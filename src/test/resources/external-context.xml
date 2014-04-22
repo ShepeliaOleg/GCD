@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans default-init-method="true"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="iMS" class="springConstructors.IMS">
+        <property name="imsURL" value="https://extdev2-admin.extdev.eu/ims/?context=ims"/>
+    </bean>
+
+    <bean id="mailQ"
+          class="springConstructors.MailQ">
+        <constructor-arg value="http://extdev2-mailq.extdev.eu/"/>
+    </bean>
+
+    <bean id="mailService" abstract="true"
+          class="springConstructors.mail.MailService">
+    </bean>
+
+    <bean id="spamavert" parent="mailService"
+          class="springConstructors.mail.Spamavert">
+        <constructor-arg value="http://spamavert.com/mail/"/>
+        <constructor-arg value="@spamavert.com"/>
+    </bean>
+
+    <bean id="mailinator" parent="mailService"
+          class="springConstructors.mail.Mailinator">
+        <constructor-arg value="http://mailinator.com/inbox.jsp?to="/>
+        <constructor-arg value="@mailinator.com"/>
+    </bean>
+
+</beans>

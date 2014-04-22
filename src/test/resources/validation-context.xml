@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="nameValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй,.'-]{1,25}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй,.'-]{1,24}"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="50"/>
+    </bean>
+
+    <bean id="nameOnRAFValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',-]{1,14}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ',-]{0,15}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,1}"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="32"/>
+    </bean>
+
+    <!--D-03145: Email should accept only ._- and IMS does not allow to use . at the beginning -->
+    <!--DA: cannot make a rule with min username length = 1 char and now allowing a dot at the beginning at the same time -->
+    <!--portal max lenth is 100 while IMS is 78 for email -->
+    <bean id="emailValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,6}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,40}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,3}"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="100"/>
+    </bean>
+
+    <!--Note for city validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
+    <bean id="cityValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.']{1,24}[,]{0,1}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.']{1,23}"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="50"/>
+    </bean>
+
+    <!--Note for address validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
+    <!--D-04154: comma character (,) is not sent to IMS properly now, should be added to the bean below after fix (BUT comma can't be at the beginning of address!!!) -->
+    <bean id="addressValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,2}[&amp;./\-]{0,3}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,55}[&amp;./\-]{0,4}"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="65"/>
+    </bean>
+
+    <!--Note for house validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
+    <bean id="houseValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,20}[&amp;./\-]{0,3}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{0,5}"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="28"/>
+    </bean>
+
+    <!--Full address rule is used for UMD portlet where there's no division between house, address1 and address2 -->
+    <!--D-04154: comma character (,) is not sent to IMS properly now, should be added to the bean below after fix (BUT comma can't be at the beginning of address!!!) -->
+    <!--D-04195: max length is now 131 char while it should be 160 like on IMS and on Reg -->
+    <!--Note for address validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
+    <bean id="fullAddressValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,6}[&amp;./\-]{0,3}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,120}[&amp;./\-]{0,10}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{0,20}"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="160"/>
+    </bean>
+
+    <!--Post Code cannot start or finish with a space, it is truncated on IMS side. -->
+    <bean id="postcodeValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,1}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{0,10}"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="12"/>
+    </bean>
+
+
+    <bean id="phoneValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="15"/>
+    </bean>
+
+
+    <bean id="countryPhoneCodeValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="5"/>
+    </bean>
+
+    <!--Full phone rule is used for UMD portlet where there's no division between area code and phone itself -->
+    <bean id="fullPhoneValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[+]{0,1}[0123456789]{3,4}[ ]{0,1}[0123456789]{3,3}[ ]{0,1}[0123456789]{0,2}[ ]{0,1}[0123456789]{1,2}"/>
+        <property name="minLength" value="7"/>
+        <property name="maxLength" value="15"/>
+    </bean>
+
+    <!--Username: should also accept the following chars but does not accept now because of PAS limitations: $/'&()+;-!? -->
+    <bean id="usernameValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.@_#*`,]{6,10}"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="10"/>
+    </bean>
+
+    <!--D-03145: Email should accept only ._- -->
+    <bean id="emailPrefixValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{6,10}"/> <!--"#$/'&amp;+()*`;!?,"-->
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="10"/>
+    </bean>
+
+    <bean id="passwordValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyz]{2,4}[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,3}[0123456789]{2,3}"/> <!--[@#$&amp;!%*^]{2,7}-->
+        <property name="minLength" value="5"/>
+        <property name="maxLength" value="10"/>
+    </bean>
+
+    <bean id="answerValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /-]{1,160}"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="160"/>
+    </bean>
+
+    <!--Bonus Code allows entering only latin letters and numbers. The following chars are not allowed: : .@_#$/'&amp;+()*`;!¡?¿,%^={|}~üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй- -->
+    <bean id="bonusCodeValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,10}"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="10"/>
+    </bean>
+
+    <bean id="searchValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{12,15}"/>
+        <property name="minLength" value="12"/>
+        <property name="maxLength" value="15"/>
+    </bean>
+
+    <bean id="emailSubjectValidationRule" class="springConstructors.validation.ValidationRule">
+        <property name="regexp" value="[&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,100}"/>  <!--üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="100"/>
+    </bean>
+</beans>
