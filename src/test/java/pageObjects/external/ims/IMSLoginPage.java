@@ -16,7 +16,7 @@ public class IMSLoginPage extends AbstractPage{
 	private static final String BUTTON_SUBMIT_XP=	"//*[@id='Submit']";
 
 	private static final String LOGIN=				"wpl_automation";
-	private static final String PASS=				"Asd123Qwe";
+	private static final String PASS=				"14789Asd";
 
 	public IMSLoginPage(){
 		super(new String[]{ROOT_XP});
