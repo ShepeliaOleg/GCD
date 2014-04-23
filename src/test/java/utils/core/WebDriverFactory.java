@@ -17,30 +17,32 @@ public class WebDriverFactory extends WebDriverObject{
 
 	private static WebDriver storedWebDriver;
 	private static String browser;
+    private static String os;
 
 	@Autowired
 	@Qualifier("driverData")
 	private DriverData driverData;
 
 	public WebDriverFactory(){
-		browser = driverData.getBrowser();
-		baseUrl = driverData.getBaseUrl();
+		browser =   driverData.getBrowser();
+        os =        driverData.getOs();
+		baseUrl =   driverData.getBaseUrl();
 	}
 
 	public void initializeWebDriver(){
 		try{
-			logdriver = initializeWebDriver(browser);
+			logdriver = initializeWebDriver(browser, os);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		webDriver = initializeWebDriver(browser);
+		webDriver = initializeWebDriver(browser, os);
 	}
 
-	public WebDriver initializeWebDriver(String browserType){
+	public WebDriver initializeWebDriver(String browserType, String osType){
 		WebDriver driver = null;
 		try{
 			if(browserType.equals("chrome")){
-				driver=createChromeDriver();
+				driver=createChromeDriver(osType);
 			}else if(browserType.equals("firefox")){
 				driver=createFireFoxDriver();
 			}
@@ -51,9 +53,10 @@ public class WebDriverFactory extends WebDriverObject{
 		return driver;
 	}
 
-	private WebDriver createChromeDriver(){
+	private WebDriver createChromeDriver(String osType){
 		ChromeOptions chromeOptions=new ChromeOptions();
 		chromeOptions.addArguments("--ignore-certificate-errors");
+        if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
 		return new ChromeDriver(chromeOptions);
 	}
 

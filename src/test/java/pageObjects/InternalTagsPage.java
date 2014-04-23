@@ -17,10 +17,10 @@ public class InternalTagsPage extends AbstractPage{
 	private static final String MULTIVIEW_ARTICLE_XP=	"//*[@class='journal-content-article']";
 	private static final String[] INTERNAL_TAGS = 		{"casino-gaming-balance", "bingo-gaming-balance",
 														"poker-gaming-balance", "sportsbook-gaming-balance", "total-bonus-balance", "withdrawable-balance",
-														"internal-wallet-total-real-balance", "user-currency", "user-name", "messages", "comp-points"};
+														"internal-wallet-total-real-balance", "user-currency", "user-name", "messages", "comp-points", "first-name"};
 	private static final String[] GUEST_TAGS = 			{"[CASINO_GAMING_BALANCE]","[BINGO_GAMING_BALANCE]",
 														"[POKER_GAMING_BALANCE]","[SPORTSBOOK_GAMING_BALANCE]","[TOTAL_BONUS_BALANCE]","[WITHDRAWABLE_BALANCE]",
-														"[INTERNAL_WALLET_TOTAL_REAL_BALANCE]","£","-","-","-"};
+														"[INTERNAL_WALLET_TOTAL_REAL_BALANCE]","£","-","-","-","-"};
 
 	public InternalTagsPage(){
 		super(new String[]{ROOT_XP});
