@@ -138,7 +138,7 @@ public class AbstractPage extends AbstractPageObject{
 	}
 
     public AbstractPage login(){
-        return (AbstractPage) this.login(defaultUserData, Page.homePage);
+        return (AbstractPage) this.login(defaultUserData.getRegisteredUserData(), Page.homePage);
     }
 
 	public AbstractPage login(UserData userData){

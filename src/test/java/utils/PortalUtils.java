@@ -6,15 +6,17 @@ import pageObjects.HomePage;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 
-/**
- * Created by sergiich on 4/23/14.
- */
-
 public class PortalUtils {
 
     public static void registerUser(UserData userData){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registerUser(userData);
+        navigateToRegistration().registerUser(userData);
+    }
+    public static void registerUser(){
+        navigateToRegistration().registerUser();
+    }
+
+    private static RegistrationPage navigateToRegistration() {
+        return (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
     }
 
     public static void loginUser(UserData userData){

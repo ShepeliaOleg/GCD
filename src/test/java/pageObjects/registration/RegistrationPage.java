@@ -1,6 +1,8 @@
 package pageObjects.registration;
 
 import enums.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
@@ -89,7 +91,12 @@ public class RegistrationPage extends AbstractPage{
 	private final static String LINK_ADULT_CONTENT_XP=								"//*[@id='webContent18']//a";
 	private final static String BUTTON_FILL_FIELDS_XP= 									"//*[@id='fillFields']";
 
-	public RegistrationPage(){
+    @Autowired
+    @Qualifier("userData")
+    private UserData defaultUserData;
+
+
+    public RegistrationPage(){
 		super(new String[]{ROOT_XP, BUTTON_SUBMIT_XP});
 	}
 
@@ -293,6 +300,10 @@ public class RegistrationPage extends AbstractPage{
 		WebDriverUtils.click(LINK_ADULT_CONTENT_XP);
 		return new AdultContentPage();
 	}
+
+    public HomePage registerUser(){
+        return (HomePage)this.registerUser(defaultUserData.getRandomUserData(), false);
+    }
 
 	public HomePage registerUser(UserData userData){
 		return (HomePage)this.registerUser(userData, false);
