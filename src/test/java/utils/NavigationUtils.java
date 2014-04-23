@@ -17,9 +17,9 @@ import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.popups.*;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
-import utils.logs.Log;
 import utils.logs.LogUtils;
 
 /**
@@ -28,6 +28,9 @@ import utils.logs.LogUtils;
  */
 
 public class NavigationUtils extends WebDriverObject{
+
+    private static final int POPUP_CHECK_RETRIES = 10;
+    private static final int POPUP_WAIT_TIMEOUT = 4;
 
 	public static AbstractPage navigateToPortal(){
         navigateToPortal(PlayerCondition.any);
@@ -44,25 +47,27 @@ public class NavigationUtils extends WebDriverObject{
     public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         navigateToPortal(condition, configuredPages, userData);
         switch (configuredPages){
-            case gamesList:
-            case gamesStyleOne:
-            case gamesStyleTwo:
-            case gamesStyleThree:
-            case gamesStyleFour:
-            case gamesToFit:
-            case gamesMinimum:
+            case bingoLobbyFeed:
+            case bingoScheduleFeed:return new BingoSchedulePage();
+            case bonusPage:return new InboxPage();
             case gamesFavourites:
+            case gamesList:
+            case gamesMinimum:
             case gamesNavigationStyleNone:
             case gamesNavigationStyleRefineBy:
             case gamesNavigationStyleCategoryTabsTop:
             case gamesNavigationStyleCategoryTabsLeft:
             case gamesNavigationStyleCategoryTabsRefineByTop:
-            case gamesNavigationStyleCategoryTabsRefineByLeft:return new GamesPortletPage();
-            case bingoLobbyFeed:
-            case bingoScheduleFeed:return new BingoSchedulePage();
-            case internalTags:return new InternalTagsPage();
+            case gamesNavigationStyleCategoryTabsRefineByLeft:
+            case gamesStyleOne:
+            case gamesStyleTwo:
+            case gamesStyleThree:
+            case gamesStyleFour:
+            case gamesToFit:return new GamesPortletPage();
             case inbox:return new InboxPage();
-            case bonusPage:return new InboxPage();
+            case internalTags:return new InternalTagsPage();
+            case register: return new RegistrationPage();
+            case responsibleGaming: return new ResponsibleGamingPage();
             default: throw new RuntimeException("Unexpected input in navigateToPage method");
         }
     }
@@ -77,7 +82,7 @@ public class NavigationUtils extends WebDriverObject{
         if(configuredPages!=null){
             suffix = configuredPages.toString();
         }
-        WebDriverUtils.navigateToURL(baseUrl + suffix);
+        WebDriverUtils.navigateToInternalURL(suffix);
         if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
             abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
         }else{
@@ -95,7 +100,7 @@ public class NavigationUtils extends WebDriverObject{
                     abstractPage.logout();
                 }
                 abstractPage.login(userData);
-                WebDriverUtils.navigateToURL(baseUrl + configuredPages.toString());
+                WebDriverUtils.navigateToInternalURL(suffix);
                 break;
         }
         LogUtils.setTimestamp();
@@ -105,10 +110,10 @@ public class NavigationUtils extends WebDriverObject{
 	public static AbstractPageObject closeAllPopups(Page exceptPage){
 		AbstractPageObject result = null;
 		int retries = 0;
-		while(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 4) && result==null){
+		while(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, POPUP_WAIT_TIMEOUT) && result==null){
 			result = checkPopups(exceptPage);
 			retries++;
-			if(retries==10){
+			if(retries==POPUP_CHECK_RETRIES){
 				WebDriverUtils.runtimeExceptionWithLogs("Unrecognizable popup appeared");
 			}
 		}
@@ -236,4 +241,6 @@ public class NavigationUtils extends WebDriverObject{
             return null;
         }
     }
+
+
 }

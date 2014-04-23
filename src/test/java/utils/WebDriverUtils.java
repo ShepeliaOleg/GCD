@@ -339,15 +339,9 @@ public class WebDriverUtils extends WebDriverObject{
 		webDriver.navigate().refresh();
 	}
 
-
-	public static void navigateToInternalURL(String baseUrl, String relativeURL){
-		String url=baseUrl + relativeURL;
-		webDriver.get(url);
-	}
-
 	public static void navigateToInternalURL(String relativeURL){
 		String url=baseUrl + relativeURL;
-		webDriver.get(url);
+        navigateToURL(url);
 	}
 
 	public static void navigateToInternalURL(WebDriver webDriver, String baseUrl, String relativeURL){
@@ -356,7 +350,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void navigateToURL(String url){
-		webDriver.navigate().to(url);
+		webDriver.get(url);
 	}
 
 	public static void clearCookies(){

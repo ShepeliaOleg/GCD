@@ -26,7 +26,8 @@ public enum ConfiguredPages{
 	internalTags("internaltags"),
     inbox("myaccount1/inbox"),
     myAccount("myaccount1"),
-	register("register");
+	register("register"),
+    responsibleGaming("myaccount1/responsible-gaming");
 
     private final String name;
 

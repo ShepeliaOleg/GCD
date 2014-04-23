@@ -155,7 +155,7 @@ public class AbstractPage extends AbstractPageObject{
 		return loggedOutHeader().getRememberMeCheckBoxState();
 	}
 
-	public String getUsernameFromLoginForm(){
+	public String getEnteredUsernameFromLoginForm(){
 		return loggedOutHeader().getUsernameText();
 	}
 

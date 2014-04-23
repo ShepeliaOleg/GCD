@@ -82,7 +82,7 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage=NavigationUtils.navigateToPortal(true);
 		homePage=(HomePage) homePage.login(userData, false);
 		homePage=(HomePage)homePage.logout();
-		String username=homePage.getUsernameFromLoginForm();
+		String username=homePage.getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username.equals(""));
 	}
 
@@ -108,7 +108,7 @@ public class LoginTest extends AbstractTest{
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
 		WebDriverUtils.waitForPageToLoad();
-		String username=homePage.getUsernameFromLoginForm();
+		String username=homePage.getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username.equals(userData.getUsername()));
 	}
 
@@ -134,13 +134,13 @@ public class LoginTest extends AbstractTest{
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
 		WebDriverUtils.waitForPageToLoad();
-		String username1=homePage.getUsernameFromLoginForm();
+		String username1=homePage.getEnteredUsernameFromLoginForm();
 		userData.setUsername("player73");
 		userData.setPassword("123456");
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
 		WebDriverUtils.waitForPageToLoad();
-		String username2=homePage.getUsernameFromLoginForm();
+		String username2=homePage.getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username1.equals("") == false && username2.equals(username1) == false);
 	}
 
