@@ -1,4 +1,6 @@
+import enums.ConfiguredPages;
 import enums.Page;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
@@ -53,8 +55,9 @@ public class PushMessagesTest extends AbstractTest{
 	/*2. Push logout */
 	@Test(groups = {"regression"})
 	public void pushLogout(){
+        HomePage homePage;
 		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 		iMS.sendPushMessage(userData, Page.logout);
 		try{
 			WebDriverUtils.waitForElement(ForceLogoutPopup.LOGOUT_POPUP, 300);

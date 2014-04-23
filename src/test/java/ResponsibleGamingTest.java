@@ -1,3 +1,5 @@
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
@@ -43,10 +45,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 	/* 2. 1,2,3: Daily <= Weekly <= Monthly */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits123(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+		HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -59,10 +60,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 	/* 3. 1,2,-: Daily <= Weekly & Monthly = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits120(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -75,10 +75,9 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 4. -,1,2: Weekly <= Monthly & Daily = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits012(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -91,10 +90,9 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 5. 1,-,2: Monthly >= Daily & Weekly = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits102(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -107,10 +105,9 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 6. 1,-,-: Daily & Weekly = not defined & Monthly = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits100(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -123,10 +120,9 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 7. -,1,-: Weekly & Daily = not defined & Monthly = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits010(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -139,10 +135,9 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 8. -,-,1: Monthly & Weekly = not defined & Daily = not defined */
 	@Test(groups = {"regression"})
 	public void setValidDepositLimits001(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
@@ -156,9 +151,8 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void currencyIsEqualToSetOnRegistration(){
 		UserData userData=defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		String currencySignDaily =      responsibleGamingPage.getDailyLimitCurrency();
@@ -171,9 +165,8 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void setTimePerSessionLimit(){
 		UserData userData=defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		responsibleGamingPage.setRandomTimePerSession();
@@ -186,9 +179,8 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void setSelfExclude(){
 		UserData userData=defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		SelfExcludePopup selfExcludePopup=responsibleGamingPage.navigateToSelfExclude();
@@ -221,9 +213,8 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void consecutiveValidUpdatesOfDepositLimits(){
 		UserData userData=defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList(6);
@@ -370,10 +361,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 
 	@Test(groups = {"regression"})
 	public void setSelfExclusion(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
-		homePage= (HomePage) registrationPage.registerUser(userData);
+        HomePage homePage= registrationPage.registerUser(userData);
 		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
 		ResponsibleGamingPage responsibleGamingPage=myAccountPage.navigateToResponsibleGaming();
 		SelfExcludePopup selfExcludePopup=responsibleGamingPage.navigateToSelfExclude();
