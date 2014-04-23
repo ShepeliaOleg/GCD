@@ -101,6 +101,7 @@ public class RandomUtils{
 
         return result;
     }
+
     public static <T> Collection<T> getSameElementsFromLists(Collection<T> list1, Collection<T> list2) {
         Collection<T> similar = new HashSet<T>(list1);
         similar.retainAll(list2);

@@ -18,7 +18,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
 
 	@BeforeClass(alwaysRun = true)
 	protected void setUp() throws Exception{
-		new WebDriverFactory().initializeWebDriver();
+		new WebDriverFactory().initializeWebDrivers();
 	}
 
 	@AfterClass(alwaysRun = true)

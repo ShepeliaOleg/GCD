@@ -24,14 +24,14 @@ public class WebDriverFactory extends WebDriverObject{
 	private DriverData driverData;
 
 	public WebDriverFactory(){
-		browser =   driverData.getBrowser();
+        baseUrl =   driverData.getBaseUrl();
+        browser =   driverData.getBrowser();
         os =        driverData.getOs();
-		baseUrl =   driverData.getBaseUrl();
 	}
 
-	public void initializeWebDriver(){
+	public void initializeWebDrivers(){
 		try{
-			logdriver = initializeWebDriver(browser, os);
+			logDriver = initializeWebDriver(browser, os);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class WebDriverFactory extends WebDriverObject{
 
 	public static void shutDown(){
 		webDriver.quit();
-		logdriver.quit();
+		logDriver.quit();
 	}
 
 	public static void switchToAdditionalWebDriver(){

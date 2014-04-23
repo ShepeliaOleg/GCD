@@ -18,8 +18,8 @@ public class LogUtils extends WebDriverObject{
 	public static String getLatestTimestamp(){
 		String result = "noLogs";
 		try{
-			WebDriverUtils.navigateToInternalURL(logdriver, baseUrl, "html/logs.txt");;
-			String fullLog = WebDriverUtils.getElementText(logdriver, "//pre");
+			WebDriverUtils.navigateToInternalURL(logDriver, baseUrl, "html/logs.txt");
+			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
 			Pattern pattern = Pattern.compile(TIMESTAMP_REGEXP);
 			Matcher matcher = pattern.matcher(fullLog);
 			while (matcher.find()){
@@ -58,8 +58,8 @@ public class LogUtils extends WebDriverObject{
 			return log;
 		}
 		try{
-			logdriver.navigate().refresh();
-			String fullLog = WebDriverUtils.getElementText(logdriver, "//pre");
+			logDriver.navigate().refresh();
+			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
 
 			Pattern pattern = Pattern.compile(TIMESTAMP_REGEXP);
 			Matcher matcher = pattern.matcher(fullLog);

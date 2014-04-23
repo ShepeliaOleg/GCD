@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 public class WebDriverObject{
 
 	public static WebDriver webDriver;
-	protected static WebDriver logdriver;
+	protected static WebDriver logDriver;
 	protected static String timestamp;
 	protected static String baseUrl;
 
