@@ -39,7 +39,7 @@ public class NavigationUtils extends WebDriverObject{
 
     public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
         if (condition.equals(PlayerCondition.loggedIn)){
-            WebDriverUtils.runtimeExceptionWithLogs("Tried to call logged in user without userdata");
+            PortalUtils.loginUser();
         }
         return navigateToPage(condition, configuredPages, null);
     }
@@ -72,11 +72,11 @@ public class NavigationUtils extends WebDriverObject{
         }
     }
 
-    public static void navigateToPortal(PlayerCondition condition){
+    private static void navigateToPortal(PlayerCondition condition){
         navigateToPortal(condition, null, null);
     }
 
-    public static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
+    private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         AbstractPage abstractPage;
         String suffix="";
         if(configuredPages!=null){

@@ -22,6 +22,7 @@ import utils.WebDriverUtils;
  * User: sergiich
  * Date: 4/10/14
  */
+
 public class PushMessagesTest extends AbstractTest{
 
 	@Autowired
@@ -48,7 +49,7 @@ public class PushMessagesTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void loginMessage(){
 		UserData userData = defaultUserData.getRegisteredUserData();
-		WelcomePopup welcomePopup = (WelcomePopup) NavigationUtils.navigateToPortal(true).login(userData, Page.welcomePopup);
+		WelcomePopup welcomePopup = (WelcomePopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home).login(userData, Page.welcomePopup);
 		welcomePopup.clickClose();
 	}
 

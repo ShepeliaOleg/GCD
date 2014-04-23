@@ -1,12 +1,7 @@
 package pageObjects.base;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
-
-import java.util.ArrayList;
 
 /**
  * User: sergiich
