@@ -11,7 +11,7 @@ import utils.core.WebDriverFactory;
  * User: sergiich
  * Date: 4/10/14
  */
-@ContextConfiguration(locations={"../spring-config.xml"})
+@ContextConfiguration(locations={"/spring-config.xml"})
 @Listeners(Listener.class)
 public class AbstractTest extends AbstractTestNGSpringContextTests{
 
