@@ -84,7 +84,7 @@ public class PushMessagesTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		userData.setPassword(newPass);
-		ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillForm(imsPass, userData.getPassword());
+		ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(imsPass, userData.getPassword());
 		Assert.assertTrue(changedPasswordPopup.successfulMessageAppeared());
 	}
 

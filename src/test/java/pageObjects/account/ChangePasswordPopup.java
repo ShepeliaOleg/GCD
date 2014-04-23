@@ -32,7 +32,7 @@ public class ChangePasswordPopup extends AbstractPopup{
 		WebDriverUtils.click(BUTTON_SUBMIT_XP);
 	}
 
-	public ChangedPasswordPopup fillForm(String oldPassword, String newPassword){
+	public ChangedPasswordPopup fillFormAndSubmit(String oldPassword, String newPassword){
 		fillOldPassword(oldPassword);
 		fillNewPassword(newPassword);
 		fillNewPasswordValidation(newPassword);

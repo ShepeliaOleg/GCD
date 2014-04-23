@@ -53,6 +53,7 @@ public class NavigationUtils extends WebDriverObject{
             case bonusPage:                                     return new BonusPage();
             case changeMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangeMyPasswordPage();
+            case gamesCasinoPage:
             case gamesFavourites:
             case gamesList:
             case gamesMinimum:

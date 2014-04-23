@@ -12,6 +12,7 @@ public enum ConfiguredPages{
     bonusPage("bonus"),
     changeMyDetails("myaccount1/update-my-details"),
     changeMyPassword("myaccount1/change-my-password"),
+    gamesCasinoPage("casino"),
     gamesList("list"),
 	gamesStyleOne("style1_slider"),
 	gamesStyleTwo("style2"),

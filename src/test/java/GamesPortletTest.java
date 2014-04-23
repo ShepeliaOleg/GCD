@@ -1,4 +1,5 @@
 import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import enums.SortBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,8 +47,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*1. Portlet is displayed, game can be launched */
 	@Test(groups = {"smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		GamesPortletPage gamesPortletPage = homePage.navigateToCasino();
+		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		String url = gameLaunchPopup.getWindowUrl();
@@ -60,8 +60,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.1. Refine By: Top level*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationStyleTopLevel (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
 		boolean categoryTabsAreHidden = gamesPortletPage.categoryMenuIsHidden();
 		boolean refineByOptionsIncludeTopCategories =  gamesPortletPage.refineByOptionsIncludeTopCategories();
@@ -96,8 +95,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.2. Refine By: Top > Category without subcategories*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromTopToCategoryWithNoSubcategories () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
 		boolean categoryTabsAreHidden = gamesPortletPage.categoryMenuIsHidden();
@@ -140,8 +138,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.3. Refine By: Top > Category with subcategories*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromTopToCategoryWithSubcategories () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
 		boolean categoryTabsAreHidden = gamesPortletPage.categoryMenuIsHidden();
@@ -186,8 +183,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.4. Refine By: Category with subcategories > subcategory*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromCategoryWithSubcategoriesToSubcategory () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -234,8 +230,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.5.  Refine By: Subcategory 1 > Subcategory 2*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromSubcategoryToSubcategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);;
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL);
@@ -283,8 +278,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.6. Refine By: Category without subcategories 1 > Category without subcategories 2*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromCategoryWithoutSubcategoriesToCategoryWithoutSubcategories () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -329,8 +323,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.7. Refine By: Category without subcategories > Top*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromCategoryWithoutSubcategoriesToTop () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -367,8 +360,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.8. Refine By: Category with subcategories > Top*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationFromCategoryWithSubcategoriesToTop () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -405,8 +397,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*2.9. Refine By: Subcategory > Parent category*/
 	@Test(groups = {"regression"})
 	public void  refineByNavigationFromSubcategoryToParentCategory () {
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleRefineBy);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
@@ -452,8 +443,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.1. Category Tabs (Top): Top*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationStyleTopLevel (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
 		boolean leftCategoriesMenuIsDisplayed = gamesPortletPage.leftCategoryMenuIsPresent();
@@ -489,8 +479,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.2. Category Tabs (Top): Top >> Category without sub-categories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromTopToCategoryWithoutSubcategories (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -537,8 +526,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.3. Category Tabs (Top): Top >> Category with sub-categories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromTopToCategoryWithSubcategories (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -592,8 +580,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.4. Category Tabs (Top): Category with subcategories > subcategory*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromCategoryWithSubcategoriesToSubcategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -656,8 +643,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.5. Category Tabs (Top): Subcategory > subcategory*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromSubcategoryToSubcategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL);
@@ -721,8 +707,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.6. Category Tabs (Top): Category without subcategories > Category without subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromCatNoSubcatToCatNoSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -771,8 +756,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.7. Category without subcategories > Category with subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromCatNoSubcatToCatSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -826,8 +810,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.8. Category with subcategories > Category without subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromCatSubCatToCatNoScubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -875,8 +858,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.9. Category with subcategories > Category with subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromCatSubcatToCatSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -930,8 +912,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.1.10. Category Tabs (Top): Subcategory >> Parent category*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationFromSubcategoryToParentCategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
@@ -986,8 +967,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.1. Category Tabs (Left): Top*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationStyleTopLevel (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
 		boolean leftCategoriesMenuIsDisplayed = gamesPortletPage.leftCategoryMenuIsPresent();
@@ -1023,8 +1003,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.2. Category Tabs (Left): Top >> Category without sub-categories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromTopToCategoryWithoutSubcategories (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -1071,8 +1050,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.3. Category Tabs (Left): Top >> Category with sub-categories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromTopToCategoryWithSubcategories (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
 		boolean refineByDropDownIsDisplayed = gamesPortletPage.refineByDropDownIsPresent();
@@ -1126,8 +1104,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.4. Category Tabs (Left): Category with subcategories > subcategory*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromCategoryWithSubcategoriesToSubcategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -1190,8 +1167,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.5. Category Tabs (Left): Subcategory > subcategory*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromSubcategoryToSubcategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL);
@@ -1255,8 +1231,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.6. Category Tabs (Left): Category without subcategories > Category without subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryLeftTopNavigationFromCatNoSubcatToCatNoSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -1305,8 +1280,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.7. Category Tabs (Left): Category without subcategories > Category with subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromCatNoSubcatToCatSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -1360,8 +1334,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.8. Category Tabs (Left): Category with subcategories > Category without subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromCatSubCatToCatNoScubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -1409,8 +1382,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.9. Category Tabs (Left): Category with subcategories > Category with subcategories*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromCatSubcatToCatSubcat (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		boolean topCategoriesMenuIsDisplayed = gamesPortletPage.topCategoryMenuIsPresent();
@@ -1464,8 +1436,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*3.2.10. Category Tabs (Left): Subcategory >> Parent category*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationFromSubcategoryToParentCategory (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
@@ -1520,8 +1491,7 @@ public class GamesPortletTest extends AbstractTest{
     /*5. Navigation style = None All navigation controls are absent All Games are displayed*/
 	@Test(groups = {"regression"})
 	public void noneNavigationStyle (){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesNavigationStyleNone);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleNone);
 		boolean allNavigationControlsHidden = gamesPortletPage.allNavigationControlsAreHidden();
 		boolean correctGamesAreDisplayed = gamesPortletPage.correctGamesAreDisplayed(gameCategories.getAllGames(), gamesPortletPage.getAllGameIDs());
 		boolean pageURLIsCorrect = gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleNone.toString());
@@ -1542,8 +1512,7 @@ public class GamesPortletTest extends AbstractTest{
     /*7.6. Jackpot Size - descending by JP size*/
 	@Test(groups = {"regression"})
 	public void sortByAllOptionsWork(){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		int gamesPerSlide = gamesPortletPage.getGameItemsNumberOnSlide();
 		int gamesTotalNumber = gamesPortletPage.getTotalGameItemsNumber();
 //        New sorting
@@ -1591,8 +1560,7 @@ public class GamesPortletTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void searchFindsCorrectGameAndNoGamesAreShownForRandomSearch(){
 		boolean gamesAreNotShown = false;
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String gameID = gamesPortletPage.getRandomGameName();
 		gamesPortletPage = gamesPortletPage.inputSearch(gameID);
 		String searchedId = gamesPortletPage.getGameName(1);
@@ -1608,10 +1576,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.1. Style 1 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1627,10 +1592,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.2. Item View Style 2 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleTwo);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1646,10 +1608,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.3. Item View Style 3 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleThree);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1670,10 +1629,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.4. Item View Style 4 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleFour);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1692,8 +1648,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*15.1. Slider : next/back arrows navigation*/
 	@Test(groups = {"regression"})
 	public void sliderPaginationWorksCorrectly(){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String firstPage = gamesPortletPage.getGameName(1);
 		gamesPortletPage = gamesPortletPage.clickNextButton();
 		String secondPage = gamesPortletPage.getGameName(1);
@@ -1704,10 +1659,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*15.3. Navigation types - To Fit*/
 	@Test(groups = {"regression"})
 	public void toFitModeIsDisplayedAndGameCanBeStarted(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesToFit);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit);
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
 		boolean isURLCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1720,16 +1672,12 @@ public class GamesPortletTest extends AbstractTest{
 	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
 	@Test(groups = {"regression"})
 	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
 		final String gameID = gamesPortletPage.getRandomGameName();
 		GameElement gameElement = new GameElement(gameID);
 		gameElement.clickFavourite();
 		boolean isFavourite = gameElement.isFavouriteActive();
-		NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesFavourites);
+        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
 		gameElement = new GameElement(gameID);
 		gameElement.clickFavouriteActive();
 		gamesPortletPage = new GamesPortletPage();
@@ -1747,8 +1695,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*22. Switching between Item and gamesList view*/
 	@Test(groups = {"regression"})
 	public void viewModeButtonIsPresentAndChangesMode(){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToHome()
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String gameId = gamesPortletPage.getRandomGameName();
 		GameElement gameElement = new GameElement(gameId);
 		boolean present = gameElement.isImagePresent();
@@ -1762,9 +1709,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*24. Disable demo mode for logged in player*/
 	@Test(groups = {"regression"})
 	public void loggedInUserTriesToPlayDisabledDemoNoDemoButtonsFound(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage.navigateToGamesPortletPage(ConfiguredPages.gamesMinimum);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum);
 		boolean isDemoPresent = gamesPortletPage.isDemoPresent();
 		Assert.assertTrue(!isDemoPresent);
 	}
@@ -1772,8 +1717,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*29.1. Guest launches a game in real mode and faces login popup*/
 	@Test(groups = {"regression"})
 	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
-		GamesPortletPage gamesPortletPage = NavigationUtils.navigateToPortal(true)
-				.navigateToGamesPortletPage(ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
 		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playReal(false);
 		Assert.assertTrue(loginPopup !=null);
 	}
@@ -1782,10 +1726,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*30. Player launches game from list view*/
 	@Test(groups = {"regression"})
 	public void gameCanBeStartedFromListView(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		GamesPortletPage gamesPortletPage = homePage
-				.navigateToGamesPortletPage(ConfiguredPages.gamesList);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup)gamesPortletPage./*clickAllGames().*/playReal(true);
 		boolean isURLCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
