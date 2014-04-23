@@ -85,26 +85,6 @@ public class AbstractPage extends AbstractPageObject{
 		return new GamesPortletPage();
 	}
 
-	public BingoSchedulePage navigateToBingoSchedulePage(ConfiguredPages feed) {
-		WebDriverUtils.navigateToInternalURL(feed.toString());
-		return new BingoSchedulePage();
-	}
-
-	public GamesPortletPage navigateToGamesPortletPage(ConfiguredPages feed){
-		WebDriverUtils.navigateToInternalURL(feed.toString());
-		return new GamesPortletPage();
-	}
-
-	public InternalTagsPage navigateToInternalTagsPage(){
-		WebDriverUtils.navigateToInternalURL(ConfiguredPages.internalTags.toString());
-		return new InternalTagsPage();
-	}
-
-	public BonusPage navigateToBonusPage(){
-		WebDriverUtils.navigateToInternalURL(ConfiguredPages.bonusPage.toString());
-		return new BonusPage();
-	}
-
 	public ForgotPasswordPopup navigateToForgotPassword(){
 		return loggedOutHeader().navigateToForgotPasswordPopup();
 	}

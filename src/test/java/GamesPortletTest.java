@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
 import pageObjects.account.LoginPopup;
 import pageObjects.gamesPortlet.GameElement;
 import pageObjects.gamesPortlet.GameInfoPopup;

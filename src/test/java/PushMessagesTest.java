@@ -126,7 +126,8 @@ public class PushMessagesTest extends AbstractTest{
 	public void pushMessageFreeBonus(){
 		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
 		String balance = homePage.getBalance();
-		FreeBonusPopup freeBonusPopup = homePage.navigateToBonusPage().clickFreeBonus();
+        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
+		FreeBonusPopup freeBonusPopup = bonusPage.clickFreeBonus();
 		OkBonusPopup okBonusPopup = freeBonusPopup.clickFreeBonus();
 		okBonusPopup.close();
 		Assert.assertTrue(homePage.compareBalances(balance)==10);
@@ -137,7 +138,8 @@ public class PushMessagesTest extends AbstractTest{
 	public void pushMessagePromoCode(){
         HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
 		String balance = homePage.getBalance();
-		OkBonusPopup okBonusPopup = homePage.navigateToBonusPage().submitCode();
+        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
+		OkBonusPopup okBonusPopup = bonusPage.submitCode();
 		okBonusPopup.close();
 		Assert.assertTrue(homePage.compareBalances(balance)==10);
 	}
