@@ -1,7 +1,11 @@
 package springConstructors;
 
+import enums.ConfiguredPages;
 import enums.Page;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.external.ims.*;
+import pageObjects.inbox.InboxPage;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
@@ -19,6 +23,10 @@ public class IMS extends WebDriverObject{
 
 	protected URL imsURL;
 
+    @Autowired
+    @Qualifier("userData")
+    private UserData defaultUserData;
+
 	public void setImsURL(URL imsURL){
 		this.imsURL=imsURL;
 	}
@@ -35,10 +43,15 @@ public class IMS extends WebDriverObject{
 		return imsHomePage;
 	}
 
+    public HashMap getInternalTagsData(){
+        return getInternalTagsData(defaultUserData.getRegisteredUserData());
+    }
+
 	public HashMap getInternalTagsData(UserData userData){
 		HashMap hashMap = new HashMap<String, String>();
 		try{
-			hashMap.put("messages", String.valueOf(NavigationUtils.navigateToHome().navigateToInboxPage().getNumberOfUnreadMessages()));
+            InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
+			hashMap.put("messages", String.valueOf(inboxPage.getNumberOfUnreadMessages()));
 		}catch(RuntimeException e){
 			WebDriverUtils.runtimeExceptionWithLogs("Inbox is not available");
 		}
@@ -89,6 +102,18 @@ public class IMS extends WebDriverObject{
 
 	}
 
+    public void sendPushMessage(Page pushMessages){
+        this.sendPushMessage(defaultUserData.getRegisteredUserData(), pushMessages, null);
+    }
+
+    public void sendPushMessage(Page pushMessages, String amount){
+        this.sendPushMessage(defaultUserData.getRegisteredUserData(), pushMessages, amount);
+    }
+
+    public void sendPushMessage(UserData userData, Page pushMessages){
+        this.sendPushMessage(userData, pushMessages, null);
+    }
+
 	public void sendPushMessage(UserData userData, Page pushMessages, String amount){
 		switch (pushMessages){
 			case logout:
@@ -119,10 +144,6 @@ public class IMS extends WebDriverObject{
 				}
 				break;
 		}
-	}
-
-	public void sendPushMessage(UserData userData, Page pushMessages){
-		this.sendPushMessage(userData, pushMessages, null);
 	}
 
     public void freezeWelcomeMessages(){

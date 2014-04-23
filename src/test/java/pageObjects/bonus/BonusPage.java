@@ -46,7 +46,7 @@ public class BonusPage extends AbstractPage{
 		return new OptInPopup();
 	}
 
-	public OptOutPopup clickOptOut(){
+	public OptOutPopup clickOptOutBonus(){
 		WebDriverUtils.click(OPT_IN);
 		return new OptOutPopup();
 	}

@@ -1,8 +1,11 @@
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.MyAccountPage;
 import springConstructors.IMS;
@@ -29,38 +32,34 @@ public class InternalTagsTest extends AbstractTest{
     /*1. Internal tags are replaced with "-" for guest user.*/
 	@Test(groups = {"regression"})
 	public void checkInternalTagsForGuestUser(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		homePage.navigateToInternalTagsPage().compareTags(true, null);
-		homePage.navigateToInternalTagsPage().compareTags(false, null);
+        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.internalTags);
+        internalTagsPage.compareTags(true, null);
+        internalTagsPage.compareTags(false, null);
 	}
 
     /*2. Internal tags availability on web content portlet*/
 	@Test(groups = {"regression"})
 	public void checkWorkingInternalTagsOnWebContentPortlet(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		NavigationUtils.navigateToPortal(true).login(userData);
-		HashMap imsData = iMS.getInternalTagsData(userData);
-		NavigationUtils.navigateToHome().navigateToInternalTagsPage().compareTags(true,imsData);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+		HashMap imsData = iMS.getInternalTagsData();
+        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
+        internalTagsPage.compareTags(true, imsData);
 	}
 
     /*3. Internal tags availability on multiview portlet*/
 	@Test(groups = {"regression"})
 	public void checkWorkingInternalTagsOnMultiviewPortlet(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		NavigationUtils.navigateToPortal(true).login(userData);
-		HashMap imsData = iMS.getInternalTagsData(userData);
-		NavigationUtils.navigateToHome().navigateToInternalTagsPage().compareTags(false, imsData);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+		HashMap imsData = iMS.getInternalTagsData();
+        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
+        internalTagsPage.compareTags(false, imsData);
 	}
 
     /*4. Balance is valid in balance portlet*/
 	@Test(groups = {"regression"})
 	public void validBalanceCashier(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		BalancePage balancePortlet=myAccountPage.navigateToBalancePortlet();
-		boolean defaultBalances=balancePortlet.BalancesAreEqualTo(userData);
-		Assert.assertTrue(defaultBalances);
+		UserData userData=defaultUserData.getRegisteredUserData();
+		BalancePage balancePortlet= (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance);
+		Assert.assertTrue(balancePortlet.BalancesAreEqualTo(userData));
 	}
 }

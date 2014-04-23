@@ -1,11 +1,14 @@
+import enums.ConfiguredPages;
 import enums.LogCategory;
 import enums.Page;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.account.LoginPopup;
+import pageObjects.base.AbstractPage;
 import pageObjects.forgotPassword.ContactUsPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.popups.AcceptTermsAndConditionsPopup;
@@ -15,6 +18,7 @@ import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.logs.Log;
 import utils.logs.LogEntry;
@@ -52,17 +56,15 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"smoke"})
 	public void validUserLogin() {
 		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		homePage = (HomePage)homePage.login(userData);
-		Assert.assertEquals(homePage.isUsernameDisplayed(userData), true);
+        PortalUtils.loginUser(userData);
+		Assert.assertEquals(new AbstractPage().isUsernameDisplayed(userData), true);
 	}
 	
 	/*3. Remember Me disabled by default in header*/
 	@Test(groups = {"regression"})
 	public void rememberMeDisabledByDefaultInHeader(){
 		WebDriverUtils.clearCookies();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		WebDriverUtils.waitForPageToLoad();
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		Assert.assertFalse(homePage.getRememberMeCheckBoxState());
 	}
 
@@ -70,7 +72,7 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void rememberMeDisabledByDefaultOnLoginPopup(){
 		WebDriverUtils.clearCookies();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		Assert.assertFalse(loginPopup.getRememberMeCheckBoxState());
 	}
@@ -79,7 +81,7 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameNotSavedAfterLoginWithoutRememberMe(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, false);
 		homePage=(HomePage)homePage.logout();
 		String username=homePage.getEnteredUsernameFromLoginForm();
@@ -90,12 +92,11 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameNotSavedAfterLoginWithoutRememberMeOnLoginPopup(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
-		homePage=(HomePage) loginPopup.login(userData);
+		homePage=loginPopup.login(userData);
 		homePage=(HomePage)homePage.logout();
 		loginPopup=homePage.navigateToLoginForm();
-		WebDriverUtils.waitForPageToLoad();
 		String username=loginPopup.getUsernameText();
 		Assert.assertTrue(username.equals(""));
 	}
@@ -104,10 +105,9 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameSavedAfterLoginWithRememberMe(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
-		WebDriverUtils.waitForPageToLoad();
 		String username=homePage.getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username.equals(userData.getUsername()));
 	}
@@ -116,12 +116,11 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameSavedAfterLoginWithRememberMeOnLoginPopup(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
 		homePage=(HomePage)homePage.logout();
 		loginPopup=homePage.navigateToLoginForm();
-		WebDriverUtils.waitForPageToLoad();
 		String username=loginPopup.getUsernameText();
 		Assert.assertTrue(username.equals(userData.getUsername()));
 	}
@@ -130,16 +129,14 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameIsOverwrittenAfterLoginWithRememberMe(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
-		WebDriverUtils.waitForPageToLoad();
 		String username1=homePage.getEnteredUsernameFromLoginForm();
 		userData.setUsername("player73");
 		userData.setPassword("123456");
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage=(HomePage)homePage.logout();
-		WebDriverUtils.waitForPageToLoad();
 		String username2=homePage.getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username1.equals("") == false && username2.equals(username1) == false);
 	}
@@ -148,7 +145,7 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void usernameIsOverwrittenAfterLoginWithRememberMeOnLoginPopup(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
 		homePage=(HomePage)homePage.logout();
@@ -159,7 +156,6 @@ public class LoginTest extends AbstractTest{
 		homePage=(HomePage) loginPopup.login(userData, true);
 		homePage=(HomePage)homePage.logout();
 		loginPopup=homePage.navigateToLoginForm();
-		WebDriverUtils.waitForPageToLoad();
 		String username2=loginPopup.getUsernameText();
 		Assert.assertTrue(username2.equals("") == false && username2.equals(username1) == false);
 	}
@@ -170,7 +166,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("lowercase");
 		userData.setPassword("123456");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
 		boolean successfulLogin=homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData);
 		Assert.assertTrue(successfulLogin);
@@ -182,7 +178,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("UPPERCASE");
 		userData.setPassword("123456");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
 		boolean successfulLogin=homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData);
 		Assert.assertTrue(successfulLogin);
@@ -194,9 +190,8 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("MiXeDcAsE");
 		userData.setPassword("123456");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
-		//accountModelDefaultWebApp.loginIsSuccessful();
 		boolean successfulLogin=homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData);
 		Assert.assertTrue(successfulLogin);
 	}
@@ -204,7 +199,7 @@ public class LoginTest extends AbstractTest{
     /*#12.1 Links work on popup*/
 	@Test(groups = {"regression"})
 	public void openRegisterPageFromLinkOnLoginPopup(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		RegistrationPage registrationPage = loginPopup.navigateToRegistration();
 	}
@@ -212,7 +207,7 @@ public class LoginTest extends AbstractTest{
 	/*#12.2 Links work on popup*/
 	@Test(groups = {"regression"})
 	public void openContactUsPopupFromLinkOnLoginPopup(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		ContactUsPopup contactUsPopup=loginPopup.navigateToContactUs();
 	}
@@ -220,7 +215,7 @@ public class LoginTest extends AbstractTest{
 	/*#12.3 Links work on popup*/
 	@Test(groups = {"regression"})
 	public void openForgotPasswordPopupFromLinkOnLoginPopup(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		ForgotPasswordPopup forgotPasswordPopup=loginPopup.navigateToForgotPassword();
 	}
@@ -228,7 +223,7 @@ public class LoginTest extends AbstractTest{
     /*#13.1 Close popup*/
 	@Test(groups = {"regression"})
 	public void closeLoginPopupByXButton(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=loginPopup.close();
 		boolean isLoggedIn=homePage.isLoggedIn();
@@ -238,7 +233,7 @@ public class LoginTest extends AbstractTest{
 	/*#13.2 Close popup*/
 	@Test(groups = {"regression"})
 	public void closeLoginPopupByCancelButton(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=loginPopup.cancel();
 		boolean isLoggedIn=homePage.isLoggedIn();
@@ -257,7 +252,7 @@ public class LoginTest extends AbstractTest{
 				"clientPlatform=web",
 				"clientType=portal"};
 		String[] sessionParameters = {"objectIdentity="+userData.getUsername()+"-playtech81001"};
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage.login(userData);
 		Log log = LogUtils.getCurrentLogs(logCategories);
 		log.doResponsesContainErrors();
@@ -273,7 +268,7 @@ public class LoginTest extends AbstractTest{
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.LogoutRequest};
 		UserData userData=defaultUserData.getRegisteredUserData();
 		String[] logoutParameters = {"objectIdentity="+userData.getUsername()+"-playtech81001"};
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage.login(userData);
 		homePage.logout();
 		Log log = LogUtils.getCurrentLogs(logCategories, 10);
@@ -287,7 +282,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("MiXeDcAsE");
 		userData.setPassword("123456");
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+		PortalUtils.loginUser();
 		boolean successfulLogin=iMS.isPlayerLoggedIn(userData.getUsername());
 		Assert.assertTrue(successfulLogin);
 	}
@@ -295,21 +290,19 @@ public class LoginTest extends AbstractTest{
     /*17. Login and accept new T&C added to IMS */
 	@Test(groups = {"regression"})
 	public void loginAndAcceptNewTnC(){
+        HomePage homePage;
 		String termsAndConditionsText = emailSubjectValidationRule.generateValidString();
 		boolean termsUrlParametersCorrect = false;
 		UserData userData = defaultUserData.getRegisteredUserData();
 		userData.setUsername(usernameValidationRule.generateValidString());
-		RegistrationPage registrationPage = NavigationUtils.navigateToPortal(true).navigateToRegistration();
-		HomePage homePage = (HomePage) registrationPage.registerUser(userData);
-		homePage.logout();
+		PortalUtils.registerUser(userData);
 		iMS.unFreezeNewTermsAndConditions(termsAndConditionsText);
 		try {
-			homePage = NavigationUtils.navigateToPortal(true);
-			AcceptTermsAndConditionsPopup tNCpopup = (AcceptTermsAndConditionsPopup) homePage.login(userData, Page.acceptTermsAndConditionsPopup);
-			termsUrlParametersCorrect = tNCpopup.checkTermsAndConditionsUrlParameters();
-			tNCpopup.clickClose();
-			homePage = (HomePage)(HomePage)homePage.logout();
-			homePage = (HomePage) homePage.login(userData, Page.homePage);
+			homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+			AcceptTermsAndConditionsPopup tNCPopup = (AcceptTermsAndConditionsPopup) homePage.login(userData, Page.acceptTermsAndConditionsPopup);
+			termsUrlParametersCorrect = tNCPopup.checkTermsAndConditionsUrlParameters();
+			tNCPopup.clickClose();
+            NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 		}finally{
 			iMS.freezeNewTermsAndConditions();
 		}
@@ -323,7 +316,7 @@ public class LoginTest extends AbstractTest{
 	public void invalidUsernameLoginFromHeader(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("incorrect");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
 		boolean incorrectCredentialsErrorMessageDisplayed=loginPopup.validationErrorVisible();
 		boolean usernameDisplayed=(userData.getUsername()).equals(loginPopup.getUsernameText());
@@ -336,7 +329,7 @@ public class LoginTest extends AbstractTest{
 	public void invalidUsernameLoginFromLoginPopup(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("incorrect");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		loginPopup=(LoginPopup) loginPopup.login(userData, false, Page.loginPopup);
 		boolean incorrectCredentialsErrorMessageDisplayed=loginPopup.validationErrorVisible();
@@ -349,7 +342,7 @@ public class LoginTest extends AbstractTest{
 	public void invalidPasswordLoginFromHeader(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setPassword("incorrect");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=(LoginPopup) homePage.login(userData, false, Page.loginPopup);
 		boolean incorrectCredentialsErrorMessageDisplayed=loginPopup.validationErrorVisible();
 		boolean usernameDisplayed=(loginPopup.getUsernameText()).equals(userData.getUsername());
@@ -362,7 +355,7 @@ public class LoginTest extends AbstractTest{
 	public void invalidPasswordLoginFromLoginPopup(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setPassword("incorrect");
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		loginPopup=(LoginPopup) loginPopup.login(userData, false, Page.loginPopup);
 		boolean incorrectCredentialsErrorMessageDisplayed=loginPopup.validationErrorVisible();
@@ -376,22 +369,21 @@ public class LoginTest extends AbstractTest{
 	/*1. Username in header*/
 	@Test(groups = {"validation"})
 	public void usernameFieldValidationInHeader() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage.loggedOutHeader().validateUsername(usernameValidationRule);
   	}
 
 	/*2. Password in header*/
 	@Test(groups = {"validation"})
 	public void passwordFieldValidationInHeader() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage.loggedOutHeader().validatePassword(passwordValidationRule);
 	}
 
 	/*3. Username in login popup*/
 	@Test(groups = {"validation"})
 	public void usernameFieldValidationInLoginPopup() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup = homePage.navigateToLoginForm();
 		loginPopup.validateUsername(usernameValidationRule);
 	}
@@ -399,7 +391,7 @@ public class LoginTest extends AbstractTest{
 	/*4. Password in login popup*/
 	@Test(groups = {"validation"})
 	public void passwordFieldValidationInLoginPopup() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup = homePage.navigateToLoginForm();
 		loginPopup.validatePassword(passwordValidationRule);
 	}

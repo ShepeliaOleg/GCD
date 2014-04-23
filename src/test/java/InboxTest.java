@@ -1,3 +1,5 @@
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
@@ -12,6 +14,7 @@ import springConstructors.mail.MailService;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 
 /**
  * User: sergiich
@@ -41,20 +44,14 @@ public class InboxTest extends AbstractTest{
 	/*1. Portlet is displayed*/
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountInboxPage() {
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		homePage = (HomePage)homePage.login(userData);
-		MyAccountPage myAccountPage = homePage.navigateToMyAccount();
-		InboxPage inboxPage = myAccountPage.navigateToInbox();
+		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 	}
 
     /*2. Message is successfully sent and displayed in MailQ*/
 	@Test(groups = {"regression"})
 	public void checkMessageIsSentToMailQ(){
 		String emailText = emailSubjectValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		boolean isMessageReceived = mailQ.checkIsMessageAppearedAndLogout(emailText);
 		Assert.assertTrue(isMessageReceived) ;
@@ -63,36 +60,31 @@ public class InboxTest extends AbstractTest{
     /*3. Reply to the sent message form MailQ is successfully received*/
 	@Test(groups = {"regression"})
 	public void checkReplyIsReceivedFromMailQ(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = defaultUserData.getRandomUserData();
+        String emailText = emailSubjectValidationRule.generateValidString();
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		homePage = (HomePage)registrationPage.registerUser(userData);
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        PortalUtils.registerUser(userData);
+		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		mailQ.sendReplyAndLogout(emailText, emailText, true, true);
-		homePage = NavigationUtils.navigateToHome();
-		boolean isReplyReceived = homePage.navigateToInboxPage().waitForMessageToAppear();
+        inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
+		boolean isReplyReceived = inboxPage.waitForMessageToAppear();
 		Assert.assertTrue(isReplyReceived);
 	}
 
     /*4. New message from MailQ is successfully received.*/
 	@Test(groups = {"regression"})
 	public void checkMessageReceivedFromMailQ(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = defaultUserData.getRandomUserData();
+        String emailText = emailSubjectValidationRule.generateValidString();
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		registrationPage.registerUser(userData);
+        PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
-		homePage=NavigationUtils.navigateToHome();
-		InboxPage inboxPage=homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		boolean isMessageReceived=inboxPage.waitForMessageToAppear();
 		Assert.assertTrue(isMessageReceived) ;
 	}
@@ -100,9 +92,7 @@ public class InboxTest extends AbstractTest{
     /*5. Player views the list of sent messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfSentMessages(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		InboxPage inboxPage=homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		boolean isMessageListPresent=inboxPage.clickSentItems().isMessageListPresent();
 		Assert.assertTrue(isMessageListPresent) ;
 	}
@@ -110,9 +100,7 @@ public class InboxTest extends AbstractTest{
     /*6. Player views the list of received messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfReceivedMessages(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		InboxPage inboxPage=homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		boolean isMessageListPresent=inboxPage.isMessageListPresent();
 		Assert.assertTrue(isMessageListPresent) ;
 	}
@@ -121,9 +109,7 @@ public class InboxTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void sendMessageAndCheckItsPresenceInSentItems(){
 		String emailText = emailSubjectValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = (HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -139,12 +125,9 @@ public class InboxTest extends AbstractTest{
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		registrationPage.registerUser(userData);
+		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
-		homePage=NavigationUtils.navigateToHome();
-		InboxPage inboxPage=homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.waitForMessageToAppear();
 		ReceivedInboxMessagePopup receivedInboxMessagePopup=inboxPage.openFirstMessage();
 		Assert.assertTrue(emailText.equals(receivedInboxMessagePopup.getSubject()) && emailText.equals(receivedInboxMessagePopup.getMessage())) ;
@@ -153,9 +136,8 @@ public class InboxTest extends AbstractTest{
     /*9. Player deletes a sent message from the list*/
 	@Test(groups = {"regression"})
 	public void deleteSentMessageFromListInSentItems(){
-		UserData userData = defaultUserData.getRegisteredUserData();
 		String emailText = emailSubjectValidationRule.generateValidString();
-		InboxPage inboxPage = NavigationUtils.navigateToPortal(true).login(userData).navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -167,9 +149,8 @@ public class InboxTest extends AbstractTest{
     /*10. Player deletes a sent message from details popup*/
 	@Test(groups = {"regression"})
 	public void deleteSentMessageFromViewMessagePopupInSentItems(){
-		UserData userData = defaultUserData.getRegisteredUserData();
 		String emailText = emailSubjectValidationRule.generateValidString();
-		InboxPage inboxPage = NavigationUtils.navigateToPortal(true).login(userData).navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -187,12 +168,9 @@ public class InboxTest extends AbstractTest{
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		homePage = (HomePage)registrationPage.registerUser(userData);
+		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
-		homePage = NavigationUtils.navigateToHome();
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		if(inboxPage.waitForMessageToAppear()){
 			inboxPage = new InboxPage();
 			inboxPage = inboxPage.deleteFirstMessage();
@@ -209,12 +187,9 @@ public class InboxTest extends AbstractTest{
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		registrationPage.registerUser(userData);
+		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
-		homePage = NavigationUtils.navigateToHome();
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		if(inboxPage.waitForMessageToAppear()){
 			inboxPage = new InboxPage();
 			inboxPage = inboxPage.openFirstMessage().clickDeleteButton();
@@ -226,9 +201,7 @@ public class InboxTest extends AbstractTest{
     /*13. Pagination on Inbox portlet*/
 	@Test(groups = {"regression"})
 	public void checkPaginationWorksCorrectly(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
-		InboxPage inboxPage=homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		SentItemsPage sentItemsPage=inboxPage.clickSentItems();
 		String firstPageSubject=sentItemsPage.getFirstMessageSubject();
 		sentItemsPage=sentItemsPage.clickNextPage();
@@ -246,10 +219,8 @@ public class InboxTest extends AbstractTest{
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		homePage = (HomePage) registrationPage.registerUser(userData);
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+		PortalUtils.registerUser(userData);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
 		mailService.navigateToInbox(username).waitForEmail();
@@ -264,12 +235,9 @@ public class InboxTest extends AbstractTest{
 		String username = userData.getUsername();
 		String email = mailService.generateEmail(username);
 		userData.setEmail(email);
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		registrationPage.registerUser(userData);
+        PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, false, true);
-		homePage = NavigationUtils.navigateToHome();
-		InboxPage inboxPage = homePage.navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		if(inboxPage.waitForMessageToAppear()){
 			inboxPage = new InboxPage();
 			ReceivedInboxMessagePopup receivedInboxMessagePopup = inboxPage.openFirstMessage();
@@ -285,8 +253,7 @@ public class InboxTest extends AbstractTest{
     /*1. Empty subject and body*/
 	@Test(groups = {"regression"})
 	public void sendEmptyMessageAndCheckValidationAppears(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		InboxPage inboxPage=NavigationUtils.navigateToPortal(true).login(userData).navigateToInboxPage();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
 		SendMessagePopup sendMessagePopup=inboxPage.clickSendMessage();
 		Assert.assertTrue(sendMessagePopup.sendEmptyMessage().isErrorPresent());
 	}

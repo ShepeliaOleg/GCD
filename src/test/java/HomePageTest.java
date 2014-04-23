@@ -1,3 +1,5 @@
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
@@ -21,16 +23,12 @@ public class HomePageTest extends AbstractTest{
 
 	@Test(groups = {"smoke"})
 	public void openHomepageAndVerifyNavigation(){
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
+		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(ConfiguredPages.home);
 		NavigationPanel navigationPanel= homePage.navigationPanel();
 	}
 
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountBalancePage() {
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		homePage = (HomePage)homePage.login(userData);
-		MyAccountPage myAccountPage = homePage.navigateToMyAccount();
-		BalancePage balancePortlet = myAccountPage.navigateToBalancePortlet();
+        BalancePage balancePortlet = (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance);
 	}
 }

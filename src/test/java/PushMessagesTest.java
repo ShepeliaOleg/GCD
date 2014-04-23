@@ -9,6 +9,7 @@ import pageObjects.HomePage;
 import pageObjects.account.ChangePasswordPopup;
 import pageObjects.account.ChangedPasswordPopup;
 import pageObjects.account.ForceLogoutPopup;
+import pageObjects.base.AbstractPage;
 import pageObjects.bonus.*;
 import pageObjects.popups.WelcomePopup;
 import springConstructors.IMS;
@@ -16,6 +17,7 @@ import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.WebDriverUtils;
 
 /**
@@ -59,7 +61,7 @@ public class PushMessagesTest extends AbstractTest{
         HomePage homePage;
 		UserData userData = defaultUserData.getRegisteredUserData();
 		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
-		iMS.sendPushMessage(userData, Page.logout);
+		iMS.sendPushMessage(Page.logout);
 		try{
 			WebDriverUtils.waitForElement(ForceLogoutPopup.LOGOUT_POPUP, 300);
 		}catch(RuntimeException e){
@@ -76,10 +78,11 @@ public class PushMessagesTest extends AbstractTest{
 		String imsPass = passwordValidationRule.generateValidString();
 		String newPass = passwordValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData).logout();
+        PortalUtils.registerUser();
 		userData.setPassword(imsPass);
 		iMS.sendPushMessage(userData, Page.changePasswordPopup);
-		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup)NavigationUtils.navigateToPortal(true).login(userData, Page.changePasswordPopup);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		userData.setPassword(newPass);
 		ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillForm(imsPass, userData.getPassword());
 		Assert.assertTrue(changedPasswordPopup.successfulMessageAppeared());
@@ -88,10 +91,9 @@ public class PushMessagesTest extends AbstractTest{
 	/*6. Update balance after receiving a bonus */
 	@Test(groups = {"regression"})
 	public void updateBalanceBonus(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+		HomePage homePage= (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
 		String balance = homePage.getBalance();
-		iMS.sendPushMessage(userData, Page.okBonus, BONUS_AMOUNT);
+		iMS.sendPushMessage(Page.okBonus, BONUS_AMOUNT);
 		NavigationUtils.closeAllPopups(Page.homePage);
 		Assert.assertTrue(homePage.compareBalances(balance)==Integer.parseInt(BONUS_AMOUNT));
 	}
@@ -99,12 +101,11 @@ public class PushMessagesTest extends AbstractTest{
 	/*7. Push messages for bonus opt in/out */
 	@Test(groups = {"regression"})
 	public void pushMessageOptIn(){
-		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData);
-		OptInPopup optInPopup = homePage.navigateToBonusPage().clickOptIn();
+		PortalUtils.registerUser();
+        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
+		OptInPopup optInPopup = bonusPage.clickOptIn();
 		optInPopup.clickOptIn().closePopup();
-		BonusPage bonusPage = new BonusPage();
-		OptOutPopup optOutPopup = bonusPage.clickOptOut();
+		OptOutPopup optOutPopup = bonusPage.clickOptOutBonus();
 		optOutPopup.clickOptOut().closePopup();
 	}
 
@@ -123,8 +124,7 @@ public class PushMessagesTest extends AbstractTest{
 	/*9. Push message for free bonus*/
 	@Test(groups = {"regression"})
 	public void pushMessageFreeBonus(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
 		String balance = homePage.getBalance();
 		FreeBonusPopup freeBonusPopup = homePage.navigateToBonusPage().clickFreeBonus();
 		OkBonusPopup okBonusPopup = freeBonusPopup.clickFreeBonus();
@@ -135,8 +135,7 @@ public class PushMessagesTest extends AbstractTest{
 	/*10. Push message for promo code redemption*/
 	@Test(groups = {"regression"})
 	public void pushMessagePromoCode(){
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
 		String balance = homePage.getBalance();
 		OkBonusPopup okBonusPopup = homePage.navigateToBonusPage().submitCode();
 		okBonusPopup.close();
@@ -147,10 +146,10 @@ public class PushMessagesTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void accept(){
 		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData);
+		PortalUtils.registerUser(userData);
 		iMS.sendPushMessage(userData, Page.acceptDeclineBonus, BONUS_AMOUNT);
 		AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-		homePage = acceptDeclineBonusPopup.accept();
+		HomePage homePage = acceptDeclineBonusPopup.accept();
 		Assert.assertTrue(homePage.getBalance().equals("£" + BONUS_AMOUNT+".00"));
 	}
 
@@ -158,10 +157,10 @@ public class PushMessagesTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void decline(){
 		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData);
+        PortalUtils.registerUser(userData);
 		iMS.sendPushMessage(userData, Page.acceptDeclineBonus, BONUS_AMOUNT);
 		AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-		homePage = acceptDeclineBonusPopup.decline();
+		HomePage homePage = acceptDeclineBonusPopup.decline();
 		Assert.assertTrue(homePage.getBalance().equals("£0.00"));
 	}
 
@@ -169,23 +168,24 @@ public class PushMessagesTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void okMessage(){
 		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage=NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData);
+        PortalUtils.registerUser(userData);
 		iMS.sendPushMessage(userData, Page.okBonus, BONUS_AMOUNT);
 		OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
 		okBonusPopup.close();
-		Assert.assertTrue(homePage.getBalance().equals("£" + BONUS_AMOUNT+".00"));
+		Assert.assertTrue(new AbstractPage().getBalance().equals("£" + BONUS_AMOUNT + ".00"));
 	}
 
     /*14. Login message disabled */
 	@Test(groups = {"regression"})
 	public void loginMessageDisabled(){
+        HomePage homePage;
 		UserData userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
-		HomePage homePage=NavigationUtils.navigateToPortal(true).navigateToRegistration().registerUser(userData);
-		homePage.logout();
+        PortalUtils.registerUser(userData);
+		new AbstractPage().logout();
 		try{
 			iMS.freezeWelcomeMessages();
-			homePage=(HomePage)NavigationUtils.navigateToPortal(true).login(userData);
+			homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 			homePage.isLoggedIn();
 		}
 		finally{

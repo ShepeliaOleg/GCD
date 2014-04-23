@@ -1,4 +1,6 @@
+import enums.ConfiguredPages;
 import enums.LogCategory;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
@@ -13,6 +15,7 @@ import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.logs.Log;
 import utils.logs.LogEntry;
@@ -62,41 +65,24 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/* 1. Portlet is displayed */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-		UserData userData = defaultUserData.getRegisteredUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		homePage = (HomePage)homePage.login(userData);
-		MyAccountPage myAccountPage = homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage = myAccountPage.navigateToChangeMyDetails();
+		ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 	}
 
 	/* 2. Correct User Details are displayed by default */
 	@Test(groups = {"regression"})
 	public void userInfoShownCorrectly(){
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		// Check if player data equals to that used during registration
-		boolean detailsDefault=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		// If user data is the same player registered with then the test returns PASS
-		Assert.assertTrue(detailsDefault);
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+		ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+		Assert.assertTrue(changeMyDetailsPage.detailsAreEqualsTo(userData));
 	}
 
 	/* 3. Player updates his details with valid values and new values are saved */
 	@Test(groups = {"regression"})
 	public void userInfoEditableSavedCorrectly(){
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		//Generate new player details and fill in UMD fields with new data
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
@@ -111,43 +97,27 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
 	@Test(groups = {"regression"})
 	public void editUserInfoAndCheckIfSavedAfterLogout(){
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//Change player details
-		UserData userData2 = defaultUserData.getRandomUserData();
-		userData2.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData2);
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+		userData = defaultUserData.getRandomUserData();
+		userData.setEmail(emailValidationRule.generateValidString());
+		changeMyDetailsPage.editDetails(userData);
 		// Check that details have been changed
-		boolean detailsUpdatedSuccessfully=changeMyDetailsPage.detailsAreEqualsTo(userData2);
+		boolean detailsUpdatedSuccessfully=changeMyDetailsPage.detailsAreEqualsTo(userData);
 		//Check that success message appeared
 		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
 		// Player logs out and logs in again
-		homePage=NavigationUtils.navigateToHome();
-		homePage=(HomePage)homePage.logout();
-		homePage=(HomePage)homePage.login(userData);
-		myAccountPage=homePage.navigateToMyAccount();
-		changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		boolean detailsKeptAfterRelogin =changeMyDetailsPage.detailsAreEqualsTo(userData2);
+        changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
+		boolean detailsKeptAfterRelogin =changeMyDetailsPage.detailsAreEqualsTo(userData);
 		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && detailsKeptAfterRelogin);
 	}
 
 	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
 	@Test(groups = {"regression"})
 	public void userInfoNotChangedIfNoChangesSaved(){
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData();
-		homePage=(HomePage)homePage.login(userData);
-		// navigate to Change My Details Page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		// Click Save button without applying any changes
+        UserData userData=defaultUserData.getRegisteredUserData();
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
 		changeMyDetailsPage.submitChanges();
 		// Check that success message is displayed
 		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
@@ -160,15 +130,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*6. Player performs several consecutive updates of UMD portlet */
 	@Test(groups = {"regression"})
 	public void userInfoChangedDuringConsecutiveUpdates() {
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//Change player details for the 1st time
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
@@ -176,7 +140,6 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		boolean detailsChanged1=changeMyDetailsPage.detailsAreEqualsTo(userData);
 		//Check that success message appeared
 		boolean messageAppeared1=changeMyDetailsPage.isVisibleConfirmationMessage();
-
 		//Change player details for the second time
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
@@ -191,8 +154,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*7. Logs*/
 	@Test(groups = {"regression"})
 	public void logsChangeDetails(){
-		LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
-		UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=defaultUserData.getRandomUserData();
+        LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
 		String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
 				"KV(1, playtech81001)",
 				"KV(2, "+userData.getUsername()+")",
@@ -202,10 +165,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 				"KV(24, "+userData.getLastName()+")",
 				"KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
 				"KV(34, "+userData.getPostCode()+")"};
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		homePage=registrationPage.registerUser(userData);
-		ChangeMyDetailsPage changeMyDetailsPage = homePage.navigateToMyAccount().navigateToChangeMyDetails();
+		PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.editDetails(userData);
 		Log log = LogUtils.getCurrentLogs(logCategories);
 		log.doResponsesContainErrors();
@@ -216,15 +177,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*8. IMS player details are updated*/
 	@Test(groups = {"regression"})
 	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//Change player details
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		String username = userData.getUsername();
 		userData = defaultUserData.getRandomUserData();
 		userData.setUsername(username);
@@ -244,15 +199,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
     /*1. Email and confirmation do not match */
 	@Test(groups = {"regression"})
 	public void errorTooltipWhenEmailAndConfirmationDoNotMatch () {
-		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//Change player details
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		String email = emailValidationRule.generateValidString();
 		String emailConfirmation = email.concat("a");
 		changeMyDetailsPage.editEmail(email);
@@ -270,14 +219,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	@Test(groups = {"validation"})
 	public void validationRequiredFieldsEmpty(){
 		//New user registration
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage=homePage.navigateToRegistration();
-		UserData userData=defaultUserData.getRandomUserData();
-		homePage=registrationPage.registerUser(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//Try to submit UMD form with empty required fields
+        UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData.setHouse("");
 		userData.setAddress("");
 		userData.setAddress2("");
@@ -296,98 +240,49 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*2. Address field validation*/
 	@Test(groups = {"validation"})
 	public void addressFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validateAddress(addressValidationRule);
 	}
 
 	/*3. City field validation*/
 	@Test(groups = {"validation"})
 	public void cityFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validateCity(cityValidationRule);
 	}
 
 	/*4. Post Code field validation*/
 	@Test(groups = {"validation"})
 	public void postCodeFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validatePostcode(postcodeValidationRule);
 	}
 
 	/*5. Phone field validation*/
 	@Test(groups = {"validation"})
 	public void phoneFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validatePhone(phoneValidationRule);
 	}
 
 	/*6. Mobile Field validation*/
 	@Test(groups = {"validation"})
 	public void mobileFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validateMobile(phoneValidationRule);
 	}
 
 	/*7. Email field validation*/
 	@Test(groups = {"validation"})
 	public void emailFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validateEmail(emailValidationRule);
 	}
 
 	/*8. Email Verification field validation*/
 	@Test(groups = {"validation"})
 	public void verificationEmailFieldValidation() {
-		//Player logs in
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
-		homePage=(HomePage)homePage.login(userData);
-		//Navigate to Change My Details page
-		MyAccountPage myAccountPage=homePage.navigateToMyAccount();
-		ChangeMyDetailsPage changeMyDetailsPage=myAccountPage.navigateToChangeMyDetails();
-		//validation
+        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails);
 		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
 	}
 

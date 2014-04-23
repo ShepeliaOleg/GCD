@@ -1,10 +1,13 @@
+import enums.ConfiguredPages;
 import enums.LogCategory;
 import enums.Page;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.base.AbstractPage;
 import pageObjects.popups.AfterRegistrationPopup;
 import pageObjects.popups.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
@@ -14,6 +17,7 @@ import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.logs.Log;
@@ -99,17 +103,15 @@ public class RegistrationTest extends AbstractTest{
 	/*1. Valid user registration*/
 	@Test(groups = {"smoke"})
 	public void validUserRegistration() {
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
-		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage = registrationPage.registerUser(userData);
-		Assert.assertEquals(homePage.isLoggedIn(), true);
+        PortalUtils.registerUser();
+		Assert.assertTrue(new AbstractPage().isLoggedIn());
 	}
 
 	/*#2. Registration with receive bonuses check box checked*/
 	@Test(groups = {"regression"})
 	public void receiveBonusesIsCheckedInIMS(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		HomePage homePage=(HomePage) registrationPage.registerUser(userData, true);
 		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
 		Assert.assertTrue(receiveBonusesCheckedInIMS);
@@ -119,7 +121,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void receiveBonusesIsNotCheckedInIMS(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData, false);
 		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
 		Assert.assertTrue(!receiveBonusesNotCheckedInIMS);
@@ -129,7 +131,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void registrationWithBonusCoupon(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage)registrationPage.registerUser(userData, false, true);
 		boolean bonusesPresent=homePage.getBalance().equals("£20.00") || homePage.getBalance().equals("£ 20.00");
 		Assert.assertTrue(bonusesPresent);
@@ -139,7 +141,7 @@ public class RegistrationTest extends AbstractTest{
 
 	public void registrationWithOutBonusCoupon(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage) registrationPage.registerUser(userData, false, false);
 		boolean bonusesNotPresent=homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
 		Assert.assertTrue(bonusesNotPresent);
@@ -148,7 +150,7 @@ public class RegistrationTest extends AbstractTest{
     /*#6. Player is registered with currency selected*/
 	@Test(groups = {"regression"})
 	public void validHeaderUnitBalance(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		// String defaultCurrencyInRegistrationForm = registrationPage.getCurrency();
 		UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage=(HomePage)registrationPage.registerUser(userData);
@@ -159,7 +161,7 @@ public class RegistrationTest extends AbstractTest{
     /*#7. After registration web content*/
 	@Test(groups = {"regression"})
 	public void afterRegistrationWebContent(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData userData=defaultUserData.getRandomUserData();
 		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
 	}
@@ -168,7 +170,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void afterRegistrationRedirect(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage)registrationPage.registerUser(userData);
 		String actualUrl=WebDriverUtils.getCurrentUrl();
 		Assert.assertTrue(actualUrl.endsWith("/afterreg"));
@@ -177,7 +179,7 @@ public class RegistrationTest extends AbstractTest{
     /*#11. The list of supported countries is correct*/
 	@Test(groups = {"regression"})
 	public void countryList(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCountryList=registrationPage.getCountryList();
 		Collection<String> diff=RandomUtils.getDiffElementsFromLists(actualCountryList, defaults.getCountryList());
 		boolean listsEquals=diff.isEmpty();
@@ -187,7 +189,7 @@ public class RegistrationTest extends AbstractTest{
     /*#12. The list of supported currencies is correct*/
 	@Test(groups = {"regression"})
 	public void currencyList(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCurrencyList=registrationPage.getCurrencyList();
 		Collection<String> diff=RandomUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
 		boolean listsEquals=diff.isEmpty();
@@ -197,17 +199,14 @@ public class RegistrationTest extends AbstractTest{
     /*#13. T&C web content is shown when clicking on T&C link*/
 	@Test(groups = {"regression"})
 	public void openTermsAndConditionsPopup(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
 	}
 
     /*#14. 18+ web content is shown when clicking on 18+ link*/
 	@Test(groups = {"regression"})
 	public void adultContentIsShown() {
-		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		userData.setUsername(usernameValidationRule.generateValidString());
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Assert.assertTrue(registrationPage.isAdultContentPresent());
 	}
 
@@ -225,7 +224,7 @@ public class RegistrationTest extends AbstractTest{
 				"KV(24, "+userData.getLastName()+")",
 				"KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
 				"KV(34, "+userData.getPostCode()+")"};
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData);
 		Log log = LogUtils.getCurrentLogs(logCategories);
 		log.doResponsesContainErrors();
@@ -243,7 +242,7 @@ public class RegistrationTest extends AbstractTest{
 				"firstName="+userData.getFirstName(),
 				"lastName="+userData.getLastName(),
 				"email="+userData.getEmail()};
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData);
 		Log log = LogUtils.getCurrentLogs(logCategories);
 		log.doResponsesContainErrors();
@@ -255,25 +254,16 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData);
 		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
 		Assert.assertTrue(registrationValuesAreCorrect);
 	}
-
-    /*#18. Registration with unique username is possible*/
-	@Test(groups = {"regression"})
-	public void verifyRegistrationWithUniqueUsername() {
-		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
-		homePage = (HomePage) registrationPage.registerUser(userData);
-	}
-
+    
     /*#19. All required fields are marked with asterisks*/
 	@Test(groups = {"regression"})
 	public void requiredFieldsLabelsMarkedWithStar(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.labelsRequiredMarkingCorrect();
 		Assert.assertTrue(checkboxTermsAndConditionsValidationErrorVisible);
 	}
@@ -281,7 +271,7 @@ public class RegistrationTest extends AbstractTest{
     /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
 	@Test(groups = {"regression"})
 	public void defaultCheckboxesState(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		boolean receiveBonusesChecked=registrationPage.getCheckboxStateReceiveBonuses();
 		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
 		Assert.assertTrue((receiveBonusesChecked == true) && (termsAndConditionsChecked == false));
@@ -290,7 +280,7 @@ public class RegistrationTest extends AbstractTest{
     /*#22. Country - country phone prefix mapping*/
 	@Test(groups = {"regression"})
 	public void countryPhonePrefix(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> countryList = defaults.getCountryList();
 		for (String country:countryList) {
 			registrationPage.fillCountry(country);
@@ -311,8 +301,7 @@ public class RegistrationTest extends AbstractTest{
     /*#23. Default selected country*/
 	@Test(groups = {"regression"})
 	public void defaultCountry(){
-		HomePage homePage=NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		String defaultCountryName = registrationPage.getCountry();
 		boolean defaultCountrySelected = defaultCountryName.equals(defaults.getDefaultCountry());
 		boolean fillFieldsVisible = registrationPage.getFillFieldsButtonVisibleState();
@@ -322,8 +311,7 @@ public class RegistrationTest extends AbstractTest{
     /*#24. Change country from UK to any and selecting UK again Fill all fields element is displayed*/
 	@Test(groups = {"regression"})
 	public void fillFieldsAppearDisappear(){
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		// stage 1
 		boolean fillFieldsVisibleStage1 = registrationPage.getFillFieldsButtonVisibleState();
 		String randomCountry;
@@ -344,8 +332,7 @@ public class RegistrationTest extends AbstractTest{
     /*#25. Enter zipcode - City/Address1/Address2/House number updated on Fill all fields click and are editable*/
 	@Test(groups = {"regression"})
 	public void zipcodeFillsAddress(){
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		List<String> fullAddressActual = registrationPage.fillAutoByPostCode("SE17RL");
 		List<String> fullAddressExpected = Arrays.asList("London", "35-41 Lower Marsh", "", "35-41");
 		boolean autofilledFieldsAreEditable = registrationPage.autofilledFieldsAreEditable();
@@ -367,7 +354,7 @@ public class RegistrationTest extends AbstractTest{
     /*#1. Try to use already existing username*/
 	@Test(groups = {"regression"})
 	public void alreadyUsedUsername(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData generatedUserData=defaultUserData.getRandomUserData();
 		UserData registeredUserData=defaultUserData.getRegisteredUserData();
 		generatedUserData.setUsername(registeredUserData.getUsername());
@@ -380,7 +367,7 @@ public class RegistrationTest extends AbstractTest{
     /*#2. Try to use already used email*/
 	@Test(groups = {"regression"})
 	public void alreadyUsedEmail(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		UserData generatedUserData=defaultUserData.getRandomUserData();
 		generatedUserData.setEmail("playtech@spamavert.com");
 		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
@@ -395,8 +382,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithInvalidBonusCoupon() {
 		String invalidBonusCoupon = searchValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage = (RegistrationPage) registrationPage.registerUser(userData, invalidBonusCoupon);
 		boolean bonusErrorPresent = registrationPage.isBonusCodeErrorPresent();
 		Assert.assertTrue(bonusErrorPresent);
@@ -406,7 +392,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void emailDoNotMatch(){
 		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.fillRegistrationForm(generatedUserData);
 		registrationPage.fillConfirmEmail("incorrect@playtech.com");
 		registrationPage.submit();
@@ -419,7 +405,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void passwordDoNotMatch(){
 		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.fillRegistrationForm(generatedUserData);
 		registrationPage.fillConfirmPassword("incorrect");
 		registrationPage.submit();
@@ -432,7 +418,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void submitWithUncheckedTermsAndConditions(){
 		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
 		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.checkboxTermsAndConditionsValidationErrorVisible();
 		Assert.assertTrue(checkboxTermsAndConditionsValidationErrorVisible);
@@ -441,7 +427,7 @@ public class RegistrationTest extends AbstractTest{
     /*VALIDATION*/
 	@Test(groups = {"validation"})
 	public void validationRequiredFieldsEmpty(){
-		RegistrationPage registrationPage = NavigationUtils.navigateToRegistration(true);
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.submit();
 		int validationErrorsCount=WebDriverUtils.getXpathCount(RegistrationPage.VALIDATION_ERROR_XP);
 		Assert.assertTrue(validationErrorsCount >= 17);
@@ -449,127 +435,109 @@ public class RegistrationTest extends AbstractTest{
 
 	@Test(groups = {"validation"})
 	public void firstnameFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateFirstname(nameValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void lastnameFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateLastname(nameValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void emailFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateEmail(emailValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void verificationEmailFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateVerificationEmail(emailValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void cityFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateCity(cityValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void address1FieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateAddress1(addressValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void address2FieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateAddress2(addressValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void houseFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateHouse(houseValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void postcodeFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void phoneFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePhone(phoneValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void phoneCountryCodeFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePhoneCountryCode(countryPhoneCodeValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void mobileFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateMobile(phoneValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void mobileCountryCodeFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateMobileCountryCode(countryPhoneCodeValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void usernameFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateUsername(usernameValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void passwordFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePassword(passwordValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void verificationPasswordFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateVerificationPassword(passwordValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void answerFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToHome();
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateAnswer(answerValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void bonusCodeFieldValidation() {
-		HomePage homePage = NavigationUtils.navigateToPortal(true);
-		RegistrationPage registrationPage = homePage.navigateToRegistration();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateBonusCode(bonusCodeValidationRule);
 	}
 }

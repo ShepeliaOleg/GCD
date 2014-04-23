@@ -5,16 +5,17 @@ import enums.Page;
 import enums.PlayerCondition;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
-import pageObjects.account.ChangePasswordPopup;
-import pageObjects.account.LoginPopup;
+import pageObjects.account.*;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import pageObjects.base.AbstractPopup;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
+import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.inbox.InboxPage;
+import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.popups.*;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
@@ -32,12 +33,11 @@ public class NavigationUtils extends WebDriverObject{
     private static final int POPUP_CHECK_RETRIES = 10;
     private static final int POPUP_WAIT_TIMEOUT = 4;
 
-	public static AbstractPage navigateToPortal(){
-        navigateToPortal(PlayerCondition.any);
-		return new AbstractPage();
-	}
+    public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
+        return navigateToPage(PlayerCondition.any, configuredPages, null);
+    }
 
-    public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
+	public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
         if (condition.equals(PlayerCondition.loggedIn)){
             PortalUtils.loginUser();
         }
@@ -47,9 +47,12 @@ public class NavigationUtils extends WebDriverObject{
     public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         navigateToPortal(condition, configuredPages, userData);
         switch (configuredPages){
+            case balance:                                       return new BalancePage();
             case bingoLobbyFeed:
-            case bingoScheduleFeed:return new BingoSchedulePage();
-            case bonusPage:return new InboxPage();
+            case bingoScheduleFeed:                             return new BingoSchedulePage();
+            case bonusPage:                                     return new BonusPage();
+            case changeMyDetails:                               return new ChangeMyDetailsPage();
+            case changeMyPassword:                              return new ChangeMyPasswordPage();
             case gamesFavourites:
             case gamesList:
             case gamesMinimum:
@@ -63,17 +66,16 @@ public class NavigationUtils extends WebDriverObject{
             case gamesStyleTwo:
             case gamesStyleThree:
             case gamesStyleFour:
-            case gamesToFit:return new GamesPortletPage();
-            case inbox:return new InboxPage();
-            case internalTags:return new InternalTagsPage();
-            case register: return new RegistrationPage();
-            case responsibleGaming: return new ResponsibleGamingPage();
+            case gamesToFit:                                    return new GamesPortletPage();
+            case home:                                          return new HomePage();
+            case inbox:                                         return new InboxPage();
+            case internalTags:                                  return new InternalTagsPage();
+            case liveTableFinder:                               return new LiveCasinoPage();
+            case register:                                      return new RegistrationPage();
+            case referAFriend:                                  return new ReferAFriendPage();
+            case responsibleGaming:                             return new ResponsibleGamingPage();
             default: throw new RuntimeException("Unexpected input in navigateToPage method");
         }
-    }
-
-    private static void navigateToPortal(PlayerCondition condition){
-        navigateToPortal(condition, null, null);
     }
 
     private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){

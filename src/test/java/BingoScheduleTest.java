@@ -24,13 +24,13 @@ public class BingoScheduleTest extends AbstractTest{
 	/* 1. Portlet is available */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayed() {
-		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bingoLobbyFeed);
+		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
 	}
 
 	/* 2. Proper columns are displayed */
 	@Test(groups = {"regression"})
 	public void columns() {
-		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bingoLobbyFeed);
+		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
 		Integer actualColumnsNumber = bingoSchedulePage.getColumnsNumber();
 		Integer expectedColumnsNumber = bingoScheduleData.getColumnsNumber();
 		Assert.assertTrue(actualColumnsNumber.equals(expectedColumnsNumber));

@@ -5,9 +5,13 @@ package enums;
  * Date: 8/16/13
  */
 public enum ConfiguredPages{
+
+    balance("myaccount1/balance"),
     bingoLobbyFeed("bingo-schedule-lobby"),
     bingoScheduleFeed("bingo-schedule-schedule"),
     bonusPage("bonus"),
+    changeMyDetails("myaccount1/update-my-details"),
+    changeMyPassword("myaccount1/change-my-password"),
     gamesList("list"),
 	gamesStyleOne("style1_slider"),
 	gamesStyleTwo("style2"),
@@ -23,10 +27,12 @@ public enum ConfiguredPages{
 	gamesNavigationStyleCategoryTabsRefineByTop ("navigation-styles/category-tabs-refine-by-top"),
 	gamesNavigationStyleCategoryTabsRefineByLeft ("navigation-styles/category-tabs-refine-by-left"),
     home("home"),
-	internalTags("internaltags"),
     inbox("myaccount1/inbox"),
+    internalTags("internaltags"),
+    liveTableFinder("live-casino"),
     myAccount("myaccount1"),
 	register("register"),
+    referAFriend("myaccount1/refer-a-friend"),
     responsibleGaming("myaccount1/responsible-gaming");
 
     private final String name;

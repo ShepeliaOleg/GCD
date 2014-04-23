@@ -109,6 +109,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void click(String xpath){
+        waitForElement(xpath);
 		webDriver.findElement(By.xpath(xpath)).click();
 	}
 
