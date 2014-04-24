@@ -13,6 +13,7 @@ import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
@@ -22,11 +23,6 @@ import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
 import utils.logs.LogUtils;
-
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 
 public class NavigationUtils extends WebDriverObject{
 
@@ -54,6 +50,7 @@ public class NavigationUtils extends WebDriverObject{
             case bonusPage:                                     return new BonusPage();
             case changeMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangeMyPasswordPage();
+            case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
             case gamesFavourites:
             case gamesList:
