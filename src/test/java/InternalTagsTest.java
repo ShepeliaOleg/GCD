@@ -40,7 +40,7 @@ public class InternalTagsTest extends AbstractTest{
     /*2. Internal tags availability on web content portlet*/
 	@Test(groups = {"regression"})
 	public void checkWorkingInternalTagsOnWebContentPortlet(){
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
 		HashMap imsData = iMS.getInternalTagsData();
         InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
         internalTagsPage.compareTags(true, imsData);
@@ -49,7 +49,7 @@ public class InternalTagsTest extends AbstractTest{
     /*3. Internal tags availability on multiview portlet*/
 	@Test(groups = {"regression"})
 	public void checkWorkingInternalTagsOnMultiviewPortlet(){
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
 		HashMap imsData = iMS.getInternalTagsData();
         InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
         internalTagsPage.compareTags(false, imsData);
@@ -59,7 +59,7 @@ public class InternalTagsTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void validBalanceCashier(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		BalancePage balancePortlet= (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance);
+		BalancePage balancePortlet= (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance, userData);
 		Assert.assertTrue(balancePortlet.BalancesAreEqualTo(userData));
 	}
 }

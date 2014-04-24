@@ -4,6 +4,7 @@ import enums.ConfiguredPages;
 import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
@@ -31,10 +32,6 @@ import utils.WebDriverUtils;
 public class AbstractPage extends AbstractPageObject{
 
 	private String mainWindowHandle;
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
 	public AbstractPage(String[] clickableBys, String[] invisibleBys){
 		super(clickableBys, invisibleBys);
@@ -117,9 +114,9 @@ public class AbstractPage extends AbstractPageObject{
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
 
-    public AbstractPage login(){
-        return (AbstractPage) this.login(defaultUserData.getRegisteredUserData(), Page.homePage);
-    }
+//    public AbstractPage login(){
+//        return (AbstractPage) this.login(defaultUserData.getRegisteredUserData(), Page.homePage);
+//    }
 
 	public AbstractPage login(UserData userData){
 		return (AbstractPage) this.login(userData, Page.homePage);

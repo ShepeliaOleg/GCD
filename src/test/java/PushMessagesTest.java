@@ -59,8 +59,7 @@ public class PushMessagesTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void pushLogout(){
         HomePage homePage;
-		UserData userData = defaultUserData.getRegisteredUserData();
-		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
 		iMS.sendPushMessage(Page.logout);
 		try{
 			WebDriverUtils.waitForElement(ForceLogoutPopup.LOGOUT_POPUP, 300);
@@ -78,7 +77,7 @@ public class PushMessagesTest extends AbstractTest{
 		String imsPass = passwordValidationRule.generateValidString();
 		String newPass = passwordValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser();
+        PortalUtils.registerUser(userData);
 		userData.setPassword(imsPass);
 		iMS.sendPushMessage(userData, Page.changePasswordPopup);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
@@ -91,7 +90,8 @@ public class PushMessagesTest extends AbstractTest{
 	/*6. Update balance after receiving a bonus */
 	@Test(groups = {"regression"})
 	public void updateBalanceBonus(){
-		HomePage homePage= (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+        UserData userData = defaultUserData.getRegisteredUserData();
+        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 		String balance = homePage.getBalance();
 		iMS.sendPushMessage(Page.okBonus, BONUS_AMOUNT);
 		NavigationUtils.closeAllPopups(Page.homePage);
@@ -101,7 +101,8 @@ public class PushMessagesTest extends AbstractTest{
 	/*7. Push messages for bonus opt in/out */
 	@Test(groups = {"regression"})
 	public void pushMessageOptIn(){
-		PortalUtils.registerUser();
+        UserData userData = defaultUserData.getRegisteredUserData();
+		PortalUtils.registerUser(userData);
         BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 		OptInPopup optInPopup = bonusPage.clickOptIn();
 		optInPopup.clickOptIn().closePopup();
@@ -124,7 +125,8 @@ public class PushMessagesTest extends AbstractTest{
 	/*9. Push message for free bonus*/
 	@Test(groups = {"regression"})
 	public void pushMessageFreeBonus(){
-		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+        UserData userData = defaultUserData.getRegisteredUserData();
+		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 		String balance = homePage.getBalance();
         BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 		FreeBonusPopup freeBonusPopup = bonusPage.clickFreeBonus();
@@ -136,7 +138,8 @@ public class PushMessagesTest extends AbstractTest{
 	/*10. Push message for promo code redemption*/
 	@Test(groups = {"regression"})
 	public void pushMessagePromoCode(){
-        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home);
+        UserData userData = defaultUserData.getRegisteredUserData();
+        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 		String balance = homePage.getBalance();
         BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 		OkBonusPopup okBonusPopup = bonusPage.submitCode();

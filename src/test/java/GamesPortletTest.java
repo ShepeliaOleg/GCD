@@ -1575,7 +1575,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.1. Style 1 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1591,7 +1591,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.2. Item View Style 2 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1607,7 +1607,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.3. Item View Style 3 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1628,7 +1628,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*14.4. Item View Style 4 - play, demo, view game info*/
 	@Test(groups = {"regression"})
 	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 		boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1658,7 +1658,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*15.3. Navigation types - To Fit*/
 	@Test(groups = {"regression"})
 	public void toFitModeIsDisplayedAndGameCanBeStarted(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
 		boolean isURLCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
@@ -1671,7 +1671,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
 	@Test(groups = {"regression"})
 	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
-		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne,defaultUserData.getRegisteredUserData());
 		final String gameID = gamesPortletPage.getRandomGameName();
 		GameElement gameElement = new GameElement(gameID);
 		gameElement.clickFavourite();
@@ -1708,7 +1708,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*24. Disable demo mode for logged in player*/
 	@Test(groups = {"regression"})
 	public void loggedInUserTriesToPlayDisabledDemoNoDemoButtonsFound(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum, defaultUserData.getRegisteredUserData());
 		boolean isDemoPresent = gamesPortletPage.isDemoPresent();
 		Assert.assertTrue(!isDemoPresent);
 	}
@@ -1725,7 +1725,7 @@ public class GamesPortletTest extends AbstractTest{
 	/*30. Player launches game from list view*/
 	@Test(groups = {"regression"})
 	public void gameCanBeStartedFromListView(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne);
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup)gamesPortletPage./*clickAllGames().*/playReal(true);
 		boolean isURLCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();

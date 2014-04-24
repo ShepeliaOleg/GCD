@@ -40,7 +40,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	/* 1. Portlet is displayed */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountChangeMyPasswordPage() {
-		ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword);
+		ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
 	}
 
 	/*2. Submit correct data */
@@ -155,14 +155,14 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	/*1. Old password field validation*/
 	@Test(groups = {"validation"})
 	public void oldPasswordFieldValidation(){
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword);
+        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
 		changeMyPasswordPage.validateOldPassword(passwordValidationRule);
 	}
 
     /*2. New password field validation*/
 	@Test(groups = {"validation"})
 	public void newPasswordFieldValidation(){
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword);
+        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
 		changeMyPasswordPage.validateNewPassword(passwordValidationRule);
 	}
 }

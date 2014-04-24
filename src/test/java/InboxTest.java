@@ -44,14 +44,15 @@ public class InboxTest extends AbstractTest{
 	/*1. Portlet is displayed*/
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountInboxPage() {
-		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        UserData userData = defaultUserData.getRegisteredUserData();
+		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, userData);
 	}
 
     /*2. Message is successfully sent and displayed in MailQ*/
 	@Test(groups = {"regression"})
 	public void checkMessageIsSentToMailQ(){
 		String emailText = emailSubjectValidationRule.generateValidString();
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		boolean isMessageReceived = mailQ.checkIsMessageAppearedAndLogout(emailText);
 		Assert.assertTrue(isMessageReceived) ;
@@ -92,7 +93,7 @@ public class InboxTest extends AbstractTest{
     /*5. Player views the list of sent messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfSentMessages(){
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		boolean isMessageListPresent=inboxPage.clickSentItems().isMessageListPresent();
 		Assert.assertTrue(isMessageListPresent) ;
 	}
@@ -100,7 +101,7 @@ public class InboxTest extends AbstractTest{
     /*6. Player views the list of received messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfReceivedMessages(){
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		boolean isMessageListPresent=inboxPage.isMessageListPresent();
 		Assert.assertTrue(isMessageListPresent) ;
 	}
@@ -108,8 +109,8 @@ public class InboxTest extends AbstractTest{
     /*7. Detailed view of a sent message can be opened*/
 	@Test(groups = {"regression"})
 	public void sendMessageAndCheckItsPresenceInSentItems(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        String emailText = emailSubjectValidationRule.generateValidString();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -136,8 +137,8 @@ public class InboxTest extends AbstractTest{
     /*9. Player deletes a sent message from the list*/
 	@Test(groups = {"regression"})
 	public void deleteSentMessageFromListInSentItems(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        String emailText = emailSubjectValidationRule.generateValidString();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -149,8 +150,8 @@ public class InboxTest extends AbstractTest{
     /*10. Player deletes a sent message from details popup*/
 	@Test(groups = {"regression"})
 	public void deleteSentMessageFromViewMessagePopupInSentItems(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        String emailText = emailSubjectValidationRule.generateValidString();
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -253,7 +254,7 @@ public class InboxTest extends AbstractTest{
     /*1. Empty subject and body*/
 	@Test(groups = {"regression"})
 	public void sendEmptyMessageAndCheckValidationAppears(){
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SendMessagePopup sendMessagePopup=inboxPage.clickSendMessage();
 		Assert.assertTrue(sendMessagePopup.sendEmptyMessage().isErrorPresent());
 	}

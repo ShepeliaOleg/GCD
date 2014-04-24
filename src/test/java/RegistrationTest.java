@@ -103,7 +103,7 @@ public class RegistrationTest extends AbstractTest{
 	/*1. Valid user registration*/
 	@Test(groups = {"smoke"})
 	public void validUserRegistration() {
-        PortalUtils.registerUser();
+        PortalUtils.registerUser(defaultUserData.getRandomUserData());
 		Assert.assertTrue(new AbstractPage().isLoggedIn());
 	}
 
@@ -259,7 +259,7 @@ public class RegistrationTest extends AbstractTest{
 		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
 		Assert.assertTrue(registrationValuesAreCorrect);
 	}
-    
+
     /*#19. All required fields are marked with asterisks*/
 	@Test(groups = {"regression"})
 	public void requiredFieldsLabelsMarkedWithStar(){

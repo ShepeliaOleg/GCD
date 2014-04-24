@@ -262,7 +262,7 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private String createSpoiler(Throwable exception){
-        return exception.toString().substring(0, exception.toString().indexOf(": "))+
+        return exception.toString()/*.substring(0, exception.toString().indexOf(": "))*/+
                 " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
                 " document.getElementById('show_id').style.display='none';\" class=\"link\">[Show]</a>" +
                 "<span id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +

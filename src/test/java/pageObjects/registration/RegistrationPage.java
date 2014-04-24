@@ -3,6 +3,7 @@ package pageObjects.registration;
 import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
@@ -90,11 +91,6 @@ public class RegistrationPage extends AbstractPage{
 	private final static String LABEL_RECEIVE_BONUSES_XP=							"//label[contains(@for, 'romotionalNotification')]";
 	private final static String LINK_ADULT_CONTENT_XP=								"//*[@id='webContent18']//a";
 	private final static String BUTTON_FILL_FIELDS_XP= 									"//*[@id='fillFields']";
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
-
 
     public RegistrationPage(){
 		super(new String[]{ROOT_XP, BUTTON_SUBMIT_XP});
@@ -301,9 +297,9 @@ public class RegistrationPage extends AbstractPage{
 		return new AdultContentPage();
 	}
 
-    public HomePage registerUser(){
-        return (HomePage)this.registerUser(defaultUserData.getRandomUserData(), false);
-    }
+//    public HomePage registerUser(){
+//        return (HomePage)this.registerUser(defaultUserData.getRandomUserData(), false);
+//    }
 
 	public HomePage registerUser(UserData userData){
 		return (HomePage)this.registerUser(userData, false);
@@ -326,7 +322,7 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	public AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, boolean isBonusCodeEntered){
-		Page page=null;
+		Page page;
 		if(!isTermsAndConditionsChecked){
 			page=Page.registrationPage;
 		}else{
@@ -343,16 +339,16 @@ public class RegistrationPage extends AbstractPage{
 		switch(expectedPage){
 
 			case homePage:
-				result=(HomePage) NavigationUtils.closeAllPopups(Page.homePage);
+				result=NavigationUtils.closeAllPopups(Page.homePage);
 				break;
 			case afterRegistrationPopup:
-				result=(AfterRegistrationPopup) NavigationUtils.closeAllPopups(Page.afterRegistrationPopup);
+				result=NavigationUtils.closeAllPopups(Page.afterRegistrationPopup);
 				break;
 			case welcomePopup:
-				result=(WelcomePopup) NavigationUtils.closeAllPopups(Page.welcomePopup);
+				result=NavigationUtils.closeAllPopups(Page.welcomePopup);
 				break;
 			case registrationPage:
-				result =(RegistrationPage) NavigationUtils.closeAllPopups(Page.registrationPage);
+				result =NavigationUtils.closeAllPopups(Page.registrationPage);
 				break;
 			default:
 				break;

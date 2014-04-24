@@ -282,7 +282,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("MiXeDcAsE");
 		userData.setPassword("123456");
-		PortalUtils.loginUser();
+		PortalUtils.loginUser(userData);
 		boolean successfulLogin=iMS.isPlayerLoggedIn(userData.getUsername());
 		Assert.assertTrue(successfulLogin);
 	}

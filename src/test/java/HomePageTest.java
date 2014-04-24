@@ -29,6 +29,6 @@ public class HomePageTest extends AbstractTest{
 
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountBalancePage() {
-        BalancePage balancePortlet = (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance);
+        BalancePage balancePortlet = (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance, defaultUserData.getRegisteredUserData());
 	}
 }
