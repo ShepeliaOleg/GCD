@@ -63,7 +63,7 @@ public class ForgotPasswordTest extends AbstractTest{
 
 	}
     /*1. Portlet is displayed on page*/
-    @Test(groups = {"smoke", "run"})
+    @Test(groups = {"smoke"})
     public void portletIsDisplayedOnPage(){
         ForgotPasswordPage forgotPasswordPage = (ForgotPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.forgotPassword);
     }
