@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
-import pageObjects.account.MyAccountPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import springConstructors.IMS;
 import springConstructors.UserData;

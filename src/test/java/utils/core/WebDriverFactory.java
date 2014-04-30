@@ -53,23 +53,17 @@ public class WebDriverFactory extends WebDriverObject{
 		return driver;
 	}
 
-	private WebDriver createChromeDriver(String osType){
-		ChromeOptions chromeOptions=new ChromeOptions();
-		chromeOptions.addArguments("--ignore-certificate-errors");
-        if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
-		return new ChromeDriver(chromeOptions);
-	}
-
-	private WebDriver createFireFoxDriver(){
-		FirefoxProfile profile=new FirefoxProfile();
-		profile.setAcceptUntrustedCertificates(true);
-		profile.setAssumeUntrustedCertificateIssuer(false);
-		return new FirefoxDriver(profile);
-	}
-
 	public static void shutDown(){
-		webDriver.quit();
-		logDriver.quit();
+		try{
+            webDriver.quit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            logDriver.quit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 	}
 
 	public static void switchToAdditionalWebDriver(){
@@ -85,4 +79,18 @@ public class WebDriverFactory extends WebDriverObject{
 		webDriver.quit();
 		webDriver = storedWebDriver;
 	}
+
+    private WebDriver createChromeDriver(String osType){
+        ChromeOptions chromeOptions=new ChromeOptions();
+        chromeOptions.addArguments("--ignore-certificate-errors");
+        if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
+        return new ChromeDriver(chromeOptions);
+    }
+
+    private WebDriver createFireFoxDriver(){
+        FirefoxProfile profile=new FirefoxProfile();
+        profile.setAcceptUntrustedCertificates(true);
+        profile.setAssumeUntrustedCertificateIssuer(false);
+        return new FirefoxDriver(profile);
+    }
 }

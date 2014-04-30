@@ -1,16 +1,9 @@
 package pageObjects.base;
 
-import enums.ConfiguredPages;
 import enums.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import pageObjects.InternalTagsPage;
 import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
 import pageObjects.account.MyAccountPage;
-import pageObjects.bingoSchedule.BingoSchedulePage;
-import pageObjects.bonus.BonusPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;

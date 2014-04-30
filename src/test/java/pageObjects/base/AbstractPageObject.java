@@ -2,7 +2,6 @@ package pageObjects.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;

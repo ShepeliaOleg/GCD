@@ -10,6 +10,7 @@ import org.testng.TestListenerAdapter;
 import utils.core.WebDriverFactory;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -19,9 +20,13 @@ import java.util.Calendar;
 public class Listener extends TestListenerAdapter{
 
 	private static PrintWriter output;
-	private static final String OUT_FOLDER            = "target/custom";
-    private static final String INDEX_FILENAME = OUT_FOLDER+"/index.html";
-	String[] list = {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
+    private static String folder;
+    private static String outFolder;
+    private static String indexFilename;
+    private static final String INDEX = "/index.html";
+    private static final String CUSTOM = "target/custom";
+
+	String[] list =                        {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
 			"ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
 			"LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
 			"RegistrationTest", "ResponsibleGamingTest"};
@@ -38,6 +43,31 @@ public class Listener extends TestListenerAdapter{
 		createScreenshot(iTestResult);
 		System.out.println(iTestResult.getName()+ "--Test method passed\n");
 	}
+
+    @Override
+    public void onStart(org.testng.ITestContext testContext){
+        if(folder==null){
+            folder = createDateFolder();
+            outFolder = CUSTOM+folder;
+            indexFilename = outFolder+INDEX;
+        }
+        try{
+            File index= new File(indexFilename);
+            if(!index.exists()){
+                createFolder();
+                output = new PrintWriter(indexFilename);
+                startHtmlPage("Test report");
+                createIndex();
+                endHtmlPage();
+                output.flush();
+                output.close();
+                System.out.println("created page for index");
+            }
+        }catch(Exception e){
+            System.out.println("Exception! But it's okay.");
+        }
+    }
+
 
 	@Override
 	public void onFinish(ITestContext testContext){
@@ -58,24 +88,11 @@ public class Listener extends TestListenerAdapter{
 				break;
 			}
         }
-        try{
-            File index= new File(INDEX_FILENAME);
-            if(!index.exists()){
-                output = new PrintWriter(INDEX_FILENAME);
-                startHtmlPage("Test report");
-                createIndex();
-                endHtmlPage();
-                output.flush();
-                output.close();
-                System.out.println("created page for index");
-            }
-        }catch(Exception e){
-            System.out.println("Exception! But it's okay.");
-        }
+
         if(classname!=null){
             writeToIndex(classname, total, passed, failed, ims);
             try{
-                output = new PrintWriter(OUT_FOLDER+"/"+classname+".html");
+                output = new PrintWriter(outFolder +"/"+classname+".html");
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -94,7 +111,7 @@ public class Listener extends TestListenerAdapter{
         String line;
         String report="";
         try{
-            File index = new File(INDEX_FILENAME);
+            File index = new File(indexFilename);
             FileReader fileReader = new FileReader(index);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((line = bufferedReader.readLine()) !=null){
@@ -220,11 +237,6 @@ public class Listener extends TestListenerAdapter{
         output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
         output.println("<head>");
         output.println("<title>"+pageName+"</title>" );
-		/* Include Java Script and JQuery */
-//		out.println("<script type=\"text/javascript\" src=\"stylesheets/jquery-latest.js\"></script>");
-		/* Include Style Sheets */
-//		out.println("<link rel=\"stylesheet\" href=\"stylesheets/sexybuttons.css\" type=\"text/css\" />");
-//		out.println("<link rel=\"stylesheet\" href=\"stylesheets/custom-report-stylesheet.css\" type=\"text/css\" />");
         output.println("<style media=\"screen\" type=\"text/css\">table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
 				".td1 {width:100px;}" +
 				".td2 {width:50px;}" +
@@ -242,15 +254,14 @@ public class Listener extends TestListenerAdapter{
 	}
 
 	private void createFolder(){
-		File file = new File(OUT_FOLDER);
+		File file = new File(outFolder);
 		file.mkdirs();
 	}
 
 	private void createScreenshot(ITestResult iTestResult){
 		WebDriver webDriver = WebDriverFactory.getWebDriver();
-		createFolder();
 		String imageName = "/"+iTestResult.getName()+".jpg";
-		File file = new File(OUT_FOLDER+imageName);
+		File file = new File(outFolder +imageName);
 		File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
 		try  {
 			FileUtils.copyFile(scrFile, file);
@@ -262,10 +273,18 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private String createSpoiler(Throwable exception){
-        return exception.toString()/*.substring(0, exception.toString().indexOf(": "))*/+
+        String exc = exception.toString();
+        int index = exc.indexOf(":");
+        return exc.substring(0, index)+
                 " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
                 " document.getElementById('show_id').style.display='none';\" class=\"link\">[Show]</a>" +
-                "<span id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+exception.getMessage()+"</span>";
+                "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
+                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+exception.getMessage()+"</div>";
+    }
+
+    private String createDateFolder() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_'at'_HH_mm");
+        return "/" + format.format(cal.getTime());
     }
 }

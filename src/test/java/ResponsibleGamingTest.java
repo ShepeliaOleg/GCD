@@ -34,7 +34,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	/*1. Portlet is displayed */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountResponsibleGamingPage() {
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 	}
 
 	/* 2. 1,2,3: Daily <= Weekly <= Monthly */

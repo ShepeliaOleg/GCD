@@ -1,15 +1,10 @@
 package pageObjects.registration;
 
 import enums.Page;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
-import pageObjects.popups.AfterRegistrationPopup;
 import pageObjects.popups.ReadTermsAndConditionsPopup;
-import pageObjects.popups.WelcomePopup;
 import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import utils.NavigationUtils;

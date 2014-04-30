@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.account.MyAccountPage;
 import pageObjects.account.ReferAFriendPage;
 import pageObjects.external.mail.MailServicePage;
 import springConstructors.UserData;
