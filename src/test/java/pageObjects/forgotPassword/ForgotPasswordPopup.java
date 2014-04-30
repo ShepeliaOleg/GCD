@@ -11,7 +11,7 @@ import utils.WebDriverUtils;
 
 public class ForgotPasswordPopup extends AbstractPopup{
 
-	private final static String ROOT_XP =            				"//*[@id='forgotPasswordPopupForm']";
+    private final static String ROOT_XP =            				"//*[@id='forgotPasswordPopupForm']";
     private final static String FIELD_USERNAME_XP =             	ROOT_XP + "//*[@id='userName']";
     private final static String FIELD_EMAIL_XP =                	ROOT_XP + "//*[@id='email']";
     private final static String DROPDOWN_BIRTH_DAY =            	ROOT_XP + "//select[@id='birthDay']";
@@ -25,12 +25,19 @@ public class ForgotPasswordPopup extends AbstractPopup{
     private final static String LABEL_VALIDATION_ERROR_MESSAGE_XP =	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
     private final static String LABEL_VALIDATION_ERROR_ICON_XP =	ROOT_XP + "//span[contains(@class,'error')]";
 
-	public ForgotPasswordPopup(){
-		super(new String[]{ROOT_XP, FIELD_USERNAME_XP, FIELD_EMAIL_XP,
-				DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH, DROPDOWN_BIRTH_YEAR,
-				BUTTON_CANCEL_XP, BUTTON_APPROVE_XP, LINK_LOGIN_XP,
-				LINK_REGISTRATION_XP, LINK_CONTACT_US_XP});
-	}
+    public ForgotPasswordPopup(){
+        super(new String[]{ROOT_XP, FIELD_USERNAME_XP, FIELD_EMAIL_XP,
+                DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH, DROPDOWN_BIRTH_YEAR,
+                BUTTON_CANCEL_XP, BUTTON_APPROVE_XP, LINK_LOGIN_XP,
+                LINK_REGISTRATION_XP, LINK_CONTACT_US_XP});
+    }
+
+    public ForgotPasswordPopup(String page){
+        super(new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP,
+                DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH, DROPDOWN_BIRTH_YEAR,
+                BUTTON_CANCEL_XP, BUTTON_APPROVE_XP, LINK_LOGIN_XP,
+                LINK_REGISTRATION_XP, LINK_CONTACT_US_XP}, null, ROOT_XP);
+    }
 
 	private void fillUsername(String username){
 		WebDriverUtils.clearAndInputTextToField(FIELD_USERNAME_XP, username);
