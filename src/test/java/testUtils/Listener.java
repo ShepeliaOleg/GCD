@@ -11,6 +11,7 @@ import utils.core.WebDriverFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -109,7 +110,7 @@ public class Listener extends TestListenerAdapter{
 
     private void writeToIndex(String classname, int total, int passed, int failed, int ims){
         String line;
-        String report="";
+        ArrayList<String> report = new ArrayList<>();
         try{
             File index = new File(indexFilename);
             FileReader fileReader = new FileReader(index);
@@ -120,23 +121,36 @@ public class Listener extends TestListenerAdapter{
                 line = replaceStringWithInt(line, classname + "Failed", failed);
                 line = replaceStringWithInt(line, classname + "Ims", ims);
                 line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+classname, "><td><a href ='"+classname);
+                if (failed>0||ims>0){
+                    line = paintRed(line);
+                }
                 line = replaceTotal(line, "id='total'>", "total", 11, total);
                 line = replaceTotal(line, "id='passed'>", "passed", 12, passed);
                 line = replaceTotal(line, "id='failed'>", "failed", 12, failed);
                 line = replaceTotal(line, "id='ims'>", "ims", 9, ims);
-                report = report.concat(line);
+                report.add(line);
             }
             bufferedReader.close();
             fileReader.close();
             FileWriter fileWriter = new FileWriter(index);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(report);
+            for ( int i=0; i<report.size();i++){
+                bufferedWriter.write(report.get(i)+"\n");
+            }
             bufferedWriter.flush();
             bufferedWriter.close();
             fileWriter.close();
         }catch (IOException e){
             System.out.println(e);
         }
+    }
+
+    private String paintRed(String line){
+        System.out.println(line);
+        line.replace("<tr>", "<tr style='background-color:#FF9763'>");
+        System.out.println(line);
+        return line;
+
     }
 
     private String replaceStringWithInt(String line, String tag, int number){
@@ -177,7 +191,7 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private void createIndex(){
-        output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:80%;border-collapse:collapse;\">");
+        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
         for(String area:list){
             output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
@@ -202,7 +216,7 @@ public class Listener extends TestListenerAdapter{
 
 	private void addRows(ITestContext iTestContext){
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:green'><td colspan='4'>Passed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:#B2F5A6'><td colspan='4'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
                 output.println("<tr style='background-color:green'><td>" + test.getName() + "</td> ");
                 output.println("<td class='passed'>passed</td> ");
@@ -210,7 +224,7 @@ public class Listener extends TestListenerAdapter{
             }
         }
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:red'><td colspan='4'>Failed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:#FF9763'><td colspan='4'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
                 output.println("<tr style='background-color:red'><td>" + test.getName() + "</td> ");
                 output.println("<td class='failed'>failed</td> ");

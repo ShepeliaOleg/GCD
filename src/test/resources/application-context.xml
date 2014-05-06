@@ -9,7 +9,9 @@
     <bean id="driverData" class="springConstructors.DriverData">
         <!--<property name="baseUrl" value="http://ci-stable-public.wpl.ptec/"/>-->
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
+        <!--<property name="browser" value="chrome"/>-->
         <property name="browser" value="#{systemProperties['browser']}"/>
+        <!--<property name="os" value="linux"/>-->
         <property name="os" value="#{systemProperties['os']}"/>
     </bean>
 

@@ -22,7 +22,7 @@
         <property name="phone" value="1234567"/>
         <property name="mobileAreaCode" value="+38"/>
         <property name="mobile" value="7654321"/>
-        <property name="username" value="autoLocal"/>
+        <property name="username" value="#{systemProperties['username']}"/>
         <property name="password" value="aut0Player"/>
         <property name="verificationQuestion" value="Name of your first pet?"/>
         <property name="verificationAnswer" value="Internet"/>

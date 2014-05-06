@@ -52,7 +52,7 @@ public class GamesPortletTest extends AbstractTest{
 		String url = gameLaunchPopup.getWindowUrl();
 		gameLaunchPopup.closePopup();
 		if (correctGamePopupUrl == false) {
-			WebDriverUtils.runtimeExceptionWithLogs(url);
+			WebDriverUtils.runtimeExceptionWithLogs("Game url is not correct = " + url);
 		}
 	}
 
