@@ -3,13 +3,14 @@
        xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       xmlns:context="http://www.springframework.org/schema/context">
 
     <bean id="driverData" class="springConstructors.DriverData">
         <!--<property name="baseUrl" value="http://ci-stable-public.wpl.ptec/"/>-->
-        <property name="baseUrl" value="${baseUrl}"/>
-        <property name="browser" value="${browser}"/>
-        <property name="os" value="${os}"/>
+        <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
+        <property name="browser" value="#{systemProperties['browser']}"/>
+        <property name="os" value="#{systemProperties['os']}"/>
     </bean>
 
 
