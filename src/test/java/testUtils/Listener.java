@@ -191,28 +191,15 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private void createIndex(){
-        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
+        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">\n");
+        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>\n");
         for(String area:list){
-            output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
+            output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>\n");
         }
-        output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>");
-        output.println("</table>");
-        output.println("<br>");
+        output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>\n");
+        output.println("</table>\n");
+        output.println("<br>\n");
     }
-
-    private String printList(){
-        String result = "[";
-        for(String a:list){
-            result = result+"'"+a+"'";
-            if (!a.equals("ResponsibleGamingTest")){
-                result=result+",";
-            }
-        }
-        result=result+"]";
-        return result;
-    }
-
 
 	private void addRows(ITestContext iTestContext){
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
@@ -247,24 +234,24 @@ public class Listener extends TestListenerAdapter{
 
 	private void startHtmlPage(String pageName)
 	{
-        output.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">");
-        output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
-        output.println("<head>");
-        output.println("<title>"+pageName+"</title>" );
+        output.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
+        output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+        output.println("<head>\n");
+        output.println("<title>"+pageName+"</title>\n" );
         output.println("<style media=\"screen\" type=\"text/css\">table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
 				".td1 {width:100px;}" +
 				".td2 {width:50px;}" +
-				".td3 {width:50px;}</style>");
-        output.println("</head>");
-        output.println("<body><br/>");
+				".td3 {width:50px;}</style>\n");
+        output.println("</head>\n");
+        output.println("<body><br/>\n");
 		Calendar cal = Calendar.getInstance();
-        output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>");
+        output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>\n");
 	}
 
 	private void endHtmlPage()
 	{
-        output.println("</div></div></div></div>");
-        output.println("</body></html>");
+        output.println("</div></div></div></div>\n");
+        output.println("</body></html>\n");
 	}
 
 	private void createFolder(){
