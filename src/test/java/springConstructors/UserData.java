@@ -75,6 +75,7 @@ public class UserData{
 	private String mobileAreaCode;
 	private String mobile;
 	private String username;
+    private String defaultUsername;
 	private String password;
 	private String verificationQuestion;
 	private String verificationAnswer;
@@ -124,12 +125,24 @@ public class UserData{
 	}
 
 	public String getUsername(){
-		return username;
+        if(username!=null){
+            return username;
+        }else{
+            return getDefaultUsername();
+        }
 	}
 
 	public void setUsername(String username){
 		this.username=username;
 	}
+
+    public String getDefaultUsername(){
+        return defaultUsername;
+    }
+
+    public void setDefaultUsername(String username){
+        this.defaultUsername=username;
+    }
 
 	public String getMobile(){
 		return mobile;

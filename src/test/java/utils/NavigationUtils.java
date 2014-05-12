@@ -35,7 +35,6 @@ public class NavigationUtils extends WebDriverObject{
 
 	public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
         if (condition.equals(PlayerCondition.loggedIn)){
-//            PortalUtils.loginUser();
             WebDriverUtils.runtimeExceptionWithLogs("No userdata set for logged in user");
         }
         return navigateToPage(condition, configuredPages, null);

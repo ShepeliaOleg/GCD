@@ -62,7 +62,7 @@ public class Listener extends TestListenerAdapter{
                 endHtmlPage();
                 output.flush();
                 output.close();
-                System.out.println("created page for index");
+                System.out.println("Created page for index");
             }
         }catch(Exception e){
             System.out.println("Exception! But it's okay.");
@@ -122,7 +122,7 @@ public class Listener extends TestListenerAdapter{
                 line = replaceStringWithInt(line, classname + "Ims", ims);
                 line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+classname, "><td><a href ='"+classname);
                 if (failed>0||ims>0){
-                    line = paintRed(line);
+                    line = paintRed(line, classname);
                 }
                 line = replaceTotal(line, "id='total'>", "total", 11, total);
                 line = replaceTotal(line, "id='passed'>", "passed", 12, passed);
@@ -145,10 +145,10 @@ public class Listener extends TestListenerAdapter{
         }
     }
 
-    private String paintRed(String line){
-        System.out.println(line);
-        line.replace("<tr>", "<tr style='background-color:#FF9763'>");
-        System.out.println(line);
+    private String paintRed(String line, String classname){
+        if (line.contains(classname)){
+            line = line.replace("<tr>", "<tr style='background-color:#FF9763'>");
+        }
         return line;
 
     }
@@ -191,14 +191,14 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private void createIndex(){
-        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">\n");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>\n");
+        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">");
+        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
         for(String area:list){
-            output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>\n");
+            output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
-        output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>\n");
-        output.println("</table>\n");
-        output.println("<br>\n");
+        output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>");
+        output.println("</table>");
+        output.println("<br>");
     }
 
 	private void addRows(ITestContext iTestContext){
@@ -235,23 +235,23 @@ public class Listener extends TestListenerAdapter{
 	private void startHtmlPage(String pageName)
 	{
         output.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
-        output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+        output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
         output.println("<head>\n");
-        output.println("<title>"+pageName+"</title>\n" );
+        output.println("<title>"+pageName+"</title>" );
         output.println("<style media=\"screen\" type=\"text/css\">table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
 				".td1 {width:100px;}" +
 				".td2 {width:50px;}" +
-				".td3 {width:50px;}</style>\n");
-        output.println("</head>\n");
-        output.println("<body><br/>\n");
+				".td3 {width:50px;}</style>");
+        output.println("</head>");
+        output.println("<body><br/>");
 		Calendar cal = Calendar.getInstance();
-        output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>\n");
+        output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>");
 	}
 
 	private void endHtmlPage()
 	{
-        output.println("</div></div></div></div>\n");
-        output.println("</body></html>\n");
+        output.println("</div></div></div></div>");
+        output.println("</body></html>");
 	}
 
 	private void createFolder(){

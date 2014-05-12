@@ -7,14 +7,13 @@
        xmlns:context="http://www.springframework.org/schema/context">
 
     <bean id="driverData" class="springConstructors.DriverData">
-        <!--<property name="baseUrl" value="http://ci-stable-public.wpl.ptec/"/>-->
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
-        <!--<property name="browser" value="chrome"/>-->
         <property name="browser" value="#{systemProperties['browser']}"/>
-        <!--<property name="os" value="linux"/>-->
         <property name="os" value="#{systemProperties['os']}"/>
+        <property name="defaultBaseUrl" value="http://ci-stable-public.wpl.ptec/"/>
+        <property name="defaultBrowser" value="chrome"/>
+        <property name="defaultOs" value="linux"/>
     </bean>
-
 
     <bean id="defaults" class="springConstructors.Defaults">
         <property name="countryFullList">
