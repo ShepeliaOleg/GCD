@@ -205,7 +205,7 @@ public class Listener extends TestListenerAdapter{
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
             output.println("<tr align='center' style='background-color:#B2F5A6'><td colspan='4'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
-                output.println("<tr style='background-color:green'><td>" + test.getName() + "</td> ");
+                output.println("<tr style='background-color:#B2F5A6'><td>" + test.getName() + "</td> ");
                 output.println("<td class='passed'>passed</td> ");
                 output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td><td></td></tr>");
             }
@@ -213,7 +213,7 @@ public class Listener extends TestListenerAdapter{
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
             output.println("<tr align='center' style='background-color:#FF9763'><td colspan='4'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
-                output.println("<tr style='background-color:red'><td>" + test.getName() + "</td> ");
+                output.println("<tr style='background-color:#FF9763'><td>" + test.getName() + "</td> ");
                 output.println("<td class='failed'>failed</td> ");
                 output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable()) + "</td></tr>");
