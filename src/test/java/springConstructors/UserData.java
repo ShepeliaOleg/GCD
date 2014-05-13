@@ -328,7 +328,7 @@ public class UserData{
 		clonedUserData.phone=phone;
 		clonedUserData.mobileAreaCode=mobileAreaCode;
 		clonedUserData.mobile=mobile;
-		clonedUserData.username=username;
+		clonedUserData.username=getUsername();
 		clonedUserData.password=password;
 		clonedUserData.verificationQuestion=verificationQuestion;
 		clonedUserData.verificationAnswer=verificationAnswer;

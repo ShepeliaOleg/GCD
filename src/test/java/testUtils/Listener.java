@@ -26,6 +26,8 @@ public class Listener extends TestListenerAdapter{
     private static String indexFilename;
     private static final String INDEX = "/index.html";
     private static final String CUSTOM = "target/custom";
+    private static final String COLOR_GREEN = "#B2F5A6";
+    private static final String COLOR_RED = "#FF9763";
 
 	String[] list =                        {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
 			"ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
@@ -76,7 +78,6 @@ public class Listener extends TestListenerAdapter{
         int failed = testContext.getFailedTests().getAllResults().size();
         int total = passed+failed;
         int ims = 0;
-
 		String classname=null;
 		if(!testContext.getPassedTests().getAllResults().isEmpty()){
 			for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
@@ -89,7 +90,6 @@ public class Listener extends TestListenerAdapter{
 				break;
 			}
         }
-
         if(classname!=null){
             writeToIndex(classname, total, passed, failed, ims);
             try{
@@ -100,7 +100,6 @@ public class Listener extends TestListenerAdapter{
             startHtmlPage(classname + " report");
             output.println("<h1>Test area: "+classname+"</h1>");
             createTable(testContext, total, passed, failed, ims);
-
             endHtmlPage();
             output.flush();
             output.close();
@@ -134,8 +133,8 @@ public class Listener extends TestListenerAdapter{
             fileReader.close();
             FileWriter fileWriter = new FileWriter(index);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for ( int i=0; i<report.size();i++){
-                bufferedWriter.write(report.get(i)+"\n");
+            for ( String writeLine:report){
+                bufferedWriter.write(writeLine+"\n");
             }
             bufferedWriter.flush();
             bufferedWriter.close();
@@ -147,7 +146,7 @@ public class Listener extends TestListenerAdapter{
 
     private String paintRed(String line, String classname){
         if (line.contains(classname)){
-            line = line.replace("<tr>", "<tr style='background-color:#FF9763'>");
+            line = line.replace("<tr>", "<tr style='background-color:"+COLOR_RED+"'>");
         }
         return line;
 
@@ -183,7 +182,7 @@ public class Listener extends TestListenerAdapter{
 
 	private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total: " + total + " Passed: " + passed + " Failed: " + failed + " IMS Issues: " + ims + "</h1>");
-        output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:80%;border-collapse:collapse;\">");
+        output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Status</td><td>Screenshot</td><td>Error</td></tr>");
 		addRows(iTestContext);
         output.println("</table>");
@@ -191,7 +190,7 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private void createIndex(){
-        output.println("<table border=\"1\" style=\"background-color:#B2F5A6;border:1px black;width:80%;border-collapse:collapse;\">");
+        output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
         for(String area:list){
             output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
@@ -203,17 +202,17 @@ public class Listener extends TestListenerAdapter{
 
 	private void addRows(ITestContext iTestContext){
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:#B2F5A6'><td colspan='4'>Passed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:"+COLOR_GREEN+"'><td colspan='4'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
-                output.println("<tr style='background-color:#B2F5A6'><td>" + test.getName() + "</td> ");
+                output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + test.getName() + "</td> ");
                 output.println("<td class='passed'>passed</td> ");
                 output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td><td></td></tr>");
             }
         }
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:#FF9763'><td colspan='4'>Failed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:"+COLOR_RED+"'><td colspan='4'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
-                output.println("<tr style='background-color:#FF9763'><td>" + test.getName() + "</td> ");
+                output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
                 output.println("<td class='failed'>failed</td> ");
                 output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable()) + "</td></tr>");
@@ -227,9 +226,7 @@ public class Listener extends TestListenerAdapter{
                 output.println("<td>N/A</td>");
                 output.println("<td>N/A</td></tr>");
             }
-
         }
-
 	}
 
 	private void startHtmlPage(String pageName)
@@ -275,12 +272,18 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception){
         String exc = exception.toString();
-        int index = exc.indexOf(":");
+        int index = exc.indexOf("|");
+        String[] fullException = exc.split("%\\$%");
         return exc.substring(0, index)+
                 " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
                 " document.getElementById('show_id').style.display='none';\" class=\"link\">[Show]</a>" +
                 "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+exception.getMessage()+"</div>";
+                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[0]+
+                " <a id=\"show_logs_id\" onclick=\"document.getElementById('spoiler_logs_id').style.display='';" +
+                " document.getElementById('show_logs_id').style.display='none';\" class=\"link\">[Logs]</a>" +
+                "<div id=\"spoiler_logs_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_logs_id').style.display='none';" +
+                " document.getElementById('show_logs_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>"+
+                "</div>";
     }
 
     private String createDateFolder() {
