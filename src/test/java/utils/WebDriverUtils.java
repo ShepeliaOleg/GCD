@@ -411,7 +411,7 @@ public class WebDriverUtils extends WebDriverObject{
 		if(!timestamp.equals("noLogs")){
 			currentLogs =LogUtils.getCurrentLogs();
 		}
-		throw new RuntimeException(exceptionMessage + "\n | <div>URL: "+webDriver.getCurrentUrl()+"</div>\n <div>%$%" + currentLogs.print()+"</div>");
+		throw new RuntimeException(exceptionMessage + "\n <br><div>URL: "+webDriver.getCurrentUrl()+"</div>\n %$%" + currentLogs.print());
 	}
 
 	//Script

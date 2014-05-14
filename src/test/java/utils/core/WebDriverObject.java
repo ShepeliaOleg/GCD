@@ -12,7 +12,11 @@ public class WebDriverObject{
 	public static WebDriver webDriver;
 	protected static WebDriver logDriver;
 	protected static String timestamp;
-	protected static String baseUrl;
+    protected static String baseUrl;
+
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 
 	public static WebDriver getWebDriver(){
 		return webDriver;

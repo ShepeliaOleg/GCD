@@ -24,10 +24,13 @@ public class Listener extends TestListenerAdapter{
     private static String folder;
     private static String outFolder;
     private static String indexFilename;
+    private WebDriver webDriver;
+    private String baseUrl;
     private static final String INDEX = "/index.html";
     private static final String CUSTOM = "target/custom";
     private static final String COLOR_GREEN = "#B2F5A6";
     private static final String COLOR_RED = "#FF9763";
+    private static final String ENV_REPLACER = "ENVIRONMENT";
 
 	String[] list =                        {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
 			"ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
@@ -127,6 +130,7 @@ public class Listener extends TestListenerAdapter{
                 line = replaceTotal(line, "id='passed'>", "passed", 12, passed);
                 line = replaceTotal(line, "id='failed'>", "failed", 12, failed);
                 line = replaceTotal(line, "id='ims'>", "ims", 9, ims);
+                line = addEnv(line);
                 report.add(line);
             }
             bufferedReader.close();
@@ -144,12 +148,18 @@ public class Listener extends TestListenerAdapter{
         }
     }
 
+    private String addEnv(String line){
+        if(line.contains(ENV_REPLACER)){
+            line = line.replace(ENV_REPLACER, baseUrl);
+        }
+        return line;
+    }
+
     private String paintRed(String line, String classname){
         if (line.contains(classname)){
             line = line.replace("<tr>", "<tr style='background-color:"+COLOR_RED+"'>");
         }
         return line;
-
     }
 
     private String replaceStringWithInt(String line, String tag, int number){
@@ -181,7 +191,8 @@ public class Listener extends TestListenerAdapter{
 
 
 	private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
-        output.println("<h2>Total: " + total + " Passed: " + passed + " Failed: " + failed + " IMS Issues: " + ims + "</h1>");
+        output.println("<h2>Total: " + total + " Passed: " + passed + " Failed: " + failed + " IMS Issues: " + ims + "</h2>");
+        output.println("<h2>Env: "+baseUrl+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Status</td><td>Screenshot</td><td>Error</td></tr>");
 		addRows(iTestContext);
@@ -190,6 +201,7 @@ public class Listener extends TestListenerAdapter{
 	}
 
     private void createIndex(){
+        output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
         for(String area:list){
@@ -257,7 +269,10 @@ public class Listener extends TestListenerAdapter{
 	}
 
 	private void createScreenshot(ITestResult iTestResult){
-		WebDriver webDriver = WebDriverFactory.getWebDriver();
+		if(webDriver==null){
+            webDriver = WebDriverFactory.getWebDriver();
+            baseUrl = WebDriverFactory.getBaseUrl();
+        }
 		String imageName = "/"+iTestResult.getName()+".jpg";
 		File file = new File(outFolder +imageName);
 		File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
@@ -272,18 +287,12 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception){
         String exc = exception.toString();
-        int index = exc.indexOf("|");
         String[] fullException = exc.split("%\\$%");
-        return exc.substring(0, index)+
+        return fullException[0]+
                 " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
                 " document.getElementById('show_id').style.display='none';\" class=\"link\">[Show]</a>" +
                 "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[0]+
-                " <a id=\"show_logs_id\" onclick=\"document.getElementById('spoiler_logs_id').style.display='';" +
-                " document.getElementById('show_logs_id').style.display='none';\" class=\"link\">[Logs]</a>" +
-                "<div id=\"spoiler_logs_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_logs_id').style.display='none';" +
-                " document.getElementById('show_logs_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>"+
-                "</div>";
+                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
     }
 
     private String createDateFolder() {
