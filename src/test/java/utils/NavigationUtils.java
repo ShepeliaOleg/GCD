@@ -114,7 +114,7 @@ public class NavigationUtils extends WebDriverObject{
 			result = checkPopups(exceptPage);
 			retries++;
 			if(retries==POPUP_CHECK_RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("Unrecognizable popup appeared");
+				WebDriverUtils.runtimeExceptionWithLogs("Unrecognizable popup appeared or popup cannot be closed");
 			}
 		}
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
