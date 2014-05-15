@@ -287,12 +287,20 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception){
         String exc = exception.toString();
-        String[] fullException = exc.split("%\\$%");
-        return fullException[0]+
-                " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
-                " document.getElementById('show_id').style.display='none';\" class=\"link\">[Show]</a>" +
-                "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+        if(exc.contains("%$%")){
+            String[] fullException = exc.split("%\\$%");
+            return fullException[0]+
+                    " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
+                    " document.getElementById('show_id').style.display='none';\" class=\"link\">[Logs]</a>" +
+                    "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
+                    " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+        }else{
+            return "Uncaught Error"+
+                    " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
+                    " document.getElementById('show_id').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
+                    "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
+                    " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+exc+"</div>";
+        }
     }
 
     private String createDateFolder() {
