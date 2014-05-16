@@ -48,7 +48,7 @@ public class PushMessagesTest extends AbstractTest{
     /* POSITIVE */
 
 	/*1. Login message */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void loginMessage(){
 		UserData userData = defaultUserData.getRegisteredUserData();
 		WelcomePopup welcomePopup = (WelcomePopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home).login(userData, Page.welcomePopup);
@@ -56,7 +56,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*2. Push logout */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void pushLogout(){
         HomePage homePage;
 		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
@@ -72,7 +72,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*3. Forced password change */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void forcedPassChange(){
 		String imsPass = passwordValidationRule.generateValidString();
 		String newPass = passwordValidationRule.generateValidString();
@@ -88,7 +88,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*6. Update balance after receiving a bonus */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void updateBalanceBonus(){
         UserData userData = defaultUserData.getRegisteredUserData();
         HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
@@ -99,7 +99,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*7. Push messages for bonus opt in/out */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void pushMessageOptIn(){
         UserData userData = defaultUserData.getRegisteredUserData();
 		PortalUtils.registerUser(userData);
@@ -111,7 +111,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*8. Push message for bonus buy in */
-//	@Test(groups = {"regression"})
+//	@Test(groups = {"regression", "push"})
 //	public void pushMessageBuyIn(){
 //		UserData userData = defaultUserData.getRegisteredUserData();
 //		HomePage homePage=NavigationUtils.navigateToPortal(true).login(userData);
@@ -123,7 +123,7 @@ public class PushMessagesTest extends AbstractTest{
 //	}
 
 	/*9. Push message for free bonus*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void pushMessageFreeBonus(){
         UserData userData = defaultUserData.getRegisteredUserData();
 		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
@@ -136,7 +136,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*10. Push message for promo code redemption*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void pushMessagePromoCode(){
         UserData userData = defaultUserData.getRegisteredUserData();
         HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
@@ -148,7 +148,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*11.  Accept/Decline push message - Accept*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void accept(){
 		UserData userData = defaultUserData.getRandomUserData();
 		PortalUtils.registerUser(userData);
@@ -159,7 +159,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*12. Accept/Decline push message - Decline*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void decline(){
 		UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -170,7 +170,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*13.  No Accept/Decline push message*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void okMessage(){
 		UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -181,7 +181,7 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
     /*14. Login message disabled */
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "push"})
 	public void loginMessageDisabled(){
         HomePage homePage;
 		UserData userData = defaultUserData.getRandomUserData();

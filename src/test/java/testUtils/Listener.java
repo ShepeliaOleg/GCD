@@ -224,10 +224,11 @@ public class Listener extends TestListenerAdapter{
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
             output.println("<tr align='center' style='background-color:"+COLOR_RED+"'><td colspan='4'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
+                String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
                 output.println("<td class='failed'>failed</td> ");
-                output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
-                output.println("<td>" + createSpoiler(test.getThrowable()) + "</td></tr>");
+                output.println("<td><a href='" + name + ".jpg'>Screenshot</a></td>");
+                output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
             }
         }
 		if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
@@ -285,21 +286,24 @@ public class Listener extends TestListenerAdapter{
 		}
 	}
 
-    private String createSpoiler(Throwable exception){
+    private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
+        String showId = "show_id_"+name+"";
+        String spoilerId = "spoiler_id_"+name+"";
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
+
             return fullException[0]+
-                    " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
-                    " document.getElementById('show_id').style.display='none';\" class=\"link\">[Logs]</a>" +
-                    "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                    " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+                    " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
+                    " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Logs]</a>" +
+                    "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
+                    " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
         }else{
             return "Uncaught Error"+
-                    " <a id=\"show_id\" onclick=\"document.getElementById('spoiler_id').style.display='';" +
-                    " document.getElementById('show_id').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
-                    "<div id=\"spoiler_id\" style=\"display: none\"><a onclick=\"document.getElementById('spoiler_id').style.display='none';" +
-                    " document.getElementById('show_id').style.display='';\" class=\"link\">[Hide]</a><br>"+exc+"</div>";
+                    " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
+                    " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
+                    "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
+                    " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+exc+"</div>";
         }
     }
 

@@ -28,6 +28,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static void waitFor(long millisec){
+        System.out.println("Waiting for " + millisec/1000 + "Seconds");
         if(millisec > 0){
             try{
                 Thread.sleep(millisec);
@@ -379,7 +380,8 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
     public static void openAdditionalSession(){
-        WebDriverFactory.switchToAdditionalWebDriver();
+        WebDriverFactory webDriverFactory = new WebDriverFactory();
+        webDriverFactory.switchToAdditionalWebDriver();
     }
 
 	public static void switchToPopup(String mainWindowHandle){

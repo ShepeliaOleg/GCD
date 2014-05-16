@@ -66,10 +66,10 @@ public class WebDriverFactory extends WebDriverObject{
         }
 	}
 
-	public static void switchToAdditionalWebDriver(){
+	public void switchToAdditionalWebDriver(){
 		storedWebDriver = webDriver;
 		try{
-			webDriver=getWebDriver();
+			webDriver=initializeWebDriver(browser, os);
 		}catch(Exception e){
 			throw new RuntimeException("Starting webdriver failed \n" + e);
 		}
