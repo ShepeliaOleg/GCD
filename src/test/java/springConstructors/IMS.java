@@ -65,11 +65,11 @@ public class IMS extends WebDriverObject{
 		boolean allValuesAreCorrect=true;
 
 		for(int i=0; i < wplRegisterData.size(); i++){
-			allValuesAreCorrect=wplRegisterData.get(i).equals(imsRegisterData.get(i));
+			allValuesAreCorrect=wplRegisterData.get(i).equalsIgnoreCase(imsRegisterData.get(i));
 			if(allValuesAreCorrect == false){
 				String errorMessage="\n Error in line " + i + "\n";
 				for(int x=0; x < wplRegisterData.size(); x++){
-					errorMessage=errorMessage.concat("(" + x + ") - " + wplRegisterData.get(x) + " = " + imsRegisterData.get(x) + "\n");
+					errorMessage=errorMessage.concat("<div>(" + x + ") - " + wplRegisterData.get(x) + " = " + imsRegisterData.get(x) + "</div>\n");
 				}
 				WebDriverUtils.runtimeExceptionWithLogs(errorMessage);
 			}

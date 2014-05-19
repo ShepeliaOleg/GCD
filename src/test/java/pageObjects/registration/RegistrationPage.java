@@ -211,6 +211,10 @@ public class RegistrationPage extends AbstractPage{
 		WebDriverUtils.clearAndInputTextToField(FIELD_ADDRESS1_XP, address);
 	}
 
+    private void fillAddress2(String address){
+        WebDriverUtils.clearAndInputTextToField(FIELD_ADDRESS2_XP, address);
+    }
+
 	private void fillHouse(String house){
 		WebDriverUtils.clearAndInputTextToField(FIELD_HOUSE_XP, house);
 	}
@@ -373,6 +377,7 @@ public class RegistrationPage extends AbstractPage{
 		fillCountry(userData.getCountry());
 		fillCity(userData.getCity());
 		fillAddress(userData.getAddress());
+        fillAddress2(userData.getAddress2());
 		//
 		fillHouse(userData.getHouse());
 		fillPostCode(userData.getPostCode());
