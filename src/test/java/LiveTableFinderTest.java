@@ -25,53 +25,53 @@ public class LiveTableFinderTest extends AbstractTest{
 	@Qualifier("userData")
 	private UserData defaultUserData;
 
-	/*2. Choose game section – scope selection (check and uncheck categories) - should be made for all the categories*/
-	@Test(groups = {"regression"})
-	public void clickCheckboxesAndCheckGameTypesDisappear(){
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		boolean result=true;
-		for(int i=1; i <= liveCasinoPage.getNumberOfCheckBoxes(); i++){
-			liveCasinoPage.clickCheckbox(i);
-			boolean uncheckedVisible=liveCasinoPage.isCheckboxResultsVisible(i);
-			liveCasinoPage.clickCheckbox(i);
-			boolean checkedVisible=liveCasinoPage.isCheckboxResultsVisible(i);
-			if(uncheckedVisible || !checkedVisible){
-				result=false;
-				break;
-			}
-		}
-		Assert.assertTrue(result);
-	}
-
-    /*3. Find a table – sorting by Game Name*/
-	@Test(groups = {"regression"})
-	public void sortingNameColumnCorrectlyWorks(){
-        LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		liveCasinoPage.sortName();
-		String initialName=liveCasinoPage.getNameElement(1);
-		liveCasinoPage.sortName();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getNameElement(liveCasinoPage.getNumberOfRows())));
-	}
-
-    /*4. Find a table – sorting by game type*/
-	@Test(groups = {"regression"})
-	public void sortingGameTypeColumnCorrectlyWorks(){
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		liveCasinoPage.sortGameType();
-		String initialName=liveCasinoPage.getGameTypeElement(1);
-		liveCasinoPage.sortGameType();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getGameTypeElement(liveCasinoPage.getNumberOfRows())));
-	}
-
-    /*5. Find a table – sorting by dealer’s name*/
-	@Test(groups = {"regression"})
-	public void sortingDealersNameColumnCorrectlyWorks(){
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		liveCasinoPage.sortDealerName();
-		String initialName=liveCasinoPage.getDealerName(1);
-		liveCasinoPage.sortDealerName();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getDealerName(liveCasinoPage.getNumberOfRows())));
-	}
+//	/*2. Choose game section – scope selection (check and uncheck categories) - should be made for all the categories*/
+//	@Test(groups = {"regression"})
+//	public void clickCheckboxesAndCheckGameTypesDisappear(){
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		boolean result=true;
+//		for(int i=1; i <= liveCasinoPage.getNumberOfCheckBoxes(); i++){
+//			liveCasinoPage.clickCheckbox(i);
+//			boolean uncheckedVisible=liveCasinoPage.isCheckboxResultsVisible(i);
+//			liveCasinoPage.clickCheckbox(i);
+//			boolean checkedVisible=liveCasinoPage.isCheckboxResultsVisible(i);
+//			if(uncheckedVisible || !checkedVisible){
+//				result=false;
+//				break;
+//			}
+//		}
+//		Assert.assertTrue(result);
+//	}
+//
+//    /*3. Find a table – sorting by Game Name*/
+//	@Test(groups = {"regression"})
+//	public void sortingNameColumnCorrectlyWorks(){
+//        LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		liveCasinoPage.sortName();
+//		String initialName=liveCasinoPage.getNameElement(1);
+//		liveCasinoPage.sortName();
+//		Assert.assertTrue(initialName.equals(liveCasinoPage.getNameElement(liveCasinoPage.getNumberOfRows())));
+//	}
+//
+//    /*4. Find a table – sorting by game type*/
+//	@Test(groups = {"regression"})
+//	public void sortingGameTypeColumnCorrectlyWorks(){
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		liveCasinoPage.sortGameType();
+//		String initialName=liveCasinoPage.getGameTypeElement(1);
+//		liveCasinoPage.sortGameType();
+//		Assert.assertTrue(initialName.equals(liveCasinoPage.getGameTypeElement(liveCasinoPage.getNumberOfRows())));
+//	}
+//
+//    /*5. Find a table – sorting by dealer’s name*/
+//	@Test(groups = {"regression"})
+//	public void sortingDealersNameColumnCorrectlyWorks(){
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		liveCasinoPage.sortDealerName();
+//		String initialName=liveCasinoPage.getDealerName(1);
+//		liveCasinoPage.sortDealerName();
+//		Assert.assertTrue(initialName.equals(liveCasinoPage.getDealerName(liveCasinoPage.getNumberOfRows())));
+//	}
 
 	/*6. Find a table – launch game as a player and play*/
 	@Test(groups = {"regression"})
@@ -84,38 +84,36 @@ public class LiveTableFinderTest extends AbstractTest{
 		Assert.assertTrue(isUrlValid);
 	}
 
-	/*7. Find a table – launch game as a guest, login and play*/
-	@Test(groups = {"regression"})
-	public void loggedOutUserPlayGame(){
-        UserData userData = defaultUserData.getRegisteredUserData();
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.liveTableFinder);
-		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
-		LoginPopup loginPopup=(LoginPopup) liveCasinoPage.clickPlay(index, false);
-		HomePage homePage = loginPopup.login(userData);
-		GameLaunchPopup gameLaunchPopup = homePage.switchToGameWindow();
-		boolean isUrlValid=gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.closePopup();
-		Assert.assertTrue(isUrlValid);
-	}
-
-    /*8. Find a table – View Info about a dealer*/
-	@Test(groups = {"regression"})
-	public void checkDealerImagesAppearInPopup(){
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
-		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
-		Assert.assertTrue(dealerImagePopup.imageNotNull());
-	}
-
-    /*9. Verify dealer's name inside of Info popup*/
-	@Test(groups = {"regression"})
-	public void checkDealerNameFromListCorrespondsToDealerNameInPopup(){
-		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
-		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
-		String dealerName=liveCasinoPage.getDealerName(index);
-		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
-		Assert.assertTrue(dealerName.equalsIgnoreCase(dealerImagePopup.getDealerName()));
-	}
-
-
+//	/*7. Find a table – launch game as a guest, login and play*/
+//	@Test(groups = {"regression"})
+//	public void loggedOutUserPlayGame(){
+//        UserData userData = defaultUserData.getRegisteredUserData();
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.liveTableFinder);
+//		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
+//		LoginPopup loginPopup=(LoginPopup) liveCasinoPage.clickPlay(index, false);
+//		HomePage homePage = loginPopup.login(userData);
+//		GameLaunchPopup gameLaunchPopup = homePage.switchToGameWindow();
+//		boolean isUrlValid=gameLaunchPopup.isUrlValid();
+//		gameLaunchPopup.closePopup();
+//		Assert.assertTrue(isUrlValid);
+//	}
+//
+//    /*8. Find a table – View Info about a dealer*/
+//	@Test(groups = {"regression"})
+//	public void checkDealerImagesAppearInPopup(){
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
+//		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
+//		Assert.assertTrue(dealerImagePopup.imageNotNull());
+//	}
+//
+//    /*9. Verify dealer's name inside of Info popup*/
+//	@Test(groups = {"regression"})
+//	public void checkDealerNameFromListCorrespondsToDealerNameInPopup(){
+//		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
+//		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
+//		String dealerName=liveCasinoPage.getDealerName(index);
+//		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
+//		Assert.assertTrue(dealerName.equalsIgnoreCase(dealerImagePopup.getDealerName()));
+//	}
 }

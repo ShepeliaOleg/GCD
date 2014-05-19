@@ -26,8 +26,8 @@ public class LiveCasinoPage extends AbstractPage{
 	private String labelNameXP=								"//*[@class='game-name']";
 	private String labelGameTypeXP=							"//*[@class='game-type']";
 	private String labelDealerXP=							"//*[@class='game-info']";
-	private String buttonPlayXP=							"//td//p/a";
-	private String buttonInfoXP=							"//td/a";
+	private String buttonPlayXP=							"//td[4]//p/a";
+	private String buttonInfoXP=							"//td[3]//p/a";
 
 	public LiveCasinoPage(){
 		super(new String[]{ROOT_XP, TABLES_XP, FILTER_XP});
