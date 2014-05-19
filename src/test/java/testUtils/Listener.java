@@ -292,12 +292,19 @@ public class Listener extends TestListenerAdapter{
         String spoilerId = "spoiler_id_"+name+"";
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
-
-            return fullException[0]+
-                    " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                    " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Logs]</a>" +
-                    "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
-                    " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+               if(fullException.length>1){
+                   return fullException[0]+
+                           " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
+                           " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Logs]</a>" +
+                           "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
+                           " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+               }else{
+                   return "Uncaught Error"+
+                           " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
+                           " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
+                           "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
+                           " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[0]+"</div>";
+               }
         }else{
             return "Uncaught Error"+
                     " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
