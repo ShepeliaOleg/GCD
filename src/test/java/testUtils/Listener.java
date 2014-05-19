@@ -288,29 +288,15 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
-        String showId = "show_id_"+name+"";
-        String spoilerId = "spoiler_id_"+name+"";
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
                if(fullException.length>1){
-                   return fullException[0]+
-                           " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                           " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Logs]</a>" +
-                           "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
-                           " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[1]+"</div>";
+                   return fullException[0]+ spoilerText(name, fullException[1]);
                }else{
-                   return "Uncaught Error"+
-                           " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                           " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
-                           "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
-                           " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+fullException[0]+"</div>";
+                   return "Uncaught Error"+ spoilerText(name, fullException[0]);
                }
         }else{
-            return "Uncaught Error"+
-                    " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                    " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
-                    "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
-                    " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+exc+"</div>";
+            return "Uncaught Error"+ spoilerText(name, exc);
         }
     }
 
@@ -318,5 +304,14 @@ public class Listener extends TestListenerAdapter{
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_'at'_HH_mm");
         return "/" + format.format(cal.getTime());
+    }
+
+    private String spoilerText(String name, String message){
+        String showId = "show_id_"+name+"";
+        String spoilerId = "spoiler_id_"+name+"";
+        return " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
+                " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
+                "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
+                " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+message+"</div>";
     }
 }

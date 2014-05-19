@@ -94,6 +94,7 @@ public class NavigationUtils extends WebDriverObject{
                 if(isLoggedIn==true){
                     abstractPage.logout();
                 }
+                WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case loggedIn:
                 if(isLoggedIn==true){

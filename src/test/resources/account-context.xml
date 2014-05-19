@@ -29,8 +29,8 @@
         <property name="verificationAnswer" value="Internet"/>
         <property name="currency" value="GBP"/>
         <property name="coupon" value="Test"/>
-        <property name="balanceMain"  value="£0.00"/>
-        <property name="balanceTotal" value="£0.00"/>
+        <property name="balanceMain"  value="£5.00"/>
+        <property name="balanceTotal" value="£5.00"/>
     </bean>
 
 </beans>

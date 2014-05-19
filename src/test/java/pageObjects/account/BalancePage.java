@@ -32,6 +32,10 @@ public class BalancePage extends AbstractPage{
 	}
 
 	public boolean BalancesAreEqualTo(UserData userData){
+        String main1 = getMainBalance();
+        String main2 = userData.getBalanceMain();
+        String total1 = getTotalBalance();
+        String total2 = userData.getBalanceTotal();
 		boolean main=getMainBalance().equals(userData.getBalanceMain());
 		boolean total=getTotalBalance().equals(userData.getBalanceTotal());
 		return (main && total);

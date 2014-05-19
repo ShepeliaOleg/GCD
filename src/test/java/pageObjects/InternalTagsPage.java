@@ -13,14 +13,14 @@ import java.util.HashMap;
 public class InternalTagsPage extends AbstractPage{
 
 	private static final String ROOT_XP=				"//*[@class='portlet-title-text']";
-	private static final String ARTICLE_XP=				"//*[@class='journal-content-article']";
-	private static final String MULTIVIEW_ARTICLE_XP=	"//*[@class='journal-content-article']";
+	private static final String ARTICLE_XP=				"//div[contains(@id, 'article')]";
+	private static final String MULTIVIEW_ARTICLE_XP=	"//div[contains(@id, 'multiview')]";
 	private static final String[] INTERNAL_TAGS = 		{"casino-gaming-balance", "bingo-gaming-balance",
 														"poker-gaming-balance", "sportsbook-gaming-balance", "total-bonus-balance", "withdrawable-balance",
-														"internal-wallet-total-real-balance", "user-currency", "user-name", "messages", "comp-points", "first-name"};
+														"internal-wallet-total-real-balance", "user-currency", "user-name", "messages", "comp-points", "user-first-name", "user-last-name"};
 	private static final String[] GUEST_TAGS = 			{"[CASINO_GAMING_BALANCE]","[BINGO_GAMING_BALANCE]",
 														"[POKER_GAMING_BALANCE]","[SPORTSBOOK_GAMING_BALANCE]","[TOTAL_BONUS_BALANCE]","[WITHDRAWABLE_BALANCE]",
-														"[INTERNAL_WALLET_TOTAL_REAL_BALANCE]","£","-","-","-","-"};
+														"[INTERNAL_WALLET_TOTAL_REAL_BALANCE]","£","-","-","-","-","-"};
 
 	public InternalTagsPage(){
 		super(new String[]{ROOT_XP});
@@ -37,7 +37,7 @@ public class InternalTagsPage extends AbstractPage{
 	private HashMap getTags(String base){
 		HashMap map = new HashMap<String, String>();
 		for(String tag:INTERNAL_TAGS){
-			map.put(tag, getInternaltagValue(tag, base));
+			map.put(tag, getInternaltagValue(tag, base).replace(",", ""));
 		}
 		return map;
 	}
@@ -69,7 +69,7 @@ public class InternalTagsPage extends AbstractPage{
 		boolean hasErrors = false;
 		for(int i=0;i<INTERNAL_TAGS.length;i++){
 			if(!tagsPage.get(INTERNAL_TAGS[i]).equals(GUEST_TAGS[i])){
-				result = result + " Expected: " + GUEST_TAGS[i] + " Actual result: " + tagsPage.get(INTERNAL_TAGS[i]);
+				result = result+"<div> Expected: "+GUEST_TAGS[i]+" | Actual: "+tagsPage.get(INTERNAL_TAGS[i]+"</div>");
 				hasErrors = true;
 			}
 		}
@@ -83,7 +83,7 @@ public class InternalTagsPage extends AbstractPage{
 		boolean hasErrors = false;
 		for(int i=0;i<INTERNAL_TAGS.length;i++){
 			if(!tagsPage.get(INTERNAL_TAGS[i]).equals(tagsIms.get(INTERNAL_TAGS[i]))){
-				result = result + " Expected: " + tagsIms.get(INTERNAL_TAGS[i]) + " Actual result: " + tagsPage.get(INTERNAL_TAGS[i]);
+				result = result+"<div> Expected: "+tagsIms.get(INTERNAL_TAGS[i])+" | Actual: "+tagsPage.get(INTERNAL_TAGS[i])+"</div>";
 				hasErrors = true;
 			}
 		}

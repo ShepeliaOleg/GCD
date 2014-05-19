@@ -71,7 +71,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		hashMap.put("user-currency", getCurrencySign());
 		hashMap.put("user-name", getUsername());
 		hashMap.put("comp-points", getCompPoints());
-        hashMap.put("first-name", getFirstName());
+        hashMap.put("user-first-name", getFirstName());
+        hashMap.put("user-last-name", getLastName());
 
 		return hashMap;
 	}

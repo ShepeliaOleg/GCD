@@ -11,6 +11,7 @@ import springConstructors.IMS;
 import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 
 import java.util.HashMap;
 
@@ -57,7 +58,8 @@ public class InternalTagsTest extends AbstractTest{
     /*4. Balance is valid in balance portlet*/
 	@Test(groups = {"regression"})
 	public void validBalanceCashier(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
 		BalancePage balancePortlet= (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance, userData);
 		Assert.assertTrue(balancePortlet.BalancesAreEqualTo(userData));
 	}
