@@ -336,7 +336,9 @@ public class RegistrationTest extends AbstractTest{
 		List<String> fullAddressActual = registrationPage.fillAutoByPostCode("SE17RL");
 		List<String> fullAddressExpected = Arrays.asList("London", "35-41 Lower Marsh", "", "35-41");
 		boolean autofilledFieldsAreEditable = registrationPage.autofilledFieldsAreEditable();
-		Assert.assertTrue(fullAddressActual.equals(fullAddressExpected) == true && autofilledFieldsAreEditable == true);
+        if(fullAddressActual.equals(fullAddressExpected) == false || autofilledFieldsAreEditable == false){
+            WebDriverUtils.runtimeExceptionWithLogs("<div>Actual: "+fullAddressActual+" </div><div>Expected: "+fullAddressExpected+"</div><div>Editable: "+autofilledFieldsAreEditable+" | Expected: True</div>");
+        }
 	}
 
 //	public void affiliateSupport(){

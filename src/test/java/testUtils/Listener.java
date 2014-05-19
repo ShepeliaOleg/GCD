@@ -310,7 +310,7 @@ public class Listener extends TestListenerAdapter{
         String showId = "show_id_"+name+"";
         String spoilerId = "spoiler_id_"+name+"";
         return " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[Full Stacktrace]</a>" +
+                " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[More]</a>" +
                 "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
                 " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+message+"</div>";
     }
