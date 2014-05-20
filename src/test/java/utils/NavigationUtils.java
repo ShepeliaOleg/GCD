@@ -141,7 +141,7 @@ public class NavigationUtils extends WebDriverObject{
 		}else if(WebDriverUtils.isVisible(WelcomePopup.BUTTON_OK_XP, 0)){
 		    return processWelcomePopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
-            processLoginPopup(exceptPage);
+            return processLoginPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(AfterRegistrationPopup.BUTTON_DEPOSIT_XP, 0)){
 			return processAfterRegistrationPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.TITLE_XP, 0)){
@@ -157,7 +157,6 @@ public class NavigationUtils extends WebDriverObject{
 		}else{
 			return null;
 		}
-		return null;
 	}
 
     private static WelcomePopup processWelcomePopup(Page exceptPage){
