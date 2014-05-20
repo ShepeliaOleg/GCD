@@ -11,10 +11,10 @@ import utils.WebDriverUtils;
 public class OkBonusPopup extends AbstractPopup{
 
 	public static final String BUTTON_OK= 	ROOT_XP + "//*[@class='ok']";
-	public static final String BONUS_TEXT= 	ROOT_XP + "//div[contains(text(), 'Congratulations, you have just received')]";
+	public static final String LABEL_BONUS_TEXT = 	ROOT_XP + "//div[contains(text(), 'Congratulations, you have just received')]";
 
 	public OkBonusPopup(){
-		super(new String[]{BONUS_TEXT});
+		super(new String[]{LABEL_BONUS_TEXT});
 	}
 
 	public void close(){
