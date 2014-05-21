@@ -344,7 +344,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     @Test(groups = {"regression"})
-	public void affiliateSupport(){
+	public void affiliateSupportCookie(){
         String advertiser="advert1";
         String banner="v2";
         String profile="v3";
@@ -358,6 +358,21 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
 	}
+
+    @Test(groups = {"regression"})
+    public void affiliateSupportURL(){
+        String advertiser="advert1";
+        String banner="v2";
+        String profile="v3";
+        String url="v4";
+        String customTitle="BTAG";
+        String customValue="12333";
+        UserData userData = defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+    }
 
     /*NEGATIVE*/
 
