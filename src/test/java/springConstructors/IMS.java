@@ -77,6 +77,11 @@ public class IMS extends WebDriverObject{
 		return allValuesAreCorrect;
 	}
 
+    public void validateAffiliate(String username, String advert, String banner, String profile, String url, String customTitle, String customValue){
+
+        navigateToPlayedDetails(username).checkAffiliateData(advert, profile, customTitle, customValue, banner, url);
+    }
+
 	public IMSPlayerDetailsPage navigateToPlayedDetails(String username){
 		return navigateToIMS().clickPlayerManagement().clickPlayerSearch().search(username);
 	}

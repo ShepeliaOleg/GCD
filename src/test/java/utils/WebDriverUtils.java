@@ -12,6 +12,7 @@ import utils.logs.Log;
 import utils.logs.LogUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -336,6 +337,12 @@ public class WebDriverUtils extends WebDriverObject{
     public static void clearCookies(){
         webDriver.manage().deleteAllCookies();
     }
+
+    public static void addCookie(String name, String value, String domain, String path, Date expiry){
+        Cookie cookie = new Cookie(name, value, domain, path, expiry);
+        webDriver.manage().addCookie(cookie);
+    }
+
 
 	public static String getCurrentUrl(){
 		return webDriver.getCurrentUrl();
