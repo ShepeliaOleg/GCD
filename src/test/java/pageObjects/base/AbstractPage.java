@@ -5,6 +5,7 @@ import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
 import pageObjects.account.MyAccountPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
+import pageObjects.forgotPassword.ForgotUsernamePopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.header.Header;
@@ -79,6 +80,9 @@ public class AbstractPage extends AbstractPageObject{
 		return loggedOutHeader().navigateToForgotPasswordPopup();
 	}
 
+    public ForgotUsernamePopup navigateToForgotUsername() {
+        return navigateToForgotPassword().switchToForgotUsernamePopup();
+    }
 	public RegistrationPage navigateToRegistration(){
 		return loggedOutHeader().openRegistrationForm();
 	}

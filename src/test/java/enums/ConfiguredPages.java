@@ -13,6 +13,7 @@ public enum ConfiguredPages{
     changeMyDetails("myaccount1/update-my-details"),
     changeMyPassword("myaccount1/change-my-password"),
     forgotPassword("forgotpassword"),
+    forgotUsername("forgotpassword"),
     gamesCasinoPage("casino"),
     gamesList("list"),
 	gamesStyleOne("style1_slider"),

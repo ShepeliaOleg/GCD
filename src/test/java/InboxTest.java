@@ -28,9 +28,13 @@ public class InboxTest extends AbstractTest{
 	@Qualifier("mailQ")
 	private MailQ mailQ;
 
-	@Autowired
-	@Qualifier("mailinator")
-	private MailService mailService;
+    @Autowired
+    @Qualifier("mailinator")
+    private MailService mailService;
+
+    @Autowired
+    @Qualifier("emailValidationRule")
+    private ValidationRule emailValidationRule;
 
 	@Autowired
 	@Qualifier("emailSubjectValidationRule")
@@ -60,8 +64,7 @@ public class InboxTest extends AbstractTest{
 	public void checkReplyIsReceivedFromMailQ(){
         UserData userData = defaultUserData.getRandomUserData();
         String emailText = emailSubjectValidationRule.generateValidString();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
         PortalUtils.registerUser(userData);
 		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
@@ -77,8 +80,7 @@ public class InboxTest extends AbstractTest{
 	public void checkMessageReceivedFromMailQ(){
         UserData userData = defaultUserData.getRandomUserData();
         String emailText = emailSubjectValidationRule.generateValidString();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
         PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
@@ -120,8 +122,7 @@ public class InboxTest extends AbstractTest{
 	public void sendMessageFromMailQAndCheckSubjectAndText(){
 		String emailText = emailSubjectValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
 		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
@@ -163,8 +164,7 @@ public class InboxTest extends AbstractTest{
 	public void deleteReceivedMessageFromListInInbox(){
 		String emailText = emailSubjectValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
 		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
@@ -182,8 +182,7 @@ public class InboxTest extends AbstractTest{
 	public void deleteReceivedMessageFromViewMessagePopupInInbox(){
 		String emailText = emailSubjectValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
 		PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
@@ -214,14 +213,13 @@ public class InboxTest extends AbstractTest{
 	public void checkMessageIsReceivedOnPlayerEmail(){
 		String emailText = emailSubjectValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 		PortalUtils.registerUser(userData);
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
-		mailService.navigateToInbox(username).waitForEmail();
+		mailService.navigateToInbox(email).waitForEmail();
 		Assert.assertTrue(true) ;
 	}
 
@@ -230,8 +228,7 @@ public class InboxTest extends AbstractTest{
 	public void checkReplyIsSentToMailQ(){
 		String emailText = emailSubjectValidationRule.generateValidString();
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = emailValidationRule.generateValidString();
 		userData.setEmail(email);
         PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, false, true);

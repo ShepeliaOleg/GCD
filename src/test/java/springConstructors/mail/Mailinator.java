@@ -12,7 +12,7 @@ public class Mailinator extends MailService{
     }
 
 	@Override
-	public MailinatorPage navigateToInbox(String emailOrUsername){
-		return (MailinatorPage) super.navigateToInbox(emailOrUsername);
+	public MailinatorPage navigateToInbox(String email){
+		return (MailinatorPage) super.navigateToInbox(email);
 	}
 }

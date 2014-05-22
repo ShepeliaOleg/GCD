@@ -12,7 +12,7 @@ public class Spamavert extends MailService{
     }
 
 	@Override
-	public SpamavertPage navigateToInbox(String emailOrUsername){
-		return (SpamavertPage) super.navigateToInbox(emailOrUsername);
+	public SpamavertPage navigateToInbox(String email){
+		return (SpamavertPage) super.navigateToInbox(email);
 	}
 }

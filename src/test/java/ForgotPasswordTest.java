@@ -80,7 +80,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
         boolean successfulPopupVisible=forgotPasswordPopup.confirmationPopupVisible();
 
@@ -92,8 +92,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void validPasswordRecoveryEmailReceived(){
         // prepare userdata
 		UserData userData=defaultUserData.getRandomUserData();
-        String username=userData.getUsername();
-		String email= mailService.generateEmail(username);
+        String email= mailService.generateEmail();
 		userData.setEmail(email);
 
         // new user registration
@@ -102,9 +101,9 @@ public class ForgotPasswordTest extends AbstractTest{
 		// change password for newly registered user
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup=homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 		boolean successfulPopupVisible=forgotPasswordPopup.confirmationPopupVisible();
-        MailServicePage mailServicePage = mailService.navigateToInbox(username);
+        MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
         Assert.assertTrue(successfulPopupVisible == true);
 	}
@@ -114,8 +113,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void ableToLoginWithNewPassword() {
 		// prepare userdata
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
         // new user registration
@@ -124,11 +122,11 @@ public class ForgotPasswordTest extends AbstractTest{
 		// change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 		boolean successfulPopupVisible = forgotPasswordPopup.confirmationPopupVisible();
 
 		// receive email and get password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
 		userData.setPassword(password);
@@ -144,8 +142,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void setNewPasswordAfterRecovery() {
 		// prepare userdata
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
 		// new user registration
@@ -154,11 +151,11 @@ public class ForgotPasswordTest extends AbstractTest{
 		// change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		forgotPasswordPopup.recoverPassword(userData);
+		forgotPasswordPopup.recover(userData);
 		boolean successfulPopupVisible = forgotPasswordPopup.confirmationPopupVisible();
 
 		// receive email and get password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
 		userData.setPassword(password);
@@ -180,8 +177,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void setNewPasswordAfterRecoveryandLogin() {
 		// prepare userdata
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
 		// new user registration
@@ -190,11 +186,11 @@ public class ForgotPasswordTest extends AbstractTest{
 		// change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		forgotPasswordPopup.recoverPassword(userData);
+		forgotPasswordPopup.recover(userData);
 		boolean successfulPopupVisible = forgotPasswordPopup.confirmationPopupVisible();
 
 		// receive email and get password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
 		userData.setPassword(password);
@@ -297,7 +293,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
         // get and verify logs
         Log log = LogUtils.getCurrentLogs(logCategories);
@@ -313,8 +309,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void checkPasswordIsChangedInIMS() {
 		// prepare userdata
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
 		// new user registration
@@ -323,11 +318,11 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 		boolean successfulPopupVisible = forgotPasswordPopup.confirmationPopupVisible();
 
 		// receive email and get password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
 		userData.setPassword(password);
@@ -352,7 +347,7 @@ public class ForgotPasswordTest extends AbstractTest{
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 
 		// check that password changed in ims
-		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(username);
+		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
 		String imsPassword = imsPlayerDetailsPage.getPassword();
 		Assert.assertTrue(imsPassword.equals(newPassword));
 	}
@@ -369,7 +364,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		boolean validationErrorVisible=forgotPasswordPopup.validationErrorMessageVisible();
 
@@ -386,7 +381,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		boolean validationErrorVisible=forgotPasswordPopup.validationErrorIconVisible();
 		Assert.assertTrue(validationErrorVisible);
@@ -402,7 +397,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		boolean validationErrorVisible=forgotPasswordPopup.validationErrorMessageVisible();
 		Assert.assertTrue(validationErrorVisible);
@@ -418,7 +413,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		boolean validationErrorVisible=forgotPasswordPopup.validationErrorMessageVisible();
 		Assert.assertTrue(validationErrorVisible);
@@ -436,7 +431,7 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		boolean successfulPopupVisible=forgotPasswordPopup.confirmationPopupVisible();
 
@@ -449,11 +444,10 @@ public class ForgotPasswordTest extends AbstractTest{
 
     /*6. Login with temporary password stops working after password is changed*/
 	@Test(groups = {"regression"})
-	public void tryToLoginWithTempPassAfterPassChanged() {
+	public void aaatryToLoginWithTempPassAfterPassChanged() {
         // prepare userdata
         UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
         // new user registration
@@ -462,10 +456,10 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
 		// get temporary password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String tempPassword = mailServicePage.getPasswordFromLetter();
 
@@ -510,9 +504,8 @@ public class ForgotPasswordTest extends AbstractTest{
 	public void newPasswordUsedRecently(){
         // prepare userdata
 		UserData userData = defaultUserData.getRandomUserData();
-		String username = userData.getUsername();
 		String oldPassword = userData.getPassword();
-		String email = mailService.generateEmail(username);
+		String email = mailService.generateEmail();
 		userData.setEmail(email);
 
         // new user registration
@@ -521,10 +514,10 @@ public class ForgotPasswordTest extends AbstractTest{
         // change password for newly registered user (forgotten password)
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPassword(userData);
+        forgotPasswordPopup.recover(userData);
 
         // get temporary password
-		MailServicePage mailServicePage = mailService.navigateToInbox(username);
+		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String tempPassword = mailServicePage.getPasswordFromLetter();
 
