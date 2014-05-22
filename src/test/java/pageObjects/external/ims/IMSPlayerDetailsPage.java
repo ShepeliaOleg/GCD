@@ -34,6 +34,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String LABEL_WITHDRAWABLE_BALANCE=					"//td[contains(text(), 'Withdrawable balance')]";
 	private static final String LABEL_TOTAL_BONUS_BALANCE=					"//td[contains(text(), 'Total bonus balance')]";
 	private static final String LABEL_IS_CREDIT_USER=						"//tr/td[preceding-sibling::td[contains(text(), 'Credit limit')]][1]";
+    private static final String LABEL_ADVERTISER =                          "//tr/td[preceding-sibling::td[contains(text(), 'Referrer advertiser:')]][1]";
 	private static final String LINK_CONTACT_PREFERENCES=					"//*[@id='contact_preferences']//a";
 	private static final String CHECKBOX_EMAIL=								"//input[@id='communicationoptouts[1][2]']";
 	private static final String CHECKBOX_SMS=								"//input[@id='communicationoptouts[2][2]']";
@@ -55,6 +56,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String FIELD_VERIFICATION_ANSWER=					"//*[@id='verificationanswer']";
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
+    private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
 
 	public IMSPlayerDetailsPage(){
 		super(new String[]{ROOT_XP, BLOCK_XP, BALANCES_XP});
@@ -98,6 +100,39 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		data.add(getCurrency());
 		return data;
 	}
+
+    public void checkAffiliateData(String advertiser, String profile, String bTag, String bTagRes, String banner, String url){
+        checkAdvertiser(advertiser+" "+"("+profile+")");
+        checkBTAG(bTag, bTagRes);
+        checkBanner(advertiser, banner);
+    }
+
+    private void checkBanner(String advertiser, String banner){
+        WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
+        String imsBanner = new IMSAffiliatePage().navigateToAffiliateIframe().getLabelBanner();
+        if(!imsBanner.equals(banner)){
+            WebDriverUtils.runtimeExceptionWithLogs("Banner parameter was not correct - <div>Expected: "+banner+"</div><div>Actual: "+imsBanner+"</div>");
+        }
+    }
+
+    private void checkAdvertiser(String advertiser){
+        String imsAdvertiser=getAdvertiser();
+        if(!advertiser.equals(imsAdvertiser)){
+            WebDriverUtils.runtimeExceptionWithLogs("Advertiser was wrong. <div>Expected: "+advertiser+"Actual: "+imsAdvertiser+"</div>");
+        }
+    }
+
+    private String getAdvertiser(){
+        return getTextAndTrim(LABEL_ADVERTISER);
+    }
+
+    private void checkBTAG(String bTag, String bTagRes){
+        WebDriverUtils.click(LINK_CUSTOM_FIELDS);
+        if(!WebDriverUtils.isVisible("//*[contains(text(), '"+bTag+"')]")||!WebDriverUtils.isVisible("//*[contains(text(), '"+bTagRes+"')]")){
+            WebDriverUtils.runtimeExceptionWithLogs("Parameters in custom fields were not found");
+        }
+    }
+
 
 	private String getUsername(){
 		return getTextAndTrim(LABEL_USERNAME);

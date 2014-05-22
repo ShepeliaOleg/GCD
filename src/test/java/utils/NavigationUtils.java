@@ -140,7 +140,7 @@ public class NavigationUtils extends WebDriverObject{
 		if(WebDriverUtils.isVisible(LoaderPopup.ANIMATION_XP, 0)){
 			WebDriverUtils.waitForElementToDisappear(LoaderPopup.ANIMATION_XP, 30);
 			return null;
-		}else if(WebDriverUtils.isVisible(WelcomePopup.BUTTON_OK_XP, 0)){
+		}else if(WebDriverUtils.isVisible(WelcomePopup.LABEL_CONTENTS, 0)){
 		    return processWelcomePopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
             return processLoginPopup(exceptPage);
@@ -152,7 +152,7 @@ public class NavigationUtils extends WebDriverObject{
             return processTermsAndConditionsPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(ChangePasswordPopup.BUTTON_SUBMIT_XP, 0)){
             return processChangePasswordPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(OkBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)){
+		}else if(WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)){
 		    return processOkBonus(exceptPage);
 		}else if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
 			return processAcceptDecline(exceptPage);

@@ -13,10 +13,10 @@ public class BonusPage extends AbstractPage{
 	private static final String PROMOTION_CODE_PORTLET = 	"//section[contains(@id, 'promotioncode')]";
 	private static final String FIELD_PROMO= 				"//*[contains(@class, 'js-promo-value')]";
 	private static final String BUTTON_SUBMIT_PROMO = 		"//button[@type='submit']";
-	private static final String PROMOCODE = 				"PORTALFREE";
+	private static final String PROMOCODE = 				"AUTOFREE";
 	private static final String FREE_BONUS = 				"//a[@data-code='45508']";
 	private static final String OPT_IN = 					"//a[@data-code='45507']";
-	private static final String BUY_IN = 					"//a[@data-code='45508']";
+	private static final String BUY_IN = 					"//a[@data-code='45609']";
 
 	public BonusPage(){
 		super(new String[]{PROMOTION_CODE_PORTLET});
@@ -51,8 +51,8 @@ public class BonusPage extends AbstractPage{
 		return new OptOutPopup();
 	}
 
-	public FreeBonusPopup clickBuyIn(){
+	public BuyInPopup clickBuyIn(){
 		WebDriverUtils.click(BUY_IN);
-		return new FreeBonusPopup();
+		return new BuyInPopup();
 	}
 }

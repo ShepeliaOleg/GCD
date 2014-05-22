@@ -53,9 +53,13 @@ public class Listener extends TestListenerAdapter{
     @Override
     public void onStart(org.testng.ITestContext testContext){
         if(folder==null){
-            folder = createDateFolder();
-            outFolder = CUSTOM+folder;
-            indexFilename = outFolder+INDEX;
+            folder = "out/";
+            outFolder = CUSTOM+"/"+folder+"/";
+            indexFilename = CUSTOM+INDEX;
+            File index= new File(indexFilename);
+            if(index.exists()){
+                index.delete();
+            }
         }
         try{
             File index= new File(indexFilename);
@@ -96,7 +100,7 @@ public class Listener extends TestListenerAdapter{
         if(classname!=null){
             writeToIndex(classname, total, passed, failed, ims);
             try{
-                output = new PrintWriter(outFolder +"/"+classname+".html");
+                output = new PrintWriter(outFolder+classname+".html");
             }catch(Exception e){
                 e.printStackTrace();
             }
@@ -122,7 +126,7 @@ public class Listener extends TestListenerAdapter{
                 line = replaceStringWithInt(line, classname + "Passed", passed);
                 line = replaceStringWithInt(line, classname + "Failed", failed);
                 line = replaceStringWithInt(line, classname + "Ims", ims);
-                line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+classname, "><td><a href ='"+classname);
+                line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+folder+classname, "><td><a href ='"+folder+classname);
                 if (failed>0||ims>0){
                     line = paintRed(line, classname);
                 }
@@ -205,7 +209,7 @@ public class Listener extends TestListenerAdapter{
         output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
         for(String area:list){
-            output.println("<tr style=\"display:none;\"><td><a href ='" + area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
+            output.println("<tr style=\"display:none;\"><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
         output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>");
         output.println("</table>");
@@ -274,7 +278,7 @@ public class Listener extends TestListenerAdapter{
             webDriver = WebDriverFactory.getWebDriver();
             baseUrl = WebDriverFactory.getBaseUrl();
         }
-		String imageName = "/"+iTestResult.getName()+".jpg";
+		String imageName = iTestResult.getName()+".jpg";
 		File file = new File(outFolder +imageName);
 		File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
 		try  {
@@ -300,11 +304,11 @@ public class Listener extends TestListenerAdapter{
         }
     }
 
-    private String createDateFolder() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_'at'_HH_mm");
-        return "/" + format.format(cal.getTime());
-    }
+//    private String createDateFolder() {
+//        Calendar cal = Calendar.getInstance();
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_'at'_HH_mm");
+//        return "/" + format.format(cal.getTime());
+//    }
 
     private String spoilerText(String name, String message){
         String showId = "show_id_"+name+"";

@@ -20,12 +20,14 @@ import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
+import utils.core.WebDriverObject;
 import utils.logs.Log;
 import utils.logs.LogEntry;
 import utils.logs.LogUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -341,15 +343,36 @@ public class RegistrationTest extends AbstractTest{
         }
 	}
 
-//	public void affiliateSupport(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		HomePage homePage = NavigationUtils.navigateToPortal(true);
-//		RegistrationPage registrationPage = homePage.navigateToRegistration();
-//		WebDriverUtils.addCookie("banner_domainclick", "advert1,v2,v3,v4,BTAG:12333", baseUrl.toString(), new Date(2014,1,1)));
-//		homePage = (HomePage) registrationPage.registerUser(userData);
-//		WebDriverUtils.runtimeExceptionWithLogs(userData.getUsername());
-//
-//	}
+    @Test(groups = {"regression"})
+	public void affiliateSupportCookie(){
+        String advertiser="advert1";
+        String banner="v2";
+        String profile="v3";
+        String url="v4";
+        String customTitle="BTAG";
+        String customValue="12333";
+		UserData userData = defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+		WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
+        WebDriverUtils.refreshPage();
+		registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+	}
+
+    @Test(groups = {"regression"})
+    public void affiliateSupportURL(){
+        String advertiser="advert1";
+        String banner="v2";
+        String profile="v3";
+        String url="v4";
+        String customTitle="BTAG";
+        String customValue="12333";
+        UserData userData = defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+    }
 
     /*NEGATIVE*/
 

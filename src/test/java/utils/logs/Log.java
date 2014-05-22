@@ -39,9 +39,9 @@ public class Log{
 		}
 		for(int i=0;i<indexList.size(); i++){
 			if(i==(indexList.size()-1)){
-				logList.add(new LogEntry(fullLog.substring(indexList.get(i))));
+				logList.add(new LogEntry("<div>"+fullLog.substring(indexList.get(i))+"</div>"));
 			}else{
-				logList.add(new LogEntry(fullLog.substring(indexList.get(i), indexList.get(i+1))));
+				logList.add(new LogEntry("<div>"+fullLog.substring(indexList.get(i), indexList.get(i+1))+"</div>"));
 			}
 		}
 		return logList;

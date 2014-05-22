@@ -111,16 +111,17 @@ public class PushMessagesTest extends AbstractTest{
 	}
 
 	/*8. Push message for bonus buy in */
-//	@Test(groups = {"regression", "push"})
-//	public void pushMessageBuyIn(){
-//		UserData userData = defaultUserData.getRegisteredUserData();
-//		HomePage homePage=NavigationUtils.navigateToPortal(true).login(userData);
-//		String balance = homePage.getBalance();
-//		BuyInBonusPopup buyInBonusPopup = homePage.navigateToBonusPage().clickBuyIn();
-//		OkBonusPopup okBonusPopup = buyInBonusPopup.clickFreeBonus();
-//		homePage = okBonusPopup.close();
-//		Assert.assertTrue(homePage.compareBalances(balance)==10);
-//	}
+	@Test(groups = {"regression", "push"})
+	public void pushMessageBuyIn(){
+		UserData userData = defaultUserData.getRegisteredUserData();
+        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+		String balance = homePage.getBalance();
+        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
+		BuyInPopup buyInPopup = bonusPage.clickBuyIn();
+		BonusBuyInPopup bonusBuyInPopup = buyInPopup.clickBuyIn();
+		bonusBuyInPopup.confirmBuyIn();
+		Assert.assertTrue(homePage.compareBalances(balance)==20);
+	}
 
 	/*9. Push message for free bonus*/
 	@Test(groups = {"regression", "push"})

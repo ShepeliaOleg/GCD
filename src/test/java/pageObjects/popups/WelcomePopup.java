@@ -9,10 +9,11 @@ import utils.WebDriverUtils;
  */
 
 public class WelcomePopup extends AbstractPopup{
-	public static final String BUTTON_OK_XP=ROOT_XP + "//button[@class='ok']";
+	public static final String BUTTON_OK_XP=    ROOT_XP + "//button[@class='ok']";
+    public static final String LABEL_CONTENTS = ROOT_XP + "//p[contains(text(), 'Welcome, Player!')]";
 
 	public WelcomePopup(){
-		super(new String[]{BUTTON_OK_XP});
+		super(new String[]{BUTTON_OK_XP, LABEL_CONTENTS});
 	}
 
 	public void clickClose(){
