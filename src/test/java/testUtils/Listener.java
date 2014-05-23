@@ -85,6 +85,11 @@ public class Listener extends TestListenerAdapter{
         int failed = testContext.getFailedTests().getAllResults().size();
         int total = passed+failed;
         int ims = 0;
+        for(ITestResult result:testContext.getFailedTests().getAllResults()){
+            if (result.getThrowable().toString().contains("Registration/Login failed")){
+                ims++;
+            }
+        }
 		String classname=null;
 		if(!testContext.getPassedTests().getAllResults().isEmpty()){
 			for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
@@ -195,7 +200,7 @@ public class Listener extends TestListenerAdapter{
 
 
 	private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
-        output.println("<h2>Total: " + total + " Passed: " + passed + " Failed: " + failed + " IMS Issues: " + ims + "</h2>");
+        output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + ", out of them registration/login issues:" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Status</td><td>Screenshot</td><td>Error</td></tr>");
@@ -207,7 +212,7 @@ public class Listener extends TestListenerAdapter{
     private void createIndex(){
         output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Ims issues</td></tr>");
+        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Registration/Login Issues</td></tr>");
         for(String area:list){
             output.println("<tr style=\"display:none;\"><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
@@ -292,15 +297,19 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
+        String shortExc="Uncaught Error";
+        if(exc.contains(":")){
+            shortExc=exc.substring(0, exc.indexOf(":"));
+        }
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
                if(fullException.length>1){
                    return fullException[0]+ spoilerText(name, fullException[1]);
                }else{
-                   return "Uncaught Error"+ spoilerText(name, fullException[0]);
+                   return shortExc + spoilerText(name, fullException[0]);
                }
         }else{
-            return "Uncaught Error"+ spoilerText(name, exc);
+            return shortExc + spoilerText(name, exc);
         }
     }
 
