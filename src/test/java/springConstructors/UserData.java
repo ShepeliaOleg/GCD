@@ -3,7 +3,6 @@ package springConstructors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.validation.ValidationRule;
-
 import java.util.ArrayList;
 
 public class UserData{
@@ -13,24 +12,12 @@ public class UserData{
 	private ValidationRule usernameValidationRule;
 
 	@Autowired
-	@Qualifier("emailValidationRule")
-	private ValidationRule emailValidationRule;
-
-	@Autowired
 	@Qualifier("phoneValidationRule")
 	private ValidationRule phoneValidationRule;
 
 	@Autowired
 	@Qualifier("countryPhoneCodeValidationRule")
 	private ValidationRule countryPhoneCodeValidationRule;
-
-	@Autowired
-	@Qualifier("fullPhoneValidationRule")
-	private ValidationRule fullPhoneValidationRule;
-
-	@Autowired
-	@Qualifier("fullAddressValidationRule")
-	private ValidationRule fullAddressValidationRule;
 
 	@Autowired
 	@Qualifier("addressValidationRule")
@@ -44,14 +31,9 @@ public class UserData{
 	@Qualifier("postcodeValidationRule")
 	private ValidationRule postcodeValidationRule;
 
-
 	@Autowired
 	@Qualifier("cityValidationRule")
 	private ValidationRule cityValidationRule;
-
-	@Autowired
-	@Qualifier("nameValidationRule")
-	private ValidationRule nameValidationRule;
 
 	@Autowired
 	@Qualifier("defaults")

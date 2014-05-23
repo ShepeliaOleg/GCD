@@ -47,7 +47,7 @@ public class ReferAFriendTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void successfulMessageAppearedOnCorrectRequest() {
         String username1 = nameValidationRule.generateValidString();
-        String email1 = mailService.generateEmail(username1);
+        String email1 = emailValidationRule.generateValidString();
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.send();
@@ -59,7 +59,7 @@ public class ReferAFriendTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void recommendationEmailReceivedOnCorrectRequest(){
         String username = nameValidationRule.generateValidString();
-        String email = mailService.generateEmail(username);
+        String email = mailService.generateEmail();
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username, email);
 		referAFriendPage.send();
@@ -74,9 +74,9 @@ public class ReferAFriendTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void successfulMessageAppearedOnSendingMultipleUsersCorrectRequest(){
         String username1 = nameValidationRule.generateValidString();
-        String email1 = mailService.generateEmail(username1);
+        String email1 = emailValidationRule.generateValidString();
         String username2 = nameValidationRule.generateValidString();
-        String email2 = mailService.generateEmail(username2);
+        String email2 = emailValidationRule.generateValidString();
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
         referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.fillSecondRecipientInfo(username2, email2);
@@ -103,7 +103,7 @@ public class ReferAFriendTest extends AbstractTest{
 	public void failMessageAppearedOnSendingEmptyName(){
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		String username1 = nameValidationRule.generateValidString();
-		String email1 = mailService.generateEmail(username1);
+		String email1 = emailValidationRule.generateValidString();
 		referAFriendPage.fillFirstRecipientInfo("", email1);
 		referAFriendPage.send();
 		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
@@ -115,7 +115,7 @@ public class ReferAFriendTest extends AbstractTest{
 	public void successfulMessageAppearedOnSendingMultipleUsersIncorrectRequest(){
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		String username1 = nameValidationRule.generateValidString();
-		String email1 = mailService.generateEmail(username1);
+		String email1 = emailValidationRule.generateValidString();
 		String username2 = nameValidationRule.generateValidString();
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.fillSecondRecipientInfo(username2, email1);
@@ -128,7 +128,7 @@ public class ReferAFriendTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void failMessageAppearedOnSendingAlreadySentEmail(){
         String username1 = nameValidationRule.generateValidString();
-        String email1 = mailService.generateEmail(username1);
+        String email1 = emailValidationRule.generateValidString();
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.send();

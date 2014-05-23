@@ -1,26 +1,41 @@
 package springConstructors.mail;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.external.mail.MailServicePage;
 import pageObjects.external.mail.MailinatorPage;
 import pageObjects.external.mail.SpamavertPage;
+import springConstructors.validation.ValidationRule;
+import utils.NavigationUtils;
 import utils.RandomUtils;
+import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
 import java.net.URL;
 
 public abstract class MailService extends WebDriverObject{
 
+    @Autowired
+    @Qualifier("emailValidationRule")
+    private ValidationRule emailValidationRule;
+
     protected URL mailServiceUrl;
     protected String mailDomain;
 
-    public MailServicePage navigateToInbox(String emailOrUsername){
-		if (emailOrUsername.contains("@")) {
-            int index = emailOrUsername.indexOf("@");
-            emailOrUsername = emailOrUsername.substring(0, index);
+    private String getUsername(String email) {
+        String username = email;
+        if (email.contains("@")) {
+            int index = email.indexOf("@");
+            username = email.substring(0, index);
         }
+        return username;
+    }
 
-        webDriver.navigate().to(mailServiceUrl.toString().concat(emailOrUsername));
-		if (mailServiceUrl.toString().contains("spamavert")) {
+    public MailServicePage navigateToInbox(String email){
+        String username = getUsername(email);
+
+        WebDriverUtils.navigateToURL(mailServiceUrl.toString().concat(username));
+        if (mailServiceUrl.toString().contains("spamavert")) {
             return new SpamavertPage();
         } else
         if (mailServiceUrl.toString().contains("mailinator")) {
@@ -30,12 +45,10 @@ public abstract class MailService extends WebDriverObject{
         }
 	}
 
-//    public String generateEmail(){
-//        return "";
-//    }
-
-    public String generateEmail(String username){
-        return RandomUtils.generateEmail(username.replaceAll(" ", "").replaceAll("'", "").replaceAll(",", ""), mailDomain);
+    public String generateEmail(){
+        String email = emailValidationRule.generateValidString();
+        String username = getUsername(email);
+        return RandomUtils.generateEmail(username, mailDomain);
     }
 
 }

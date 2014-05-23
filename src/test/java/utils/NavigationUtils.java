@@ -14,6 +14,7 @@ import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
+import pageObjects.forgotPassword.ForgotUsernamePage;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
@@ -50,6 +51,7 @@ public class NavigationUtils extends WebDriverObject{
             case changeMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangeMyPasswordPage();
             case forgotPassword:                                return new ForgotPasswordPage();
+            case forgotUsername:                                return new ForgotUsernamePage();
             case gamesCasinoPage:
             case gamesFavourites:
             case gamesList:
