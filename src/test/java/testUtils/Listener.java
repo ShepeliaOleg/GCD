@@ -33,7 +33,7 @@ public class Listener extends TestListenerAdapter{
     private static final String ENV_REPLACER = "ENVIRONMENT";
 
 	String[] list =                        {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
-			"ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
+			"ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
 			"LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
 			"RegistrationTest", "ResponsibleGamingTest"};
 
