@@ -50,20 +50,20 @@ public class ForgotUsernameTest extends AbstractTest{
 	/*POSITIVE*/
 
 	/*1. Portlet is displayed in popup*/
-	@Test(groups = {"smoke"})
+	@Test(groups = {"broken"})
 	public void portletIsDisplayedOnPopup(){
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotUsernamePopup forgotUsernamePopup = homePage.navigateToForgotUsername();
 
 	}
     /*1. Portlet is displayed on page*/
-    @Test(groups = {"smoke"})
+    @Test(groups = {"broken"})
     public void portletIsDisplayedOnPage(){
         ForgotUsernamePage forgotUsernamePage = (ForgotUsernamePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.forgotUsername);
     }
 	
 	/*2. Submit correct data 3. Check confirmation popup*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"broken"})
 	public void validPasswordRecovery(){
         // prepare userdata
         UserData userData = defaultUserData.getRegisteredUserData().cloneUserData();
