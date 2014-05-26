@@ -156,7 +156,7 @@ public class AbstractPage extends AbstractPageObject{
 	}
 
 	public void waitForLogout(){
-		loggedInHeader().waitForLogout();
+		header().waitForLogout();
 	}
 
 }

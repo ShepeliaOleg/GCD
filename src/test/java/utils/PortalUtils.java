@@ -10,10 +10,6 @@ import springConstructors.UserData;
 
 public class PortalUtils {
 
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
-
     public static void registerUser(UserData userData){
         navigateToRegistration().registerUser(userData);
     }

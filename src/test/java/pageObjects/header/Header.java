@@ -1,6 +1,7 @@
 package pageObjects.header;
 
 import org.apache.commons.lang3.ArrayUtils;
+import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import utils.WebDriverUtils;
 
@@ -24,6 +25,11 @@ public class Header extends AbstractPageObject{
 	public boolean isLoggedIn(){
 		return WebDriverUtils.isVisible(LOGGED_IN_XP, 1);
 	}
+
+    public AbstractPage waitForLogout(){
+        WebDriverUtils.waitForElementToDisappear(LOGGED_IN_XP, 30);
+        return new AbstractPage();
+    }
 
 
 

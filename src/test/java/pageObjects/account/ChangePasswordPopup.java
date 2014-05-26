@@ -10,7 +10,7 @@ public class ChangePasswordPopup extends AbstractPopup{
 	private final static String LABEL_MESSAGE_ERROR_XP=				ROOT_XP+"//div[contains(@class,'error')]";
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@id='oldPassword']";
     private final static String INPUT_NEW_PASSWORD_XP =             "//*[@id='newPassword']";
-    private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@id='newPassword']";
+    private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@id='newPasswordVerification']";
 
 	public ChangePasswordPopup(){
 		super(new String[]{BUTTON_SUBMIT_XP});

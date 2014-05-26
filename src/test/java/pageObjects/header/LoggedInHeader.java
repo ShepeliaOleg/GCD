@@ -38,11 +38,6 @@ public class LoggedInHeader extends Header{
 		return waitForLogout();
 	}
 
-	public AbstractPage waitForLogout(){
-		WebDriverUtils.waitForElementToDisappear(LOGGED_IN_XP, 30);
-		return new AbstractPage();
-	}
-
 	public String getBalance(){
 		return WebDriverUtils.getElementText(LABEL_BALANCE_XP);
 	}
