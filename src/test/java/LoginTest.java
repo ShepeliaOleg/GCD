@@ -241,7 +241,7 @@ public class LoginTest extends AbstractTest{
 	}
 
 	/*14. Login logs*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"logs"})
 	public void loginLogs(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.LoginRequest,
 				LogCategory.LoginResponse,
@@ -263,7 +263,7 @@ public class LoginTest extends AbstractTest{
 	}
 
 	/*15. Logout logs*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"logs"})
 	public void logoutLogs(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.LogoutRequest};
 		UserData userData=defaultUserData.getRegisteredUserData();

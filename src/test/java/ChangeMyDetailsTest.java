@@ -149,7 +149,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	}
 
 	/*7. Logs*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"logs"})
 	public void logsChangeDetails(){
         UserData userData=defaultUserData.getRandomUserData();
         LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};

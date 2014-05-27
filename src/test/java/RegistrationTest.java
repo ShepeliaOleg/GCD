@@ -213,7 +213,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
 	/*#15. Logs registration*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"logs"})
 	public void checkLogParametersRegistration(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
 		UserData userData=defaultUserData.getRandomUserData();
@@ -235,7 +235,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
 	/*#16. Logs username check*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"logs"})
 	public void checkLogParametersUsername(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.CheckUsernameRequest, LogCategory.CheckUsernameResponse};
 		UserData userData=defaultUserData.getRandomUserData();
