@@ -149,19 +149,19 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
 	}
 
-    /*VALIDATION*/
-
-	/*1. Old password field validation*/
-	@Test(groups = {"validation"})
-	public void oldPasswordFieldValidation(){
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
-		changeMyPasswordPage.validateOldPassword(passwordValidationRule);
-	}
-
-    /*2. New password field validation*/
-	@Test(groups = {"validation"})
-	public void newPasswordFieldValidation(){
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
-		changeMyPasswordPage.validateNewPassword(passwordValidationRule);
-	}
+//    /*VALIDATION*/
+//
+//	/*1. Old password field validation*/
+//	@Test(groups = {"validation"})
+//	public void oldPasswordFieldValidation(){
+//        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+//		changeMyPasswordPage.validateOldPassword(passwordValidationRule);
+//	}
+//
+//    /*2. New password field validation*/
+//	@Test(groups = {"validation"})
+//	public void newPasswordFieldValidation(){
+//        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+//		changeMyPasswordPage.validateNewPassword(passwordValidationRule);
+//	}
 }
