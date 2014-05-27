@@ -35,7 +35,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String LABEL_TOTAL_BONUS_BALANCE=					"//td[contains(text(), 'Total bonus balance')]";
 	private static final String LABEL_IS_CREDIT_USER=						"//tr/td[preceding-sibling::td[contains(text(), 'Credit limit')]][1]";
     private static final String LABEL_ADVERTISER =                          "//tr/td[preceding-sibling::td[contains(text(), 'Referrer advertiser:')]][1]";
-	private static final String LINK_CONTACT_PREFERENCES=					"//*[@id='contact_preferences']//a";
+	private static final String LABEL_LOCK_REMOVED =                        "//*[contains(text(), 'Temporary Lock (NTries) has been removed.')]";
+    private static final String LINK_CONTACT_PREFERENCES=					"//*[@id='contact_preferences']//a";
 	private static final String CHECKBOX_EMAIL=								"//input[@id='communicationoptouts[1][2]']";
 	private static final String CHECKBOX_SMS=								"//input[@id='communicationoptouts[2][2]']";
 	private static final String CHECKBOX_DIRECT_MAIL=						"//input[@id='communicationoptouts[3][2]']";
@@ -56,6 +57,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String FIELD_VERIFICATION_ANSWER=					"//*[@id='verificationanswer']";
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
+    private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
     private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
 
 	public IMSPlayerDetailsPage(){
@@ -270,6 +272,12 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		imsChangePassPopup.changePassword(password);
 		imsChangePassPopup.closePopup();
 	}
+
+    public void resetFailedLogins(){
+        WebDriverUtils.click(BUTTON_FAILED_LOGINS);
+        WebDriverUtils.acceptJavaScriptAlert();
+        WebDriverUtils.waitForElement(LABEL_LOCK_REMOVED);
+    }
 
 	private IMSChangePassPopup openChangePassPopup(){
 		WebDriverUtils.click(BUTTON_CHANGE_PASSWORD);

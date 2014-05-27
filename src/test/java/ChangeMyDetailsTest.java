@@ -282,5 +282,4 @@ public class ChangeMyDetailsTest extends AbstractTest{
                 ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
 	}
-
 }
