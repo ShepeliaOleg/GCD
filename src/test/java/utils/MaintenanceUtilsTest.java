@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import springConstructors.IMS;
+import testUtils.AbstractTest;
 
 /**
  * Created by sergiich on 5/27/14.
  */
-public class ExternalUtils {
+public class MaintenanceUtilsTest extends AbstractTest{
 
     @Autowired
     @Qualifier("iMS")
