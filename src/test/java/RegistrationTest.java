@@ -343,8 +343,8 @@ public class RegistrationTest extends AbstractTest{
         }
 	}
 
-    @Test(groups = {"regression"})
-	public void affiliateSupportCookie(){
+    @Test(groups = {"regression", "affiliate"})
+	public void affiliateSupportCookieAll(){
         String advertiser="advert1";
         String banner="v2";
         String profile="v3";
@@ -353,13 +353,26 @@ public class RegistrationTest extends AbstractTest{
         String customValue="12333";
 		UserData userData = defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.clearCookies();
 		WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
         WebDriverUtils.refreshPage();
 		registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
 	}
 
-    @Test(groups = {"regression"})
+    @Test(groups = {"regression", "affiliate"})
+    public void affiliateSupportCookieFirst(){
+        String advertiser="advert1";
+        UserData userData = defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.clearCookies();
+        WebDriverUtils.addCookie("banner_domainclick", advertiser+",,,,", WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsername(), advertiser);
+    }
+
+    @Test(groups = {"regression", "affiliate"})
     public void affiliateSupportURL(){
         String advertiser="advert1";
         String banner="v2";
@@ -369,6 +382,7 @@ public class RegistrationTest extends AbstractTest{
         String customValue="12333";
         UserData userData = defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.clearCookies();
         WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);

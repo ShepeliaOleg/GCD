@@ -104,9 +104,13 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	}
 
     public void checkAffiliateData(String advertiser, String profile, String bTag, String bTagRes, String banner, String url){
-        checkAdvertiser(advertiser+" "+"("+profile+")");
+        checkAdvertiser(advertiser+" ("+profile+")");
         checkBTAG(bTag, bTagRes);
         checkBanner(advertiser, banner);
+    }
+
+    public void checkAffiliateData(String advertiser){
+        checkAdvertiser(advertiser+" (-)");
     }
 
     private void checkBanner(String advertiser, String banner){
@@ -129,8 +133,12 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     }
 
     private void checkBTAG(String bTag, String bTagRes){
-        WebDriverUtils.click(LINK_CUSTOM_FIELDS);
-        if(!WebDriverUtils.isVisible("//*[contains(text(), '"+bTag+"')]")||!WebDriverUtils.isVisible("//*[contains(text(), '"+bTagRes+"')]")){
+        String bTagElement = "*[contains(text(), '"+bTag+"')]";
+        if (!WebDriverUtils.isVisible("//"+bTagElement)){
+            WebDriverUtils.click(LINK_CUSTOM_FIELDS);
+            WebDriverUtils.waitForElement("//"+bTagElement);
+        }
+        if(!WebDriverUtils.isVisible("//*[preceding-sibling::"+bTagElement+" and contains(text(), '"+bTagRes+"')]")){
             WebDriverUtils.runtimeExceptionWithLogs("Parameters in custom fields were not found");
         }
     }
