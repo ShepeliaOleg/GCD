@@ -121,7 +121,10 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		//Check that no changes are applied
 		boolean detailsNotUpdated =changeMyDetailsPage.detailsAreEqualsTo(userData);
 		//If message was displayed but user data was not changed then test passes
-		Assert.assertTrue(messageAppeared && detailsNotUpdated);
+		if(!messageAppeared || !detailsNotUpdated){
+            WebDriverUtils.runtimeExceptionWithLogs("<div>Message appeared = "+messageAppeared+" (expected 'true')</div>" +
+                    "<div>Details not updated = "+detailsNotUpdated+" (expected 'true')</div>");
+        }
 	}
 
 	/*6. Player performs several consecutive updates of UMD portlet */
