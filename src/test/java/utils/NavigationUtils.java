@@ -3,6 +3,7 @@ package utils;
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
+import org.testng.SkipException;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.*;
@@ -126,7 +127,11 @@ public class NavigationUtils extends WebDriverObject{
 		if(exceptPage == Page.homePage){
 			HomePage homePage = new HomePage();
 			if(!homePage.isLoggedIn()){
-				WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed");
+                if(WebDriverUtils.isVisible(RegistrationPage.LABEL_ERROR_TIMEOUT_XP, 2)){
+                    throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
+                }else{
+                    WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(RegistrationPage.LABEL_MESSAGE_ERROR_XP));
+                }
 			}
 			result = homePage;
 		}else if(exceptPage == Page.registrationPage){

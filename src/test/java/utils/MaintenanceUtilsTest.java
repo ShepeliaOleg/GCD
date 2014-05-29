@@ -17,7 +17,7 @@ public class MaintenanceUtilsTest extends AbstractTest{
 
     @Test(groups = {"ims"})
     public void resetFailedLogins() {
-        String[] usernames = {"autoSmoke", "autoSmoke1", "autoSmokeS", "autoSmokeS1", "autoReg", "autoReg1", "autoRegS", "autoRegS1"};
+        String[] usernames = {"autoSmoke", "autoSmoke1", "autoSmokeS", "autoSmokeS1", "autoReg", "autoReg1", "autoRegS", "autoRegS1", "testx1"};
         for(String username:usernames){
             System.out.println("Resetting " + username);
             iMS.navigateToPlayedDetails(username).resetFailedLogins();

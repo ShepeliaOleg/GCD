@@ -59,7 +59,7 @@ public class LoginTest extends AbstractTest{
         PortalUtils.loginUser(userData);
 		Assert.assertEquals(new AbstractPage().isUsernameDisplayed(userData), true);
 	}
-	
+
 	/*3. Remember Me disabled by default in header*/
 	@Test(groups = {"regression"})
 	public void rememberMeDisabledByDefaultInHeader(){
@@ -83,8 +83,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, false);
-		homePage=(HomePage)homePage.logout();
-		String username=homePage.getEnteredUsernameFromLoginForm();
+		String username=homePage.logout().getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username.equals(""));
 	}
 
@@ -95,8 +94,7 @@ public class LoginTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=loginPopup.login(userData);
-		homePage=(HomePage)homePage.logout();
-		loginPopup=homePage.navigateToLoginForm();
+		loginPopup=homePage.logout().navigateToLoginForm();
 		String username=loginPopup.getUsernameText();
 		Assert.assertTrue(username.equals(""));
 	}
@@ -107,8 +105,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		String username=homePage.getEnteredUsernameFromLoginForm();
+        String username=homePage.logout().getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username.equals(userData.getUsername()));
 	}
 
@@ -119,8 +116,7 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		loginPopup=homePage.navigateToLoginForm();
+		loginPopup=homePage.logout().navigateToLoginForm();
 		String username=loginPopup.getUsernameText();
 		Assert.assertTrue(username.equals(userData.getUsername()));
 	}
@@ -131,13 +127,11 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		String username1=homePage.getEnteredUsernameFromLoginForm();
+		String username1=homePage.logout().getEnteredUsernameFromLoginForm();
 		userData.setUsername("player73");
 		userData.setPassword("123456");
 		homePage=(HomePage) homePage.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		String username2=homePage.getEnteredUsernameFromLoginForm();
+        String username2=homePage.logout().getEnteredUsernameFromLoginForm();
 		Assert.assertTrue(username1.equals("") == false && username2.equals(username1) == false);
 	}
 
@@ -148,16 +142,13 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		loginPopup=homePage.navigateToLoginForm();
-		String username1=loginPopup.getUsernameText();
-		userData.setUsername("testx1");
-		userData.setPassword("Asd123");
+		loginPopup=homePage.logout().navigateToLoginForm();
+        String changedUsername = userData.getUsername()+"1";
+		userData.setUsername(changedUsername);
 		homePage=(HomePage) loginPopup.login(userData, true);
-		homePage=(HomePage)homePage.logout();
-		loginPopup=homePage.navigateToLoginForm();
+		loginPopup=homePage.logout().navigateToLoginForm();
 		String username2=loginPopup.getUsernameText();
-		Assert.assertTrue(username2.equals("") == false && username2.equals(username1) == false);
+		Assert.assertTrue(username2.equals(changedUsername));
 	}
 
 	/*11.1 Case-sensitive login*/
@@ -241,7 +232,7 @@ public class LoginTest extends AbstractTest{
 	}
 
 	/*14. Login logs*/
-	@Test(groups = {"logs"})
+	@Test(groups = {"regression","logs"})
 	public void loginLogs(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.LoginRequest,
 				LogCategory.LoginResponse,
@@ -263,7 +254,7 @@ public class LoginTest extends AbstractTest{
 	}
 
 	/*15. Logout logs*/
-	@Test(groups = {"logs"})
+	@Test(groups = {"regression","logs"})
 	public void logoutLogs(){
 		LogCategory[] logCategories = new LogCategory[]{LogCategory.LogoutRequest};
 		UserData userData=defaultUserData.getRegisteredUserData();
@@ -285,28 +276,6 @@ public class LoginTest extends AbstractTest{
 		PortalUtils.loginUser(userData);
 		boolean successfulLogin=iMS.isPlayerLoggedIn(userData.getUsername());
 		Assert.assertTrue(successfulLogin);
-	}
-
-    /*17. Login and accept new T&C added to IMS */
-	@Test(groups = {"regression"})
-	public void loginAndAcceptNewTnC(){
-        HomePage homePage;
-		String termsAndConditionsText = emailSubjectValidationRule.generateValidString();
-		boolean termsUrlParametersCorrect = false;
-		UserData userData = defaultUserData.getRegisteredUserData();
-		userData.setUsername(usernameValidationRule.generateValidString());
-		PortalUtils.registerUser(userData);
-		iMS.unFreezeNewTermsAndConditions(termsAndConditionsText);
-		try {
-			homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-			AcceptTermsAndConditionsPopup tNCPopup = (AcceptTermsAndConditionsPopup) homePage.login(userData, Page.acceptTermsAndConditionsPopup);
-			termsUrlParametersCorrect = tNCPopup.checkTermsAndConditionsUrlParameters();
-			tNCPopup.clickClose();
-            NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
-		}finally{
-			iMS.freezeNewTermsAndConditions();
-		}
-		Assert.assertTrue(termsUrlParametersCorrect);
 	}
 
     /* NEGATIVE */

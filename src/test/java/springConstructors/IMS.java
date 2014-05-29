@@ -89,25 +89,12 @@ public class IMS extends WebDriverObject{
 		return navigateToIMS().clickPlayerManagement().clickPlayerSearch().search(username);
 	}
 
-	public IMSSystemManagementPage navigateToSystemManagement(){
-		return navigateToIMS().clickSystemManagement();
-	}
-
 	public IMSTemplateToolsPage navigateToTemplateTools(){
 		return navigateToIMS().clickTemplateTools();
 	}
 
 	public boolean isPlayerLoggedIn(String username){
 		return navigateToPlayedDetails(username).isPlayerOnline();
-	}
-
-	public void freezeNewTermsAndConditions(){
-		navigateToSystemManagement().clickTermsAndConditions().navigateToSearchIframe().openTermsAndConditions().navigateToSearchIframe().setFreezeStateAndUpdate("Version #3", true);
-	}
-
-	public void unFreezeNewTermsAndConditions(String termsAndConditionsText){
-		navigateToSystemManagement().clickTermsAndConditions().navigateToSearchIframe().openTermsAndConditions().navigateToSearchIframe().setFreezeStateAndUpdate(termsAndConditionsText, false);
-
 	}
 
     public void sendPushMessage(Page pushMessages){

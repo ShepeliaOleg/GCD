@@ -51,6 +51,12 @@ public class Listener extends TestListenerAdapter{
 	}
 
     @Override
+    public void onTestSkipped(ITestResult iTestResult){
+        createScreenshot(iTestResult);
+        System.out.println(iTestResult.getName()+ "--Test method skipped\n");
+    }
+
+    @Override
     public void onStart(org.testng.ITestContext testContext){
         if(folder==null){
             folder = "out/";
@@ -83,13 +89,8 @@ public class Listener extends TestListenerAdapter{
 	public void onFinish(ITestContext testContext){
         int passed = testContext.getPassedTests().getAllResults().size();
         int failed = testContext.getFailedTests().getAllResults().size();
+        int ims = testContext.getSkippedTests().getAllResults().size();
         int total = passed+failed;
-        int ims = 0;
-        for(ITestResult result:testContext.getFailedTests().getAllResults()){
-            if (result.getThrowable().toString().contains("Registration/Login failed")){
-                ims++;
-            }
-        }
 		String classname=null;
 		if(!testContext.getPassedTests().getAllResults().isEmpty()){
 			for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
@@ -101,7 +102,12 @@ public class Listener extends TestListenerAdapter{
 				classname = iTestResult.getTestClass().getName();
 				break;
 			}
+        }else if(!testContext.getSkippedTests().getAllResults().isEmpty()){
+            for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
+                classname = iTestResult.getTestClass().getName();
+                break;
         }
+    }
         if(classname!=null){
             writeToIndex(classname, total, passed, failed, ims);
             try{
@@ -243,10 +249,11 @@ public class Listener extends TestListenerAdapter{
 		if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
             output.println("<tr align='center'><td colspan='4'>Skipped Tests</td></tr>");
             for(ITestResult test:iTestContext.getSkippedTests().getAllResults()){
-                output.println("<tr><td>" + test.getName() + "</td> ");
+                String name = test.getName();
+                output.println("<tr><td>" + name + "</td> ");
                 output.println("<td>Skipped</td> ");
-                output.println("<td>N/A</td>");
-                output.println("<td>N/A</td></tr>");
+                output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
+                output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
 	}

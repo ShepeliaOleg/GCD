@@ -280,7 +280,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*#22. Country - country phone prefix mapping*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "code"})
 	public void countryPhonePrefix(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> countryList = defaults.getCountryList();

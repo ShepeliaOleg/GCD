@@ -101,7 +101,7 @@ public class PushMessagesTest extends AbstractTest{
 	/*7. Push messages for bonus opt in/out */
 	@Test(groups = {"regression", "push"})
 	public void pushMessageOptIn(){
-        UserData userData = defaultUserData.getRegisteredUserData();
+        UserData userData = defaultUserData.getRandomUserData();
 		PortalUtils.registerUser(userData);
         BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 		OptInPopup optInPopup = bonusPage.clickOptIn();

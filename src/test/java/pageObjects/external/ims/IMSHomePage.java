@@ -24,11 +24,6 @@ public class IMSHomePage extends AbstractPage{
 		return new IMSPlayerManagementPage();
 	}
 
-	public IMSSystemManagementPage clickSystemManagement(){
-		WebDriverUtils.click(LINK_TAB_SYSTEM_MANAGEMENT_XP);
-		return new IMSSystemManagementPage();
-	}
-
 	public IMSTemplateToolsPage clickTemplateTools(){
 		WebDriverUtils.click(LINK_TAB_TEMPLATE_TOOLS_XP);
 		return new IMSTemplateToolsPage();

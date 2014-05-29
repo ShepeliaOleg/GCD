@@ -416,12 +416,16 @@ public class WebDriverUtils extends WebDriverObject{
 	//Exceptions
 
 	public static void runtimeExceptionWithLogs(String exceptionMessage){
-		Log currentLogs = new Log("Log page is unavailable");
-		if(!timestamp.equals("noLogs")){
-			currentLogs =LogUtils.getCurrentLogs();
-		}
-		throw new RuntimeException(exceptionMessage + "\n <br><div>URL: "+webDriver.getCurrentUrl()+"</div>\n %$%" + currentLogs.print());
+		throw new RuntimeException(exceptionMessage + getUrlAndLogs());
 	}
+
+    public static String getUrlAndLogs(){
+        Log currentLogs = new Log("Log page is unavailable");
+        if(!timestamp.equals("noLogs")){
+            currentLogs =LogUtils.getCurrentLogs();
+        }
+        return "\n <br><div>URL: "+webDriver.getCurrentUrl()+"</div>\n %$%" + currentLogs.print();
+    }
 
 	//Script
 
