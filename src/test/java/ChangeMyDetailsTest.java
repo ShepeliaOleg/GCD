@@ -96,8 +96,10 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void editUserInfoAndCheckIfSavedAfterLogout(){
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
+        String userName = userData.getUsername();
         ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData = defaultUserData.getRandomUserData();
+        userData.setUsername(userName);
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
 		// Check that details have been changed
