@@ -19,7 +19,8 @@ import utils.WebDriverUtils;
  */
 
 public class LoginPopup extends AbstractPopup{
-	private static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
+	public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
+    public static final String LABEL_TIMEOUT_ERROR_XP=   ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
 	public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='username']";
 	private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
 	private static final String CHECKBOX_REMEMBERME_XP=		ROOT_XP + "//*[@name='remember-me']";

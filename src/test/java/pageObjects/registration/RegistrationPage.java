@@ -32,7 +32,7 @@ public class RegistrationPage extends AbstractPage{
 	private static final String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@id='usernameSuggestionsTmpl']";
     private static final String LABEL_TOOLTIP_XP = 									"//*[@id='tooltip']//span";
     private final static String LABEL_BONUS_CODE_ERROR_XPATH = 						"//*[contains(text(), 'Bonus code is not found or not available')]";
-    public final static String LABEL_ERROR_TIMEOUT_XP =                            "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
+    public final static String LABEL_ERROR_TIMEOUT_XP =                            "//*[@id='registration']//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
     private final static String BONUS_CODE = 										"TEST";
 	private final static String DROPDOWN_TITLE_XP=									"//*[@id='title']";
 	private final static String LABEL_TITLE_XP=										"//label[@for='title']";

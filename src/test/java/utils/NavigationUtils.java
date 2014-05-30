@@ -181,7 +181,11 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.loginPopup){
             return loginPopup;
         }else{
-            WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed");
+            if(WebDriverUtils.isVisible(LoginPopup.LABEL_TIMEOUT_ERROR_XP, 2)){
+                throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
+            }else{
+                WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
+            }
         }
         return null;
     }
