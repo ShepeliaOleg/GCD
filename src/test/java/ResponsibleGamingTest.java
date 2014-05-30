@@ -163,7 +163,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /* 13. Close self-exclusion popup */
 	@Test(groups = {"regression"})
 	public void cancelSelfExclusion(){
-		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		SelfExcludePopup selfExcludePopup = responsibleGamingPage.navigateToSelfExclude();
 		selfExcludePopup.clickClose();
 		Assert.assertTrue(new AbstractPage().isLoggedIn() == true);
@@ -173,7 +173,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void consecutiveValidUpdatesOfDepositLimits(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
-        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList(6);
 		responsibleGamingPage.setDepositLimits(randomLimits.get(0),randomLimits.get(1),randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
@@ -191,7 +191,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*1. 2,1,-: Daily > Weekly & Monthly = not defined*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits210(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), "0");
 		responsibleGamingPage.submitDepositLimit();
@@ -204,7 +204,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*2. -,2,1: Weekly > Monthly & Daily = not defined*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits021(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(2), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
@@ -217,7 +217,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*3. 2,-,1: Daily > Monthly & Weekly = not defined */
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits201(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),"0", randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
@@ -230,7 +230,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*4. 3,2,1: Daily > Weekly > Monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits321(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), randomLimits.get(0));
 		responsibleGamingPage.submitDepositLimit();
@@ -243,7 +243,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*5. 2,3,1: Daily < Weekly & Weekly > Monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits231(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), randomLimits.get(0));
 		responsibleGamingPage.submitDepositLimit();
@@ -256,7 +256,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*6. 2,1,3: Daily > weekly & daily < monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits213(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(0), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
@@ -269,7 +269,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*7. 3,1,2: daily > weekly & daily > monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits312(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(0), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
@@ -282,7 +282,7 @@ public class ResponsibleGamingTest extends AbstractTest{
     /*8. 1,3,2: daily < weekly & weekly > monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits132(){
-        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(0),randomLimits.get(2), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
@@ -295,7 +295,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void setSelfExclusion(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
-        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.responsibleGaming);
+        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
 		SelfExcludePopup selfExcludePopup=responsibleGamingPage.navigateToSelfExclude();
 		SelfExcludeConfirmPopup selfExcludeConfirmPopup=selfExcludePopup.submitSelfExclude();
 		boolean confirmationMessageVisible=selfExcludeConfirmPopup.confirmationMessagesVisible();
