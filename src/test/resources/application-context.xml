@@ -89,7 +89,7 @@
                 <value>Ethiopia@251</value>
                 <value>Falkland Islands@500</value>
                 <value>Faroe Islands@298</value>
-                <value>Federated States of Micronesia@691</value>
+                <!--<value>Federated States of Micronesia@691</value> banned on IMS-->
                 <value>Fiji@679</value>
                 <value>Finland@358</value>
                 <value>France@33</value>
@@ -246,7 +246,7 @@
                 <value>United Arab Emirates@971</value>
                 <value>United Kingdom@44</value>
                 <value>United Republic Of Tanzania@255</value>
-                <value>United States@1</value>
+                <!--<value>United States@1</value> not supported-->
                 <value>United States Minor Outlying Islands@699</value>
                 <value>Uruguay@598</value>
                 <value>Uzbekistan@998</value>
