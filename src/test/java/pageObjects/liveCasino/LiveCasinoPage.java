@@ -88,7 +88,7 @@ public class LiveCasinoPage extends AbstractPage{
 	}
 
 	public void clickCheckbox(int index){
-		WebDriverUtils.click("//*[@class='live-table-finder-form']//li[" + index + "]/input");
+		WebDriverUtils.click("//*[@class='live-table-finder-form']//li[" + index + "]/label");
 	}
 
 	public boolean isCheckboxResultsVisible(int index){

@@ -52,8 +52,12 @@ public class InboxTest extends AbstractTest{
     /*2. Message is successfully sent and displayed in MailQ*/
 	@Test(groups = {"regression"})
 	public void checkMessageIsSentToMailQ(){
-		String emailText = emailSubjectValidationRule.generateValidString();
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+        UserData userData = defaultUserData.getRandomUserData();
+        String emailText = emailSubjectValidationRule.generateValidString();
+        String email = emailValidationRule.generateValidString();
+        userData.setEmail(email);
+        PortalUtils.registerUser(userData);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		boolean isMessageReceived = mailQ.checkIsMessageAppearedAndLogout(emailText);
 		Assert.assertTrue(isMessageReceived) ;

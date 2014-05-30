@@ -13,6 +13,7 @@ import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.RandomUtils;
+import utils.WebDriverUtils;
 
 /**
  * User: sergiich
@@ -112,8 +113,11 @@ public class LiveTableFinderTest extends AbstractTest{
 	public void checkDealerNameFromListCorrespondsToDealerNameInPopup(){
 		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
 		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
-		String dealerName=liveCasinoPage.getDealerName(index);
+		String dealerName=liveCasinoPage.getDealerName(index).replace("\nINFO", "");
 		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
-		Assert.assertTrue(dealerName.equalsIgnoreCase(dealerImagePopup.getDealerName()));
+        String popupDealerName = dealerImagePopup.getDealerName();
+		if(!dealerName.equalsIgnoreCase(popupDealerName)){
+            WebDriverUtils.runtimeExceptionWithLogs("<div>Expected: "+dealerName+"</div><div>Actual: "+popupDealerName+"</div>");
+        }
 	}
 }
