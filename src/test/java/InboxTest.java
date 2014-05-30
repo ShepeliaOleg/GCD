@@ -198,7 +198,7 @@ public class InboxTest extends AbstractTest{
     /*13. Pagination on Inbox portlet*/
 	@Test(groups = {"regression"})
 	public void checkPaginationWorksCorrectly(){
-        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
+        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SentItemsPage sentItemsPage=inboxPage.clickSentItems();
 		String firstPageSubject=sentItemsPage.getFirstMessageSubject();
 		sentItemsPage=sentItemsPage.clickNextPage();
