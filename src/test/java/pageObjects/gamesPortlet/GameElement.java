@@ -69,9 +69,9 @@ public class GameElement extends AbstractPage{
 		WebDriverUtils.click(buttonPlayDemo);
 	}
 
-	public void clickImage(){
+	public void clickTitle(){
 		WebDriverUtils.mouseOver(ROOT_GAME);
-		WebDriverUtils.click(image);
+		WebDriverUtils.click(labelGameTitle);
 	}
 
 	public void clickFavourite(){
@@ -88,10 +88,6 @@ public class GameElement extends AbstractPage{
 		return WebDriverUtils.isVisible(buttonFavouritesActive);
 	}
 
-	public boolean isGameStillPresent(){
-		return WebDriverUtils.isVisible(ROOT_GAME);
-	}
-
 	public GameInfoPopup clickInfo(){
 		WebDriverUtils.click(buttonInfo);
 		return new GameInfoPopup(getGameId());
@@ -103,15 +99,19 @@ public class GameElement extends AbstractPage{
 
 	public boolean isDemoPresent(){
 		WebDriverUtils.mouseOver(ROOT_GAME);
-		return WebDriverUtils.isVisible(buttonPlayDemo, 1);
+		return WebDriverUtils.isVisible(buttonPlayDemo, 0);
 	}
 
 	public boolean isRealPresent(){
 		WebDriverUtils.mouseOver(ROOT_GAME);
-		return WebDriverUtils.isVisible(buttonPlayReal, 1);
+		return WebDriverUtils.isVisible(buttonPlayReal, 0);
 	}
 
 	public boolean isImagePresent(){
-		return WebDriverUtils.isVisible(image, 1);
+		return WebDriverUtils.isVisible(image, 0);
 	}
+
+    public boolean isTitlePresent(){
+        return WebDriverUtils.isVisible(labelGameTitle, 0);
+    }
 }

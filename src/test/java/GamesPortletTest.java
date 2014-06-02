@@ -1614,7 +1614,7 @@ public class GamesPortletTest extends AbstractTest{
 		try{
 			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
 		}catch(RuntimeException e){
-			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromImage(true);
+			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
 		}
 		boolean isURLTwoCorrect = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();

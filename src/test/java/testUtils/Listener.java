@@ -90,7 +90,7 @@ public class Listener extends TestListenerAdapter{
         int passed = testContext.getPassedTests().getAllResults().size();
         int failed = testContext.getFailedTests().getAllResults().size();
         int ims = testContext.getSkippedTests().getAllResults().size();
-        int total = passed+failed;
+        int total = passed+failed+ims;
 		String classname=null;
 		if(!testContext.getPassedTests().getAllResults().isEmpty()){
 			for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){

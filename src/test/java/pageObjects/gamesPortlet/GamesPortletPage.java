@@ -30,7 +30,7 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String BUTTON_PREVIOUS_XP= 					"//div[@class='prev']/a";
 	private static final String BUTTON_LIST_VIEW_XP=					"//a[@data-view='LIST']";
 	private static final String BUTTON_ITEM_VIEW_XP=					"//a[@data-view='ITEM']";
-	private static final String FIELD_SEARCH_XP = 						"//*[@class='field-search']";
+	private static final String FIELD_SEARCH_XP = 						"//input[contains(@class, 'field-search')]";
 	//Refine By
 	private static final String CATEGORY_REFINE_BY_XP_BEGINNING = 		"//*[@class='filterbox']//a[@data-category = ";
 	private static final String DROPD0WN_REFINE_BY_XP = 				"//*[contains(@class, 'games-filter-box')]//div";
@@ -193,7 +193,7 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public GamesPortletPage inputSearch(String gameId){
-		WebDriverUtils.clearAndInputTextToField(FIELD_SEARCH_XP, gameId, 100);
+		WebDriverUtils.clearAndInputTextToField(FIELD_SEARCH_XP, gameId);
 		return new GamesPortletPage();
 	}
 
@@ -276,7 +276,7 @@ public class GamesPortletPage extends AbstractPage{
 		return result;
 	}
 
-	public AbstractPageObject playRealFromImage(boolean isLoggedIn){
+	public AbstractPageObject playRealFromTitle(boolean isLoggedIn){
 		AbstractPageObject result=null;
 		ArrayList<String> checkedGames=new ArrayList<String>();
 		int gameCount = WebDriverUtils.getXpathCount(GAMES_XP);
@@ -284,8 +284,8 @@ public class GamesPortletPage extends AbstractPage{
 			String gameId = getGameName(i);
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
-				if(gameElement.isImagePresent()){
-					gameElement.clickImage();
+				if(gameElement.isTitlePresent()){
+					gameElement.clickTitle();
 					break;
 				}else{
 					checkedGames.add(gameId);
@@ -353,7 +353,7 @@ public class GamesPortletPage extends AbstractPage{
 	// Category tabs
 	public GamesPortletPage clickCategoryTab (String categoryURL){
 		WebDriverUtils.click(getCategoryXpath(categoryURL));
-		WebDriverUtils.waitFor();
+		WebDriverUtils.waitFor(3000);
 		return new GamesPortletPage();
 	}
 
