@@ -490,7 +490,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 
         // set new password
-        changePasswordPopup.fillFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
+        changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
 
 		boolean errorMessageAppeared = changePasswordPopup.errorMessageAppeared();
 

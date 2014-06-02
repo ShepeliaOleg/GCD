@@ -403,6 +403,12 @@ public class UserData{
         return userData;
     }
 
+    public String print(){
+        return "<div>"+getTitle()+"</div>"+"<div>"+getFirstName()+"</div>"+"<div>"+getLastName()+"</div>"
+                +"<div>"+getCountry()+"</div>"+"<div>"+getFullAddress()+"</div>"+"<div>"+getCity()+"</div>"+"<div>"+getPostCode()+"</div>"
+                +"<div>"+getPhoneAreaCode()+getPhone()+"</div>"+"<div>"+getMobileAreaCode()+getMobile()+"</div>"+"<div>"+getEmail()+"</div>";
+    }
+
 //	public User generateUser() {
 //		// get userdata of registered user
 //		UserData userData = getRegisteredUser().getUserData().cloneUserData();

@@ -72,7 +72,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
 		ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-		Assert.assertTrue(changeMyDetailsPage.detailsAreEqualsTo(userData));
+		Assert.assertTrue(changeMyDetailsPage.detailsAreEqualsTo(userData), userData.print());
 	}
 
 	/* 3. Player updates his details with valid values and new values are saved */
@@ -110,7 +110,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		// Player logs out and logs in again
         changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
 		boolean detailsKeptAfterRelogin =changeMyDetailsPage.detailsAreEqualsTo(userData);
-		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && detailsKeptAfterRelogin);
+		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && detailsKeptAfterRelogin, "<div>Details changed: "+detailsUpdatedSuccessfully+"< (expected true)</div>" +
+                "<div>Details are kept after relogin: "+detailsKeptAfterRelogin+" (expected true)</div><div> Message appeared: "+messageAppeared+" (expected true)</div>"+userData.print());
 	}
 
 	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
@@ -178,7 +179,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
             request.containsParameters(parameters);
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }
@@ -188,21 +189,21 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*8. IMS player details are updated*/
 	@Test(groups = {"regression"})
 	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-		String username = userData.getUsername();
-		userData = defaultUserData.getRandomUserData();
-		userData.setUsername(username);
-		userData.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData);
-		// Check that details have been changed
-		boolean detailsUpdatedSuccessfully=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//Check that success message appeared
-		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
-		//Check user details are changed on IMS
-		boolean iMSDetailsCoincide =  iMS.validateRegisterData(userData);
-		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && iMSDetailsCoincide);
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        String username = userData.getUsername();
+        userData = defaultUserData.getRandomUserData();
+        userData.setUsername(username);
+        userData.setEmail(emailValidationRule.generateValidString());
+        changeMyDetailsPage.editDetails(userData);
+        // Check that details have been changed
+        boolean detailsUpdatedSuccessfully = changeMyDetailsPage.detailsAreEqualsTo(userData);
+        //Check that success message appeared
+        boolean messageAppeared = changeMyDetailsPage.isVisibleConfirmationMessage();
+        //Check user details are changed on IMS
+        boolean iMSDetailsCoincide = iMS.validateRegisterData(userData);
+        Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && iMSDetailsCoincide);
 	}
 
 	/*NEGATIVE CASES*/

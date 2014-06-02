@@ -4,6 +4,7 @@ import enums.ConfiguredPages;
 import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.testng.SkipException;
 import pageObjects.external.ims.*;
 import pageObjects.inbox.InboxPage;
 import utils.NavigationUtils;
@@ -32,15 +33,23 @@ public class IMS extends WebDriverObject{
 	}
 
 	private IMSHomePage navigateToIMS(){
-		IMSHomePage imsHomePage;
-		webDriver.navigate().to(imsURL);
-		if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
-			IMSLoginPage imsLoginPage=new IMSLoginPage();
-			imsHomePage=imsLoginPage.logInToIMS();
-		}else{
-			imsHomePage=new IMSHomePage();
-		}
-		return imsHomePage;
+        try{
+            IMSHomePage imsHomePage;
+            webDriver.navigate().to(imsURL);
+            if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
+                IMSLoginPage imsLoginPage=new IMSLoginPage();
+                imsHomePage=imsLoginPage.logInToIMS();
+            }else{
+                imsHomePage=new IMSHomePage();
+            }
+            return imsHomePage;
+        }catch (RuntimeException e){
+            if (e.getMessage().contains(IMSHomePage.LINK_TAB_PLAYER_MANAGEMENT_XP)){
+                throw new SkipException("IMS timeout"+e.getMessage());
+            }else{
+                throw new RuntimeException(e.getMessage());
+            }
+        }
 	}
 
     public HashMap getInternalTagsData(){

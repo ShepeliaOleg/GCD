@@ -9,6 +9,7 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
+import pageObjects.external.ims.IMSHomePage;
 import pageObjects.popups.AfterRegistrationPopup;
 import pageObjects.popups.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
@@ -236,7 +237,7 @@ public class RegistrationTest extends AbstractTest{
             regReq.containsParameters(parameters);
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }
@@ -376,12 +377,12 @@ public class RegistrationTest extends AbstractTest{
         String url="v4";
         String customTitle="BTAG";
         String customValue="12333";
-		UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         WebDriverUtils.clearCookies();
-		WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
+        WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
         WebDriverUtils.refreshPage();
-		registrationPage.registerUser(userData);
+        registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
 	}
 

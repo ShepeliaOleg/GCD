@@ -18,7 +18,7 @@
     <bean id="defaults" class="springConstructors.Defaults">
         <property name="countryFullList">
             <list>
-                <!--AF,AX,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CI,CO,KM,CG,CD,CK,CR,HR,CU,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,EE,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GU,GT,GN,GW,GY,HT,HM,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IL,IT,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,MD,MC,MN,ME,MS,MA,MZ,MM,NA,NR,NP,NL,AN,NC,NZ,NI,NE,NG,NU,NF,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,PR,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,RS,CS,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,UM,UY,UZ,VU,VA,VE,VN,VG,VI,WF,EH,YE,ZM,ZW-->
+                <!--AF,AX,AL,DZ,AS,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CI,CO,KM,CG,CD,CK,CR,HR,CU,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,EE,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GT,GN,GW,GY,HT,HM,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IT,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,MD,MC,MN,ME,MS,MA,MZ,MM,NA,NR,NP,NL,AN,NC,NZ,NI,NE,NG,NU,NF,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,RS,CS,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,UM,UY,UZ,VU,VA,VE,VN,VG,WF,EH,YE,ZM,ZW-->
                 <value>Afghanistan@93</value>
                 <value>Aland Islands@358</value>
                 <value>Albania@355</value>
@@ -106,7 +106,7 @@
                 <value>Greenland@299</value>
                 <value>Grenada@1473</value>
                 <value>Guadeloupe@590</value>
-                <value>Guam@1671</value>
+                <!--<value>Guam@1671</value> GU banned on IMS-->
                 <value>Guatemala@502</value>
                 <value>Guinea@224</value>
                 <value>Guinea-Bissau@245</value>
@@ -121,7 +121,7 @@
                 <value>Indonesia@62</value>
                 <value>Iraq@964</value>
                 <value>Islamic Republic of Iran@98</value>
-                <value>Israel@972</value>
+                <!--<value>Israel@972</value> IL banned on IMS-->
                 <value>Italy@39</value>
                 <value>Jamaica@1876</value>
                 <value>Japan@81</value>
@@ -187,7 +187,7 @@
                 <value>Pitcairn@64</value>
                 <value>Poland@48</value>
                 <value>Portugal@351</value>
-                <value>Puerto Rico@1</value>
+                <!--<value>Puerto Rico@1</value> PR banned on IMS-->
                 <value>Qatar@974</value>
                 <value>Republic of Ireland@353</value>
                 <value>Republic of Korea@82</value>
@@ -255,7 +255,7 @@
                 <value>Venezuela@58</value>
                 <value>Viet Nam@84</value>
                 <value>Virgin Islands, British@1284</value>
-                <value>Virgin Islands, U.S@1340</value>
+                <!--<value>Virgin Islands, U.S@1340</value> VI banned on IMS-->
                 <value>Wallis and Futuna@681</value>
                 <value>Western Sahara@212</value>
                 <value>Yemen@967</value>

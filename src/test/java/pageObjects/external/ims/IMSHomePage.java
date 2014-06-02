@@ -10,7 +10,7 @@ import utils.WebDriverUtils;
 
 public class IMSHomePage extends AbstractPage{
 
-	private static final String LINK_TAB_PLAYER_MANAGEMENT_XP=	"//*[@id='player_management_link']";
+	public static final String LINK_TAB_PLAYER_MANAGEMENT_XP=	"//*[@id='player_management_link']";
 	private static final String LINK_TAB_TEMPLATE_TOOLS_XP=		"//*[@id='template_tools_link']";
 	private static final String LINK_TAB_SYSTEM_MANAGEMENT_XP=	"//*[@id='system_management_link']";
 	private static final String LINK_LOGOUT=					"//a[contains(text(), 'Log out')]";

@@ -40,6 +40,14 @@ public class ChangePasswordPopup extends AbstractPopup{
 		return new ChangedPasswordPopup();
 	}
 
+    public ChangePasswordPopup fillIncorrectFormAndSubmit(String oldPassword, String newPassword){
+        fillOldPassword(oldPassword);
+        fillNewPassword(newPassword);
+        fillNewPasswordValidation(newPassword);
+        submit();
+        return new ChangePasswordPopup();
+    }
+
 	public boolean errorMessageAppeared(){
 		return WebDriverUtils.isVisible(LABEL_MESSAGE_ERROR_XP);
 	}
