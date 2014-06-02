@@ -138,8 +138,11 @@ public class Listener extends TestListenerAdapter{
                 line = replaceStringWithInt(line, classname + "Failed", failed);
                 line = replaceStringWithInt(line, classname + "Ims", ims);
                 line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+folder+classname, "><td><a href ='"+folder+classname);
-                if (failed>0||ims>0){
+                if (failed>0){
                     line = paintRed(line, classname);
+                }
+                if (ims>0){
+                    line = paintYellow(line, classname);
                 }
                 line = replaceTotal(line, "id='total'>", "total", 11, total);
                 line = replaceTotal(line, "id='passed'>", "passed", 12, passed);
@@ -177,6 +180,13 @@ public class Listener extends TestListenerAdapter{
         return line;
     }
 
+    private String paintYellow(String line, String classname){
+        if (line.contains(classname)){
+            line = line.replace("<tr>", "<tr style='background-color:yellow'>");
+        }
+        return line;
+    }
+
     private String replaceStringWithInt(String line, String tag, int number){
         if(line.contains(tag)){
             line=line.replace(tag, Integer.toString(number));
@@ -206,7 +216,7 @@ public class Listener extends TestListenerAdapter{
 
 
 	private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
-        output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + ", out of them registration/login issues:" + ims + "</h2>");
+        output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Status</td><td>Screenshot</td><td>Error</td></tr>");
@@ -218,7 +228,7 @@ public class Listener extends TestListenerAdapter{
     private void createIndex(){
         output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Registration/Login Issues</td></tr>");
+        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>IMS Registration/Login Issues(Skipped)</td></tr>");
         for(String area:list){
             output.println("<tr style=\"display:none;\"><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
