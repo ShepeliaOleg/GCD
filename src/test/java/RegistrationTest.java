@@ -263,7 +263,7 @@ public class RegistrationTest extends AbstractTest{
             usrReq.containsParameters(parameters);
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }
@@ -362,7 +362,7 @@ public class RegistrationTest extends AbstractTest{
             }
         }catch (RuntimeException e){
             if(e.getMessage().contains("35-41/")){
-                throw new SkipException("Skipped untill D-10144 is fixed");
+                throw new SkipException("Skipped untill D-10144 is fixed"+WebDriverUtils.getUrlAndLogs());
             }else{
                 WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
             }
@@ -438,7 +438,7 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
 		String errorMessageText=registrationPage.getErrorMessageText();
         if(errorMessageText.contains("Timeout occurred")){
-            throw new SkipException("IMS timeout");
+            throw new SkipException("IMS timeout"+WebDriverUtils.getUrlAndLogs());
         }
 		boolean emailUsedMessageDisplayed=errorMessageText.equals("The specified email address is already in use.");
 

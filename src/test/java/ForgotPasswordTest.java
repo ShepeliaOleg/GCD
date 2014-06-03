@@ -24,6 +24,7 @@ import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.WebDriverUtils;
 import utils.logs.Log;
 import utils.logs.LogEntry;
 import utils.logs.LogUtils;
@@ -295,7 +296,7 @@ public class ForgotPasswordTest extends AbstractTest{
             LogEntry forgotResponse = log.getEntry(LogCategory.ForgotPasswordResponse);    
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+ WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }

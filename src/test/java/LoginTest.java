@@ -255,7 +255,7 @@ public class LoginTest extends AbstractTest{
             winSessionReq.containsParameters(sessionParameters);
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }
@@ -277,7 +277,7 @@ public class LoginTest extends AbstractTest{
             logReq.containsParameters(logoutParameters);
         }catch (RuntimeException e){
             if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue");
+                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
             }else{
                 throw new RuntimeException(e.getMessage());
             }

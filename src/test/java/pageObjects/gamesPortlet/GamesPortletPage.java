@@ -353,7 +353,6 @@ public class GamesPortletPage extends AbstractPage{
 	// Category tabs
 	public GamesPortletPage clickCategoryTab (String categoryURL){
 		WebDriverUtils.click(getCategoryXpath(categoryURL));
-		WebDriverUtils.waitFor(3000);
 		return new GamesPortletPage();
 	}
 

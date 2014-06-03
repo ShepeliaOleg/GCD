@@ -219,7 +219,7 @@ public class Listener extends TestListenerAdapter{
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Status</td><td>Screenshot</td><td>Error</td></tr>");
+        output.println("<tr align=\"center\" valign=\"middle\" style=\"background-color:orange;color:white;\"><td width='30%'>Area</td><td width='15%'>Status</td><td width='15%'>Screenshot</td><td>Error</td></tr>");
 		addRows(iTestContext);
         output.println("</table>");
         output.println("<br>");
@@ -242,8 +242,8 @@ public class Listener extends TestListenerAdapter{
             output.println("<tr align='center' style='background-color:"+COLOR_GREEN+"'><td colspan='4'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
                 output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + test.getName() + "</td> ");
-                output.println("<td class='passed'>passed</td> ");
-                output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td><td></td></tr>");
+                output.println("<td align=\"center\" valign=\"middle\" class='passed'>passed</td> ");
+                output.println("<td align=\"center\" valign=\"middle\"><a href='" + test.getName() + ".jpg'>Screenshot</a></td><td></td></tr>");
             }
         }
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
@@ -251,8 +251,8 @@ public class Listener extends TestListenerAdapter{
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
-                output.println("<td class='failed'>failed</td> ");
-                output.println("<td><a href='" + name + ".jpg'>Screenshot</a></td>");
+                output.println("<td align=\"center\" valign=\"middle\" class='failed'>failed</td> ");
+                output.println("<td align=\"center\" valign=\"middle\"><a href='" + name + ".jpg'>Screenshot</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
             }
         }
@@ -261,8 +261,8 @@ public class Listener extends TestListenerAdapter{
             for(ITestResult test:iTestContext.getSkippedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
-                output.println("<td>Skipped</td> ");
-                output.println("<td><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
+                output.println("<td align=\"center\" valign=\"middle\">Skipped</td> ");
+                output.println("<td align=\"center\" valign=\"middle\"><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
                 output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }

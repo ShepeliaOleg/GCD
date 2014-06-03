@@ -46,7 +46,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits(randomLimits.get(0),randomLimits.get(1), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
 	/* 3. 1,2,-: Daily <= Weekly & Monthly = not defined */
@@ -58,7 +58,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), "0");
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 4. -,1,2: Weekly <= Monthly & Daily = not defined */
@@ -70,7 +70,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 5. 1,-,2: Monthly >= Daily & Weekly = not defined */
@@ -82,7 +82,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 6. 1,-,-: Daily & Weekly = not defined & Monthly = not defined */
@@ -94,7 +94,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", "0");
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 7. -,1,-: Weekly & Daily = not defined & Monthly = not defined */
@@ -106,7 +106,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), "0");
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 8. -,-,1: Monthly & Weekly = not defined & Daily = not defined */
@@ -118,7 +118,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setDepositLimits("0","0", randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
 		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-        Assert.assertTrue(successfullySetLimitsMessageDisplayed);
+        Assert.assertTrue(successfullySetLimitsMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 9. Currency sign displayed on portlet is equal to player currency, set on registration procedure */
@@ -129,7 +129,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		String currencySignDaily =      responsibleGamingPage.getDailyLimitCurrency();
 		String currencySignWeekly =     responsibleGamingPage.getWeeklyLimitCurrency();
 		String currencySignMonthly =    responsibleGamingPage.getMonthlyLimitCurrency();
-		Assert.assertTrue(currencySignDaily.startsWith("£") && currencySignWeekly.startsWith("£") && currencySignMonthly.startsWith("£"));
+		Assert.assertTrue(currencySignDaily.startsWith("£") && currencySignWeekly.startsWith("£") && currencySignMonthly.startsWith("£"), WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 10. Set time per session */
@@ -140,7 +140,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.setRandomTimePerSession();
 		responsibleGamingPage.submitTimePerSession();
 		boolean successfullySetLimitMessageDisplayed = responsibleGamingPage.timePerSessionChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(successfullySetLimitMessageDisplayed);
+		Assert.assertTrue(successfullySetLimitMessageDisplayed, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 11. Set self-exlusion and verify player is logged out */
@@ -157,7 +157,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		}catch(RuntimeException e){
 			WebDriverUtils.runtimeExceptionWithLogs("User was not logged out. Self exclusion failed.");
 		}
-		Assert.assertTrue(confirmationMessageVisible == true);
+		Assert.assertTrue(confirmationMessageVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 13. Close self-exclusion popup */
@@ -166,7 +166,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		SelfExcludePopup selfExcludePopup = responsibleGamingPage.navigateToSelfExclude();
 		selfExcludePopup.clickClose();
-		Assert.assertTrue(new AbstractPage().isLoggedIn() == true);
+		Assert.assertTrue(new AbstractPage().isLoggedIn() == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /* 14. Several consecutive updates of deposit limits */
@@ -183,7 +183,8 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean futureChangeNotificationWeekly =        responsibleGamingPage.weeklyFutureChangeNotificationVisible();
 		boolean futureChangeNotificationMonthly =       responsibleGamingPage.monthlyFutureChangeNotificationVisible();
 		boolean successfullySetLimitsMessageDisplayed = responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrue(futureChangeNotificationDaily == true && futureChangeNotificationWeekly == true && futureChangeNotificationMonthly == true && successfullySetLimitsMessageDisplayed == true);
+		Assert.assertTrue(futureChangeNotificationDaily == true && futureChangeNotificationWeekly == true && futureChangeNotificationMonthly == true && successfullySetLimitsMessageDisplayed == true,
+                WebDriverUtils.getUrlAndLogs());
 	}
 
     /* Negative */
@@ -198,7 +199,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*2. -,2,1: Weekly > Monthly & Daily = not defined*/
@@ -211,7 +212,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*3. 2,-,1: Daily > Monthly & Weekly = not defined */
@@ -224,7 +225,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == false && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == false && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*4. 3,2,1: Daily > Weekly > Monthly*/
@@ -237,7 +238,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*5. 2,3,1: Daily < Weekly & Weekly > Monthly*/
@@ -250,7 +251,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*6. 2,1,3: Daily > weekly & daily < monthly*/
@@ -263,7 +264,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*7. 3,1,2: daily > weekly & daily > monthly*/
@@ -276,7 +277,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
     /*8. 1,3,2: daily < weekly & weekly > monthly*/
@@ -289,7 +290,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
 		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
 		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrue(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		Assert.assertTrue(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 
 	@Test(groups = {"regression"})
@@ -305,6 +306,6 @@ public class ResponsibleGamingTest extends AbstractTest{
 		}catch(RuntimeException e){
 			WebDriverUtils.runtimeExceptionWithLogs("User was not logged out. Self exclusion failed.");
 		}
-		Assert.assertTrue(confirmationMessageVisible == true);
+		Assert.assertTrue(confirmationMessageVisible == true, WebDriverUtils.getUrlAndLogs());
 	}
 }
