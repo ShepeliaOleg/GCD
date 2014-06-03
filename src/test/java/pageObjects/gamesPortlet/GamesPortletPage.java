@@ -1,5 +1,6 @@
 package pageObjects.gamesPortlet;
 
+import enums.Categories;
 import enums.SortBy;
 import pageObjects.account.LoginPopup;
 import pageObjects.base.AbstractPage;
@@ -38,7 +39,7 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String DROPDOWN_REFINE_BY_OPTION_PARTIAL_XP = 	"/a[contains(@class,'datalink')]";
 	private static final String DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP = DROPD0WN_REFINE_BY_XP + "//*[@class='active main-toggle']";
 	//Category Tabs
-	private static final String TAB_CATEGORY_XP= 						"//*[contains(@class,'nav')]//a[@data-category = ";
+	private static final String TAB_CATEGORY_XP= 						"//ul[contains(@class,'nav')]//a[@data-category = ";
 	private static final String TAB_ACTIVE_CATEGORY_XP= 				"//*[contains(@class,'nav')]//li[@class='active']/a[@data-category]";
 	private static final String TAB_ACTIVE_SUBCATEGORY_XP= 				"//*[contains(@class,'subnav')]//li[@class='active']/a[@data-category]";
 	private static final String MENU_TOP_XP = 							"//*[contains(@class,'tabs')]";
@@ -65,7 +66,11 @@ public class GamesPortletPage extends AbstractPage{
 	public static final String CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL = CAT_SUBCAT2_RELATIVE_URL + SUBCAT_B_RELATIVE_URL;
 	public static final String CAT_WITH_SUBCAT2_SUBCAT_C_RELATIVE_URL = CAT_SUBCAT2_RELATIVE_URL + SUBCAT_C_RELATIVE_URL;
 	public static final String CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL = CAT_SUBCAT2_RELATIVE_URL + SUBCAT_D_RELATIVE_URL;
-	//Sortby
+    private static final String[] SUBCATEGORIES_1 = new String[]{CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL, CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL, CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL};
+    private static final String[] SUBCATEGORIES_2 = new String[]{CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL, CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL,CAT_WITH_SUBCAT2_SUBCAT_C_RELATIVE_URL,CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL};
+    private static final String[] CATEGORIES_TOP = new String[]{CAT_NO_SUBCAT1_RELATIVE_URL, CAT_NO_SUBCAT2_RELATIVE_URL,CAT_SUBCAT1_RELATIVE_URL,CAT_SUBCAT2_RELATIVE_URL};
+
+    //Sortby
 	public static final String DROPDOWN_SORT_BY_XP=						"//*[contains(@class, 'games-select-box')]/div";
 	public static final String ITEM_SORT_BY_NONE_XP=					"//a[@data-sortby='none']";
 	public static final String ITEM_SORT_BY_POPULARITY_XP=				"//a[@data-sortby='popularity']";
@@ -125,8 +130,8 @@ public class GamesPortletPage extends AbstractPage{
 		return isGamePresent;
 	}
 
-	public boolean correctGamesAreDisplayed(List<String> gamesToBeDisplayed, List<String> gamesDisplayed){
-		return gamesToBeDisplayed.containsAll(gamesDisplayed);
+	public boolean gamesAreDisplayed(List<String> gamesToBeDisplayed){
+		return gamesToBeDisplayed.containsAll(getAllGameIDs());
 	}
 
 	public boolean allNavigationControlsAreHidden() {
@@ -353,6 +358,7 @@ public class GamesPortletPage extends AbstractPage{
 	// Category tabs
 	public GamesPortletPage clickCategoryTab (String categoryURL){
 		WebDriverUtils.click(getCategoryXpath(categoryURL));
+
 		return new GamesPortletPage();
 	}
 
@@ -387,25 +393,22 @@ public class GamesPortletPage extends AbstractPage{
 				leftSubcategoryMenuIsPresent() == false);
 	}
 
-	public boolean categoriesMenuIncludesTopCategories () {
-		return (isCategoryTabPresent(CAT_NO_SUBCAT1_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_NO_SUBCAT2_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_SUBCAT1_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_SUBCAT2_RELATIVE_URL));
-	}
+    public boolean categoryTabsInclude(Categories category) {
+        switch(category){
+            case top: return childCategoriesDisplayedInTabs(CATEGORIES_TOP);
+            case first:return childCategoriesDisplayedInTabs(SUBCATEGORIES_1);
+            case second:return childCategoriesDisplayedInTabs(SUBCATEGORIES_2);
+        }
+        throw new RuntimeException("Check test conditions - Category is not set");
+    }
 
-	public boolean childCategoriesForCatSubcat1DisplayedInCategoryTabsMenu (){
-		return (isCategoryTabPresent(CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL));
-	}
-
-	public boolean childCategoriesForCatSubcat2DisplayedInCategoryTabsMenu (){
-		return (isCategoryTabPresent(CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_WITH_SUBCAT2_SUBCAT_C_RELATIVE_URL)&&
-				isCategoryTabPresent(CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL));
-	}
+    private boolean childCategoriesDisplayedInTabs(String[] childCategories){
+        ArrayList<Boolean> results = new ArrayList<>();
+        for(String subCat:childCategories){
+            results.add(isCategoryTabPresent(subCat));
+        }
+        return !results.contains(false);
+    }
 
 	public boolean isActiveCategoryTabPresent (){
 		return (WebDriverUtils.getXpathCount(TAB_ACTIVE_CATEGORY_XP) > 0);
@@ -475,7 +478,7 @@ public class GamesPortletPage extends AbstractPage{
 		return refineByOptions.contains(refineByOption);
 	}
 
-	public List<String> getAllRefineByOptions () {
+	public ArrayList<String> getAllRefineByOptions () {
 		ArrayList<String> refineByOptions=new ArrayList<String>();
 		int xPathCount=WebDriverUtils.getXpathCount(DROPDOWN_REFINE_BY_OPTION_FULL_XP);
 		for(int i=1; i <= xPathCount; i++){
@@ -510,27 +513,21 @@ public class GamesPortletPage extends AbstractPage{
 		return WebDriverUtils.getAttribute(DROPDOWN_REFINE_BY_OPTION_FULL_XP + "[text() = '" + getActiveRefineByOptionText() + "']", CATEGORY_NAME_XP);
 	}
 
-	public boolean refineByOptionsIncludeTopCategories () {
-		List<String> refineByOptions = getAllRefineByOptions();
-		return (isRefineByOptionPresent(refineByOptions, CAT_NO_SUBCAT1_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_NO_SUBCAT2_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_SUBCAT1_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_SUBCAT2_RELATIVE_URL));
+	public boolean refineByOptionsInclude(Categories category) {
+        switch(category){
+            case top: return childCategoriesDisplayedInRefineBy(CATEGORIES_TOP);
+            case first:return childCategoriesDisplayedInRefineBy(SUBCATEGORIES_1);
+            case second:return childCategoriesDisplayedInRefineBy(SUBCATEGORIES_2);
+        }
+        throw new RuntimeException("Check test conditions - Category is not set");
 	}
 
-	public boolean childCategoriesForCatSubcat1DisplayedInRefineBy (){
-		List<String> refineByOptions = getAllRefineByOptions();
-		return (isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL));
-	}
-
-	public boolean childCategoriesForCatSubcat2DisplayedInRefineBy (){
-		List<String> refineByOptions = getAllRefineByOptions();
-		return (isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT2_SUBCAT_C_RELATIVE_URL)&&
-				isRefineByOptionPresent(refineByOptions, CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL));
-	}
-
+    private boolean childCategoriesDisplayedInRefineBy (String[] childCategories){
+        ArrayList<String> refineByOptions = getAllRefineByOptions();
+        ArrayList<Boolean> results = new ArrayList<>();
+        for(String subCat:childCategories){
+            results.add(isRefineByOptionPresent(refineByOptions, subCat));
+        }
+        return !results.contains(false);
+    }
 }

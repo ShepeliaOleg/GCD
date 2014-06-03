@@ -41,5 +41,9 @@ public class TypeUtils{
         return stringList;
     }
 
+    public static boolean listAContainsListB(List<String> listA, List<String> listB){
+        return listA.containsAll(listB);
+    }
+
 
 }
