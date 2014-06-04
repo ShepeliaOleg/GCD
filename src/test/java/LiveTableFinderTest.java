@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.account.LoginPopup;
@@ -13,7 +12,7 @@ import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.RandomUtils;
-import utils.WebDriverUtils;
+import utils.TypeUtils;
 
 /**
  * User: sergiich
@@ -41,7 +40,7 @@ public class LiveTableFinderTest extends AbstractTest{
 				break;
 			}
 		}
-		Assert.assertTrue(result);
+		TypeUtils.assertTrueWithLogs(result,"game types disappear");
 	}
 
     /*3. Find a table – sorting by Game Name*/
@@ -51,7 +50,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		liveCasinoPage.sortName();
 		String initialName=liveCasinoPage.getNameElement(1);
 		liveCasinoPage.sortName();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getNameElement(liveCasinoPage.getNumberOfRows())));
+		TypeUtils.assertTrueWithLogs(initialName.equals(liveCasinoPage.getNameElement(liveCasinoPage.getNumberOfRows())),"sorting by name correct");
 	}
 
     /*4. Find a table – sorting by game type*/
@@ -61,7 +60,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		liveCasinoPage.sortGameType();
 		String initialName=liveCasinoPage.getGameTypeElement(1);
 		liveCasinoPage.sortGameType();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getGameTypeElement(liveCasinoPage.getNumberOfRows())));
+		TypeUtils.assertTrueWithLogs(initialName.equals(liveCasinoPage.getGameTypeElement(liveCasinoPage.getNumberOfRows())),"sorting by gameType correct");
 	}
 
     /*5. Find a table – sorting by dealer’s name*/
@@ -71,7 +70,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		liveCasinoPage.sortDealerName();
 		String initialName=liveCasinoPage.getDealerName(1);
 		liveCasinoPage.sortDealerName();
-		Assert.assertTrue(initialName.equals(liveCasinoPage.getDealerName(liveCasinoPage.getNumberOfRows())));
+		TypeUtils.assertTrueWithLogs(initialName.equals(liveCasinoPage.getDealerName(liveCasinoPage.getNumberOfRows())),"sorting by dealerName correct");
 	}
 
 	/*6. Find a table – launch game as a player and play*/
@@ -82,7 +81,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		GameLaunchPopup gameLaunchPopup=(GameLaunchPopup) liveCasinoPage.clickPlay(index, true);
 		boolean isUrlValid=gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-		Assert.assertTrue(isUrlValid);
+		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
 	}
 
 	/*7. Find a table – launch game as a guest, login and play*/
@@ -96,7 +95,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		GameLaunchPopup gameLaunchPopup = homePage.switchToGameWindow();
 		boolean isUrlValid=gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-		Assert.assertTrue(isUrlValid);
+		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
 	}
 
     /*8. Find a table – View Info about a dealer*/
@@ -105,7 +104,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(ConfiguredPages.liveTableFinder);
 		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
 		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
-		Assert.assertTrue(dealerImagePopup.imageNotNull());
+		TypeUtils.assertTrueWithLogs(dealerImagePopup.imageNotNull(), "image displayed");
 	}
 
     /*9. Verify dealer's name inside of Info popup*/
@@ -116,8 +115,6 @@ public class LiveTableFinderTest extends AbstractTest{
 		String dealerName=liveCasinoPage.getDealerName(index).replace("\nINFO", "");
 		DealerImagePopup dealerImagePopup=liveCasinoPage.clickInfo(index);
         String popupDealerName = dealerImagePopup.getDealerName();
-		if(!dealerName.equalsIgnoreCase(popupDealerName)){
-            WebDriverUtils.runtimeExceptionWithLogs("<div>Expected: "+dealerName+"</div><div>Actual: "+popupDealerName+"</div>");
-        }
+        TypeUtils.assertTrueWithLogs(dealerName.equalsIgnoreCase(popupDealerName), "dealer names equal");
 	}
 }

@@ -15,9 +15,9 @@ import springConstructors.GameControlLabels;
 import springConstructors.UserData;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
-import testUtils.Assert;
 import utils.NavigationUtils;
 import utils.RandomUtils;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -52,21 +52,21 @@ public class GamesPortletTest extends AbstractTest{
         boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		String url = gameLaunchPopup.getWindowUrl();
 		gameLaunchPopup.closePopup();
-		Assert.assertTrueWithLogs(correctGamePopupUrl, "Game url is not correct = " + url);
+		TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid: " + url);
 	}
 
 	/*2.1. Refine By: Top level*/
 	@Test(groups = {"regression"})
 	public void refineByNavigationStyleTopLevel (){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)&&gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()), "noCategoryIsSelectedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()), "gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(WebDriverUtils.getCurrentUrl().endsWith(ConfiguredPages.gamesNavigationStyleRefineBy.toString()), "pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)&&gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()), "noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()), "gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(WebDriverUtils.getCurrentUrl().endsWith(ConfiguredPages.gamesNavigationStyleRefineBy.toString()), "pageURLIsCorrect");
 	}
 
 	/*2.2. Refine By: Top > Category without subcategories*/
@@ -74,17 +74,17 @@ public class GamesPortletTest extends AbstractTest{
 	public void refineByNavigationFromTopToCategoryWithNoSubcategories () {        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)&&gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()), "correctGamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)&&gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()), "correctGamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"invalidGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*2.3. Refine By: Top > Category with subcategories*/
@@ -92,18 +92,18 @@ public class GamesPortletTest extends AbstractTest{
 	public void refineByNavigationFromTopToCategoryWithSubcategories () {        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"invalidGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*2.4. Refine By: Category with subcategories > subcategory*/
@@ -112,18 +112,18 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top), "refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatA()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())&&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top), "refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatA()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())&&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2())&&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatB())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"invalidGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL),"pageURLContainsCategoryPath");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*2.5.  Refine By: Subcategory 1 > Subcategory 2*/
@@ -133,18 +133,18 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top), "refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatB()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top), "refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second), "refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatB()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())&&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatA())&&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"invalidGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL),"pageURLContainsCategoryPath");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*2.6. Refine By: Category without subcategories 1 > Category without subcategories 2*/
@@ -153,17 +153,17 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertFalseWithLogs((gamesPortletPage.refineByOptionsInclude(Categories.first) && gamesPortletPage.refineByOptionsInclude(Categories.second)), "refineByOptionsIncludeSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs((gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertFalseWithLogs((gamesPortletPage.refineByOptionsInclude(Categories.first) && gamesPortletPage.refineByOptionsInclude(Categories.second)), "refineByOptionsIncludeSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs((gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 && gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 && gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2())), "invalidGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLContainsCategoryPath");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*2.7. Refine By: Category without subcategories > Top*/
@@ -172,15 +172,15 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)
                 &&gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleRefineBy.toString()),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleRefineBy.toString()),"pageURLIsCorrect");
 	}
 
 	/*2.8. Refine By: Category with subcategories > Top*/
@@ -189,15 +189,15 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
-		Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-		Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first)
                 &&gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeSubcategories");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleRefineBy.toString()),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleRefineBy.toString()),"pageURLIsCorrect");
 	}
 
 	/*2.9. Refine By: Subcategory > Parent category*/
@@ -207,33 +207,33 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
-		Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-		Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"noCategoryIsSelectedInRefineBy");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"invalidGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLContainsCategoryPath");
 	}
 
 	/*3.1.1. Category Tabs (Top): Top*/
 	@Test(groups = {"regression"})
 	public void categoryTabsTopNavigationStyleTopLevel (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsTop.toString()),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsTop.toString()),"pageURLIsCorrect");
 	}
 
 	/*3.1.2. Category Tabs (Top): Top >> Category without sub-categories*/
@@ -241,19 +241,19 @@ public class GamesPortletTest extends AbstractTest{
 	public void categoryTabsTopNavigationFromTopToCategoryWithoutSubcategories (){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.3. Category Tabs (Top): Top >> Category with sub-categories*/
@@ -261,21 +261,21 @@ public class GamesPortletTest extends AbstractTest{
 	public void categoryTabsTopNavigationFromTopToCategoryWithSubcategories (){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 
@@ -285,26 +285,26 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"correctSubcategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"correctSubcategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.5. Category Tabs (Top): Subcategory > subcategory*/
@@ -314,26 +314,26 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"correctSubcategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"correctSubcategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.6. Category Tabs (Top): Category without subcategories > Category without subcategories*/
@@ -342,19 +342,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 
@@ -364,21 +364,21 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");		
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");		
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.8. Category with subcategories > Category without subcategories*/
@@ -387,19 +387,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.9. Category with subcategories > Category with subcategories*/
@@ -408,21 +408,21 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsTop);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.1.10. Category Tabs (Top): Subcategory >> Parent category*/
@@ -432,36 +432,36 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.1. Category Tabs (Left): Top*/
 	@Test(groups = {"regression"})
 	public void categoryTabsLeftNavigationStyleTopLevel (){        
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft.toString()),"pageURLIsCorrect");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft.toString()),"pageURLIsCorrect");
 	}
 
 	/*3.2.2. Category Tabs (Left): Top >> Category without sub-categories*/
@@ -469,19 +469,19 @@ public class GamesPortletTest extends AbstractTest{
 	public void categoryTabsLeftNavigationFromTopToCategoryWithoutSubcategories (){        
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.3. Category Tabs (Left): Top >> Category with sub-categories*/
@@ -489,21 +489,21 @@ public class GamesPortletTest extends AbstractTest{
 	public void categoryTabsLeftNavigationFromTopToCategoryWithSubcategories (){        
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 
@@ -513,26 +513,26 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"correctSubcategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"correctSubcategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.5. Category Tabs (Left): Subcategory > subcategory*/
@@ -542,26 +542,26 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"correctSubcategoryTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"incorrectSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveSubcategoryTabXp().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"correctSubcategoryTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_B_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.6. Category Tabs (Left): Category without subcategories > Category without subcategories*/
@@ -570,19 +570,19 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 
@@ -592,21 +592,21 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 
 	}
 
@@ -616,19 +616,19 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                         &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                         &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.9. Category Tabs (Left): Category with subcategories > Category with subcategories*/
@@ -637,21 +637,21 @@ public class GamesPortletTest extends AbstractTest{
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.second),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
 	/*3.2.10. Category Tabs (Left): Subcategory >> Parent category*/
@@ -661,36 +661,36 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
 		gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-		Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-		Assert.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
-		Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-		Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.first),"correctSubcategoriesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.isActiveSubcategoryTabPresent(),"isActiveSubcategoryTabPresent");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
 	}
 
     //    4.1.1. Category Tabs And Refine By (Top): Top
     @Test(groups = {"regression"})
     public void categoryTabsRefineByTopNavigationStyleTopLevel (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop.toString()),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop.toString()),"pageURLIsCorrect");
     }
 
 
@@ -699,19 +699,19 @@ public class GamesPortletTest extends AbstractTest{
     public void categoryTabsRefineByTopNavigationFromTopToCategoryWithoutSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     //    4.1.3. Category Tabs And Refine By (Top): Top >> Category with sub-categories
@@ -719,24 +719,24 @@ public class GamesPortletTest extends AbstractTest{
     public void categoryTabsRefineByTopNavigationFromTopToCategoryWithSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     //    4.1.4. Category Tabs And Refine By (Top): Category with subcategories > subcategory
@@ -745,27 +745,27 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"correctGamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"correctGamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
     }
     /*4.1.5.  Category Tabs And Refine By (Top): Subcategory 1 > Subcategory 2 */
     @Test(groups = {"regression"})     
@@ -774,26 +774,26 @@ public class GamesPortletTest extends AbstractTest{
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctCategoryTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctCategoryTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatA())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.1.6. Category Tabs And Refine By (Top): Category without subcategories 1 > Category without subcategories 2*/
@@ -802,19 +802,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.1.7. Category Tabs And Refine By (Top): Category without subcategories > Category with subcategories*/
@@ -823,24 +823,24 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.1.8. Category Tabs And Refine By (Top): Category with subcategories > Category without subcategories*/
@@ -849,19 +849,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top), "correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.1.9. Category Tabs And Refine By (Top): Category with subcategories > Category with subcategories*/
@@ -870,24 +870,24 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"correctGamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"correctGamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /*4.1.10. Category Tabs And Refine By (Top): Subcategory > Parent category*/
@@ -897,39 +897,39 @@ public class GamesPortletTest extends AbstractTest{
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL);
         gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     //    4.2.1. Category Tabs And Refine By (Left): Top
     @Test(groups = {"regression"})     
     public void categoryTabsRefineByLeftNavigationStyleTopLevel (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft.toString()),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft.toString()),"pageURLIsCorrect");
     }
 
     //    4.2.2. Category Tabs And Refine By (Left): Top >> Category without sub-categories
@@ -937,19 +937,19 @@ public class GamesPortletTest extends AbstractTest{
     public void categoryTabsRefineByLeftNavigationFromTopToCategoryWithoutSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     //    4.2.3. Category Tabs And Refine By (Left): Top >> Category with sub-categories
@@ -957,24 +957,24 @@ public class GamesPortletTest extends AbstractTest{
     public void categoryTabsRefineByLeftNavigationFromTopToCategoryWithSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     //    4.2.4. Category Tabs And Refine By (Left): Category with subcategories > subcategory
@@ -983,27 +983,27 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctCategoryTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatA()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatC())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatD()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_A_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /*4.2.5.  Category Tabs And Refine By (Left): Subcategory 1 > Subcategory 2 */
@@ -1013,26 +1013,26 @@ public class GamesPortletTest extends AbstractTest{
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_B_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
-        Assert.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctCategoryTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveRefineByOption().equals(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"selectedCategoryIsDisplayedInRefineBy");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctCategoryTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatC()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1_subcatA())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2_subcatB()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_WITH_SUBCAT1_SUBCAT_C_RELATIVE_URL),"pageURLIsCorrect");
 
     }
 
@@ -1042,19 +1042,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
       }
 
     /* 4.2.7. Category Tabs And Refine By (Left): Category without subcategories > Category with subcategories*/
@@ -1063,24 +1063,24 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.2.8. Category Tabs And Refine By (Left): Category with subcategories > Category without subcategories*/
@@ -1089,19 +1089,19 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
-        Assert.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /* 4.2.9. Category Tabs And Refine By (Left): Category with subcategories > Category with subcategories*/
@@ -1110,24 +1110,24 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /*4.2.10. Category Tabs And Refine By (Left): Subcategory > Parent category*/
@@ -1137,33 +1137,33 @@ public class GamesPortletTest extends AbstractTest{
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
         gamesPortletPage.refineBy(gamesPortletPage.CAT_WITH_SUBCAT2_SUBCAT_D_RELATIVE_URL);
         gamesPortletPage.clickRefineByOptionByText(gameControlLabels.getResetFilterLabel());
-        Assert.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
-        Assert.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
-        Assert.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"noCategoryIsSelectedInRefineBy");
-        Assert.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
-        Assert.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
-        Assert.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
-        Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
-        Assert.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"refineByDropDownIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByOptionsIncludeTopCategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.second),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.first),"noCategoryIsSelectedInRefineBy");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.getActiveRefineByOptionText().equals(gameControlLabels.getRefineByLabel()),"resetFilterOptionIsPresent");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isRefineByTextOptionPresent(gameControlLabels.getResetFilterLabel()),"topCategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.getActiveCategoryTabXp().equals(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"correctTabIsActive");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat2()),"gamesAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat1())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatNoSubcat2())
                 &&gamesPortletPage.gamesAreDisplayed(gameCategories.getCatSubcat1()),"incorrectGamesAreDisplayed");
-        Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL),"pageURLIsCorrect");
     }
 
     /*5. Navigation style = None All navigation controls are absent All Games are displayed*/
 	@Test(groups = {"regression"})
 	public void noneNavigationStyle (){        
 		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleNone);
-		Assert.assertTrueWithLogs(gamesPortletPage.allNavigationControlsAreHidden(),"allNavigationControlsHidden");
-		Assert.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
-		Assert.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleNone.toString()),"pageURLIsCorrect");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.allNavigationControlsAreHidden(),"allNavigationControlsHidden");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleNone.toString()),"pageURLIsCorrect");
 	}
 
     /*7. Sort By for Casino games*/
@@ -1179,7 +1179,7 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.sortBy(SortBy.New);
 		String gameID = gamesPortletPage.getGameName(1);
 		GameElement gameElement = new GameElement(gameID);
-        boolean isNew = gameElement.isNew();
+        TypeUtils.assertTrueWithLogs(gameElement.isNew(),"is sorted by New");
 
 //        Alphabetical sorting
 		gamesPortletPage.sortBy(SortBy.Alphabetical);
@@ -1211,7 +1211,8 @@ public class GamesPortletTest extends AbstractTest{
 				isJackpotDesc = false;
 			}
 		}
-		Assert.assertTrueWithLogs(isNew && isJackpotDesc && isAlphabetical);
+		TypeUtils.assertTrueWithLogs(isJackpotDesc,"is sorted by jackpots");
+        TypeUtils.assertTrueWithLogs(isAlphabetical,"is sorted alphabetically");
 	}
 
 	/*11. Specific category search on GP with "Use Separate Page for each game category" disabled*/
@@ -1229,7 +1230,8 @@ public class GamesPortletTest extends AbstractTest{
 		}catch(RuntimeException e){
 			gamesAreNotShown = true;
 		}
-		Assert.assertTrueWithLogs(searchedId.equals(gameID) && gamesAreNotShown);
+		TypeUtils.assertTrueWithLogs(searchedId.equals(gameID),"Search correct");
+        TypeUtils.assertTrueWithLogs(gamesAreNotShown, "games are not shown for wrong search");
 	}
 
 	/*14. Item View Styles*/
@@ -1238,15 +1240,16 @@ public class GamesPortletTest extends AbstractTest{
 	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-        boolean isURLOneCorrect =  gameLaunchPopup.isUrlValid();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-        boolean isURLTwoCorrect = gameLaunchPopup.isUrlValid();
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-        boolean isPopupTitleCorrect = gameInfoPopup.isTitleCorrect();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
 		gameInfoPopup.clickClose();
-		Assert.assertTrueWithLogs(isURLOneCorrect && isURLTwoCorrect && isPopupTitleCorrect);
 	}
 
 	/*14.2. Item View Style 2 - play, demo, view game info*/
@@ -1254,15 +1257,16 @@ public class GamesPortletTest extends AbstractTest{
 	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-		boolean isURLOneCorrect =  gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.closePopup();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+        gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-        boolean isURLTwoCorrect = gameLaunchPopup.isUrlValid();
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-		boolean isPopupTitleCorrect = gameInfoPopup.isTitleCorrect();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
 		gameInfoPopup.clickClose();
-		Assert.assertTrueWithLogs(isURLOneCorrect && isURLTwoCorrect && isPopupTitleCorrect);
 	}
 
 	/*14.3. Item View Style 3 - play, demo, view game info*/
@@ -1270,20 +1274,20 @@ public class GamesPortletTest extends AbstractTest{
 	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-        boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 		try{
 			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
 		}catch(RuntimeException e){
 			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
 		}
-        boolean isURLTwoCorrect = gameLaunchPopup.isUrlValid();
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-        boolean isPopupTitleCorrect = gameInfoPopup.isTitleCorrect();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
 		gameInfoPopup.clickClose();
-		Assert.assertTrueWithLogs(isURLOneCorrect && isURLTwoCorrect && isPopupTitleCorrect);
 	}
 
 	/*14.4. Item View Style 4 - play, demo, view game info*/
@@ -1291,17 +1295,16 @@ public class GamesPortletTest extends AbstractTest{
 	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-        boolean isURLOneCorrect = gameLaunchPopup.isUrlValid();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-        boolean isURLTwoCorrect = gameLaunchPopup.isUrlValid();
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-        boolean isPopupTitleCorrect = gameInfoPopup.isTitleCorrect();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
 		gameInfoPopup.clickClose();
-		Assert.assertTrueWithLogs(isURLOneCorrect && isURLTwoCorrect && isPopupTitleCorrect);
 	}
 
 	/*15. Navigation types*/
@@ -1314,16 +1317,17 @@ public class GamesPortletTest extends AbstractTest{
 		String secondPage = gamesPortletPage.getGameName(1);
 		gamesPortletPage = gamesPortletPage.clickPreviousButton();
 		String firstPageReopened = gamesPortletPage.getGameName(1);
-		Assert.assertTrueWithLogs(firstPage.equals(firstPageReopened) && !firstPage.equals(secondPage));
+		TypeUtils.assertTrueWithLogs(firstPage.equals(firstPageReopened),"Is back at first page");
+        TypeUtils.assertFalseWithLogs(firstPage.equals(secondPage),"Switched to second page");
 	}
 	/*15.3. Navigation types - To Fit*/
 	@Test(groups = {"regression"})
 	public void toFitModeIsDisplayedAndGameCanBeStarted(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
-        boolean isURLCorrect = gameLaunchPopup.isUrlValid();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-		Assert.assertTrueWithLogs(isURLCorrect);
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 	}
 
     /*16. Use Favorites*/
@@ -1336,17 +1340,12 @@ public class GamesPortletTest extends AbstractTest{
 		final String gameID = gamesPortletPage.getRandomGameName();
 		GameElement gameElement = new GameElement(gameID);
 		gameElement.clickFavourite();
-		boolean isFavourite = gameElement.isFavouriteActive();
+        TypeUtils.assertTrueWithLogs(gameElement.isFavouriteActive(),"Is favorite");
         NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
 		gameElement = new GameElement(gameID);
 		gameElement.clickFavouriteActive();
 		gamesPortletPage = new GamesPortletPage();
-        boolean isGamePresent = gamesPortletPage.isGamePresent(gameID);
-		if (!isFavourite||isGamePresent){
-			WebDriverUtils.runtimeExceptionWithLogs(
-                    "<div>isFavourite:" + isFavourite + " ER: true</div>" +
-                    "<div>isGamePresent:" + isGamePresent + " ER: true</div>");
-		}
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(gameID),"is still favorite");
 	}
 
 	/*22. Switching between Item and gamesList view*/
@@ -1355,20 +1354,18 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String gameId = gamesPortletPage.getRandomGameName();
 		GameElement gameElement = new GameElement(gameId);
-        boolean present =  gameElement.isImagePresent();
+        TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view");
 		gamesPortletPage = gamesPortletPage.clickListView();
-        boolean notPresent = gameElement.isImagePresent();
+        TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"list view");
 		gamesPortletPage.clickItemView();
-		boolean presentAgain = gameElement.isImagePresent();
-		Assert.assertTrueWithLogs(present && !notPresent && presentAgain);
+		TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view after list");
 	}
 
 	/*24. Disable demo mode for logged in player*/
 	@Test(groups = {"regression"})
 	public void loggedInUserTriesToPlayDisabledDemoNoDemoButtonsFound(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum, defaultUserData.getRegisteredUserData());
-        boolean isDemoPresent = gamesPortletPage.isDemoPresent();
-		Assert.assertTrueWithLogs(!isDemoPresent);
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isDemoPresent(),"demo buttons present");
 	}
 
 	/*29.1. Guest launches a game in real mode and faces login popup*/
@@ -1376,7 +1373,6 @@ public class GamesPortletTest extends AbstractTest{
 	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
 		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playReal(false);
-		Assert.assertTrueWithLogs(loginPopup !=null);
 	}
 
 
@@ -1385,9 +1381,9 @@ public class GamesPortletTest extends AbstractTest{
 	public void gameCanBeStartedFromListView(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup)gamesPortletPage./*clickAllGames().*/playReal(true);
-        boolean isURLCorrect = gameLaunchPopup.isUrlValid();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		gameLaunchPopup.closePopup();
-		Assert.assertTrueWithLogs(isURLCorrect);
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 	}
 
 }

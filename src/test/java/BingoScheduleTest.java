@@ -1,12 +1,12 @@
 import enums.ConfiguredPages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import springConstructors.BingoScheduleData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.TypeUtils;
 
 /**
  * User: sergiich
@@ -32,6 +32,6 @@ public class BingoScheduleTest extends AbstractTest{
 		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
 		Integer actualColumnsNumber = bingoSchedulePage.getColumnsNumber();
 		Integer expectedColumnsNumber = bingoScheduleData.getColumnsNumber();
-		Assert.assertTrue(actualColumnsNumber.equals(expectedColumnsNumber));
+        TypeUtils.assertTrueWithLogs(actualColumnsNumber.equals(expectedColumnsNumber), "Column number is correct");
 	}
 }

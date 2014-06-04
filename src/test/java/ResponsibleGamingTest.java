@@ -11,9 +11,9 @@ import pageObjects.responsibleGaming.SelfExcludeConfirmPopup;
 import pageObjects.responsibleGaming.SelfExcludePopup;
 import springConstructors.UserData;
 import testUtils.AbstractTest;
-import testUtils.Assert;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 
 import java.util.List;
@@ -45,8 +45,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(0),randomLimits.get(1), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
 	/* 3. 1,2,-: Daily <= Weekly & Monthly = not defined */
@@ -57,8 +56,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), "0");
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 4. -,1,2: Weekly <= Monthly & Daily = not defined */
@@ -69,8 +67,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 5. 1,-,2: Monthly >= Daily & Weekly = not defined */
@@ -81,8 +78,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 6. 1,-,-: Daily & Weekly = not defined & Monthly = not defined */
@@ -93,8 +89,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", "0");
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 7. -,1,-: Weekly & Daily = not defined & Monthly = not defined */
@@ -105,8 +100,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), "0");
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 8. -,-,1: Monthly & Weekly = not defined & Daily = not defined */
@@ -117,8 +111,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits("0","0", randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
-		boolean successfullySetLimitsMessageDisplayed=responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-        Assert.assertTrueWithLogs(successfullySetLimitsMessageDisplayed);
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* 9. Currency sign displayed on portlet is equal to player currency, set on registration procedure */
@@ -126,10 +119,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void currencyIsEqualToSetOnRegistration(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		String currencySignDaily =      responsibleGamingPage.getDailyLimitCurrency();
-		String currencySignWeekly =     responsibleGamingPage.getWeeklyLimitCurrency();
-		String currencySignMonthly =    responsibleGamingPage.getMonthlyLimitCurrency();
-		Assert.assertTrueWithLogs(currencySignDaily.startsWith("£") && currencySignWeekly.startsWith("£") && currencySignMonthly.startsWith("£"));
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.getDailyLimitCurrency().startsWith("£"),"currencySignDaily.startsWith(\"£\")");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.getWeeklyLimitCurrency().startsWith("£"),"currencySignWeekly.startsWith(\"£\")");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.getMonthlyLimitCurrency().startsWith("£"), "currencySignMonthly.startsWith(\"£\")");
 	}
 
     /* 10. Set time per session */
@@ -139,8 +131,7 @@ public class ResponsibleGamingTest extends AbstractTest{
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
 		responsibleGamingPage.setRandomTimePerSession();
 		responsibleGamingPage.submitTimePerSession();
-		boolean successfullySetLimitMessageDisplayed = responsibleGamingPage.timePerSessionChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(successfullySetLimitMessageDisplayed);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.timePerSessionChangedSuccessfullyMessageVisible(), "successfullySetLimitMessageDisplayed");
 	}
 
     /* 11. Set self-exlusion and verify player is logged out */
@@ -157,7 +148,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		}catch(RuntimeException e){
 			WebDriverUtils.runtimeExceptionWithLogs("User was not logged out. Self exclusion failed.");
 		}
-		Assert.assertTrueWithLogs(confirmationMessageVisible == true);
+		TypeUtils.assertTrueWithLogs(confirmationMessageVisible, "confirmationMessageVisible");
 	}
 
     /* 13. Close self-exclusion popup */
@@ -166,7 +157,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
 		SelfExcludePopup selfExcludePopup = responsibleGamingPage.navigateToSelfExclude();
 		selfExcludePopup.clickClose();
-		Assert.assertTrueWithLogs(new AbstractPage().isLoggedIn() == true);
+		TypeUtils.assertTrueWithLogs(new AbstractPage().isLoggedIn(), "Logged in");
 	}
 
     /* 14. Several consecutive updates of deposit limits */
@@ -179,12 +170,10 @@ public class ResponsibleGamingTest extends AbstractTest{
 		responsibleGamingPage.submitDepositLimit();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(3),randomLimits.get(4),randomLimits.get(5));
 		responsibleGamingPage.submitDepositLimit();
-		boolean futureChangeNotificationDaily =         responsibleGamingPage.dailyFutureChangeNotificationVisible();
-		boolean futureChangeNotificationWeekly =        responsibleGamingPage.weeklyFutureChangeNotificationVisible();
-		boolean futureChangeNotificationMonthly =       responsibleGamingPage.monthlyFutureChangeNotificationVisible();
-		boolean successfullySetLimitsMessageDisplayed = responsibleGamingPage.depositsChangedSuccessfullyMessageVisible();
-		Assert.assertTrueWithLogs(futureChangeNotificationDaily == true && futureChangeNotificationWeekly == true && futureChangeNotificationMonthly == true && successfullySetLimitsMessageDisplayed == true,
-                WebDriverUtils.getUrlAndLogs());
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyFutureChangeNotificationVisible(), "futureChangeNotificationDaily");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyFutureChangeNotificationVisible(), "futureChangeNotificationWeekly");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyFutureChangeNotificationVisible(), "futureChangeNotificationMonthly");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
     /* Negative */
@@ -196,10 +185,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), "0");
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(), "dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertFalseWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*2. -,2,1: Weekly > Monthly & Daily = not defined*/
@@ -209,10 +197,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits("0",randomLimits.get(2), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		TypeUtils.assertFalseWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*3. 2,-,1: Daily > Monthly & Weekly = not defined */
@@ -222,10 +209,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),"0", randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == false && monthlyErrorVisible == true);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertFalseWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*4. 3,2,1: Daily > Weekly > Monthly*/
@@ -235,10 +221,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), randomLimits.get(0));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*5. 2,3,1: Daily < Weekly & Weekly > Monthly*/
@@ -248,10 +233,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), randomLimits.get(0));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*6. 2,1,3: Daily > weekly & daily < monthly*/
@@ -261,10 +245,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(0), randomLimits.get(2));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == false);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertFalseWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*7. 3,1,2: daily > weekly & daily > monthly*/
@@ -274,10 +257,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(0), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == true && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(), "weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
     /*8. 1,3,2: daily < weekly & weekly > monthly*/
@@ -287,10 +269,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
 		responsibleGamingPage.setDepositLimits(randomLimits.get(0),randomLimits.get(2), randomLimits.get(1));
 		responsibleGamingPage.submitDepositLimit();
-		boolean dailyErrorVisible=responsibleGamingPage.dailyValidationErrorMessageVisible();
-		boolean weeklyErrorVisible=responsibleGamingPage.weeklyValidationErrorMessageVisible();
-		boolean monthlyErrorVisible=responsibleGamingPage.monthlyValidationErrorMessageVisible();
-		Assert.assertTrueWithLogs(dailyErrorVisible == false && weeklyErrorVisible == true && monthlyErrorVisible == true);
+		TypeUtils.assertFalseWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
+        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
 	}
 
 	@Test(groups = {"regression"})
@@ -306,6 +287,6 @@ public class ResponsibleGamingTest extends AbstractTest{
 		}catch(RuntimeException e){
 			WebDriverUtils.runtimeExceptionWithLogs("User was not logged out. Self exclusion failed.");
 		}
-		Assert.assertTrueWithLogs(confirmationMessageVisible == true);
+		TypeUtils.assertTrueWithLogs(confirmationMessageVisible);
 	}
 }

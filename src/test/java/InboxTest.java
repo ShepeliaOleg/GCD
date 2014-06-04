@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.inbox.*;
 import springConstructors.MailQ;
@@ -12,6 +11,7 @@ import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 
 /**
  * User: sergiich
@@ -59,8 +59,7 @@ public class InboxTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.clickSendMessage().sendMessage(emailText);
-		boolean isMessageReceived = mailQ.checkIsMessageAppearedAndLogout(emailText);
-		Assert.assertTrue(isMessageReceived) ;
+        TypeUtils.assertTrueWithLogs(mailQ.checkIsMessageAppearedAndLogout(emailText),"isMessageReceived");
 	}
 
     /*3. Reply to the sent message form MailQ is successfully received*/
@@ -75,8 +74,7 @@ public class InboxTest extends AbstractTest{
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		mailQ.sendReplyAndLogout(emailText, emailText, true, true);
         inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
-		boolean isReplyReceived = inboxPage.waitForMessageToAppear();
-		Assert.assertTrue(isReplyReceived);
+        TypeUtils.assertTrueWithLogs(inboxPage.waitForMessageToAppear(),"isReplyReceived");
 	}
 
     /*4. New message from MailQ is successfully received.*/
@@ -89,24 +87,21 @@ public class InboxTest extends AbstractTest{
         PortalUtils.registerUser(userData);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
-		boolean isMessageReceived=inboxPage.waitForMessageToAppear();
-		Assert.assertTrue(isMessageReceived) ;
+        TypeUtils.assertTrueWithLogs(inboxPage.waitForMessageToAppear(),"isMessageReceived");
 	}
 
     /*5. Player views the list of sent messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfSentMessages(){
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
-		boolean isMessageListPresent=inboxPage.clickSentItems().isMessageListPresent();
-		Assert.assertTrue(isMessageListPresent) ;
+        TypeUtils.assertTrueWithLogs(inboxPage.clickSentItems().isMessageListPresent(),"isMessageListPresent");
 	}
 
     /*6. Player views the list of received messages*/
 	@Test(groups = {"regression"})
 	public void checkListOfReceivedMessages(){
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
-		boolean isMessageListPresent=inboxPage.isMessageListPresent();
-		Assert.assertTrue(isMessageListPresent) ;
+        TypeUtils.assertTrueWithLogs(inboxPage.isMessageListPresent(),"isMessageListPresent");
 	}
 
     /*7. Detailed view of a sent message can be opened*/
@@ -118,7 +113,8 @@ public class InboxTest extends AbstractTest{
 		inboxPage = sendMessagePopup.sendMessage(emailText);
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
 		SentMessagePopup sentMessagePopup = sentItemsPage.openFirstMessage();
-		Assert.assertTrue(emailText.equals(sentMessagePopup.getSubject()) && emailText.equals(sentMessagePopup.getMessage())) ;
+		TypeUtils.assertTrueWithLogs(emailText.equals(sentMessagePopup.getSubject()),"Correct subject received");
+        TypeUtils.assertTrueWithLogs(emailText.equals(sentMessagePopup.getMessage()),"Correct message received") ;
 	}
 
     /*8. Detailed view of a received message can be opened*/
@@ -133,7 +129,8 @@ public class InboxTest extends AbstractTest{
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 		inboxPage.waitForMessageToAppear();
 		ReceivedInboxMessagePopup receivedInboxMessagePopup=inboxPage.openFirstMessage();
-		Assert.assertTrue(emailText.equals(receivedInboxMessagePopup.getSubject()) && emailText.equals(receivedInboxMessagePopup.getMessage())) ;
+		TypeUtils.assertTrueWithLogs(emailText.equals(receivedInboxMessagePopup.getSubject()), "Correct subject received");
+        TypeUtils.assertTrueWithLogs(emailText.equals(receivedInboxMessagePopup.getMessage()), "Correct message received");
 	}
 
     /*9. Player deletes a sent message from the list*/
@@ -146,7 +143,8 @@ public class InboxTest extends AbstractTest{
 		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
 		sentItemsPage = sentItemsPage.deleteFirstMessage();
 		SentMessagePopup sentMessagePopup = sentItemsPage.openFirstMessage();
-		Assert.assertTrue(!emailText.equals(sentMessagePopup.getSubject()) && !emailText.equals(sentMessagePopup.getMessage())) ;
+        TypeUtils.assertFalseWithLogs(emailText.equals(sentMessagePopup.getSubject()), "subject is same");
+        TypeUtils.assertFalseWithLogs(emailText.equals(sentMessagePopup.getMessage()),"message is same") ;
 	}
 
     /*10. Player deletes a sent message from details popup*/
@@ -160,7 +158,8 @@ public class InboxTest extends AbstractTest{
 		SentMessagePopup sentMessagePopup = sentItemsPage.openFirstMessage();
 		sentItemsPage = sentMessagePopup.clickDeleteButton();
 		sentMessagePopup = sentItemsPage.openFirstMessage();
-		Assert.assertTrue(!emailText.equals(sentMessagePopup.getSubject()) && !emailText.equals(sentMessagePopup.getMessage())) ;
+		TypeUtils.assertFalseWithLogs(emailText.equals(sentMessagePopup.getSubject()), "subject is same");
+        TypeUtils.assertFalseWithLogs(emailText.equals(sentMessagePopup.getMessage()),"message is same") ;
 	}
 
     /*11. Player deletes a received message from the list view*/
@@ -177,8 +176,7 @@ public class InboxTest extends AbstractTest{
 			inboxPage = new InboxPage();
 			inboxPage = inboxPage.deleteFirstMessage();
 		}
-		boolean isMessageStillPresent = inboxPage.isMessagePresent();
-		Assert.assertTrue(!isMessageStillPresent);
+        TypeUtils.assertFalseWithLogs(inboxPage.isMessagePresent(),"isMessageStillPresent");
 	}
 
     /*12. Player deletes a received message from the details popup*/
@@ -195,8 +193,7 @@ public class InboxTest extends AbstractTest{
 			inboxPage = new InboxPage();
 			inboxPage = inboxPage.openFirstMessage().clickDeleteButton();
 		}
-		boolean isMessageStillPresent = inboxPage.isMessagePresent();
-		Assert.assertTrue(!isMessageStillPresent);
+        TypeUtils.assertFalseWithLogs(inboxPage.isMessagePresent(),"isMessageStillPresent");
 	}
 
     /*13. Pagination on Inbox portlet*/
@@ -209,7 +206,8 @@ public class InboxTest extends AbstractTest{
 		String secondPageSubject=sentItemsPage.getFirstMessageSubject();
 		sentItemsPage=sentItemsPage.clickPreviousPage();
 		String firstPageRefreshedSubject=sentItemsPage.getFirstMessageSubject();
-		Assert.assertTrue(!firstPageSubject.equals(secondPageSubject) && firstPageSubject.equals(firstPageRefreshedSubject)) ;
+		TypeUtils.assertFalseWithLogs(firstPageSubject.equals(secondPageSubject),"page not changed");
+        TypeUtils.assertTrueWithLogs(firstPageSubject.equals(firstPageRefreshedSubject),"first page opened") ;
 	}
 
     /*16. Received message comes to player’s email*/
@@ -224,7 +222,6 @@ public class InboxTest extends AbstractTest{
 		inboxPage.clickSendMessage().sendMessage(emailText);
 		mailQ.sendMessageAndLogout(email, emailText, emailText, true, true);
 		mailService.navigateToInbox(email).waitForEmail();
-		Assert.assertTrue(true) ;
 	}
 
     /*17. Player replies to MailQ from the details view of a received message*/
@@ -243,8 +240,7 @@ public class InboxTest extends AbstractTest{
 			ReplyToReceivedInboxMessagePopup replyToReceivedInboxMessagePopup = receivedInboxMessagePopup.clickReplyButton();
 			replyToReceivedInboxMessagePopup.sendReply(emailText);
 		}
-		boolean isReplyAppeared = mailQ.checkIsMessageAppearedAndLogout(emailText);
-		Assert.assertTrue(isReplyAppeared);
+        TypeUtils.assertTrueWithLogs(mailQ.checkIsMessageAppearedAndLogout(emailText),"isReplyAppeared");
 	}
 
     /*NEGATIVE*/
@@ -254,7 +250,7 @@ public class InboxTest extends AbstractTest{
 	public void sendEmptyMessageAndCheckValidationAppears(){
         InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 		SendMessagePopup sendMessagePopup=inboxPage.clickSendMessage();
-		Assert.assertTrue(sendMessagePopup.sendEmptyMessage().isErrorPresent());
+		TypeUtils.assertTrueWithLogs(sendMessagePopup.sendEmptyMessage().isErrorPresent(), "Error present");
 	}
 
 }

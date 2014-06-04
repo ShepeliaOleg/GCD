@@ -9,7 +9,6 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
-import pageObjects.external.ims.IMSHomePage;
 import pageObjects.popups.AfterRegistrationPopup;
 import pageObjects.popups.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;

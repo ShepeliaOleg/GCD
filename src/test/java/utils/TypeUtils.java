@@ -1,12 +1,13 @@
 package utils;
 
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class TypeUtils{
+public class TypeUtils extends Assert {
 
     private static int getIntegerValueFromString(String string){
         int value;
@@ -45,5 +46,35 @@ public class TypeUtils{
         return listA.containsAll(listB);
     }
 
+    public static void assertTrueWithLogs(boolean condition, java.lang.String message){
+        try{
+            assertTrue(condition, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
 
+    public static void assertFalseWithLogs(boolean condition, java.lang.String message){
+        try{
+            assertFalse(condition, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
+
+    public static void assertTrueWithLogs(boolean condition){
+        try{
+            assertTrue(condition);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
+
+    public static void assertFalseWithLogs(boolean condition){
+        try{
+            assertFalse(condition);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
 }

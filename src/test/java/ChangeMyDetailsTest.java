@@ -3,7 +3,6 @@ import enums.LogCategory;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.account.ChangeMyDetailsPage;
@@ -14,6 +13,7 @@ import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.logs.Log;
 import utils.logs.LogEntry;
@@ -72,7 +72,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
 		ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-		Assert.assertTrue(changeMyDetailsPage.detailsAreEqualsTo(userData), userData.print());
+		TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData), "detailsUpdatedSuccessfully"+userData.print());
 	}
 
 	/* 3. Player updates his details with valid values and new values are saved */
@@ -85,11 +85,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
-		//Check that details are updated
-		boolean detailsUpdatedSuccessfully=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//Check that success message appeared
-		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
-		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared);
+		TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
 	}
 
 	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
@@ -103,15 +100,10 @@ public class ChangeMyDetailsTest extends AbstractTest{
         userData.setUsername(userName);
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
-		// Check that details have been changed
-		boolean detailsUpdatedSuccessfully=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//Check that success message appeared
-		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
-		// Player logs out and logs in again
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
         changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
-		boolean detailsKeptAfterRelogin =changeMyDetailsPage.detailsAreEqualsTo(userData);
-		Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && detailsKeptAfterRelogin, "<div>Details changed: "+detailsUpdatedSuccessfully+"< (expected true)</div>" +
-                "<div>Details are kept after relogin: "+detailsKeptAfterRelogin+" (expected true)</div><div> Message appeared: "+messageAppeared+" (expected true)</div>"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsKeptAfterRelogin"+userData.print());
 	}
 
 	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
@@ -120,15 +112,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
         UserData userData=defaultUserData.getRegisteredUserData();
         ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
 		changeMyDetailsPage.submitChanges();
-		// Check that success message is displayed
-		boolean messageAppeared=changeMyDetailsPage.isVisibleConfirmationMessage();
-		//Check that no changes are applied
-		boolean detailsNotUpdated =changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//If message was displayed but user data was not changed then test passes
-		if(!messageAppeared || !detailsNotUpdated){
-            WebDriverUtils.runtimeExceptionWithLogs("<div>Message appeared = "+messageAppeared+" (expected 'true')</div>" +
-                    "<div>Details not updated = "+detailsNotUpdated+" (expected 'true')</div>");
-        }
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"message appeared");
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsNotUpdated"+userData.print());
 	}
 
 	/*6. Player performs several consecutive updates of UMD portlet */
@@ -140,19 +125,13 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
-		// Check that details have been changed
-		boolean detailsChanged1=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//Check that success message appeared
-		boolean messageAppeared1=changeMyDetailsPage.isVisibleConfirmationMessage();
-		//Change player details for the second time
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged1"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
 		changeMyDetailsPage.editDetails(userData);
-		// Check that details have been changed
-		boolean detailsChanged2=changeMyDetailsPage.detailsAreEqualsTo(userData);
-		//Check that success message appeared
-		boolean messageAppeared2=changeMyDetailsPage.isVisibleConfirmationMessage();
-		Assert.assertTrue(messageAppeared1 && messageAppeared2 && detailsChanged1 && detailsChanged2);
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged2"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
 	}
 
 	/*7. Logs*/
@@ -197,13 +176,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
         userData.setUsername(username);
         userData.setEmail(emailValidationRule.generateValidString());
         changeMyDetailsPage.editDetails(userData);
-        // Check that details have been changed
-        boolean detailsUpdatedSuccessfully = changeMyDetailsPage.detailsAreEqualsTo(userData);
-        //Check that success message appeared
-        boolean messageAppeared = changeMyDetailsPage.isVisibleConfirmationMessage();
-        //Check user details are changed on IMS
-        boolean iMSDetailsCoincide = iMS.validateRegisterData(userData);
-        Assert.assertTrue(detailsUpdatedSuccessfully && messageAppeared && iMSDetailsCoincide);
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
+        TypeUtils.assertTrueWithLogs(iMS.validateRegisterData(userData),"iMSDetailsCoincide"+userData.print());
 	}
 
 	/*NEGATIVE CASES*/
@@ -221,8 +196,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		changeMyDetailsPage.submitChanges();
 		changeMyDetailsPage.clickEmailField();
 		String errorMessageText=changeMyDetailsPage.getTooltipMessageText();
-		boolean correctErrorTooltipIsDisplayed=errorMessageText.equals("This address is different from the one above, please correct");
-		Assert.assertTrue(correctErrorTooltipIsDisplayed);
+        TypeUtils.assertTrueWithLogs(errorMessageText.equals("This address is different from the one above, please correct"),"correctErrorTooltipIsDisplayed");
 	}
 
 	/*VALIDATION CASES*/
@@ -246,7 +220,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		userData.setEmail("");
 		changeMyDetailsPage.editDetails(userData);
 		int validationErrorsCount= WebDriverUtils.getXpathCount(changeMyDetailsPage.VALIDATION_ERROR_XP);
-		Assert.assertTrue(validationErrorsCount >= 6);
+		TypeUtils.assertTrueWithLogs(validationErrorsCount >= 6, "validationErrorsCount>=6");
 	}
 
 	/*2. Address field validation*/

@@ -3,7 +3,6 @@ import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.account.ChangeMyPasswordPage;
@@ -15,6 +14,7 @@ import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 
 /**
  * User: sergiich
@@ -50,7 +50,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
 		ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
-		Assert.assertTrue(changeMyPasswordPage.isSuccessMessagePresent());
+		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isSuccessMessagePresent(),"success message present");
 	}
 
 	/*3. login with new password*/
@@ -62,7 +62,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		userData.setPassword(newPass);
-		Assert.assertTrue(NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData).isLoggedIn());
+		TypeUtils.assertTrueWithLogs(NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData).isLoggedIn(), "Logged in");
 	}
 
 	/*4.Logs*/
@@ -78,7 +78,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		IMSPlayerDetailsPage playerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
 		String imsPass = playerDetailsPage.getPassword();
-		Assert.assertTrue(imsPass.equals(newPass));
+		TypeUtils.assertTrueWithLogs(imsPass.equals(newPass), "Password is changed on ims");
 
 	}
 
@@ -93,7 +93,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(incorrectPass, newPass);
-		Assert.assertTrue(changeMyPasswordPage.isErrorPresent());
+		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
 	}
 
 	/*2. New password is the same as old*/
@@ -103,7 +103,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), userData.getPassword());
-		Assert.assertTrue(changeMyPasswordPage.isErrorPresent());
+		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
 	}
 
 	/*3. New password which has been used recently*/
@@ -122,7 +122,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		}else{
 			result = false;
 		}
-        Assert.assertTrue(result);
+        TypeUtils.assertTrueWithLogs(result,"Error is present");
 	}
 
 	/*4. New Password and Retype do not match*/
@@ -134,7 +134,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass, incorrectPass);
-		Assert.assertTrue(changeMyPasswordPage.isFieldValidatorPresent());
+		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isFieldValidatorPresent(),"Field validator present");
 	}
 
 	/*5. Change password and try to log in with your old password*/
@@ -148,20 +148,4 @@ public class ChangeMyPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
 	}
-
-//    /*VALIDATION*/
-//
-//	/*1. Old password field validation*/
-//	@Test(groups = {"validation"})
-//	public void oldPasswordFieldValidation(){
-//        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
-//		changeMyPasswordPage.validateOldPassword(passwordValidationRule);
-//	}
-//
-//    /*2. New password field validation*/
-//	@Test(groups = {"validation"})
-//	public void newPasswordFieldValidation(){
-//        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
-//		changeMyPasswordPage.validateNewPassword(passwordValidationRule);
-//	}
 }

@@ -1,13 +1,6 @@
 package pageObjects.forgotPassword;
 
-import pageObjects.HomePage;
-import pageObjects.account.LoginPopup;
-import pageObjects.base.AbstractPopup;
-import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
-import utils.ValidationUtils;
-import utils.WebDriverUtils;
 
 public class ForgotUsernamePopup extends ForgotPopup{
 

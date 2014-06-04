@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
@@ -12,6 +11,7 @@ import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 
 import java.util.HashMap;
 
@@ -61,6 +61,6 @@ public class InternalTagsTest extends AbstractTest{
 		UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
 		BalancePage balancePortlet= (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.balance, userData);
-		Assert.assertTrue(balancePortlet.BalancesAreEqualTo(userData));
+        TypeUtils.assertTrueWithLogs(balancePortlet.BalancesAreEqualTo(userData), "balances are equal");
 	}
 }

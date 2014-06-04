@@ -6,7 +6,6 @@ import pageObjects.external.mail.MailServicePage;
 import pageObjects.external.mail.MailinatorPage;
 import pageObjects.external.mail.SpamavertPage;
 import springConstructors.validation.ValidationRule;
-import utils.NavigationUtils;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;

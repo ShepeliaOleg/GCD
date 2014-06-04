@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.account.ReferAFriendPage;
 import pageObjects.external.mail.MailServicePage;
@@ -11,6 +10,7 @@ import springConstructors.mail.MailService;
 import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.TypeUtils;
 
 /**
  * User: sergiich
@@ -51,8 +51,7 @@ public class ReferAFriendTest extends AbstractTest{
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == true);
+        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* 3. Invitation comes to email box */
@@ -63,11 +62,10 @@ public class ReferAFriendTest extends AbstractTest{
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username, email);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
+        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
-		boolean inboxEmpty= mailServicePage.inboxIsEmpty();
-		Assert.assertTrue(messageSuccessful == true && inboxEmpty == false);
+        TypeUtils.assertFalseWithLogs(mailServicePage.inboxIsEmpty(),"inbox empty");
 	}
 
     /* 4. Send invitations to several emails */
@@ -81,8 +79,7 @@ public class ReferAFriendTest extends AbstractTest{
         referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.fillSecondRecipientInfo(username2, email2);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == true);
+        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* Negative*/
@@ -94,8 +91,7 @@ public class ReferAFriendTest extends AbstractTest{
 		String username1 = nameValidationRule.generateValidString();
 		referAFriendPage.fillFirstRecipientInfo(username1, "");
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == false);
+        TypeUtils.assertFalseWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* 2. Email field is filled out while name field is empty */
@@ -106,8 +102,7 @@ public class ReferAFriendTest extends AbstractTest{
 		String email1 = emailValidationRule.generateValidString();
 		referAFriendPage.fillFirstRecipientInfo("", email1);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == false);
+        TypeUtils.assertFalseWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* 3. Specify one email for several referrals */
@@ -120,8 +115,7 @@ public class ReferAFriendTest extends AbstractTest{
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.fillSecondRecipientInfo(username2, email1);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == false);
+        TypeUtils.assertFalseWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* 4. Send an invitation to already used email */
@@ -132,11 +126,10 @@ public class ReferAFriendTest extends AbstractTest{
         ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.send();
-		boolean messageSuccessful=referAFriendPage.notificationMessageIsSuccessful();
+        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 		referAFriendPage.send();
-		boolean messageUnsuccessful=referAFriendPage.notificationMessageIsSuccessful();
-		Assert.assertTrue(messageSuccessful == true && messageUnsuccessful == false);
+        TypeUtils.assertFalseWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
 	}
 
     /* validation */
