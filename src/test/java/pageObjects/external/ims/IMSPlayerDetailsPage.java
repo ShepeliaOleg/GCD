@@ -41,7 +41,10 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String CHECKBOX_SMS=								"//input[@id='communicationoptouts[2][2]']";
 	private static final String CHECKBOX_DIRECT_MAIL=						"//input[@id='communicationoptouts[3][2]']";
 	private static final String CHECKBOX_PHONE=								"//input[@id='communicationoptouts[4][2]']";
-	private static final String FIELD_FIRST_NAME=							"//*[@id='firstname']";
+    private static final String CHECKBOX_DO_NOT_EMAIL=						"//input[@id='communicationoptouts[1][1]']";
+    private static final String CHECKBOX_DO_NOT_SMS=						"//input[@id='communicationoptouts[2][1]']";
+    private static final String CHECKBOX_DO_NOT_PHONE=						"//input[@id='communicationoptouts[4][1]']";
+    private static final String FIELD_FIRST_NAME=							"//*[@id='firstname']";
 	private static final String FIELD_LAST_NAME=							"//*[@id='lastname']";
 	private static final String FIELD_BIRTH_DATE=							"//*[@id='birthdate']";
 	private static final String FIELD_EMAIL=								"//*[@id='email']";
@@ -265,9 +268,19 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		if(!email || !sms || !dirMail || !phone){
 			result=false;
 		}
-
 		return result;
 	}
+
+    public boolean[] getNotificationCheckboxesState(){
+        boolean result[]=new boolean[3];
+        if(!WebDriverUtils.isVisible(CHECKBOX_ALL_CHANNELS)){
+            clickContactPreferences();
+        }
+        result[0] =getCheckboxState(CHECKBOX_DO_NOT_EMAIL);
+        result[1]=getCheckboxState(CHECKBOX_DO_NOT_SMS);
+        result[2]=getCheckboxState(CHECKBOX_DO_NOT_PHONE);
+        return result;
+    }
 
 	public void sendPushLogout(){
 		WebDriverUtils.click(BUTTON_KILL_PLAYER);

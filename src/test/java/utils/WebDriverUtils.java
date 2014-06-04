@@ -24,12 +24,13 @@ public class WebDriverUtils extends WebDriverObject{
 
 	private static final int TIMEOUT = 10;
 
+    // Waits
+
     public static void waitFor(){
         waitFor(1000);
     }
 
     public static void waitFor(long millisec){
-        System.out.println("Waiting for " + millisec/1000 + "Seconds");
         if(millisec > 0){
             try{
                 Thread.sleep(millisec);
@@ -38,8 +39,6 @@ public class WebDriverUtils extends WebDriverObject{
             }
         }
     }
-
-    // Waits
 
     public static void waitForElement(String xpath){
         waitForElement(xpath, TIMEOUT);

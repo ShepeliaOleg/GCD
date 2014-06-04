@@ -181,6 +181,21 @@ public class ChangeMyDetailsTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(iMS.validateRegisterData(userData),"iMSDetailsCoincide"+userData.print());
 	}
 
+    /*8. IMS notifications updated*/
+    @Test(groups = {"regression"})
+    public void iMSNotificationsUpdatedAfterPlayerDetailsChanged() {
+        UserData userData = defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        changeMyDetailsPage.setNotificationCheckboxes(false);
+        iMS.validateNotificationCheckboxes(userData, false);
+        changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        changeMyDetailsPage.setNotificationCheckboxes(true);
+        iMS.validateNotificationCheckboxes(userData, true);
+    }
+
+
+
 	/*NEGATIVE CASES*/
 
     /*1. Email and confirmation do not match */

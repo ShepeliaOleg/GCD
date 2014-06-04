@@ -1,9 +1,12 @@
 package utils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -76,5 +79,27 @@ public class TypeUtils extends Assert {
         }catch (AssertionError e){
             WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
         }
+    }
+
+    public static String decodeBase64(String encodedString) {
+        return new String(Base64.decodeBase64(encodedString));
+
+    }
+
+    public static <T> Collection<T> getSameElementsFromLists(Collection<T> list1, Collection<T> list2) {
+        Collection<T> similar = new HashSet<T>(list1);
+        similar.retainAll(list2);
+
+        return similar;
+    }
+
+    public static <T> Collection<T> getDiffElementsFromLists(Collection<T> list1, Collection<T> list2) {
+        Collection<T> different = new HashSet<T>();
+        different.addAll(list1);
+        different.addAll(list2);
+        Collection<T> same = getSameElementsFromLists(list1, list2);
+        different.removeAll(same);
+
+        return different;
     }
 }

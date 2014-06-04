@@ -1,6 +1,6 @@
 package pageObjects.external.mail;
 
-import utils.RandomUtils;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 
 import java.util.regex.Matcher;
@@ -34,7 +34,7 @@ public class MailinatorPage extends MailServicePage {
     public String getPasswordFromLetter(){
         String password=null;
         String encodedLetter=getLetterText();
-        String decodedLetter= RandomUtils.decodeBase64(encodedLetter);
+        String decodedLetter= TypeUtils.decodeBase64(encodedLetter);
         Pattern pattern=Pattern.compile(MATCHER.concat("\\S+"));
         Matcher matcher=pattern.matcher(decodedLetter);
         if(matcher.find()){

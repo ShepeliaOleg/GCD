@@ -70,6 +70,15 @@ public class IMS extends WebDriverObject{
 		return navigateToPlayedDetails(userData.getUsername()).getInternalTagsData(hashMap);
 	}
 
+    public void validateNotificationCheckboxes(UserData userData, boolean state) {
+        IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
+        for(boolean imsState:imsPlayerDetailsPage.getNotificationCheckboxesState()){
+            if(imsState==state){
+                WebDriverUtils.runtimeExceptionWithLogs("Notifications state did not update");
+            }
+        }
+    }
+
 	public boolean validateRegisterData(UserData userData){
 		IMSPlayerDetailsPage imsPlayerDetailsPage=navigateToPlayedDetails(userData.getUsername());
 		ArrayList<String> imsRegisterData=imsPlayerDetailsPage.getRegisterData();

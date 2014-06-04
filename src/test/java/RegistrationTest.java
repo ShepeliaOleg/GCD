@@ -19,7 +19,7 @@ import springConstructors.validation.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
-import utils.RandomUtils;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 import utils.logs.Log;
@@ -184,7 +184,7 @@ public class RegistrationTest extends AbstractTest{
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCountryList=registrationPage.getCountryList();
-		Collection<String> diff=RandomUtils.getDiffElementsFromLists(actualCountryList, defaults.getCountryList());
+		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountryList, defaults.getCountryList());
 		boolean listsEquals=diff.isEmpty();
 		Assert.assertTrue(listsEquals == true);
 	}
@@ -194,7 +194,7 @@ public class RegistrationTest extends AbstractTest{
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCurrencyList=registrationPage.getCurrencyList();
-		Collection<String> diff=RandomUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
+		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
 		boolean listsEquals=diff.isEmpty();
 		Assert.assertTrue(listsEquals == true);
 	}

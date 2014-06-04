@@ -27,10 +27,36 @@ public class ChangeMyDetailsPage extends AbstractPage{
     private final static String FIELD_MOBILE_XP= 				"//*[@id='mobile']";
 	private final static String DROPDOWN_COUNTRY_XP=			"//*[@id='country']";
 	private static final String BUTTON_UPDATE_XP=				"//button[contains(@id,'updatemydetails')]";
+    private static final String CHECKBOX_NOTIFICATION_EMAIL_XP=	"//*[@id='accountNotificationEmail']";
+    private static final String CHECKBOX_NOTIFICATION_PHONE_XP=	"//*[@id='accountNotificationPhone']";
+    private static final String CHECKBOX_NOTIFICATION_SMS_XP=	"//*[@id='accountNotificationSms']";
 
     public ChangeMyDetailsPage(){
-		super(new String[]{RESPONSIBLE_GAMING_ROOT_XP, BUTTON_UPDATE_XP});
-	}
+        super(new String[]{RESPONSIBLE_GAMING_ROOT_XP, BUTTON_UPDATE_XP});
+    }
+
+    public void setNotificationCheckboxes(boolean state){
+        setNotificationCheckboxes(state, state, state);
+    }
+
+    public void setNotificationCheckboxes(boolean email, boolean phone, boolean sms){
+        setNotificationCheckboxEmail(email);
+        setNotificationCheckboxTelephone(phone);
+        setNotificationCheckboxSMS(sms);
+        submitChanges();
+    }
+
+    private void setNotificationCheckboxEmail(boolean state){
+        WebDriverUtils.setCheckBoxState(CHECKBOX_NOTIFICATION_EMAIL_XP, state);
+    }
+
+    private void setNotificationCheckboxTelephone(boolean state){
+        WebDriverUtils.setCheckBoxState(CHECKBOX_NOTIFICATION_PHONE_XP, state);
+    }
+
+    private void setNotificationCheckboxSMS(boolean state){
+        WebDriverUtils.setCheckBoxState(CHECKBOX_NOTIFICATION_SMS_XP, state);
+    }
 
 	private void editCountry(String country){
 		WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
@@ -68,9 +94,6 @@ public class ChangeMyDetailsPage extends AbstractPage{
 		WebDriverUtils.click(BUTTON_UPDATE_XP);
 	}
 
-	//
-
-
 	public void editDetails(UserData userData){
 		editCountry(userData.getCountry());
 		editAddress(userData.getFullAddress());
@@ -97,7 +120,6 @@ public class ChangeMyDetailsPage extends AbstractPage{
         boolean email2=isConfirmEmailEqualsTo(userData.getEmail());
         return (title1 && title2 && title3 && country && address && city && postCode && phone && mobile && email1 && email2);
     }
-
 
     public boolean isVisibleConfirmationMessage(){
 		return WebDriverUtils.isVisible(LABEL_CONFIRMATION_MESSAGE_XP);
@@ -145,6 +167,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
 
 
     //Tooltips methods
+
     public String getTooltipMessageText() {
         return getVisibleMessageText(LABEL_TOOLTIP_XP);
     }
@@ -157,11 +180,12 @@ public class ChangeMyDetailsPage extends AbstractPage{
         }
 		return null;
     }
+
 	public void clickEmailField() {
 		WebDriverUtils.click(FIELD_EMAIL_VERIFICATION_XP);
 	}
 
-        /* Fields validation */
+    /* Fields validation */
 
     public void validateEmail(ValidationRule rule) {
 		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
@@ -179,10 +203,9 @@ public class ChangeMyDetailsPage extends AbstractPage{
 		ValidationUtils.validate(FIELD_ADDRESS_XP, rule);
     }
 
-     public void validatePostcode(ValidationRule rule) {
+    public void validatePostcode(ValidationRule rule) {
 		 ValidationUtils.validate(FIELD_POSTCODE_XP, rule);
     }
-
 
     public void validatePhone(ValidationRule rule) {
         ValidationUtils.validate(FIELD_PHONE_XP, rule);

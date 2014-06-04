@@ -4,9 +4,10 @@ package utils;/*
  */
 
 import nl.flotsam.xeger.Xeger;
-import org.apache.commons.codec.binary.Base64;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class RandomUtils{
    private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй";
@@ -86,10 +87,6 @@ public class RandomUtils{
         return option;
         }
 
-    public static String decodeBase64(String encodedString) {
-        return new String(Base64.decodeBase64(encodedString));
-
-    }
 
     public static String getAllExcept(String substring) {
         String result = allSymbols;
@@ -100,22 +97,5 @@ public class RandomUtils{
         }
 
         return result;
-    }
-
-    public static <T> Collection<T> getSameElementsFromLists(Collection<T> list1, Collection<T> list2) {
-        Collection<T> similar = new HashSet<T>(list1);
-        similar.retainAll(list2);
-
-        return similar;
-    }
-
-    public static <T> Collection<T> getDiffElementsFromLists(Collection<T> list1, Collection<T> list2) {
-        Collection<T> different = new HashSet<T>();
-        different.addAll(list1);
-        different.addAll(list2);
-        Collection<T> same = getSameElementsFromLists(list1, list2);
-        different.removeAll(same);
-
-        return different;
     }
 }
