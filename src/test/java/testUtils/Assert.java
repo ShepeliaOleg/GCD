@@ -8,18 +8,34 @@ import utils.WebDriverUtils;
 public class  Assert extends org.testng.Assert {
 
     public static void assertTrueWithLogs(boolean condition, java.lang.String message){
-        assertTrue(condition, message + WebDriverUtils.getUrlAndLogs());
+        try{
+            assertTrue(condition, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
     }
 
     public static void assertFalseWithLogs(boolean condition, java.lang.String message){
-        assertFalse(condition, message + WebDriverUtils.getUrlAndLogs());
+        try{
+            assertFalse(condition, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
     }
 
     public static void assertTrueWithLogs(boolean condition){
-        assertTrue(condition, WebDriverUtils.getUrlAndLogs());
+        try{
+            assertTrue(condition);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
     }
 
     public static void assertFalseWithLogs(boolean condition){
-        assertFalse(condition, WebDriverUtils.getUrlAndLogs());
+        try{
+            assertFalse(condition);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
     }
 }
