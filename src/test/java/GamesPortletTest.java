@@ -230,8 +230,8 @@ public class GamesPortletTest extends AbstractTest{
 		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
 		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
 		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
-		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsTop.toString()),"pageURLIsCorrect");
 	}
@@ -458,8 +458,8 @@ public class GamesPortletTest extends AbstractTest{
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
 		TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
 		TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"isActiveCategoryTabPresent");
-		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertFalseWithLogs(gamesPortletPage.categoryTabsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsLeft.toString()),"pageURLIsCorrect");
 	}
@@ -679,7 +679,7 @@ public class GamesPortletTest extends AbstractTest{
 	}
 
     //    4.1.1. Category Tabs And Refine By (Top): Top
-    @Test(groups = {"regression"})
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationStyleTopLevel (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         TypeUtils.assertTrueWithLogs(gamesPortletPage.topCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
@@ -687,15 +687,15 @@ public class GamesPortletTest extends AbstractTest{
         TypeUtils.assertFalseWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"leftCategoriesMenuIsDisplayed");
         TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
         TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop.toString()),"pageURLIsCorrect");
     }
 
 
     //    4.1.2. Category Tabs And Refine By (Top): Top >> Category without sub-categories
-    @Test(groups = {"regression"})
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromTopToCategoryWithoutSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
@@ -715,7 +715,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     //    4.1.3. Category Tabs And Refine By (Top): Top >> Category with sub-categories
-    @Test(groups = {"regression"})
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromTopToCategoryWithSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
@@ -818,7 +818,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /* 4.1.7. Category Tabs And Refine By (Top): Category without subcategories > Category with subcategories*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromCatNoSubcatToCatSubCat (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
@@ -844,7 +844,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /* 4.1.8. Category Tabs And Refine By (Top): Category with subcategories > Category without subcategories*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromCatSubcatToCatNoSubcat (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
@@ -865,7 +865,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /* 4.1.9. Category Tabs And Refine By (Top): Category with subcategories > Category with subcategories*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromCatSubcatToCatSubcat(){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
@@ -891,7 +891,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /*4.1.10. Category Tabs And Refine By (Top): Subcategory > Parent category*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByTopNavigationFromSubcategoryToParentCategory (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByTop);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
@@ -918,7 +918,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     //    4.2.1. Category Tabs And Refine By (Left): Top
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationStyleTopLevel (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         TypeUtils.assertTrueWithLogs(gamesPortletPage.leftCategoryMenuIsPresent(),"topCategoriesMenuIsDisplayed");
@@ -926,14 +926,14 @@ public class GamesPortletTest extends AbstractTest{
         TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
         TypeUtils.assertFalseWithLogs(gamesPortletPage.topSubcategoryMenuIsPresent(),"topSubcategoriesMenuIsDisplayed");
         TypeUtils.assertFalseWithLogs(gamesPortletPage.leftSubcategoryMenuIsPresent(),"leftSubcategoriesMenuIsDisplayed");
-        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"isActiveCategoryTabPresent");
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.refineByOptionsInclude(Categories.top),"correctCategoryTabsAreDisplayed");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.isActiveCategoryTabPresent(),"isActiveCategoryTabPresent");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.gamesAreDisplayed(gameCategories.getAllGames()),"gamesAreDisplayed");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft.toString()),"pageURLIsCorrect");
     }
 
     //    4.2.2. Category Tabs And Refine By (Left): Top >> Category without sub-categories
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromTopToCategoryWithoutSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
@@ -953,7 +953,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     //    4.2.3. Category Tabs And Refine By (Left): Top >> Category with sub-categories
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromTopToCategoryWithSubcategories (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT1_RELATIVE_URL);
@@ -1037,7 +1037,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /* 4.2.6. Category Tabs And Refine By (Left): Category without subcategories 1 > Category without subcategories 2*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromCatNoSubcatToCatNoSubcat (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT1_RELATIVE_URL);
@@ -1058,7 +1058,7 @@ public class GamesPortletTest extends AbstractTest{
       }
 
     /* 4.2.7. Category Tabs And Refine By (Left): Category without subcategories > Category with subcategories*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromCatNoSubcatToCatSubCat (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_NO_SUBCAT2_RELATIVE_URL);
@@ -1105,7 +1105,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /* 4.2.9. Category Tabs And Refine By (Left): Category with subcategories > Category with subcategories*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromCatSubcatToCatSubcat(){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
@@ -1131,7 +1131,7 @@ public class GamesPortletTest extends AbstractTest{
     }
 
     /*4.2.10. Category Tabs And Refine By (Left): Subcategory > Parent category*/
-    @Test(groups = {"regression"})     
+    @Test(groups = {"regression","broken"})
     public void categoryTabsRefineByLeftNavigationFromSubcategoryToParentCategory (){        
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleCategoryTabsRefineByLeft);
         gamesPortletPage.clickCategoryTab(gamesPortletPage.CAT_SUBCAT2_RELATIVE_URL);
@@ -1356,7 +1356,7 @@ public class GamesPortletTest extends AbstractTest{
 		GameElement gameElement = new GameElement(gameId);
         TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view");
 		gamesPortletPage = gamesPortletPage.clickListView();
-        TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"list view");
+        TypeUtils.assertFalseWithLogs(gameElement.isImagePresent(),"list view");
 		gamesPortletPage.clickItemView();
 		TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view after list");
 	}
