@@ -3,11 +3,6 @@ package utils;
 import org.openqa.selenium.Keys;
 import springConstructors.validation.ValidationRule;
 
-/**
- * User: sergiich
- * Date: 4/14/14
- */
-
 public class ValidationUtils{
 
 	private static void validateNotAllowedSymbolsDeleted(String xpath, ValidationRule rule) {
@@ -41,7 +36,7 @@ public class ValidationUtils{
 			String  randomAllowed   = rule.generateValidString();
 			String randomTooShort = randomAllowed.substring(0, randomLength);
 			WebDriverUtils.clearAndInputTextToField(xpath, randomTooShort);
-			validationStatusIs(xpath, "failed");
+			validationStatusIs(xpath, "failed", randomTooShort);
 		}
 
 	}
@@ -64,17 +59,17 @@ public class ValidationUtils{
 				WebDriverUtils.runtimeExceptionWithLogs("According to validation rule, entered string generated from allowed symbols: \"" + randomTooLong + "\" should be cut to allowed max length: \""+ max + "\" but actual length is \"" + post.length() + "\"");
 			}
 
-			validationStatusIs(xpath, "passed");
+			validationStatusIs(xpath, "passed", post);
 
 		}
 
 	}
 
-	private static void validationStatusIs(String xpath, String expectedStatus) {
+	private static void validationStatusIs(String xpath, String expectedStatus, String value) {
 		WebDriverUtils.pressKey(Keys.TAB);
 		String actualStatus = getValidationStatus(xpath);
 		if (!actualStatus.equals(expectedStatus)) {
-			WebDriverUtils.runtimeExceptionWithLogs(xpath + "input field should be marked as \"" + expectedStatus + "\" but it marked as \"" + actualStatus + "\"");
+			WebDriverUtils.runtimeExceptionWithLogs(xpath + "input field with value \"" + value + "\" should be marked as \"" + expectedStatus + "\" but it marked as \"" + actualStatus + "\"");
 		}
 	}
 
