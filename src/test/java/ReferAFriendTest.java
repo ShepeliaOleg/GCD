@@ -12,10 +12,6 @@ import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.TypeUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 public class ReferAFriendTest extends AbstractTest{
 
 	@Autowired
