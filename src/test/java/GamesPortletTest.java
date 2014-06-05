@@ -778,224 +778,224 @@ gamesPortletPage.checkNavigation(false, true, true, false, false);
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsPageURL(ConfiguredPages.gamesNavigationStyleNone.toString()),"pageURLIsCorrect");
 	}
 
-//    /*7. Sort By for Casino games*/
-//    /*7.1. New - descending by New tag*/
-//    /*7.3. A-Z - acsending alphabetical*/
-//    /*7.6. Jackpot Size - descending by JP size*/
-//	@Test(groups = {"regression"})
-//	public void sortByAllOptionsWork(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
-//		int gamesPerSlide = gamesPortletPage.getGameItemsNumberOnSlide();
-//		int gamesTotalNumber = gamesPortletPage.getTotalGameItemsNumber();
-////        New sorting
-//		gamesPortletPage.sortBy(SortBy.New);
-//		String gameID = gamesPortletPage.getGameName(1);
-//		GameElement gameElement = new GameElement(gameID);
-//        TypeUtils.assertTrueWithLogs(gameElement.isNew(),"is sorted by New");
-//
-////        Alphabetical sorting
-//		gamesPortletPage.sortBy(SortBy.Alphabetical);
-//		ArrayList<String> gameIDs = new ArrayList<String>();
-//        boolean isAlphabetical =  true;
-//		for(int i=1; i<=gamesPerSlide; i++){
-//			gameIDs.add(gamesPortletPage.getGameName(i));
-//		}
-//		for (int i=1; i<gameIDs.size();i++){
-//			if(gameIDs.get(i).compareTo(gameIDs.get(i-1))<0){
-//				isAlphabetical = false;
-//			}
-//		}
-////        Jackpots sorting
-//		int jackpotsCount = gamesPortletPage.getJackpotGamesCount();
-//		if (jackpotsCount > gamesPerSlide){
-//			jackpotsCount = gamesPerSlide;
-//		}
-//		ArrayList<Double> jackpots = new ArrayList(jackpotsCount);
-//		gamesPortletPage.sortBy(SortBy.Jackpot);
-//        boolean isJackpotDesc = true;
-//		for(int i=1; i<=jackpotsCount; i++){
-//			gameID = gamesPortletPage.getGameName(i);
-//			gameElement = new GameElement(gameID);
-//			jackpots.add(Double.parseDouble(gameElement.getJackpot()));
-//		}
-//		for (int i=1; i<jackpots.size();i++){
-//			if (jackpots.get(i) > jackpots.get(i-1)){
-//				isJackpotDesc = false;
-//			}
-//		}
-//		TypeUtils.assertTrueWithLogs(isJackpotDesc,"is sorted by jackpots");
-//        TypeUtils.assertTrueWithLogs(isAlphabetical,"is sorted alphabetically");
-//	}
-//
-//	/*11. Specific category search on GP with "Use Separate Page for each game category" disabled*/
-//	/*11.1.1. Search is applied on each char entering and provides correct results*/
-//	/*11.1.3.  No results are displayed for a search parameter which has no matches with the list of games*/
-//	@Test(groups = {"regression"})
-//	public void searchFindsCorrectGameAndNoGamesAreShownForRandomSearch(){
-//        boolean gamesAreNotShown = false;
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
-//		String gameID = gamesPortletPage.getRandomGameName();
-//		gamesPortletPage = gamesPortletPage.inputSearch(gameID);
-//		String searchedId = gamesPortletPage.getGameName(1);
-//		try{
-//			gamesPortletPage = gamesPortletPage.inputSearch(searchValidationRule.generateValidString());
-//		}catch(RuntimeException e){
-//			gamesAreNotShown = true;
-//		}
-//		TypeUtils.assertTrueWithLogs(searchedId.equals(gameID),"Search correct");
-//        TypeUtils.assertTrueWithLogs(gamesAreNotShown, "games are not shown for wrong search");
-//	}
-//
-//	/*14. Item View Styles*/
-//	/*14.1. Style 1 - play, demo, view game info*/
-//	@Test(groups = {"regression"})
-//	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
-//		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
-//		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-//        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
-//		gameInfoPopup.clickClose();
-//	}
-//
-//	/*14.2. Item View Style 2 - play, demo, view game info*/
-//	@Test(groups = {"regression"})
-//	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//        gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
-//		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
-//		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-//        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
-//		gameInfoPopup.clickClose();
-//	}
-//
-//	/*14.3. Item View Style 3 - play, demo, view game info*/
-//	@Test(groups = {"regression"})
-//	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
-//		try{
-//			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//		}catch(RuntimeException e){
-//			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
-//		}
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
-//		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-//        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
-//		gameInfoPopup.clickClose();
-//	}
-//
-//	/*14.4. Item View Style 4 - play, demo, view game info*/
-//	@Test(groups = {"regression"})
-//	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
-//		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
-//		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
-//        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
-//		gameInfoPopup.clickClose();
-//	}
-//
-//	/*15. Navigation types*/
-//	/*15.1. Slider : next/back arrows navigation*/
-//	@Test(groups = {"regression"})
-//	public void sliderPaginationWorksCorrectly(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
-//		String firstPage = gamesPortletPage.getGameName(1);
-//		gamesPortletPage = gamesPortletPage.clickNextButton();
-//		String secondPage = gamesPortletPage.getGameName(1);
-//		gamesPortletPage = gamesPortletPage.clickPreviousButton();
-//		String firstPageReopened = gamesPortletPage.getGameName(1);
-//		TypeUtils.assertTrueWithLogs(firstPage.equals(firstPageReopened),"Is back at first page");
-//        TypeUtils.assertFalseWithLogs(firstPage.equals(secondPage),"Switched to second page");
-//	}
-//	/*15.3. Navigation types - To Fit*/
-//	@Test(groups = {"regression"})
-//	public void toFitModeIsDisplayedAndGameCanBeStarted(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
-//	}
-//
-//    /*16. Use Favorites*/
-//    /*16.1. Player adds games to favorites*/
-//    /*16.2. Player removes games from favorites*/
-//	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
-//	@Test(groups = {"regression"})
-//	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
-//		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne,defaultUserData.getRegisteredUserData());
-//		final String gameID = gamesPortletPage.getRandomGameName();
-//		GameElement gameElement = new GameElement(gameID);
-//		gameElement.clickFavourite();
-//        TypeUtils.assertTrueWithLogs(gameElement.isFavouriteActive(),"Is favorite");
-//        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
-//		gameElement = new GameElement(gameID);
-//		gameElement.clickFavouriteActive();
-//		gamesPortletPage = new GamesPortletPage();
-//        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(gameID),"is still favorite");
-//	}
-//
-//	/*22. Switching between Item and gamesList view*/
-//	@Test(groups = {"regression"})
-//	public void viewModeButtonIsPresentAndChangesMode(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
-//		String gameId = gamesPortletPage.getRandomGameName();
-//		GameElement gameElement = new GameElement(gameId);
-//        TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view");
-//		gamesPortletPage = gamesPortletPage.clickListView();
-//        TypeUtils.assertFalseWithLogs(gameElement.isImagePresent(),"list view");
-//		gamesPortletPage.clickItemView();
-//		TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view after list");
-//	}
-//
-//	/*24. Disable demo mode for logged in player*/
-//	@Test(groups = {"regression"})
-//	public void loggedInUserTriesToPlayDisabledDemoNoDemoButtonsFound(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum, defaultUserData.getRegisteredUserData());
-//        TypeUtils.assertFalseWithLogs(gamesPortletPage.isDemoPresent(),"demo buttons present");
-//	}
-//
-//	/*29.1. Guest launches a game in real mode and faces login popup*/
-//	@Test(groups = {"regression"})
-//	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
-//		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playReal(false);
-//	}
-//
-//
-//	/*30. Player launches game from list view*/
-//	@Test(groups = {"regression"})
-//	public void gameCanBeStartedFromListView(){
-//        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
-//		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup)gamesPortletPage./*clickAllGames().*/playReal(true);
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
-//        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
-//	}
+    /*7. Sort By for Casino games*/
+    /*7.1. New - descending by New tag*/
+    /*7.3. A-Z - acsending alphabetical*/
+    /*7.6. Jackpot Size - descending by JP size*/
+	@Test(groups = {"regression"})
+	public void sortByAllOptionsWork(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
+		int gamesPerSlide = gamesPortletPage.getGameItemsNumberOnSlide();
+		int gamesTotalNumber = gamesPortletPage.getTotalGameItemsNumber();
+//        New sorting
+		gamesPortletPage.sortBy(SortBy.New);
+		String gameID = gamesPortletPage.getGameName(1);
+		GameElement gameElement = new GameElement(gameID);
+        TypeUtils.assertTrueWithLogs(gameElement.isNew(),"is sorted by New");
+
+//        Alphabetical sorting
+		gamesPortletPage.sortBy(SortBy.Alphabetical);
+		ArrayList<String> gameIDs = new ArrayList<String>();
+        boolean isAlphabetical =  true;
+		for(int i=1; i<=gamesPerSlide; i++){
+			gameIDs.add(gamesPortletPage.getGameName(i));
+		}
+		for (int i=1; i<gameIDs.size();i++){
+			if(gameIDs.get(i).compareTo(gameIDs.get(i-1))<0){
+				isAlphabetical = false;
+			}
+		}
+//        Jackpots sorting
+		int jackpotsCount = gamesPortletPage.getJackpotGamesCount();
+		if (jackpotsCount > gamesPerSlide){
+			jackpotsCount = gamesPerSlide;
+		}
+		ArrayList<Double> jackpots = new ArrayList(jackpotsCount);
+		gamesPortletPage.sortBy(SortBy.Jackpot);
+        boolean isJackpotDesc = true;
+		for(int i=1; i<=jackpotsCount; i++){
+			gameID = gamesPortletPage.getGameName(i);
+			gameElement = new GameElement(gameID);
+			jackpots.add(Double.parseDouble(gameElement.getJackpot()));
+		}
+		for (int i=1; i<jackpots.size();i++){
+			if (jackpots.get(i) > jackpots.get(i-1)){
+				isJackpotDesc = false;
+			}
+		}
+		TypeUtils.assertTrueWithLogs(isJackpotDesc,"is sorted by jackpots");
+        TypeUtils.assertTrueWithLogs(isAlphabetical,"is sorted alphabetically");
+	}
+
+	/*11. Specific category search on GP with "Use Separate Page for each game category" disabled*/
+	/*11.1.1. Search is applied on each char entering and provides correct results*/
+	/*11.1.3.  No results are displayed for a search parameter which has no matches with the list of games*/
+	@Test(groups = {"regression"})
+	public void searchFindsCorrectGameAndNoGamesAreShownForRandomSearch(){
+        boolean gamesAreNotShown = false;
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
+		String gameID = gamesPortletPage.getRandomGameName();
+		gamesPortletPage = gamesPortletPage.inputSearch(gameID);
+		String searchedId = gamesPortletPage.getGameName(1);
+		try{
+			gamesPortletPage = gamesPortletPage.inputSearch(searchValidationRule.generateValidString());
+		}catch(RuntimeException e){
+			gamesAreNotShown = true;
+		}
+		TypeUtils.assertTrueWithLogs(searchedId.equals(gameID),"Search correct");
+        TypeUtils.assertTrueWithLogs(gamesAreNotShown, "games are not shown for wrong search");
+	}
+
+	/*14. Item View Styles*/
+	/*14.1. Style 1 - play, demo, view game info*/
+	@Test(groups = {"regression"})
+	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
+		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
+		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
+		gameInfoPopup.clickClose();
+	}
+
+	/*14.2. Item View Style 2 - play, demo, view game info*/
+	@Test(groups = {"regression"})
+	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+        gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
+		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
+		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
+		gameInfoPopup.clickClose();
+	}
+
+	/*14.3. Item View Style 3 - play, demo, view game info*/
+	@Test(groups = {"regression"})
+	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
+		try{
+			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
+		}catch(RuntimeException e){
+			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
+		}
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
+		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
+		gameInfoPopup.clickClose();
+	}
+
+	/*14.4. Item View Style 4 - play, demo, view game info*/
+	@Test(groups = {"regression"})
+	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
+		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
+        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
+		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
+        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
+		gameInfoPopup.clickClose();
+	}
+
+	/*15. Navigation types*/
+	/*15.1. Slider : next/back arrows navigation*/
+	@Test(groups = {"regression"})
+	public void sliderPaginationWorksCorrectly(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
+		String firstPage = gamesPortletPage.getGameName(1);
+		gamesPortletPage = gamesPortletPage.clickNextButton();
+		String secondPage = gamesPortletPage.getGameName(1);
+		gamesPortletPage = gamesPortletPage.clickPreviousButton();
+		String firstPageReopened = gamesPortletPage.getGameName(1);
+		TypeUtils.assertTrueWithLogs(firstPage.equals(firstPageReopened),"Is back at first page");
+        TypeUtils.assertFalseWithLogs(firstPage.equals(secondPage),"Switched to second page");
+	}
+	/*15.3. Navigation types - To Fit*/
+	@Test(groups = {"regression"})
+	public void toFitModeIsDisplayedAndGameCanBeStarted(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
+	}
+
+    /*16. Use Favorites*/
+    /*16.1. Player adds games to favorites*/
+    /*16.2. Player removes games from favorites*/
+	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
+	@Test(groups = {"regression"})
+	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
+		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne,defaultUserData.getRegisteredUserData());
+		final String gameID = gamesPortletPage.getRandomGameName();
+		GameElement gameElement = new GameElement(gameID);
+		gameElement.clickFavourite();
+        TypeUtils.assertTrueWithLogs(gameElement.isFavouriteActive(),"Is favorite");
+        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
+		gameElement = new GameElement(gameID);
+		gameElement.clickFavouriteActive();
+		gamesPortletPage = new GamesPortletPage();
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(gameID),"is still favorite");
+	}
+
+	/*22. Switching between Item and gamesList view*/
+	@Test(groups = {"regression"})
+	public void viewModeButtonIsPresentAndChangesMode(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
+		String gameId = gamesPortletPage.getRandomGameName();
+		GameElement gameElement = new GameElement(gameId);
+        TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view");
+		gamesPortletPage = gamesPortletPage.clickListView();
+        TypeUtils.assertFalseWithLogs(gameElement.isImagePresent(),"list view");
+		gamesPortletPage.clickItemView();
+		TypeUtils.assertTrueWithLogs(gameElement.isImagePresent(),"image view after list");
+	}
+
+	/*24. Disable demo mode for logged in player*/
+	@Test(groups = {"regression"})
+	public void loggedInUserTriesToPlayDisabledDemoNoDemoButtonsFound(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesMinimum, defaultUserData.getRegisteredUserData());
+        TypeUtils.assertFalseWithLogs(gamesPortletPage.isDemoPresent(),"demo buttons present");
+	}
+
+	/*29.1. Guest launches a game in real mode and faces login popup*/
+	@Test(groups = {"regression"})
+	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
+		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playReal(false);
+	}
+
+
+	/*30. Player launches game from list view*/
+	@Test(groups = {"regression"})
+	public void gameCanBeStartedFromListView(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
+		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup)gamesPortletPage./*clickAllGames().*/playReal(true);
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+		gameLaunchPopup.closePopup();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
+	}
 
 }
