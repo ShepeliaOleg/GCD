@@ -1,9 +1,5 @@
 package enums;
 
-/**
- * User: sergiich
- * Date: 8/16/13
- */
 public enum ConfiguredPages{
 
     balance("myaccount1/balance"),
@@ -36,7 +32,8 @@ public enum ConfiguredPages{
     myAccount("myaccount1"),
 	register("register"),
     referAFriend("myaccount1/refer-a-friend"),
-    responsibleGaming("myaccount1/responsible-gaming");
+    responsibleGaming("myaccount1/responsible-gaming"),
+    selfExclusion("myaccount1/responsible-gaming");
 
     private final String name;
 
