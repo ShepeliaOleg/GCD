@@ -49,6 +49,22 @@ public class TypeUtils extends Assert {
         return listA.containsAll(listB);
     }
 
+    public static void assertEqualsWithLogs(boolean actual, boolean expected){
+        try{
+            assertEquals(actual, expected);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
+
+    public static void assertEqualsWithLogs(boolean actual, boolean expected, java.lang.String message){
+        try{
+            assertEquals(actual, expected, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
+
     public static void assertTrueWithLogs(boolean condition, java.lang.String message){
         try{
             assertTrue(condition, message);

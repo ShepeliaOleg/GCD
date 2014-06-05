@@ -395,34 +395,42 @@ public class GamesPortletPage extends AbstractPage{
 				leftSubcategoryMenuIsPresent() == false);
 	}
 
-    public boolean categoryTabsInclude(GameCategories category) {
+    public boolean categoryTabsInclude(boolean shouldInclude, GameCategories... category) {
         ArrayList<Boolean> results = new ArrayList<>();
-        for(String url:category.getUrls()){
-            results.add(isCategoryTabPresent(url));
+        for(GameCategories cat:category){
+            for(String url:cat.getUrls()){
+                results.add(isCategoryTabPresent(url));
+            }
         }
-        return !results.contains(false);
+        return !results.contains(!shouldInclude);
     }
 
 	public boolean isActiveCategoryTabPresent (){
 		return (WebDriverUtils.getXpathCount(TAB_ACTIVE_CATEGORY_XP) > 0);
 	}
 
+    public boolean isActiveCategoryTabPresent (GameCategories category){
+        if(isActiveCategoryTabPresent()){
+            return getActiveCategoryTabXp().equals(category.getUrl());
+        }
+        WebDriverUtils.runtimeExceptionWithLogs("Active category is not present");
+        return false;
+    }
+
 	public boolean isActiveSubcategoryTabPresent (){
 		return (WebDriverUtils.getXpathCount(TAB_ACTIVE_SUBCATEGORY_XP) > 0);
 	}
 
-	public String getActiveCategoryName (){
-		return WebDriverUtils.getElementText(TAB_ACTIVE_CATEGORY_XP);
-
-	}
+    public boolean isActiveSubcategoryTabPresent (GameCategories category){
+        if(isActiveSubcategoryTabPresent()){
+            return getActiveSubcategoryTabXp().equals(category.getUrl());
+        }
+        WebDriverUtils.runtimeExceptionWithLogs("Active category is not present");
+        return false;
+    }
 
 	public String getActiveCategoryTabXp () {
 		return WebDriverUtils.getAttribute(TAB_ACTIVE_CATEGORY_XP, CATEGORY_NAME_XP);
-	}
-
-	public String getActiveSubcategoryName (){
-		return WebDriverUtils.getElementText(TAB_ACTIVE_SUBCATEGORY_XP);
-
 	}
 
 	public String getActiveSubcategoryTabXp () {
@@ -441,10 +449,6 @@ public class GamesPortletPage extends AbstractPage{
 		return CATEGORY_REFINE_BY_XP_BEGINNING +"'" + categoryURL + "']";
 	}
 
-	public boolean isCategoryItemPresentInRefineBy  (String categoryURL){
-		return  WebDriverUtils.isVisible(getRefineByCategoryXpath(categoryURL));
-	}
-
 	private void clickDropDownOption(String dropdownRefineBy, String categoryXpath){
 		WebDriverUtils.waitForElement(dropdownRefineBy);
 		if (!WebDriverUtils.isVisible(categoryXpath, 0)){
@@ -456,7 +460,11 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
     public boolean isResetFilterPresent (){
-        return isRefineByOptionPresent(LABEL_RESET_FILTER);
+        return isRefineByTextOptionPresent(LABEL_RESET_FILTER);
+    }
+
+    public boolean isRefineByTextOptionPresent (String refineByOptionText){
+        return getAllRefineByOptionsTexts().contains(refineByOptionText);
     }
 
     public void clickRefineByResetFilter (){
@@ -488,10 +496,6 @@ public class GamesPortletPage extends AbstractPage{
 		return refineByOptions;
 	}
 
-	public boolean isRefineByTextOptionPresent (String refineByOptionText){
-		return getAllRefineByOptionsTexts().contains(refineByOptionText);
-	}
-
 	public List<String> getAllRefineByOptionsTexts () {
 		ArrayList<String> refineByOptions=new ArrayList<String>();
 		int xPathCount=WebDriverUtils.getXpathCount(DROPDOWN_REFINE_BY_OPTION_FULL_XP);
@@ -505,10 +509,13 @@ public class GamesPortletPage extends AbstractPage{
 		return refineByOptions;
 	}
 
-
 	public String getActiveRefineByOptionText () {
 		return WebDriverUtils.getElementText(DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP);
 	}
+
+    public boolean isActiveRefineByOption (GameCategories category) {
+        return getActiveRefineByOption().equals(category.getUrl());
+    }
 
     public boolean isRefineByUnselected() {
         return WebDriverUtils.getElementText(DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP).equals(LABEL_REFINE_BY);
@@ -518,16 +525,7 @@ public class GamesPortletPage extends AbstractPage{
 		return WebDriverUtils.getAttribute(DROPDOWN_REFINE_BY_OPTION_FULL_XP + "[text() = '" + getActiveRefineByOptionText() + "']", CATEGORY_NAME_XP);
 	}
 
-	public boolean refineByOptionsInclude(GameCategories category) {
-        ArrayList<String> refineByOptions = getAllRefineByOptions();
-        ArrayList<Boolean> results = new ArrayList<>();
-        for(String url:category.getUrls()){
-            results.add(isRefineByOptionPresent(refineByOptions, url));
-        }
-        return !results.contains(false);
-	}
-
-    public boolean refineByOptionsInclude(GameCategories... category) {
+    public boolean refineByOptionsInclude(boolean shouldInclude, GameCategories... category) {
         ArrayList<String> refineByOptions = getAllRefineByOptions();
         ArrayList<Boolean> results = new ArrayList<>();
         for(GameCategories cat:category){
@@ -535,15 +533,14 @@ public class GamesPortletPage extends AbstractPage{
                 results.add(isRefineByOptionPresent(refineByOptions, url));
             }
         }
-        return !results.contains(false);
+        return !results.contains(!shouldInclude);
     }
 
-    private boolean childCategoriesDisplayedInRefineBy (String[] childCategories){
-        ArrayList<String> refineByOptions = getAllRefineByOptions();
-        ArrayList<Boolean> results = new ArrayList<>();
-        for(String subCat:childCategories){
-            results.add(isRefineByOptionPresent(refineByOptions, subCat));
-        }
-        return !results.contains(false);
+    public void checkNavigation(boolean refineBy, boolean topCategory, boolean topSubCategory, boolean leftCategory, boolean leftSubCategory){
+        TypeUtils.assertEqualsWithLogs(refineByDropDownIsPresent(),refineBy,"refineByDropdownIsPresent");
+        TypeUtils.assertEqualsWithLogs(topCategoryMenuIsPresent(),topCategory,"topCategoryMenuIsPresent");
+        TypeUtils.assertEqualsWithLogs(topSubcategoryMenuIsPresent(),topSubCategory,"topSubcategoriesMenuIsDisplayed");
+        TypeUtils.assertEqualsWithLogs(leftCategoryMenuIsPresent(),leftCategory,"leftCategoriesMenuIsDisplayed");
+        TypeUtils.assertEqualsWithLogs(leftSubcategoryMenuIsPresent(),leftSubCategory,"leftSubcategoriesMenuIsDisplayed");
     }
 }

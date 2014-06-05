@@ -48,6 +48,7 @@ public enum GameCategories {
     public String getUrl(){
         return urls.get(0);
     }
+
     public ArrayList<String> getUrls(){
         return urls;
     }
