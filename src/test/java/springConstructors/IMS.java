@@ -74,7 +74,7 @@ public class IMS extends WebDriverObject{
         IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
         for(boolean imsState:imsPlayerDetailsPage.getNotificationCheckboxesState()){
             if(imsState==state){
-                WebDriverUtils.runtimeExceptionWithLogs("Notifications state did not update");
+                WebDriverUtils.runtimeExceptionWithLogs("Notifications state did not update<div>Expected: "+state+", Found: "+!imsState+"</div>");
             }
         }
     }

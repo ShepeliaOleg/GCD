@@ -188,9 +188,11 @@ public class ChangeMyDetailsTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
         changeMyDetailsPage.setNotificationCheckboxes(false);
+        WebDriverUtils.waitFor(5000);
         iMS.validateNotificationCheckboxes(userData, false);
         changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
         changeMyDetailsPage.setNotificationCheckboxes(true);
+        WebDriverUtils.waitFor(5000);
         iMS.validateNotificationCheckboxes(userData, true);
     }
 
