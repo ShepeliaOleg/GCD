@@ -49,7 +49,7 @@ public class WebDriverUtils extends WebDriverObject{
 		try{
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
-			runtimeExceptionWithLogs("Element was not found: " + xpath + "\n");
+			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not appear after: "+timeout+" ms</div>");
 		}
 	}
 
@@ -62,7 +62,7 @@ public class WebDriverUtils extends WebDriverObject{
 		try{
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
-			runtimeExceptionWithLogs("Element did not disappear: " + xpath + "\n");
+			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not disappear after: "+timeout+" ms</div>");
 		}
 	}
 
@@ -74,6 +74,19 @@ public class WebDriverUtils extends WebDriverObject{
 			runtimeExceptionWithLogs("Page didn't load in 30 sec");
 		}
 	}
+
+    public static void waitForNumberOfElements(String xpath, int number){
+        waitForNumberOfElements(xpath, number, TIMEOUT);
+    }
+
+    public static void waitForNumberOfElements(String xpath, int number, long timeout){
+        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        try{
+            wait.until(CustomExpectedConditions.numberOfElementsEquals(number, xpath));
+        } catch(TimeoutException e) {
+            runtimeExceptionWithLogs("Number of elements did not become: "+number+"<div>In "+timeout+" ms</div>");
+        }
+    }
 
     //Element actions
 

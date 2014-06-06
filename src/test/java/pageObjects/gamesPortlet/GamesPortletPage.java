@@ -361,7 +361,7 @@ public class GamesPortletPage extends AbstractPage{
 	// Category tabs
 	public GamesPortletPage clickCategoryTab (GameCategories category){
 		WebDriverUtils.click(getCategoryXpath(category.getUrl()));
-        WebDriverUtils.waitForElement("//*[@data-gamecode='"+category.getLastGame()+"']");
+        waitForGamesLoad();
         return new GamesPortletPage();
 	}
 
@@ -442,7 +442,7 @@ public class GamesPortletPage extends AbstractPage{
 	// Refine By
 	public GamesPortletPage refineBy (GameCategories category){
 		clickDropDownOption(DROPD0WN_REFINE_BY_XP, getRefineByCategoryXpath(category.getUrl()));
-        WebDriverUtils.waitForElement("//*[@data-gamecode='"+category.getLastGame()+"']");
+        waitForGamesLoad();
 		return new GamesPortletPage();
 	}
 
@@ -456,8 +456,9 @@ public class GamesPortletPage extends AbstractPage{
 			WebDriverUtils.click(dropdownRefineBy);
 			WebDriverUtils.waitForElement(categoryXpath);
 		}
+        WebDriverUtils.mouseOver(categoryXpath);
 		WebDriverUtils.click(categoryXpath);
-		WebDriverUtils.waitForElement(GAMES_XP);
+		waitForGamesLoad();
 	}
 
     public boolean isResetFilterPresent (){
@@ -543,5 +544,9 @@ public class GamesPortletPage extends AbstractPage{
         TypeUtils.assertEqualsWithLogs(topSubcategoryMenuIsPresent(),topSubCategory,"topSubcategoriesMenuIsDisplayed");
         TypeUtils.assertEqualsWithLogs(leftCategoryMenuIsPresent(),leftCategory,"leftCategoriesMenuIsDisplayed");
         TypeUtils.assertEqualsWithLogs(leftSubcategoryMenuIsPresent(),leftSubCategory,"leftSubcategoriesMenuIsDisplayed");
+    }
+
+    private void waitForGamesLoad(){
+        WebDriverUtils.waitForNumberOfElements("//div[contains(@class, 'pt-items')]/ul", 1);
     }
 }
