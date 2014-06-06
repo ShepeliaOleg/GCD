@@ -74,7 +74,8 @@ public class NavigationUtils extends WebDriverObject{
             case liveTableFinder:                               return new LiveCasinoPage();
             case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
-            case responsibleGaming:                             return new ResponsibleGamingPage();
+            case responsibleGaming:
+            case selfExclusion:                                 return new ResponsibleGamingPage();
             default: throw new RuntimeException("Unexpected input in navigateToPage method");
         }
     }

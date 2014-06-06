@@ -81,8 +81,8 @@ public class GamesPortletTest extends AbstractTest{
 		gamesPortletPage.refineBy(GameCategories.cat1);
         TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(true, GameCategories.groupSub1, GameCategories.groupTop),"refineByOptionsIncludeCorrectSubcategories");
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(false, GameCategories.groupSub2),"refineByOptionsIncludeIncorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(true, GameCategories.groupSub1),"refineByOptionsIncludeCorrectSubcategories");
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(false, GameCategories.groupSub2, GameCategories.groupTop),"refineByOptionsIncludeIncorrectSubcategories");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByUnselected(),"noCategoryIsSelectedInRefineBy");
         gamesPortletPage.correctGamesAreDisplayed(GameCategories.cat1);
         TypeUtils.assertTrueWithLogs(gamesPortletPage.isResetFilterPresent(),"resetFilterOptionIsPresent");
@@ -176,12 +176,12 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
 		gamesPortletPage.refineBy(GameCategories.cat1);
 		gamesPortletPage.refineBy(GameCategories.cat1SubA);
-		gamesPortletPage.isResetFilterPresent();
-		TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
+        gamesPortletPage.clickRefineByResetFilter();
+        TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByDropDownIsPresent(),"refineByDropDownIsDisplayed");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.categoryMenuIsHidden(),"categoryTabsAreHidden");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(true, GameCategories.groupSub1),"refineByOptionsIncludeCorrectSubcategories");
         TypeUtils.assertTrueWithLogs(gamesPortletPage.refineByOptionsInclude(false, GameCategories.groupTop, GameCategories.groupSub2),"refineByOptionsIncludeTopCategories");
-		TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByUnselected(),"noCategoryIsSelectedInRefineBy");
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.isRefineByUnselected(),"isRefineByUnselected");
 		gamesPortletPage.correctGamesAreDisplayed(GameCategories.cat1);
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.isResetFilterPresent(),"resetFilterOptionIsPresent");
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.currentURLIsCategoryURL(GameCategories.cat1),"pageURLContainsCategoryPath");

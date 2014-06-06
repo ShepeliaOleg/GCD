@@ -128,12 +128,11 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
 		String username1=homePage.logout().getEnteredUsernameFromLoginForm();
-		userData.setUsername("player73");
-		userData.setPassword("123456");
+        String changedUsername = userData.getUsername()+"2";
+        userData.setUsername(changedUsername);
 		homePage=(HomePage) homePage.login(userData, true);
         String username2=homePage.logout().getEnteredUsernameFromLoginForm();
-		TypeUtils.assertFalseWithLogs(username1.equals(""),"username empty");
-        TypeUtils.assertFalseWithLogs(username2.equals(username1), "username is not overwritten");
+        TypeUtils.assertTrueWithLogs(username2.equals(changedUsername), "correct username displayed");
 	}
 
 	/*10. Login + Remember Me + override old username from popoup*/
@@ -144,7 +143,7 @@ public class LoginTest extends AbstractTest{
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
 		loginPopup=homePage.logout().navigateToLoginForm();
-        String changedUsername = userData.getUsername()+"1";
+        String changedUsername = userData.getUsername()+"2";
 		userData.setUsername(changedUsername);
 		homePage=(HomePage) loginPopup.login(userData, true);
 		loginPopup=homePage.logout().navigateToLoginForm();
