@@ -224,7 +224,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 	}
 
 	public List<String> getSortedRandomLimitsList() {
-		return getSortedRandomLimitsList(3);
+		return getSortedRandomLimitsList(4);
 	}
 
 	public List<String> getSortedRandomLimitsList(int number) {
