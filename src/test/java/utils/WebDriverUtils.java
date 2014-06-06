@@ -49,7 +49,7 @@ public class WebDriverUtils extends WebDriverObject{
 		try{
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
-			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not appear after: "+timeout+" ms</div>");
+			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not appear after: "+timeout+" s</div>");
 		}
 	}
 
@@ -62,7 +62,7 @@ public class WebDriverUtils extends WebDriverObject{
 		try{
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
-			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not disappear after: "+timeout+" ms</div>");
+			runtimeExceptionWithLogs("Element: " + xpath + "<div>Did not disappear after: "+timeout+" s</div>");
 		}
 	}
 
