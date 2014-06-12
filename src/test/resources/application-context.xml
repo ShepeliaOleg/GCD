@@ -10,7 +10,7 @@
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
-        <property name="defaultBaseUrl" value="http://ci-dev-public.wpl.ptec/"/>
+        <property name="defaultBaseUrl" value="http://ci-dev-admin.wpl.ptec/"/>
         <property name="defaultBrowser" value="chrome"/>
         <property name="defaultOs" value="linux"/>
     </bean>
@@ -198,7 +198,7 @@
                 <value>Romania@40</value>
                 <value>Russia@7</value>
                 <value>Rwanda@250</value>
-                <value>Saint Helena@290</value>
+                <value>St. Helena@290</value>
                 <value>Saint Kitts and Nevis@1869</value>
                 <value>Saint Lucia@1758</value>
                 <value>Saint Pierre and Miquelon@508</value>
