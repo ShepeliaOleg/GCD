@@ -35,10 +35,11 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String BUTTON_ITEM_VIEW_XP=					"//a[@data-view='ITEM']";
 	private static final String FIELD_SEARCH_XP = 						"//input[contains(@class, 'field-search')]";
 	//Refine By
-    private static final String LABEL_REFINE_BY =                        "Refine by";
-    private static final String LABEL_RESET_FILTER =                     "RESET FILTER";
-	private static final String CATEGORY_REFINE_BY_XP_BEGINNING = 		"//*[@class='filterbox']//a[@data-category = ";
-	private static final String DROPD0WN_REFINE_BY_XP = 				"//*[contains(@class, 'games-filter-box')]//div";
+    private static final String LABEL_REFINE_BY =                       "Refine by";
+    private static final String LABEL_RESET_FILTER =                    "RESET FILTER";
+    private static final String DROPDOWN_REFINE_BY_OPENED_XP= 		    "//*[@class='filterbox']";
+	private static final String CATEGORY_REFINE_BY_XP_BEGINNING = 		DROPDOWN_REFINE_BY_OPENED_XP + "//a[@data-category = ";
+	private static final String DROPD0WN_REFINE_BY_XP = 				"//*[contains(@class, 'games-filter-box')]/div/ul";
 	private static final String DROPDOWN_REFINE_BY_OPTION_FULL_XP = 	DROPD0WN_REFINE_BY_XP + "//a[contains(@class,'datalink')]";
 	private static final String DROPDOWN_REFINE_BY_OPTION_PARTIAL_XP = 	"/a[contains(@class,'datalink')]";
 	private static final String DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP = DROPD0WN_REFINE_BY_XP + "//*[@class='active main-toggle']";
@@ -56,7 +57,8 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String MENU_SUBCATEGORY_TABS_LEFT_XP = 		MENU_LEFT_XP + SUBCATEGORY_TABS_XP;
 
     //Sortby
-	public static final String DROPDOWN_SORT_BY_XP=						"//*[contains(@class, 'games-select-box')]/div";
+	public static final String DROPDOWN_SORT_BY_XP=						"//*[contains(@class, 'games-select-box')]/div/ul";
+    private static final String DROPDOWN_SORT_BY_OPENED_XP= 		    "//*[@class='sortbox']";
 	public static final String ITEM_SORT_BY_NONE_XP=					"//a[@data-sortby='none']";
 	public static final String ITEM_SORT_BY_POPULARITY_XP=				"//a[@data-sortby='popularity']";
 	public static final String ITEM_SORT_BY_NEW_XP=						"//a[@data-sortby='new']";
@@ -218,19 +220,19 @@ public class GamesPortletPage extends AbstractPage{
 	public GamesPortletPage sortBy(SortBy sortBy){
 		switch(sortBy){
 			case None:
-				clickDropDownOption(DROPDOWN_SORT_BY_XP, ITEM_SORT_BY_NONE_XP);
+				clickSortByOption(ITEM_SORT_BY_NONE_XP);
 				break;
 			case New:
-				clickDropDownOption(DROPDOWN_SORT_BY_XP, ITEM_SORT_BY_NEW_XP);
+                clickSortByOption(ITEM_SORT_BY_NEW_XP);
 				break;
 			case Jackpot:
-				clickDropDownOption(DROPDOWN_SORT_BY_XP, ITEM_SORT_BY_JACKPOTS);
+                clickSortByOption(ITEM_SORT_BY_JACKPOTS);
 				break;
 			case Alphabetical:
-				clickDropDownOption(DROPDOWN_SORT_BY_XP, ITEM_SORT_BY_NAME_XP);
+                clickSortByOption(ITEM_SORT_BY_NAME_XP);
 				break;
 			case MostPopular:
-				clickDropDownOption(DROPDOWN_SORT_BY_XP, ITEM_SORT_BY_POPULARITY_XP);
+                clickSortByOption(ITEM_SORT_BY_POPULARITY_XP);
 				break;
 		}
 		return new GamesPortletPage();
@@ -362,7 +364,6 @@ public class GamesPortletPage extends AbstractPage{
 	public GamesPortletPage clickCategoryTab (GameCategories category){
 		WebDriverUtils.click(getCategoryXpath(category.getUrl()));
         waitForGamesLoad();
-        WebDriverUtils.waitFor(5000);
         return new GamesPortletPage();
 	}
 
@@ -442,7 +443,7 @@ public class GamesPortletPage extends AbstractPage{
 
 	// Refine By
 	public GamesPortletPage refineBy (GameCategories category){
-		clickDropDownOption(DROPD0WN_REFINE_BY_XP, getRefineByCategoryXpath(category.getUrl()));
+        clickRefineByOption( getRefineByCategoryXpath(category.getUrl()));
         waitForGamesLoad();
 		return new GamesPortletPage();
 	}
@@ -451,13 +452,10 @@ public class GamesPortletPage extends AbstractPage{
 		return CATEGORY_REFINE_BY_XP_BEGINNING +"'" + categoryURL + "']";
 	}
 
-	private void clickDropDownOption(String dropdownRefineBy, String categoryXpath){
-		WebDriverUtils.waitForElement(dropdownRefineBy);
-		if (!WebDriverUtils.isVisible(categoryXpath, 0)){
-			WebDriverUtils.click(dropdownRefineBy);
-			WebDriverUtils.waitForElement(categoryXpath);
-		}
-        WebDriverUtils.mouseOver(categoryXpath);
+	private void clickRefineByOption(String categoryXpath){
+        if(!isRefineByOpened()){
+            clickRefineByDropdown();
+        }
 		WebDriverUtils.click(categoryXpath);
 		waitForGamesLoad();
 	}
@@ -475,7 +473,7 @@ public class GamesPortletPage extends AbstractPage{
     }
 
 	public void clickRefineByOptionByText (String text){
-		clickDropDownOption(DROPD0WN_REFINE_BY_XP, DROPDOWN_REFINE_BY_OPTION_FULL_XP + "[text()='" + text + "']");
+		clickRefineByOption(DROPDOWN_REFINE_BY_OPTION_FULL_XP + "[text()='" + text + "']");
 	}
 
 	public boolean refineByDropDownIsPresent(){
@@ -503,14 +501,22 @@ public class GamesPortletPage extends AbstractPage{
 		ArrayList<String> refineByOptions=new ArrayList<String>();
 		int xPathCount=WebDriverUtils.getXpathCount(DROPDOWN_REFINE_BY_OPTION_FULL_XP);
 		for(int i=1; i <= xPathCount; i++){
-			boolean refineByVisible =  WebDriverUtils.isVisible(DROPD0WN_REFINE_BY_XP + "//*[@class='filterbox']//li", 0);
-			if (!refineByVisible) {
-				clickDropDownOption(DROPD0WN_REFINE_BY_XP, DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP);
-			}
+            if(!isRefineByOpened()){
+                clickRefineByDropdown();
+            }
 			refineByOptions.add(WebDriverUtils.getElementText(DROPD0WN_REFINE_BY_XP + "//ul[@class='filterbox']/li" + "[" + i + "]" + "/a"));
 		}
 		return refineByOptions;
 	}
+
+    private void clickRefineByDropdown(){
+        WebDriverUtils.click(DROPD0WN_REFINE_BY_XP);
+//        WebDriverUtils.mouseOver("//ul[@class='filterbox']/li");
+    }
+
+    private boolean isRefineByOpened(){
+        return WebDriverUtils.isVisible(DROPDOWN_REFINE_BY_OPENED_XP, 0);
+    }
 
 	public String getActiveRefineByOptionText () {
 		return WebDriverUtils.getElementText(DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP);
@@ -549,5 +555,23 @@ public class GamesPortletPage extends AbstractPage{
 
     private void waitForGamesLoad(){
         WebDriverUtils.waitForNumberOfElements("//div[contains(@class, 'pt-items')]/ul", 1);
+    }
+
+    //sort by
+
+    private void clickSortByDropdown(){
+        WebDriverUtils.click(DROPDOWN_SORT_BY_XP);
+    }
+
+    private void clickSortByOption(String categoryXpath){
+        if(!isSortByOpened()){
+            clickSortByDropdown();
+        }
+        WebDriverUtils.click(categoryXpath);
+        waitForGamesLoad();
+    }
+
+    private boolean isSortByOpened(){
+        return WebDriverUtils.isVisible(DROPDOWN_SORT_BY_OPENED_XP, 0);
     }
 }

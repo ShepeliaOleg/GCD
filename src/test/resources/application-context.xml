@@ -10,8 +10,8 @@
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
-        <property name="defaultBaseUrl" value="http://ci-dev-admin.wpl.ptec/"/>
-        <property name="defaultBrowser" value="chrome"/>
+        <property name="defaultBaseUrl" value="http://ci-dev-public.wpl.ptec/"/>
+        <property name="defaultBrowser" value="firefox"/>
         <property name="defaultOs" value="linux"/>
     </bean>
 

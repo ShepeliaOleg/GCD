@@ -12,7 +12,7 @@ import utils.WebDriverUtils;
 public abstract class ForgotPopup extends AbstractPopup{
 
     public boolean forgotType;  // true == ForgotPassword; false == ForgotUsername
-    public final static String ROOT_XP =            				"//*[@id='p_p_id_forgotpassword_WAR_accountportlet_']";
+    public final static String ROOT_XP =            				"//*[@class='forgot-password-wrap']";
     public final static String FORGOT_PASSWORD_TAB_XP =             ROOT_XP + "//a[contains(@data-tab,'password')]";
     public final static String FORGOT_USERNAME_TAB_XP =             ROOT_XP + "//a[contains(@data-tab,'name')]";
     public final static String FIELD_EMAIL_XP =                	    ROOT_XP + "//*[@id='email']";

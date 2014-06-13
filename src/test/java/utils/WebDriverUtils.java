@@ -91,8 +91,11 @@ public class WebDriverUtils extends WebDriverObject{
     //Element actions
 
     public static void click(String xpath){
-        waitForElement(xpath);
-        webDriver.findElement(By.xpath(xpath)).click();
+        try {
+            webDriver.findElement(By.xpath(xpath)).click();
+        }catch (WebDriverException e){
+            runtimeExceptionWithLogs("Could not click element by xpath: "+xpath);
+        }
     }
 
     public static String getAttribute(String xpath, String attribute){
