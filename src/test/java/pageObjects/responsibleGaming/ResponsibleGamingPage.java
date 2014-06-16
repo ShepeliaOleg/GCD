@@ -1,14 +1,14 @@
 package pageObjects.responsibleGaming;
 
 
+import enums.DepositLimits;
 import org.openqa.selenium.WebElement;
 import pageObjects.base.AbstractPage;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ResponsibleGamingPage extends AbstractPage{
 	private static final String RESPONSIBLE_GAMING_ROOT_XP =                        	"//*[contains(@id,'portlet_responsiblegaming')]";
@@ -22,64 +22,15 @@ public class ResponsibleGamingPage extends AbstractPage{
     private static final String FUTURE_CHANGE_NOTIFICATION_DAILY_XP =               	"//*[@class='depositLimitChange']/div[contains(text(),'daily')]";
     private static final String FUTURE_CHANGE_NOTIFICATION_WEEKLY_XP =              	"//*[@class='depositLimitChange']/div[contains(text(),'weekly')]";
     private static final String FUTURE_CHANGE_NOTIFICATION_MONTHLY_XP =             	"//*[@class='depositLimitChange']/div[contains(text(),'monthly')]";
-	private static final String DROPDOWN_DAILY_XP =                                 	"//select[@id='limitDepositDaily']";
-	private static final String DROPDOWN_WEEKLY_XP =                                	"//select[@id='limitDepositWeekly']";
-	private static final String DROPDOWN_MONTHLY_XP =                               	"//select[@id='limitDepositMonthly']";
+	public static final String DROPDOWN_DAILY_XP =                                 		"//select[@id='limitDepositDaily']";
+	public static final String DROPDOWN_WEEKLY_XP =                                		"//select[@id='limitDepositWeekly']";
+	public static final String DROPDOWN_MONTHLY_XP =                              	 	"//select[@id='limitDepositMonthly']";
     private static final String DROPDOWN_TIME_PER_SESSION_XP =                     	 	"//select[@id='limitSessionPerSession']";
 	private static final String LINK_SELF_EXCLUDE = 									"//p[@class='self-exclude']/a";
 
 	public ResponsibleGamingPage(){
 		super(new String[]{RESPONSIBLE_GAMING_ROOT_XP, BUTTON_DEPOSIT_XP, DROPDOWN_DAILY_XP, DROPDOWN_WEEKLY_XP, DROPDOWN_MONTHLY_XP});
 	}
-
-    private void setDepositLimit(String xpath, String limitValue) {
-        if (limitValue.equalsIgnoreCase("0")) {
-           WebDriverUtils.setDropdownOptionByValue(xpath, "0");
-        } else {
-           WebDriverUtils.setDropdownOptionByText(xpath, limitValue);
-        }
-    }
-
-	private void setDailyDepositLimit(String depositLimitValue){
-		setDepositLimit(DROPDOWN_DAILY_XP, depositLimitValue);
-	}
-
-	private void setWeeklyDepositLimit(String depositLimitValue){
-        setDepositLimit(DROPDOWN_WEEKLY_XP, depositLimitValue);
-	}
-
-	private void setMonthlyDepositLimit(String depositLimitValue){
-		setDepositLimit(DROPDOWN_MONTHLY_XP, depositLimitValue);
-	}
-
-	private WebElement getDailyDepositLimitSelectedOption(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_DAILY_XP);
-	}
-
-	private WebElement getWeeklyDepositLimitSelectedOption(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_WEEKLY_XP);
-	}
-
-	private WebElement getMonthlyDepositLimitSelectedOption(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_MONTHLY_XP);
-	}
-
-
-	private List<WebElement> getDailyDepositLimitOptions(){
-		return WebDriverUtils.getDropdownOptions(DROPDOWN_DAILY_XP);
-	}
-
-	private List<WebElement> getWeeklyDepositLimitOptions(){
-		return WebDriverUtils.getDropdownOptions(DROPDOWN_WEEKLY_XP);
-	}
-
-	private List<WebElement> getMonthlyDepositLimitOptions(){
-		return WebDriverUtils.getDropdownOptions(DROPDOWN_MONTHLY_XP);
-	}
-
-    private WebElement getMaximumDepositLimitOption(String xpath){
-        return WebDriverUtils.getDropdownLastOption(xpath);
-    }
 
     // currency
 
@@ -147,18 +98,6 @@ public class ResponsibleGamingPage extends AbstractPage{
 		return WebDriverUtils.isVisible(LABEL_ERROR_MONTHLY_XP);
 	}
 
-    public boolean dailyFutureChangeNotificationVisible(){
-        return WebDriverUtils.isVisible(FUTURE_CHANGE_NOTIFICATION_DAILY_XP);
-    }
-
-    public boolean weeklyFutureChangeNotificationVisible(){
-        return WebDriverUtils.isVisible(FUTURE_CHANGE_NOTIFICATION_WEEKLY_XP);
-    }
-
-    public boolean monthlyFutureChangeNotificationVisible(){
-        return WebDriverUtils.isVisible(FUTURE_CHANGE_NOTIFICATION_MONTHLY_XP);
-    }
-
 	public SelfExcludePopup navigateToSelfExclude(){
 		WebDriverUtils.click(LINK_SELF_EXCLUDE);
 		return new SelfExcludePopup();
@@ -180,57 +119,11 @@ public class ResponsibleGamingPage extends AbstractPage{
 		}
 	}
 
-	public void setDepositLimits(String dailyLimit, String weeklyLimit, String monthlyLimit){
-		setDailyDepositLimit(dailyLimit);
-		setWeeklyDepositLimit(weeklyLimit);
-		setMonthlyDepositLimit(monthlyLimit);
-	}
-
-    private List<WebElement> getRandomLimitsList(int number){
-		List<WebElement> allOptions=getDailyDepositLimitOptions();
-
-        if (allOptions.size() < number) {
-			WebDriverUtils.runtimeExceptionWithLogs("Requested number of random elements cannot be more than limit options available");
-        }
-
-		List<WebElement> randomOptionsWebElements=RandomUtils.getRandomElementsFromList(allOptions, number);
-
-		return randomOptionsWebElements;
-	}
-//
-//    public List<String> getSortedRandomLimitsList() {
-//        return getSortedRandomLimitsList(3);
-//    }
-
-//    public List<String> getSortedRandomLimitsList(int number) {
-//        List<WebElement> randomOptionsWebElements = getRandomLimitsList(number);
-//
-//        return sortLimits(randomOptionsWebElements);
-//    }
-
-//    private List<String> sortLimits(List<WebElement> options) {
-//        List<Integer> optionsInteger = TypeUtils.convertWebElementListToIntegerList(options);
-//
-//        Collections.sort(optionsInteger);
-//
-//        return TypeUtils.convertIntegerListToStringList(optionsInteger);
-//    }
-
 	public void setRandomTimePerSession(){
 		List<WebElement> allOptions=getTimePerSessionLimitOptions();
 		WebElement randomOptionsWebElements=RandomUtils.getRandomElementsFromList(allOptions, 1).get(0);
 
 		setTimePerSession(randomOptionsWebElements.getText());
-	}
-
-	public List<String> getSortedRandomLimitsList() {
-		return getSortedRandomLimitsList(4);
-	}
-
-	public List<String> getSortedRandomLimitsList(int number) {
-		List<WebElement> randomOptionsWebElements = getRandomLimitsList(number);
-
-		return sortLimits(randomOptionsWebElements);
 	}
 
 	private List<String> sortLimits(List<WebElement> options) {
@@ -241,5 +134,87 @@ public class ResponsibleGamingPage extends AbstractPage{
 		return TypeUtils.convertIntegerListToStringList(optionsInteger);
 	}
 
+
+	public void setDepositLimits(int daily, int weekly, int monthly){
+		int counter=0;
+		int big, med, small;
+		Map<DepositLimits,Integer> initialLimits=new TreeMap<>();
+		Map<Integer,DepositLimits> filteredOrderedLimits=new TreeMap<>();
+		Map<DepositLimits,Integer> finalLimits=new TreeMap<>();
+		initialLimits.put(DepositLimits.daily, daily);
+		initialLimits.put(DepositLimits.weekly, weekly);
+		initialLimits.put(DepositLimits.monthly, monthly);
+		for(Map.Entry<DepositLimits,Integer> entry:initialLimits.entrySet()){
+			if(entry.getValue()==0){
+				setDepositLimitNotDefined(entry.getKey());
+			}else{
+				filteredOrderedLimits.put(entry.getValue(), entry.getKey());
+			}
+		}
+		switch(filteredOrderedLimits.size()){
+			case 3:
+				do{
+					big = parseLimit(filteredOrderedLimits.get(3));
+					med = parseLimit(filteredOrderedLimits.get(2));
+					small = parseLimit(filteredOrderedLimits.get(1));
+					counter++;
+					if(counter>=300){
+						WebDriverUtils.runtimeExceptionWithLogs("Wrong deposit limits configuration");
+					}
+				}while(big<=med || med<=small);
+				finalLimits.put(filteredOrderedLimits.get(3),big);
+				finalLimits.put(filteredOrderedLimits.get(2),med);
+				finalLimits.put(filteredOrderedLimits.get(1),small);
+				break;
+			case 2:
+				do{
+					med = parseLimit(filteredOrderedLimits.get(2));
+					small = parseLimit(filteredOrderedLimits.get(1));
+					counter++;
+					if(counter>=300){
+						WebDriverUtils.runtimeExceptionWithLogs("Wrong deposit limits configuration");
+					}
+				}while(med<=small);
+				finalLimits.put(filteredOrderedLimits.get(2),med);
+				finalLimits.put(filteredOrderedLimits.get(1),small);
+				break;
+			case 1:
+				finalLimits.put(filteredOrderedLimits.get(1), parseLimit(filteredOrderedLimits.get(1)));
+				break;
+			case 0:
+				break;
+		}
+		for(Map.Entry<DepositLimits,Integer> entry:finalLimits.entrySet()){
+			setDepositLimit(entry.getKey(), Integer.toString(entry.getValue()));
+		}
+		System.out.println(daily +" "+weekly+" "+monthly+" | "+ finalLimits.toString());
+		submitDepositLimit();
+	}
+
+	private int parseLimit(DepositLimits type){
+		return Integer.parseInt(getRandomLimit(type));
+	}
+
+	private void setDepositLimit(DepositLimits type, String limit){
+		WebDriverUtils.setDropdownOptionByValue(type.getXpath(), limit);
+	}
+
+	private void setDepositLimitNotDefined(DepositLimits type){
+		setDepositLimit(type, "0");
+	}
+
+	private List<WebElement> getDepositLimits(DepositLimits type){
+		return WebDriverUtils.getDropdownOptions(type.getXpath());
+	}
+
+	private String getRandomLimit(DepositLimits type){
+		return RandomUtils.getRandomElementsFromList(getDepositLimits(type), 1, 1).get(0).getAttribute("value");
+	}
+
+	public void checkErrors(boolean daily, boolean weekly, boolean monthly){
+		TypeUtils.assertEqualsWithLogs(dailyValidationErrorMessageVisible(), daily, "dailyErrorVisible");
+		TypeUtils.assertEqualsWithLogs(weeklyValidationErrorMessageVisible(), weekly, "weeklyErrorVisible");
+		TypeUtils.assertEqualsWithLogs(monthlyValidationErrorMessageVisible(), monthly, "monthlyErrorVisible");
+	}
 
 }

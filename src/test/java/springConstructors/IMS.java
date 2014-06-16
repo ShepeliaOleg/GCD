@@ -26,6 +26,7 @@ import java.util.HashMap;
 public class IMS extends WebDriverObject{
 
 	protected URL imsURL;
+	private static final int RETRIES = 10;
 
     @Autowired
     @Qualifier("userData")
@@ -115,7 +116,15 @@ public class IMS extends WebDriverObject{
 	}
 
 	public boolean isPlayerLoggedIn(String username){
-		return navigateToPlayedDetails(username).isPlayerOnline();
+		IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(username);
+		for(int i=0; i<RETRIES; i++){
+			if(imsPlayerDetailsPage.isPlayerOnline()){
+				return true;
+			}
+			WebDriverUtils.waitFor();
+			WebDriverUtils.refreshPage();
+		}
+		return false;
 	}
 
     public void sendPushMessage(Page pushMessages){

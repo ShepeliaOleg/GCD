@@ -282,8 +282,6 @@ public class LoginTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void loginAndCheckStatusInIMS(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername("MiXeDcAsE");
-		userData.setPassword("123456");
 		PortalUtils.loginUser(userData);
         TypeUtils.assertTrueWithLogs(iMS.isPlayerLoggedIn(userData.getUsername()),"successfulLogin");
 	}

@@ -15,6 +15,10 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 	private static final String BUTTON_SEARCH_XP=		"//*[@id='search-submit']";
 	private static final String RADIOBUTTON_INTERNAL_XP="//*[@id='search_internalAccount-True']";
 	private static final String RADIOBUTTON_BOTH_XP= 	"//*[@id='search_internalAccount-Both-label']";
+	private static final String FIELD_SIGNUP_DATE_XP = 	"//*[@id='search_signupDate_to']";
+	private static final String DROPDOWN_DATE_XP = 		"//*[@id='wrapper_0']";
+	private static final String LABEL_CLEAR_XP = 		"//*[@class='smdr-clear']";
+
 
 	public IMSAdvancedPlayerSearchPage(){
 		super(new String[]{ROOT_XP, BUTTON_SEARCH_XP});
@@ -36,9 +40,16 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 		WebDriverUtils.click(RADIOBUTTON_BOTH_XP);
 	}
 
+	private void resetDate(){
+		WebDriverUtils.click(FIELD_SIGNUP_DATE_XP);
+		WebDriverUtils.waitForElement(DROPDOWN_DATE_XP);
+		WebDriverUtils.click(LABEL_CLEAR_XP);
+	}
+
 	public IMSPlayerDetailsPage search(String username){
 		String userLink = "//a[contains(text(), '"+username+"')]";
-		if(!WebDriverUtils.isVisible(userLink)){
+		if(!WebDriverUtils.isVisible(userLink, 0)){
+			resetDate();
 			clickBoth();
 			inputUsername(username);
 			clickSearch();

@@ -57,7 +57,4 @@ public enum GameCategories {
         return games;
     }
 
-    public String getLastGame(){
-        return games.get(games.size()-1);
-    }
 }

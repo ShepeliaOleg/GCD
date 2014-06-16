@@ -33,18 +33,35 @@ public class RandomUtils{
         return username.concat(domain);
     }
 
-    private static List<Integer> getRandomIndexes(int number, int max) {
-        Random random = new Random();
-        List<Integer> indexesList = new ArrayList<Integer>();
-        int index;
-        for (int i=0; i<number; i++) {
-            do {
-                index = random.nextInt(max);
-            } while (indexesList.contains(index));
-            indexesList.add(index);
-        }
-        return indexesList;
-    }
+	private static List<Integer> getRandomIndexes(int number, int max){
+		return getRandomIndexes(number, max, 0);
+	}
+
+    private static List<Integer> getRandomIndexes(int number, int max, int offset) {
+		Random random = new Random();
+		List<Integer> indexesList = new ArrayList<>();
+		int index;
+		for (int i=0; i<number; i++) {
+			do{
+				index = random.nextInt(max-offset)+offset;
+			}while (indexesList.contains(index));
+			indexesList.add(index);
+		}
+		return indexesList;
+	}
+
+	public static <T> List<T> getRandomElementsFromList(List<T> list, int number) {
+		return getRandomElementsFromList(list, number, 0);
+	}
+
+	public static <T> List<T> getRandomElementsFromList(List<T> list, int number, int offset) {
+		if (number >= list.size()) {
+			WebDriverUtils.runtimeExceptionWithLogs("You're requested more items than array had");
+		}
+		List<Integer> randomIndexes = getRandomIndexes(number, list.size(),offset);
+		List<T> randomItems = getElementsFromListByIndexes(list, randomIndexes);
+		return randomItems;
+	}
 
     public static int generateRandomIntBetween(int min, int max) {
         Random random = new Random();
@@ -53,10 +70,8 @@ public class RandomUtils{
     }
 
     private static <T> List<T> getElementsFromListByIndexes(List<T> list, List<Integer> indexes) {
-
         List<T> selected = new ArrayList<T>();
         final int listSize = list.size();
-
         for (Integer idx : indexes) {
             if (idx >= listSize) {
 				WebDriverUtils.runtimeExceptionWithLogs("Index " + idx + " can't be more than " + listSize);
@@ -65,15 +80,6 @@ public class RandomUtils{
             selected.add(elt);
         }
         return selected;
-    }
-
-    public static <T> List<T> getRandomElementsFromList(List<T> list, int number) {
-        if (number >= list.size()) {
-			WebDriverUtils.runtimeExceptionWithLogs("You're requested more items than array had");
-        }
-        List<Integer> randomIndexes = getRandomIndexes(number, list.size());
-        List<T> randomItems = getElementsFromListByIndexes(list, randomIndexes);
-        return randomItems;
     }
 
     public static String getOption(String optionName, String optionDefaultValue) {

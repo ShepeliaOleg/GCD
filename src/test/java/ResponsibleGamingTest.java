@@ -30,9 +30,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits123(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
 		ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), randomLimits.get(3));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,2,3);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -41,9 +39,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits120(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2), "0");
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,2,0);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -52,9 +48,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits012(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), randomLimits.get(2));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(0,1,2);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -63,9 +57,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits102(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", randomLimits.get(2));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,0,2);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -74,9 +66,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits100(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),"0", "0");
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,0,0);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -85,9 +75,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits010(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits("0",randomLimits.get(1), "0");
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(0,1,0);
 		TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -96,9 +84,7 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void setValidDepositLimits001(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits("0","0", randomLimits.get(1));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(0,0,1);
         TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -127,12 +113,9 @@ public class ResponsibleGamingTest extends AbstractTest{
 	public void consecutiveValidUpdatesOfDepositLimits(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList(6);
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(2),randomLimits.get(3));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,2,3);
         TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
-		responsibleGamingPage.setDepositLimits(randomLimits.get(3),randomLimits.get(4),randomLimits.get(5));
-		responsibleGamingPage.submitDepositLimit();
+		responsibleGamingPage.setDepositLimits(1,2,3);
         TypeUtils.assertTrueWithLogs(responsibleGamingPage.depositsChangedSuccessfullyMessageVisible(), "successfullySetLimitsMessageDisplayed");
 	}
 
@@ -142,96 +125,64 @@ public class ResponsibleGamingTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits210(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), "0");
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(), "dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertFalseWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(2,1,0);
+		responsibleGamingPage.checkErrors(true, true, false);
 	}
 
     /*2. -,2,1: Weekly > Monthly & Daily = not defined*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits021(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits("0",randomLimits.get(2), randomLimits.get(1));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertFalseWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(0,2,1);
+		responsibleGamingPage.checkErrors(false, true, true);
 	}
 
     /*3. 2,-,1: Daily > Monthly & Weekly = not defined */
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits201(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(2),"0", randomLimits.get(1));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertFalseWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(2,0,1);
+		responsibleGamingPage.checkErrors(true, false, true);
 	}
 
     /*4. 3,2,1: Daily > Weekly > Monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits321(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(3),randomLimits.get(2), randomLimits.get(1));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(3,2,1);
+		responsibleGamingPage.checkErrors(true, true, true);
 	}
 
     /*5. 2,3,1: Daily < Weekly & Weekly > Monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits231(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(3), randomLimits.get(1));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(2,3,1);
+		responsibleGamingPage.checkErrors(true, true, true);
 	}
 
     /*6. 2,1,3: Daily > weekly & daily < monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits213(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(2),randomLimits.get(1), randomLimits.get(3));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertFalseWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(2,1,3);
+		responsibleGamingPage.checkErrors(true, true, false);
 	}
 
     /*7. 3,1,2: daily > weekly & daily > monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits312(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(3),randomLimits.get(1), randomLimits.get(2));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertTrueWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(), "weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(3,1,2);
+		responsibleGamingPage.checkErrors(true, true, true);
 	}
 
     /*8. 1,3,2: daily < weekly & weekly > monthly*/
 	@Test(groups = {"regression"})
 	public void setInvalidDepositLimits132(){
         ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.responsibleGaming, defaultUserData.getRegisteredUserData());
-		List<String> randomLimits = responsibleGamingPage.getSortedRandomLimitsList();
-		responsibleGamingPage.setDepositLimits(randomLimits.get(1),randomLimits.get(3), randomLimits.get(2));
-		responsibleGamingPage.submitDepositLimit();
-		TypeUtils.assertFalseWithLogs(responsibleGamingPage.dailyValidationErrorMessageVisible(),"dailyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.weeklyValidationErrorMessageVisible(),"weeklyErrorVisible");
-        TypeUtils.assertTrueWithLogs(responsibleGamingPage.monthlyValidationErrorMessageVisible(),"monthlyErrorVisible");
+		responsibleGamingPage.setDepositLimits(1,3,2);
+		responsibleGamingPage.checkErrors(false, true, true);
 	}
 
 }
