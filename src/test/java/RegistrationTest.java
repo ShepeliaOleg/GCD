@@ -141,7 +141,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*#5. Registration without bonus code provided*/
-
+    @Test(groups = {"regression"})
 	public void registrationWithOutBonusCoupon(){
 		UserData userData=defaultUserData.getRandomUserData();
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -188,6 +188,16 @@ public class RegistrationTest extends AbstractTest{
 		boolean listsEquals=diff.isEmpty();
 		Assert.assertTrue(listsEquals == true);
 	}
+
+    /*#??. The list of supported nationalities is correct*/
+    @Test(groups = {"spanish"})
+    public void nationalityList(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        Collection<String> actualNationalityList =registrationPage.getNationalityList();
+        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalityList, defaults.getCountryList());
+        boolean listsEquals=diff.isEmpty();
+        Assert.assertTrue(listsEquals == true);
+    }
 
     /*#12. The list of supported currencies is correct*/
 	@Test(groups = {"regression"})
