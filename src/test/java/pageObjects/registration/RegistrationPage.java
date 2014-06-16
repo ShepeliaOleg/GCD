@@ -47,6 +47,7 @@ public class RegistrationPage extends AbstractPage{
 	private final static String DROPDOWN_BIRTHMONTH_XP=								"//select[@id='birthMonth']";
 	private final static String DROPDOWN_BIRTHYEAR_XP=								"//select[@id='birthYear']";
 	private final static String LABEL_BIRTHDAY_XP=									"//label[@for='birthDay']";
+    private final static String DROPDOWN_NATIONALITY_XP=							"//select[@id='nationality']";
     private final static String FIELD_EMAIL_XP = 									"//*[@id='email']";
 	private final static String LABEL_EMAIL_XP=										"//label[@for='email']";
     private final static String FIELD_EMAIL_VERIFICATION_XP = 						"//*[@id='emailVerification']";
@@ -66,7 +67,7 @@ public class RegistrationPage extends AbstractPage{
     private final static String FIELD_PHONE_COUNTRY_CODE_XP  = 						"//*[@id='phoneAreaCode']";
     private final static String FIELD_PHONE_XP = 									"//*[@id='phone']";
 	private final static String LABEL_PHONE_XP=										"//label[@for='phone']";
-    private final static String FIELD_MOBILE_COUNTRY_CODE_XP= 							"//*[@id='mobileAreaCode']";
+    private final static String FIELD_MOBILE_COUNTRY_CODE_XP= 						"//*[@id='mobileAreaCode']";
     private final static String FIELD_MOBILE_XP = 									"//*[@id='mobile']";
 	private final static String LABEL_MOBILE_XP =									"//label[@for='mobile']";
     private final static String FIELD_USERNAME_XP = 								"//*[@id='userName']";
@@ -86,7 +87,7 @@ public class RegistrationPage extends AbstractPage{
 	private final static String CHECKBOX_RECEIVE_BONUSES_XP=						"//*[contains(@id, 'romotionalNotification')]";
 	private final static String LABEL_RECEIVE_BONUSES_XP=							"//label[contains(@for, 'romotionalNotification')]";
 	private final static String LINK_ADULT_CONTENT_XP=								"//*[@id='webContent18']//a";
-	private final static String BUTTON_FILL_FIELDS_XP= 									"//*[@id='fillFields']";
+	private final static String BUTTON_FILL_FIELDS_XP= 								"//*[@id='fillFields']";
 
     public RegistrationPage(){
 		super(new String[]{ROOT_XP, BUTTON_SUBMIT_XP});
@@ -493,6 +494,10 @@ public class RegistrationPage extends AbstractPage{
 
     public Collection<String> getCountryList() {
         return WebDriverUtils.getDropdownOptionsText(DROPDOWN_COUNTRY_XP);
+    }
+
+    public Collection<String> getNationalityList() {
+        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_NATIONALITY_XP);
     }
 
     public Collection<String> getCurrencyList() {
