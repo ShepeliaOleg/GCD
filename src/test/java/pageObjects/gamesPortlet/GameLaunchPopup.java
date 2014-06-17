@@ -27,19 +27,14 @@ public class GameLaunchPopup extends AbstractBrowserWindowPopup{
 	public boolean isUrlValid(){
 		String url;
 		for (int i=0; i<30; i++){
-			if(getWindowUrl().contains(VALID_GAME_URL) || getWindowUrl().contains(NO_FLASH_URL)){
-				url=getWindowUrl();
+			url=getWindowUrl();
 				if(url.contains(VALID_GAME_URL) || url.contains(NO_FLASH_URL)){
 					return true;
 				}else
 					WebDriverUtils.waitFor(1000);
-			}
-		}
-		if(WebDriverUtils.isVisible("//*[contains(text(), 'This web page is not available')]", 0) || WebDriverUtils.isVisible("//*[contains(text(), 'The connection has timed out')]", 0)){
-			throw new SkipException("Game server is not reachable " + WebDriverUtils.getUrlAndLogs());
 		}
 		return false;
-		}
+	}
 
 	public String getMainWindowHandle(){
 
