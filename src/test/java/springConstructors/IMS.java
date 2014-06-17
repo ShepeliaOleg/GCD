@@ -5,10 +5,7 @@ import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.SkipException;
-import pageObjects.external.ims.IMSHomePage;
-import pageObjects.external.ims.IMSLoginPage;
-import pageObjects.external.ims.IMSPlayerDetailsPage;
-import pageObjects.external.ims.IMSTemplateToolsPage;
+import pageObjects.external.ims.*;
 import pageObjects.inbox.InboxPage;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
@@ -140,34 +137,42 @@ public class IMS extends WebDriverObject{
     }
 
 	public void sendPushMessage(UserData userData, Page pushMessages, String amount){
-		switch (pushMessages){
-			case logout:
-				try{
-					WebDriverUtils.openAdditionalSession();
-					navigateToPlayedDetails(userData.getUsername()).sendPushLogout();
-				}finally{
-					WebDriverUtils.closeAdditionalSession();
-				}
-				break;
-			case changePasswordPopup:
-				navigateToPlayedDetails(userData.getUsername()).changePassword(userData.getPassword());
-				break;
-			case okBonus:
-				try{
-					WebDriverUtils.openAdditionalSession();
-					navigateToPlayedDetails(userData.getUsername()).addBonus(Page.okBonus, amount);
-				}finally{
-					WebDriverUtils.closeAdditionalSession();
-				}
-				break;
-			case acceptDeclineBonus:
-				try{
-					WebDriverUtils.openAdditionalSession();
-					navigateToPlayedDetails(userData.getUsername()).addBonus(Page.acceptDeclineBonus, amount);
-				}finally{
-					WebDriverUtils.closeAdditionalSession();
-				}
-				break;
+		try{
+			switch (pushMessages){
+				case logout:
+					try{
+						WebDriverUtils.openAdditionalSession();
+						navigateToPlayedDetails(userData.getUsername()).sendPushLogout();
+					}finally{
+						WebDriverUtils.closeAdditionalSession();
+					}
+					break;
+				case changePasswordPopup:
+					navigateToPlayedDetails(userData.getUsername()).changePassword(userData.getPassword());
+					break;
+				case okBonus:
+					try{
+						WebDriverUtils.openAdditionalSession();
+						navigateToPlayedDetails(userData.getUsername()).addBonus(Page.okBonus, amount);
+					}finally{
+						WebDriverUtils.closeAdditionalSession();
+					}
+					break;
+				case acceptDeclineBonus:
+					try{
+						WebDriverUtils.openAdditionalSession();
+						navigateToPlayedDetails(userData.getUsername()).addBonus(Page.acceptDeclineBonus, amount);
+					}finally{
+						WebDriverUtils.closeAdditionalSession();
+					}
+					break;
+			}
+		}catch(RuntimeException e){
+			if (e.getMessage().contains(IMSChangePassPopup.LABEL_PASSWORD_CHANGED)){
+				throw new SkipException("IMS timeout "+e.getMessage());
+			}else{
+				throw new RuntimeException(e.getMessage());
+			}
 		}
 	}
 

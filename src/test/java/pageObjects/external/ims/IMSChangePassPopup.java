@@ -12,7 +12,7 @@ public class IMSChangePassPopup extends AbstractBrowserWindowPopup{
 
 	private static final String BUTTON_CHANGE_PASSWORD=	"//input[@id='changepwd']";
 	private static final String FIELD_CHANGE_PASSWORD=	"//input[@id='password1']";
-	private static final String LABEL_PASSWORD_CHANGED=	"//*[contains(text(), 'New password has been generated and sent to user.')]";
+	public static final String LABEL_PASSWORD_CHANGED=	"//*[contains(text(), 'New password has been generated and sent to user.')]";
 
 	private String mainWindowHandle;
 	private static final String VALID_GAME_URL="/launchcasino.html";
