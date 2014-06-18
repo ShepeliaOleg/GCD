@@ -146,7 +146,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
 	}
 
 	private boolean isPostCodeEqualsTo(String postCode){
-		return (WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP).toLowerCase()).equals(postCode.toLowerCase());
+		return (WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP)).equalsIgnoreCase(postCode);
 	}
 
 	private boolean isPhoneEqualsTo(String phone){
