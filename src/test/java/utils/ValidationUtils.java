@@ -1,7 +1,7 @@
 package utils;
 
 import org.openqa.selenium.Keys;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 
 public class ValidationUtils{
 

@@ -11,7 +11,7 @@ import pageObjects.gamesPortlet.GameInfoPopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.RandomUtils;

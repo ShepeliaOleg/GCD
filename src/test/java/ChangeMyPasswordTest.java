@@ -10,16 +10,12 @@ import pageObjects.account.LoginPopup;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import springConstructors.IMS;
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 public class ChangeMyPasswordTest extends AbstractTest{
 
 	@Autowired

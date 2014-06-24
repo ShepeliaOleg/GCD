@@ -2,8 +2,6 @@ package springConstructors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import springConstructors.validation.ValidationRule;
-
 import java.util.ArrayList;
 
 public class UserData{
@@ -410,15 +408,4 @@ public class UserData{
                 +"<div>"+getPhoneAreaCode()+getPhone()+"</div>"+"<div>"+getMobileAreaCode()+getMobile()+"</div>"+"<div>"+getEmail()+"</div>";
     }
 
-//	public User generateUser() {
-//		// get userdata of registered user
-//		UserData userData = getRegisteredUser().getUserData().cloneUserData();
-//		// generate and change unique fields
-//		userData.setUsername(RandomUtils.generateString("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 9));
-//		//
-//		User newUser = new User();
-//		newUser.setUserData(userData);
-//
-//		return newUser;
-//	}
 }
