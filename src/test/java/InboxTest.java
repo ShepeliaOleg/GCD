@@ -7,7 +7,7 @@ import pageObjects.inbox.*;
 import springConstructors.MailQ;
 import springConstructors.UserData;
 import springConstructors.mail.MailService;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;

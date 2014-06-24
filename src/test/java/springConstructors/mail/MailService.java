@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.external.mail.MailServicePage;
 import pageObjects.external.mail.MailinatorPage;
 import pageObjects.external.mail.SpamavertPage;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;

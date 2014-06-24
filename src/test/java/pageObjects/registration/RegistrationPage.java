@@ -6,7 +6,7 @@ import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import pageObjects.popups.ReadTermsAndConditionsPopup;
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.ValidationUtils;
 import utils.WebDriverUtils;

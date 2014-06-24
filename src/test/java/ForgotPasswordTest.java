@@ -19,7 +19,7 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.mail.MailService;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;

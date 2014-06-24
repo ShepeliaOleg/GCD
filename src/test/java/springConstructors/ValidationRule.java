@@ -1,11 +1,6 @@
-package springConstructors.validation;
+package springConstructors;
 
 import utils.RandomUtils;
-
-/**
- * User: ivan
- * Date: 1/8/13
- */
 
 public class ValidationRule {
     private String regexp;
@@ -36,26 +31,6 @@ public class ValidationRule {
         this.maxLength = maxLength;
     }
 
-//    public ValidationRule cloneValidationRule() {
-//        ValidationRule clonedValidationRule = new ValidationRule();
-//
-//        clonedValidationRule.regexp = regexp;
-//        clonedValidationRule.minLength = minLength;
-//        clonedValidationRule.maxLength = maxLength;
-//
-//        return clonedValidationRule;
-//    }
-//
-//    public String getAllAllowedSymbols() {
-//        String allAllowedSymbols = "";
-//
-//        for (ValidationSymbols symbols : validationSymbols) {
-//            allAllowedSymbols = allAllowedSymbols.concat(symbols.getSymbols());
-//        }
-//
-//        return allAllowedSymbols;
-//    }
-//
     public String getAllNotAllowedSymbols() {
         return RandomUtils.getAllExcept(getAllAllowedSymbols());
     }
@@ -65,16 +40,6 @@ public class ValidationRule {
     }
 
     public String generateValidString(int length) {
-//        int lastLetterIndex = regexp.lastIndexOf("z");
-//        int lastDigitIndex = regexp.lastIndexOf("0123456789");
-//        int lastIndex = 0;
-//        if (lastDigitIndex > lastLetterIndex) {
-//            lastIndex = lastDigitIndex;
-//        }
-//        else lastIndex = lastLetterIndex;
-//
-//        int startQuantifierIndex = regexp.indexOf("{", lastIndex) + 1;
-//        int endQuantifierIndex = regexp.indexOf("}", lastIndex);
 
         String regexpTemp = extendRegExpToMax (regexp);
         int startQuantifierIndex = regexpTemp.lastIndexOf("{") + 1;

@@ -1,7 +1,7 @@
 package pageObjects.forgotPassword;
 
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import utils.ValidationUtils;
 import utils.WebDriverUtils;
 

@@ -14,7 +14,7 @@ import pageObjects.bonus.*;
 import pageObjects.popups.WelcomePopup;
 import springConstructors.IMS;
 import springConstructors.UserData;
-import springConstructors.validation.ValidationRule;
+import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
