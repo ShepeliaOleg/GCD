@@ -18,11 +18,6 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
-
 public class AbstractPage extends AbstractPageObject{
 
 	private String mainWindowHandle;

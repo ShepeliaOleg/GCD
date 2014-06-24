@@ -83,6 +83,7 @@ public class NavigationUtils extends WebDriverObject{
     private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         AbstractPage abstractPage;
         String suffix="";
+        LogUtils.setTimestamp();
         if(configuredPages!=null){
             suffix = configuredPages.toString();
         }
@@ -108,7 +109,6 @@ public class NavigationUtils extends WebDriverObject{
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
         }
-        LogUtils.setTimestamp();
     }
 
 	//Popups

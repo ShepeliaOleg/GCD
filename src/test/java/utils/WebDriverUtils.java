@@ -15,11 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
-
 public class WebDriverUtils extends WebDriverObject{
 
 	private static final int TIMEOUT = 10;

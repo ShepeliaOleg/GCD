@@ -5,13 +5,8 @@ import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
 public class Header extends AbstractPageObject{
-	private static final String ROOT_XP=	"//*[@id='header']";
+	private static final String ROOT_XP=	"//*[@class='main-header']";
 	public static final String LOGGED_IN_XP="//*[@id='welcome']";
 
 	public Header(){

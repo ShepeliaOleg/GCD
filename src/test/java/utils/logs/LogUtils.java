@@ -8,15 +8,12 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * User: sergiich
- * Date: 4/11/14
- */
 public class LogUtils extends WebDriverObject{
 	public static final String TIMESTAMP_REGEXP = "(([0-5][0-9]|[0-9])(:[0-5][0-9]){2},[0-9]{3} (INFO|WARN|PM|ums|WARN|ERROR))";
 
-	public static String getLatestTimestamp(){
+	public static void setTimestamp(){
 		String result = "noLogs";
+        timestamp = result;
 		try{
 			WebDriverUtils.navigateToInternalURL(logDriver, baseUrl, "html/logs.txt");
 			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
@@ -28,7 +25,7 @@ public class LogUtils extends WebDriverObject{
 		}catch(Exception e){
 			System.out.println(e);
 		}
-		return result;
+		timestamp = result;
 	}
 
 	public static Log getCurrentLogs(){
@@ -78,7 +75,4 @@ public class LogUtils extends WebDriverObject{
 		return log;
 	}
 
-	public static void setTimestamp(){
-		timestamp = getLatestTimestamp();
-	}
 }

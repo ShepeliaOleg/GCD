@@ -10,10 +10,6 @@ import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
 public class HomePageTest extends AbstractTest{
 
 	@Autowired
