@@ -8,7 +8,7 @@
         <property name="title" value="Mr"/>
         <property name="firstName" value="Player"/>
         <property name="lastName" value="Automation"/>
-        <property name="birthDay" value="01"/>
+        <property name="birthDay" value="1"/>
         <property name="birthMonth" value="January"/>
         <property name="birthYear" value="1985"/>
         <property name="email" value="test@playtech.com"/>

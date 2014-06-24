@@ -31,11 +31,11 @@ public class WebDriverFactory extends WebDriverObject{
 	}
 
 	public void initializeWebDrivers(){
-		try{
-			logDriver = initializeWebDriver(browser, os);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+//		try{
+//			logDriver = initializeWebDriver(browser, os);
+//		}catch(Exception e){
+//			e.printStackTrace();
+//		}
 		webDriver = initializeWebDriver(browser, os);
 	}
 
@@ -60,11 +60,11 @@ public class WebDriverFactory extends WebDriverObject{
         }catch (Exception e){
             e.printStackTrace();
         }
-        try{
-            logDriver.quit();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//            logDriver.quit();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
 	}
 
 	public void switchToAdditionalWebDriver(){

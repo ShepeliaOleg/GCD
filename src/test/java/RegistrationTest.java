@@ -314,15 +314,9 @@ public class RegistrationTest extends AbstractTest{
 		for (String country:countryList) {
 			registrationPage.fillCountry(country);
 			String phoneAreaCode = registrationPage.getPhoneAreaCode();
-			String mobileAreaCode = registrationPage.getMobileAreaCode();
 			String expectedAreaCode = defaults.getPhoneCodeByCountryName(country);
-			if (!phoneAreaCode.equals(mobileAreaCode)) {
-				throw new RuntimeException("Phone area code (" + phoneAreaCode + ") and mobile area code (" + mobileAreaCode + ") are not equal on selecting " + country + " country.");
-			}
-			else {
-				if (!phoneAreaCode.equals("+" + expectedAreaCode)) {
-					throw new RuntimeException("Phone area code (" + phoneAreaCode + ") and mobile area code (" + mobileAreaCode +") are not equal to expected area code (" + expectedAreaCode + ") on selecting " + country + " country.");
-				}
+			if (!phoneAreaCode.equals("+" + expectedAreaCode)) {
+				throw new RuntimeException("Phone area code (" + phoneAreaCode + ") is not equal to expected area code (" + expectedAreaCode + ") on selecting " + country + " country.");
 			}
 		}
 	}
@@ -547,18 +541,6 @@ public class RegistrationTest extends AbstractTest{
 	}
 
 	@Test(groups = {"validation"})
-	public void address2FieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateAddress2(addressValidationRule);
-	}
-
-	@Test(groups = {"validation"})
-	public void houseFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateHouse(houseValidationRule);
-	}
-
-	@Test(groups = {"validation"})
 	public void postcodeFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule);
@@ -577,18 +559,6 @@ public class RegistrationTest extends AbstractTest{
 	}
 
 	@Test(groups = {"validation"})
-	public void mobileFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateMobile(phoneValidationRule);
-	}
-
-	@Test(groups = {"validation"})
-	public void mobileCountryCodeFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateMobileCountryCode(countryPhoneCodeValidationRule);
-	}
-
-	@Test(groups = {"validation"})
 	public void usernameFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateUsername(usernameValidationRule);
@@ -604,12 +574,6 @@ public class RegistrationTest extends AbstractTest{
 	public void verificationPasswordFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateVerificationPassword(passwordValidationRule);
-	}
-
-	@Test(groups = {"validation"})
-	public void answerFieldValidation() {
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateAnswer(answerValidationRule);
 	}
 
 	@Test(groups = {"validation"})

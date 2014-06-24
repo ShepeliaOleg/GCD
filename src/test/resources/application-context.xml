@@ -10,7 +10,7 @@
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
-        <property name="defaultBaseUrl" value="http://mob-7regal-adminpor.wpl.ptec:8080/"/>
+        <property name="defaultBaseUrl" value="http://eagle:flight@mob-demo3.playtechgaming.com/"/>
         <property name="defaultBrowser" value="firefox"/>
         <property name="defaultOs" value="linux"/>
     </bean>
@@ -19,248 +19,248 @@
         <property name="countryFullList">
             <list>
                 <!--AF,AX,AL,DZ,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CI,CO,KM,CG,CD,CK,CR,HR,CU,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GT,GN,GW,GY,HT,HM,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IT,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,MD,MC,MN,ME,MS,MA,MZ,MM,NA,NR,NP,NL,NC,NZ,NI,NE,NG,NU,NF,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,RS,CS,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,UY,UZ,VU,VA,VE,VN,VG,WF,EH,YE,ZM,ZW-->
-                <value>Afghanistan@93</value>
+                <!--<value>Afghanistan@93</value>-->
                 <value>Aland Islands@358</value>
                 <value>Albania@355</value>
-                <value>Algeria@213</value>
-                <!--<value>American Samoa@1684</value> AS banned on IMS-->
-                <value>Andorra@376</value>
-                <value>Angola@244</value>
-                <value>Anguilla@1264</value>
-                <value>Antarctica@672</value>
-                <value>Antigua and Barbuda@1268</value>
-                <value>Argentina@54</value>
-                <value>Armenia@374</value>
-                <value>Aruba@297</value>
-                <value>Australia@61</value>
-                <value>Austria@43</value>
-                <value>Azerbaijan@994</value>
-                <value>Bahamas@1242</value>
-                <value>Bahrain@973</value>
-                <value>Bangladesh@880</value>
-                <value>Barbados@1246</value>
-                <value>Belarus@375</value>
-                <value>Belgium@32</value>
-                <value>Belize@501</value>
-                <value>Benin@229</value>
-                <value>Bermuda@1441</value>
-                <value>Bhutan@975</value>
-                <value>Bolivia@591</value>
-                <value>Bosnia and Herzegovina@387</value>
-                <value>Botswana@267</value>
-                <value>Bouvet Island@47</value>
-                <value>Brazil@55</value>
-                <value>British Indian Ocean Territory@246</value>
-                <value>Brunei@673</value>
-                <value>Bulgaria@359</value>
-                <value>Burkina Faso@226</value>
-                <value>Burundi@257</value>
-                <value>Cambodia@855</value>
-                <value>Cameroon@237</value>
-                <value>Canada@1</value>
-                <value>Cape Verde@238</value>
-                <value>Cayman Islands@1345</value>
-                <value>Central African Republic@236</value>
-                <value>Chad@235</value>
-                <value>Chile@56</value>
-                <value>China@86</value>
-                <value>Christmas Island@61</value>
-                <value>Cocos Islands@61</value>
-                <value>Colombia@57</value>
-                <value>Comoros@269</value>
-                <value>Cook Islands@682</value>
-                <value>Costa Rica@506</value>
-                <value>Cote d Ivoire@225</value>
-                <value>Croatia@385</value>
-                <value>Cuba@53</value>
-                <!--<value>Cyprus@357</value> CY banned on IMS-->
-                <value>Czech Republic@420</value>
-                <value>North Korea@850</value>
-                <value>Denmark@45</value>
-                <value>Djibouti@253</value>
-                <value>Dominica@1767</value>
-                <value>Dominican Republic@1809</value>
-                <value>Ecuador@593</value>
-                <value>Egypt@20</value>
-                <value>El Salvador@503</value>
-                <value>Equatorial Guinea@240</value>
-                <value>Eritrea@291</value>
-                <!--<value>Estonia@372</value> EE banned on IMS-->
-                <value>Ethiopia@251</value>
-                <value>Falkland Islands@500</value>
-                <value>Faroe Islands@298</value>
-                <!--<value>Federated States of Micronesia@691</value> FM banned on IMS -->
-                <value>Fiji@679</value>
-                <value>Finland@358</value>
-                <value>France@33</value>
-                <value>French Guiana@594</value>
-                <value>French Polynesia@689</value>
-                <value>French Southern Territories@262</value>
-                <value>Gabon@241</value>
-                <value>Gambia@220</value>
-                <value>Georgia@995</value>
-                <value>Germany@49</value>
-                <value>Ghana@233</value>
-                <value>Gibraltar@350</value>
-                <value>Greece@30</value>
-                <value>Greenland@299</value>
-                <value>Grenada@1473</value>
-                <value>Guadeloupe@590</value>
-                <!--<value>Guam@1671</value> GU banned on IMS-->
-                <value>Guatemala@502</value>
-                <value>Guinea@224</value>
-                <value>Guinea-Bissau@245</value>
-                <value>Guyana@592</value>
-                <value>Haiti@509</value>
-                <value>Heard Island and McDonald Islands@672</value>
-                <value>Honduras@504</value>
-                <value>Hong Kong@852</value>
-                <value>Hungary@36</value>
-                <value>Iceland@354</value>
-                <value>India@91</value>
-                <value>Indonesia@62</value>
-                <value>Iraq@964</value>
-                <value>Islamic Republic of Iran@98</value>
-                <!--<value>Israel@972</value> IL banned on IMS-->
-                <value>Italy@39</value>
-                <value>Jamaica@1876</value>
-                <value>Japan@81</value>
-                <value>Jordan@962</value>
-                <value>Kazakhstan@7</value>
-                <value>Kenya@254</value>
-                <value>Kiribati@686</value>
-                <value>Kuwait@965</value>
-                <value>Kyrgyzstan@996</value>
-                <value>Laos@856</value>
-                <value>Latvia@371</value>
-                <value>Lebanon@961</value>
-                <value>Lesotho@266</value>
-                <value>Liberia@231</value>
-                <value>Libyan Arab Jamahiriya@218</value>
-                <value>Liechtenstein@423</value>
-                <value>Lithuania@370</value>
-                <value>Luxembourg@352</value>
-                <value>Macao@853</value>
-                <value>Macedonia@389</value>
-                <value>Madagascar@261</value>
-                <value>Malawi@265</value>
-                <value>Malaysia@60</value>
-                <value>Maldives@960</value>
-                <value>Mali@223</value>
-                <value>Malta@356</value>
-                <value>Marshall Islands@692</value>
-                <value>Martinique@596</value>
-                <value>Mauritania@222</value>
-                <value>Mauritius@230</value>
-                <value>Mayotte@269</value>
-                <value>Mexico@52</value>
-                <value>Monaco@377</value>
-                <value>Mongolia@976</value>
-                <value>Montenegro@382</value>
-                <value>Montserrat@1664</value>
-                <value>Morocco@212</value>
-                <value>Mozambique@258</value>
-                <value>Myanmar@95</value>
-                <value>Namibia@264</value>
-                <value>Nauru@674</value>
-                <value>Nepal@977</value>
-                <value>Netherlands@31</value>
-                <!--<value>Netherlands Antilles@599</value> AN banned on IMS-->
-                <value>New Caledonia@687</value>
-                <value>New Zealand@64</value>
-                <value>Nicaragua@505</value>
-                <value>Niger@227</value>
-                <value>Nigeria@234</value>
-                <value>Niue@683</value>
-                <value>Norfolk Island@672</value>
-                <!--<value>Northern Mariana Islands@1670</value> MP banned on IMS-->
-                <value>Norway@47</value>
-                <value>Oman@968</value>
-                <value>Pakistan@92</value>
-                <value>Palau@680</value>
-                <value>Palestinian Territory, Occupied@970</value>
-                <value>Panama@507</value>
-                <value>Papua New Guinea@675</value>
-                <value>Paraguay@595</value>
-                <value>Peru@51</value>
-                <value>Philippines@63</value>
-                <value>Pitcairn@64</value>
-                <value>Poland@48</value>
-                <value>Portugal@351</value>
-                <!--<value>Puerto Rico@1</value> PR banned on IMS-->
-                <value>Qatar@974</value>
-                <value>Republic of Ireland@353</value>
-                <value>Republic of Korea@82</value>
-                <value>Republic of Moldova@373</value>
-                <value>Serbia@381</value>
-                <value>Congo@242</value>
-                <value>Reunion@262</value>
-                <value>Romania@40</value>
-                <value>Russia@7</value>
-                <value>Rwanda@250</value>
-                <value>St. Helena@290</value>
-                <value>Saint Kitts and Nevis@1869</value>
-                <value>Saint Lucia@1758</value>
-                <value>Saint Pierre and Miquelon@508</value>
-                <value>Saint Vincent and the Grenadines@1784</value>
-                <value>Samoa@685</value>
-                <value>San Marino@378</value>
-                <value>Sao Tome and Principe@239</value>
-                <value>Saudi Arabia@966</value>
-                <value>Senegal@221</value>
-                <value>Serbia and Montenegro@381</value>
-                <value>Seychelles@248</value>
-                <value>Sierra Leone@232</value>
-                <value>Singapore@65</value>
-                <value>Slovak Republic@421</value>
-                <value>Slovenia@386</value>
-                <value>Solomon Islands@677</value>
-                <value>Somalia@252</value>
-                <value>South Africa@27</value>
-                <value>South Georgia and the South Sandwich Islands@500</value>
-                <value>Spain@34</value>
-                <value>Sri Lanka@94</value>
-                <value>Sudan@249</value>
-                <value>Suriname@597</value>
-                <value>Svalbard and Jan Mayen@47</value>
-                <value>Swaziland@268</value>
-                <value>Sweden@46</value>
-                <value>Switzerland@41</value>
-                <value>Syrian Arab Republic@963</value>
-                <value>Taiwan@886</value>
-                <value>Tajikistan@992</value>
-                <value>Thailand@66</value>
-                <value>The Democratic Republic Of The Congo@243</value>
-                <value>Timor-Leste@670</value>
-                <value>Togo@228</value>
-                <value>Tokelau@690</value>
-                <value>Tonga@676</value>
-                <value>Trinidad and Tobago@1868</value>
-                <value>Tunisia@216</value>
-                <value>Turkey@90</value>
-                <value>Turkmenistan@993</value>
-                <value>Turks and Caicos Islands@1649</value>
-                <value>Tuvalu@688</value>
-                <value>Uganda@256</value>
-                <value>Ukraine@380</value>
-                <value>United Arab Emirates@971</value>
-                <value>United Kingdom@44</value>
-                <value>Tanzania@255</value>
-                <!--<value>United States@1</value> US not supported-->
-                <!--<value>United States Minor Outlying Islands@699</value> UM banned on IMS-->
-                <value>Uruguay@598</value>
-                <value>Uzbekistan@998</value>
-                <value>Vanuatu@678</value>
-                <value>Vatican City State@379</value>
-                <value>Venezuela@58</value>
-                <value>Vietnam@84</value>
-                <value>Virgin Islands, British@1284</value>
-                <!--<value>Virgin Islands, U.S@1340</value> VI banned on IMS-->
-                <value>Wallis and Futuna@681</value>
-                <value>Western Sahara@212</value>
-                <value>Yemen@967</value>
-                <value>Zambia@260</value>
-                <value>Zimbabwe@263</value>
+                <!--<value>Algeria@213</value>-->
+                <!--&lt;!&ndash;<value>American Samoa@1684</value> AS banned on IMS&ndash;&gt;-->
+                <!--<value>Andorra@376</value>-->
+                <!--<value>Angola@244</value>-->
+                <!--<value>Anguilla@1264</value>-->
+                <!--<value>Antarctica@672</value>-->
+                <!--<value>Antigua and Barbuda@1268</value>-->
+                <!--<value>Argentina@54</value>-->
+                <!--<value>Armenia@374</value>-->
+                <!--<value>Aruba@297</value>-->
+                <!--<value>Australia@61</value>-->
+                <!--<value>Austria@43</value>-->
+                <!--<value>Azerbaijan@994</value>-->
+                <!--<value>Bahamas@1242</value>-->
+                <!--<value>Bahrain@973</value>-->
+                <!--<value>Bangladesh@880</value>-->
+                <!--<value>Barbados@1246</value>-->
+                <!--<value>Belarus@375</value>-->
+                <!--<value>Belgium@32</value>-->
+                <!--<value>Belize@501</value>-->
+                <!--<value>Benin@229</value>-->
+                <!--<value>Bermuda@1441</value>-->
+                <!--<value>Bhutan@975</value>-->
+                <!--<value>Bolivia@591</value>-->
+                <!--<value>Bosnia and Herzegovina@387</value>-->
+                <!--<value>Botswana@267</value>-->
+                <!--<value>Bouvet Island@47</value>-->
+                <!--<value>Brazil@55</value>-->
+                <!--<value>British Indian Ocean Territory@246</value>-->
+                <!--<value>Brunei@673</value>-->
+                <!--<value>Bulgaria@359</value>-->
+                <!--<value>Burkina Faso@226</value>-->
+                <!--<value>Burundi@257</value>-->
+                <!--<value>Cambodia@855</value>-->
+                <!--<value>Cameroon@237</value>-->
+                <!--<value>Canada@1</value>-->
+                <!--<value>Cape Verde@238</value>-->
+                <!--<value>Cayman Islands@1345</value>-->
+                <!--<value>Central African Republic@236</value>-->
+                <!--<value>Chad@235</value>-->
+                <!--<value>Chile@56</value>-->
+                <!--<value>China@86</value>-->
+                <!--<value>Christmas Island@61</value>-->
+                <!--<value>Cocos Islands@61</value>-->
+                <!--<value>Colombia@57</value>-->
+                <!--<value>Comoros@269</value>-->
+                <!--<value>Cook Islands@682</value>-->
+                <!--<value>Costa Rica@506</value>-->
+                <!--<value>Cote d Ivoire@225</value>-->
+                <!--<value>Croatia@385</value>-->
+                <!--<value>Cuba@53</value>-->
+                <!--&lt;!&ndash;<value>Cyprus@357</value> CY banned on IMS&ndash;&gt;-->
+                <!--<value>Czech Republic@420</value>-->
+                <!--<value>North Korea@850</value>-->
+                <!--<value>Denmark@45</value>-->
+                <!--<value>Djibouti@253</value>-->
+                <!--<value>Dominica@1767</value>-->
+                <!--<value>Dominican Republic@1809</value>-->
+                <!--<value>Ecuador@593</value>-->
+                <!--<value>Egypt@20</value>-->
+                <!--<value>El Salvador@503</value>-->
+                <!--<value>Equatorial Guinea@240</value>-->
+                <!--<value>Eritrea@291</value>-->
+                <!--&lt;!&ndash;<value>Estonia@372</value> EE banned on IMS&ndash;&gt;-->
+                <!--<value>Ethiopia@251</value>-->
+                <!--<value>Falkland Islands@500</value>-->
+                <!--<value>Faroe Islands@298</value>-->
+                <!--&lt;!&ndash;<value>Federated States of Micronesia@691</value> FM banned on IMS &ndash;&gt;-->
+                <!--<value>Fiji@679</value>-->
+                <!--<value>Finland@358</value>-->
+                <!--<value>France@33</value>-->
+                <!--<value>French Guiana@594</value>-->
+                <!--<value>French Polynesia@689</value>-->
+                <!--<value>French Southern Territories@262</value>-->
+                <!--<value>Gabon@241</value>-->
+                <!--<value>Gambia@220</value>-->
+                <!--<value>Georgia@995</value>-->
+                <!--<value>Germany@49</value>-->
+                <!--<value>Ghana@233</value>-->
+                <!--<value>Gibraltar@350</value>-->
+                <!--<value>Greece@30</value>-->
+                <!--<value>Greenland@299</value>-->
+                <!--<value>Grenada@1473</value>-->
+                <!--<value>Guadeloupe@590</value>-->
+                <!--&lt;!&ndash;<value>Guam@1671</value> GU banned on IMS&ndash;&gt;-->
+                <!--<value>Guatemala@502</value>-->
+                <!--<value>Guinea@224</value>-->
+                <!--<value>Guinea-Bissau@245</value>-->
+                <!--<value>Guyana@592</value>-->
+                <!--<value>Haiti@509</value>-->
+                <!--<value>Heard Island and McDonald Islands@672</value>-->
+                <!--<value>Honduras@504</value>-->
+                <!--<value>Hong Kong@852</value>-->
+                <!--<value>Hungary@36</value>-->
+                <!--<value>Iceland@354</value>-->
+                <!--<value>India@91</value>-->
+                <!--<value>Indonesia@62</value>-->
+                <!--<value>Iraq@964</value>-->
+                <!--<value>Islamic Republic of Iran@98</value>-->
+                <!--&lt;!&ndash;<value>Israel@972</value> IL banned on IMS&ndash;&gt;-->
+                <!--<value>Italy@39</value>-->
+                <!--<value>Jamaica@1876</value>-->
+                <!--<value>Japan@81</value>-->
+                <!--<value>Jordan@962</value>-->
+                <!--<value>Kazakhstan@7</value>-->
+                <!--<value>Kenya@254</value>-->
+                <!--<value>Kiribati@686</value>-->
+                <!--<value>Kuwait@965</value>-->
+                <!--<value>Kyrgyzstan@996</value>-->
+                <!--<value>Laos@856</value>-->
+                <!--<value>Latvia@371</value>-->
+                <!--<value>Lebanon@961</value>-->
+                <!--<value>Lesotho@266</value>-->
+                <!--<value>Liberia@231</value>-->
+                <!--<value>Libyan Arab Jamahiriya@218</value>-->
+                <!--<value>Liechtenstein@423</value>-->
+                <!--<value>Lithuania@370</value>-->
+                <!--<value>Luxembourg@352</value>-->
+                <!--<value>Macao@853</value>-->
+                <!--<value>Macedonia@389</value>-->
+                <!--<value>Madagascar@261</value>-->
+                <!--<value>Malawi@265</value>-->
+                <!--<value>Malaysia@60</value>-->
+                <!--<value>Maldives@960</value>-->
+                <!--<value>Mali@223</value>-->
+                <!--<value>Malta@356</value>-->
+                <!--<value>Marshall Islands@692</value>-->
+                <!--<value>Martinique@596</value>-->
+                <!--<value>Mauritania@222</value>-->
+                <!--<value>Mauritius@230</value>-->
+                <!--<value>Mayotte@269</value>-->
+                <!--<value>Mexico@52</value>-->
+                <!--<value>Monaco@377</value>-->
+                <!--<value>Mongolia@976</value>-->
+                <!--<value>Montenegro@382</value>-->
+                <!--<value>Montserrat@1664</value>-->
+                <!--<value>Morocco@212</value>-->
+                <!--<value>Mozambique@258</value>-->
+                <!--<value>Myanmar@95</value>-->
+                <!--<value>Namibia@264</value>-->
+                <!--<value>Nauru@674</value>-->
+                <!--<value>Nepal@977</value>-->
+                <!--<value>Netherlands@31</value>-->
+                <!--&lt;!&ndash;<value>Netherlands Antilles@599</value> AN banned on IMS&ndash;&gt;-->
+                <!--<value>New Caledonia@687</value>-->
+                <!--<value>New Zealand@64</value>-->
+                <!--<value>Nicaragua@505</value>-->
+                <!--<value>Niger@227</value>-->
+                <!--<value>Nigeria@234</value>-->
+                <!--<value>Niue@683</value>-->
+                <!--<value>Norfolk Island@672</value>-->
+                <!--&lt;!&ndash;<value>Northern Mariana Islands@1670</value> MP banned on IMS&ndash;&gt;-->
+                <!--<value>Norway@47</value>-->
+                <!--<value>Oman@968</value>-->
+                <!--<value>Pakistan@92</value>-->
+                <!--<value>Palau@680</value>-->
+                <!--<value>Palestinian Territory, Occupied@970</value>-->
+                <!--<value>Panama@507</value>-->
+                <!--<value>Papua New Guinea@675</value>-->
+                <!--<value>Paraguay@595</value>-->
+                <!--<value>Peru@51</value>-->
+                <!--<value>Philippines@63</value>-->
+                <!--<value>Pitcairn@64</value>-->
+                <!--<value>Poland@48</value>-->
+                <!--<value>Portugal@351</value>-->
+                <!--&lt;!&ndash;<value>Puerto Rico@1</value> PR banned on IMS&ndash;&gt;-->
+                <!--<value>Qatar@974</value>-->
+                <!--<value>Republic of Ireland@353</value>-->
+                <!--<value>Republic of Korea@82</value>-->
+                <!--<value>Republic of Moldova@373</value>-->
+                <!--<value>Serbia@381</value>-->
+                <!--<value>Congo@242</value>-->
+                <!--<value>Reunion@262</value>-->
+                <!--<value>Romania@40</value>-->
+                <!--<value>Russia@7</value>-->
+                <!--<value>Rwanda@250</value>-->
+                <!--<value>St. Helena@290</value>-->
+                <!--<value>Saint Kitts and Nevis@1869</value>-->
+                <!--<value>Saint Lucia@1758</value>-->
+                <!--<value>Saint Pierre and Miquelon@508</value>-->
+                <!--<value>Saint Vincent and the Grenadines@1784</value>-->
+                <!--<value>Samoa@685</value>-->
+                <!--<value>San Marino@378</value>-->
+                <!--<value>Sao Tome and Principe@239</value>-->
+                <!--<value>Saudi Arabia@966</value>-->
+                <!--<value>Senegal@221</value>-->
+                <!--<value>Serbia and Montenegro@381</value>-->
+                <!--<value>Seychelles@248</value>-->
+                <!--<value>Sierra Leone@232</value>-->
+                <!--<value>Singapore@65</value>-->
+                <!--<value>Slovak Republic@421</value>-->
+                <!--<value>Slovenia@386</value>-->
+                <!--<value>Solomon Islands@677</value>-->
+                <!--<value>Somalia@252</value>-->
+                <!--<value>South Africa@27</value>-->
+                <!--<value>South Georgia and the South Sandwich Islands@500</value>-->
+                <!--<value>Spain@34</value>-->
+                <!--<value>Sri Lanka@94</value>-->
+                <!--<value>Sudan@249</value>-->
+                <!--<value>Suriname@597</value>-->
+                <!--<value>Svalbard and Jan Mayen@47</value>-->
+                <!--<value>Swaziland@268</value>-->
+                <!--<value>Sweden@46</value>-->
+                <!--<value>Switzerland@41</value>-->
+                <!--<value>Syrian Arab Republic@963</value>-->
+                <!--<value>Taiwan@886</value>-->
+                <!--<value>Tajikistan@992</value>-->
+                <!--<value>Thailand@66</value>-->
+                <!--<value>The Democratic Republic Of The Congo@243</value>-->
+                <!--<value>Timor-Leste@670</value>-->
+                <!--<value>Togo@228</value>-->
+                <!--<value>Tokelau@690</value>-->
+                <!--<value>Tonga@676</value>-->
+                <!--<value>Trinidad and Tobago@1868</value>-->
+                <!--<value>Tunisia@216</value>-->
+                <!--<value>Turkey@90</value>-->
+                <!--<value>Turkmenistan@993</value>-->
+                <!--<value>Turks and Caicos Islands@1649</value>-->
+                <!--<value>Tuvalu@688</value>-->
+                <!--<value>Uganda@256</value>-->
+                <!--<value>Ukraine@380</value>-->
+                <!--<value>United Arab Emirates@971</value>-->
+                <!--<value>United Kingdom@44</value>-->
+                <!--<value>Tanzania@255</value>-->
+                <!--&lt;!&ndash;<value>United States@1</value> US not supported&ndash;&gt;-->
+                <!--&lt;!&ndash;<value>United States Minor Outlying Islands@699</value> UM banned on IMS&ndash;&gt;-->
+                <!--<value>Uruguay@598</value>-->
+                <!--<value>Uzbekistan@998</value>-->
+                <!--<value>Vanuatu@678</value>-->
+                <!--<value>Vatican City State@379</value>-->
+                <!--<value>Venezuela@58</value>-->
+                <!--<value>Vietnam@84</value>-->
+                <!--<value>Virgin Islands, British@1284</value>-->
+                <!--&lt;!&ndash;<value>Virgin Islands, U.S@1340</value> VI banned on IMS&ndash;&gt;-->
+                <!--<value>Wallis and Futuna@681</value>-->
+                <!--<value>Western Sahara@212</value>-->
+                <!--<value>Yemen@967</value>-->
+                <!--<value>Zambia@260</value>-->
+                <!--<value>Zimbabwe@263</value>-->
             </list>
         </property>
         <property name="currencyList">
