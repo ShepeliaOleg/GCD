@@ -18,13 +18,13 @@ import utils.WebDriverUtils;
 
 public class LoggedOutHeader extends Header{
 
-	private static final String ROOT_XP = 				"//*[@id='login']";
-	private static final String FIELD_USERNAME_XP= 	"//*[@name='username']";
-	private static final String FIELD_PASSWORD_XP= 	"//*[@name='password']";
+	private static final String ROOT_XP = 				"//*[@class='login-replacer']";
+	private static final String FIELD_USERNAME_XP= 		"//*[@id='name']";
+	private static final String FIELD_PASSWORD_XP= 		ROOT_XP+"//*[@id='password']";
 	private static final String BUTTON_SUBMIT_XP = 		"//button[(@type='submit')]";
-	private static final String LINK_REGISTER_XP=		"//a[contains(@title,'Register')]";
-	private static final String LINK_FORGOT_PASSWORD_XP="//*[@id='forgot-password-link']";
-	private static final String CHECKBOX_REMEMBER_ME=	"//*[@id='fake-remember-me']";
+	private static final String LINK_REGISTER_XP=		"//a[contains(@class,'btn-register')]";
+	private static final String LINK_FORGOT_PASSWORD_XP="//*[contains(@class, 'forgot-password')]";
+	private static final String CHECKBOX_REMEMBER_ME=	"//*[@id='rememberme']";
 
 	public LoggedOutHeader(){
 		super(new String[]{ROOT_XP});
@@ -83,10 +83,8 @@ public class LoggedOutHeader extends Header{
 
 	public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page expectedPage) throws RuntimeException{
 		setRememberMeCheckBoxState(rememberMeEnable);
-		String username=userData.getUsername();
-		String password=userData.getPassword();
-		fillUsername(username);
-		fillPassword(password);
+		fillUsername(userData.getUsername());
+		fillPassword(userData.getPassword());
 		clickSubmit();
 		return NavigationUtils.closeAllPopups(expectedPage);
 	}

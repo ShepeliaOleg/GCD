@@ -20,20 +20,20 @@ import java.util.List;
 
 public class GamesPortletPage extends AbstractPage{
 	//General
-	private static final String TAG_GAME_ID=							"value";
+	private static final String TAG_GAME_ID=							"data-key";
 	private static final String TAG_GAME_NAME=							"data-name";
 	private static final String TAG_JACKPOT=							"data-game-jackpot";
-	private static final String TICKER_JACKPOT_XP = 					"//span[@class='game-jackpot']";
-	private static final String GAMES_PORTLET_ROOT_XP=					"//div[@data-portlet = 'gamesinfo']";
-	private static final String GAMES_XP=								"//*[@class='gm-item-wrap']";
-	private static final String BEGINNING_GAMES_XP = 					"//ul[1]";
-	private static final String TOGGLE_XP = 							"//li[contains(@class, 'toggle')]";
-	private static final String CATEGORY_NAME_XP = 						"data-category";
+	private static final String TICKER_JACKPOT_XP= 						"//span[@class='game-jackpot']";
+	private static final String ROOT_XP=								"//*[contains(@id, 'WAR_gamesportlet')]";
+	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
+	private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
+	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
+	private static final String CATEGORY_NAME_XP= 						"data-category";
 	private static final String BUTTON_NEXT_XP= 						"//div[@class='next']/a";
 	private static final String BUTTON_PREVIOUS_XP= 					"//div[@class='prev']/a";
 	private static final String BUTTON_LIST_VIEW_XP=					"//a[@data-view='LIST']";
 	private static final String BUTTON_ITEM_VIEW_XP=					"//a[@data-view='ITEM']";
-	private static final String FIELD_SEARCH_XP = 						"//input[contains(@class, 'field-search')]";
+	private static final String FIELD_SEARCH_XP= 						"//input[contains(@class, 'field-search')]";
 	//Refine By
     private static final String LABEL_REFINE_BY =                       "Refine by";
     private static final String LABEL_RESET_FILTER =                    "RESET FILTER";
@@ -70,7 +70,7 @@ public class GamesPortletPage extends AbstractPage{
 	private static final int RETRIES=50;
 
 	public GamesPortletPage(){
-		super(new String[]{GAMES_PORTLET_ROOT_XP, GAMES_XP});
+		super(new String[]{ROOT_XP, GAMES_XP});
 	}
 
 	// General
@@ -101,7 +101,7 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public String getGameID(int index){
-		return WebDriverUtils.getAttribute(GAMES_XP + "[" + index + "]//input[contains(@name,'Code')]", TAG_GAME_ID);
+		return WebDriverUtils.getAttribute("//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
 	}
 
 	public String getRandomGameID(){
@@ -243,7 +243,7 @@ public class GamesPortletPage extends AbstractPage{
 		ArrayList<String> checkedGames=new ArrayList<String>();
 		int gameCount = WebDriverUtils.getXpathCount(GAMES_XP);
 		for(int i=1; i <= gameCount; i++){
-			String gameId= getGameName(i);
+			String gameId= getGameID(i);
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
 				if(gameElement.isDemoPresent()){

@@ -7,7 +7,7 @@ import utils.WebDriverUtils;
 
 public class Header extends AbstractPageObject{
 	private static final String ROOT_XP=	"//*[@class='main-header']";
-	public static final String LOGGED_IN_XP="//*[@id='welcome']";
+	public static final String LOGGED_IN_XP="//*[contains(@class, 'main-header__balance')]";
 
 	public Header(){
 		super(new String[]{ROOT_XP});

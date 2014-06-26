@@ -10,7 +10,7 @@ import utils.WebDriverUtils;
 public class GameElement extends AbstractPage{
 
 	private static final String TAG_JACKPOT=			"data-game-jackpot";
-	private static final String GAMES_PORTLET_ROOT_XP=	"//div[@data-portlet = 'gamesinfo']";
+	private static final String ROOT_XP=				"//*[contains(@id, 'WAR_gamesportlet')]";
 
 	private String ROOT_GAME;
 	private String buttonPlayReal;
@@ -25,10 +25,10 @@ public class GameElement extends AbstractPage{
 	private String gameID;
 
 	public GameElement(String gameID){
-		super(new String[]{GAMES_PORTLET_ROOT_XP, "//li[@data-name='" + gameID + "']"});
-		ROOT_GAME=				"//li[@data-name='" + gameID + "']";
-		buttonPlayReal=			ROOT_GAME + "//a[contains(@class, 'play')]";
-		buttonPlayDemo=			ROOT_GAME + "//a[contains(@class, 'demo')]";
+		super(new String[]{ROOT_XP, "//div[@data-key='" + gameID + "']"});
+		ROOT_GAME=				"//div[@data-key='" + gameID + "']";
+		buttonPlayReal=			ROOT_GAME + "//*[contains(@class, 'btn_type_play')]";
+		buttonPlayDemo=			ROOT_GAME + "//*[contains(@class, 'btn_type_play-demo')]";
 		buttonFavourites=		ROOT_GAME + "//a[contains(@class, 'games-favorite')]";
 		buttonFavouritesActive=	ROOT_GAME + "//a[contains(@class, 'games-favorite active')]";
 		buttonInfo=				ROOT_GAME + "//a[@class='btn info']";
