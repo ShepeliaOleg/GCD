@@ -9,10 +9,14 @@ import java.util.List;
 public class Defaults{
 	List<String> countryFullList;
 	List<String> currencyList;
-    String defaultCountry;
+    String defaultCountryCode;
 
-    public String getDefaultCountry() {
-        return defaultCountry;
+    public String getDefaultCountryCode() {
+        return defaultCountryCode;
+    }
+
+    public String getDefaultCountryName() {
+        return getCountryName(getFullInfoByCountryCode(defaultCountryCode));
     }
 
 	public List getCountryFullList(){
@@ -31,45 +35,51 @@ public class Defaults{
 		this.currencyList = currencyList;
 	}
 
-    public void setDefaultCountry(String defaultCountry) {
-        this.defaultCountry = defaultCountry;
+    public void setDefaultCountryCode(String countryCode) {
+        this.defaultCountryCode = countryCode;
     }
 
-    public List<String> getCountryList() {
+    public List<String> getCountriesCodesList() {
         List <String> countries = new ArrayList<String>();
          for (String countryFullInfo:countryFullList) {
-             countries.add(getCountryName(countryFullInfo));
+             countries.add(getCountryCode(countryFullInfo));
          }
         return countries;
     }
 
-    private String getFullInfoByCountryName(String countryName) {
+    private String getFullInfoByCountryCode(String countryCode) {
         String countryFullInfo = null;
         for (String countryFull:countryFullList) {
-            if (countryFull.startsWith(countryName)) {
+            if (countryFull.startsWith(countryCode)) {
                 countryFullInfo = countryFull;
                 break;
             }
         }
         if (countryFullInfo == null) {
-			WebDriverUtils.runtimeExceptionWithLogs(countryName + " country could not be found in countries list");
+			WebDriverUtils.runtimeExceptionWithLogs("\"" +countryCode + "\" country code could not be found in countries list");
         }else{
 			return countryFullInfo;
 		}
     	return countryFullInfo;
     }
 
-    public String getPhoneCodeByCountryName(String countryName) {
-        String countryFullInfo = getFullInfoByCountryName(countryName);
+    public String getPhoneCodeByCountryCode(String countryCode) {
+        String countryFullInfo = getFullInfoByCountryCode(countryCode);
 
         return getCountryPhoneCode(countryFullInfo);
     }
 
-    public String getRandomCountryName(){
+    public String getCountryNameByCountryCode(String countryCode) {
+        String countryFullInfo = getFullInfoByCountryCode(countryCode);
+
+        return getCountryName(countryFullInfo);
+    }
+
+    public String getRandomCountryCode(){
         int randomIndex = RandomUtils.generateRandomIntBetween(0, (countryFullList.size() - 1));
         String countryFullInfo = countryFullList.get(randomIndex);
 
-        return getCountryName(countryFullInfo);
+        return getCountryCode(countryFullInfo);
     }
 
     private String getPartOfFullCountry(String input, int partIndex) {
@@ -77,10 +87,15 @@ public class Defaults{
         return splitted[partIndex];
     }
 
-    private String getCountryName(String countryFullInfo) {
+    private String getCountryCode(String countryFullInfo) {
         return getPartOfFullCountry(countryFullInfo, 0);
     }
 
-    private String getCountryPhoneCode(String countryFullInfo) {
+    private String getCountryName(String countryFullInfo) {
         return getPartOfFullCountry(countryFullInfo, 1);
-}   }
+    }
+
+    private String getCountryPhoneCode(String countryFullInfo) {
+        return getPartOfFullCountry(countryFullInfo, 2);
+    }
+}

@@ -10,15 +10,9 @@ import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.ValidationUtils;
 import utils.WebDriverUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-/**
- * User: ivan
- * Date: 7/31/13
- */
 
 public class RegistrationPage extends AbstractPage{
 	
@@ -28,10 +22,10 @@ public class RegistrationPage extends AbstractPage{
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
     private static final String CHECKBOX_TERMS_AND_CONDITION_VALIDATION_ERROR_XP = 	CHECKBOX_TERMS_AND_CONDITION_XP+TOOLTIP_ERROR_XP;
     private static final String LINK_TERMS_AND_CONDITION_XP = 						"//*[contains(@class, 'terms')]/a";
-    public static final String LABEL_MESSAGE_ERROR_XP = 							ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
+    public  static final String LABEL_MESSAGE_ERROR_XP = 							ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
 	private static final String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@id='usernameSuggestionsTmpl']";
     private final static String LABEL_BONUS_CODE_ERROR_XPATH = 						"//*[contains(text(), 'Bonus code is not found or not available')]";
-    public final static String LABEL_ERROR_TIMEOUT_XP =                            	ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
+    public  final static String LABEL_ERROR_TIMEOUT_XP =                            ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
     private final static String BONUS_CODE = 										"TEST";
 	private final static String DROPDOWN_GENDER_XP=									"//*[@id='gender']";
 	private final static String LABEL_GENDER_XP=									"//label[@for='gender']";
@@ -158,8 +152,8 @@ public class RegistrationPage extends AbstractPage{
 		WebDriverUtils.setDropdownOptionByText(DROPDOWN_BIRTHYEAR_XP, birthYear);
 	}
 
-	public void fillCountry(String country){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
+	public void fillCountry(String countryCode){
+		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_COUNTRY_XP, countryCode);
 	}
 
 	private void fillCity(String city){
@@ -300,11 +294,11 @@ public class RegistrationPage extends AbstractPage{
 		}
 	}
 
-	public String getCurrency(){
+	public String getSelectedCurrency(){
 		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_CURRENCY_XP).getText();
 	}
 
-	public String getCountry(){
+	public String getSelectedCountryName(){
 		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_COUNTRY_XP).getText();
 	}
 
@@ -374,12 +368,12 @@ public class RegistrationPage extends AbstractPage{
 		return null;
     }
 
-    public Collection<String> getCountryList() {
-        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_COUNTRY_XP);
+    public Collection<String> getCountriesCodesList() {
+        return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_COUNTRY_XP);
     }
 
-    public Collection<String> getNationalityList() {
-        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_NATIONALITY_XP);
+    public Collection<String> getNationalitiesCodesList() {
+        return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_NATIONALITY_XP);
     }
 
     public Collection<String> getCurrencyList() {

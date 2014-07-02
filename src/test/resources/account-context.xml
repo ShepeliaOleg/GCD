@@ -12,7 +12,7 @@
         <property name="birthMonth" value="January"/>
         <property name="birthYear" value="1985"/>
         <property name="email" value="test@playtech.com"/>
-        <property name="country" value="Spain"/>
+        <property name="country" value="ES"/>
         <property name="city" value="Madrid"/>
         <property name="address" value="Santiago"/>
         <property name="address2" value=""/>

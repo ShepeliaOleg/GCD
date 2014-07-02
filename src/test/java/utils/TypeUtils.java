@@ -3,7 +3,6 @@ package utils;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -47,6 +46,22 @@ public class TypeUtils extends Assert {
 
     public static boolean listAContainsListB(List<String> listA, List<String> listB){
         return listA.containsAll(listB);
+    }
+
+    public static void assertEqualsWithLogs(String actual, String expected){
+        try{
+            assertEquals(actual, expected);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
+    }
+
+    public static void assertEqualsWithLogs(String actual, String expected, java.lang.String message){
+        try{
+            assertEquals(actual, expected, message);
+        }catch (AssertionError e){
+            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+        }
     }
 
     public static void assertEqualsWithLogs(boolean actual, boolean expected){

@@ -388,7 +388,7 @@ public class UserData{
         UserData userData = getRegisteredUserData();
         // generate and change unique fields
         userData.setUsername(usernameValidationRule.generateValidString());
-        userData.setCountry(countryList.getRandomCountryName());
+        userData.setCountry(countryList.getRandomCountryCode());
         userData.setCity(cityValidationRule.generateValidString());
         userData.setPostCode(postcodeValidationRule.generateValidString());
         userData.setAddress(addressValidationRule.generateValidString());

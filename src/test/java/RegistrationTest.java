@@ -4,7 +4,6 @@ import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
@@ -25,16 +24,11 @@ import utils.core.WebDriverObject;
 import utils.logs.Log;
 import utils.logs.LogEntry;
 import utils.logs.LogUtils;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 public class RegistrationTest extends AbstractTest{
 
 	@Autowired
@@ -107,7 +101,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"smoke"})
 	public void validUserRegistration() {
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
-		Assert.assertTrue(new AbstractPage().isLoggedIn());
+        TypeUtils.assertTrueWithLogs(new AbstractPage().isLoggedIn());
 	}
 
 	/*#2. Registration with receive bonuses check box checked*/
@@ -117,7 +111,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		HomePage homePage=(HomePage) registrationPage.registerUser(userData, true);
 		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-		Assert.assertTrue(receiveBonusesCheckedInIMS);
+		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS);
 	}
 
     /*#3. Registration with receive bonuses check box unchecked*/
@@ -127,7 +121,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData, false);
 		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-		Assert.assertTrue(!receiveBonusesNotCheckedInIMS);
+        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS);
 	}
 
     /*#4. Registration with bonus code provided*/
@@ -137,7 +131,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage)registrationPage.registerUser(userData, false, true);
 		boolean bonusesPresent=homePage.getBalance().equals("£10.00") || homePage.getBalance().equals("£ 10.00");
-		Assert.assertTrue(bonusesPresent);
+        TypeUtils.assertTrueWithLogs(bonusesPresent);
 	}
 
     /*#5. Registration without bonus code provided*/
@@ -147,18 +141,19 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage) registrationPage.registerUser(userData, false, false);
 		boolean bonusesNotPresent=homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
-		Assert.assertTrue(bonusesNotPresent);
+        TypeUtils.assertTrueWithLogs(bonusesNotPresent);
 	}
 
     /*#6. Player is registered with currency selected*/
 	@Test(groups = {"regression"})
 	public void validHeaderUnitBalance(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		// String defaultCurrencyInRegistrationForm = registrationPage.getCurrency();
+		String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
 		UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage=(HomePage)registrationPage.registerUser(userData);
 		String currencyInHeader=homePage.getBalance();
-		Assert.assertTrue(currencyInHeader.contains("£"));
+        TypeUtils.assertTrueWithLogs(defaultCurrencyInRegistrationForm.contains("GBP"));
+        TypeUtils.assertTrueWithLogs(currencyInHeader.contains("£"));
 	}
 
     /*#7. After registration web content*/
@@ -176,27 +171,25 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         HomePage homePage=(HomePage)registrationPage.registerUser(userData);
 		String actualUrl=WebDriverUtils.getCurrentUrl();
-		Assert.assertTrue(actualUrl.endsWith("/afterreg"));
+        TypeUtils.assertTrueWithLogs(actualUrl.endsWith("/afterreg"));
 	}
 
     /*#11. The list of supported countries is correct*/
 	@Test(groups = {"regression"})
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> actualCountryList=registrationPage.getCountryList();
-		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountryList, defaults.getCountryList());
-		boolean listsEquals=diff.isEmpty();
-		Assert.assertTrue(listsEquals == true);
+		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList();
+		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountriesCodesList());
+        TypeUtils.assertTrueWithLogs(diff.isEmpty());
 	}
 
     /*#??. The list of supported nationalities is correct*/
     @Test(groups = {"spanish"})
     public void nationalityList(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> actualNationalityList =registrationPage.getNationalityList();
-        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalityList, defaults.getCountryList());
-        boolean listsEquals=diff.isEmpty();
-        Assert.assertTrue(listsEquals == true);
+        Collection<String> actualNationalitiesCodesList = registrationPage.getNationalitiesCodesList();
+        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountriesCodesList());
+        TypeUtils.assertTrueWithLogs(diff.isEmpty());
     }
 
     /*#12. The list of supported currencies is correct*/
@@ -205,8 +198,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCurrencyList=registrationPage.getCurrencyList();
 		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
-		boolean listsEquals=diff.isEmpty();
-		Assert.assertTrue(listsEquals == true);
+        TypeUtils.assertTrueWithLogs(diff.isEmpty());
 	}
 
     /*#13. T&C web content is shown when clicking on T&C link*/
@@ -220,7 +212,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void adultContentIsShown() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Assert.assertTrue(registrationPage.isAdultContentPresent());
+        TypeUtils.assertTrueWithLogs(registrationPage.isAdultContentPresent());
 	}
 
 	/*#15. Logs registration*/
@@ -286,7 +278,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData);
 		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
-		Assert.assertTrue(registrationValuesAreCorrect);
+        TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
 	}
 
     /*#19. All required fields are marked with asterisks*/
@@ -294,7 +286,7 @@ public class RegistrationTest extends AbstractTest{
 	public void requiredFieldsLabelsMarkedWithStar(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.labelsRequiredMarkingCorrect();
-		Assert.assertTrue(checkboxTermsAndConditionsValidationErrorVisible);
+        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
 	}
 
     /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
@@ -303,58 +295,75 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		boolean receiveBonusesChecked=registrationPage.getCheckboxStateReceiveBonuses();
 		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
-		Assert.assertTrue((receiveBonusesChecked == true) && (termsAndConditionsChecked == false));
+        TypeUtils.assertTrueWithLogs((receiveBonusesChecked == true) && (termsAndConditionsChecked == false));
 	}
 
-    /*#22. Country - country phone prefix mapping*/
+    /*#22. Country - countryCode code and phone prefix mapping*/
 	@Test(groups = {"regression", "code"})
-	public void countryPhonePrefix(){
+	public void countryCodePhoneCodeMapping(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> countryList = defaults.getCountryList();
-		for (String country:countryList) {
-			registrationPage.fillCountry(country);
+		Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+		for (String countryCode : countriesCodesList) {
+			registrationPage.fillCountry(countryCode);
 			String phoneAreaCode = registrationPage.getPhoneAreaCode();
-			String expectedAreaCode = defaults.getPhoneCodeByCountryName(country);
-			if (!phoneAreaCode.equals("+" + expectedAreaCode)) {
-				throw new RuntimeException("Phone area code (" + phoneAreaCode + ") is not equal to expected area code (" + expectedAreaCode + ") on selecting " + country + " country.");
-			}
+			String expectedAreaCode = defaults.getPhoneCodeByCountryCode(countryCode);
+
+            TypeUtils.assertEqualsWithLogs(phoneAreaCode, "+" + expectedAreaCode, "Phone area code \"" + phoneAreaCode + "\" is not equal to expected area code \"" + expectedAreaCode + "\" on selecting \'" + countryCode + "\" country code.");
+
 		}
 	}
 
-    /*#23. Default selected country*/
+    /*#??. Country - countryCode code and name mapping*/
+    @Test(groups = {"regression", "code"})
+    public void countryCodeNamePrefix(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+        for (String countryCode : countriesCodesList) {
+            registrationPage.fillCountry(countryCode);
+            String actualCountryName = registrationPage.getSelectedCountryName();
+            String expectedCountryName = defaults.getCountryNameByCountryCode(countryCode);
+
+            TypeUtils.assertEqualsWithLogs(actualCountryName, expectedCountryName, "Phone area code (" + actualCountryName + ") is not equal to expected area code (" + expectedCountryName + ") on selecting " + countryCode + " countryCode.");
+
+        }
+    }
+
+    /*#23. Default selected countryCode*/
 	@Test(groups = {"regression"})
 	public void defaultCountry(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		String defaultCountryName = registrationPage.getCountry();
-		boolean defaultCountrySelected = defaultCountryName.equals(defaults.getDefaultCountry());
-		boolean fillFieldsVisible = registrationPage.getFillFieldsButtonVisibleState();
-		Assert.assertTrue(defaultCountrySelected == true && fillFieldsVisible == true);
+		String selectedCountryName = registrationPage.getSelectedCountryName();
+
+        TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
+		//TypeUtils.assertTrueWithLogs(registrationPage.getFillFieldsButtonVisibleState());
 	}
 
-    /*#24. Change country from UK to any and selecting UK again Fill all fields element is displayed*/
+    /*#24. Change countryCode from UK to any and selecting UK again Fill all fields element is displayed*/
 	@Test(groups = {"regression"})
 	public void fillFieldsAppearDisappear(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		// stage 1
 		boolean fillFieldsVisibleStage1 = registrationPage.getFillFieldsButtonVisibleState();
-		String randomCountry;
-		String defaultCountry = defaults.getDefaultCountry();
+		String randomCountryCode;
+		String defaultCountryCode = defaults.getDefaultCountryCode();
 		do {
-			randomCountry = defaults.getRandomCountryName();
+			randomCountryCode = defaults.getRandomCountryCode();
 		}
-		while (randomCountry.equals(defaultCountry));
+		while (randomCountryCode.equals(defaultCountryCode));
 		// stage 2
-		registrationPage.fillCountry(randomCountry);
+		registrationPage.fillCountry(randomCountryCode);
 		boolean fillFieldsVisibleStage2 = registrationPage.getFillFieldsButtonVisibleState();
 		// stage 3
-		registrationPage.fillCountry(defaultCountry);
+		registrationPage.fillCountry(defaultCountryCode);
 		boolean fillFieldsVisibleStage3 = registrationPage.getFillFieldsButtonVisibleState();
-		Assert.assertTrue(fillFieldsVisibleStage1 == true && fillFieldsVisibleStage2 == false && fillFieldsVisibleStage3 == true);
+        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage1);
+        TypeUtils.assertFalse(fillFieldsVisibleStage2);
+        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage3);
 	}
 
     /*#25. Enter zipcode - City/Address1/Address2/House number updated on Fill all fields click and are editable*/
 	@Test(groups = {"regression"})
-	public void zipcodeFillsAddress(){
+	public void zipCodeFillsAddress(){
         try {
             RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
             List<String> fullAddressActual = registrationPage.fillAutoByPostCode("SE17RL");
@@ -365,7 +374,7 @@ public class RegistrationTest extends AbstractTest{
             }
         }catch (RuntimeException e){
             if(e.getMessage().contains("35-41/")){
-                throw new SkipException("Skipped untill D-10144 is fixed"+WebDriverUtils.getUrlAndLogs());
+                throw new SkipException("Skipped until D-10144 is fixed"+WebDriverUtils.getUrlAndLogs());
             }else{
                 WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
             }
@@ -429,7 +438,7 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
 		String errorMessageText=registrationPage.getUsernameSuggestionText();
 		boolean usernameUsedMessageDisplayed=errorMessageText.contains("Not available, check suggestions:");
-		Assert.assertTrue(usernameUsedMessageDisplayed);
+        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
 	}
 
     /*#2. Try to use already used email*/
@@ -445,7 +454,7 @@ public class RegistrationTest extends AbstractTest{
         }
 		boolean emailUsedMessageDisplayed=errorMessageText.equals("The specified email address is already in use.");
 
-		Assert.assertTrue(emailUsedMessageDisplayed);
+        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
 	}
 
     /*3. Try to use invalid bonus code*/
@@ -456,7 +465,7 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage = (RegistrationPage) registrationPage.registerUser(userData, invalidBonusCoupon);
 		boolean bonusErrorPresent = registrationPage.isBonusCodeErrorPresent();
-		Assert.assertTrue(bonusErrorPresent);
+        TypeUtils.assertTrueWithLogs(bonusErrorPresent);
 	}
 
     /*#4. Email and email confirmation do not match*/
@@ -469,7 +478,7 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.submit();
 		String tooltipMessageText=registrationPage.getTooltipMessageText();
 		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("This address is different from the one above, please correct");
-		Assert.assertTrue(usernameUsedMessageDisplayed);
+        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
 	}
 
     /*#5. Password & Confirmation do not match*/
@@ -482,7 +491,7 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.submit();
 		String errorMessageText=registrationPage.getTooltipMessageText();
 		boolean emailUsedMessageDisplayed=errorMessageText.equals("Passwords are not the same");
-		Assert.assertTrue(emailUsedMessageDisplayed);
+        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
 	}
 
     /*#6. Try to submit registration form without accepting T&C (without checking check box)*/
@@ -492,7 +501,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
 		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.checkboxTermsAndConditionsValidationErrorVisible();
-		Assert.assertTrue(checkboxTermsAndConditionsValidationErrorVisible);
+        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
 	}
 
     /*VALIDATION*/
@@ -501,7 +510,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.submit();
 		int validationErrorsCount=WebDriverUtils.getXpathCount(RegistrationPage.VALIDATION_ERROR_XP);
-		Assert.assertTrue(validationErrorsCount >= 17);
+        TypeUtils.assertTrue(validationErrorsCount >= 17);
 	}
 
 	@Test(groups = {"validation"})

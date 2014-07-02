@@ -129,6 +129,10 @@ public class WebDriverUtils extends WebDriverObject{
         return null;
     }
 
+    public static String getElementValue(WebElement webElement){
+        return webElement.getAttribute("value");
+    }
+
     public static String getElementText(WebDriver webDriver, String xpath){
         try{
             return webDriver.findElement(By.xpath(xpath)).getText();
@@ -293,7 +297,7 @@ public class WebDriverUtils extends WebDriverObject{
             Select dropdown=createDropdown(xpath);
             dropdown.selectByValue(value);
         }catch(NoSuchElementException e){
-            runtimeExceptionWithLogs("Could not find element: " + xpath);
+            runtimeExceptionWithLogs("Could not find element " + xpath + " with value \"" + value + "\"");
         }
     }
 
@@ -312,7 +316,7 @@ public class WebDriverUtils extends WebDriverObject{
         List<String> optionsText=null;
         try{
             List<WebElement> options=getDropdownOptions(xpath);
-            optionsText=new ArrayList<String>();
+            optionsText= new ArrayList<String>();
             for(WebElement option : options){
                 optionsText.add(option.getText());
             }
@@ -320,6 +324,20 @@ public class WebDriverUtils extends WebDriverObject{
             runtimeExceptionWithLogs("Could not find element: " + xpath);
         }
         return optionsText;
+    }
+
+    public static List<String> getDropdownOptionsValue(String xpath){
+        List<String> optionsValue =null;
+        try{
+            List<WebElement> options=getDropdownOptions(xpath);
+            optionsValue = new ArrayList<String>();
+            for(WebElement option : options){
+                optionsValue.add(getElementValue(option));
+            }
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithLogs("Could not find element: " + xpath);
+        }
+        return optionsValue;
     }
 
 	public static WebElement getDropdownSelectedOption(String xpath){
