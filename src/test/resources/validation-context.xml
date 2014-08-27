@@ -4,10 +4,220 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="nameValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй,.'-]{1,25}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZüõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй,.'-]{1,24}"/>
+    <bean id="genderValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="M@F"/>
+        <property name="isMandatory" value="false"/>
+        <property name="minLength" value="N/A"/>
+        <property name="maxLength" value="N/A"/>
+        <property name="tooltipPositive" value="N/A"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="N/A"/>
+    </bean>
+
+    <bean id="firstNameValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',.-üõöÖÄß]{1,25}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',.-üõöÖÄß]{1,24}"/>
+        <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="50"/>
+        <property name="tooltipPositive" value="Please enter your First name"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your First name. "/>
+        <property name="tooltipNegativeShort" value="Please enter at least 2 characters"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (a-z) (A-Z) and (. - , ')"/>
+    </bean>
+
+    <bean id="lastNameValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',.-üõöÖÄß]{1,25}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',.-üõöÖÄß]{1,24}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="50"/>
+        <property name="tooltipPositive" value="Please enter your Last name"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your Last name. "/>
+        <property name="tooltipNegativeShort" value="Please enter at least 2 characters"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (a-z) (A-Z) and (. - , ')"/>
+    </bean>
+
+    <bean id="emailValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,37}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{3,4}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="100"/>
+        <property name="tooltipPositive" value="Please enter a valid email in the following format: xxxx@xxxx.xxx"/>
+        <property name="tooltipNegativeEmpty" value="Please enter valid email"/>
+        <property name="tooltipNegativeShort" value="Please enter a valid email address"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (a-z), (A-Z) numbers (0-9) and (. _ - @)"/>
+    </bean>
+
+    <bean id="stateValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-,]{1,20}"/>
+        <property name="isMandatory" value="false"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="20"/>
+        <property name="tooltipPositive" value="Please enter your State (Optional)"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z) and (.-,)"/>
+    </bean>
+
+    <bean id="countryValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="AX@AL@AG"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="N/A"/>
+        <property name="maxLength" value="N/A"/>
+        <property name="tooltipPositive" value="Select your country of residence"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="N/A"/>
+    </bean>
+
+    <bean id="cityValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,16}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="50"/>
+        <property name="tooltipPositive" value="Please enter the town or city you live in"/>
+        <property name="tooltipNegativeEmpty" value="Please enter the town or city you live in.(up to 50 characters)"/>
+        <property name="tooltipNegativeShort" value="Inserted city is invalid. Please use letters(A-Z) (a-z), numbers(0-9) and characters(.-'), minimum 2 characters"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z), numbers (0-9) and (.- ')"/>
+    </bean>
+
+    <bean id="addressValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,80}[&amp;./\- ]{0,4}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,72}[&amp;./\-]{0,4}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="160"/>
+        <property name="tooltipPositive" value="Please enter your address"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your address (up to 160 characters)"/>
+        <property name="tooltipNegativeShort" value="Inserted address is invalid. Please use letters(A-Z) (a-z) and numbers(0-9) and characters(.,'/\#&amp;-), minimum 2 characters"/>
+        <property name="tooltipNegativeLong" value="Inserted address is invalid. Please enter up to 160 characters"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z), numbers (0-9) and (.-'\ /#&amp;)"/>
+    </bean>
+
+    <bean id="address2ValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[#]{0,1}[']{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß]{1,30}[#&amp;,./\-' ]{0,5}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß]{1,23}[#&amp;,./\-' ]{0,5}"/>
+        <property name="isMandatory" value="false"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="65"/>
+        <property name="tooltipPositive" value="Please enter your address"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
+        <property name="tooltipNegativeShort" value="Inserted address is invalid. Please use letters(A-Z) (a-z) and numbers(0-9) and characters(.,'/\#&amp;-), minimum 2 characters"/>
+        <property name="tooltipNegativeLong" value="Inserted address is invalid. Please enter up to 65 characters"/>
+        <property name="tooltipNegativeInvalid" value="Inserted address is invalid. Please use letters (A-Z) (a-z) and numbers(0-9) and characters(.,'/\#&amp;-), minimum 2 characters"/>
+    </bean>
+
+    <bean id="houseValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{1,20}[]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{0,8}"/>
+        <property name="isMandatory" value="false"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="28"/>
+        <property name="tooltipPositive" value="Please enter your house number/name"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Please enter valid house number/name"/>
+        <property name="tooltipNegativeInvalid" value="Please enter valid house number/name"/>
+    </bean>
+
+    <bean id="postcodeValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,6}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{0,5}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="12"/>
+        <property name="tooltipPositive" value="Please enter your zip/postal code"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your zip/postal code. (up to 12 characters)"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Please enter your zip/postal code. (up to 12 characters)"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z), numbers (0-9) and (_- / \#)"/>
+    </bean>
+
+    <bean id="countryPhoneCodeValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="5"/>
+        <property name="tooltipPositive" value="Please enter your phone number including area code"/>
+        <property name="tooltipNegativeEmpty" value="Please enter a valid area code"/>
+        <property name="tooltipNegativeShort" value="Please enter a valid area code"/>
+        <property name="tooltipNegativeLong" value="Please enter a valid area code"/>
+        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9)"/>
+    </bean>
+
+    <bean id="phoneValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="11"/>
+        <property name="tooltipPositive" value="Please enter your phone number"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your phone number (16 characters, country code included)"/>
+        <property name="tooltipNegativeShort" value="You may only use numbers (0-9) and + (6-11 digits)"/>
+        <property name="tooltipNegativeLong" value="You may only use numbers (0-9) and + (6-11 digits)"/>
+        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9) "/>
+    </bean>
+
+    <bean id="usernameValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{3,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{2,5}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="5"/>
+        <property name="maxLength" value="16"/>
+        <property name="tooltipPositive" value="Choose a Username between 5-16 characters long."/>
+        <property name="tooltipNegativeEmpty" value="Sorry, your username must be between 5-16 characters long."/>
+        <property name="tooltipNegativeShort" value="Please use only letters (a-zA-Z), numbers (0-9) and characters (.@_-). Length must be 5-16 characters"/>
+        <property name="tooltipNegativeLong" value="Please use only letters (a-zA-Z), numbers (0-9) and characters (.@_-). Length must be 5-16 characters"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (a-z), (A-Z), numbers (0-9) and (. -  _@)"/>
+    </bean>
+
+    <bean id="passwordValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyz]{2,4}[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,3}[0123456789]{1,3}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="5"/>
+        <property name="maxLength" value="10"/>
+        <property name="tooltipPositive" value="Choose a password between 5-10 characters long.  Use letters and numbers only without spaces."/>
+        <property name="tooltipNegativeEmpty" value="Choose a password between 5-10 characters long.  Use letters and numbers only without spaces."/>
+        <property name="tooltipNegativeShort" value="Password: Password: 5-10 chars, at least 1 number, at least 1 capital letter and at least 1 small letter. Symbols not accepted"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (A-z) (a-z) and numbers (0-9) without spaces."/>
+    </bean>
+
+    <bean id="answerValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/- ]{1,160}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="160"/>
+        <property name="tooltipPositive" value="Please enter answer to security question"/>
+        <property name="tooltipNegativeEmpty" value="Answer to the security question is required"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="Sorry, invalid character used, please try again"/>
+    </bean>
+
+    <bean id="currencyValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="GBP@USD@EUR"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="N/A"/>
+        <property name="maxLength" value="N/A"/>
+        <property name="tooltipPositive" value="Please select currency for your account"/>
+        <property name="tooltipNegativeEmpty" value="Please select currency for your account"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="N/A"/>
+    </bean>
+
+    <bean id="bonusCodeValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,10}"/>
+        <property name="isMandatory" value="false"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="10"/>
+        <property name="tooltipPositive" value="If you have a bonus or a promotion code, please enter it here."/>
+        <property name="tooltipNegativeEmpty" value="Coupon code must be between 1-10 characters"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You may only use letters (a-z), (A-Z) and numbers (0-9) without spaces."/>
     </bean>
 
     <bean id="nameOnRAFValidationRule" class="springConstructors.ValidationRule">
@@ -16,105 +226,21 @@
         <property name="maxLength" value="32"/>
     </bean>
 
-    <!--D-03145: Email should accept only ._- and IMS does not allow to use . at the beginning -->
-    <!--DA: cannot make a rule with min username length = 1 char and now allowing a dot at the beginning at the same time -->
-    <!--portal max lenth is 100 while IMS is 78 for email -->
-    <bean id="emailValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,37}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{3,4}"/>
-        <property name="minLength" value="6"/>
-        <property name="maxLength" value="100"/>
-    </bean>
-
-    <!--Note for city validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
-    <bean id="cityValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.']{1,24}[,]{0,1}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.']{1,23}"/>
-        <property name="minLength" value="2"/>
-        <property name="maxLength" value="50"/>
-    </bean>
-
-    <!--Note for address validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
-    <!--D-04154: comma character (,) is not sent to IMS properly now, should be added to the bean below after fix (BUT comma can't be at the beginning of address!!!) -->
-    <bean id="addressValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,2}[&amp;./\-]{0,3}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,55}[&amp;./\-]{0,4}"/>
-        <property name="minLength" value="2"/>
-        <property name="maxLength" value="65"/>
-    </bean>
-
-    <!--Note for house validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
-    <bean id="houseValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,20}[&amp;./\-]{0,3}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{0,5}"/>
-        <property name="minLength" value="1"/>
-        <property name="maxLength" value="28"/>
-    </bean>
-
-    <!--Full address rule is used for UMD portlet where there's no division between house, address1 and address2 -->
-    <!--D-04154: comma character (,) is not sent to IMS properly now, should be added to the bean below after fix (BUT comma can't be at the beginning of address!!!) -->
-    <!--D-04195: max length is now 131 char while it should be 160 like on IMS and on Reg -->
-    <!--Note for address validation: UTF-8 is currently not supported by Selenium (incorrect chars are sent to the field) üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй-->
     <bean id="fullAddressValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,6}[&amp;./\-]{0,3}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,120}[&amp;./\-]{0,10}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{0,20}"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="160"/>
     </bean>
 
-    <!--Post Code cannot start or finish with a space, it is truncated on IMS side. -->
-    <bean id="postcodeValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,1}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{0,10}"/>
-        <property name="minLength" value="1"/>
-        <property name="maxLength" value="12"/>
-    </bean>
-
-
-    <bean id="phoneValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
-        <property name="minLength" value="6"/>
-        <property name="maxLength" value="15"/>
-    </bean>
-
-
-    <bean id="countryPhoneCodeValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>
-        <property name="minLength" value="1"/>
-        <property name="maxLength" value="5"/>
-    </bean>
-
-    <!--Full phone rule is used for UMD portlet where there's no division between area code and phone itself -->
     <bean id="fullPhoneValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[+]{0,1}[0123456789]{3,4}[ ]{0,1}[0123456789]{3,3}[ ]{0,1}[0123456789]{0,2}[ ]{0,1}[0123456789]{1,2}"/>
         <property name="minLength" value="7"/>
         <property name="maxLength" value="15"/>
     </bean>
 
-    <!--Username: should also accept the following chars but does not accept now because of PAS limitations: $/'&()+;-!? -->
-    <bean id="usernameValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.@_#*`,]{6,10}"/>
-        <property name="minLength" value="6"/>
-        <property name="maxLength" value="10"/>
-    </bean>
-
-    <!--D-03145: Email should accept only ._- -->
     <bean id="emailPrefixValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{6,10}"/> <!--"#$/'&amp;+()*`;!?,"-->
         <property name="minLength" value="6"/>
-        <property name="maxLength" value="10"/>
-    </bean>
-
-    <bean id="passwordValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyz]{2,4}[ABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,3}[0123456789]{2,3}"/> <!--[@#$&amp;!%*^]{2,7}-->
-        <property name="minLength" value="5"/>
-        <property name="maxLength" value="10"/>
-    </bean>
-
-    <bean id="answerValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 /-]{1,160}"/>
-        <property name="minLength" value="1"/>
-        <property name="maxLength" value="160"/>
-    </bean>
-
-    <!--Bonus Code allows entering only latin letters and numbers. The following chars are not allowed: : .@_#$/'&amp;+()*`;!¡?¿,%^={|}~üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй- -->
-    <bean id="bonusCodeValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,10}"/>
-        <property name="minLength" value="0"/>
         <property name="maxLength" value="10"/>
     </bean>
 

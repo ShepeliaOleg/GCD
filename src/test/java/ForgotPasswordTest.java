@@ -369,37 +369,37 @@ public class ForgotPasswordTest extends AbstractTest{
 
     /*VALIDATION*/
 
-    /*1. Username field validation*/
-	@Test(groups = {"validation"})
-	public void usernameFieldValidation() {
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		forgotPasswordPopup.validateUsername(usernameValidationRule);
-	}
-
-    /*2. Email address field validation*/
-	@Test(groups = {"validation"})
-	public void emailFieldValidation() {
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		forgotPasswordPopup.validateEmail(emailValidationRule);
-	}
-
-    /*3. Old password field validation on Change password popup*/
-	@Test(groups = {"validation"})
-	public void oldPasswordFieldValidation() {
-        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-		changePasswordPopup.validateOldPassword(passwordValidationRule);
-	}
-
-    /*4. New password field validation on Change password popup*/
-	@Test(groups = {"validation"})
-	public void newPasswordFieldValidation() {
-        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-		changePasswordPopup.validateNewPassword(passwordValidationRule);
-	}
+//    /*1. Username field validation*/
+//	@Test(groups = {"validation"})
+//	public void usernameFieldValidation() {
+//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+//        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+//		forgotPasswordPopup.validateUsername(usernameValidationRule);
+//	}
+//
+//    /*2. Email address field validation*/
+//	@Test(groups = {"validation"})
+//	public void emailFieldValidation() {
+//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+//        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+//		forgotPasswordPopup.validateEmail(emailValidationRule);
+//	}
+//
+//    /*3. Old password field validation on Change password popup*/
+//	@Test(groups = {"validation"})
+//	public void oldPasswordFieldValidation() {
+//        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
+//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+//        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+//		changePasswordPopup.validateOldPassword(passwordValidationRule);
+//	}
+//
+//    /*4. New password field validation on Change password popup*/
+//	@Test(groups = {"validation"})
+//	public void newPasswordFieldValidation() {
+//        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
+//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+//        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+//		changePasswordPopup.validateNewPassword(passwordValidationRule);
+//	}
 }

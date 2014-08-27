@@ -34,14 +34,30 @@ public class RegistrationTest extends AbstractTest{
 	@Autowired
 	@Qualifier("userData")
 	private UserData defaultUserData;
+
+    @Autowired
+    @Qualifier("genderValidationRule")
+    private ValidationRule genderValidationRule;
 	
 	@Autowired
-	@Qualifier("nameValidationRule")
-	private ValidationRule nameValidationRule;
+	@Qualifier("firstNameValidationRule")
+	private ValidationRule firstNameValidationRule;
+
+    @Autowired
+    @Qualifier("lastNameValidationRule")
+    private ValidationRule lastNameValidationRule;
 
 	@Autowired
 	@Qualifier("emailValidationRule")
 	private ValidationRule emailValidationRule;
+
+    @Autowired
+    @Qualifier("stateValidationRule")
+    private ValidationRule stateValidationRule;
+
+    @Autowired
+    @Qualifier("countryValidationRule")
+    private ValidationRule countryValidationRule;
 
 	@Autowired
 	@Qualifier("cityValidationRule")
@@ -50,6 +66,10 @@ public class RegistrationTest extends AbstractTest{
 	@Autowired
 	@Qualifier("addressValidationRule")
 	private ValidationRule addressValidationRule;
+
+    @Autowired
+    @Qualifier("address2ValidationRule")
+    private ValidationRule address2ValidationRule;
 
 	@Autowired
 	@Qualifier("houseValidationRule")
@@ -67,25 +87,29 @@ public class RegistrationTest extends AbstractTest{
 	@Qualifier("phoneValidationRule")
 	private ValidationRule phoneValidationRule;
 
+    @Autowired
+    @Qualifier("usernameValidationRule")
+    private ValidationRule usernameValidationRule;
+
+    @Autowired
+    @Qualifier("passwordValidationRule")
+    private ValidationRule passwordValidationRule;
+
+    @Autowired
+    @Qualifier("answerValidationRule")
+    private ValidationRule answerValidationRule;
+
+    @Autowired
+    @Qualifier("currencyValidationRule")
+    private ValidationRule currencyValidationRule;
+
+    @Autowired
+    @Qualifier("bonusCodeValidationRule")
+    private ValidationRule bonusCodeValidationRule;
+
 	@Autowired
 	@Qualifier("searchValidationRule")
 	private ValidationRule searchValidationRule;
-
-	@Autowired
-	@Qualifier("usernameValidationRule")
-	private ValidationRule usernameValidationRule;
-
-	@Autowired
-	@Qualifier("passwordValidationRule")
-	private ValidationRule passwordValidationRule;
-
-	@Autowired
-	@Qualifier("answerValidationRule")
-	private ValidationRule answerValidationRule;
-
-	@Autowired
-	@Qualifier("bonusCodeValidationRule")
-	private ValidationRule bonusCodeValidationRule;
 
 	@Autowired
 	@Qualifier("iMS")
@@ -513,16 +537,22 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrue(validationErrorsCount >= 17);
 	}
 
+    @Test(groups = {"validation"})
+    public void genderDropdownValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateGender(genderValidationRule);
+    }
+
 	@Test(groups = {"validation"})
 	public void firstnameFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateFirstname(nameValidationRule);
+		registrationPage.validateFirstname(firstNameValidationRule);
 	}
 
 	@Test(groups = {"validation"})
 	public void lastnameFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateLastname(nameValidationRule);
+		registrationPage.validateLastname(lastNameValidationRule);
 	}
 
 	@Test(groups = {"validation"})
@@ -531,11 +561,18 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.validateEmail(emailValidationRule);
 	}
 
-	@Test(groups = {"validation"})
-	public void verificationEmailFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateVerificationEmail(emailValidationRule);
-	}
+    @Test(groups = {"validation"})
+    public void stateFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateState(stateValidationRule);
+    }
+
+    @Test(groups = {"validation"})
+    public void countryFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateCountry(countryValidationRule);
+    }
+
 
 	@Test(groups = {"validation"})
 	public void cityFieldValidation() {
@@ -544,10 +581,22 @@ public class RegistrationTest extends AbstractTest{
 	}
 
 	@Test(groups = {"validation"})
-	public void address1FieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateAddress1(addressValidationRule);
-	}
+     public void address1FieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateAddress1(addressValidationRule);
+    }
+
+    @Test(groups = {"validation"})
+    public void address2FieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateAddress2(address2ValidationRule);
+    }
+
+    @Test(groups = {"validation"})
+    public void houseFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateHouse(houseValidationRule);
+    }
 
 	@Test(groups = {"validation"})
 	public void postcodeFieldValidation() {
@@ -555,16 +604,16 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.validatePostcode(postcodeValidationRule);
 	}
 
+    @Test(groups = {"validation"})
+    public void phoneCountryCodeFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validatePhoneCountryCode(countryPhoneCodeValidationRule);
+    }
+
 	@Test(groups = {"validation"})
 	public void phoneFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePhone(phoneValidationRule);
-	}
-
-	@Test(groups = {"validation"})
-	public void phoneCountryCodeFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validatePhoneCountryCode(countryPhoneCodeValidationRule);
 	}
 
 	@Test(groups = {"validation"})
@@ -579,11 +628,17 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.validatePassword(passwordValidationRule);
 	}
 
-	@Test(groups = {"validation"})
-	public void verificationPasswordFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateVerificationPassword(passwordValidationRule);
-	}
+    @Test(groups = {"validation"})
+    public void answerFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateAnswer(answerValidationRule);
+    }
+
+    @Test(groups = {"validation"})
+    public void currencyDropdownValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateCurrency(currencyValidationRule);
+    }
 
 	@Test(groups = {"validation"})
 	public void bonusCodeFieldValidation() {

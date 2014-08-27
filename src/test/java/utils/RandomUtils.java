@@ -1,16 +1,17 @@
-package utils;/*
- * User: ivanva
- * Date: 6/7/13
- */
+package utils;
 
 import nl.flotsam.xeger.Xeger;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
+import springConstructors.ValidationRule;
+import utils.validation.RegexNode;
+import utils.validation.ValidationUtils;
 
 public class RandomUtils{
-   private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöäÜÖÄßĶķŪūŽžŅņĻļĢģÀàÈèÙùËëÏïÜüŸÿÂâÊêÎîÔôÛûЫыЪъЭэЁёЬьЙй";
+   private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöÖÄß";
 
     public static String generateString(String characters, int length) {
         char[] text = new char[length];
@@ -21,11 +22,18 @@ public class RandomUtils{
         return new String(text);
     }
 
-    public static String generateStringByRegexp(String regex) {
-        Xeger generator = new Xeger(regex);
-        String result = generator.generate();
-        assert result.matches(regex);
+//    public static String generateStringByRegexp(String regex) {
+//        Xeger generator = new Xeger(regex);
+//        String result = generator.generate();
+//        assert result.matches(regex);
+//        return result;
+//    }
 
+    public static String generateStringByRegexp(String regex) {
+        String result = "";
+        for(RegexNode node: ValidationUtils.splitToNodes(regex)){
+            result+=RandomStringUtils.random(generateRandomIntBetween(node.getMin(),node.getMax()), node.getSymbols());
+        }
         return result;
     }
 
@@ -65,7 +73,6 @@ public class RandomUtils{
 
     public static int generateRandomIntBetween(int min, int max) {
         Random random = new Random();
-
         return min + random.nextInt(max - min + 1);
     }
 

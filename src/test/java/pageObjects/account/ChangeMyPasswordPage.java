@@ -1,8 +1,6 @@
 package pageObjects.account;
 
 import pageObjects.base.AbstractPage;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 public class ChangeMyPasswordPage extends AbstractPage{
@@ -60,11 +58,11 @@ public class ChangeMyPasswordPage extends AbstractPage{
 		return WebDriverUtils.isVisible(FIELD_VALIDATOR);
 	}
 
-    public void validateOldPassword(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PASSWORD_OLD_XP, rule);
-    }
-
-    public void validateNewPassword(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_PASSWORD_NEW_XP, rule);
-    }
+//    public void validateOldPassword(ValidationRule rule) {
+//        ValidationUtils.validate(FIELD_PASSWORD_OLD_XP, rule);
+//    }
+//
+//    public void validateNewPassword(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_PASSWORD_NEW_XP, rule);
+//    }
 }

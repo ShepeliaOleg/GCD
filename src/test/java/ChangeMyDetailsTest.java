@@ -241,51 +241,51 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	}
 
 	/*2. Address field validation*/
-	@Test(groups = {"validation"})
-	public void addressFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validateAddress(addressValidationRule);
-	}
+//	@Test(groups = {"validation"})
+//	public void addressFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validateAddress(addressValidationRule);
+//	}
 
 	/*3. City field validation*/
-	@Test(groups = {"validation"})
-	public void cityFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validateCity(cityValidationRule);
-	}
-
-	/*4. Post Code field validation*/
-	@Test(groups = {"validation"})
-	public void postCodeFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validatePostcode(postcodeValidationRule);
-	}
-
-	/*5. Phone field validation*/
-	@Test(groups = {"validation"})
-	public void phoneFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validatePhone(phoneValidationRule);
-	}
-
-	/*6. Mobile Field validation*/
-	@Test(groups = {"validation"})
-	public void mobileFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validateMobile(phoneValidationRule);
-	}
-
-	/*7. Email field validation*/
-	@Test(groups = {"validation"})
-	public void emailFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validateEmail(emailValidationRule);
-	}
-
-	/*8. Email Verification field validation*/
-	@Test(groups = {"validation"})
-	public void verificationEmailFieldValidation() {
-                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
-	}
+//	@Test(groups = {"validation"})
+//	public void cityFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validateCity(cityValidationRule);
+//	}
+//
+//	/*4. Post Code field validation*/
+//	@Test(groups = {"validation"})
+//	public void postCodeFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validatePostcode(postcodeValidationRule);
+//	}
+//
+//	/*5. Phone field validation*/
+//	@Test(groups = {"validation"})
+//	public void phoneFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validatePhone(phoneValidationRule);
+//	}
+//
+//	/*6. Mobile Field validation*/
+//	@Test(groups = {"validation"})
+//	public void mobileFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validateMobile(phoneValidationRule);
+//	}
+//
+//	/*7. Email field validation*/
+//	@Test(groups = {"validation"})
+//	public void emailFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validateEmail(emailValidationRule);
+//	}
+//
+//	/*8. Email Verification field validation*/
+//	@Test(groups = {"validation"})
+//	public void verificationEmailFieldValidation() {
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
+//	}
 }

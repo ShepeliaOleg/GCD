@@ -90,8 +90,7 @@ public class WebDriverFactory extends WebDriverObject{
 
     private WebDriver createFireFoxDriver(){
         FirefoxProfile profile=new FirefoxProfile();
-        profile.setAcceptUntrustedCertificates(true);
-        profile.setAssumeUntrustedCertificateIssuer(false);
+        profile.setPreference("focusmanager.testmode", true);
         return new FirefoxDriver(profile);
     }
 }

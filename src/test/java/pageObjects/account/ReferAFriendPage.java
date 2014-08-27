@@ -1,8 +1,6 @@
 package pageObjects.account;
 
 import pageObjects.base.AbstractPage;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 /*
@@ -86,11 +84,11 @@ public class ReferAFriendPage extends AbstractPage{
  		return result;
 	}
 
-    public void validateName(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_NAME1_XP, rule);
-    }
-
-    public void validateEmail(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_EMAIL1_XP, rule);
-    }
+//    public void validateName(ValidationRule rule) {
+//        ValidationUtils.validate(FIELD_NAME1_XP, rule);
+//    }
+//
+//    public void validateEmail(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_EMAIL1_XP, rule);
+//    }
 }

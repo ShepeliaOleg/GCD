@@ -1,8 +1,6 @@
 package pageObjects.forgotPassword;
 
 import springConstructors.UserData;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 public class ForgotPasswordPopup extends ForgotPopup{
@@ -52,8 +50,8 @@ public class ForgotPasswordPopup extends ForgotPopup{
 		fillBirthYear(userData.getBirthYear());
 	}
 
-	public void validateUsername(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_USERNAME_XP, rule);
-	}
+//	public void validateUsername(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_USERNAME_XP, rule);
+//	}
 
 }

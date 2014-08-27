@@ -186,7 +186,7 @@ public class WebDriverUtils extends WebDriverObject{
         }
     }
 
-    private static void clearField(String xpath){
+    protected static void clearField(String xpath){
         try{
             webDriver.findElement(By.xpath(xpath)).clear();
         }catch(NoSuchElementException e){

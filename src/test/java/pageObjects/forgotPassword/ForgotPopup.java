@@ -5,8 +5,6 @@ import pageObjects.account.LoginPopup;
 import pageObjects.base.AbstractPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 public abstract class ForgotPopup extends AbstractPopup{
@@ -108,7 +106,7 @@ public abstract class ForgotPopup extends AbstractPopup{
         return new ContactUsPopup();
     }
 
-	public void validateEmail(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
-	}
+//	public void validateEmail(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
+//	}
 }

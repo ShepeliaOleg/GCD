@@ -8,63 +8,74 @@ import pageObjects.popups.ReadTermsAndConditionsPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.ValidationUtils;
+import utils.validation.ValidationUtils;
 import utils.WebDriverUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class RegistrationPage extends AbstractPage{
-	
+
     private static final String ROOT_XP = 											"//*[contains(@class, 'fn-register-content')]";
-	private static final String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')]";
+    private final static String FIELD_BASE_XP =				 				        ROOT_XP + "//*[@id='"+PLACEHOLDER+"']";
+    private static final String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')]";
+
     private static final String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
     private static final String CHECKBOX_TERMS_AND_CONDITION_VALIDATION_ERROR_XP = 	CHECKBOX_TERMS_AND_CONDITION_XP+TOOLTIP_ERROR_XP;
     private static final String LINK_TERMS_AND_CONDITION_XP = 						"//*[contains(@class, 'terms')]/a";
     public  static final String LABEL_MESSAGE_ERROR_XP = 							ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
-	private static final String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@id='usernameSuggestionsTmpl']";
+    private static final String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@id='usernameSuggestionsTmpl']";
     private final static String LABEL_BONUS_CODE_ERROR_XPATH = 						"//*[contains(text(), 'Bonus code is not found or not available')]";
     public  final static String LABEL_ERROR_TIMEOUT_XP =                            ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
     private final static String BONUS_CODE = 										"TEST";
-	private final static String DROPDOWN_GENDER_XP=									"//*[@id='gender']";
-	private final static String LABEL_GENDER_XP=									"//label[@for='gender']";
-    private final static String FIELD_FIRSTNAME_XP =				 				"//*[@id='firstname']";
+
+    private final static String DROPDOWN_GENDER_ID=									"gender";
+    private final static String LABEL_GENDER_XP=									"//label[@for='gender']";
+    private final static String FIELD_FIRSTNAME_ID =				 				"firstname";
 	private final static String LABEL_FIRSTNAME_XP =								"//label[@for='firstname']";
-    private final static String FIELD_LASTNAME_XP = 								"//*[@id='lastname']";
+    private final static String FIELD_LASTNAME_ID = 								"lastname";
 	private final static String LABEL_LASTNAME_XP=									"//label[@for='lastname']";
-	private final static String DROPDOWN_BIRTHDAY_XP=								"//select[@id='birthDay']";
-	private final static String DROPDOWN_BIRTHMONTH_XP=								"//select[@id='birthMonth']";
-	private final static String DROPDOWN_BIRTHYEAR_XP=								"//select[@id='birthYear']";
-	private final static String LABEL_BIRTHDAY_XP=									"//span[following-sibling::div/div[@class='date-section']]";
-    private final static String DROPDOWN_NATIONALITY_XP=							"//select[@id='nationality']";
-    private final static String FIELD_EMAIL_XP = 									"//*[@id='email']";
-	private final static String LABEL_EMAIL_XP=										"//label[@for='email']";
-    private final static String FIELD_EMAIL_VERIFICATION_XP = 						"//*[@id='confirmEmail']";
-	private final static String LABEL_EMAIL_VERIFICATION_XP=						"//label[@for='confirmEmail']";
-    private final static String DROPDOWN_COUNTRY_XP = 								"//*[@name='countrycode']";
-	private final static String LABEL_COUNTRY_XP=									"//span[following-sibling::div/*[@name='countrycode']]";
-    private final static String FIELD_CITY_XP = 									"//*[@id='city']";
-	private final static String LABEL_CITY_XP=										"//label[@for='city']";
-    private final static String FIELD_ADDRESS1_XP = 								"//*[@id='address']";
-	private final static String LABEL_ADDRESS1_XP =									"//label[@for='address']";
-    private final static String FIELD_POSTCODE_XP = 								"//*[@id='zip']";
-	private final static String LABEL_POSTCODE_XP=									"//label[@for='zip']";
-    private final static String FIELD_PHONE_COUNTRY_CODE_XP  = 						"//*[@id='phoneAreaCode']";
+    private final static String FIELD_EMAIL_ID = 									"email";
+    private final static String LABEL_EMAIL_XP=										"//label[@for='email']";
+    private final static String FIELD_STATE_ID = 									"state";
+    private final static String LABEL_STATE_XP=										"//label[@for='state']";
+    private final static String DROPDOWN_COUNTRY_ID = 								"countrycode";
+    private final static String LABEL_COUNTRY_XP=									"//span[following-sibling::div/*[@name='countrycode']]";
+    private final static String FIELD_CITY_ID = 									"city";
+    private final static String LABEL_CITY_XP=										"//label[@for='city']";
+    private final static String FIELD_ADDRESS1_ID = 								"address";
+    private final static String LABEL_ADDRESS1_XP =									"//label[@for='address']";
+    private final static String FIELD_ADDRESS2_ID = 								"address2";
+    private final static String LABEL_ADDRESS2_XP =									"//label[@for='address2']";
+    private final static String FIELD_HOUSE_ID = 								    "house";
+    private final static String LABEL_HOUSE_XP =									"//label[@for='house']";
+    private final static String FIELD_POSTCODE_ID = 								"zip";
+    private final static String LABEL_POSTCODE_XP=									"//label[@for='zip']";
+    private final static String FIELD_PHONE_COUNTRY_CODE_ID  = 						"phoneAreaCode";
     private final static String FIELD_PHONE_XP = 									"//*[@id='phoneNumber']";
-	private final static String LABEL_PHONE_XP=										"//span[following-sibling::div/span/*[@id='phoneNumber']]";
-    private final static String FIELD_USERNAME_XP = 								"//*[@id='userName']";
-	private final static String LABEL_USERNAME_XP=									"//label[@for='userName']";
-    private final static String FIELD_PASSWORD_XP = 								ROOT_XP+"//*[@id='password']";
-	private final static String LABEL_PASSWORD_XP=									ROOT_XP+"//label[@for='password']";
-    private final static String FIELD_PASSWORD_VERIFICATION_XP = 					"//*[@id='passwordVerify']";
-	private final static String LABEL_PASSWORD_VERIFICATION_XP=						"//label[@for='passwordVerify']";
-    private final static String DROPDOWN_CURRENCY_XP = 								"//*[@name='currencyCode']";
-	private final static String LABEL_CURRENCY_XP=									"//span[following-sibling::div/*[@name='currencyCode']]";
-    private final static String FIELD_BONUSCODE_XP = 								"//*[@id='coupon']";
-	private final static String LABEL_BONUSCODE_XP=									"//label[@for='coupon']";
+    private final static String LABEL_PHONE_XP=										"//span[following-sibling::div/span/*[@id='phoneNumber']]";
+    private final static String FIELD_USERNAME_ID = 								"userName";
+    private final static String LABEL_USERNAME_XP=									"//label[@for='userName']";
+    private final static String FIELD_PASSWORD_ID = 								"password";
+    private final static String LABEL_PASSWORD_XP=									ROOT_XP+"//label[@for='password']";
+    private final static String FIELD_ANSWER_ID = 								    "answer";
+    private final static String LABEL_ANSWER_XP=									"//label[@for='answer']";
+    private final static String DROPDOWN_CURRENCY_ID = 								"currencyCode";
+    private final static String LABEL_CURRENCY_XP=									"//span[following-sibling::div/*[@name='currencyCode']]";
+    private final static String FIELD_BONUSCODE_ID = 								"coupon";
+    private final static String LABEL_BONUSCODE_XP=									"//label[@for='coupon']";
+    private final static String DROPDOWN_BIRTHDAY_ID=								"birthDay";
+    private final static String DROPDOWN_BIRTHMONTH_XP=								"//select[@id='birthMonth']";
+    private final static String DROPDOWN_BIRTHYEAR_XP=								"//select[@id='birthYear']";
+    private final static String LABEL_BIRTHDAY_XP=									"//span[following-sibling::div/div[@class='date-section']]";
+    private final static String DROPDOWN_NATIONALITY_XP=							"//select[@id='nationality']";
+    private final static String FIELD_EMAIL_VERIFICATION_ID = 						"confirmEmail";
+    private final static String LABEL_EMAIL_VERIFICATION_XP=						"//label[@for='confirmEmail']";
+    private final static String FIELD_PASSWORD_VERIFICATION_ID = 					"passwordVerify";
+    private final static String LABEL_PASSWORD_VERIFICATION_XP=						"//label[@for='passwordVerify']";
 	private final static String CHECKBOX_RECEIVE_BONUSES_XP=						"//*[@id='nobonus']";
-	private final static String LABEL_RECEIVE_BONUSES_XP=							"//label[@for'nobonus']";
+	private final static String LABEL_RECEIVE_BONUSES_XP=							"//label[@for='nobonus']";
 	private final static String LINK_ADULT_CONTENT_XP=								"//*[@id='webContent18']//a";
 	private final static String BUTTON_FILL_FIELDS_XP= 								"//*[@id='fillFields']";
 
@@ -81,7 +92,7 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	private void setGender(String title){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_GENDER_XP, title);
+		WebDriverUtils.setDropdownOptionByText(getXpathByID(DROPDOWN_GENDER_ID), title);
 	}
 
 	public List<String> fillAutoByPostCode(String postCode) {
@@ -95,53 +106,53 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	private String getCity(){
-		return WebDriverUtils.getInputFieldText(FIELD_CITY_XP);
+		return WebDriverUtils.getInputFieldText(getXpathByID(FIELD_CITY_ID));
 	}
 
 	private String getAddress1(){
-		return WebDriverUtils.getInputFieldText(FIELD_ADDRESS1_XP);
+		return WebDriverUtils.getInputFieldText(getXpathByID(FIELD_ADDRESS1_ID));
 	}
 
 	public boolean autofilledFieldsAreEditable() {
-		boolean city = WebDriverUtils.isEditable(FIELD_CITY_XP);
-		boolean address1 = WebDriverUtils.isEditable(FIELD_ADDRESS1_XP);
+		boolean city = WebDriverUtils.isEditable(getXpathByID(FIELD_CITY_ID));
+		boolean address1 = WebDriverUtils.isEditable(getXpathByID(FIELD_ADDRESS1_ID));
 		return city && address1;
 	}
 
 	public String getPhoneAreaCode(){
-		return WebDriverUtils.getInputFieldText(FIELD_PHONE_COUNTRY_CODE_XP);
+		return WebDriverUtils.getInputFieldText(getXpathByID(FIELD_PHONE_COUNTRY_CODE_ID));
 	}
 
 	private void fillUsername(String username){
-		WebDriverUtils.clearAndInputTextToField(FIELD_USERNAME_XP, username);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_USERNAME_ID), username);
 	}
 
 	private void fillPassword(String password){
-		WebDriverUtils.clearAndInputTextToField(FIELD_PASSWORD_XP, password);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PASSWORD_ID), password);
 	}
 
 	public void fillConfirmPassword(String confirmPassword){
-		WebDriverUtils.clearAndInputTextToField(FIELD_PASSWORD_VERIFICATION_XP, confirmPassword);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PASSWORD_VERIFICATION_ID), confirmPassword);
 	}
 
 	private void fillEmail(String email){
-		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, email);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_EMAIL_ID), email);
 	}
 
 	public void fillConfirmEmail(String confirmEmail){
-		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_VERIFICATION_XP, confirmEmail);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_EMAIL_VERIFICATION_ID), confirmEmail);
 	}
 
 	private void fillFirstName(String firstName){
-		WebDriverUtils.clearAndInputTextToField(FIELD_FIRSTNAME_XP, firstName);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_FIRSTNAME_ID), firstName);
 	}
 
 	private void fillLastName(String lastName){
-		WebDriverUtils.clearAndInputTextToField(FIELD_LASTNAME_XP, lastName);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_LASTNAME_ID), lastName);
 	}
 
 	private void fillBirthDay(String birthDay){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_BIRTHDAY_XP, birthDay);
+		WebDriverUtils.setDropdownOptionByText(getXpathByID(DROPDOWN_BIRTHDAY_ID), birthDay);
 	}
 
 	private void fillBirthMonth(String birthMonth){
@@ -153,23 +164,23 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	public void fillCountry(String countryCode){
-		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_COUNTRY_XP, countryCode);
+		WebDriverUtils.setDropdownOptionByValue(getXpathByID(DROPDOWN_COUNTRY_ID), countryCode);
 	}
 
 	private void fillCity(String city){
-		WebDriverUtils.clearAndInputTextToField(FIELD_CITY_XP, city);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_CITY_ID), city);
 	}
 
 	private void fillAddress(String address){
-		WebDriverUtils.clearAndInputTextToField(FIELD_ADDRESS1_XP, address);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_ADDRESS1_ID), address);
 	}
 
 	private void fillPostCode(String postCode){
-		WebDriverUtils.clearAndInputTextToField(FIELD_POSTCODE_XP, postCode);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_POSTCODE_ID), postCode);
 	}
 
 	private void fillPhoneAreaCode(String phoneAreaCode){
-		WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_COUNTRY_CODE_XP, phoneAreaCode);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PHONE_COUNTRY_CODE_ID), phoneAreaCode);
 	}
 
 	private void fillPhone(String phone){
@@ -177,11 +188,11 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	private void setCurrency(String currencyCode){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_CURRENCY_XP, currencyCode);
+		WebDriverUtils.setDropdownOptionByText(getXpathByID(DROPDOWN_CURRENCY_ID), currencyCode);
 	}
 
 	private void fillBonusCode(String coupon){
-		WebDriverUtils.clearAndInputTextToField(FIELD_BONUSCODE_XP, coupon);
+		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_BONUSCODE_ID), coupon);
 	}
 
 	public boolean getCheckboxStateTermsAndConditions(){
@@ -295,11 +306,11 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	public String getSelectedCurrency(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_CURRENCY_XP).getText();
+		return WebDriverUtils.getDropdownSelectedOption(getXpathByID(DROPDOWN_CURRENCY_ID)).getText();
 	}
 
 	public String getSelectedCountryName(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_COUNTRY_XP).getText();
+		return WebDriverUtils.getDropdownSelectedOption(getXpathByID(DROPDOWN_COUNTRY_ID)).getText();
 	}
 
 	public boolean isBonusCodeErrorPresent(){
@@ -369,7 +380,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public Collection<String> getCountriesCodesList() {
-        return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_COUNTRY_XP);
+        return WebDriverUtils.getDropdownOptionsValue(getXpathByID(DROPDOWN_COUNTRY_ID));
     }
 
     public Collection<String> getNationalitiesCodesList() {
@@ -377,61 +388,86 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public Collection<String> getCurrencyList() {
-        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_CURRENCY_XP);
+        return WebDriverUtils.getDropdownOptionsText(getXpathByID(DROPDOWN_CURRENCY_ID));
+    }
+
+
+    private String getXpathByID(String id){
+        return FIELD_BASE_XP.replace(PLACEHOLDER, id);
     }
 
     /* Fields validation */
 
+    public void validateGender(ValidationRule rule) {
+        ValidationUtils.validateDropdown(getXpathByID(DROPDOWN_GENDER_ID), rule, DROPDOWN_GENDER_ID);
+    }
+
     public void validateFirstname(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_FIRSTNAME_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_FIRSTNAME_ID), rule, FIELD_FIRSTNAME_ID);
     }
 
     public void validateLastname(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_LASTNAME_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_LASTNAME_ID), rule, FIELD_LASTNAME_ID);
     }
 
     public void validateEmail(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_EMAIL_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_EMAIL_ID), rule, FIELD_EMAIL_ID);
     }
 
-    public void validateVerificationEmail(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_EMAIL_VERIFICATION_XP, rule);
+    public void validateState(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByID(FIELD_STATE_ID), rule, FIELD_STATE_ID);
+    }
+
+    public void validateCountry(ValidationRule rule) {
+        ValidationUtils.validateDropdown(getXpathByID(DROPDOWN_COUNTRY_ID), rule, DROPDOWN_COUNTRY_ID);
     }
 
     public void validateCity(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_CITY_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_CITY_ID), rule, FIELD_CITY_ID);
     }
 
     public void validateAddress1(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_ADDRESS1_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_ADDRESS1_ID), rule, FIELD_ADDRESS1_ID);
+    }
+
+    public void validateAddress2(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByID(FIELD_ADDRESS2_ID), rule, FIELD_ADDRESS2_ID);
+    }
+
+    public void validateHouse(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByID(FIELD_HOUSE_ID), rule, FIELD_HOUSE_ID);
     }
 
     public void validatePostcode(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_POSTCODE_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_POSTCODE_ID), rule, FIELD_POSTCODE_ID);
     }
 
     public void validatePhoneCountryCode(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PHONE_COUNTRY_CODE_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_PHONE_COUNTRY_CODE_ID), rule, FIELD_PHONE_COUNTRY_CODE_ID);
     }
 
     public void validatePhone(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PHONE_XP, rule);
+        ValidationUtils.validateField(FIELD_PHONE_XP, rule, FIELD_PHONE_COUNTRY_CODE_ID);
     }
 
     public void validateUsername(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_USERNAME_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_USERNAME_ID), rule, FIELD_USERNAME_ID);
     }
 
     public void validatePassword(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PASSWORD_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_PASSWORD_ID), rule, FIELD_PASSWORD_ID);
     }
 
-    public void validateVerificationPassword(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PASSWORD_VERIFICATION_XP, rule);
+    public void validateAnswer(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByID(FIELD_ANSWER_ID), rule, FIELD_ANSWER_ID);
+    }
+
+    public void validateCurrency(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByID(DROPDOWN_CURRENCY_ID), rule, DROPDOWN_CURRENCY_ID);
     }
 
     public void validateBonusCode(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_BONUSCODE_XP, rule);
+        ValidationUtils.validateField(getXpathByID(FIELD_BONUSCODE_ID), rule, FIELD_BONUSCODE_ID);
     }
 
 }

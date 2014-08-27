@@ -130,17 +130,17 @@ public class ReferAFriendTest extends AbstractTest{
 
     /* validation */
 
-	/*1. Name field validation*/
-	@Test(groups = {"validation"})
-	public void nameFieldValidation(){
-        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
-		referAFriendPage.validateName(nameValidationRule);
-	}
-
-	/*2. Email field validation*/
-	@Test(groups = {"validation"})
-	public void emailFieldValidation(){
-        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
-		referAFriendPage.validateEmail(emailValidationRule);
-	}
+//	/*1. Name field validation*/
+//	@Test(groups = {"validation"})
+//	public void nameFieldValidation(){
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//		referAFriendPage.validateName(nameValidationRule);
+//	}
+//
+//	/*2. Email field validation*/
+//	@Test(groups = {"validation"})
+//	public void emailFieldValidation(){
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//		referAFriendPage.validateEmail(emailValidationRule);
+//	}
 }

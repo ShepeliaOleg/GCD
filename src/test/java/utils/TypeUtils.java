@@ -23,24 +23,18 @@ public class TypeUtils extends Assert {
     }
 
     public static List<Integer> convertWebElementListToIntegerList(List<WebElement> webElementList) {
-
         List<Integer> integerList=new ArrayList<Integer>();
-
         for (int i = 0; i < webElementList.size(); i++) {
             integerList.add(getIntegerValueFromString(webElementList.get(i).getText()));
         }
-
         return integerList;
     }
 
     public static List<String> convertIntegerListToStringList(List<Integer> integerList) {
-
         List<String> stringList=new ArrayList<String>();
-
         for (int i = 0; i < integerList.size(); i++) {
             stringList.add(String.valueOf(integerList.get(i)));
         }
-
         return stringList;
     }
 
@@ -132,5 +126,9 @@ public class TypeUtils extends Assert {
         different.removeAll(same);
 
         return different;
+    }
+
+    public static String[] splitNumbers(String string){
+        return string.replace("}", "").replace("{", "").split(",");
     }
 }

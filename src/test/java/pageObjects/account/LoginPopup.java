@@ -8,9 +8,7 @@ import pageObjects.forgotPassword.ContactUsPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
-import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 /**
@@ -151,11 +149,11 @@ public class LoginPopup extends AbstractPopup{
 
     /* VALIDATION*/
 
-    public void validateUsername(ValidationRule rule) {
-        ValidationUtils.validate(INPUT_USERNAME_XP, rule);
-    }
-
-    public void validatePassword(ValidationRule rule) {
-		ValidationUtils.validate(INPUT_PASSWORD_XP, rule);
-    }
+//    public void validateUsername(ValidationRule rule) {
+//        ValidationUtils.validate(INPUT_USERNAME_XP, rule);
+//    }
+//
+//    public void validatePassword(ValidationRule rule) {
+//		ValidationUtils.validate(INPUT_PASSWORD_XP, rule);
+//    }
 }

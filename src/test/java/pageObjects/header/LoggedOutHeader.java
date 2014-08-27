@@ -6,9 +6,7 @@ import pageObjects.base.AbstractPageObject;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
-import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 /**
@@ -91,11 +89,11 @@ public class LoggedOutHeader extends Header{
 
 	/* VALIDATION */
 
-	public void validateUsername(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_USERNAME_XP, rule);
-	}
-
-	public void validatePassword(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_PASSWORD_XP, rule);
-	}
+//	public void validateUsername(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_USERNAME_XP, rule);
+//	}
+//
+//	public void validatePassword(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_PASSWORD_XP, rule);
+//	}
 }

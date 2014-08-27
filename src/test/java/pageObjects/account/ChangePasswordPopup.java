@@ -1,8 +1,6 @@
 package pageObjects.account;
 
 import pageObjects.base.AbstractPopup;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 public class ChangePasswordPopup extends AbstractPopup{
@@ -52,11 +50,11 @@ public class ChangePasswordPopup extends AbstractPopup{
 		return WebDriverUtils.isVisible(LABEL_MESSAGE_ERROR_XP);
 	}
 
-    public void validateOldPassword(ValidationRule rule) {
-        ValidationUtils.validate(INPUT_OLD_PASSWORD_XP, rule);
-    }
-
-    public void validateNewPassword(ValidationRule rule) {
-		ValidationUtils.validate(INPUT_NEW_PASSWORD_XP, rule);
-    }
+//    public void validateOldPassword(ValidationRule rule) {
+//        ValidationUtils.validate(INPUT_OLD_PASSWORD_XP, rule);
+//    }
+//
+//    public void validateNewPassword(ValidationRule rule) {
+//		ValidationUtils.validate(INPUT_NEW_PASSWORD_XP, rule);
+//    }
 }

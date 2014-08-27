@@ -6,15 +6,11 @@ import org.springframework.test.context.ContextConfiguration;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
-/**
- * User: sergiich
- * Date: 7/5/13
- */
-@ContextConfiguration(locations={"/spring-config.xml"})
 public abstract class AbstractPageObject extends WebDriverObject {
 
-	public static final String VALIDATION_ERROR_XP="//span[contains(@class,'error')]";
-    private static final int TIMEOUT = 30;
+	public static final String VALIDATION_ERROR_XP= "//span[contains(@class,'error')]";
+    protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
+    private static final int TIMEOUT =              30;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -54,7 +50,6 @@ public abstract class AbstractPageObject extends WebDriverObject {
             }
         }
     }
-
 }
 
 

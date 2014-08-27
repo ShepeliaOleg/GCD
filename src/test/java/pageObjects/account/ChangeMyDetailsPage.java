@@ -2,8 +2,6 @@ package pageObjects.account;
 
 import pageObjects.base.AbstractPage;
 import springConstructors.UserData;
-import springConstructors.ValidationRule;
-import utils.ValidationUtils;
 import utils.WebDriverUtils;
 
 /*
@@ -187,32 +185,32 @@ public class ChangeMyDetailsPage extends AbstractPage{
 
     /* Fields validation */
 
-    public void validateEmail(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
-    }
-
-    public void validateVerificationEmail(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_EMAIL_VERIFICATION_XP, rule);
-    }
-
-    public void validateCity(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_CITY_XP, rule);
-    }
-
-    public void validateAddress(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_ADDRESS_XP, rule);
-    }
-
-    public void validatePostcode(ValidationRule rule) {
-		 ValidationUtils.validate(FIELD_POSTCODE_XP, rule);
-    }
-
-    public void validatePhone(ValidationRule rule) {
-        ValidationUtils.validate(FIELD_PHONE_XP, rule);
-    }
-
-    public void validateMobile(ValidationRule rule) {
-		ValidationUtils.validate(FIELD_MOBILE_XP, rule);
-    }
+//    public void validateEmail(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
+//    }
+//
+//    public void validateVerificationEmail(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_EMAIL_VERIFICATION_XP, rule);
+//    }
+//
+//    public void validateCity(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_CITY_XP, rule);
+//    }
+//
+//    public void validateAddress(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_ADDRESS_XP, rule);
+//    }
+//
+//    public void validatePostcode(ValidationRule rule) {
+//		 ValidationUtils.validate(FIELD_POSTCODE_XP, rule);
+//    }
+//
+//    public void validatePhone(ValidationRule rule) {
+//        ValidationUtils.validate(FIELD_PHONE_XP, rule);
+//    }
+//
+//    public void validateMobile(ValidationRule rule) {
+//		ValidationUtils.validate(FIELD_MOBILE_XP, rule);
+//    }
 
 }

@@ -10,9 +10,9 @@
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
-        <property name="defaultBaseUrl" value="http://eagle:flight@mob-demo3.playtechgaming.com/"/>
-        <property name="defaultBrowser" value="firefox"/>
-        <property name="defaultOs" value="linux"/>
+        <property name="defaultBaseUrl" value="http://eagle:flight@lpm-7regal-public-618179476.eu-west-1.elb.amazonaws.com/"/>
+        <property name="defaultBrowser" value="chrome"/>
+        <property name="defaultOs" value="win"/>
     </bean>
 
     <bean id="defaults" class="springConstructors.Defaults">

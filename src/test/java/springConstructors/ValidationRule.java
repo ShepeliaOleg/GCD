@@ -1,11 +1,66 @@
 package springConstructors;
 
 import utils.RandomUtils;
+import utils.TypeUtils;
+import utils.validation.RegexNode;
+import utils.validation.ValidationUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ValidationRule {
     private String regexp;
     private int minLength;
     private int maxLength;
+
+    private String tooltipPositive;
+    private String tooltipNegativeEmpty;
+    private String tooltipNegativeShort;
+    private String tooltipNegativeLong;
+    private String tooltipNegativeInvalid;
+
+    private String isMandatory;
+
+    public String getTooltipPositive() {
+        return tooltipPositive;
+    }
+
+    public String getTooltipNegativeEmpty() {
+        return tooltipNegativeEmpty;
+    }
+
+    public String getTooltipNegativeShort() {
+        return tooltipNegativeShort;
+    }
+
+    public String getTooltipNegativeLong() {
+        return tooltipNegativeLong;
+    }
+
+    public String getTooltipNegativeInvalid() {
+        return tooltipNegativeInvalid;
+    }
+
+    public void setTooltipPositive(String tooltipPositive) {
+        this.tooltipPositive = tooltipPositive;
+    }
+
+    public void setTooltipNegativeEmpty(String tooltipNegativeEmpty) {
+        this.tooltipNegativeEmpty = tooltipNegativeEmpty;
+    }
+
+    public void setTooltipNegativeShort(String tooltipNegativeShort) {
+        this.tooltipNegativeShort = tooltipNegativeShort;
+    }
+
+    public void setTooltipNegativeLong(String tooltipNegativeLong) {
+        this.tooltipNegativeLong = tooltipNegativeLong;
+    }
+
+    public void setTooltipNegativeInvalid(String tooltipNegativeInvalid) {
+        this.tooltipNegativeInvalid = tooltipNegativeInvalid;
+    }
 
     public String getRegexp() {
         return regexp;
@@ -31,6 +86,14 @@ public class ValidationRule {
         this.maxLength = maxLength;
     }
 
+    public String getIsMandatory() {
+        return isMandatory;
+    }
+
+    public void setIsMandatory(String isMandatory) {
+        this.isMandatory = isMandatory;
+    }
+
     public String getAllNotAllowedSymbols() {
         return RandomUtils.getAllExcept(getAllAllowedSymbols());
     }
@@ -39,50 +102,17 @@ public class ValidationRule {
         return RandomUtils.generateStringByRegexp(regexp);
     }
 
-    public String generateValidString(int length) {
-
-        String regexpTemp = extendRegExpToMax (regexp);
-        int startQuantifierIndex = regexpTemp.lastIndexOf("{") + 1;
-        int endQuantifierIndex = regexpTemp.lastIndexOf("}");
-
-
-        String quantifier = regexpTemp.substring(startQuantifierIndex, endQuantifierIndex);
-        String[] numbers = quantifier.split(",");
-        int min = Integer.parseInt(numbers[0]);
-        int max = Integer.parseInt(numbers[1]);
-
-
-        String extendedRegexp = regexpTemp.substring(0,startQuantifierIndex).concat(String.valueOf(min+length)).concat(",").concat(String.valueOf(max+length)).concat(regexpTemp.substring(endQuantifierIndex));
-
-        return RandomUtils.generateStringByRegexp(extendedRegexp);
+    public String generateValidStringOverMaxSymbols(){
+        String allAllowedSymbols = getAllAllowedSymbols();
+        return generateValidStringWithMaxSymbols()+allAllowedSymbols.substring(allAllowedSymbols.length() - 1);
     }
 
-    private String extendRegExpToMax (String regexp) {
-        String extdendedRegExp = regexp;
-        int fromIndex = 0;
-        //We search for each {min,max} occurrence in regexp and replace min with max in it
-        while (fromIndex < extdendedRegExp.lastIndexOf("{")){
-            int startQuantifierIndex = extdendedRegExp.indexOf("{", fromIndex) + 1;
-            int endQuantifierIndex = extdendedRegExp.indexOf("}", startQuantifierIndex);
-            String quantifier = extdendedRegExp.substring(startQuantifierIndex, endQuantifierIndex);
-            String[] numbers = quantifier.split(",");
-            if (Integer.parseInt(numbers[0]) != Integer.parseInt(numbers[1])){
-                String end = "";
-                if (endQuantifierIndex != extdendedRegExp.lastIndexOf("}")){
-                    end = extdendedRegExp.substring(endQuantifierIndex+1);
-                }
-                extdendedRegExp = extdendedRegExp.substring(0, startQuantifierIndex-1).concat("{").concat(numbers[1].toString()).concat(",").concat(numbers[1].toString()).concat("}").concat(end);
-            }
-
-            //next cycle should start from index after current {} occurrence
-            fromIndex = startQuantifierIndex;
+    private String generateValidStringWithMaxSymbols() {
+        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(regexp);
+        for(RegexNode node:nodes){
+            node.setMin(node.getMax());
         }
-
-        return extdendedRegExp;
-    }
-
-    public String generateMaximumValue (){
-        return RandomUtils.generateStringByRegexp(extendRegExpToMax (regexp));
+        return RandomUtils.generateStringByRegexp(ValidationUtils.generateRegExpFromNodes(nodes));
     }
 
     public String getAllAllowedSymbols() {
@@ -94,5 +124,7 @@ public class ValidationRule {
         return string;
     }
 
-
+    public String[] getDropdownValues() {
+        return getRegexp().split("@");
+    }
 }
