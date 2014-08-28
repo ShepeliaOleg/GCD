@@ -9,11 +9,6 @@ import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
 public class LoggedOutHeader extends Header{
 
 	private static final String ROOT_XP = 				"//*[@class='login-replacer']";

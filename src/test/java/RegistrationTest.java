@@ -121,412 +121,412 @@ public class RegistrationTest extends AbstractTest{
 	
 	/*POSITIVE*/
 	
-	/*1. Valid user registration*/
-	@Test(groups = {"smoke"})
-	public void validUserRegistration() {
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
-        TypeUtils.assertTrueWithLogs(new AbstractPage().isLoggedIn());
-	}
-
-	/*#2. Registration with receive bonuses check box checked*/
-	@Test(groups = {"regression"})
-	public void receiveBonusesIsCheckedInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		HomePage homePage=(HomePage) registrationPage.registerUser(userData, true);
-		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS);
-	}
-
-    /*#3. Registration with receive bonuses check box unchecked*/
-	@Test(groups = {"regression"})
-	public void receiveBonusesIsNotCheckedInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.registerUser(userData, false);
-		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS);
-	}
-
-    /*#4. Registration with bonus code provided*/
-	@Test(groups = {"regression"})
-	public void registrationWithBonusCoupon(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        HomePage homePage=(HomePage)registrationPage.registerUser(userData, false, true);
-		boolean bonusesPresent=homePage.getBalance().equals("£10.00") || homePage.getBalance().equals("£ 10.00");
-        TypeUtils.assertTrueWithLogs(bonusesPresent);
-	}
-
-    /*#5. Registration without bonus code provided*/
-    @Test(groups = {"regression"})
-	public void registrationWithOutBonusCoupon(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        HomePage homePage=(HomePage) registrationPage.registerUser(userData, false, false);
-		boolean bonusesNotPresent=homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
-        TypeUtils.assertTrueWithLogs(bonusesNotPresent);
-	}
-
-    /*#6. Player is registered with currency selected*/
-	@Test(groups = {"regression"})
-	public void validHeaderUnitBalance(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
-		UserData userData=defaultUserData.getRandomUserData();
-        HomePage homePage=(HomePage)registrationPage.registerUser(userData);
-		String currencyInHeader=homePage.getBalance();
-        TypeUtils.assertTrueWithLogs(defaultCurrencyInRegistrationForm.contains("GBP"));
-        TypeUtils.assertTrueWithLogs(currencyInHeader.contains("£"));
-	}
-
-    /*#7. After registration web content*/
-	@Test(groups = {"regression"})
-	public void afterRegistrationWebContent(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData userData=defaultUserData.getRandomUserData();
-		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
-	}
-
-    /*#10. After-registration redirect*/
-	@Test(groups = {"regression"})
-	public void afterRegistrationRedirect(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        HomePage homePage=(HomePage)registrationPage.registerUser(userData);
-		String actualUrl=WebDriverUtils.getCurrentUrl();
-        TypeUtils.assertTrueWithLogs(actualUrl.endsWith("/afterreg"));
-	}
-
-    /*#11. The list of supported countries is correct*/
-	@Test(groups = {"regression"})
-	public void countryList(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList();
-		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountriesCodesList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty());
-	}
-
-    /*#??. The list of supported nationalities is correct*/
-    @Test(groups = {"spanish"})
-    public void nationalityList(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> actualNationalitiesCodesList = registrationPage.getNationalitiesCodesList();
-        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountriesCodesList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty());
-    }
-
-    /*#12. The list of supported currencies is correct*/
-	@Test(groups = {"regression"})
-	public void currencyList(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> actualCurrencyList=registrationPage.getCurrencyList();
-		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty());
-	}
-
-    /*#13. T&C web content is shown when clicking on T&C link*/
-	@Test(groups = {"regression"})
-	public void openTermsAndConditionsPopup(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
-	}
-
-    /*#14. 18+ web content is shown when clicking on 18+ link*/
-	@Test(groups = {"regression"})
-	public void adultContentIsShown() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        TypeUtils.assertTrueWithLogs(registrationPage.isAdultContentPresent());
-	}
-
-	/*#15. Logs registration*/
-	@Test(groups = {"regression", "logs"})
-	public void checkLogParametersRegistration(){
-        try{
-            LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
-            UserData userData=defaultUserData.getRandomUserData();
-            String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
-                    "KV(1, playtech81001)",
-                    "KV(2, "+userData.getUsername()+")",
-                    "KV(7, "+userData.getCity()+")",
-                    "KV(19, "+userData.getEmail()+")",
-                    "KV(21, "+userData.getFirstName()+")",
-                    "KV(24, "+userData.getLastName()+")",
-                    "KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
-                    "KV(34, "+userData.getPostCode()+")"};
-            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-            registrationPage.registerUser(userData);
-            Log log = LogUtils.getCurrentLogs(logCategories);
-            log.doResponsesContainErrors();
-            LogEntry regReq = log.getEntry(LogCategory.SetPlayerInfoRequest);
-            regReq.containsParameters(parameters);
-        }catch (RuntimeException e){
-            if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
-            }else{
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-	}
-
-	/*#16. Logs username check*/
-	@Test(groups = {"regression", "logs"})
-	public void checkLogParametersUsername(){
-        try{
-            LogCategory[] logCategories = new LogCategory[]{LogCategory.CheckUsernameRequest, LogCategory.CheckUsernameResponse};
-            UserData userData=defaultUserData.getRandomUserData();
-            String[] parameters = {"objectIdentity=playtech81001",
-                    "username="+userData.getUsername(),
-                    "firstName="+userData.getFirstName(),
-                    "lastName="+userData.getLastName(),
-                    "email="+userData.getEmail()};
-            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-            registrationPage.registerUser(userData);
-            Log log = LogUtils.getCurrentLogs(logCategories);
-            log.doResponsesContainErrors();
-            LogEntry usrReq = log.getEntry(LogCategory.CheckUsernameRequest);
-            usrReq.containsParameters(parameters);
-        }catch (RuntimeException e){
-            if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
-                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
-            }else{
-                throw new RuntimeException(e.getMessage());
-            }
-        }
-	}
-
-    /*#17. IMS Player Details Page*/
-	@Test(groups = {"regression"})
-	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.registerUser(userData);
-		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
-        TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
-	}
-
-    /*#19. All required fields are marked with asterisks*/
-	@Test(groups = {"regression"})
-	public void requiredFieldsLabelsMarkedWithStar(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.labelsRequiredMarkingCorrect();
-        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
-	}
-
-    /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
-	@Test(groups = {"regression"})
-	public void defaultCheckboxesState(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean receiveBonusesChecked=registrationPage.getCheckboxStateReceiveBonuses();
-		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
-        TypeUtils.assertTrueWithLogs((receiveBonusesChecked == true) && (termsAndConditionsChecked == false));
-	}
-
-    /*#22. Country - countryCode code and phone prefix mapping*/
-	@Test(groups = {"regression", "code"})
-	public void countryCodePhoneCodeMapping(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> countriesCodesList = defaults.getCountriesCodesList();
-		for (String countryCode : countriesCodesList) {
-			registrationPage.fillCountry(countryCode);
-			String phoneAreaCode = registrationPage.getPhoneAreaCode();
-			String expectedAreaCode = defaults.getPhoneCodeByCountryCode(countryCode);
-
-            TypeUtils.assertEqualsWithLogs(phoneAreaCode, "+" + expectedAreaCode, "Phone area code \"" + phoneAreaCode + "\" is not equal to expected area code \"" + expectedAreaCode + "\" on selecting \'" + countryCode + "\" country code.");
-
-		}
-	}
-
-    /*#??. Country - countryCode code and name mapping*/
-    @Test(groups = {"regression", "code"})
-    public void countryCodeNamePrefix(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> countriesCodesList = defaults.getCountriesCodesList();
-        for (String countryCode : countriesCodesList) {
-            registrationPage.fillCountry(countryCode);
-            String actualCountryName = registrationPage.getSelectedCountryName();
-            String expectedCountryName = defaults.getCountryNameByCountryCode(countryCode);
-
-            TypeUtils.assertEqualsWithLogs(actualCountryName, expectedCountryName, "Phone area code (" + actualCountryName + ") is not equal to expected area code (" + expectedCountryName + ") on selecting " + countryCode + " countryCode.");
-
-        }
-    }
-
-    /*#23. Default selected countryCode*/
-	@Test(groups = {"regression"})
-	public void defaultCountry(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		String selectedCountryName = registrationPage.getSelectedCountryName();
-
-        TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
-		//TypeUtils.assertTrueWithLogs(registrationPage.getFillFieldsButtonVisibleState());
-	}
-
-    /*#24. Change countryCode from UK to any and selecting UK again Fill all fields element is displayed*/
-	@Test(groups = {"regression"})
-	public void fillFieldsAppearDisappear(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		// stage 1
-		boolean fillFieldsVisibleStage1 = registrationPage.getFillFieldsButtonVisibleState();
-		String randomCountryCode;
-		String defaultCountryCode = defaults.getDefaultCountryCode();
-		do {
-			randomCountryCode = defaults.getRandomCountryCode();
-		}
-		while (randomCountryCode.equals(defaultCountryCode));
-		// stage 2
-		registrationPage.fillCountry(randomCountryCode);
-		boolean fillFieldsVisibleStage2 = registrationPage.getFillFieldsButtonVisibleState();
-		// stage 3
-		registrationPage.fillCountry(defaultCountryCode);
-		boolean fillFieldsVisibleStage3 = registrationPage.getFillFieldsButtonVisibleState();
-        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage1);
-        TypeUtils.assertFalse(fillFieldsVisibleStage2);
-        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage3);
-	}
-
-    /*#25. Enter zipcode - City/Address1/Address2/House number updated on Fill all fields click and are editable*/
-	@Test(groups = {"regression"})
-	public void zipCodeFillsAddress(){
-        try {
-            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-            List<String> fullAddressActual = registrationPage.fillAutoByPostCode("SE17RL");
-            List<String> fullAddressExpected = Arrays.asList("London", "35-41 Lower Marsh", "", "35-41");
-            boolean autofilledFieldsAreEditable = registrationPage.autofilledFieldsAreEditable();
-            if (fullAddressActual.equals(fullAddressExpected) == false || autofilledFieldsAreEditable == false) {
-                WebDriverUtils.runtimeExceptionWithLogs("<div>Actual: " + fullAddressActual + " </div><div>Expected: " + fullAddressExpected + "</div><div>Editable: " + autofilledFieldsAreEditable + " | Expected: True</div>");
-            }
-        }catch (RuntimeException e){
-            if(e.getMessage().contains("35-41/")){
-                throw new SkipException("Skipped until D-10144 is fixed"+WebDriverUtils.getUrlAndLogs());
-            }else{
-                WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
-            }
-        }
-	}
-
-    @Test(groups = {"regression", "affiliate"})
-	public void affiliateSupportCookieAll(){
-        String advertiser="advert1";
-        String banner="v2";
-        String profile="v3";
-        String url="v4";
-        String customTitle="BTAG";
-        String customValue="12333";
-        UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.clearCookies();
-        WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
-        WebDriverUtils.refreshPage();
-        registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
-	}
-
-    @Test(groups = {"regression", "affiliate"})
-    public void affiliateSupportCookieFirst(){
-        String advertiser="advert1";
-        UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.clearCookies();
-        WebDriverUtils.addCookie("banner_domainclick", advertiser+",,,,", WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
-        WebDriverUtils.refreshPage();
-        registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser);
-    }
-
-    @Test(groups = {"regression", "affiliate"})
-    public void affiliateSupportURL(){
-        String advertiser="advert1";
-        String banner="v2";
-        String profile="v3";
-        String url="v4";
-        String customTitle="BTAG";
-        String customValue="12333";
-        UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.clearCookies();
-        WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
-        registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
-    }
-
-    /*NEGATIVE*/
-
-    /*#1. Try to use already existing username*/
-	@Test(groups = {"regression"})
-	public void alreadyUsedUsername(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		UserData registeredUserData=defaultUserData.getRegisteredUserData();
-		generatedUserData.setUsername(registeredUserData.getUsername());
-		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
-		String errorMessageText=registrationPage.getUsernameSuggestionText();
-		boolean usernameUsedMessageDisplayed=errorMessageText.contains("Not available, check suggestions:");
-        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
-	}
-
-    /*#2. Try to use already used email*/
-	@Test(groups = {"regression"})
-	public void alreadyUsedEmail(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		generatedUserData.setEmail("playtech@spamavert.com");
-		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
-		String errorMessageText=registrationPage.getErrorMessageText();
-        if(errorMessageText.contains("Timeout occurred")){
-            throw new SkipException("IMS timeout"+WebDriverUtils.getUrlAndLogs());
-        }
-		boolean emailUsedMessageDisplayed=errorMessageText.equals("The specified email address is already in use.");
-
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
-	}
-
-    /*3. Try to use invalid bonus code*/
-	@Test(groups = {"regression"})
-	public void registrationWithInvalidBonusCoupon() {
-		String invalidBonusCoupon = searchValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage = (RegistrationPage) registrationPage.registerUser(userData, invalidBonusCoupon);
-		boolean bonusErrorPresent = registrationPage.isBonusCodeErrorPresent();
-        TypeUtils.assertTrueWithLogs(bonusErrorPresent);
-	}
-
-    /*#4. Email and email confirmation do not match*/
-	@Test(groups = {"regression"})
-	public void emailDoNotMatch(){
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.fillRegistrationForm(generatedUserData);
-		registrationPage.fillConfirmEmail("incorrect@playtech.com");
-		registrationPage.submit();
-		String tooltipMessageText=registrationPage.getTooltipMessageText();
-		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("This address is different from the one above, please correct");
-        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
-	}
-
-    /*#5. Password & Confirmation do not match*/
-	@Test(groups = {"regression"})
-	public void passwordDoNotMatch(){
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.fillRegistrationForm(generatedUserData);
-		registrationPage.fillConfirmPassword("incorrect");
-		registrationPage.submit();
-		String errorMessageText=registrationPage.getTooltipMessageText();
-		boolean emailUsedMessageDisplayed=errorMessageText.equals("Passwords are not the same");
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
-	}
-
-    /*#6. Try to submit registration form without accepting T&C (without checking check box)*/
-	@Test(groups = {"regression"})
-	public void submitWithUncheckedTermsAndConditions(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
-		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.checkboxTermsAndConditionsValidationErrorVisible();
-        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
-	}
+//	/*1. Valid user registration*/
+//	@Test(groups = {"smoke"})
+//	public void validUserRegistration() {
+//        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+//        TypeUtils.assertTrueWithLogs(new AbstractPage().isLoggedIn());
+//	}
+//
+//	/*#2. Registration with receive bonuses check box checked*/
+//	@Test(groups = {"regression"})
+//	public void receiveBonusesIsCheckedInIMS(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		HomePage homePage=(HomePage) registrationPage.registerUser(userData, true);
+//		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
+//		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS);
+//	}
+//
+//    /*#3. Registration with receive bonuses check box unchecked*/
+//	@Test(groups = {"regression"})
+//	public void receiveBonusesIsNotCheckedInIMS(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage.registerUser(userData, false);
+//		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
+//        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS);
+//	}
+//
+//    /*#4. Registration with bonus code provided*/
+//	@Test(groups = {"regression"})
+//	public void registrationWithBonusCoupon(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        HomePage homePage=(HomePage)registrationPage.registerUser(userData, false, true);
+//		boolean bonusesPresent=homePage.getBalance().equals("£10.00") || homePage.getBalance().equals("£ 10.00");
+//        TypeUtils.assertTrueWithLogs(bonusesPresent);
+//	}
+//
+//    /*#5. Registration without bonus code provided*/
+//    @Test(groups = {"regression"})
+//	public void registrationWithOutBonusCoupon(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        HomePage homePage=(HomePage) registrationPage.registerUser(userData, false, false);
+//		boolean bonusesNotPresent=homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
+//        TypeUtils.assertTrueWithLogs(bonusesNotPresent);
+//	}
+//
+//    /*#6. Player is registered with currency selected*/
+//	@Test(groups = {"regression"})
+//	public void validHeaderUnitBalance(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
+//		UserData userData=defaultUserData.getRandomUserData();
+//        HomePage homePage=(HomePage)registrationPage.registerUser(userData);
+//		String currencyInHeader=homePage.getBalance();
+//        TypeUtils.assertTrueWithLogs(defaultCurrencyInRegistrationForm.contains("GBP"));
+//        TypeUtils.assertTrueWithLogs(currencyInHeader.contains("£"));
+//	}
+//
+//    /*#7. After registration web content*/
+//	@Test(groups = {"regression"})
+//	public void afterRegistrationWebContent(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		UserData userData=defaultUserData.getRandomUserData();
+//		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
+//	}
+//
+//    /*#10. After-registration redirect*/
+//	@Test(groups = {"regression"})
+//	public void afterRegistrationRedirect(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        HomePage homePage=(HomePage)registrationPage.registerUser(userData);
+//		String actualUrl=WebDriverUtils.getCurrentUrl();
+//        TypeUtils.assertTrueWithLogs(actualUrl.endsWith("/afterreg"));
+//	}
+//
+//    /*#11. The list of supported countries is correct*/
+//	@Test(groups = {"regression"})
+//	public void countryList(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList();
+//		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountriesCodesList());
+//        TypeUtils.assertTrueWithLogs(diff.isEmpty());
+//	}
+//
+//    /*#??. The list of supported nationalities is correct*/
+//    @Test(groups = {"spanish"})
+//    public void nationalityList(){
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        Collection<String> actualNationalitiesCodesList = registrationPage.getNationalitiesCodesList();
+//        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountriesCodesList());
+//        TypeUtils.assertTrueWithLogs(diff.isEmpty());
+//    }
+//
+//    /*#12. The list of supported currencies is correct*/
+//	@Test(groups = {"regression"})
+//	public void currencyList(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		Collection<String> actualCurrencyList=registrationPage.getCurrencyList();
+//		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
+//        TypeUtils.assertTrueWithLogs(diff.isEmpty());
+//	}
+//
+//    /*#13. T&C web content is shown when clicking on T&C link*/
+//	@Test(groups = {"regression"})
+//	public void openTermsAndConditionsPopup(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
+//	}
+//
+//    /*#14. 18+ web content is shown when clicking on 18+ link*/
+//	@Test(groups = {"regression"})
+//	public void adultContentIsShown() {
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        TypeUtils.assertTrueWithLogs(registrationPage.isAdultContentPresent());
+//	}
+//
+//	/*#15. Logs registration*/
+//	@Test(groups = {"regression", "logs"})
+//	public void checkLogParametersRegistration(){
+//        try{
+//            LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
+//            UserData userData=defaultUserData.getRandomUserData();
+//            String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
+//                    "KV(1, playtech81001)",
+//                    "KV(2, "+userData.getUsername()+")",
+//                    "KV(7, "+userData.getCity()+")",
+//                    "KV(19, "+userData.getEmail()+")",
+//                    "KV(21, "+userData.getFirstName()+")",
+//                    "KV(24, "+userData.getLastName()+")",
+//                    "KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
+//                    "KV(34, "+userData.getPostCode()+")"};
+//            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//            registrationPage.registerUser(userData);
+//            Log log = LogUtils.getCurrentLogs(logCategories);
+//            log.doResponsesContainErrors();
+//            LogEntry regReq = log.getEntry(LogCategory.SetPlayerInfoRequest);
+//            regReq.containsParameters(parameters);
+//        }catch (RuntimeException e){
+//            if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
+//                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
+//            }else{
+//                throw new RuntimeException(e.getMessage());
+//            }
+//        }
+//	}
+//
+//	/*#16. Logs username check*/
+//	@Test(groups = {"regression", "logs"})
+//	public void checkLogParametersUsername(){
+//        try{
+//            LogCategory[] logCategories = new LogCategory[]{LogCategory.CheckUsernameRequest, LogCategory.CheckUsernameResponse};
+//            UserData userData=defaultUserData.getRandomUserData();
+//            String[] parameters = {"objectIdentity=playtech81001",
+//                    "username="+userData.getUsername(),
+//                    "firstName="+userData.getFirstName(),
+//                    "lastName="+userData.getLastName(),
+//                    "email="+userData.getEmail()};
+//            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//            registrationPage.registerUser(userData);
+//            Log log = LogUtils.getCurrentLogs(logCategories);
+//            log.doResponsesContainErrors();
+//            LogEntry usrReq = log.getEntry(LogCategory.CheckUsernameRequest);
+//            usrReq.containsParameters(parameters);
+//        }catch (RuntimeException e){
+//            if(e.getMessage().contains("Not all registration logs appeared") || e.toString().contains("Logs have not been updated")){
+//                throw new SkipException("Log page issue"+WebDriverUtils.getUrlAndLogs());
+//            }else{
+//                throw new RuntimeException(e.getMessage());
+//            }
+//        }
+//	}
+//
+//    /*#17. IMS Player Details Page*/
+//	@Test(groups = {"regression"})
+//	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage.registerUser(userData);
+//		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
+//        TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
+//	}
+//
+//    /*#19. All required fields are marked with asterisks*/
+//	@Test(groups = {"regression"})
+//	public void requiredFieldsLabelsMarkedWithStar(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.labelsRequiredMarkingCorrect();
+//        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
+//	}
+//
+//    /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
+//	@Test(groups = {"regression"})
+//	public void defaultCheckboxesState(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		boolean receiveBonusesChecked=registrationPage.getCheckboxStateReceiveBonuses();
+//		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
+//        TypeUtils.assertTrueWithLogs((receiveBonusesChecked == true) && (termsAndConditionsChecked == false));
+//	}
+//
+//    /*#22. Country - countryCode code and phone prefix mapping*/
+//	@Test(groups = {"regression", "code"})
+//	public void countryCodePhoneCodeMapping(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+//		for (String countryCode : countriesCodesList) {
+//			registrationPage.fillCountry(countryCode);
+//			String phoneAreaCode = registrationPage.getPhoneAreaCode();
+//			String expectedAreaCode = defaults.getPhoneCodeByCountryCode(countryCode);
+//
+//            TypeUtils.assertEqualsWithLogs(phoneAreaCode, "+" + expectedAreaCode, "Phone area code \"" + phoneAreaCode + "\" is not equal to expected area code \"" + expectedAreaCode + "\" on selecting \'" + countryCode + "\" country code.");
+//
+//		}
+//	}
+//
+//    /*#??. Country - countryCode code and name mapping*/
+//    @Test(groups = {"regression", "code"})
+//    public void countryCodeNamePrefix(){
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+//        for (String countryCode : countriesCodesList) {
+//            registrationPage.fillCountry(countryCode);
+//            String actualCountryName = registrationPage.getSelectedCountryName();
+//            String expectedCountryName = defaults.getCountryNameByCountryCode(countryCode);
+//
+//            TypeUtils.assertEqualsWithLogs(actualCountryName, expectedCountryName, "Phone area code (" + actualCountryName + ") is not equal to expected area code (" + expectedCountryName + ") on selecting " + countryCode + " countryCode.");
+//
+//        }
+//    }
+//
+//    /*#23. Default selected countryCode*/
+//	@Test(groups = {"regression"})
+//	public void defaultCountry(){
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		String selectedCountryName = registrationPage.getSelectedCountryName();
+//
+//        TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
+//		//TypeUtils.assertTrueWithLogs(registrationPage.getFillFieldsButtonVisibleState());
+//	}
+//
+//    /*#24. Change countryCode from UK to any and selecting UK again Fill all fields element is displayed*/
+//	@Test(groups = {"regression"})
+//	public void fillFieldsAppearDisappear(){
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		// stage 1
+//		boolean fillFieldsVisibleStage1 = registrationPage.getFillFieldsButtonVisibleState();
+//		String randomCountryCode;
+//		String defaultCountryCode = defaults.getDefaultCountryCode();
+//		do {
+//			randomCountryCode = defaults.getRandomCountryCode();
+//		}
+//		while (randomCountryCode.equals(defaultCountryCode));
+//		// stage 2
+//		registrationPage.fillCountry(randomCountryCode);
+//		boolean fillFieldsVisibleStage2 = registrationPage.getFillFieldsButtonVisibleState();
+//		// stage 3
+//		registrationPage.fillCountry(defaultCountryCode);
+//		boolean fillFieldsVisibleStage3 = registrationPage.getFillFieldsButtonVisibleState();
+//        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage1);
+//        TypeUtils.assertFalse(fillFieldsVisibleStage2);
+//        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage3);
+//	}
+//
+//    /*#25. Enter zipcode - City/Address1/Address2/House number updated on Fill all fields click and are editable*/
+//	@Test(groups = {"regression"})
+//	public void zipCodeFillsAddress(){
+//        try {
+//            RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//            List<String> fullAddressActual = registrationPage.fillAutoByPostCode("SE17RL");
+//            List<String> fullAddressExpected = Arrays.asList("London", "35-41 Lower Marsh", "", "35-41");
+//            boolean autofilledFieldsAreEditable = registrationPage.autofilledFieldsAreEditable();
+//            if (fullAddressActual.equals(fullAddressExpected) == false || autofilledFieldsAreEditable == false) {
+//                WebDriverUtils.runtimeExceptionWithLogs("<div>Actual: " + fullAddressActual + " </div><div>Expected: " + fullAddressExpected + "</div><div>Editable: " + autofilledFieldsAreEditable + " | Expected: True</div>");
+//            }
+//        }catch (RuntimeException e){
+//            if(e.getMessage().contains("35-41/")){
+//                throw new SkipException("Skipped until D-10144 is fixed"+WebDriverUtils.getUrlAndLogs());
+//            }else{
+//                WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+//            }
+//        }
+//	}
+//
+//    @Test(groups = {"regression", "affiliate"})
+//	public void affiliateSupportCookieAll(){
+//        String advertiser="advert1";
+//        String banner="v2";
+//        String profile="v3";
+//        String url="v4";
+//        String customTitle="BTAG";
+//        String customValue="12333";
+//        UserData userData = defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        WebDriverUtils.clearCookies();
+//        WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
+//        WebDriverUtils.refreshPage();
+//        registrationPage.registerUser(userData);
+//        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+//	}
+//
+//    @Test(groups = {"regression", "affiliate"})
+//    public void affiliateSupportCookieFirst(){
+//        String advertiser="advert1";
+//        UserData userData = defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        WebDriverUtils.clearCookies();
+//        WebDriverUtils.addCookie("banner_domainclick", advertiser+",,,,", WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
+//        WebDriverUtils.refreshPage();
+//        registrationPage.registerUser(userData);
+//        iMS.validateAffiliate(userData.getUsername(), advertiser);
+//    }
+//
+//    @Test(groups = {"regression", "affiliate"})
+//    public void affiliateSupportURL(){
+//        String advertiser="advert1";
+//        String banner="v2";
+//        String profile="v3";
+//        String url="v4";
+//        String customTitle="BTAG";
+//        String customValue="12333";
+//        UserData userData = defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        WebDriverUtils.clearCookies();
+//        WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
+//        registrationPage.registerUser(userData);
+//        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+//    }
+//
+//    /*NEGATIVE*/
+//
+//    /*#1. Try to use already existing username*/
+//	@Test(groups = {"regression"})
+//	public void alreadyUsedUsername(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		UserData generatedUserData=defaultUserData.getRandomUserData();
+//		UserData registeredUserData=defaultUserData.getRegisteredUserData();
+//		generatedUserData.setUsername(registeredUserData.getUsername());
+//		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
+//		String errorMessageText=registrationPage.getUsernameSuggestionText();
+//		boolean usernameUsedMessageDisplayed=errorMessageText.contains("Not available, check suggestions:");
+//        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
+//	}
+//
+//    /*#2. Try to use already used email*/
+//	@Test(groups = {"regression"})
+//	public void alreadyUsedEmail(){
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		UserData generatedUserData=defaultUserData.getRandomUserData();
+//		generatedUserData.setEmail("playtech@spamavert.com");
+//		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
+//		String errorMessageText=registrationPage.getErrorMessageText();
+//        if(errorMessageText.contains("Timeout occurred")){
+//            throw new SkipException("IMS timeout"+WebDriverUtils.getUrlAndLogs());
+//        }
+//		boolean emailUsedMessageDisplayed=errorMessageText.equals("The specified email address is already in use.");
+//
+//        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
+//	}
+//
+//    /*3. Try to use invalid bonus code*/
+//	@Test(groups = {"regression"})
+//	public void registrationWithInvalidBonusCoupon() {
+//		String invalidBonusCoupon = searchValidationRule.generateValidString();
+//		UserData userData = defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage = (RegistrationPage) registrationPage.registerUser(userData, invalidBonusCoupon);
+//		boolean bonusErrorPresent = registrationPage.isBonusCodeErrorPresent();
+//        TypeUtils.assertTrueWithLogs(bonusErrorPresent);
+//	}
+//
+//    /*#4. Email and email confirmation do not match*/
+//	@Test(groups = {"regression"})
+//	public void emailDoNotMatch(){
+//		UserData generatedUserData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage.fillRegistrationForm(generatedUserData);
+//		registrationPage.fillConfirmEmail("incorrect@playtech.com");
+//		registrationPage.submit();
+//		String tooltipMessageText=registrationPage.getTooltipMessageText();
+//		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("This address is different from the one above, please correct");
+//        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
+//	}
+//
+//    /*#5. Password & Confirmation do not match*/
+//	@Test(groups = {"regression"})
+//	public void passwordDoNotMatch(){
+//		UserData generatedUserData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage.fillRegistrationForm(generatedUserData);
+//		registrationPage.fillConfirmPassword("incorrect");
+//		registrationPage.submit();
+//		String errorMessageText=registrationPage.getTooltipMessageText();
+//		boolean emailUsedMessageDisplayed=errorMessageText.equals("Passwords are not the same");
+//        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
+//	}
+//
+//    /*#6. Try to submit registration form without accepting T&C (without checking check box)*/
+//	@Test(groups = {"regression"})
+//	public void submitWithUncheckedTermsAndConditions(){
+//		UserData userData=defaultUserData.getRandomUserData();
+//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
+//		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.checkboxTermsAndConditionsValidationErrorVisible();
+//        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
+//	}
 
     /*VALIDATION*/
 	@Test(groups = {"validation"})
@@ -568,7 +568,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     @Test(groups = {"validation"})
-    public void countryFieldValidation() {
+    public void countryDropdownValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateCountry(countryValidationRule);
     }

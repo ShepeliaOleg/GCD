@@ -10,11 +10,11 @@ import utils.WebDriverUtils;
 public abstract class ForgotPopup extends AbstractPopup{
 
     public boolean forgotType;  // true == ForgotPassword; false == ForgotUsername
-    public final static String ROOT_XP =            				"//*[@class='forgot-password-wrap']";
+    public final static String ROOT_XP =            				"//*[contains(@class, 'forgotten-password')]";
     public final static String FORGOT_PASSWORD_TAB_XP =             ROOT_XP + "//a[contains(@data-tab,'password')]";
     public final static String FORGOT_USERNAME_TAB_XP =             ROOT_XP + "//a[contains(@data-tab,'name')]";
-    public final static String FIELD_EMAIL_XP =                	    ROOT_XP + "//*[@id='email']";
-    public final static String BUTTON_APPROVE_XP =             	    ROOT_XP + "//button/span/strong[contains(text(),'Approve')]";
+    public final static String FIELD_EMAIL_XP =                	    ROOT_XP + "//*[@name='email']";
+    public final static String BUTTON_APPROVE_XP =             	    ROOT_XP + "//*[contains(@class, 'btn fn-forgotpassword')]";
     public final static String BUTTON_CANCEL_XP =              	    ROOT_XP + "//a[@class='cancelButton']";
     public final static String LINK_LOGIN_XP =               		ROOT_XP + "//a[@class='loginButton']";
     public final static String LINK_REGISTRATION_XP =				ROOT_XP + "//a[contains(@href,'reg')]";
@@ -45,18 +45,23 @@ public abstract class ForgotPopup extends AbstractPopup{
 		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, email);
 	}
 
-	public void submit(){
-		WebDriverUtils.click(BUTTON_APPROVE_XP);
+	public ForgotPasswordConfirmationPopup submitSuccess(){
+        clickSubmit();
+        return new ForgotPasswordConfirmationPopup();
 	}
+
+    public void clickSubmit(){
+        WebDriverUtils.click(BUTTON_APPROVE_XP);
+    }
 
 	public HomePage clickCancel(){
 		WebDriverUtils.click(BUTTON_CANCEL_XP);
 		return new HomePage();
 	}
 
-	public void recover(UserData userData){
+	public ForgotPasswordConfirmationPopup recover(UserData userData){
 		fillUserData(userData);
-		submit();
+		return submitSuccess();
 	}
 
 	public HomePage fillDataAndCancel(UserData userData){

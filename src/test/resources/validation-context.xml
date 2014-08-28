@@ -7,8 +7,8 @@
     <bean id="genderValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="M@F"/>
         <property name="isMandatory" value="false"/>
-        <property name="minLength" value="N/A"/>
-        <property name="maxLength" value="N/A"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="0"/>
         <property name="tooltipPositive" value="N/A"/>
         <property name="tooltipNegativeEmpty" value="N/A"/>
         <property name="tooltipNegativeShort" value="N/A"/>
@@ -21,10 +21,10 @@
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="50"/>
-        <property name="tooltipPositive" value="Please enter your First name"/>
-        <property name="tooltipNegativeEmpty" value="Please enter your First name. "/>
+        <property name="tooltipPositive" value="Please enter your First name."/>
+        <property name="tooltipNegativeEmpty" value="Please enter your first name up to 50 characters long"/>
         <property name="tooltipNegativeShort" value="Please enter at least 2 characters"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Please enter less than 50 characters"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (a-z) (A-Z) and (. - , ')"/>
     </bean>
 
@@ -33,10 +33,10 @@
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="50"/>
-        <property name="tooltipPositive" value="Please enter your Last name"/>
-        <property name="tooltipNegativeEmpty" value="Please enter your Last name. "/>
+        <property name="tooltipPositive" value="Please enter your Last name."/>
+        <property name="tooltipNegativeEmpty" value="Please enter your last name up to 50 characters long"/>
         <property name="tooltipNegativeShort" value="Please enter at least 2 characters"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Please enter less than 50 characters"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (a-z) (A-Z) and (. - , ')"/>
     </bean>
 
@@ -48,7 +48,7 @@
         <property name="tooltipPositive" value="Please enter a valid email in the following format: xxxx@xxxx.xxx"/>
         <property name="tooltipNegativeEmpty" value="Please enter valid email"/>
         <property name="tooltipNegativeShort" value="Please enter a valid email address"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Please enter a valid email address"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (a-z), (A-Z) numbers (0-9) and (. _ - @)"/>
     </bean>
 
@@ -67,8 +67,8 @@
     <bean id="countryValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="AX@AL@AG"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="N/A"/>
-        <property name="maxLength" value="N/A"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="0"/>
         <property name="tooltipPositive" value="Select your country of residence"/>
         <property name="tooltipNegativeEmpty" value="N/A"/>
         <property name="tooltipNegativeShort" value="N/A"/>
@@ -84,7 +84,7 @@
         <property name="tooltipPositive" value="Please enter the town or city you live in"/>
         <property name="tooltipNegativeEmpty" value="Please enter the town or city you live in.(up to 50 characters)"/>
         <property name="tooltipNegativeShort" value="Inserted city is invalid. Please use letters(A-Z) (a-z), numbers(0-9) and characters(.-'), minimum 2 characters"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Inserted city is invalid. Please use letters(A-Z) (a-z), numbers(0-9) and characters(.-'), maximum 50 characters"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z), numbers (0-9) and (.- ')"/>
     </bean>
 
@@ -113,7 +113,7 @@
     </bean>
 
     <bean id="houseValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{1,20}[]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{0,8}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{1,20}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789üõöÖÄß#&amp;-\'/.]{0,8}"/>
         <property name="isMandatory" value="false"/>
         <property name="minLength" value="1"/>
         <property name="maxLength" value="28"/>
@@ -193,14 +193,14 @@
         <property name="tooltipNegativeEmpty" value="Answer to the security question is required"/>
         <property name="tooltipNegativeShort" value="N/A"/>
         <property name="tooltipNegativeLong" value="N/A"/>
-        <property name="tooltipNegativeInvalid" value="Sorry, invalid character used, please try again"/>
+        <property name="tooltipNegativeInvalid" value="Sorry, invalid character used, please try again You may only use letters (A-Z) (a-z) and (/-)"/>
     </bean>
 
     <bean id="currencyValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="GBP@USD@EUR"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="N/A"/>
-        <property name="maxLength" value="N/A"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="0"/>
         <property name="tooltipPositive" value="Please select currency for your account"/>
         <property name="tooltipNegativeEmpty" value="Please select currency for your account"/>
         <property name="tooltipNegativeShort" value="N/A"/>
@@ -214,9 +214,9 @@
         <property name="minLength" value="1"/>
         <property name="maxLength" value="10"/>
         <property name="tooltipPositive" value="If you have a bonus or a promotion code, please enter it here."/>
-        <property name="tooltipNegativeEmpty" value="Coupon code must be between 1-10 characters"/>
+        <property name="tooltipNegativeEmpty" value="N/A"/>
         <property name="tooltipNegativeShort" value="N/A"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Coupon code must be between 1-10 characters"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (a-z), (A-Z) and numbers (0-9) without spaces."/>
     </bean>
 

@@ -1,5 +1,6 @@
 package pageObjects.header;
 
+import pageObjects.account.LogoutPopup;
 import pageObjects.account.MyAccountPage;
 import pageObjects.base.AbstractPage;
 import pageObjects.inbox.InboxPage;
@@ -33,9 +34,9 @@ public class LoggedInHeader extends Header{
 		return new InboxPage();
 	}
 
-	public AbstractPage clickLogout(){
+	public LogoutPopup clickLogout(){
 		WebDriverUtils.click(BUTTON_LOGOUT_XP);
-		return waitForLogout();
+		return new LogoutPopup();
 	}
 
 	public String getBalance(){

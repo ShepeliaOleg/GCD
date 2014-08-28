@@ -29,8 +29,6 @@ public class AbstractPage extends AbstractPageObject{
 	}
 
 	public String getMainWindowHandle(){
-
-
 		return mainWindowHandle;
 	}
 
@@ -63,7 +61,7 @@ public class AbstractPage extends AbstractPageObject{
 	}
 
 	public AbstractPage logout(){
-		return loggedInHeader().clickLogout();
+		return loggedInHeader().clickLogout().logout();
 	}
 
 	public GamesPortletPage navigateToCasino(){
@@ -150,8 +148,8 @@ public class AbstractPage extends AbstractPageObject{
 		return loggedInHeader().compareBalances(balance);
 	}
 
-	public void waitForLogout(){
-		header().waitForLogout();
+	public AbstractPage waitForLogout(){
+		return header().waitForLogout();
 	}
 
 }

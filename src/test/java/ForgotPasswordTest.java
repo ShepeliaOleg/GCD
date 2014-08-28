@@ -13,6 +13,7 @@ import pageObjects.account.LoginPopup;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import pageObjects.external.mail.MailServicePage;
 import pageObjects.forgotPassword.ContactUsPopup;
+import pageObjects.forgotPassword.ForgotPasswordConfirmationPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
@@ -64,11 +65,11 @@ public class ForgotPasswordTest extends AbstractTest{
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
 
 	}
-    /*1. Portlet is displayed on page*/
-    @Test(groups = {"smoke"})
-    public void portletIsDisplayedOnPage(){
-        ForgotPasswordPage forgotPasswordPage = (ForgotPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.forgotPassword);
-    }
+//    /*1. Portlet is displayed on page*/
+//    @Test(groups = {"smoke"})
+//    public void portletIsDisplayedOnPage(){
+//        ForgotPasswordPage forgotPasswordPage = (ForgotPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.forgotPassword);
+//    }
 	
 	/*2. Submit correct data 3. Check confirmation popup*/
 	@Test(groups = {"regression"})
@@ -77,8 +78,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.confirmationPopupVisible(),"successfulPopupVisible");
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
 	}
 
     /*4. Check email */
@@ -89,9 +89,8 @@ public class ForgotPasswordTest extends AbstractTest{
 		userData.setEmail(email);
 		PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ForgotPasswordPopup forgotPasswordPopup=homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.confirmationPopupVisible(),"successfulPopupVisible");
+        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
         MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 	}
@@ -104,11 +103,10 @@ public class ForgotPasswordTest extends AbstractTest{
 		userData.setEmail(email);
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.confirmationPopupVisible(),"successfulPopupVisible");
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
+        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
+        MailServicePage mailServicePage = mailService.navigateToInbox(email);
+        mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
 		userData.setPassword(password);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);

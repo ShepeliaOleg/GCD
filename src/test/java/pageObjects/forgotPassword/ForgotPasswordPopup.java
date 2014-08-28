@@ -5,24 +5,21 @@ import utils.WebDriverUtils;
 
 public class ForgotPasswordPopup extends ForgotPopup{
 
-    private final static String FIELD_USERNAME_XP =             	ROOT_XP + "//*[@id='userName']";
+    private final static String FIELD_USERNAME_XP =             	ROOT_XP + "//*[@name='username']";
     private final static String DROPDOWN_BIRTH_DAY =            	ROOT_XP + "//select[@id='birthDay']";
     private final static String DROPDOWN_BIRTH_MONTH =          	ROOT_XP + "//select[@id='birthMonth']";
     private final static String DROPDOWN_BIRTH_YEAR =         	  	ROOT_XP + "//select[@id='birthYear']";
+    private final static String[] ELEMENTS =                        new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP,
+                                                                    DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH,
+                                                                    DROPDOWN_BIRTH_YEAR, BUTTON_APPROVE_XP};
 
     public ForgotPasswordPopup(){
-        super(new String[]{ROOT_XP, FIELD_USERNAME_XP, FIELD_EMAIL_XP,
-                DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH, DROPDOWN_BIRTH_YEAR,
-                BUTTON_CANCEL_XP, BUTTON_APPROVE_XP, LINK_LOGIN_XP,
-                LINK_REGISTRATION_XP, LINK_CONTACT_US_XP});
+        super(ELEMENTS);
         forgotType = true;
     }
 
     public ForgotPasswordPopup(String page){
-        super(new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP,
-                DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH, DROPDOWN_BIRTH_YEAR,
-                BUTTON_CANCEL_XP, BUTTON_APPROVE_XP, LINK_LOGIN_XP,
-                LINK_REGISTRATION_XP, LINK_CONTACT_US_XP}, page);
+        super(ELEMENTS, page);
         forgotType = true;
     }
 

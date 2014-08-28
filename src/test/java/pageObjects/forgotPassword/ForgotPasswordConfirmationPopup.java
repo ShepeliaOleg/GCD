@@ -10,9 +10,10 @@ import pageObjects.base.AbstractPopup;
 
 public class ForgotPasswordConfirmationPopup extends AbstractPopup{
 
-	public static final String MODULE_LOCATOR_XP="//p[contains(text(),'We have sent a new password to your email')]";
+    public static final String ROOT_XP =            "//*[contains(@class, 'popup_type_info ')]";
+    public static final String MODULE_LOCATOR_XP =  ROOT_XP + "//*[contains(text(),'Email with temporary password has been sent')]";
 
-	public ForgotPasswordConfirmationPopup(WebDriver webDriver){
-		super(new String[]{MODULE_LOCATOR_XP});
+	public ForgotPasswordConfirmationPopup(){
+		super(new String[]{ROOT_XP, MODULE_LOCATOR_XP});
 	}
 }

@@ -29,7 +29,7 @@ import utils.logs.LogUtils;
 public class NavigationUtils extends WebDriverObject{
 
     private static final int POPUP_CHECK_RETRIES = 10;
-    private static final int POPUP_WAIT_TIMEOUT = 4;
+    private static final int POPUP_WAIT_TIMEOUT = 10;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
         return navigateToPage(PlayerCondition.any, configuredPages, null);

@@ -31,8 +31,25 @@ public class RandomUtils{
 
     public static String generateStringByRegexp(String regex) {
         String result = "";
-        for(RegexNode node: ValidationUtils.splitToNodes(regex)){
-            result+=RandomStringUtils.random(generateRandomIntBetween(node.getMin(),node.getMax()), node.getSymbols());
+        int min=0;
+        int max=0;
+        int length=0;
+        String symbols="";
+        RegexNode tempNode=null;
+        try{
+            for(RegexNode node: ValidationUtils.splitToNodes(regex)){
+                tempNode = node;
+                min = node.getMin();
+                max = node.getMax();
+                length = generateRandomIntBetween(min, max);
+                symbols = node.getSymbols();
+                result+=RandomStringUtils.random(length, symbols);
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            throw new RuntimeException("Failed to generate by rule '"+regex+"'," +
+                    " failed on '"+tempNode+"': min '"+min+"'," +
+                    " max '"+max+"', length '"+length+"'," +
+                    " symbols '"+symbols+"'");
         }
         return result;
     }

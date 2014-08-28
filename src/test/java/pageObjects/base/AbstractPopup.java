@@ -6,8 +6,8 @@ import utils.WebDriverUtils;
 public abstract class AbstractPopup extends AbstractPageObject{
 
 	public final static String ROOT_XP=			    "//*[contains(@class, 'popup popup-modal')]";
-	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'cancel')]";
-	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'accept')]";
+	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'fn-close')]";
+	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
 
 	public AbstractPopup(){
 		this(null);

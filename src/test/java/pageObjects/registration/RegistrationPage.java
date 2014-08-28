@@ -41,6 +41,7 @@ public class RegistrationPage extends AbstractPage{
     private final static String FIELD_STATE_ID = 									"state";
     private final static String LABEL_STATE_XP=										"//label[@for='state']";
     private final static String DROPDOWN_COUNTRY_ID = 								"countrycode";
+    private final static String DROPDOWN_COUNTRY_XP = 								ROOT_XP + "//*[@name='"+DROPDOWN_COUNTRY_ID+"']";
     private final static String LABEL_COUNTRY_XP=									"//span[following-sibling::div/*[@name='countrycode']]";
     private final static String FIELD_CITY_ID = 									"city";
     private final static String LABEL_CITY_XP=										"//label[@for='city']";
@@ -62,6 +63,7 @@ public class RegistrationPage extends AbstractPage{
     private final static String FIELD_ANSWER_ID = 								    "answer";
     private final static String LABEL_ANSWER_XP=									"//label[@for='answer']";
     private final static String DROPDOWN_CURRENCY_ID = 								"currencyCode";
+    private final static String DROPDOWN_CURRENCY_XP = 								ROOT_XP + "//*[@name='"+DROPDOWN_CURRENCY_ID+"']";
     private final static String LABEL_CURRENCY_XP=									"//span[following-sibling::div/*[@name='currencyCode']]";
     private final static String FIELD_BONUSCODE_ID = 								"coupon";
     private final static String LABEL_BONUSCODE_XP=									"//label[@for='coupon']";
@@ -164,7 +166,7 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	public void fillCountry(String countryCode){
-		WebDriverUtils.setDropdownOptionByValue(getXpathByID(DROPDOWN_COUNTRY_ID), countryCode);
+		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_COUNTRY_XP, countryCode);
 	}
 
 	private void fillCity(String city){
@@ -188,7 +190,7 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	private void setCurrency(String currencyCode){
-		WebDriverUtils.setDropdownOptionByText(getXpathByID(DROPDOWN_CURRENCY_ID), currencyCode);
+		WebDriverUtils.setDropdownOptionByText(DROPDOWN_CURRENCY_XP, currencyCode);
 	}
 
 	private void fillBonusCode(String coupon){
@@ -419,7 +421,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateCountry(ValidationRule rule) {
-        ValidationUtils.validateDropdown(getXpathByID(DROPDOWN_COUNTRY_ID), rule, DROPDOWN_COUNTRY_ID);
+        ValidationUtils.validateDropdown(DROPDOWN_COUNTRY_XP, rule, DROPDOWN_COUNTRY_ID);
     }
 
     public void validateCity(ValidationRule rule) {
@@ -463,7 +465,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateCurrency(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByID(DROPDOWN_CURRENCY_ID), rule, DROPDOWN_CURRENCY_ID);
+        ValidationUtils.validateDropdown(DROPDOWN_CURRENCY_XP, rule, DROPDOWN_CURRENCY_ID);
     }
 
     public void validateBonusCode(ValidationRule rule) {
