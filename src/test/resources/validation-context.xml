@@ -81,7 +81,7 @@
         <!--<property name="isMandatory" value="true"/>-->
         <!--<property name="minLength" value="2"/>-->
         <!--<property name="maxLength" value="50"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,20}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{2,20}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="20"/>
@@ -97,7 +97,7 @@
         <!--<property name="isMandatory" value="true"/>-->
         <!--<property name="minLength" value="2"/>-->
         <!--<property name="maxLength" value="160"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,20}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{2,20}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="20"/>
@@ -135,7 +135,7 @@
     <bean id="postcodeValidationRule" class="springConstructors.ValidationRule">
         <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,6}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{0,5}"/>-->
         <!--<property name="minLength" value="1"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{2,12}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="12"/>
@@ -153,7 +153,7 @@
         <!--<property name="maxLength" value="5"/>-->
         <property name="regexp" value="[+]{1,1}[0123456789]{1,4}"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="1"/>
+        <property name="minLength" value="2"/>
         <property name="maxLength" value="5"/>
         <property name="tooltipPositive" value="Please enter your phone number including area code"/>
         <property name="tooltipNegativeEmpty" value="Please enter a valid area code"/>
