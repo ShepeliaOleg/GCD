@@ -1,6 +1,7 @@
 package pageObjects.registration;
 
 import enums.Page;
+import org.openqa.selenium.Keys;
 import pageObjects.HomePage;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
@@ -18,7 +19,7 @@ public class RegistrationPage extends AbstractPage{
 
     private static final String ROOT_XP = 											"//*[contains(@class, 'fn-register-content')]";
     private final static String FIELD_BASE_XP =				 				        ROOT_XP + "//*[@id='"+PLACEHOLDER+"']";
-    private static final String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')]";
+    private static final String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')][@data-tooltip-owner = '"+PLACEHOLDER+"']//span";
 
     private static final String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
@@ -368,8 +369,21 @@ public class RegistrationPage extends AbstractPage{
 		return getVisibleMessageText(LABEL_USERNAME_SUGGESTION_XP);
 	}
 
-    public String getTooltipMessageText() {
-        return getVisibleMessageText(TOOLTIP_ERROR_XP);
+    public String getTooltipMessageText(String id) {
+        String xp = TOOLTIP_ERROR_XP.replace(PLACEHOLDER, id);
+        WebDriverUtils.waitForElement(xp);
+        return getVisibleMessageText(xp);
+    }
+
+    public String getConfirmPasswordTooltipMessageText() {
+        WebDriverUtils.click(getXpathByID(FIELD_PASSWORD_VERIFICATION_ID));
+        return getTooltipMessageText(FIELD_PASSWORD_VERIFICATION_ID);
+    }
+
+    public String getConfirmEmailTooltipMessageText() {
+        WebDriverUtils.pressKey(Keys.TAB);
+        WebDriverUtils.click(getXpathByID(FIELD_EMAIL_VERIFICATION_ID));
+        return getTooltipMessageText(FIELD_EMAIL_VERIFICATION_ID);
     }
 
     private String getVisibleMessageText(String xpath) {

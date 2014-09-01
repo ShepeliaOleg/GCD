@@ -492,31 +492,29 @@ public class RegistrationTest extends AbstractTest{
 //        TypeUtils.assertTrueWithLogs(bonusErrorPresent);
 //	}
 //
-//    /*#4. Email and email confirmation do not match*/
-//	@Test(groups = {"regression"})
-//	public void emailDoNotMatch(){
-//		UserData generatedUserData=defaultUserData.getRandomUserData();
-//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-//		registrationPage.fillRegistrationForm(generatedUserData);
-//		registrationPage.fillConfirmEmail("incorrect@playtech.com");
-//		registrationPage.submit();
-//		String tooltipMessageText=registrationPage.getTooltipMessageText();
-//		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("This address is different from the one above, please correct");
-//        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed);
-//	}
-//
-//    /*#5. Password & Confirmation do not match*/
-//	@Test(groups = {"regression"})
-//	public void passwordDoNotMatch(){
-//		UserData generatedUserData=defaultUserData.getRandomUserData();
-//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-//		registrationPage.fillRegistrationForm(generatedUserData);
-//		registrationPage.fillConfirmPassword("incorrect");
-//		registrationPage.submit();
-//		String errorMessageText=registrationPage.getTooltipMessageText();
-//		boolean emailUsedMessageDisplayed=errorMessageText.equals("Passwords are not the same");
-//        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed);
-//	}
+    /*#4. Email and email confirmation do not match*/
+	@Test(groups = {"regression"})
+	public void emailDoNotMatch(){
+		UserData generatedUserData=defaultUserData.getRandomUserData();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+		registrationPage.fillRegistrationForm(generatedUserData);
+		registrationPage.fillConfirmEmail("incorrect@playtech.com");
+		String tooltipMessageText=registrationPage.getConfirmEmailTooltipMessageText();
+		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("Emails don't match");
+        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected 'Emails don't match', Actual " + "'"+tooltipMessageText+"'");
+	}
+
+    /*#5. Password & Confirmation do not match*/
+	@Test(groups = {"regression"})
+	public void passwordDoNotMatch(){
+		UserData generatedUserData=defaultUserData.getRandomUserData();
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+		registrationPage.fillRegistrationForm(generatedUserData);
+		registrationPage.fillConfirmPassword("incorrect");
+		String errorMessageText=registrationPage.getConfirmPasswordTooltipMessageText();
+		boolean emailUsedMessageDisplayed=errorMessageText.equals("Sorry, Your passwords don't match");
+        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected 'Sorry, Your passwords don't match', Actual " + "'"+errorMessageText+"'");
+	}
 //
 //    /*#6. Try to submit registration form without accepting T&C (without checking check box)*/
 //	@Test(groups = {"regression"})

@@ -19,8 +19,8 @@ public abstract class ForgotPopup extends AbstractPopup{
     public final static String LINK_LOGIN_XP =               		ROOT_XP + "//a[@class='loginButton']";
     public final static String LINK_REGISTRATION_XP =				ROOT_XP + "//a[contains(@href,'reg')]";
     public final static String LINK_CONTACT_US_XP =            	    ROOT_XP + "//a[@data-title]";
-    public final static String LABEL_VALIDATION_ERROR_MESSAGE_XP =	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
-    public final static String LABEL_VALIDATION_ERROR_ICON_XP =	    ROOT_XP + "//span[contains(@class,'error')]";
+    public final static String LABEL_VALIDATION_ERROR_MESSAGE_XP =	ROOT_XP + "//*[contains(@class,'fn-from-messages')]";
+    public final static String LABEL_VALIDATION_ERROR_ICON_XP =	    ROOT_XP + "//div[contains(@class, 'fn-validate')][contains(@class, 'invalid')]";
 
 
     public ForgotPopup(String[] xpathes){
@@ -63,6 +63,11 @@ public abstract class ForgotPopup extends AbstractPopup{
 		fillUserData(userData);
 		return submitSuccess();
 	}
+
+    public void invalidRecover(UserData userData){
+        fillUserData(userData);
+        clickSubmit();
+    }
 
 	public HomePage fillDataAndCancel(UserData userData){
 		fillUserData(userData);

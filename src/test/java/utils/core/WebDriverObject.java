@@ -2,17 +2,12 @@ package utils.core;
 
 import org.openqa.selenium.WebDriver;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
-
 public class WebDriverObject{
 
 	public static WebDriver webDriver;
-	protected static WebDriver logDriver;
-	protected static String timestamp;
     protected static String baseUrl;
+    protected static WebDriver logDriver;
+    protected static String timestamp;
 
     public static String getBaseUrl() {
         return baseUrl;

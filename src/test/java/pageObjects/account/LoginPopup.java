@@ -19,14 +19,12 @@ import utils.WebDriverUtils;
 public class LoginPopup extends AbstractPopup{
 	public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
     public static final String LABEL_TIMEOUT_ERROR_XP=   ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
-	public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='username']";
+	public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
 	private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
-	private static final String CHECKBOX_REMEMBERME_XP=		ROOT_XP + "//*[@name='remember-me']";
-	private static final String BUTTON_CANCEL_XP=			ROOT_XP + "//a[contains(@class, 'jsCancelButton')]";
-	public static final String BUTTON_SUBMIT_XP=			ROOT_XP + "//button";
-	private static final String LINK_REGISTER_XP=			ROOT_XP + "//a[@class='registration-link']";
-	private static final String LINK_CONTACTUS_XP=			ROOT_XP + "//a[not(@class)]";
-	private static final String LINK_FORGOTTEN_XP=			ROOT_XP + "//a[@class='jsForgotPasswordButton']";
+	private static final String CHECKBOX_REMEMBERME_XP=		ROOT_XP + "//*[@id='rememberme']";
+    private static final String LINK_FORGOTTEN_XP=			ROOT_XP + "//a[@class='fn-forgot-password']";
+    public static final String BUTTON_SUBMIT_XP=			ROOT_XP + "//*[contains(@class, 'fn-login-btn')]";
+    private static final String LINK_REGISTER_XP=			ROOT_XP + "//*[contains(@class, 'register-btn')]";
 
 	public LoginPopup(){
 		super(new String[]{BUTTON_SUBMIT_XP, LINK_REGISTER_XP, LINK_FORGOTTEN_XP});
@@ -58,11 +56,6 @@ public class LoginPopup extends AbstractPopup{
 
 	public void setRememberMeCheckBoxState(boolean desiredState){
 		WebDriverUtils.setCheckBoxState(CHECKBOX_REMEMBERME_XP, desiredState);
-	}
-
-	public HomePage cancel(){
-		WebDriverUtils.click(BUTTON_CANCEL_XP);
-		return new HomePage();
 	}
 
 	public void submit(){
@@ -135,11 +128,6 @@ public class LoginPopup extends AbstractPopup{
 	public ForgotPasswordPopup navigateToForgotPassword(){
 		WebDriverUtils.click(LINK_FORGOTTEN_XP);
 		return new ForgotPasswordPopup();
-	}
-
-	public ContactUsPopup navigateToContactUs(){
-		WebDriverUtils.click(LINK_CONTACTUS_XP);
-		return new ContactUsPopup();
 	}
 
 	public HomePage close(){
