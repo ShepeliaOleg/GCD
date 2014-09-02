@@ -137,7 +137,7 @@ public class ForgotPasswordTest extends AbstractTest{
 
     /*7. login with new password*/
 	@Test(groups = {"regression"})
-	public void setNewPasswordAfterRecoveryandLogin() {
+	public void setNewPasswordAfterRecoveryAndLogin() {
 		UserData userData = defaultUserData.getRandomUserData();
 		String email = mailService.generateEmail();
 		userData.setEmail(email);

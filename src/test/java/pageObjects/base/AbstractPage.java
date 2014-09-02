@@ -3,6 +3,7 @@ package pageObjects.base;
 import enums.Page;
 import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
+import pageObjects.account.LogoutPopup;
 import pageObjects.account.MyAccountPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.forgotPassword.ForgotUsernamePopup;
@@ -61,8 +62,12 @@ public class AbstractPage extends AbstractPageObject{
 	}
 
 	public AbstractPage logout(){
-		return loggedInHeader().clickLogout().logout();
+		return clickLogout().logout();
 	}
+    public LogoutPopup clickLogout(){
+        return loggedInHeader().clickLogout();
+    }
+
 
 	public GamesPortletPage navigateToCasino(){
 		navigationPanel().selectCasinoTab();

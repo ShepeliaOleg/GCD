@@ -19,7 +19,7 @@ public class SignedOutPopup extends AbstractPopup {
         WebDriverUtils.click(BUTTON_ACCEPT_XP);
     }
 
-    private LoginPopup loginAgain() {
+    public LoginPopup loginAgain() {
         clickLoginAgain();
         return new LoginPopup();
     }

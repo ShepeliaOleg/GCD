@@ -40,6 +40,18 @@
         <property name="tooltipNegativeInvalid" value="You may only use letters (a-z) (A-Z) and (. - , ')"/>
     </bean>
 
+    <bean id="dateOfBirthValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="DOB"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="0"/>
+        <property name="maxLength" value="0"/>
+        <property name="tooltipPositive" value="Please enter your birthdate  Day/Month/Year"/>
+        <property name="tooltipNegativeEmpty" value="Please select day (dd)Please select month (mm)Please select year (yyyy)"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="You should be at least 18 years old"/>
+    </bean>
+
     <bean id="emailValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,37}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{3,4}"/>
         <property name="isMandatory" value="true"/>
