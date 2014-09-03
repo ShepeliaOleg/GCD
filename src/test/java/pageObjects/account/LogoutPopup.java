@@ -15,12 +15,12 @@ public class LogoutPopup extends AbstractPopup {
         super(new String[]{BUTTON_ACCEPT_XP, BUTTON_CLOSE_XP});
     }
 
-    private void clickLogoutButton(){
+    public SignedOutPopup clickLogoutButton(){
         WebDriverUtils.click(BUTTON_ACCEPT_XP);
+        return new SignedOutPopup();
     }
 
     public AbstractPage logout(){
-        clickLogoutButton();
-        return new SignedOutPopup().closePopup().waitForLogout();
+        return clickLogoutButton().closePopup().waitForLogout();
     }
 }

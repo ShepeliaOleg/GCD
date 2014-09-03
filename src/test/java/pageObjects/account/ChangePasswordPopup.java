@@ -4,11 +4,11 @@ import pageObjects.base.AbstractPopup;
 import utils.WebDriverUtils;
 
 public class ChangePasswordPopup extends AbstractPopup{
-	public  final static String BUTTON_SUBMIT_XP    =               "//*[@id='changePassword']";
+	public  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')]";
 	private final static String LABEL_MESSAGE_ERROR_XP=				ROOT_XP+"//div[contains(@class,'error')]";
-    private final static String INPUT_OLD_PASSWORD_XP =             "//*[@id='oldPassword']";
-    private final static String INPUT_NEW_PASSWORD_XP =             "//*[@id='newPassword']";
-    private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@id='newPasswordVerification']";
+    private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";
+    private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
+    private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='newPasswordConfirm']";
 
 	public ChangePasswordPopup(){
 		super(new String[]{BUTTON_SUBMIT_XP});

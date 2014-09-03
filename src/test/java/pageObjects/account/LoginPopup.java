@@ -17,7 +17,7 @@ import utils.WebDriverUtils;
  */
 
 public class LoginPopup extends AbstractPopup{
-	public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
+	public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'error')]";
     public static final String LABEL_TIMEOUT_ERROR_XP=   ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
 	public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
 	private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
@@ -85,22 +85,8 @@ public class LoginPopup extends AbstractPopup{
 		String password=userData.getPassword();
 		fillUserCredentials(username, password);
 		submit();
-		AbstractPageObject result=null;
-
-		switch(expectedPage){
-			case homePage:
-				result=(HomePage) NavigationUtils.closeAllPopups(Page.homePage);
-				break;
-			case changePasswordPopup:
-				result=(ChangePasswordPopup) NavigationUtils.closeAllPopups(Page.changePasswordPopup);
-				break;
-			case loginPopup:
-				result=(LoginPopup) NavigationUtils.closeAllPopups(Page.loginPopup);
-				break;
-			default:
-				break;
-		}
-		return result;
+        WebDriverUtils.waitFor(1000);
+        return NavigationUtils.closeAllPopups(expectedPage);
 	}
 
 //    public HomePage login(UserData userData, boolean rememberMeEnable) {

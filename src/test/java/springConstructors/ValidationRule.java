@@ -120,7 +120,20 @@ public class ValidationRule {
         String string = regexp.replaceAll("\\{[0-9,]*\\}", "");
         // remove all [] brackets
         string = string.replaceAll("\\[|\\]", "");
-
+        ArrayList<Character> characters = new ArrayList<>();
+        ArrayList<Character> filteredCharacters = new ArrayList<>();
+        for(char a : string.toCharArray()){
+            characters.add(a);
+        }
+        for(char a : characters){
+            if(!filteredCharacters.contains(a)){
+                filteredCharacters.add(a);
+            }
+        }
+        string = "";
+        for(char a : filteredCharacters){
+            string+=a;
+        }
         return string;
     }
 

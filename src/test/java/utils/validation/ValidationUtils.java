@@ -1,6 +1,7 @@
 package utils.validation;
 
 import org.openqa.selenium.Keys;
+import pageObjects.registration.RegistrationPage;
 import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
@@ -101,9 +102,14 @@ public class ValidationUtils{
     }
 
     private static ArrayList<String> validateValidDropdownInput(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
-        for(String value:rule.getDropdownValues()){
-            inputDropdownAndSwitch(xpath, value);
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, value, STATUS_PASSED);
+        if(rule.getRegexp().equals("DOB")){
+            inputDateOfBirthAndSwitch(xpath);
+            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, "Valid Date Of Birth", STATUS_PASSED);
+        }else{
+            for(String value:rule.getDropdownValues()){
+                inputDropdownAndSwitch(xpath, value);
+                results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, value, STATUS_PASSED);
+            }
         }
         return results;
     }
@@ -189,7 +195,12 @@ public class ValidationUtils{
     }
 
 	private static String getValidationStatus(String xpath) {
-		String classValue = WebDriverUtils.getAttribute(xpath + "/..", "class");
+        String classValue;
+        if(xpath.equals(RegistrationPage.DROPDOWN_BIRTHDAY_XP)){
+            classValue = WebDriverUtils.getAttribute(xpath + "/../../..", "class");
+        }else {
+            classValue = WebDriverUtils.getAttribute(xpath + "/..", "class");
+        }
 		String[] classParametes = classValue.split(" ");
 		return classParametes[classParametes.length-1];
 	}
@@ -211,6 +222,13 @@ public class ValidationUtils{
 
     private static void inputDropdownAndSwitch(String xpath, String value){
         WebDriverUtils.setDropdownOptionByValue(xpath, value);
+        switchToDropdown(xpath);
+    }
+
+    private static void inputDateOfBirthAndSwitch(String xpath){
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHDAY_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHMONTH_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHYEAR_XP, "1980");
         switchToDropdown(xpath);
     }
 
@@ -246,11 +264,8 @@ public class ValidationUtils{
         ArrayList<String> results = new ArrayList();
         String message = "";
         results = validateClick(xpath, rule, results, tooltipID);
-        results = validateValidDropdownInput(xpath, rule, results, tooltipID);
         results = validateEmptyDropdown(xpath, rule, results, tooltipID);
-        if(!rule.getTooltipNegativeInvalid().equals("N/A")){
-            results = validateNotAllowedDropdown(xpath, rule,results, tooltipID);
-        }
+        results = validateValidDropdownInput(xpath, rule, results, tooltipID);
         for(String result:results){
             if(!result.equals(PASSED)){
                 message += "<div>" + result + "</div>";

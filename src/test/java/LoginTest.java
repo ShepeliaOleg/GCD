@@ -94,7 +94,7 @@ public class LoginTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=loginPopup.login(userData);
-		loginPopup=homePage.logout().navigateToLoginForm();
+        loginPopup=homePage.clickLogout().clickLogoutButton().loginAgain();
 		String username=loginPopup.getUsernameText();
 		TypeUtils.assertTrueWithLogs(username.equals(""), "username empty");
 	}
@@ -116,7 +116,7 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
-		loginPopup=homePage.logout().navigateToLoginForm();
+        loginPopup=homePage.clickLogout().clickLogoutButton().loginAgain();
 		String username=loginPopup.getUsernameText();
 		TypeUtils.assertTrueWithLogs(username.equals(userData.getUsername()), "correct username displayed");
 	}
@@ -142,11 +142,11 @@ public class LoginTest extends AbstractTest{
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
-		loginPopup=homePage.logout().navigateToLoginForm();
+        loginPopup=homePage.clickLogout().clickLogoutButton().loginAgain();
         String changedUsername = userData.getUsername()+"2";
 		userData.setUsername(changedUsername);
 		homePage=(HomePage) loginPopup.login(userData, true);
-		loginPopup=homePage.logout().navigateToLoginForm();
+		loginPopup=homePage.clickLogout().clickLogoutButton().loginAgain();
 		String username2=loginPopup.getUsernameText();
 		TypeUtils.assertTrueWithLogs(username2.equals(changedUsername), "correct username displayed");
 	}
@@ -156,7 +156,6 @@ public class LoginTest extends AbstractTest{
 	public void loginWithLowerCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("lowercase");
-		userData.setPassword("123456");
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
         TypeUtils.assertTrueWithLogs(homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData),"successfulLogin");
@@ -167,7 +166,6 @@ public class LoginTest extends AbstractTest{
 	public void loginWithUpperCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("UPPERCASE");
-		userData.setPassword("123456");
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
         TypeUtils.assertTrueWithLogs(homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData),"successfulLogin");
@@ -178,7 +176,6 @@ public class LoginTest extends AbstractTest{
 	public void loginWithMixedCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("MiXeDcAsE");
-		userData.setPassword("123456");
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage)homePage.login(userData);
         TypeUtils.assertTrueWithLogs(homePage.usernameOfLoggedInPlayerIsDisplayedInHeader(userData),"successfulLogin");

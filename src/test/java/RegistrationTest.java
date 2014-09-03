@@ -42,6 +42,10 @@ public class RegistrationTest extends AbstractTest{
     @Qualifier("lastNameValidationRule")
     private ValidationRule lastNameValidationRule;
 
+    @Autowired
+    @Qualifier("dateOfBirthValidationRule")
+    private ValidationRule dateOfBirthValidationRule;
+
 	@Autowired
 	@Qualifier("emailValidationRule")
 	private ValidationRule emailValidationRule;
@@ -551,11 +555,17 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.validateFirstname(firstNameValidationRule);
 	}
 
-	@Test(groups = {"validation"})
-	public void lastnameFieldValidation() {
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validateLastname(lastNameValidationRule);
-	}
+    @Test(groups = {"validation"})
+    public void lastnameFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateLastname(lastNameValidationRule);
+    }
+
+    @Test(groups = {"validation"})
+    public void dateOfBirthValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateDateOfBirth(dateOfBirthValidationRule);
+    }
 
 	@Test(groups = {"validation"})
 	public void emailFieldValidation() {
@@ -574,7 +584,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateCountry(countryValidationRule);
     }
-
 
 	@Test(groups = {"validation"})
 	public void cityFieldValidation() {

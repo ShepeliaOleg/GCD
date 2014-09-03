@@ -70,8 +70,9 @@ public class RegistrationPage extends AbstractPage{
     private final static String FIELD_BONUSCODE_ID = 								"coupon";
     private final static String LABEL_BONUSCODE_XP=									"//label[@for='coupon']";
     private final static String DROPDOWN_BIRTHDAY_ID=								"birthDay";
-    private final static String DROPDOWN_BIRTHMONTH_XP=								"//select[@id='birthMonth']";
-    private final static String DROPDOWN_BIRTHYEAR_XP=								"//select[@id='birthYear']";
+    public final static String DROPDOWN_BIRTHDAY_XP=								ROOT_XP + "//*[@id='birthDay']";
+    public final static String DROPDOWN_BIRTHMONTH_XP=								"//*[@id='birthMonth']";
+    public final static String DROPDOWN_BIRTHYEAR_XP=								"//*[@id='birthYear']";
     private final static String LABEL_BIRTHDAY_XP=									"//span[following-sibling::div/div[@class='date-section']]";
     private final static String DROPDOWN_NATIONALITY_XP=							"//select[@id='nationality']";
     private final static String FIELD_EMAIL_VERIFICATION_ID = 						"confirmEmail";
@@ -431,6 +432,10 @@ public class RegistrationPage extends AbstractPage{
         ValidationUtils.validateField(getXpathByID(FIELD_LASTNAME_ID), rule, FIELD_LASTNAME_ID);
     }
 
+    public void validateDateOfBirth(ValidationRule rule) {
+        ValidationUtils.validateDropdown(getXpathByID(DROPDOWN_BIRTHDAY_ID), rule, DROPDOWN_BIRTHDAY_ID);
+    }
+
     public void validateEmail(ValidationRule rule) {
         ValidationUtils.validateField(getXpathByID(FIELD_EMAIL_ID), rule, FIELD_EMAIL_ID);
     }
@@ -490,5 +495,4 @@ public class RegistrationPage extends AbstractPage{
     public void validateBonusCode(ValidationRule rule) {
         ValidationUtils.validateField(getXpathByID(FIELD_BONUSCODE_ID), rule, FIELD_BONUSCODE_ID);
     }
-
 }
