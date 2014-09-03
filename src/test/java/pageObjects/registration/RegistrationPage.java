@@ -17,16 +17,16 @@ import java.util.List;
 
 public class RegistrationPage extends AbstractPage{
 
-    private static final String ROOT_XP = 											"//*[contains(@class, 'fn-register-content')]";
+    private final static String ROOT_XP = 											"//*[contains(@class, 'fn-register-content')]";
     private final static String FIELD_BASE_XP =				 				        ROOT_XP + "//*[@id='"+PLACEHOLDER+"']";
-    private static final String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')][@data-tooltip-owner = '"+PLACEHOLDER+"']//span";
+    private final static String TOOLTIP_ERROR_XP = 									ROOT_XP + "//div[contains(@class,'error-tooltip')][@data-tooltip-owner = '"+PLACEHOLDER+"']//span";
 
-    private static final String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
-    private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
-    private static final String CHECKBOX_TERMS_AND_CONDITION_VALIDATION_ERROR_XP = 	CHECKBOX_TERMS_AND_CONDITION_XP+TOOLTIP_ERROR_XP;
-    private static final String LINK_TERMS_AND_CONDITION_XP = 						"//*[contains(@class, 'terms')]/a";
-    public  static final String LABEL_MESSAGE_ERROR_XP = 							ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
-    private static final String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@id='usernameSuggestionsTmpl']";
+    private final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
+    private final static String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
+    private final static String CHECKBOX_TERMS_AND_CONDITION_VALIDATION_ERROR_XP = 	CHECKBOX_TERMS_AND_CONDITION_XP+TOOLTIP_ERROR_XP;
+    private final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[contains(@class, 'terms')]/a";
+    public  final static String LABEL_MESSAGE_ERROR_XP = 							ROOT_XP + "//*[contains(@class,'portlet-msg-error')]";
+    private final static String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@class='fn-suggestion']/..";
     private final static String LABEL_BONUS_CODE_ERROR_XPATH = 						"//*[contains(text(), 'Bonus code is not found or not available')]";
     public  final static String LABEL_ERROR_TIMEOUT_XP =                            ROOT_XP + "//*[contains(@class, 'portlet-msg-error') and contains(text(), 'Timeout occurred')]";
     private final static String BONUS_CODE = 										"TEST";
@@ -59,13 +59,14 @@ public class RegistrationPage extends AbstractPage{
     public final static String FIELD_PHONE_XP = 									"//*[@id='phoneNumber']";
     private final static String LABEL_PHONE_XP=										"//span[following-sibling::div/span/*[@id='phoneNumber']]";
     private final static String FIELD_USERNAME_ID = 								"userName";
-    private final static String LABEL_USERNAME_XP=									"//label[@for='userName']";
+    public  final static String FIELD_USERNAME_XP = 								ROOT_XP + "//*[@id='" + FIELD_USERNAME_ID + "']";;
+    private final static String LABEL_USERNAME_XP=									"//label[@for='" + FIELD_USERNAME_ID + "']";
     private final static String FIELD_PASSWORD_ID = 								"password";
     private final static String LABEL_PASSWORD_XP=									ROOT_XP+"//label[@for='password']";
     private final static String FIELD_ANSWER_ID = 								    "answer";
     private final static String LABEL_ANSWER_XP=									"//label[@for='answer']";
     private final static String DROPDOWN_CURRENCY_ID = 								"currencyCode";
-    private final static String DROPDOWN_CURRENCY_XP = 								ROOT_XP + "//*[@name='"+DROPDOWN_CURRENCY_ID+"']";
+    private final static String DROPDOWN_CURRENCY_XP = 								ROOT_XP + "//*[@name='" + DROPDOWN_CURRENCY_ID + "']";
     private final static String LABEL_CURRENCY_XP=									"//span[following-sibling::div/*[@name='currencyCode']]";
     private final static String FIELD_BONUSCODE_ID = 								"coupon";
     private final static String LABEL_BONUSCODE_XP=									"//label[@for='coupon']";
@@ -90,7 +91,7 @@ public class RegistrationPage extends AbstractPage{
 		super(new String[]{ROOT_XP, BUTTON_SUBMIT_XP});
 	}
 
-	public boolean getFillFieldsButtonVisibleState(){
+	public boolean isFindMyAddressButtonVisible(){
 		return WebDriverUtils.isVisible(BUTTON_FILL_FIELDS_XP);
 	}
 
@@ -133,6 +134,11 @@ public class RegistrationPage extends AbstractPage{
 	private void fillUsername(String username){
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_USERNAME_ID), username);
 	}
+
+    public String getUsernameSuggestion(String username){
+        ValidationUtils.inputFieldAndRefocus(getXpathByID(FIELD_USERNAME_ID), username);
+        return getVisibleMessageText(LABEL_USERNAME_SUGGESTION_XP);
+    }
 
 	public void fillPassword(String password){
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PASSWORD_ID), password);
@@ -214,7 +220,7 @@ public class RegistrationPage extends AbstractPage{
 		return WebDriverUtils.getCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP);
 	}
 
-	private void setCheckboxReceiveBonuses(boolean desiredState){
+	private void setCheckboxReceivePromotional(boolean desiredState){
 		WebDriverUtils.setCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP, desiredState);
 	}
 
@@ -244,7 +250,7 @@ public class RegistrationPage extends AbstractPage{
 	}
 
 	public AbstractPageObject registerUser(UserData userData, String invalidBonusCode){
-		return this.registerUser(userData, true, false, true, invalidBonusCode, Page.registrationPage);
+		return this.registerUser(userData, true, false, true, invalidBonusCode, Page.homePage);
 	}
 
 	public AbstractPageObject registerUser(UserData userData, boolean isReceiveBonusesChecked, boolean isBonusCodeEntered){
@@ -301,23 +307,26 @@ public class RegistrationPage extends AbstractPage{
 		setCurrency(userData.getCurrency());
 	}
 
-	private void fillOther(boolean tac, boolean isReceiveBonusesChecked, boolean isBonusCodeEntered, String bonusCode){
+	private void fillOther(boolean tac, boolean isReceivePromotionalOffers, boolean isBonusCodeEntered, String bonusCode){
 		setGender();
 //		setCheckboxTermsAndConditions(tac);
-		setCheckboxReceiveBonuses(isReceiveBonusesChecked);
-		if(isBonusCodeEntered && bonusCode == null){
-			fillBonusCode(BONUS_CODE);
-		}else if(isBonusCodeEntered && bonusCode != null){
-			fillBonusCode(bonusCode);
-		}
+		setCheckboxReceivePromotional(isReceivePromotionalOffers);
+		if (isBonusCodeEntered) {
+            if (bonusCode == null){
+                fillBonusCode(BONUS_CODE);
+            }else {
+                fillBonusCode(bonusCode);
+            }
+        }
+
 	}
 
 	public String getSelectedCurrency(){
-		return WebDriverUtils.getDropdownSelectedOption(getXpathByID(DROPDOWN_CURRENCY_ID)).getText();
+		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_CURRENCY_XP).getText();
 	}
 
 	public String getSelectedCountryName(){
-		return WebDriverUtils.getDropdownSelectedOption(getXpathByID(DROPDOWN_COUNTRY_ID)).getText();
+		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_COUNTRY_XP).getText().trim();
 	}
 
 	public boolean isBonusCodeErrorPresent(){
@@ -369,10 +378,6 @@ public class RegistrationPage extends AbstractPage{
         return getVisibleMessageText(LABEL_MESSAGE_ERROR_XP);
     }
 
-	public String getUsernameSuggestionText() {
-		return getVisibleMessageText(LABEL_USERNAME_SUGGESTION_XP);
-	}
-
     public String getTooltipMessageText(String id) {
         String xp = TOOLTIP_ERROR_XP.replace(PLACEHOLDER, id);
         WebDriverUtils.waitForElement(xp);
@@ -400,7 +405,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public Collection<String> getCountriesCodesList() {
-        return WebDriverUtils.getDropdownOptionsValue(getXpathByID(DROPDOWN_COUNTRY_ID));
+        return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_COUNTRY_XP);
     }
 
     public Collection<String> getNationalitiesCodesList() {
@@ -408,7 +413,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public Collection<String> getCurrencyList() {
-        return WebDriverUtils.getDropdownOptionsText(getXpathByID(DROPDOWN_CURRENCY_ID));
+        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_CURRENCY_XP);
     }
 
 

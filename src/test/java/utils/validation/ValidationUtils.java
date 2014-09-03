@@ -13,7 +13,7 @@ public class ValidationUtils{
     private static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final String NO_TOOLTIP =     "N/A";
     public static final String STATUS_PASSED = "valid";
-    private static final String STATUS_FAILED = "invalid";
+    public static final String STATUS_FAILED = "invalid";
     public static final String STATUS_NONE = "fn-validate";
     private static final String TOOLTIP_STATUS_ERROR = "tooltip-error";
     public static final String PASSED = "Passed";
@@ -317,7 +317,7 @@ public class ValidationUtils{
         ArrayList<String> results = new ArrayList();
         String message = "";
         results = validateClick(xpath, rule, results, tooltipID);
-        results = validateEmptyDropdown(xpath, rule,results, tooltipID);
+        results = validateEmptyDropdown(xpath, rule, results, tooltipID);
         results = validateValidDropdownInput(xpath, rule, results, tooltipID);
         for(String result:results){
             if(!result.equals(PASSED)){

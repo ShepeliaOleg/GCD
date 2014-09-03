@@ -3,11 +3,6 @@ package pageObjects.external.ims;
 import pageObjects.base.AbstractPage;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 7/24/13
- */
-
 public class IMSPlayerSearchPage extends AbstractPage{
 
 	private static final String ROOT_XP=					"//*[@id='search']";

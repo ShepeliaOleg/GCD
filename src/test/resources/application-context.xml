@@ -12,237 +12,237 @@
         <property name="os" value="#{systemProperties['os']}"/>
         <property name="defaultBaseUrl" value="http://mob-7regal-adminpor.wpl.ptec:8080/"/>
         <property name="defaultBrowser" value="chrome"/>
-        <property name="defaultOs" value="win"/>
+        <property name="defaultOs" value="linux"/>
     </bean>
 
     <bean id="defaults" class="springConstructors.Defaults">
         <property name="countryFullList">
             <list>
                 <!--AF,AX,AL,DZ,AD,AO,AI,AQ,AG,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BY,BE,BZ,BJ,BM,BT,BO,BA,BW,BV,BR,IO,BN,BG,BF,BI,KH,CM,CA,CV,KY,CF,TD,CL,CN,CX,CC,CI,CO,KM,CG,CD,CK,CR,HR,CU,CZ,DK,DJ,DM,DO,EC,EG,SV,GQ,ER,ET,FK,FO,FJ,FI,FR,GF,PF,TF,GA,GM,GE,DE,GH,GI,GR,GL,GD,GP,GT,GN,GW,GY,HT,HM,HN,HK,HU,IS,IN,ID,IR,IQ,IE,IT,JM,JP,JO,KZ,KE,KI,KP,KR,KW,KG,LA,LV,LB,LS,LR,LY,LI,LT,LU,MO,MK,MG,MW,MY,MV,ML,MT,MH,MQ,MR,MU,YT,MX,MD,MC,MN,ME,MS,MA,MZ,MM,NA,NR,NP,NL,NC,NZ,NI,NE,NG,NU,NF,NO,OM,PK,PW,PS,PA,PG,PY,PE,PH,PN,PL,PT,QA,RE,RO,RU,RW,SH,KN,LC,PM,VC,WS,SM,ST,SA,SN,RS,CS,SC,SL,SG,SK,SI,SB,SO,ZA,GS,ES,LK,SD,SR,SJ,SZ,SE,CH,SY,TW,TJ,TZ,TH,TL,TG,TK,TO,TT,TN,TR,TM,TC,TV,UG,UA,AE,GB,UY,UZ,VU,VA,VE,VN,VG,WF,EH,YE,ZM,ZW-->
-                <!--<value>AF@Afghanistan@93</value>-->
+                <value>AF@Afghanistan@93</value>
                 <value>AX@Aland Islands@358</value>
                 <value>AL@Albania@355</value>
-                <!--<value>DZ@Algeria@213</value>-->
-                <!--&lt;!&ndash;<value>AS@American Samoa@1684</value> AS banned on IMS&ndash;&gt;-->
-                <!--<value>AD@Andorra@376</value>-->
-                <!--<value>AO@Angola@244</value>-->
-                <!--<value>AI@Anguilla@1264</value>-->
-                <!--<value>AQ@Antarctica@672</value>-->
+                <value>DZ@Algeria@213</value>
+                <!--<value>AS@American Samoa@1684</value> AS banned on IMS-->
+                <value>AD@Andorra@376</value>
+                <value>AO@Angola@244</value>
+                <value>AI@Anguilla@1264</value>
+                <value>AQ@Antarctica@672</value>
                 <value>AG@Antigua and Barbuda@1268</value>
                 <value>AR@Argentina@54</value>
-                <!--<value>AM@Armenia@374</value>-->
-                <!--<value>AW@Aruba@297</value>-->
+                <value>AM@Armenia@374</value>
+                <value>AW@Aruba@297</value>
                 <value>AU@Australia@61</value>
                 <value>AT@Austria@43</value>
                 <value>AZ@Azerbaijan@994</value>
-                <!--<value>BS@Bahamas@1242</value>-->
-                <!--<value>BH@Bahrain@973</value>-->
-                <!--<value>BD@Bangladesh@880</value>-->
-                <!--<value>BB@Barbados@1246</value>-->
+                <value>BS@Bahamas@1242</value>
+                <value>BH@Bahrain@973</value>
+                <value>BD@Bangladesh@880</value>
+                <value>BB@Barbados@1246</value>
                 <value>BY@Belarus@375</value>
                 <value>BE@Belgium@32</value>
-                <!--<value>BZ@Belize@501</value>-->
-                <!--<value>BJ@Benin@229</value>-->
-                <!--<value>BM@Bermuda@1441</value>-->
-                <!--<value>BT@Bhutan@975</value>-->
+                <value>BZ@Belize@501</value>
+                <value>BJ@Benin@229</value>
+                <value>BM@Bermuda@1441</value>
+                <value>BT@Bhutan@975</value>
                 <value>BO@Bolivia@591</value>
                 <value>BA@Bosnia and Herzegovina@387</value>
-                <!--<value>BV@Botswana@267</value>-->
-                <!--<value>BV@Bouvet Island@47</value>-->
+                <value>BW@Botswana@267</value>
+                <value>BV@Bouvet Island@47</value>
                 <value>BR@Brazil@55</value>
-                <!--<value>IO@British Indian Ocean Territory@246</value>-->
-                <!--<value>BN@Brunei@673</value>-->
-                <!--<value>BG@Bulgaria@359</value>-->
-                <!--<value>BF@Burkina Faso@226</value>-->
-                <!--<value>BI@Burundi@257</value>-->
-                <!--<value>KH@Cambodia@855</value>-->
-                <!--<value>CM@Cameroon@237</value>-->
+                <value>IO@British Indian Ocean Territory@246</value>
+                <value>BN@Brunei@673</value>
+                <value>BG@Bulgaria@359</value>
+                <value>BF@Burkina Faso@226</value>
+                <value>BI@Burundi@257</value>
+                <value>KH@Cambodia@855</value>
+                <value>CM@Cameroon@237</value>
                 <value>CA@Canada@1</value>
-                <!--<value>CV@Cape Verde@238</value>-->
-                <!--<value>KY@Cayman Islands@1345</value>-->
-                <!--<value>CF@Central African Republic@236</value>-->
-                <!--<value>TD@Chad@235</value>-->
+                <value>CV@Cape Verde@238</value>
+                <value>KY@Cayman Islands@1345</value>
+                <value>CF@Central African Republic@236</value>
+                <value>TD@Chad@235</value>
                 <value>CL@Chile@56</value>
-                <!--<value>CN@China@86</value>-->
-                <!--<value>CX@Christmas Island@61</value>-->
-                <!--<value>CC@Cocos Islands@61</value>-->
+                <value>CN@China@86</value>
+                <value>CX@Christmas Island@61</value>
+                <value>CC@Cocos Islands@61</value>
                 <value>CO@Colombia@57</value>
-                <!--<value>KM@Comoros@269</value>-->
-                <!--<value>CK@Cook Islands@682</value>-->
-                <!--<value>CR@Costa Rica@506</value>-->
-                <!--<value>CI@Cote d Ivoire@225</value>-->
+                <value>KM@Comoros@269</value>
+                <value>CK@Cook Islands@682</value>
+                <value>CR@Costa Rica@506</value>
+                <value>CI@Cote d Ivoire@225</value>
                 <value>HR@Croatia@385</value>
-                <!--<value>CU@Cuba@53</value>-->
+                <value>CU@Cuba@53</value>
                 <!--<value>CY@Cyprus@357</value> CY banned on IMS-->
                 <value>CZ@Czech Republic@420</value>
                 <value>DK@Denmark@45</value>
-                <!--<value>DJ@Djibouti@253</value>-->
-                <!--<value>DM@Dominica@1767</value>-->
-                <!--<value>DO@Dominican Republic@1809</value>-->
-                <!--<value>EC@Ecuador@593</value>-->
-                <!--<value>EG@Egypt@20</value>-->
-                <!--<value>SV@El Salvador@503</value>-->
-                <!--<value>GQ@Equatorial Guinea@240</value>-->
-                <!--<value>ER@Eritrea@291</value>-->
+                <value>DJ@Djibouti@253</value>
+                <value>DM@Dominica@1767</value>
+                <value>DO@Dominican Republic@1809</value>
+                <value>EC@Ecuador@593</value>
+                <value>EG@Egypt@20</value>
+                <value>SV@El Salvador@503</value>
+                <value>GQ@Equatorial Guinea@240</value>
+                <value>ER@Eritrea@291</value>
                 <!--<value>EE@Estonia@372</value> EE banned on IMS-->
-                <!--<value>ET@Ethiopia@251</value>-->
-                <!--<value>FK@Falkland Islands@500</value>-->
+                <value>ET@Ethiopia@251</value>
+                <value>FK@Falkland Islands@500</value>
                 <value>FO@Faroe Islands@298</value>
                 <!--<value>@Federated States of Micronesia@691</value> FM banned on IMS-->
-                <!--<value>FJ@Fiji@679</value>-->
+                <value>FJ@Fiji@679</value>
                 <value>FI@Finland@358</value>
                 <value>FR@France@33</value>
-                <!--<value>GF@French Guiana@594</value>-->
-                <!--<value>PF@French Polynesia@689</value>-->
-                <!--<value>TF@French Southern Territories@262</value>-->
-                <!--<value>GA@Gabon@241</value>-->
-                <!--<value>GM@Gambia@220</value>-->
+                <value>GF@French Guiana@594</value>
+                <value>PF@French Polynesia@689</value>
+                <value>TF@French Southern Territories@262</value>
+                <value>GA@Gabon@241</value>
+                <value>GM@Gambia@220</value>
                 <value>GE@Georgia@995</value>
                 <value>DE@Germany@49</value>
-                <!--<value>GH@Ghana@233</value>-->
-                <!--<value>GI@Gibraltar@350</value>-->
+                <value>GH@Ghana@233</value>
+                <value>GI@Gibraltar@350</value>
                 <value>GR@Greece@30</value>
-                <!--<value>GL@Greenland@299</value>-->
-                <!--<value>GD@Grenada@1473</value>-->
-                <!--<value>GP@Guadeloupe@590</value>-->
+                <value>GL@Greenland@299</value>
+                <value>GD@Grenada@1473</value>
+                <value>GP@Guadeloupe@590</value>
                 <!--<value>GU@Guam@1671</value> GU banned on IMS-->
-                <!--<value>GT@Guatemala@502</value>-->
-                <!--<value>GN@Guinea@224</value>-->
-                <!--<value>GW@Guinea-Bissau@245</value>-->
-                <!--<value>GY@Guyana@592</value>-->
-                <!--<value>HT@Haiti@509</value>-->
-                <!--<value>HM@Heard Island and McDonald Islands@672</value>-->
-                <!--<value>HN@Honduras@504</value>-->
-                <!--<value>HK@Hong Kong@852</value>-->
+                <value>GT@Guatemala@502</value>
+                <value>GN@Guinea@224</value>
+                <value>GW@Guinea-Bissau@245</value>
+                <value>GY@Guyana@592</value>
+                <value>HT@Haiti@509</value>
+                <value>HM@Heard Island and McDonald Islands@672</value>
+                <value>HN@Honduras@504</value>
+                <value>HK@Hong Kong@852</value>
                 <value>HU@Hungary@36</value>
                 <value>IS@Iceland@354</value>
                 <value>IN@India@91</value>
                 <value>ID@Indonesia@62</value>
-                <!--<value>IQ@Iraq@964</value>-->
-                <!--<value>IR@Islamic Republic of Iran@98</value>-->
+                <value>IQ@Iraq@964</value>
+                <value>IR@Islamic Republic of Iran@98</value>
                 <!--<value>IL@Israel@972</value> IL banned on IMS-->
                 <value>IT@Italy@39</value>
                 <value>JM@Jamaica@1876</value>
                 <value>JP@Japan@81</value>
                 <value>JO@Jordan@962</value>
                 <value>KZ@Kazakhstan@7</value>
-                <!--<value>KE@Kenya@254</value>-->
-                <!--<value>KI@Kiribati@686</value>-->
+                <value>KE@Kenya@254</value>
+                <value>KI@Kiribati@686</value>
                 <value>KW@Kuwait@965</value>
-                <!--<value>KG@Kyrgyzstan@996</value>-->
+                <value>KG@Kyrgyzstan@996</value>
                 <value>LA@Laos@856</value>
                 <value>LV@Latvia@371</value>
                 <value>LB@Lebanon@961</value>
-                <!--<value>LS@Lesotho@266</value>-->
-                <!--<value>LR@Liberia@231</value>-->
-                <!--<value>LY@Libyan Arab Jamahiriya@218</value>-->
-                <!--<value>LI@Liechtenstein@423</value>-->
+                <value>LS@Lesotho@266</value>
+                <value>LR@Liberia@231</value>
+                <value>LY@Libyan Arab Jamahiriya@218</value>
+                <value>LI@Liechtenstein@423</value>
                 <value>LT@Lithuania@370</value>
                 <value>LU@Luxembourg@352</value>
-                <!--<value>MO@Macao@853</value>-->
+                <value>MO@Macao@853</value>
                 <value>MK@Macedonia@389</value>
-                <!--<value>MG@Madagascar@261</value>-->
-                <!--<value>MW@Malawi@265</value>-->
+                <value>MG@Madagascar@261</value>
+                <value>MW@Malawi@265</value>
                 <value>MY@Malaysia@60</value>
-                <!--<value>MV@Maldives@960</value>-->
-                <!--<value>ML@Mali@223</value>-->
+                <value>MV@Maldives@960</value>
+                <value>ML@Mali@223</value>
                 <value>MT@Malta@356</value>
-                <!--<value>MH@Marshall Islands@692</value>-->
-                <!--<value>MQ@Martinique@596</value>-->
-                <!--<value>MR@Mauritania@222</value>-->
-                <!--<value>MU@Mauritius@230</value>-->
-                <!--<value>YT@Mayotte@269</value>-->
+                <value>MH@Marshall Islands@692</value>
+                <value>MQ@Martinique@596</value>
+                <value>MR@Mauritania@222</value>
+                <value>MU@Mauritius@230</value>
+                <value>YT@Mayotte@269</value>
                 <value>MX@Mexico@52</value>
-                <!--<value>MC@Monaco@377</value>-->
+                <value>MC@Monaco@377</value>
                 <value>MN@Mongolia@976</value>
                 <value>ME@Montenegro@382</value>
-                <!--<value>MS@Montserrat@1664</value>-->
+                <value>MS@Montserrat@1664</value>
                 <value>MA@Morocco@212</value>
-                <!--<value>MZ@Mozambique@258</value>-->
-                <!--<value>MM@Myanmar@95</value>-->
-                <!--<value>NA@Namibia@264</value>-->
-                <!--<value>NR@Nauru@674</value>-->
-                <!--<value>NP@Nepal@977</value>-->
-                <!--<value>NL@Netherlands@31</value>-->
+                <value>MZ@Mozambique@258</value>
+                <value>MM@Myanmar@95</value>
+                <value>NA@Namibia@264</value>
+                <value>NR@Nauru@674</value>
+                <value>NP@Nepal@977</value>
+                <value>NL@Netherlands@31</value>
                 <!--<value>AN@Netherlands Antilles@599</value> AN banned on IMS-->
-                <!--<value>NC@New Caledonia@687</value>-->
+                <value>NC@New Caledonia@687</value>
                 <value>NZ@New Zealand@64</value>
-                <!--<value>NI@Nicaragua@505</value>-->
-                <!--<value>NE@Niger@227</value>-->
+                <value>NI@Nicaragua@505</value>
+                <value>NE@Niger@227</value>
                 <value>NG@Nigeria@234</value>
-                <!--<value>NU@Niue@683</value>-->
-                <!--<value>NF@Norfolk Island@672</value>-->
-                <!--<value>KP@North Korea@850</value>-->
+                <value>NU@Niue@683</value>
+                <value>NF@Norfolk Island@672</value>
+                <value>KP@North Korea@850</value>
                 <!--<value>MP@Northern Mariana Islands@1670</value> MP banned on IMS-->
                 <value>NO@Norway@47</value>
-                <!--<value>OM@Oman@968</value>-->
+                <value>OM@Oman@968</value>
                 <value>PK@Pakistan@92</value>
-                <!--<value>PW@Palau@680</value>-->
-                <!--<value>PS@Palestinian Territory, Occupied@970</value>-->
-                <!--<value>PA@Panama@507</value>-->
-                <!--<value>PG@Papua New Guinea@675</value>-->
-                <!--<value>PY@Paraguay@595</value>-->
-                <!--<value>PE@Peru@51</value>-->
-                <!--<value>PH@Philippines@63</value>-->
-                <!--<value>PN@Pitcairn@64</value>-->
+                <value>PW@Palau@680</value>
+                <value>PS@Palestinian Territory, Occupied@970</value>
+                <value>PA@Panama@507</value>
+                <value>PG@Papua New Guinea@675</value>
+                <value>PY@Paraguay@595</value>
+                <value>PE@Peru@51</value>
+                <value>PH@Philippines@63</value>
+                <value>PN@Pitcairn@64</value>
                 <value>PL@Poland@48</value>
                 <value>PT@Portugal@351</value>
                 <!--<value>PR@Puerto Rico@1</value> PR banned on IMS-->
-                <!--<value>QA@Qatar@974</value>-->
+                <value>QA@Qatar@974</value>
                 <value>IE@Republic of Ireland@353</value>
                 <value>KR@Republic of Korea@82</value>
                 <value>MD@Republic of Moldova@373</value>
                 <value>RS@Serbia@381</value>
-                <!--<value>CG@Congo@242</value>-->
-                <!--<value>RE@Reunion@262</value>-->
+                <value>CG@Congo@242</value>
+                <value>RE@Reunion@262</value>
                 <value>RO@Romania@40</value>
                 <value>RU@Russia@7</value>
-                <!--<value>RW@Rwanda@250</value>-->
-                <!--<value>SH@St. Helena@290</value>-->
-                <!--<value>KN@Saint Kitts and Nevis@1869</value>-->
-                <!--<value>LC@Saint Lucia@1758</value>-->
-                <!--<value>PM@Saint Pierre and Miquelon@508</value>-->
-                <!--<value>VC@Saint Vincent and the Grenadines@1784</value>-->
-                <!--<value>WS@Samoa@685</value>-->
-                <!--<value>SM@San Marino@378</value>-->
-                <!--<value>ST@Sao Tome and Principe@239</value>-->
+                <value>RW@Rwanda@250</value>
+                <value>SH@St. Helena@290</value>
+                <value>KN@Saint Kitts and Nevis@1869</value>
+                <value>LC@Saint Lucia@1758</value>
+                <value>PM@Saint Pierre and Miquelon@508</value>
+                <value>VC@Saint Vincent and the Grenadines@1784</value>
+                <value>WS@Samoa@685</value>
+                <value>SM@San Marino@378</value>
+                <value>ST@Sao Tome and Principe@239</value>
                 <value>SA@Saudi Arabia@966</value>
-                <!--<value>SN@Senegal@221</value>-->
+                <value>SN@Senegal@221</value>
                 <value>CS@Serbia and Montenegro@381</value>
-                <!--<value>SC@Seychelles@248</value>-->
-                <!--<value>SL@Sierra Leone@232</value>-->
+                <value>SC@Seychelles@248</value>
+                <value>SL@Sierra Leone@232</value>
                 <value>SG@Singapore@65</value>
                 <value>SK@Slovak Republic@421</value>
                 <value>SI@Slovenia@386</value>
-                <!--<value>SB@Solomon Islands@677</value>-->
-                <!--<value>SO@Somalia@252</value>-->
+                <value>SB@Solomon Islands@677</value>
+                <value>SO@Somalia@252</value>
                 <value>ZA@South Africa@27</value>
-                <!--<value>GS@South Georgia and the South Sandwich Islands@500</value>-->
+                <value>GS@South Georgia and the South Sandwich Islands@500</value>
                 <value>ES@Spain@34</value>
-                <!--<value>LK@Sri Lanka@94</value>-->
-                <!--<value>SD@Sudan@249</value>-->
-                <!--<value>SR@Suriname@597</value>-->
-                <!--<value>SJ@Svalbard and Jan Mayen@47</value>-->
+                <value>LK@Sri Lanka@94</value>
+                <value>SD@Sudan@249</value>
+                <value>SR@Suriname@597</value>
+                <value>SJ@Svalbard and Jan Mayen@47</value>
                 <value>SZ@Swaziland@268</value>
                 <value>SE@Sweden@46</value>
-                <!--<value>CH@Switzerland@41</value>-->
-                <!--<value>SY@Syrian Arab Republic@963</value>-->
+                <value>CH@Switzerland@41</value>
+                <value>SY@Syrian Arab Republic@963</value>
                 <value>TW@Taiwan@886</value>
-                <!--<value>TJ@Tajikistan@992</value>-->
+                <value>TJ@Tajikistan@992</value>
                 <value>TH@Thailand@66</value>
-                <!--<value>CD@The Democratic Republic Of The Congo@243</value>-->
-                <!--<value>TL@Timor-Leste@670</value>-->
-                <!--<value>TG@Togo@228</value>-->
-                <!--<value>TK@Tokelau@690</value>-->
-                <!--<value>TO@Tonga@676</value>-->
+                <value>CD@The Democratic Republic Of The Congo@243</value>
+                <value>TL@Timor-Leste@670</value>
+                <value>TG@Togo@228</value>
+                <value>TK@Tokelau@690</value>
+                <value>TO@Tonga@676</value>
                 <value>TT@Trinidad and Tobago@1868</value>
                 <value>TN@Tunisia@216</value>
-                <!--<value>TR@Turkey@90</value>-->
-                <!--<value>TM@Turkmenistan@993</value>-->
-                <!--<value>TC@Turks and Caicos Islands@1649</value>-->
-                <!--<value>TV@Tuvalu@688</value>-->
-                <!--<value>TZ@Tanzania@255</value>-->
-                <!--<value>UG@Uganda@256</value>-->
+                <value>TR@Turkey@90</value>
+                <value>TM@Turkmenistan@993</value>
+                <value>TC@Turks and Caicos Islands@1649</value>
+                <value>TV@Tuvalu@688</value>
+                <value>TZ@Tanzania@255</value>
+                <value>UG@Uganda@256</value>
                 <value>UA@Ukraine@380</value>
                 <value>AE@United Arab Emirates@971</value>
                 <value>GB@United Kingdom@44</value>
@@ -250,17 +250,17 @@
                 <!--<value>UM@United States Minor Outlying Islands@699</value> UM banned on IMS-->
                 <value>UY@Uruguay@598</value>
                 <value>UZ@Uzbekistan@998</value>
-                <!--<value>VU@Vanuatu@678</value>-->
+                <value>VU@Vanuatu@678</value>
                 <value>VA@Vatican City State@379</value>
                 <value>VE@Venezuela@58</value>
                 <value>VN@Vietnam@84</value>
-                <!--<value>VG@Virgin Islands, British@1284</value>-->
+                <value>VG@Virgin Islands, British@1284</value>
                 <!--<value>VI@Virgin Islands, U.S@1340</value> VI banned on IMS-->
-                <!--<value>WF@Wallis and Futuna@681</value>-->
-                <!--<value>EH@Western Sahara@212</value>-->
-                <!--<value>YE@Yemen@967</value>-->
-                <!--<value>ZM@Zambia@260</value>-->
-                <!--<value>ZW@Zimbabwe@263</value>-->
+                <value>WF@Wallis and Futuna@681</value>
+                <value>EH@Western Sahara@212</value>
+                <value>YE@Yemen@967</value>
+                <value>ZM@Zambia@260</value>
+                <value>ZW@Zimbabwe@263</value>
             </list>
         </property>
         <property name="currencyList">
@@ -268,7 +268,11 @@
                 <value>GBP</value>
                 <value>EUR</value>
                 <value>USD</value>
-                <value>RUB</value>
+                <value>CAD</value>
+                <value>AUD</value>
+                <value>SEK</value>
+                <value>NOK</value>
+                <value>ZAR</value>
             </list>
         </property>
         <property name="defaultCountryCode">
