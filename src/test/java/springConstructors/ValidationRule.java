@@ -102,6 +102,41 @@ public class ValidationRule {
         return RandomUtils.generateStringByRegexp(regexp);
     }
 
+    public String generateValidString(char a) {
+        int counter=0;
+        String symbols;
+        String character = String.valueOf(a);
+        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(regexp);
+        for(RegexNode node:nodes){
+            if(node.getSymbols().contains(String.valueOf(getValidChar()))&&counter==0){
+                node.setMin(node.getMin()+2);
+                counter++;
+            }
+            symbols = node.getSymbols();
+            if(character.equals(" ")){
+                if(symbols.equals(" ")){
+                    node.setMin(node.getMax());
+                }else {
+                    node.setMax(node.getMin());
+                }
+            }else{
+                node.setMax(node.getMin());
+                if(!symbols.equals(".")&&!symbols.equals("@")&&!symbols.equals("+")){
+                    node.setSymbols(character);
+                }
+            }
+        }
+        return RandomUtils.generateStringByRegexp(ValidationUtils.generateRegExpFromNodes(nodes));
+    }
+
+    public String generateValidMinLengthUnifiedString(){
+        return generateValidString(getValidChar());
+    }
+
+    public char getValidChar(){
+        return regexp.charAt(4);
+    }
+
     public String generateValidStringOverMaxSymbols(){
         String allAllowedSymbols = getAllAllowedSymbols();
         return generateValidStringWithMaxSymbols()+allAllowedSymbols.substring(allAllowedSymbols.length() - 1);
@@ -115,9 +150,21 @@ public class ValidationRule {
         return RandomUtils.generateStringByRegexp(ValidationUtils.generateRegExpFromNodes(nodes));
     }
 
+    public String generateValidStringWithMinSymbols() {
+        String tempRegexp = regexp;
+        if(tempRegexp.contains("[@]")){
+            tempRegexp = tempRegexp.replace("{1,6}", "{0,6}");
+        }
+        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(tempRegexp);
+        for(RegexNode node:nodes){
+            node.setMax(node.getMin());
+        }
+        return RandomUtils.generateStringByRegexp(ValidationUtils.generateRegExpFromNodes(nodes));
+    }
+
     public String getAllAllowedSymbols() {
         // remove all quantifiers in {} with brackets itself
-        String string = regexp.replaceAll("\\{[0-9,]*\\}", "");
+        String string = regexp.replaceAll("\\{[0-9]*[,][0-9]*\\}", "");
         // remove all [] brackets
         string = string.replaceAll("\\[|\\]", "");
         ArrayList<Character> characters = new ArrayList<>();

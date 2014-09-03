@@ -54,8 +54,9 @@ public class RegistrationPage extends AbstractPage{
     private final static String LABEL_HOUSE_XP =									"//label[@for='house']";
     private final static String FIELD_POSTCODE_ID = 								"zip";
     private final static String LABEL_POSTCODE_XP=									"//label[@for='zip']";
-    private final static String FIELD_PHONE_COUNTRY_CODE_ID  = 						"phoneAreaCode";
-    private final static String FIELD_PHONE_XP = 									"//*[@id='phoneNumber']";
+    public final static String FIELD_PHONE_COUNTRY_CODE_ID  = 						"phoneAreaCode";
+    public final static String FIELD_PHONE_COUNTRY_CODE_XP = 						"//*[@id='"+FIELD_PHONE_COUNTRY_CODE_ID+"']";
+    public final static String FIELD_PHONE_XP = 									"//*[@id='phoneNumber']";
     private final static String LABEL_PHONE_XP=										"//span[following-sibling::div/span/*[@id='phoneNumber']]";
     private final static String FIELD_USERNAME_ID = 								"userName";
     private final static String LABEL_USERNAME_XP=									"//label[@for='userName']";
@@ -74,9 +75,11 @@ public class RegistrationPage extends AbstractPage{
     public final static String DROPDOWN_BIRTHYEAR_XP=								"//*[@id='birthYear']";
     private final static String LABEL_BIRTHDAY_XP=									"//span[following-sibling::div/div[@class='date-section']]";
     private final static String DROPDOWN_NATIONALITY_XP=							"//select[@id='nationality']";
-    private final static String FIELD_EMAIL_VERIFICATION_ID = 						"confirmEmail";
+    public final static String FIELD_EMAIL_VERIFICATION_ID = 						"confirmEmail";
+    public final static String FIELD_EMAIL_VERIFICATION_XP = 						"//*[@id='"+FIELD_EMAIL_VERIFICATION_ID+"']";
     private final static String LABEL_EMAIL_VERIFICATION_XP=						"//label[@for='confirmEmail']";
-    private final static String FIELD_PASSWORD_VERIFICATION_ID = 					"passwordVerify";
+    public final static String FIELD_PASSWORD_VERIFICATION_ID = 					"passwordVerify";
+    public final static String FIELD_PASSWORD_VERIFICATION_XP = 					"//*[@id='"+FIELD_PASSWORD_VERIFICATION_ID+"']";
     private final static String LABEL_PASSWORD_VERIFICATION_XP=						"//label[@for='passwordVerify']";
 	private final static String CHECKBOX_RECEIVE_BONUSES_XP=						"//*[@id='nobonus']";
 	private final static String LABEL_RECEIVE_BONUSES_XP=							"//label[@for='nobonus']";
@@ -131,7 +134,7 @@ public class RegistrationPage extends AbstractPage{
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_USERNAME_ID), username);
 	}
 
-	private void fillPassword(String password){
+	public void fillPassword(String password){
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PASSWORD_ID), password);
 	}
 
@@ -139,7 +142,7 @@ public class RegistrationPage extends AbstractPage{
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_PASSWORD_VERIFICATION_ID), confirmPassword);
 	}
 
-	private void fillEmail(String email){
+	public void fillEmail(String email){
 		WebDriverUtils.clearAndInputTextToField(getXpathByID(FIELD_EMAIL_ID), email);
 	}
 
@@ -411,6 +414,14 @@ public class RegistrationPage extends AbstractPage{
 
     private String getXpathByID(String id){
         return FIELD_BASE_XP.replace(PLACEHOLDER, id);
+    }
+
+    public void clickPasswordConfirmation() {
+        WebDriverUtils.click(FIELD_PASSWORD_VERIFICATION_XP);
+    }
+
+    public void clickEmailConfirmation() {
+        WebDriverUtils.click(FIELD_EMAIL_VERIFICATION_XP);
     }
 
     /* Fields validation */

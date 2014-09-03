@@ -1,15 +1,8 @@
 import enums.ConfiguredPages;
-import enums.LogCategory;
-import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.base.AbstractPage;
-import pageObjects.popups.AfterRegistrationPopup;
-import pageObjects.popups.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.Defaults;
 import springConstructors.IMS;
@@ -17,17 +10,11 @@ import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
-import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
-import utils.core.WebDriverObject;
-import utils.logs.Log;
-import utils.logs.LogEntry;
-import utils.logs.LogUtils;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import utils.validation.ValidationUtils;
+
+import java.util.*;
 
 public class RegistrationTest extends AbstractTest{
 
@@ -496,30 +483,6 @@ public class RegistrationTest extends AbstractTest{
 //        TypeUtils.assertTrueWithLogs(bonusErrorPresent);
 //	}
 //
-    /*#4. Email and email confirmation do not match*/
-	@Test(groups = {"regression"})
-	public void emailDoNotMatch(){
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.fillRegistrationForm(generatedUserData);
-		registrationPage.fillConfirmEmail("incorrect@playtech.com");
-		String tooltipMessageText=registrationPage.getConfirmEmailTooltipMessageText();
-		boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("Emails don't match");
-        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected 'Emails don't match', Actual " + "'"+tooltipMessageText+"'");
-	}
-
-    /*#5. Password & Confirmation do not match*/
-	@Test(groups = {"regression"})
-	public void passwordDoNotMatch(){
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.fillRegistrationForm(generatedUserData);
-		registrationPage.fillConfirmPassword("incorrect");
-		String errorMessageText=registrationPage.getConfirmPasswordTooltipMessageText();
-		boolean emailUsedMessageDisplayed=errorMessageText.equals("Sorry, Your passwords don't match");
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected 'Sorry, Your passwords don't match', Actual " + "'"+errorMessageText+"'");
-	}
-//
 //    /*#6. Try to submit registration form without accepting T&C (without checking check box)*/
 //	@Test(groups = {"regression"})
 //	public void submitWithUncheckedTermsAndConditions(){
@@ -568,6 +531,46 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateEmail(emailValidationRule);
 	}
+
+    /*#4. Email and email confirmation do not match*/
+    @Test(groups = {"validation"})
+    public void emailConfirmationValidation(){
+        String message="";
+        String xpath = RegistrationPage.FIELD_EMAIL_VERIFICATION_XP;
+        String id = RegistrationPage.FIELD_EMAIL_VERIFICATION_ID;
+        ArrayList<String> results = new ArrayList<>();
+        UserData generatedUserData=defaultUserData.getRandomUserData();
+        String email = generatedUserData.getEmail();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.clickEmailConfirmation();
+        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
+        String tooltip = "Please retype your email.";
+        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
+        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
+        registrationPage.fillEmail(email);
+        ValidationUtils.inputFieldAndRefocus(xpath, email);
+        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, email, ValidationUtils.STATUS_PASSED);
+        for(String result:results){
+            if(!result.equals(ValidationUtils.PASSED)){
+                message += "<div>" + result + "</div>";
+            }
+        }
+        if(!message.isEmpty()){
+            WebDriverUtils.runtimeExceptionWithLogs(message);
+        }
+    }
+
+    @Test(groups = {"validation"})
+    public void emailDoNotMatch(){
+        UserData generatedUserData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.fillRegistrationForm(generatedUserData);
+        registrationPage.fillConfirmEmail(emailValidationRule.generateValidString());
+        String tooltipMessageText=registrationPage.getConfirmEmailTooltipMessageText();
+        boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("Emails don't match");
+        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected 'Emails don't match', Actual " + "'"+tooltipMessageText+"'");
+    }
+
 
     @Test(groups = {"validation"})
     public void stateFieldValidation() {
@@ -634,6 +637,45 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePassword(passwordValidationRule);
 	}
+
+    @Test(groups = {"validation"})
+    public void passwordConfirmationValidation(){
+        String message="";
+        String xpath = RegistrationPage.FIELD_PASSWORD_VERIFICATION_XP;
+        String id = RegistrationPage.FIELD_PASSWORD_VERIFICATION_ID;
+        ArrayList<String> results = new ArrayList<>();
+        UserData generatedUserData=defaultUserData.getRandomUserData();
+        String password = generatedUserData.getPassword();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.clickPasswordConfirmation();
+        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
+        String tooltip = "Please reytpe your password.";
+        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
+        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
+        registrationPage.fillPassword(password);
+        ValidationUtils.inputFieldAndRefocus(xpath, password);
+        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, password, ValidationUtils.STATUS_PASSED);
+        for(String result:results){
+            if(!result.equals(ValidationUtils.PASSED)){
+                message += "<div>" + result + "</div>";
+            }
+        }
+        if(!message.isEmpty()){
+            WebDriverUtils.runtimeExceptionWithLogs(message);
+        }
+    }
+
+    /*#5. Password & Confirmation do not match*/
+    @Test(groups = {"regression"})
+    public void passwordDoNotMatch(){
+        UserData generatedUserData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.fillRegistrationForm(generatedUserData);
+        registrationPage.fillConfirmPassword(passwordValidationRule.generateValidString());
+        String errorMessageText=registrationPage.getConfirmPasswordTooltipMessageText();
+        boolean emailUsedMessageDisplayed=errorMessageText.equals("Sorry, Your passwords don't match");
+        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected 'Sorry, Your passwords don't match', Actual " + "'"+errorMessageText+"'");
+    }
 
     @Test(groups = {"validation"})
     public void answerFieldValidation() {
