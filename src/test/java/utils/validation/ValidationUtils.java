@@ -12,10 +12,10 @@ public class ValidationUtils{
     private static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final String NO_TOOLTIP =     "N/A";
     private static final String STATUS_PASSED = "valid";
-    private static final String STATUS_FAILED = "invalid";
+    public  static final String STATUS_FAILED = "invalid";
     private static final String STATUS_NONE = "fn-validate";
     private static final String TOOLTIP_STATUS_ERROR = "tooltip-error";
-    private static final String PASSED = "Passed";
+    public  static final String PASSED = "Passed";
     private static final String TOOLTIP_XP = "//*[contains(@class, 'tooltip')]";
     private static final String TOOLTIP_CONTAINER_XP = "//*[@data-tooltip-owner='"+PLACEHOLDER+"']";
     private static final String TOOLTIP_LABEL_XP = TOOLTIP_CONTAINER_XP+"//span";
@@ -144,7 +144,7 @@ public class ValidationUtils{
         return results;
     }
 
-	private static String validationStatusIs(String xpath, String expectedStatus, String value) {
+	public static String validationStatusIs(String xpath, String expectedStatus, String value) {
 		String actualStatus = getValidationStatus(xpath);
 		if (!actualStatus.equals(expectedStatus)) {
 			return (xpath + " input field with value '" + value + "' should be marked as '" + expectedStatus + "' but it marked as '" + actualStatus + "'");
@@ -194,7 +194,7 @@ public class ValidationUtils{
 		return classParametes[classParametes.length-1];
 	}
 
-    private static void inputAndSwitch(String xpath, String input){
+    public static void inputAndSwitch(String xpath, String input){
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);
         clickAndWait(xpath);
@@ -247,7 +247,7 @@ public class ValidationUtils{
         String message = "";
         results = validateClick(xpath, rule, results, tooltipID);
         results = validateValidDropdownInput(xpath, rule, results, tooltipID);
-        results = validateEmptyDropdown(xpath, rule,results, tooltipID);
+        results = validateEmptyDropdown(xpath, rule, results, tooltipID);
         if(!rule.getTooltipNegativeInvalid().equals("N/A")){
             results = validateNotAllowedDropdown(xpath, rule,results, tooltipID);
         }

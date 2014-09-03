@@ -15,11 +15,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * User: sergiich
- * Date: 8/6/13
- */
-
 public class IMS extends WebDriverObject{
 
 	protected URL imsURL;
