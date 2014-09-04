@@ -23,6 +23,7 @@ import pageObjects.popups.*;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
+import utils.core.WebDriverFactory;
 import utils.core.WebDriverObject;
 import utils.logs.LogUtils;
 
@@ -131,7 +132,11 @@ public class NavigationUtils extends WebDriverObject{
                 if(WebDriverUtils.isVisible(RegistrationPage.LABEL_ERROR_TIMEOUT_XP, 2)){
                     throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
                 }else{
-                    WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(RegistrationPage.LABEL_MESSAGE_ERROR_XP));
+                    if(WebDriverUtils.isVisible(RegistrationPage.LABEL_MESSAGE_ERROR_XP)){
+                        WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(RegistrationPage.LABEL_MESSAGE_ERROR_XP));
+                    }else{
+                        WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed");
+                    }
                 }
 			}
 			result = homePage;

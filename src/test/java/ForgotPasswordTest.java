@@ -153,6 +153,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		String newPassword = passwordValidationRule.generateValidString();
         ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
+        changedPasswordPopup.clickClose();
 		userData.setPassword(newPassword);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 	}

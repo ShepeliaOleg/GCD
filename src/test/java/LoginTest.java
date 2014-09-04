@@ -60,6 +60,13 @@ public class LoginTest extends AbstractTest{
 		TypeUtils.assertTrueWithLogs(new AbstractPage().isUsernameDisplayed(userData), "correct username displayed");
 	}
 
+    /*2. Login popup is available*/
+    @Test(groups = {"smoke"})
+    public void loginPopupPresent() {
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        LoginPopup loginPopup = homePage.navigateToLoginForm();
+    }
+
 	/*3. Remember Me disabled by default in header*/
 	@Test(groups = {"regression"})
 	public void rememberMeDisabledByDefaultInHeader(){

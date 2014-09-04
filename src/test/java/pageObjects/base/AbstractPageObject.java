@@ -2,7 +2,6 @@ package pageObjects.base;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
@@ -34,7 +33,7 @@ public abstract class AbstractPageObject extends WebDriverObject {
 	}
 
 	public AbstractPageObject(String[] clickableBys, String[] invisibleBys, String iframeId){
-		WebDriverUtils.switchToIframe(iframeId);
+		WebDriverUtils.switchToIframeById(iframeId);
 		validate(clickableBys, invisibleBys);
 	}
 
