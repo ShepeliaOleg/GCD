@@ -11,7 +11,7 @@
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
         <property name="defaultBaseUrl" value="http://mob-7regal-adminpor.wpl.ptec:8080/"/>
-        <property name="defaultBrowser" value="chrome"/>
+        <property name="defaultBrowser" value="firefox"/>
         <property name="defaultOs" value="linux"/>
     </bean>
 

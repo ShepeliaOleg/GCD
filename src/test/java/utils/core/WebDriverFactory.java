@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.DriverData;
@@ -46,7 +47,9 @@ public class WebDriverFactory extends WebDriverObject{
 				driver=createChromeDriver(osType);
 			}else if(browserType.equals("firefox")){
 				driver=createFireFoxDriver();
-			}
+			}else if(browserType.equals("explorer")){
+                driver=createIEDriver();
+            }
 			driver.manage().window().setSize(new Dimension(1920, 1080));
 		}catch(Exception e){
 			throw new RuntimeException("Starting webdriver failed \n" + e);
@@ -93,4 +96,10 @@ public class WebDriverFactory extends WebDriverObject{
         profile.setPreference("focusmanager.testmode", true);
         return new FirefoxDriver(profile);
     }
+
+    private WebDriver createIEDriver(){
+        System.setProperty("webdriver.ie.driver","C:/Playtech/webdriver/iedriver/IEDriverServer.exe");
+        return new InternetExplorerDriver();
+    }
+
 }
