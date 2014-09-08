@@ -25,12 +25,13 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String TAG_JACKPOT=							"data-game-jackpot";
 	private static final String TICKER_JACKPOT_XP= 						"//span[@class='game-jackpot']";
 	private static final String ROOT_XP=								"//*[contains(@id, 'WAR_gamesportlet')]";
-	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
-	private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
+	private static final String GAMES_XP=								"//*[contains(@class, 'fn-game-item')]";
+    private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
+    private static final String FIRST_PAGE_GAMES_XP=                    BEGINNING_GAMES_XP + GAMES_XP;
 	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
 	private static final String CATEGORY_NAME_XP= 						"data-category";
-	private static final String BUTTON_NEXT_XP= 						"//div[@class='next']/a";
-	private static final String BUTTON_PREVIOUS_XP= 					"//div[@class='prev']/a";
+	private static final String BUTTON_NEXT_XP= 						"//*[contains(@class, 'pagination__arrow_type_next')]";
+	private static final String BUTTON_PREVIOUS_XP= 					"//*[contains(@class, 'pagination__arrow_type_previous')]";
 	private static final String BUTTON_LIST_VIEW_XP=					"//a[@data-view='LIST']";
 	private static final String BUTTON_ITEM_VIEW_XP=					"//a[@data-view='ITEM']";
 	private static final String FIELD_SEARCH_XP= 						"//input[contains(@class, 'field-search')]";
@@ -75,7 +76,7 @@ public class GamesPortletPage extends AbstractPage{
 
 	// General
 	public ArrayList<String> getAllGameNames(){
-		ArrayList<String> gameIDs=new ArrayList<String>(150);
+		ArrayList<String> gameIDs=new ArrayList();
 		int xPathCount=WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP + GAMES_XP);
 		for(int i=1; i <= xPathCount; i++){
 			gameIDs.add(getGameName(i));
@@ -84,7 +85,7 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public String getGameName(int index){
-		return WebDriverUtils.getAttribute(GAMES_XP + "[" + index + "]", TAG_GAME_NAME);
+		return WebDriverUtils.getAttribute("//li["+index+"]" + GAMES_XP, TAG_GAME_NAME);
 	}
 
 	public String getRandomGameName(){
@@ -92,8 +93,8 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public ArrayList<String> getAllGameIDs(){
-		ArrayList<String> gameIDs=new ArrayList<String>(150);
-		int xPathCount=WebDriverUtils.getXpathCount(GAMES_XP);
+		ArrayList<String> gameIDs=new ArrayList();
+		int xPathCount=WebDriverUtils.getXpathCount(FIRST_PAGE_GAMES_XP);
 		for(int i=1; i <= xPathCount; i++){
 			gameIDs.add(getGameID(i));
 		}
@@ -101,22 +102,27 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public String getGameID(int index){
-		return WebDriverUtils.getAttribute("//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
+        String id;
+        String itemViewXP = "//ul[1]//li["+index+"]" + GAMES_XP;
+        String listViewXP = "//ul[1]" + GAMES_XP + "["+index+"]";
+        if(WebDriverUtils.isVisible(itemViewXP, 0)){
+            id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
+        }else {
+            id = WebDriverUtils.getAttribute(listViewXP, TAG_GAME_ID);
+        }
+		return id;
 	}
+
+    public String getGameID(int index, int page){
+        return WebDriverUtils.getAttribute("//ul["+page+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
+    }
 
 	public String getRandomGameID(){
 		return RandomUtils.getRandomElementsFromList(getAllGameIDs(), 1).get(0);
 	}
 
 	public boolean isGamePresent(String gameID){
-		boolean isGamePresent=false;
-		try{
-			GameElement gameElement=new GameElement(gameID);
-			isGamePresent=true;
-		}catch(RuntimeException e){
-			isGamePresent=false;
-		}
-		return isGamePresent;
+		return WebDriverUtils.isVisible("//div[@data-key='" + gameID + "']", 1);
 	}
 
     public void correctGamesAreDisplayed(GameCategories category){
@@ -261,10 +267,10 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
 	public AbstractPageObject playReal(boolean isLoggedIn){
-		AbstractPageObject result=null;
+		AbstractPageObject result;
 		ArrayList<String> checkedGames=new ArrayList<String>();
 		for(int i=0; i <= RETRIES; i++){
-			String gameId= getRandomGameName();
+			String gameId = getRandomGameID();
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
 				if(gameElement.isRealPresent()){
@@ -286,35 +292,21 @@ public class GamesPortletPage extends AbstractPage{
 		return result;
 	}
 
-	public AbstractPageObject playRealFromTitle(boolean isLoggedIn){
-		AbstractPageObject result=null;
-		ArrayList<String> checkedGames=new ArrayList<String>();
-		int gameCount = WebDriverUtils.getXpathCount(GAMES_XP);
-		for(int i=1; i <= gameCount; i++){
-			String gameId = getGameName(i);
-			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
-				GameElement gameElement=new GameElement(gameId);
-				if(gameElement.isTitlePresent()){
-					gameElement.clickTitle();
-					break;
-				}else{
-					checkedGames.add(gameId);
-				}
-			}
-			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("No real game buttons found and couldn't click image");
-			}
-		}
-		if(isLoggedIn){
-			result=new GameLaunchPopup(getMainWindowHandle());
-		}else{
-			result=new LoginPopup();
-		}
-		return result;
-	}
+    public AbstractPageObject playRealList(boolean isLoggedIn){
+        AbstractPageObject result;
+        String gameId = getRandomGameID();
+        GameElement gameElement=new GameElement(gameId);
+        gameElement.clickPlayRealList();
+        if(isLoggedIn){
+            result=new GameLaunchPopup(getMainWindowHandle());
+        }else{
+            result=new LoginPopup();
+        }
+        return result;
+    }
 
 	public GameLaunchPopup playReal(int index){
-		String gameId= getGameName(index);
+		String gameId= getGameID(index);
 		GameElement gameElement=new GameElement(gameId);
 		if(gameElement.isRealPresent()){
 			gameElement.clickPlayReal();

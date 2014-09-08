@@ -25,8 +25,8 @@ public class GameElement extends AbstractPage{
 	private String gameID;
 
 	public GameElement(String gameID){
-		super(new String[]{ROOT_XP, "//div[@data-key='" + gameID + "']"});
-		ROOT_GAME=				"//div[@data-key='" + gameID + "']";
+		super(new String[]{ROOT_XP, "//*[@data-key='" + gameID + "']"});
+		ROOT_GAME=				"//*[@data-key='" + gameID + "']";
 		buttonPlayReal=			ROOT_GAME + "//*[contains(@class, 'btn_type_play')]";
 		buttonPlayDemo=			ROOT_GAME + "//*[contains(@class, 'btn_type_play-demo')]";
 		buttonFavourites=		ROOT_GAME + "//a[contains(@class, 'games-favorite')]";
@@ -63,6 +63,11 @@ public class GameElement extends AbstractPage{
 		WebDriverUtils.mouseOver(ROOT_GAME);
 		WebDriverUtils.click(buttonPlayReal);
 	}
+
+    public void clickPlayRealList(){
+        WebDriverUtils.click(ROOT_GAME + "/a");
+        new StartGamePopup().clickReal();
+    }
 
 	public void clickPlayDemo(){
 		WebDriverUtils.mouseOver(ROOT_GAME);
