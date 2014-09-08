@@ -3,6 +3,16 @@ package enums;
 public enum ConfiguredPages{
 
     balance("myaccount1/balance"),
+    banner5seconds("banner_5_seconds"),
+    bannerHtml("banner_html"),
+    bannerImage("banner_image"),
+    bannerInRotation("banner_in_rotation"),
+    bannerMixed("banner_mixed"),
+    bannerNavigationArrows("banner_arrows"),
+    bannerNavigationArrowsBullets("banner_arrows_bullets"),
+    bannerNavigationBullets("banner_bullets"),
+    bannerNavigationButtons("banner_buttons"),
+    bannerWebContent("banner_webcontent"),
     bingoLobbyFeed("bingo-schedule-lobby"),
     bingoScheduleFeed("bingo-schedule-schedule"),
     bonusPage("bonus"),
