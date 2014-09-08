@@ -14,9 +14,9 @@ public abstract class MailServicePage extends AbstractPage{
     public abstract String getPasswordFromLetter();
 
 	public void waitForEmail() {
-		waitForEmail(600);
+		waitForPasswordEmail(600);
 	}
 
-    public abstract void waitForEmail(long timeout);
+    public abstract void waitForPasswordEmail(long timeout);
 
 }

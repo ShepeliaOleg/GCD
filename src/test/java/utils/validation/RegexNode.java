@@ -11,11 +11,11 @@ public class RegexNode {
     private static final String TEXT_END = "]";
     private static final String NUMBERS_START = "{";
     private static final String NUMBERS_END = "}";
-
     int max;
-
     int min;
+
     String symbols;
+
     public RegexNode(String node){
         max = parseMax(node);
         min = parseMin(node);
@@ -43,6 +43,11 @@ public class RegexNode {
     private String parseLength(String node){
         int start = node.indexOf(NUMBERS_START);
         int end = node.indexOf(NUMBERS_END)+1;
+        if(node.contains(NUMBERS_START+"]")){
+            start = node.indexOf(NUMBERS_START, start+1);
+        }else if(node.contains(NUMBERS_END+"]")){
+            end = node.indexOf(NUMBERS_END, start)+1;
+        }
         if(start!=-1){
             return (node.substring(start, end));
         }else{
@@ -60,6 +65,10 @@ public class RegexNode {
 
     public String getSymbols() {
         return symbols;
+    }
+
+    public void setSymbols(String symbols) {
+        this.symbols = symbols;
     }
 
     public void setMax(int max) {

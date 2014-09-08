@@ -12,17 +12,17 @@ public class ValidationUtils{
 
     private static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final String NO_TOOLTIP =     "N/A";
-    private static final String STATUS_PASSED = "valid";
-    public  static final String STATUS_FAILED = "invalid";
-    private static final String STATUS_NONE = "fn-validate";
+    public static final String STATUS_PASSED = "valid";
+    public static final String STATUS_FAILED = "invalid";
+    public static final String STATUS_NONE = "fn-validate";
     private static final String TOOLTIP_STATUS_ERROR = "tooltip-error";
-    public  static final String PASSED = "Passed";
+    public static final String PASSED = "Passed";
     private static final String TOOLTIP_XP = "//*[contains(@class, 'tooltip')]";
     private static final String TOOLTIP_CONTAINER_XP = "//*[@data-tooltip-owner='"+PLACEHOLDER+"']";
     private static final String TOOLTIP_LABEL_XP = TOOLTIP_CONTAINER_XP+"//span";
 
     private static ArrayList<String> validateClick(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
-        clickAndWait(xpath);
+        clickField(xpath);
         results.add(validationStatusIs(xpath, STATUS_NONE, ""));
         String tooltip = rule.getTooltipPositive();
         if(!tooltip.equals(NO_TOOLTIP)){
@@ -33,7 +33,7 @@ public class ValidationUtils{
     }
 
     private static ArrayList<String> validateEmpty(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
-        inputAndSwitch(xpath);
+        inputFieldAndRefocus(xpath);
         if(rule.getIsMandatory().equals("true")){
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), xpath, tooltipID, "", STATUS_FAILED);
         }else {
@@ -43,39 +43,53 @@ public class ValidationUtils{
     }
 
     private static ArrayList<String> validateEmptyDropdown(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
-        switchToDropdown(xpath);
+        refocusDropdown(xpath);
         if(rule.getIsMandatory().equals("true")){
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), xpath, tooltipID, "", STATUS_FAILED);
         }else{
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, "", STATUS_PASSED);
+            results = validateStatusAndToolTips(results, STATUS_NONE, xpath, tooltipID, "", STATUS_PASSED);
         }
         return results;
     }
 
 	private static ArrayList<String> validateNotAllowedSymbols(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
+        String tooltip = rule.getTooltipNegativeInvalid();
         String value;
         String allNotAllowedSymbols = rule.getAllNotAllowedSymbols();
+        String validationStatus="";
+        String tooltipStatus="";
+        String tooltipText="";
         for(char a: allNotAllowedSymbols.toCharArray()) {
-            value = "";
-            for (int i = 0; i < rule.getMinLength(); i++) {
-                value += a;
+            char validChar = rule.getValidChar();
+            String character = String.valueOf(a);
+            if(character.equals("\\")||character.equals("^")||character.equals("$")||character.equals(".")
+                    ||character.equals("|")||character.equals("?")||character.equals("*")||character.equals("+")
+                    ||character.equals("(")||character.equals(")")||character.equals("[")||character.equals("]")
+                    ||character.equals("{")){
+                character = "\\" + character;
             }
-            inputAndSwitch(xpath, value);
-            results = validateStatusAndToolTips(results, rule.getTooltipNegativeInvalid(), xpath, tooltipID, value, STATUS_FAILED);
+            value = rule.generateValidMinLengthUnifiedString().replaceAll("(?<="+validChar+")"+validChar+"(?="+validChar+")", character);
+            inputFieldAndRefocus(xpath, value);
+            if(!validationStatusIs(xpath, STATUS_FAILED, value).equals(PASSED)){
+                validationStatus+=a;
+            };
+            if(!tooltip.equals(NO_TOOLTIP)){
+                if(!tooltipStatusIs(tooltipID, STATUS_FAILED, value).equals(PASSED)){
+                    tooltipStatus+=a;
+                };
+                if(!tooltipTextIs(tooltipID, tooltip, value).equals(PASSED)){
+                    tooltipText+=a;
+                };
+            }
         }
-        return results;
-    }
-
-    private static ArrayList<String> validateNotAllowedDropdown(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
-        String value;
-        String allNotAllowedSymbols = rule.getAllNotAllowedSymbols();
-        for(char a: allNotAllowedSymbols.toCharArray()) {
-            value = "";
-            for (int i = 0; i < rule.getMinLength(); i++) {
-                value += a;
-            }
-            inputAndSwitch(xpath, value);
-            results = validateStatusAndToolTips(results, rule.getTooltipNegativeInvalid(), xpath, tooltipID, value, STATUS_FAILED);
+        if(validationStatus.length()>0){
+            results.add("For symbols = '" + validationStatus + "' validation status should be '"+STATUS_FAILED+"'");
+        }
+        if(tooltipStatus.length()>0){
+            results.add("For symbols = '" + tooltipStatus + "' tooltip status should be '"+STATUS_FAILED+"'");
+        }
+        if(tooltipText.length()>0){
+            results.add("For symbols = '" + tooltipText + "' tooltip text should be '"+tooltip+"'");
         }
         return results;
     }
@@ -83,32 +97,53 @@ public class ValidationUtils{
     private static ArrayList<String> validateAllowedSymbols(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         String value;
         String allAllowedSymbols = rule.getAllAllowedSymbols();
+        String validationStatus="";
+        String tooltipStatus="";
         for(char a: allAllowedSymbols.toCharArray()){
-            value="";
-            for(int i=0; i<rule.getMinLength();i++){
-                value+=a;
+            char validChar = rule.getValidChar();
+            String character = String.valueOf(a);
+            if(character.equals("@")&&rule.getRegexp().contains("[@]")){
+                continue;
             }
-            inputAndSwitch(xpath, value);
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, value, STATUS_PASSED);
+            if(character.equals("\\")||character.equals("^")||character.equals("$")||character.equals(".")
+                    ||character.equals("|")||character.equals("?")||character.equals("*")||character.equals("+")
+                    ||character.equals("(")||character.equals(")")||character.equals("[")||character.equals("]")
+                    ||character.equals("{")){
+                character = "\\" + character;
+            }
+            value = rule.generateValidMinLengthUnifiedString().replaceAll("(?<="+validChar+")"+validChar+"(?="+validChar+")", character);
+            inputFieldAndRefocus(xpath, value);
+            if(!validationStatusIs(xpath, STATUS_PASSED, value).equals(PASSED)){
+                validationStatus+=a;
+            };
+            if(!tooltipVisibilityIs(tooltipID, value, false).equals(PASSED)){
+                tooltipStatus+=a;
+            };
+        }
+        if(validationStatus.length()>0){
+            results.add("For symbols = '" + validationStatus + "' validation status should be '"+STATUS_PASSED+"'");
+        }
+        if(tooltipStatus.length()>0){
+            results.add("For symbols = '" + tooltipStatus + "' positive tooltip should not appear on click");
         }
         return results;
     }
 
     private static ArrayList<String> validateValidFieldInput(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         String randomAllowed = rule.generateValidString();
-        inputAndSwitch(xpath, randomAllowed);
-        results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, randomAllowed, STATUS_PASSED);
+        inputFieldAndRefocus(xpath, randomAllowed);
+        results = validateStatusAndToolTips(results, STATUS_NONE, xpath, tooltipID, randomAllowed, STATUS_PASSED);
         return results;
     }
 
     private static ArrayList<String> validateValidDropdownInput(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         if(rule.getRegexp().equals("DOB")){
             inputDateOfBirthAndSwitch(xpath);
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, "Valid Date Of Birth", STATUS_PASSED);
+            results = validateStatusAndToolTips(results, STATUS_NONE, xpath, tooltipID, "Valid Date Of Birth", STATUS_PASSED);
         }else{
             for(String value:rule.getDropdownValues()){
-                inputDropdownAndSwitch(xpath, value);
-                results = validateStatusAndToolTips(results, rule.getTooltipPositive(), xpath, tooltipID, value, STATUS_PASSED);
+                inputDropdownAndRefocus(xpath, value);
+                results = validateStatusAndToolTips(results, STATUS_NONE, xpath, tooltipID, value, STATUS_PASSED);
             }
         }
         return results;
@@ -120,8 +155,8 @@ public class ValidationUtils{
             throw new RuntimeException("Minimum value for validation rule should be positive, actual value: " + min);
         } else if (min > 1) {
 			int randomLength = RandomUtils.generateRandomIntBetween(1, min - 1);
-			String randomTooShort = rule.generateValidString().substring(0, randomLength);
-            inputAndSwitch(xpath, randomTooShort);
+			String randomTooShort = rule.generateValidStringWithMinSymbols().substring(0, randomLength);
+            inputFieldAndRefocus(xpath, randomTooShort);
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeShort(), xpath, tooltipID, randomTooShort, STATUS_FAILED);
         }else {
             results.add(PASSED);
@@ -135,15 +170,17 @@ public class ValidationUtils{
 			throw new RuntimeException("Maximum value for validation rule should be larger than 0, actual value: " + max);
 		}else {
             String randomTooLong = rule.generateValidStringOverMaxSymbols();
-            inputAndSwitch(xpath, randomTooLong);
+            inputFieldAndRefocus(xpath, randomTooLong);
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeLong(), xpath, tooltipID, randomTooLong, STATUS_FAILED);
         }
         return results;
 	}
 
-    private static ArrayList<String> validateStatusAndToolTips(ArrayList<String> results, String tooltip, String xpath, String tooltipID, String value, String status ){
+    public static ArrayList<String> validateStatusAndToolTips(ArrayList<String> results, String tooltip, String xpath, String tooltipID, String value, String status ){
         results.add(validationStatusIs(xpath, status, value));
-        if(!tooltip.equals(NO_TOOLTIP)){
+        if(tooltip.equals(STATUS_NONE)){
+            results.add(tooltipVisibilityIs(tooltipID, value, false));
+        }else if(!tooltip.equals(NO_TOOLTIP)){
             results.add(tooltipStatusIs(tooltipID, status, value));
             results.add(tooltipTextIs(tooltipID, tooltip, value));
         }
@@ -153,16 +190,16 @@ public class ValidationUtils{
 	public static String validationStatusIs(String xpath, String expectedStatus, String value) {
 		String actualStatus = getValidationStatus(xpath);
 		if (!actualStatus.equals(expectedStatus)) {
-			return (xpath + " input field with value '" + value + "' should be marked as '" + expectedStatus + "' but it marked as '" + actualStatus + "'");
+			return ("Value = '" + value + "' should be '" + expectedStatus + "', but it is '" + actualStatus + "'");
 		} else {
             return PASSED;
         }
 	}
 
-    private static String tooltipStatusIs(String id, String expectedStatus, String value) {
+    public static String tooltipStatusIs(String id, String expectedStatus, String value) {
         if(getTooltipStatus(id).contains(TOOLTIP_STATUS_ERROR)){
             if(expectedStatus.equals(STATUS_PASSED)){
-                return "For input field '"+ id + "' with value '" + value + "' tooltip should be positive, but it is negative";
+                return "Value = '" + value + "' tooltip should be positive, but it is negative";
             }else {
                 return PASSED;
             }
@@ -170,17 +207,17 @@ public class ValidationUtils{
             if(expectedStatus.equals(STATUS_PASSED)){
                 return PASSED;
             }else {
-                return "For input field '"+ id + "' with value '" + value + "' tooltip should be negative, but it is positive";
+                return "Value = '" + value + "' tooltip should be negative, but it is positive";
             }
         }
     }
 
-    private static String tooltipTextIs(String id, String expectedText, String value) {
+    public static String tooltipTextIs(String id, String expectedText, String value) {
         String actualText = getTooltipText(id);
         if(actualText.equals(expectedText)){
             return PASSED;
         }else {
-            return "For input field '"+ id + "' with value '" + value + "' tooltip should be '"+expectedText+"', but it is '"+actualText+"'";
+            return "Value = '" + value + "' tooltip should be '"+expectedText+"', but it is '"+actualText+"'";
         }
     }
 
@@ -194,6 +231,19 @@ public class ValidationUtils{
         return WebDriverUtils.getElementText(TOOLTIP_LABEL_XP.replace(PLACEHOLDER, id));
     }
 
+    private static String tooltipVisibilityIs(String id, String value, boolean expectedStatus) {
+        boolean actualStatus = isTooltipVisible(id);
+        if(!actualStatus==expectedStatus){
+            return "Value = '" + value + "' tooltip visibility should be '"+expectedStatus+"', but it is '"+actualStatus+"'";
+        }else {
+            return PASSED;
+        }
+    }
+
+    private static boolean isTooltipVisible(String id) {
+        return WebDriverUtils.isVisible(TOOLTIP_LABEL_XP.replace(PLACEHOLDER, id), 0);
+    }
+
 	private static String getValidationStatus(String xpath) {
         String classValue;
         if(xpath.equals(RegistrationPage.DROPDOWN_BIRTHDAY_XP)){
@@ -205,39 +255,42 @@ public class ValidationUtils{
 		return classParametes[classParametes.length-1];
 	}
 
-    public static void inputAndSwitch(String xpath, String input){
+    public static void inputFieldAndRefocus(String xpath, String input){
+        if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
+        }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
+        }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);
-        clickAndWait(xpath);
+        clickField(xpath);
     }
 
-    private static void inputAndSwitch(String xpath){
-        inputAndSwitch(xpath, " ");
+    private static void inputFieldAndRefocus(String xpath){
+        inputFieldAndRefocus(xpath, " ");
     }
 
-    private static void clickAndWait(String xpath){
+    private static void clickField(String xpath){
         WebDriverUtils.click(xpath);
-        WebDriverUtils.waitForElement(TOOLTIP_XP);
     }
 
-    private static void inputDropdownAndSwitch(String xpath, String value){
+    private static void inputDropdownAndRefocus(String xpath, String value){
         WebDriverUtils.setDropdownOptionByValue(xpath, value);
-        switchToDropdown(xpath);
+        refocusDropdown(xpath);
     }
 
     private static void inputDateOfBirthAndSwitch(String xpath){
         WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHDAY_XP, "01");
         WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHMONTH_XP, "01");
         WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHYEAR_XP, "1980");
-        switchToDropdown(xpath);
+        refocusDropdown(xpath);
     }
 
-    private static void switchToDropdown(String xpath){
+    private static void refocusDropdown(String xpath){
         WebDriverUtils.pressKey(Keys.TAB);
         //this is not a typo, tab has to be clicked twice
         WebDriverUtils.pressKey(Keys.TAB);
-        WebDriverUtils.click(xpath);
-        WebDriverUtils.waitForElement(TOOLTIP_XP);
+        clickField(xpath);
     }
 
 	public static void validateField(String xpath, ValidationRule rule, String tooltipID) {
@@ -281,6 +334,9 @@ public class ValidationUtils{
         ArrayList<RegexNode> nodes = new ArrayList<>();
         while(tempRegExp.indexOf("[")!=-1){
             int end = tempRegExp.indexOf("}")+1;
+            if(tempRegExp.contains("}]")){
+                end = tempRegExp.indexOf("}", end)+1;
+            }
             nodes.add(new RegexNode(tempRegExp.substring(tempRegExp.indexOf("["), end)));
             tempRegExp=tempRegExp.substring(end);
         }

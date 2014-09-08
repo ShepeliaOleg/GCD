@@ -31,7 +31,7 @@ public class LoginPopup extends AbstractPopup{
 	}
 
 	public boolean validationErrorVisible(){
-		return WebDriverUtils.isVisible(LABEL_VALIDATION_ERROR_XP);
+		return WebDriverUtils.isVisible(LABEL_VALIDATION_ERROR_XP, 1);
 	}
 
 	private void fillUsername(String username){

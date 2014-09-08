@@ -54,7 +54,7 @@ public class SpamavertPage extends MailServicePage {
 	}
 
     @Override
-	public void waitForEmail(long timeout){
+	public void waitForPasswordEmail(long timeout){
 		try{
 			WebDriverUtils.waitForElementToDisappear(WAITING_DIALOG_XP, timeout);
 		}catch(RuntimeException e){

@@ -451,9 +451,13 @@ public class WebDriverUtils extends WebDriverObject{
         webDriver.switchTo().defaultContent();
     }
 
-	public static void switchToIframe(String iframeId){
+	public static void switchToIframeById(String iframeId){
 		webDriver.switchTo().frame(iframeId);
 	}
+
+    public static void switchToIframeByXpath(String iframeXpath){
+        webDriver.switchTo().frame(webDriver.findElement(By.xpath(iframeXpath)));
+    }
 
 	//Exceptions
 

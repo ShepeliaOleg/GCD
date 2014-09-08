@@ -11,7 +11,7 @@ import utils.WebDriverUtils;
 
 public class ChangeMyDetailsPage extends AbstractPage{
 
-	public static final String RESPONSIBLE_GAMING_ROOT_XP=		"//*[contains(@id,'portlet_updatemydetails')]";
+	public static final String ROOT_XP =		                "//*[contains(@id,'updatemydetails')]";
 	private static final String LABEL_CONFIRMATION_MESSAGE_XP=	"//*[contains(@class,'portlet-msg portlet-msg-info')]";
     private static final String LABEL_ERROR_MESSAGE_XP=			"//*[contains(@class,'portlet-msg portlet-msg-error')]";
 	private final static String LABEL_TITLE=					"//*[@id='updateMyDetailsModel']//h3";
@@ -20,17 +20,17 @@ public class ChangeMyDetailsPage extends AbstractPage{
     private final static String FIELD_EMAIL_VERIFICATION_XP= 	"//*[@id='emailVerification']";
     private final static String FIELD_CITY_XP= 					"//*[@id='city']";
     private final static String FIELD_ADDRESS_XP=  				"//*[@id='address']";
-    private final static String FIELD_POSTCODE_XP = 			"//*[@id='postCode']";
+    private final static String FIELD_POSTCODE_XP = 			"//*[@id='zip']";
     private final static String FIELD_PHONE_XP = 				"//*[@id='telephone']";
-    private final static String FIELD_MOBILE_XP= 				"//*[@id='mobile']";
-	private final static String DROPDOWN_COUNTRY_XP=			"//*[@id='country']";
-	private static final String BUTTON_UPDATE_XP=				"//button[contains(@id,'updatemydetails')]";
+    private final static String FIELD_MOBILE_XP= 				"//*[@id='cellPhone']";
+	private final static String DROPDOWN_COUNTRY_XP=			"//*[@id='countryCode']";
+	private static final String BUTTON_UPDATE_XP=				ROOT_XP + "//button[contains(@class,'btn')]";
     private static final String CHECKBOX_NOTIFICATION_EMAIL_XP=	"//*[@id='accountNotificationEmail']";
     private static final String CHECKBOX_NOTIFICATION_PHONE_XP=	"//*[@id='accountNotificationPhone']";
     private static final String CHECKBOX_NOTIFICATION_SMS_XP=	"//*[@id='accountNotificationSms']";
 
     public ChangeMyDetailsPage(){
-        super(new String[]{RESPONSIBLE_GAMING_ROOT_XP, BUTTON_UPDATE_XP});
+        super(new String[]{ROOT_XP, BUTTON_UPDATE_XP});
     }
 
     public void setNotificationCheckboxes(boolean state){

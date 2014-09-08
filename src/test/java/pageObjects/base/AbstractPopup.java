@@ -33,6 +33,10 @@ public abstract class AbstractPopup extends AbstractPageObject{
 	public void clickAccept(){
 		WebDriverUtils.click(BUTTON_ACCEPT_XP);
 	}
+
+    protected void clickOffPopup(){
+        WebDriverUtils.click("//*[contains(@class, 'fn-overlay')]");
+    }
 }
 
 

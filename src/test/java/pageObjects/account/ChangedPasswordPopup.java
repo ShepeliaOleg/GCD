@@ -10,13 +10,14 @@ import utils.WebDriverUtils;
 
 public class ChangedPasswordPopup extends AbstractPopup{
 	public final static String BUTTON_OK_XP=				"//*[@title='ok']";
-	private final static String LABEL_MESSAGE_SUCCESS_XP=	ROOT_XP + "//div[contains(text(),'successful')]";
+	private final static String LABEL_MESSAGE_SUCCESS_XP=	ROOT_XP + "//div[contains(text(),'Password Changed')]";
 
 	public ChangedPasswordPopup(){
-		super(new String[]{BUTTON_OK_XP});
+		super(new String[]{LABEL_MESSAGE_SUCCESS_XP});
 	}
 
 	public boolean successfulMessageAppeared(){
 		return WebDriverUtils.isVisible(LABEL_MESSAGE_SUCCESS_XP);
 	}
 }
+
