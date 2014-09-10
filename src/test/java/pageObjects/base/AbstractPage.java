@@ -64,6 +64,7 @@ public class AbstractPage extends AbstractPageObject{
 	public AbstractPage logout(){
 		return clickLogout().logout();
 	}
+
     public LogoutPopup clickLogout(){
         return loggedInHeader().clickLogout();
     }

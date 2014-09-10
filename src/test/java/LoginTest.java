@@ -4,10 +4,13 @@ import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.account.LoginPopup;
+import pageObjects.account.LogoutPopup;
+import pageObjects.account.SignedOutPopup;
 import pageObjects.base.AbstractPage;
 import pageObjects.forgotPassword.ContactUsPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
@@ -134,7 +137,7 @@ public class LoginTest extends AbstractTest{
 		UserData userData=defaultUserData.getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
-		String username1=homePage.logout().getEnteredUsernameFromLoginForm();
+		homePage.logout();
         String changedUsername = userData.getUsername()+"2";
         userData.setUsername(changedUsername);
 		homePage=(HomePage) homePage.login(userData, true);
@@ -217,8 +220,7 @@ public class LoginTest extends AbstractTest{
 	public void closeLoginPopupByXButton(){
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
-		homePage=loginPopup.close();
-        TypeUtils.assertFalseWithLogs(homePage.isLoggedIn(), "logged in");
+        TypeUtils.assertFalseWithLogs(loginPopup.close().isLoggedIn(), "logged in");
 	}
 
 //	/*#13.2 Close popup*/
@@ -289,6 +291,52 @@ public class LoginTest extends AbstractTest{
 		PortalUtils.loginUser(userData);
         TypeUtils.assertTrueWithLogs(iMS.isPlayerLoggedIn(userData.getUsername()),"successfulLogin");
 	}
+
+    /*17. Click Cancel on confirmation popup >> you are still logged in*/
+    @Test(groups={"regression"})
+    public void logoutConfirmationPopupCancel(){
+        UserData userData=defaultUserData.getRegisteredUserData();
+        PortalUtils.loginUser(userData);
+        HomePage homePage = new HomePage();
+        LogoutPopup logoutPopup = homePage.clickLogout();
+        TypeUtils.assertTrueWithLogs(logoutPopup.closePopup().isLoggedIn(), "User is logged in");
+
+    }
+
+    /*18. Click Cancel on login suggestion popup >> popup is closed, you are logged out*/
+    @Test(groups={"regression"})
+    public void reloginPopupCancel(){
+        UserData userData=defaultUserData.getRegisteredUserData();
+        PortalUtils.loginUser(userData);
+        HomePage homePage = new HomePage();
+        LogoutPopup logoutPopup = homePage.clickLogout();
+        SignedOutPopup signedOutPopup = logoutPopup.clickLogoutButton();
+        TypeUtils.assertFalseWithLogs(signedOutPopup.closePopup().isLoggedIn(), "User is logged in");
+    }
+
+    /*19. Close log in popup >> login popup is closed, you are logged out*/
+    @Test(groups={"regression"})
+    public void reloginPopupReloginCancel(){
+        UserData userData=defaultUserData.getRegisteredUserData();
+        PortalUtils.loginUser(userData);
+        HomePage homePage = new HomePage();
+        LogoutPopup logoutPopup = homePage.clickLogout();
+        SignedOutPopup signedOutPopup = logoutPopup.clickLogoutButton();
+        LoginPopup loginPopup = signedOutPopup.loginAgain();
+        TypeUtils.assertFalseWithLogs(loginPopup.close().isLoggedIn(), "User is logged in");
+    }
+
+    /*20. Log in again under the same player from login popup >> you are successfully logged in*/
+    @Test(groups={"regression"})
+    public void reloginPopupReloginSuccess(){
+        UserData userData=defaultUserData.getRegisteredUserData();
+        PortalUtils.loginUser(userData);
+        HomePage homePage = new HomePage();
+        LogoutPopup logoutPopup = homePage.clickLogout();
+        SignedOutPopup signedOutPopup = logoutPopup.clickLogoutButton();
+        LoginPopup loginPopup = signedOutPopup.loginAgain();
+        TypeUtils.assertTrueWithLogs(loginPopup.login(userData).isLoggedIn(), "User is logged in");
+    }
 
     /* NEGATIVE */
 
