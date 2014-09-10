@@ -291,7 +291,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	public void changePassword(String password){
 		IMSChangePassPopup imsChangePassPopup = openChangePassPopup();
 		imsChangePassPopup.changePassword(password);
-		imsChangePassPopup.closePopup();
+		imsChangePassPopup.close();
 	}
 
     public void resetFailedLogins(){

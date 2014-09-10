@@ -1,7 +1,5 @@
 package pageObjects.base;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
@@ -11,16 +9,13 @@ public abstract class AbstractPageObject extends WebDriverObject {
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final int TIMEOUT =              30;
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
 	public AbstractPageObject(String mainWindowHandle){
-		WebDriverUtils.switchToPopup(mainWindowHandle);
+		WebDriverUtils.switchToOtherWindow(mainWindowHandle);
 		validate(null, null);
 	}
 
 	public AbstractPageObject(String mainWindowHandle, String[] clickableBys){
-		WebDriverUtils.switchToPopup(mainWindowHandle);
+		WebDriverUtils.switchToOtherWindow(mainWindowHandle);
 		validate(clickableBys, null);
 	}
 

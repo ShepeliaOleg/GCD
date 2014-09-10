@@ -80,7 +80,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
 		GameLaunchPopup gameLaunchPopup=(GameLaunchPopup) liveCasinoPage.clickPlay(index, true);
 		boolean isUrlValid=gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.closePopup();
+		gameLaunchPopup.close();
 		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
 	}
 
@@ -94,7 +94,7 @@ public class LiveTableFinderTest extends AbstractTest{
 		HomePage homePage = loginPopup.login(userData);
 		GameLaunchPopup gameLaunchPopup = homePage.switchToGameWindow();
 		boolean isUrlValid=gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.closePopup();
+		gameLaunchPopup.close();
 		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
 	}
 

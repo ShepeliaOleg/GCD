@@ -1,27 +1,15 @@
 package pageObjects.gamesPortlet;
 
-import org.testng.SkipException;
-import pageObjects.base.AbstractBrowserWindowPopup;
+import pageObjects.base.AbstractBrowserWindow;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 7/31/13
- */
+public class GameLaunchPopup extends AbstractBrowserWindow {
 
-public class GameLaunchPopup extends AbstractBrowserWindowPopup{
-
-	private String mainWindowHandle;
-    private static final String VALID_GAME_URL="/launchcasino.html";
+	private static final String VALID_GAME_URL="/launchcasino.html";
     private static final String NO_FLASH_URL="/flashless.html";
 
     public GameLaunchPopup(String mainWindowHandle){
         super(mainWindowHandle);
-        this.mainWindowHandle=mainWindowHandle;
-    }
-
-    public String getWindowUrl(){
-        return WebDriverUtils.getCurrentUrl();
     }
 
 	public boolean isUrlValid(){
@@ -36,13 +24,5 @@ public class GameLaunchPopup extends AbstractBrowserWindowPopup{
 		return false;
 	}
 
-	public String getMainWindowHandle(){
 
-		return mainWindowHandle;
-	}
-
-	public void closePopup(){
-		WebDriverUtils.closeCurrentWindow();
-		WebDriverUtils.switchToWindow(getMainWindowHandle());
-	}
 }

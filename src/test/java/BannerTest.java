@@ -3,9 +3,11 @@ import enums.BannerSlideType;
 import enums.ConfiguredPages;
 import org.testng.annotations.Test;
 import pageObjects.banner.BannerPage;
+import pageObjects.external.ExternalPage;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.TypeUtils;
+import utils.WebDriverUtils;
 import java.util.List;
 
 public class BannerTest extends AbstractTest{
@@ -25,8 +27,8 @@ public class BannerTest extends AbstractTest{
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
 
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.webContent), "There is no slide with WebContent content present.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "WebContent is not visible.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.webContent), "There is no slide with WebContent content present.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with WebContent is not displayed.");
     }
 
     /* 3. Banner shows image */
@@ -36,8 +38,8 @@ public class BannerTest extends AbstractTest{
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
 
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.image), "There is no slide with image content present.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Image is not visible.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.image), "There is no slide with image content present.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with Image is not displayed.");
 	}
     /* 4. Banner shows HTML */
     @Test(groups = {"regression"})
@@ -46,8 +48,8 @@ public class BannerTest extends AbstractTest{
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
 
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.html), "There is no slide with HTML content present.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "HTML is not visible.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.html), "There is no slide with HTML content present.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with HTML is not displayed.");
     }
 
     /* 5. Banner shows mixed content */
@@ -57,54 +59,130 @@ public class BannerTest extends AbstractTest{
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
 
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 3, "Expected number of slides is 3.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.image), "There is no slide with image content present.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.webContent), "There is no slide with WebContent content present.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.contains(BannerSlideType.html), "There is no slide with HTML content present.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with image was not displayed.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Slide with WebContent was not displayed.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Slide with HTML was not displayed");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is not image content type.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(1).equals(BannerSlideType.html),       "Second slide is not HTML content type.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(2).equals(BannerSlideType.webContent), "Third slide is not WebContent content type.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1, 10), "First slide with image was not displayed.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2, 10), "Second slide with HTML was not displayed");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3, 10), "Third slide with WebContent was not displayed.");
     }
 
     /* 8. Navigation – buttons*/
+    @Test(groups = {"regression"})
     public void bannerNavigationButtons() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationButtons);
+        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.buttons, "Expected navigation type is 'Buttons'.");
+        bannerPage.showSlide(1);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking first button.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking second button.");
+        bannerPage.showSlide(3);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking third button.");
     }
 
     /* 9. Navigation – arrows*/
+    @Test(groups = {"regression"})
     public void bannerNavigationArrows() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrows);
-        bannerPage.showNextSlide(BannerNavigationType.arrows);
+        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.arrows, "Expected navigation type is 'Arrows'.");
+        bannerPage.showSlide(1);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Both Next and Previous arrows should be displayed on medium slide.");
+        bannerPage.showSlide(3);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Previous arrow should be displayed on last slide.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking previous arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Both Next and Previous arrows should be displayed on medium slide.");
+        bannerPage.showSlide(1);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking previous arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
+
     }
 
     /* 10. Navigation - arrows and bullets*/
+    @Test(groups = {"regression"})
     public void bannerNavigationArrowsBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrowsBullets);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.arrowsAndBullets, "Expected navigation type is 'Arrows and Bullets'.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(), "Both Next and Previous arrows should be displayed on medium slide.");
+        bannerPage.showSlide(3);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking next arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Previous arrow should be displayed on last slide.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking previous arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(), "Both Next and Previous arrows should be displayed on medium slide.");
+        bannerPage.showSlide(1);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking previous arrow.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
+        bannerPage.showSlide(3, BannerNavigationType.bullets);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking third bullet.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
+        bannerPage.showSlide(2, BannerNavigationType.bullets);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking second bullet.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Both Next and Previous arrows should be displayed on medium slide.");
+        bannerPage.showSlide(1, BannerNavigationType.bullets);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking first bullet.");
+        TypeUtils.assertTrueWithLogs(bannerPage.arrowsDisplayed(),   "Only Previous arrow should be displayed on last slide.");
+
     }
 
     /* 11. Navigation – bullets*/
+    @Test(groups = {"regression"})
     public void bannerNavigationBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationBullets);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.bullets, "Expected navigation type is 'Bullets'.");
+        bannerPage.showSlide(3);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking third bullet.");
+        bannerPage.showSlide(1);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking first bullet.");
+        bannerPage.showSlide(2);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking second bullet.");
     }
 
     /* 12. Navigation – none*/
+    @Test(groups = {"regression"})
     public void bannerNavigationNone() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
-        BannerNavigationType bannerNavigationType = bannerPage.getNavigationType();
-        TypeUtils.assertEqualsWithLogs(bannerNavigationType, BannerNavigationType.none, "Banner configured to have no navigation, but some navigation items are displayed.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.none, "Expected navigation type is 'None'.");
     }
 
     /* 14. Banner as link*/
+    @Test(groups = {"regression"})
+    public void bannerLink() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerLink);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        bannerPage.clickSlide(1);
+        ExternalPage externalPage = new ExternalPage(bannerPage.getMainWindowHandle());
+        String currentUrl = WebDriverUtils.getCurrentUrl();
+        externalPage.close();
+        TypeUtils.assertEqualsWithLogs(currentUrl, "https://www.google.com.ua/", "Banner should link to 'https://www.google.com.ua/', but '" + currentUrl + "' is opened.");
+
+    }
 
     /* 15. Include banner in rotation*/
     @Test(groups = {"regression"})
     public void bannerInRotation() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerInRotation);
-        int slidesNumber = bannerPage.getSlidesCount();
 
-        TypeUtils.assertTrueWithLogs(slidesNumber == 3, "Expected number of slides is 3.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed, in spite of it included in rotation.");
-        TypeUtils.assertTrueWithLogs(!bannerPage.slideIsDisplayed(2), "Second slide is displayed, in spite of it not included in rotation.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide is not displayed, in spite of it included in rotation.");
+        List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
+
+        TypeUtils.assertTrueWithLogs(slidesTypes.size() == 2, "Expected number of slides is 2.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is not image content type.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(1).equals(BannerSlideType.webContent), "Second slide is not WebContent content type.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide is not displayed.");
+
     }
 
     /* 17. Number of banners*/

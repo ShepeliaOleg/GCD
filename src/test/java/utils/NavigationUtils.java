@@ -49,9 +49,11 @@ public class NavigationUtils extends WebDriverObject{
         switch (configuredPages){
             case balance:                                       return new BalancePage();
             case banner5seconds:
+            case bannerGame:
             case bannerHtml:
             case bannerImage:
             case bannerInRotation:
+            case bannerLink:
             case bannerMixed:
             case bannerNavigationArrows:
             case bannerNavigationArrowsBullets:

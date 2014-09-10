@@ -433,10 +433,10 @@ public class WebDriverUtils extends WebDriverObject{
         webDriverFactory.switchToAdditionalWebDriver();
     }
 
-	public static void switchToPopup(String mainWindowHandle){
+	public static void switchToOtherWindow(String mainWindowHandle){
 		for(String winHandle : webDriver.getWindowHandles()){
 			if(!winHandle.equals(mainWindowHandle)){
-				webDriver.switchTo().window(winHandle);
+				switchToWindow(winHandle);
 			}
 		}
 	}
