@@ -9,8 +9,6 @@ import utils.WebDriverUtils;
  */
 public class SignedOutPopup extends AbstractPopup {
 
-    public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'fn-decline')]";
-
     public SignedOutPopup() {
         super(new String[]{BUTTON_ACCEPT_XP, BUTTON_CLOSE_XP});
     }
@@ -22,10 +20,6 @@ public class SignedOutPopup extends AbstractPopup {
     public LoginPopup loginAgain() {
         clickLoginAgain();
         return new LoginPopup();
-    }
-
-    public void clickClose(){
-        WebDriverUtils.click(BUTTON_CLOSE_XP);
     }
 
     public AbstractPage closePopup() {

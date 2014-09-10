@@ -2,6 +2,7 @@ package pageObjects.account;
 
 import enums.Page;
 import pageObjects.HomePage;
+import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import pageObjects.base.AbstractPopup;
 import pageObjects.forgotPassword.ContactUsPopup;
@@ -116,9 +117,9 @@ public class LoginPopup extends AbstractPopup{
 		return new ForgotPasswordPopup();
 	}
 
-	public HomePage close(){
-		WebDriverUtils.click(BUTTON_CLOSE_XP);
-		return new HomePage();
+	public AbstractPage close(){
+		clickClose();
+		return new AbstractPage();
 	}
 
     /* VALIDATION*/

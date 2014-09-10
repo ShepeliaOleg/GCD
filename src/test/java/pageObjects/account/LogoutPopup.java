@@ -20,6 +20,16 @@ public class LogoutPopup extends AbstractPopup {
         return new SignedOutPopup();
     }
 
+    @Override
+    public void clickClose(){
+        WebDriverUtils.click(BUTTON_CLOSE_XP);
+    }
+
+    public AbstractPage closePopup(){
+        clickClose();
+        return new AbstractPage();
+    }
+
     public AbstractPage logout(){
         return clickLogoutButton().closePopup().waitForLogout();
     }
