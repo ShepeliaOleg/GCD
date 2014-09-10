@@ -7,6 +7,7 @@ import org.testng.SkipException;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.*;
+import pageObjects.banner.BannerPage;
 import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import pageObjects.base.AbstractPopup;
@@ -47,6 +48,16 @@ public class NavigationUtils extends WebDriverObject{
         navigateToPortal(condition, configuredPages, userData);
         switch (configuredPages){
             case balance:                                       return new BalancePage();
+            case banner5seconds:
+            case bannerHtml:
+            case bannerImage:
+            case bannerInRotation:
+            case bannerMixed:
+            case bannerNavigationArrows:
+            case bannerNavigationArrowsBullets:
+            case bannerNavigationBullets:
+            case bannerNavigationButtons:
+            case bannerWebContent:                              return new BannerPage();
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();

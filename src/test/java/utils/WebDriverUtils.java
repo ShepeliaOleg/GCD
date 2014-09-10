@@ -156,6 +156,20 @@ public class WebDriverUtils extends WebDriverObject{
         return true;
     }
 
+    public static boolean isElementVisible(String xpath){
+        return isVisible(xpath) && isElementDimensionsPositive(xpath);
+    }
+
+    public static boolean isElementVisible(String xpath, long timeout){
+        return isVisible(xpath, timeout) && isElementDimensionsPositive(xpath);
+    }
+
+    public static boolean isElementDimensionsPositive(String xpath){
+        int width = getElementWidth(xpath);
+        int height = getElementHeight(xpath);
+        return width > 0 && height > 0;
+    }
+
 	public static void mouseOver(String xpath){
 		try{
 			Actions actions=new Actions(webDriver);
