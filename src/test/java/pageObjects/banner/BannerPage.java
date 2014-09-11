@@ -7,7 +7,6 @@ import pageObjects.base.AbstractPage;
 import pageObjects.base.AbstractPageObject;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import utils.WebDriverUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,19 +102,6 @@ public class BannerPage extends AbstractPage{
         }
         return 0;
     }
-
-    /* Navigation*/
-
-//    public void showNextSlide(BannerNavigationType navigationType) {
-//        switch (navigationType) {
-//            case arrows:
-//                showNextSlideArrows();
-//            case bullets:
-//                getDisplayedSlideIndex();
-//            case buttons:
-//
-//        }
-//    }
 
     private void showNextSlide() {
         WebDriverUtils.click(NAVIGATION_ARROW_NEXT_XP);

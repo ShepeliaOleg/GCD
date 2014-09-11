@@ -30,28 +30,18 @@ public class BannerTest extends AbstractTest{
 		BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
 	}
 
-    /* 2. Banner shows WebContent */
+    /* 2. Banner shows image */
     @Test(groups = {"regression"})
-    public void bannerWebContent() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerWebContent);
-        List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-
-        TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.webContent), "There is no slide with WebContent content present.");
-        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with WebContent is not displayed.");
-    }
-
-    /* 3. Banner shows image */
-	@Test(groups = {"regression"})
-	public void bannerImage() {
+    public void bannerImage() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
 
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
         TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.image), "There is no slide with image content present.");
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with Image is not displayed.");
-	}
-    /* 4. Banner shows HTML */
+    }
+
+    /* 3. Banner shows HTML */
     @Test(groups = {"regression"})
     public void bannerHtml() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerHtml);
@@ -60,6 +50,17 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
         TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.html), "There is no slide with HTML content present.");
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with HTML is not displayed.");
+    }
+
+    /* 4. Banner shows WebContent */
+    @Test(groups = {"regression"})
+    public void bannerWebContent() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerWebContent);
+        List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
+
+        TypeUtils.assertTrueWithLogs(slidesTypes.size() == 1, "Expected number of slides is 1.");
+        TypeUtils.assertTrueWithLogs(slidesTypes.get(0).equals(BannerSlideType.webContent), "There is no slide with WebContent content present.");
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "Slide with WebContent is not displayed.");
     }
 
     /* 5. Banner shows mixed content */
@@ -77,7 +78,7 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3, 10), "Third slide with WebContent was not displayed.");
     }
 
-    /* 8. Navigation – buttons*/
+    /* 6. Navigation – buttons*/
     @Test(groups = {"regression"})
     public void bannerNavigationButtons() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationButtons);
@@ -90,7 +91,7 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking third button.");
     }
 
-    /* 9. Navigation – arrows*/
+    /* 7. Navigation – arrows*/
     @Test(groups = {"regression"})
     public void bannerNavigationArrows() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrows);
@@ -113,7 +114,7 @@ public class BannerTest extends AbstractTest{
 
     }
 
-    /* 10. Navigation - arrows and bullets*/
+    /* 8. Navigation - arrows and bullets*/
     @Test(groups = {"regression"})
     public void bannerNavigationArrowsBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrowsBullets);
@@ -145,7 +146,7 @@ public class BannerTest extends AbstractTest{
 
     }
 
-    /* 11. Navigation – bullets*/
+    /* 9. Navigation – bullets*/
     @Test(groups = {"regression"})
     public void bannerNavigationBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationBullets);
@@ -159,7 +160,7 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide was not displayed after clicking second bullet.");
     }
 
-    /* 12. Navigation – none*/
+    /* 10. Navigation – none*/
     @Test(groups = {"regression"})
     public void bannerNavigationNone() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
@@ -167,7 +168,7 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.none, "Expected navigation type is 'None'.");
     }
 
-    /* 14. Banner as link*/
+    /* 11. Banner as link*/
     @Test(groups = {"regression"})
     public void bannerLink() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerLink);
@@ -180,7 +181,7 @@ public class BannerTest extends AbstractTest{
 
     }
 
-    /* 15. Include banner in rotation*/
+    /* 12. Include banner in rotation*/
     @Test(groups = {"regression"})
     public void bannerInRotation() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerInRotation);
@@ -194,10 +195,7 @@ public class BannerTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(2), "Second slide is not displayed.");
 
     }
-
-    /* 17. Number of banners*/
-
-    /* 18. Time to display*/
+    /* 13. Time to display*/
     @Test(groups = {"regression"})
     public void banner5seconds() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.banner5seconds);
@@ -209,10 +207,10 @@ public class BannerTest extends AbstractTest{
         long appearingOfFirstSlide =  bannerPage.whenSlideDisplayed(1);
         long timeToDisplay = appearingOfFirstSlide - appearingOfSecondSlide;
 
-        TypeUtils.assertTrueWithLogs(4999 < timeToDisplay && timeToDisplay < 5001, "Slides should switch each 5 seconds, but it took " + timeToDisplay + " ms.");
+        TypeUtils.assertTrueWithLogs(4900 < timeToDisplay && timeToDisplay < 5100, "Slides should switch each 5 seconds, but it took " + timeToDisplay + " ms.");
     }
 
-    /* 19. Game launch from banner*/
+    /* 14. Game launch from banner as guest user*/
     @Test(groups = {"regression"})
     public void bannerLaunchGameGuestPlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGame);
@@ -220,7 +218,7 @@ public class BannerTest extends AbstractTest{
         LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
     }
 
-
+    /* 15. Game launch from banner as logged in player*/
     @Test(groups = {"regression"})
     public void bannerLaunchGameLoggedInPlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGame, defaultUserData.getRegisteredUserData());
