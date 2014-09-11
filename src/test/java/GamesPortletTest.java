@@ -3,9 +3,9 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.account.LoginPopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
+import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
@@ -16,7 +16,7 @@ import utils.core.AbstractTest;
  * User: sergiich
  * Date: 4/10/14
  */
-public class GamesPortletTest extends AbstractTest{
+public class GamesPortletTest extends AbstractTest {
 
 	@Autowired
 	@Qualifier("userData")
@@ -33,7 +33,7 @@ public class GamesPortletTest extends AbstractTest{
 		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
         boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
 		String url = gameLaunchPopup.getWindowUrl();
-		gameLaunchPopup.closePopup();
+		gameLaunchPopup.close();
 		TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid: " + url);
     }
 
@@ -845,11 +845,11 @@ public class GamesPortletTest extends AbstractTest{
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 //        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
 //        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
 //        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
@@ -862,11 +862,11 @@ public class GamesPortletTest extends AbstractTest{
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 //        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//        gameLaunchPopup.closePopup();
+//        gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
 //        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
 //        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
@@ -879,7 +879,7 @@ public class GamesPortletTest extends AbstractTest{
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 //        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		try{
 //			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
@@ -887,7 +887,7 @@ public class GamesPortletTest extends AbstractTest{
 //			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
 //		}
 //        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
 //        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
@@ -900,11 +900,11 @@ public class GamesPortletTest extends AbstractTest{
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
 //        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
 //        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
 //        TypeUtils.assertTrueWithLogs(gameInfoPopup.isTitleCorrect(), "is popup title correct");
@@ -933,7 +933,7 @@ public class GamesPortletTest extends AbstractTest{
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
 //        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-//		gameLaunchPopup.closePopup();
+//		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 //	}
 //
@@ -988,7 +988,7 @@ public class GamesPortletTest extends AbstractTest{
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
         boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.closePopup();
+		gameLaunchPopup.close();
         TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 	}
 

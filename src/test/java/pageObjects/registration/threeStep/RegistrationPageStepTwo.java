@@ -1,15 +1,10 @@
 package pageObjects.registration.threeStep;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
-/**
- * User: ivan
- * Date: 7/31/13
- */
-
-public class RegistrationPageStepTwo extends AbstractPage{
+public class RegistrationPageStepTwo extends AbstractPage {
 
     private static final String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][2]";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";

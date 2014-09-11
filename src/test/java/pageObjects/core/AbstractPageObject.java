@@ -1,8 +1,9 @@
 package pageObjects.core;
 
+import utils.WebDriverUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
 public abstract class AbstractPageObject extends WebDriverObject {
@@ -15,12 +16,12 @@ public abstract class AbstractPageObject extends WebDriverObject {
     private ApplicationContext applicationContext;
 
 	public AbstractPageObject(String mainWindowHandle){
-		WebDriverUtils.switchToPopup(mainWindowHandle);
+		WebDriverUtils.switchToOtherWindow(mainWindowHandle);
 		validate(null, null);
 	}
 
 	public AbstractPageObject(String mainWindowHandle, String[] clickableBys){
-		WebDriverUtils.switchToPopup(mainWindowHandle);
+		WebDriverUtils.switchToOtherWindow(mainWindowHandle);
 		validate(clickableBys, null);
 	}
 
@@ -54,5 +55,6 @@ public abstract class AbstractPageObject extends WebDriverObject {
         return WebDriverUtils.isVisible(PORTLET_ERROR_XP);
     }
 }
+
 
 
