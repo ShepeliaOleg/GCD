@@ -4,16 +4,18 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
-       xmlns:context="http://www.springframework.org/schema/context">
+        >
 
     <bean id="driverData" class="springConstructors.DriverData">
         <property name="baseUrl" value="#{systemProperties['baseUrl']}"/>
         <property name="browser" value="#{systemProperties['browser']}"/>
         <property name="os" value="#{systemProperties['os']}"/>
+        <property name="platform" value="#{systemProperties['platform']}"/>
         <property name="defaultBaseUrl" value="http://mob-7regal-adminpor.wpl.ptec:8080/"/>
         <!--<property name="defaultBaseUrl" value="http://eagle:flight@lpm-7regal-public-618179476.eu-west-1.elb.amazonaws.com/"/>-->
         <property name="defaultBrowser" value="firefox"/>
         <property name="defaultOs" value="win"/>
+        <property name="defaultPlatform" value="mobile"/>
     </bean>
 
     <bean id="defaults" class="springConstructors.Defaults">

@@ -6,27 +6,34 @@ import enums.PlayerCondition;
 import org.testng.SkipException;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
-import pageObjects.account.*;
+import pageObjects.account.BalancePage;
+import pageObjects.account.UpdateMyDetailsPage;
 import pageObjects.banner.BannerPage;
-import pageObjects.base.AbstractPage;
-import pageObjects.base.AbstractPageObject;
-import pageObjects.base.AbstractPopup;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.changePassword.ChangePasswordPage;
+import pageObjects.changePassword.ChangePasswordPopup;
+import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
-import pageObjects.forgotPassword.ForgotUsernamePage;
 import pageObjects.gamesPortlet.GamesPortletPage;
+import pageObjects.generalPopups.LoaderPopup;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
-import pageObjects.popups.*;
-import pageObjects.registration.RegistrationPage;
+import pageObjects.login.AcceptTermsAndConditionsPopup;
+import pageObjects.login.LoginPopup;
+import pageObjects.login.WelcomePopup;
+import pageObjects.referAFriend.ReferAFriendPage;
+import pageObjects.registration.AfterRegistrationPopup;
+import pageObjects.registration.ReadTermsAndConditionsPopup;
+import pageObjects.registration.classic.RegistrationPageAllSteps;
+import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
-import utils.core.WebDriverFactory;
 import utils.core.WebDriverObject;
-import utils.logs.LogUtils;
 
 public class NavigationUtils extends WebDriverObject{
 
@@ -39,7 +46,7 @@ public class NavigationUtils extends WebDriverObject{
 
 	public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
         if (condition.equals(PlayerCondition.loggedIn)){
-            WebDriverUtils.runtimeExceptionWithLogs("No userdata set for logged in user");
+            WebDriverUtils.runtimeExceptionWithUrl("No userdata set for logged in user");
         }
         return navigateToPage(condition, configuredPages, null);
     }
@@ -61,10 +68,9 @@ public class NavigationUtils extends WebDriverObject{
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
-            case changeMyDetails:                               return new ChangeMyDetailsPage();
-            case changeMyPassword:                              return new ChangeMyPasswordPage();
+            case changeMyDetails:                               return new UpdateMyDetailsPage();
+            case changeMyPassword:                              return new ChangePasswordPage();
             case forgotPassword:                                return new ForgotPasswordPage();
-            case forgotUsername:                                return new ForgotUsernamePage();
             case gamesCasinoPage:
             case gamesFavourites:
             case gamesList:
@@ -84,7 +90,8 @@ public class NavigationUtils extends WebDriverObject{
             case inbox:                                         return new InboxPage();
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
-            case register:                                      return new RegistrationPage();
+            case register:                                      return new RegistrationPageAllSteps();
+            case registerSteps:                                 return new RegistrationPageStepOne();
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:
             case selfExclusion:                                 return new ResponsibleGamingPage();
@@ -94,17 +101,10 @@ public class NavigationUtils extends WebDriverObject{
 
     private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         AbstractPage abstractPage;
-        String suffix="";
-        LogUtils.setTimestamp();
-        if(configuredPages!=null){
-            suffix = configuredPages.toString();
-        }
+        String suffix=configuredPages.toString();
+//        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
-        if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
-            abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
-        }else{
-            abstractPage = new AbstractPage();
-        }
+        abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
         boolean isLoggedIn=abstractPage.isLoggedIn();
         switch (condition){
             case guest:
@@ -131,28 +131,20 @@ public class NavigationUtils extends WebDriverObject{
 			result = checkPopups(exceptPage);
 			retries++;
 			if(retries==POPUP_CHECK_RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("Unrecognizable popup appeared or popup cannot be closed");
+				WebDriverUtils.runtimeExceptionWithUrl("Unrecognizable popup appeared or popup cannot be closed");
 			}
 		}
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
-			WebDriverUtils.runtimeExceptionWithLogs(exceptPage.toString() + " was expected, but never appeared.");
+			WebDriverUtils.runtimeExceptionWithUrl(exceptPage.toString() + " was expected, but never appeared.");
 		}
 		if(exceptPage == Page.homePage){
 			HomePage homePage = new HomePage();
 			if(!homePage.isLoggedIn()){
-                if(WebDriverUtils.isVisible(RegistrationPage.LABEL_ERROR_TIMEOUT_XP, 2)){
-                    throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
-                }else{
-                    if(WebDriverUtils.isVisible(RegistrationPage.LABEL_MESSAGE_ERROR_XP)){
-                        WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(RegistrationPage.LABEL_MESSAGE_ERROR_XP));
-                    }else{
-                        WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed");
-                    }
-                }
+                processRegistrationError();
 			}
 			result = homePage;
 		}else if(exceptPage == Page.registrationPage){
-			RegistrationPage registrationPage = new RegistrationPage();
+			RegistrationPageAllSteps registrationPage = new RegistrationPageAllSteps();
 			result=registrationPage;
 		}
 		return result;
@@ -201,7 +193,7 @@ public class NavigationUtils extends WebDriverObject{
             if(WebDriverUtils.isVisible(LoginPopup.LABEL_TIMEOUT_ERROR_XP, 2)){
                 throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
             }else{
-                WebDriverUtils.runtimeExceptionWithLogs("Registration/Login failed : "+ WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
+                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
             }
         }
         return null;
@@ -212,7 +204,7 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.afterRegistrationPopup){
             return afterRegistrationPopup;
         }else{
-            afterRegistrationPopup.clickClose();
+            afterRegistrationPopup.closePopup();
             WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.BUTTON_DEPOSIT_XP);
             return null;
         }
@@ -223,7 +215,7 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.readTermsAndConditionsPopup){
             return readTermsAndConditionsPopup;
         }else{
-            readTermsAndConditionsPopup.clickClose();
+            readTermsAndConditionsPopup.closePopup();
             WebDriverUtils.waitForElementToDisappear(ReadTermsAndConditionsPopup.TITLE_XP);
             return null;
         }
@@ -245,7 +237,7 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.changePasswordPopup){
             return changePasswordPopup;
         }else{
-            WebDriverUtils.runtimeExceptionWithLogs("Password change prompt appeared");
+            WebDriverUtils.runtimeExceptionWithUrl("Password change prompt appeared");
         }
         return null;
     }
@@ -267,6 +259,18 @@ public class NavigationUtils extends WebDriverObject{
         }else{
             acceptDeclineBonusPopup.decline();
             return null;
+        }
+    }
+
+    private static void processRegistrationError(){
+        if(WebDriverUtils.isVisible(RegistrationPageAllSteps.LABEL_ERROR_TIMEOUT_XP, 2)){
+            throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
+        }else{
+            if(WebDriverUtils.isVisible(RegistrationPageAllSteps.LABEL_MESSAGE_ERROR_XP)){
+                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(RegistrationPageAllSteps.LABEL_MESSAGE_ERROR_XP));
+            }else{
+                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
+            }
         }
     }
 

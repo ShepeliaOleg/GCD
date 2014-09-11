@@ -1,6 +1,6 @@
 package pageObjects.external.ims;
 
-import pageObjects.base.AbstractBrowserWindowPopup;
+import pageObjects.core.AbstractBrowserWindowPopup;
 import utils.WebDriverUtils;
 
 /**

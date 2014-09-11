@@ -9,10 +9,10 @@ import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.liveCasino.DealerImagePopup;
 import pageObjects.liveCasino.LiveCasinoPage;
 import springConstructors.UserData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.RandomUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich

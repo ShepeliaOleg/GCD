@@ -1,7 +1,7 @@
 package pageObjects.external.ims;
 
 import enums.Page;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 /**

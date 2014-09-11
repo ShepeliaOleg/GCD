@@ -3,9 +3,10 @@ import enums.BannerSlideType;
 import enums.ConfiguredPages;
 import org.testng.annotations.Test;
 import pageObjects.banner.BannerPage;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
+
 import java.util.List;
 
 public class BannerTest extends AbstractTest{

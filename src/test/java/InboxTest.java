@@ -6,12 +6,12 @@ import org.testng.annotations.Test;
 import pageObjects.inbox.*;
 import springConstructors.MailQ;
 import springConstructors.UserData;
-import springConstructors.mail.MailService;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
+import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich

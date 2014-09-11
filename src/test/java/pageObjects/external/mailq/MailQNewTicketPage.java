@@ -1,7 +1,7 @@
 package pageObjects.external.mailq;
 
 import org.openqa.selenium.Keys;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 /**

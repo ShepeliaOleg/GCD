@@ -1,6 +1,6 @@
 package pageObjects.registration;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 
 /**
  * User: sergiich

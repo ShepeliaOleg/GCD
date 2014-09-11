@@ -2,7 +2,7 @@ package pageObjects.responsibleGaming;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
 import java.util.List;

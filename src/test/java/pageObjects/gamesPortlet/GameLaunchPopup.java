@@ -1,7 +1,6 @@
 package pageObjects.gamesPortlet;
 
-import org.testng.SkipException;
-import pageObjects.base.AbstractBrowserWindowPopup;
+import pageObjects.core.AbstractBrowserWindowPopup;
 import utils.WebDriverUtils;
 
 /**

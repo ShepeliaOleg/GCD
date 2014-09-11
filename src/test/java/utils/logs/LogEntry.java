@@ -30,7 +30,7 @@ public class LogEntry{
 
 	public void containsErrorWithException(){
 		if(containsError()){
-			WebDriverUtils.runtimeExceptionWithLogs("\n Error code is: " + getError());
+			WebDriverUtils.runtimeExceptionWithUrl("\n Error code is: " + getError());
 		}
 	}
 
@@ -44,7 +44,7 @@ public class LogEntry{
 	public void containsParameters(String[] parameters){
 		for(int i=0;i<parameters.length;i++){
 			if(!containsParameter(parameters[i])){
-				WebDriverUtils.runtimeExceptionWithLogs("Some parameters were not correct, - " + parameters[i]);
+				WebDriverUtils.runtimeExceptionWithUrl("Some parameters were not correct, - " + parameters[i]);
 			}
 		}
 	}

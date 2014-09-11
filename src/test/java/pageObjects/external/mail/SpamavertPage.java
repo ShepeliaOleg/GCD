@@ -58,7 +58,7 @@ public class SpamavertPage extends MailServicePage {
 		try{
 			WebDriverUtils.waitForElementToDisappear(WAITING_DIALOG_XP, timeout);
 		}catch(RuntimeException e){
-			WebDriverUtils.runtimeExceptionWithLogs("Email was not received after waiting for " + timeout + " seconds");
+			WebDriverUtils.runtimeExceptionWithUrl("Email was not received after waiting for " + timeout + " seconds");
 		}
 
 	}

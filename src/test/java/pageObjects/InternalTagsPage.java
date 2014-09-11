@@ -1,6 +1,6 @@
 package pageObjects;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 import java.util.HashMap;
@@ -74,7 +74,7 @@ public class InternalTagsPage extends AbstractPage{
 			}
 		}
 		if(hasErrors){
-			WebDriverUtils.runtimeExceptionWithLogs(result);
+			WebDriverUtils.runtimeExceptionWithUrl(result);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class InternalTagsPage extends AbstractPage{
 			}
 		}
 		if(hasErrors){
-			WebDriverUtils.runtimeExceptionWithLogs(result);
+			WebDriverUtils.runtimeExceptionWithUrl(result);
 		}
 	}
 }

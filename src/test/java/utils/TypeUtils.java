@@ -3,6 +3,7 @@ package utils;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -50,7 +51,7 @@ public class TypeUtils extends Assert {
         try{
             assertEquals(actual, expected, message);
         }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
         }
     }
 
@@ -58,7 +59,7 @@ public class TypeUtils extends Assert {
         try{
             assertTrue(condition, message);
         }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
         }
     }
 
@@ -66,7 +67,7 @@ public class TypeUtils extends Assert {
         try{
             assertFalse(condition, message);
         }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
         }
     }
 
@@ -74,7 +75,7 @@ public class TypeUtils extends Assert {
         try{
             assertTrue(condition);
         }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
         }
     }
 
@@ -82,7 +83,7 @@ public class TypeUtils extends Assert {
         try{
             assertFalse(condition);
         }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithLogs(e.getMessage());
+            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
         }
     }
 
@@ -110,5 +111,9 @@ public class TypeUtils extends Assert {
 
     public static String[] splitNumbers(String string){
         return string.replace("}", "").replace("{", "").split(",");
+    }
+
+    public static int convertBalance(String balance){
+        return Integer.parseInt(balance.substring(0, balance.indexOf('.')).replace(",", "").replace("£", ""));
     }
 }

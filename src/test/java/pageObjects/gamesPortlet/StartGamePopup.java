@@ -1,6 +1,6 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
 public class StartGamePopup extends AbstractPopup{

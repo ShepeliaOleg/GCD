@@ -3,14 +3,14 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.account.ReferAFriendPage;
 import pageObjects.external.mail.MailServicePage;
+import pageObjects.referAFriend.ReferAFriendPage;
 import springConstructors.UserData;
-import springConstructors.mail.MailService;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
+import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 public class ReferAFriendTest extends AbstractTest{
 

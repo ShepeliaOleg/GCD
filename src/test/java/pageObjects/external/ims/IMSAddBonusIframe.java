@@ -1,7 +1,7 @@
 package pageObjects.external.ims;
 
 import enums.Page;
-import pageObjects.base.AbstractIframe;
+import pageObjects.core.AbstractIframe;
 import utils.WebDriverUtils;
 
 /**
@@ -33,7 +33,7 @@ public class IMSAddBonusIframe extends AbstractIframe{
 		}else if (pushMessages == Page.acceptDeclineBonus) {
 			WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BONUS_TEMPLATE, ACCEPT_DECLINE_VALUE);
 		}else{
-			WebDriverUtils.runtimeExceptionWithLogs("Unknown bonus type requested");
+			WebDriverUtils.runtimeExceptionWithUrl("Unknown bonus type requested");
 		}
 	}
 

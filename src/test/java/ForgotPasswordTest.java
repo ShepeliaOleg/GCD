@@ -1,34 +1,25 @@
 import enums.ConfiguredPages;
-import enums.LogCategory;
 import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.account.ChangePasswordPopup;
-import pageObjects.account.ChangedPasswordPopup;
-import pageObjects.account.LoginPopup;
+import pageObjects.changePassword.ChangePasswordPopup;
+import pageObjects.changePassword.ChangedPasswordPopup;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import pageObjects.external.mail.MailServicePage;
-import pageObjects.forgotPassword.ContactUsPopup;
 import pageObjects.forgotPassword.ForgotPasswordConfirmationPopup;
-import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
-import pageObjects.registration.RegistrationPage;
+import pageObjects.login.LoginPopup;
 import springConstructors.IMS;
 import springConstructors.UserData;
-import springConstructors.mail.MailService;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
+import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
-import utils.WebDriverUtils;
-import utils.logs.Log;
-import utils.logs.LogEntry;
-import utils.logs.LogUtils;
+import utils.core.AbstractTest;
 
 public class ForgotPasswordTest extends AbstractTest{
 
@@ -78,7 +69,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
 	}
 
     /*4. Check email */
@@ -90,7 +81,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
         MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 	}
@@ -104,7 +95,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
         MailServicePage mailServicePage = mailService.navigateToInbox(email);
         mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -122,8 +113,8 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.confirmationPopupVisible(),"successfulPopupVisible");
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"successfulPopupVisible");
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -144,7 +135,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recover(userData);
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -153,7 +144,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		String newPassword = passwordValidationRule.generateValidString();
         ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
-        changedPasswordPopup.clickClose();
+        changedPasswordPopup.closePopup();
 		userData.setPassword(newPassword);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
 	}
@@ -197,7 +188,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		homePage=forgotPasswordPopup.fillDataAndClosePopup(userData);
+		forgotPasswordPopup.fillDataAndClosePopup(userData);
 	}
 
 //	/*11. Logs*/
@@ -234,7 +225,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
+        forgotPasswordPopup.recoverPasswordValid(userData);
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -251,15 +242,15 @@ public class ForgotPasswordTest extends AbstractTest{
 
     /*NEGATIVE*/
 
-	/*1. Try to submit FP form with incorrect email (valida but not the one specified for your account)*/
+	/*1. Try to clickLogin FP form with incorrect email (valida but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void invalidPasswordRecovery(){
         UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
         userData.setEmail("incorrectemail@mailService.com");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.invalidRecover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.validationErrorMessageVisible(),"validationErrorVisible");
+        forgotPasswordPopup.recoverPasswordInvalid(userData);
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
 	}
 
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
@@ -269,30 +260,30 @@ public class ForgotPasswordTest extends AbstractTest{
 		userData.setBirthYear("2000");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.invalidRecover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.validationErrorIconVisible(),"validationErrorVisible");
+        forgotPasswordPopup.recoverPasswordInvalid(userData);
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
 	}
 
-    /*3. Try to submit FP form with incorrect date of birth (valid but not the one specified for your account)*/
+    /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectDateOfBirth(){
         UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
 		userData.setBirthDay("23"); // set incorrect date of birth
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.invalidRecover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.validationErrorMessageVisible(),"validationErrorVisible");
+        forgotPasswordPopup.recoverPasswordInvalid(userData);
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
 	}
 
-    /*4. Try to submit FP form with not existing username*/
+    /*4. Try to clickLogin FP form with not existing username*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectUsername(){
         UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
 		userData.setUsername("incorrectUsername"); // set incorrect username
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.invalidRecover(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.validationErrorMessageVisible(),"validationErrorVisible");
+        forgotPasswordPopup.recoverPasswordInvalid(userData);
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
 	}
 
     /*5. Restore password and try to login with old password*/
@@ -302,7 +293,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
+        forgotPasswordPopup.recoverPasswordValid(userData);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
 	}
@@ -316,7 +307,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
+        forgotPasswordPopup.recoverPasswordValid(userData);
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String tempPassword = mailServicePage.getPasswordFromLetter();
@@ -350,7 +341,7 @@ public class ForgotPasswordTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recover(userData);
+        forgotPasswordPopup.recoverPasswordValid(userData);
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String tempPassword = mailServicePage.getPasswordFromLetter();

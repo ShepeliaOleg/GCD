@@ -1,6 +1,6 @@
 package pageObjects.external.ims;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 
 /**
  * Created by sergiich on 5/21/14.

@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.account.ChangeMyPasswordPage;
 import pageObjects.account.LoginPopup;
+import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 public class ChangeMyPasswordTest extends AbstractTest{
 
@@ -35,7 +35,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	/* 1. Portlet is displayed */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountChangeMyPasswordPage() {
-		ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
 	}
 
 	/*2. Submit correct data */
@@ -44,7 +44,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		UserData userData = defaultUserData.getRandomUserData();
 		String newPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-		ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isSuccessMessagePresent(),"success message present");
 	}
@@ -55,14 +55,11 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		UserData userData = defaultUserData.getRandomUserData();
 		String newPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		userData.setPassword(newPass);
 		TypeUtils.assertTrueWithLogs(NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData).isLoggedIn(), "Logged in");
 	}
-
-	/*4.Logs*/
-	//No logged  requests sent from/to portal
 
 	/*5. IMS Player Details Page*/
 	@Test(groups = {"regression"})
@@ -70,7 +67,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		UserData userData = defaultUserData.getRandomUserData();
 		String newPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		IMSPlayerDetailsPage playerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
 		String imsPass = playerDetailsPage.getPassword();
@@ -87,7 +84,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		String newPass = passwordValidationRule.generateValidString();
 		String incorrectPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(incorrectPass, newPass);
 		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
 	}
@@ -97,7 +94,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	public void changeToSamePassword(){
 		UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), userData.getPassword());
 		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
 	}
@@ -110,7 +107,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		String newPass = passwordValidationRule.generateValidString();
 		String oldPass = userData.getPassword();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 		if(changeMyPasswordPage.isSuccessMessagePresent()){
 			changeMyPasswordPage = changeMyPasswordPage.changePassword(newPass, oldPass);
@@ -128,7 +125,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		String newPass = passwordValidationRule.generateValidString();
 		String incorrectPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass, incorrectPass);
 		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isFieldValidatorPresent(),"Field validator present");
 	}
@@ -139,7 +136,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		UserData userData = defaultUserData.getRandomUserData();
 		String newPass = passwordValidationRule.generateValidString();
         PortalUtils.registerUser(userData);
-        ChangeMyPasswordPage changeMyPasswordPage = (ChangeMyPasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 		changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);

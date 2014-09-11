@@ -1,14 +1,12 @@
 package utils;
 
-import nl.flotsam.xeger.Xeger;
+import org.apache.commons.lang3.RandomStringUtils;
+import utils.validation.RegexNode;
+import utils.validation.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.apache.commons.lang3.RandomStringUtils;
-import springConstructors.ValidationRule;
-import utils.validation.RegexNode;
-import utils.validation.ValidationUtils;
 
 public class RandomUtils{
    private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöÖÄß";
@@ -81,7 +79,7 @@ public class RandomUtils{
 
 	public static <T> List<T> getRandomElementsFromList(List<T> list, int number, int offset) {
 		if (number >= list.size()) {
-			WebDriverUtils.runtimeExceptionWithLogs("You're requested more items than array had");
+			WebDriverUtils.runtimeExceptionWithUrl("You're requested more items than array had");
 		}
 		List<Integer> randomIndexes = getRandomIndexes(number, list.size(),offset);
 		List<T> randomItems = getElementsFromListByIndexes(list, randomIndexes);
@@ -98,7 +96,7 @@ public class RandomUtils{
         final int listSize = list.size();
         for (Integer idx : indexes) {
             if (idx >= listSize) {
-				WebDriverUtils.runtimeExceptionWithLogs("Index " + idx + " can't be more than " + listSize);
+				WebDriverUtils.runtimeExceptionWithUrl("Index " + idx + " can't be more than " + listSize);
             }
             T elt = list.get(idx);
             selected.add(elt);
@@ -112,7 +110,7 @@ public class RandomUtils{
             option = optionDefaultValue;
             }
         if (option == null) {
-			WebDriverUtils.runtimeExceptionWithLogs(optionName + " parameter is not defined");
+			WebDriverUtils.runtimeExceptionWithUrl(optionName + " parameter is not defined");
         }
         return option;
         }

@@ -1,13 +1,10 @@
 package springConstructors;
 
 import utils.RandomUtils;
-import utils.TypeUtils;
 import utils.validation.RegexNode;
 import utils.validation.ValidationUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ValidationRule {
     private String regexp;

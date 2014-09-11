@@ -1,6 +1,6 @@
 package pageObjects.bonus;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 /**

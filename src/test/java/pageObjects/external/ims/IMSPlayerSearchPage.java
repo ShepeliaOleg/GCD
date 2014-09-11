@@ -1,6 +1,6 @@
 package pageObjects.external.ims;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 public class IMSPlayerSearchPage extends AbstractPage{

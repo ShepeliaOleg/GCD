@@ -9,10 +9,11 @@ public class DriverData{
     public static String baseUrl;
     public static String browser;
     public static String os;
+    public static String platform;
     public static String defaultBaseUrl;
     public static String defaultBrowser;
     public static String defaultOs;
-    public static String pasUrl;
+    public static String defaultPlatform;
 
     public static String getBaseUrl(){
         if(baseUrl!=null){
@@ -46,6 +47,22 @@ public class DriverData{
         }
     }
 
+    public static void setOs(String os) {
+        DriverData.os = os;
+    }
+
+    public String getPlatform() {
+        if(platform!=null){
+            return platform;
+        }else{
+            return getDefaultPlatform();
+        }
+    }
+
+    public void setPlatform(String platform) {
+        DriverData.platform = platform;
+    }
+
     public static String getDefaultBaseUrl() {
         return defaultBaseUrl;
     }
@@ -70,16 +87,11 @@ public class DriverData{
         DriverData.defaultOs = defaultOs;
     }
 
-    public static void setOs(String os) {
-        DriverData.os = os;
+    public static String getDefaultPlatform() {
+        return defaultPlatform;
     }
 
-    public static String getPasUrl(){
-        return pasUrl;
+    public static void setDefaultPlatform(String defaultPlatform) {
+        DriverData.defaultPlatform = defaultPlatform;
     }
-
-    public static void setPasUrl(String pasUrl){
-        DriverData.pasUrl=pasUrl;
-    }
-
 }

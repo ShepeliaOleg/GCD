@@ -41,6 +41,7 @@ public enum ConfiguredPages{
     liveTableFinder("live-casino"),
     myAccount("myaccount1"),
 	register("register"),
+    registerSteps("register"),
     referAFriend("myaccount1/refer-a-friend"),
     responsibleGaming("myaccount1/responsible-gaming"),
     selfExclusion("myaccount1/responsible-gaming");

@@ -1,6 +1,6 @@
 package pageObjects.account;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 

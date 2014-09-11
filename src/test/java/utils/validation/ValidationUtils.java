@@ -1,7 +1,7 @@
 package utils.validation;
 
 import org.openqa.selenium.Keys;
-import pageObjects.registration.RegistrationPage;
+import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
@@ -246,7 +246,7 @@ public class ValidationUtils{
 
 	private static String getValidationStatus(String xpath) {
         String classValue;
-        if(xpath.equals(RegistrationPage.DROPDOWN_BIRTHDAY_XP)){
+        if(xpath.equals(RegistrationPageAllSteps.DROPDOWN_BIRTHDAY_XP)){
             classValue = WebDriverUtils.getAttribute(xpath + "/../../..", "class");
         }else {
             classValue = WebDriverUtils.getAttribute(xpath + "/..", "class");
@@ -256,10 +256,10 @@ public class ValidationUtils{
 	}
 
     public static void inputFieldAndRefocus(String xpath, String input){
-        if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
-        }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
+        if(xpath.contains(RegistrationPageAllSteps.FIELD_PHONE_COUNTRY_CODE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPageAllSteps.FIELD_PHONE_XP, "111111");
+        }else if(xpath.contains(RegistrationPageAllSteps.FIELD_PHONE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPageAllSteps.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);
@@ -280,9 +280,9 @@ public class ValidationUtils{
     }
 
     private static void inputDateOfBirthAndSwitch(String xpath){
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHDAY_XP, "01");
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHMONTH_XP, "01");
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHYEAR_XP, "1980");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHDAY_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHMONTH_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHYEAR_XP, "1980");
         refocusDropdown(xpath);
     }
 
@@ -309,7 +309,7 @@ public class ValidationUtils{
             }
         }
         if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithLogs(message);
+            WebDriverUtils.runtimeExceptionWithUrl(message);
         }
 	}
 
@@ -325,7 +325,7 @@ public class ValidationUtils{
             }
         }
         if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithLogs(message);
+            WebDriverUtils.runtimeExceptionWithUrl(message);
         }
     }
 

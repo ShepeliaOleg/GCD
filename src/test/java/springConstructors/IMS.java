@@ -58,7 +58,7 @@ public class IMS extends WebDriverObject{
             InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 			hashMap.put("messages", String.valueOf(inboxPage.getNumberOfUnreadMessages()));
 		}catch(RuntimeException e){
-			WebDriverUtils.runtimeExceptionWithLogs("Inbox is not available");
+			WebDriverUtils.runtimeExceptionWithUrl("Inbox is not available");
 		}
 		return navigateToPlayedDetails(userData.getUsername()).getInternalTagsData(hashMap);
 	}
@@ -67,7 +67,7 @@ public class IMS extends WebDriverObject{
         IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
         for(boolean imsState:imsPlayerDetailsPage.getNotificationCheckboxesState()){
             if(imsState==state){
-                WebDriverUtils.runtimeExceptionWithLogs("Notifications state did not update<div>Expected: "+state+", Found: "+!imsState+"</div>");
+                WebDriverUtils.runtimeExceptionWithUrl("Notifications state did not update<div>Expected: " + state + ", Found: " + !imsState + "</div>");
             }
         }
     }
@@ -85,7 +85,7 @@ public class IMS extends WebDriverObject{
 				for(int x=0; x < wplRegisterData.size(); x++){
 					errorMessage=errorMessage.concat("<div>(" + x + ") - " + wplRegisterData.get(x) + " = " + imsRegisterData.get(x) + "</div>\n");
 				}
-				WebDriverUtils.runtimeExceptionWithLogs(errorMessage);
+				WebDriverUtils.runtimeExceptionWithUrl(errorMessage);
 			}
 		}
 		return allValuesAreCorrect;

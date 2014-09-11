@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import springConstructors.BingoScheduleData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich

@@ -1,6 +1,6 @@
 package pageObjects.forgotPassword;
 
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
 /*

@@ -1,6 +1,6 @@
 package pageObjects.external.ims;
 
-import pageObjects.base.AbstractIframe;
+import pageObjects.core.AbstractIframe;
 import utils.WebDriverUtils;
 
 /**

@@ -1,6 +1,6 @@
 package pageObjects.bingoSchedule;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 public class BingoSchedulePage extends AbstractPage{

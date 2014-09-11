@@ -3,17 +3,17 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.base.AbstractPage;
-import pageObjects.header.LoggedInHeader;
+import pageObjects.core.AbstractPage;
+import pageObjects.header.Header;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.responsibleGaming.SelfExcludeConfirmPopup;
 import pageObjects.responsibleGaming.SelfExcludePopup;
 import springConstructors.UserData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 public class SelfExclusionTest extends AbstractTest{
 
@@ -33,9 +33,9 @@ public class SelfExclusionTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(selfExcludeConfirmPopup.confirmationMessagesVisible(), "confirmationMessagesVisible");
         selfExcludeConfirmPopup.clickOk();
         try{
-            WebDriverUtils.waitForElementToDisappear(LoggedInHeader.LOGGED_IN_XP);
+            WebDriverUtils.waitForElementToDisappear(Header.BALANCE_AREA);
         }catch(RuntimeException e){
-            WebDriverUtils.runtimeExceptionWithLogs("User was not logged out. Self exclusion failed.");
+            WebDriverUtils.runtimeExceptionWithUrl("User was not logged out. Self exclusion failed.");
         }
     }
 

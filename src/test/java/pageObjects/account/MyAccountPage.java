@@ -1,7 +1,9 @@
 package pageObjects.account;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.changePassword.ChangePasswordPage;
+import pageObjects.core.AbstractPage;
 import pageObjects.inbox.InboxPage;
+import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import utils.WebDriverUtils;
 
@@ -33,14 +35,14 @@ public class MyAccountPage extends AbstractPage{
 		return new BalancePage();
 	}
 
-	public ChangeMyDetailsPage navigateToChangeMyDetails(){
+	public UpdateMyDetailsPage navigateToChangeMyDetails(){
 		WebDriverUtils.click(LINK_CHANGE_MY_DETAILS_XP);
-		return new ChangeMyDetailsPage();
+		return new UpdateMyDetailsPage();
 	}
 
-	public ChangeMyPasswordPage navigateToChangeMyPassword(){
+	public ChangePasswordPage navigateToChangeMyPassword(){
 		WebDriverUtils.click(LINK_CHANGE_MY_PASSWORD_XP);
-		return new ChangeMyPasswordPage();
+		return new ChangePasswordPage();
 	}
 
 	public void navigateToQuickDeposit(){

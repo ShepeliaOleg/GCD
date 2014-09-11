@@ -3,8 +3,8 @@ package pageObjects.gamesPortlet;
 import enums.GameCategories;
 import enums.SortBy;
 import pageObjects.account.LoginPopup;
-import pageObjects.base.AbstractPage;
-import pageObjects.base.AbstractPageObject;
+import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPageObject;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
@@ -140,8 +140,8 @@ public class GamesPortletPage extends AbstractPage{
                     shouldNotAppear.add(gamecode);
                 }
             }
-            WebDriverUtils.runtimeExceptionWithLogs("Error in games presentation. <div>Did not appear: "+didNotAppear.toString()
-                    +"</div><div>Extra games appeared: "+shouldNotAppear.toString()+"</div>");
+            WebDriverUtils.runtimeExceptionWithUrl("Error in games presentation. <div>Did not appear: " + didNotAppear.toString()
+                    + "</div><div>Extra games appeared: " + shouldNotAppear.toString() + "</div>");
         }
     }
 
@@ -260,7 +260,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("No demo game buttons found");
+				WebDriverUtils.runtimeExceptionWithUrl("No demo game buttons found");
 			}
 		}
 		return new GameLaunchPopup(getMainWindowHandle());
@@ -281,7 +281,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("No real game buttons found");
+				WebDriverUtils.runtimeExceptionWithUrl("No real game buttons found");
 			}
 		}
 		if(isLoggedIn){
@@ -311,7 +311,7 @@ public class GamesPortletPage extends AbstractPage{
 		if(gameElement.isRealPresent()){
 			gameElement.clickPlayReal();
 		}else{
-			WebDriverUtils.runtimeExceptionWithLogs("No real game button found");
+			WebDriverUtils.runtimeExceptionWithUrl("No real game button found");
 		}
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
@@ -332,7 +332,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithLogs("No Info buttons found");
+				WebDriverUtils.runtimeExceptionWithUrl("No Info buttons found");
 			}
 		}
 		return new GameInfoPopup(gameId);
@@ -408,7 +408,7 @@ public class GamesPortletPage extends AbstractPage{
         if(isActiveCategoryTabPresent()){
             return getActiveCategoryTabXp().equals(category.getUrl());
         }
-        WebDriverUtils.runtimeExceptionWithLogs("Active category is not present");
+        WebDriverUtils.runtimeExceptionWithUrl("Active category is not present");
         return false;
     }
 
@@ -420,7 +420,7 @@ public class GamesPortletPage extends AbstractPage{
         if(isActiveSubcategoryTabPresent()){
             return getActiveSubcategoryTabXp().equals(category.getUrl());
         }
-        WebDriverUtils.runtimeExceptionWithLogs("Active category is not present");
+        WebDriverUtils.runtimeExceptionWithUrl("Active category is not present");
         return false;
     }
 

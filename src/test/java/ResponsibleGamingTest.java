@@ -5,11 +5,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
-import java.util.List;
+import utils.core.AbstractTest;
 
 public class ResponsibleGamingTest extends AbstractTest{
 

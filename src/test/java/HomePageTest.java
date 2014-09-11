@@ -7,8 +7,8 @@ import pageObjects.HomePage;
 import pageObjects.account.BalancePage;
 import pageObjects.header.NavigationPanel;
 import springConstructors.UserData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
+import utils.core.AbstractTest;
 
 public class HomePageTest extends AbstractTest{
 

@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
-import pageObjects.account.ChangeMyDetailsPage;
+import pageObjects.account.UpdateMyDetailsPage;
 import springConstructors.Defaults;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.logs.Log;
 import utils.logs.LogEntry;
 import utils.logs.LogUtils;
@@ -63,7 +63,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/* 1. Portlet is displayed */
 	@Test(groups = {"smoke"})
 	public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-		ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+		UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 	}
 
 	/* 2. Correct User Details are displayed by default */
@@ -71,8 +71,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void userInfoShownCorrectly(){
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-		ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-		TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData), "detailsUpdatedSuccessfully"+userData.print());
+		UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+		TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData), "detailsUpdatedSuccessfully"+userData.print());
 	}
 
 	/* 3. Player updates his details with valid values and new values are saved */
@@ -80,13 +80,13 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void userInfoEditableSavedCorrectly(){
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		//Generate new player details and fill in UMD fields with new data
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData);
-		TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
+		updateMyDetailsPage.editDetails(userData);
+		TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
 	}
 
 	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
@@ -95,25 +95,25 @@ public class ChangeMyDetailsTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         String userName = userData.getUsername();
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData = defaultUserData.getRandomUserData();
         userData.setUsername(userName);
 		userData.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData);
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
-        changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsKeptAfterRelogin"+userData.print());
+		updateMyDetailsPage.editDetails(userData);
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
+        updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsKeptAfterRelogin"+userData.print());
 	}
 
 	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
 	@Test(groups = {"regression"})
 	public void userInfoNotChangedIfNoChangesSaved(){
         UserData userData=defaultUserData.getRegisteredUserData();
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
-		changeMyDetailsPage.submitChanges();
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"message appeared");
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsNotUpdated"+userData.print());
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
+		updateMyDetailsPage.submitChanges();
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"message appeared");
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsNotUpdated"+userData.print());
 	}
 
 	/*6. Player performs several consecutive updates of UMD portlet */
@@ -121,17 +121,17 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void userInfoChangedDuringConsecutiveUpdates() {
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData);
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged1"+userData.print());
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
+		updateMyDetailsPage.editDetails(userData);
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged1"+userData.print());
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
 		userData = defaultUserData.getRandomUserData();
 		userData.setEmail(emailValidationRule.generateValidString());
-		changeMyDetailsPage.editDetails(userData);
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged2"+userData.print());
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
+		updateMyDetailsPage.editDetails(userData);
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged2"+userData.print());
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
 	}
 
 	/*7. Logs*/
@@ -150,8 +150,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
                     "KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
                     "KV(34, "+userData.getPostCode()+")"};
             PortalUtils.registerUser(userData);
-            ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-            changeMyDetailsPage.editDetails(userData);
+            UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+            updateMyDetailsPage.editDetails(userData);
             Log log = LogUtils.getCurrentLogs(logCategories);
             log.doResponsesContainErrors();
             LogEntry request = log.getEntry(LogCategory.SetPlayerInfoRequest);
@@ -170,14 +170,14 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
         String username = userData.getUsername();
         userData = defaultUserData.getRandomUserData();
         userData.setUsername(username);
         userData.setEmail(emailValidationRule.generateValidString());
-        changeMyDetailsPage.editDetails(userData);
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-        TypeUtils.assertTrueWithLogs(changeMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
+        updateMyDetailsPage.editDetails(userData);
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
+        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
         TypeUtils.assertTrueWithLogs(iMS.validateRegisterData(userData),"iMSDetailsCoincide"+userData.print());
 	}
 
@@ -186,12 +186,12 @@ public class ChangeMyDetailsTest extends AbstractTest{
     public void iMSNotificationsUpdatedAfterPlayerDetailsChanged() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-        changeMyDetailsPage.setNotificationCheckboxes(false);
+        UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        updateMyDetailsPage.setNotificationCheckboxes(false);
         WebDriverUtils.waitFor(5000);
         iMS.validateNotificationCheckboxes(userData, false);
-        changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-        changeMyDetailsPage.setNotificationCheckboxes(true);
+        updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        updateMyDetailsPage.setNotificationCheckboxes(true);
         WebDriverUtils.waitFor(5000);
         iMS.validateNotificationCheckboxes(userData, true);
     }
@@ -205,14 +205,14 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	public void errorTooltipWhenEmailAndConfirmationDoNotMatch () {
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		String email = emailValidationRule.generateValidString();
 		String emailConfirmation = email.concat("a");
-		changeMyDetailsPage.editEmail(email);
-		changeMyDetailsPage.editEmailVerification(emailConfirmation);
-		changeMyDetailsPage.submitChanges();
-		changeMyDetailsPage.clickEmailField();
-		String errorMessageText=changeMyDetailsPage.getTooltipMessageText();
+		updateMyDetailsPage.editEmail(email);
+		updateMyDetailsPage.editEmailVerification(emailConfirmation);
+		updateMyDetailsPage.submitChanges();
+		updateMyDetailsPage.clickEmailField();
+		String errorMessageText= updateMyDetailsPage.getTooltipMessageText();
         TypeUtils.assertTrueWithLogs(errorMessageText.equals("This address is different from the one above, please correct"),"correctErrorTooltipIsDisplayed");
 	}
 
@@ -224,7 +224,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		//New user registration
         UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
-        ChangeMyDetailsPage changeMyDetailsPage=(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
 		userData.setHouse("");
 		userData.setAddress("");
 		userData.setAddress2("");
@@ -235,8 +235,8 @@ public class ChangeMyDetailsTest extends AbstractTest{
 		userData.setMobileAreaCode("");
 		userData.setMobile("");
 		userData.setEmail("");
-		changeMyDetailsPage.editDetails(userData);
-		int validationErrorsCount= WebDriverUtils.getXpathCount(changeMyDetailsPage.VALIDATION_ERROR_XP);
+		updateMyDetailsPage.editDetails(userData);
+		int validationErrorsCount= WebDriverUtils.getXpathCount(updateMyDetailsPage.VALIDATION_ERROR_XP);
 		TypeUtils.assertTrueWithLogs(validationErrorsCount >= 6, "validationErrorsCount>=6");
 	}
 

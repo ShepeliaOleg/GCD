@@ -1,6 +1,6 @@
 package pageObjects;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 
 public class HomePage extends AbstractPage{
 	private static final String NAVIGATION_PANEL= 	"//*[@id = 'nav']";

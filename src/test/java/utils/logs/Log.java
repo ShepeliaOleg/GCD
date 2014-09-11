@@ -49,25 +49,25 @@ public class Log{
 
 	public String print(){
 		String result = "";
-		for(int i=0; i<logs.size();i++){
-			result = result + "\n " + logs.get(i).print();
+		for(LogEntry entry:logs){
+			result = result + "\n " + entry.print();
 		}
 		return result;
 	}
 
 	public LogEntry getEntry(LogCategory logCategory){
 		LogEntry logEntry = new LogEntry("noLogs");
-		for(int i=0; i<logs.size();i++){
-			if(logs.get(i).isRequiredEntry(logCategory)){
-				logEntry = logs.get(i);
+		for(LogEntry entry:logs){
+			if(entry.isRequiredEntry(logCategory)){
+				logEntry = entry;
 			}
 		}
 		return logEntry;
 	}
 
 	public boolean contains(String timestamp){
-		for(int i=0; i<logs.size();i++){
-			if(logs.get(i).contains(timestamp)){
+		for(LogEntry entry:logs){
+			if(entry.contains(timestamp)){
 				return true;
 			}
 		}
@@ -75,17 +75,17 @@ public class Log{
 	}
 
 	public void doResponsesContainErrors(){
-		for(int i=0;i<logs.size();i++){
-			if(logs.get(i).contains("Response")){
-				logs.get(i).containsErrorWithException();
+		for(LogEntry entry:logs){
+			if(entry.contains("Response")){
+                entry.containsErrorWithException();
 			}
 		}
 	}
 
 	public void checkEntriesArePresent(){
-		for(int i=0;i<logs.size();i++){
-			if(logs.get(i).contains("noLogs")){
-				WebDriverUtils.runtimeExceptionWithLogs("Not all registration logs appeared");
+		for(LogEntry entry:logs){
+			if(entry.contains("noLogs")){
+				WebDriverUtils.runtimeExceptionWithUrl("Not all registration logs appeared");
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package pageObjects.inbox;
 
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
 /**

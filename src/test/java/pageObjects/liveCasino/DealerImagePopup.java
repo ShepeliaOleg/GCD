@@ -1,6 +1,6 @@
 package pageObjects.liveCasino;
 
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
 /**

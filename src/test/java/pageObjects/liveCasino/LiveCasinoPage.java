@@ -1,8 +1,8 @@
 package pageObjects.liveCasino;
 
 import pageObjects.account.LoginPopup;
-import pageObjects.base.AbstractPage;
-import pageObjects.base.AbstractPageObject;
+import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPageObject;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import utils.WebDriverUtils;
 

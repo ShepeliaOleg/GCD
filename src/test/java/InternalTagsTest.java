@@ -8,10 +8,10 @@ import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import springConstructors.IMS;
 import springConstructors.UserData;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 import java.util.HashMap;
 

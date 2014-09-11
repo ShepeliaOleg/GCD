@@ -1,7 +1,7 @@
 package pageObjects.external.ims;
 
 import enums.Page;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -120,14 +120,14 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
         String imsBanner = new IMSAffiliatePage().navigateToAffiliateIframe().getLabelBanner();
         if(!imsBanner.equals(banner)){
-            WebDriverUtils.runtimeExceptionWithLogs("Banner parameter was not correct - <div>Expected: "+banner+"</div><div>Actual: "+imsBanner+"</div>");
+            WebDriverUtils.runtimeExceptionWithUrl("Banner parameter was not correct - <div>Expected: " + banner + "</div><div>Actual: " + imsBanner + "</div>");
         }
     }
 
     private void checkAdvertiser(String advertiser){
         String imsAdvertiser=getAdvertiser();
         if(!advertiser.equals(imsAdvertiser)){
-            WebDriverUtils.runtimeExceptionWithLogs("Advertiser was wrong. <div>Expected: "+advertiser+"Actual: "+imsAdvertiser+"</div>");
+            WebDriverUtils.runtimeExceptionWithUrl("Advertiser was wrong. <div>Expected: " + advertiser + "Actual: " + imsAdvertiser + "</div>");
         }
     }
 
@@ -142,7 +142,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
             WebDriverUtils.waitForElement("//"+bTagElement);
         }
         if(!WebDriverUtils.isVisible("//*[preceding-sibling::"+bTagElement+" and contains(text(), '"+bTagRes+"')]")){
-            WebDriverUtils.runtimeExceptionWithLogs("Parameters in custom fields were not found");
+            WebDriverUtils.runtimeExceptionWithUrl("Parameters in custom fields were not found");
         }
     }
 

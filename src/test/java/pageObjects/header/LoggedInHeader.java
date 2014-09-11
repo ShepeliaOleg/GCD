@@ -1,28 +1,51 @@
 package pageObjects.header;
 
-import pageObjects.account.LogoutPopup;
 import pageObjects.account.MyAccountPage;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import pageObjects.inbox.InboxPage;
+import pageObjects.login.LogoutPopup;
 import springConstructors.UserData;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
-
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 
 public class LoggedInHeader extends Header{
 
-	private static final String LABEL_BALANCE_XP=	"//*[@class='main-header__balance']/b[2]";
-	private static final String LABEL_USERNAME_XP=	"//*[@class='main-header__balance']/b[1]";
+    private static final String LABEL_USERNAME_XP=	BALANCE_AREA+ "/b[1] | "+BALANCE_AREA+"/div/*[1]";
+    private static final String LABEL_BALANCE_XP=	BALANCE_AREA+ "/b[2] | "+BALANCE_AREA+"/div/*[2]";
+    //Desktop only
     private static final String LINK_MY_ACCOUNT_XP=	"//a[contains(@class, 'myaccount-link')]";
 	private static final String BUTTON_LOGOUT_XP=	"//a[contains(@class, 'logout-link')]";
 	private static final String LINK_INBOX_XP=		"//*[contains(@class,'inbox')]";
 
 	public LoggedInHeader(){
-		super(new String[]{LOGGED_IN_XP});
+		super(new String[]{Header.BALANCE_AREA, LABEL_BALANCE_XP, LABEL_USERNAME_XP});
 	}
+
+    public String getBalance(){
+        return WebDriverUtils.getElementText(LABEL_BALANCE_XP);
+    }
+
+    public String getUsername(){
+        return WebDriverUtils.getElementText(LABEL_USERNAME_XP);
+    }
+
+    public boolean isUsernameDisplayed(UserData userData){
+        return (getUsername().contains(userData.getUsername()));
+    }
+
+    public int compareBalances(String oldBalance){
+        return TypeUtils.convertBalance(getBalance()) - TypeUtils.convertBalance(oldBalance);
+    }
+
+    public LogoutPopup clickLogout(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return clickLogoutButton();
+        }else {
+            return openMenu().loggedInMenu().clickLogout();
+        }
+    }
+
+    //Desktop only
 
 	public MyAccountPage navigateToMyAccount(){
 		WebDriverUtils.click(LINK_MY_ACCOUNT_XP);
@@ -34,30 +57,10 @@ public class LoggedInHeader extends Header{
 		return new InboxPage();
 	}
 
-	public LogoutPopup clickLogout(){
-		WebDriverUtils.click(BUTTON_LOGOUT_XP);
-		return new LogoutPopup();
-	}
+    private LogoutPopup clickLogoutButton(){
+        WebDriverUtils.click(BUTTON_LOGOUT_XP);
+        return new LogoutPopup();
+    }
 
-	public String getBalance(){
-		return WebDriverUtils.getElementText(LABEL_BALANCE_XP);
-	}
 
-	public int compareBalances(String oldBalance){
-		String newBalance = getBalance();
-		return convertBalance(newBalance) - convertBalance(oldBalance);
-	}
-
-	public String getWelcomeMessage(){
-		return WebDriverUtils.getElementText(LABEL_USERNAME_XP);
-	}
-
-	public boolean isUsernameDisplayed(UserData userData){
-		String username=userData.getUsername();
-		return (getWelcomeMessage().contains(username));
-	}
-
-	private int convertBalance(String balance){
-		return Integer.parseInt(balance.substring(0, balance.indexOf('.')).replace(",", "").replace("£", ""));
-	}
 }

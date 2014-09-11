@@ -3,12 +3,15 @@ package pageObjects.responsibleGaming;
 
 import enums.DepositLimits;
 import org.openqa.selenium.WebElement;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ResponsibleGamingPage extends AbstractPage{
 	private static final String RESPONSIBLE_GAMING_ROOT_XP =                        	"//*[contains(@id,'portlet_responsiblegaming')]";
@@ -159,7 +162,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 					small = parseLimit(filteredOrderedLimits.get(1));
 					counter++;
 					if(counter>=300){
-						WebDriverUtils.runtimeExceptionWithLogs("Wrong deposit limits configuration");
+						WebDriverUtils.runtimeExceptionWithUrl("Wrong deposit limits configuration");
 					}
 				}while(big<=med || med<=small);
 				finalLimits.put(filteredOrderedLimits.get(3),big);
@@ -172,7 +175,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 					small = parseLimit(filteredOrderedLimits.get(1));
 					counter++;
 					if(counter>=300){
-						WebDriverUtils.runtimeExceptionWithLogs("Wrong deposit limits configuration");
+						WebDriverUtils.runtimeExceptionWithUrl("Wrong deposit limits configuration");
 					}
 				}while(med<=small);
 				finalLimits.put(filteredOrderedLimits.get(2),med);

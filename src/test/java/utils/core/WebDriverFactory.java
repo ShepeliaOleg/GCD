@@ -29,6 +29,7 @@ public class WebDriverFactory extends WebDriverObject{
         baseUrl =   driverData.getBaseUrl();
         browser =   driverData.getBrowser();
         os =        driverData.getOs();
+        platform =  driverData.getPlatform();
 	}
 
 	public void initializeWebDrivers(){

@@ -6,19 +6,19 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.account.ChangePasswordPopup;
-import pageObjects.account.ChangedPasswordPopup;
 import pageObjects.account.ForceLogoutPopup;
-import pageObjects.base.AbstractPage;
 import pageObjects.bonus.*;
-import pageObjects.popups.WelcomePopup;
+import pageObjects.changePassword.ChangePasswordPopup;
+import pageObjects.changePassword.ChangedPasswordPopup;
+import pageObjects.core.AbstractPage;
+import pageObjects.generalPopups.WelcomePopup;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich
@@ -64,7 +64,7 @@ public class PushMessagesTest extends AbstractTest{
 		try{
 			WebDriverUtils.waitForElement(ForceLogoutPopup.LOGOUT_POPUP, 300);
 		}catch(RuntimeException e){
-			WebDriverUtils.runtimeExceptionWithLogs("User was not logged out after 180 seconds");
+			WebDriverUtils.runtimeExceptionWithUrl("User was not logged out after 180 seconds");
 		}
 		ForceLogoutPopup forceLogoutPopup = new ForceLogoutPopup();
 		homePage = forceLogoutPopup.close();

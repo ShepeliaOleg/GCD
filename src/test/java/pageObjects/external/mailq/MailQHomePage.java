@@ -1,6 +1,6 @@
 package pageObjects.external.mailq;
 
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 /**
@@ -60,7 +60,7 @@ public class MailQHomePage extends AbstractPage{
 			clickLatestSubject();
 			return new MailQReplyPage();
 		}else{
-			WebDriverUtils.runtimeExceptionWithLogs("The message did not appear after " + RETRIES + " retries");
+			WebDriverUtils.runtimeExceptionWithUrl("The message did not appear after " + RETRIES + " retries");
 		}
 		return null;
 	}

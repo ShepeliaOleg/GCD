@@ -1,15 +1,18 @@
 package pageObjects.header;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pageObjects.base.AbstractPage;
-import pageObjects.base.AbstractPageObject;
+import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPageObject;
+import pageObjects.menu.Menu;
 import utils.WebDriverUtils;
 
 public class Header extends AbstractPageObject{
-	private static final String ROOT_XP=	"//*[@class='main-header']";
-	public static final String LOGGED_IN_XP="//*[contains(@class, 'main-header__balance')]";
+	protected static final String ROOT_XP=	"//*[@class='main-header']";
+	public static final String BALANCE_AREA ="//*[contains(@class, 'main-header__balance')]";
+    //Mobile only
+    public static final String MENU_XP =       ROOT_XP + "//*[contains(@class,'fn-open-menu')]";
 
-	public Header(){
+    public Header(){
 		super(new String[]{ROOT_XP});
 	}
 
@@ -18,12 +21,17 @@ public class Header extends AbstractPageObject{
 	}
 
 	public boolean isLoggedIn(){
-		return WebDriverUtils.isVisible(LOGGED_IN_XP, 1);
+		return WebDriverUtils.isVisible(BALANCE_AREA, 1);
 	}
 
     public AbstractPage waitForLogout(){
-        WebDriverUtils.waitForElementToDisappear(LOGGED_IN_XP, 30);
+        WebDriverUtils.waitForElementToDisappear(BALANCE_AREA, 30);
         return new AbstractPage();
+    }
+
+    public Menu openMenu() {
+        WebDriverUtils.click(MENU_XP);
+        return new Menu();
     }
 
 

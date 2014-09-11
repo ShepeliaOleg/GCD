@@ -1,24 +1,16 @@
 import enums.ConfiguredPages;
-import enums.GameCategories;
 import enums.PlayerCondition;
-import enums.SortBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.account.LoginPopup;
-import pageObjects.gamesPortlet.GameElement;
-import pageObjects.gamesPortlet.GameInfoPopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import testUtils.AbstractTest;
 import utils.NavigationUtils;
-import utils.RandomUtils;
 import utils.TypeUtils;
-import utils.WebDriverUtils;
-
-import java.util.ArrayList;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich

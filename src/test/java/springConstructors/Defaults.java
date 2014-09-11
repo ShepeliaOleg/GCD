@@ -56,7 +56,7 @@ public class Defaults{
             }
         }
         if (countryFullInfo == null) {
-			WebDriverUtils.runtimeExceptionWithLogs("\"" +countryCode + "\" country code could not be found in countries list");
+			WebDriverUtils.runtimeExceptionWithUrl("\"" + countryCode + "\" country code could not be found in countries list");
         }else{
 			return countryFullInfo;
 		}

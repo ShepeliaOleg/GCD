@@ -2,6 +2,7 @@ package springConstructors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import java.util.ArrayList;
 
 public class UserData{
@@ -38,7 +39,8 @@ public class UserData{
 	@Qualifier("defaults")
 	private Defaults countryList;
 
-	private String title;
+    private String gender;
+    private String title;
 	private String firstName;
 	private String lastName;
 	private String birthDay;
@@ -273,6 +275,14 @@ public class UserData{
 		this.title=title;
 	}
 
+    public String getGender(){
+        return gender;
+    }
+
+    public void setGender(String gender){
+        this.gender=gender;
+    }
+
 	public void setBalanceMain(String balanceMain){
 		this.balanceMain=balanceMain;
 	}
@@ -291,7 +301,6 @@ public class UserData{
 
 	public UserData cloneUserData(){
 		UserData clonedUserData=new UserData();
-
 		clonedUserData.title=title;
 		clonedUserData.firstName=firstName;
 		clonedUserData.lastName=lastName;
@@ -317,14 +326,14 @@ public class UserData{
 		clonedUserData.coupon=coupon;
 		clonedUserData.balanceMain=balanceMain;
 		clonedUserData.balanceTotal=balanceTotal;
-
+        clonedUserData.gender=gender;
 		return clonedUserData;
 	}
 
     public ArrayList<String> getRegisterData () {
-        ArrayList<String> data=new ArrayList<String>();
+        ArrayList<String> data=new ArrayList<>();
         data.add(getTitle().toLowerCase());
-        data.add("Male");
+        data.add(getGender());
         data.add(getFirstName());
         data.add(getLastName());
         data.add(getNumericBirthDate());
@@ -384,9 +393,7 @@ public class UserData{
 	}
 
     public UserData getRandomUserData() {
-        // get userdata of registered user
         UserData userData = getRegisteredUserData();
-        // generate and change unique fields
         userData.setUsername(usernameValidationRule.generateValidString());
         userData.setCountry(countryList.getRandomCountryCode());
         userData.setCity(cityValidationRule.generateValidString());
@@ -403,9 +410,9 @@ public class UserData{
     }
 
     public String print(){
-        return "<div>"+getTitle()+"</div>"+"<div>"+getFirstName()+"</div>"+"<div>"+getLastName()+"</div>"
-                +"<div>"+getCountry()+"</div>"+"<div>"+getFullAddress()+"</div>"+"<div>"+getCity()+"</div>"+"<div>"+getPostCode()+"</div>"
-                +"<div>"+getPhoneAreaCode()+getPhone()+"</div>"+"<div>"+getMobileAreaCode()+getMobile()+"</div>"+"<div>"+getEmail()+"</div>";
+        return "<div>"+getTitle()+"</div><div>"+getGender()+"</div><div>"+getFirstName()+"</div><div>"+getLastName()+"</div><div>"
+                +getCountry()+"</div><div>"+getFullAddress()+"</div><div>"+getCity()+"</div><div>"+getPostCode()+"</div><div>"
+                +getPhoneAreaCode()+getPhone()+"</div><div>"+getMobileAreaCode()+getMobile()+"</div><div>"+getEmail()+"</div>";
     }
 
 }

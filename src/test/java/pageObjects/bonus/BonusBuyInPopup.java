@@ -1,7 +1,7 @@
 package pageObjects.bonus;
 
-import pageObjects.base.AbstractPopup;
-import pageObjects.popups.PageRefreshPopup;
+import pageObjects.core.AbstractPopup;
+import pageObjects.generalPopups.PageRefreshPopup;
 import utils.WebDriverUtils;
 
 /**

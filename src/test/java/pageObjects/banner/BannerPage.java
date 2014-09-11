@@ -2,7 +2,7 @@ package pageObjects.banner;
 
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
-import pageObjects.base.AbstractPage;
+import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;

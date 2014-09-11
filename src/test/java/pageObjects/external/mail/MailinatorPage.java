@@ -1,6 +1,5 @@
 package pageObjects.external.mail;
 
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 
 import java.util.regex.Matcher;
@@ -49,7 +48,7 @@ public class MailinatorPage extends MailServicePage {
         try{
             WebDriverUtils.waitForElement(MAILLIST_ITEM_XP, timeout);
         }catch(RuntimeException e){
-            WebDriverUtils.runtimeExceptionWithLogs("Email was not received after waiting for " + timeout + " seconds");
+            WebDriverUtils.runtimeExceptionWithUrl("Email was not received after waiting for " + timeout + " seconds");
         }
 
     }

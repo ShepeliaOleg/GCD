@@ -1,7 +1,6 @@
 package pageObjects.forgotPassword;
 
-import org.openqa.selenium.WebDriver;
-import pageObjects.base.AbstractPopup;
+import pageObjects.core.AbstractPopup;
 
 /**
  * User: svetlanagl
