@@ -5,8 +5,7 @@ import enums.Page;
 import enums.PlayerCondition;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPageObject;
-import pageObjects.registration.classic.RegistrationPageAllSteps;
-import pageObjects.registration.threeStep.RegistrationPageStepOne;
+import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
 
@@ -16,16 +15,12 @@ public class PortalUtils extends WebDriverObject{
         return (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
     }
 
+    private static RegistrationPage navigateToRegistration() {
+        return (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+    }
+
     public static void loginUser(UserData userData){
         navigateToHome().login(userData);
-    }
-
-    private static RegistrationPageAllSteps navigateToRegistration() {
-        return (RegistrationPageAllSteps) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-    }
-
-    private static RegistrationPageStepOne navigateToRegistrationStepOne() {
-        return (RegistrationPageStepOne) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerSteps);
     }
 
     public static HomePage registerUser(UserData userData){
@@ -55,10 +50,6 @@ public class PortalUtils extends WebDriverObject{
     }
 
     public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, String bonusCode, Page expectedPage){
-        if(platform.equals(PLATFORM_DESKTOP)){
-            return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, bonusCode, expectedPage);
-        }else {
-            return navigateToRegistrationStepOne().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, bonusCode, expectedPage);
-        }
+        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, bonusCode, expectedPage);
     }
 }

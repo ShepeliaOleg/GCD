@@ -12,9 +12,6 @@ public abstract class AbstractPageObject extends WebDriverObject {
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final int TIMEOUT =              30;
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
 	public AbstractPageObject(String mainWindowHandle){
 		WebDriverUtils.switchToOtherWindow(mainWindowHandle);
 		validate(null, null);
@@ -51,8 +48,12 @@ public abstract class AbstractPageObject extends WebDriverObject {
         }
     }
 
-    public boolean isErrorVisible(){
+    public boolean isPortletErrorVisible(){
         return WebDriverUtils.isVisible(PORTLET_ERROR_XP);
+    }
+
+    public String getPortletErrorMessage() {
+        return WebDriverUtils.getElementText(PORTLET_ERROR_XP);
     }
 }
 

@@ -114,7 +114,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"successfulPopupVisible");
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"successfulPopupVisible");
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -250,7 +250,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
@@ -261,7 +261,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
@@ -272,7 +272,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*4. Try to clickLogin FP form with not existing username*/
@@ -283,7 +283,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isErrorVisible(),"validationErrorVisible");
+        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*5. Restore password and try to login with old password*/

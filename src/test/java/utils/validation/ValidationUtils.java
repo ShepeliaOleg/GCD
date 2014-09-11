@@ -1,6 +1,7 @@
 package utils.validation;
 
 import org.openqa.selenium.Keys;
+import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.ValidationRule;
 import utils.RandomUtils;
@@ -17,9 +18,10 @@ public class ValidationUtils{
     public static final String STATUS_NONE = "fn-validate";
     private static final String TOOLTIP_STATUS_ERROR = "tooltip-error";
     public static final String PASSED = "Passed";
-    private static final String TOOLTIP_XP = "//*[contains(@class, 'tooltip')]";
-    private static final String TOOLTIP_CONTAINER_XP = "//*[@data-tooltip-owner='"+PLACEHOLDER+"']";
-    private static final String TOOLTIP_LABEL_XP = TOOLTIP_CONTAINER_XP+"//span";
+    protected final static String TOOLTIP_ERROR_XP =                                    "//div[contains(@class,'error-tooltip')]";
+    protected final static String TOOLTIP_ERROR_BY_ID_XP =                              TOOLTIP_ERROR_XP +
+            "[@data-tooltip-owner = '"+PLACEHOLDER+"']//span " +
+            "| //*[@data-validation-type='"+PLACEHOLDER+"']"+TOOLTIP_ERROR_XP;
 
     private static ArrayList<String> validateClick(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         clickField(xpath);
@@ -222,13 +224,13 @@ public class ValidationUtils{
     }
 
     private static String getTooltipStatus(String id) {
-        String classValue = WebDriverUtils.getAttribute(TOOLTIP_CONTAINER_XP.replace(PLACEHOLDER, id), "class");
+        String classValue = WebDriverUtils.getAttribute(TOOLTIP_ERROR_BY_ID_XP.replace(PLACEHOLDER, id), "class");
         String[] classParametes = classValue.split(" ");
         return classParametes[0];
     }
 
-    private static String getTooltipText(String id) {
-        return WebDriverUtils.getElementText(TOOLTIP_LABEL_XP.replace(PLACEHOLDER, id));
+    public static String getTooltipText(String id) {
+        return WebDriverUtils.getElementText(TOOLTIP_ERROR_BY_ID_XP.replace(PLACEHOLDER, id));
     }
 
     private static String tooltipVisibilityIs(String id, String value, boolean expectedStatus) {
@@ -241,12 +243,12 @@ public class ValidationUtils{
     }
 
     private static boolean isTooltipVisible(String id) {
-        return WebDriverUtils.isVisible(TOOLTIP_LABEL_XP.replace(PLACEHOLDER, id), 0);
+        return WebDriverUtils.isVisible(TOOLTIP_ERROR_BY_ID_XP.replace(PLACEHOLDER, id), 0);
     }
 
 	private static String getValidationStatus(String xpath) {
         String classValue;
-        if(xpath.equals(RegistrationPageAllSteps.DROPDOWN_BIRTHDAY_XP)){
+        if(xpath.equals(RegistrationPage.DROPDOWN_BIRTHDAY_XP)){
             classValue = WebDriverUtils.getAttribute(xpath + "/../../..", "class");
         }else {
             classValue = WebDriverUtils.getAttribute(xpath + "/..", "class");
@@ -256,10 +258,10 @@ public class ValidationUtils{
 	}
 
     public static void inputFieldAndRefocus(String xpath, String input){
-        if(xpath.contains(RegistrationPageAllSteps.FIELD_PHONE_COUNTRY_CODE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPageAllSteps.FIELD_PHONE_XP, "111111");
-        }else if(xpath.contains(RegistrationPageAllSteps.FIELD_PHONE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPageAllSteps.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
+        if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
+        }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
+            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);
@@ -280,9 +282,9 @@ public class ValidationUtils{
     }
 
     private static void inputDateOfBirthAndSwitch(String xpath){
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHDAY_XP, "01");
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHMONTH_XP, "01");
-        WebDriverUtils.setDropdownOptionByValue(RegistrationPageAllSteps.DROPDOWN_BIRTHYEAR_XP, "1980");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHDAY_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHMONTH_XP, "01");
+        WebDriverUtils.setDropdownOptionByValue(RegistrationPage.DROPDOWN_BIRTHYEAR_XP, "1980");
         refocusDropdown(xpath);
     }
 
