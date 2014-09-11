@@ -216,6 +216,11 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGame);
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
         LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
+        loginPopup.login(defaultUserData.getRegisteredUserData());
+        GameLaunchPopup gameLaunchPopup = new GameLaunchPopup(bannerPage.getMainWindowHandle());
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+        gameLaunchPopup.close();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
     }
 
     /* 15. Game launch from banner as logged in player*/
@@ -227,7 +232,6 @@ public class BannerTest extends AbstractTest{
         boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
         gameLaunchPopup.close();
         TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
-
     }
 
 
