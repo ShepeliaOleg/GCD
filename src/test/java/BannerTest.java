@@ -1,9 +1,15 @@
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
 import enums.ConfiguredPages;
+import enums.PlayerCondition;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.account.LoginPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.external.ExternalPage;
+import pageObjects.gamesPortlet.GameLaunchPopup;
+import springConstructors.UserData;
 import testUtils.AbstractTest;
 import utils.NavigationUtils;
 import utils.TypeUtils;
@@ -11,6 +17,10 @@ import utils.WebDriverUtils;
 import java.util.List;
 
 public class BannerTest extends AbstractTest{
+
+    @Autowired
+    @Qualifier("userData")
+    private UserData defaultUserData;
 
 	/*POSITIVE*/
 
@@ -203,5 +213,24 @@ public class BannerTest extends AbstractTest{
     }
 
     /* 19. Game launch from banner*/
+    @Test(groups = {"regression"})
+    public void bannerLaunchGameGuestPlayer() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGame);
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
+    }
+
+
+    @Test(groups = {"regression"})
+    public void bannerLaunchGameLoggedInPlayer() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGame, defaultUserData.getRegisteredUserData());
+        TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) bannerPage.clickSlide(1);
+        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+        gameLaunchPopup.close();
+        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
+
+    }
+
 
 }

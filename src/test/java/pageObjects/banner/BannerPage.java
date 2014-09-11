@@ -2,7 +2,10 @@ package pageObjects.banner;
 
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
+import pageObjects.account.LoginPopup;
 import pageObjects.base.AbstractPage;
+import pageObjects.base.AbstractPageObject;
+import pageObjects.gamesPortlet.GameLaunchPopup;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -201,11 +204,16 @@ public class BannerPage extends AbstractPage{
 
     }
 
-    public void clickSlide(int slideIndex) {
-        clickSlide(getSlideXpathByIndex(slideIndex));
+    public AbstractPageObject clickSlide(int slideIndex) {
+        return clickSlide(getSlideXpathByIndex(slideIndex));
     }
 
-    private void clickSlide(String xpath) {
+    private AbstractPageObject clickSlide(String xpath) {
         WebDriverUtils.click(xpath);
+        if (isLoggedIn()) {
+            return new GameLaunchPopup(getMainWindowHandle());
+        } else {
+            return new LoginPopup();
+        }
     }
 }

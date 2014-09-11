@@ -27,10 +27,6 @@ import utils.logs.Log;
 import utils.logs.LogEntry;
 import utils.logs.LogUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 public class LoginTest extends AbstractTest{
 
 	@Autowired

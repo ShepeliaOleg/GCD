@@ -24,7 +24,6 @@ import pageObjects.popups.*;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
-import utils.core.WebDriverFactory;
 import utils.core.WebDriverObject;
 import utils.logs.LogUtils;
 
