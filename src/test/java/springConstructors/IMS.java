@@ -93,7 +93,7 @@ public class IMS extends WebDriverObject{
 	private IMSHomePage navigateToIMS(){
         try{
             IMSHomePage imsHomePage;
-            webDriver.navigate().to(imsURL);
+            webDriver.navigate().to(getImsURL());
             if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
                 IMSLoginPage imsLoginPage=new IMSLoginPage();
                 imsHomePage=imsLoginPage.logInToIMS();
