@@ -10,6 +10,7 @@ import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.login.LogoutPopup;
 import pageObjects.login.SignedOutPopup;
+import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.IMS;
 import springConstructors.UserData;
@@ -183,7 +184,7 @@ public class LoginTest extends AbstractTest {
 	public void openRegisterPageFromLinkOnLoginPopup(){
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
-		RegistrationPageAllSteps registrationPage = loginPopup.clickRegistration();
+		RegistrationPage registrationPage = loginPopup.clickRegistration();
 	}
 
 //	/*#12.2 Links work on popup*/

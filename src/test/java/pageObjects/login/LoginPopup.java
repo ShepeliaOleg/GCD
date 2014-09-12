@@ -70,7 +70,11 @@ public class LoginPopup extends AbstractPopup{
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         clickLogin();
-        WebDriverUtils.waitFor(1000);
+        try{
+            WebDriverUtils.waitForElementToDisappear(BUTTON_LOGIN_XP, 10);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return NavigationUtils.closeAllPopups(expectedPage);
     }
 
