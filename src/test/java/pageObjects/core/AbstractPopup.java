@@ -9,7 +9,7 @@ public abstract class AbstractPopup extends AbstractPageObject{
 	public final static String ROOT_XP=			    "//*[contains(@class, 'popup-modal__inner')]";
 	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')] | "+ ROOT_XP + "//*[contains(@class, 'fn-decline')]";
 	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
-private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overlay')]";
+    private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overlay')]";
 
 	public AbstractPopup(){
 		this(null);
@@ -39,7 +39,7 @@ private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overla
     public void closePopup(){
         if(WebDriverUtils.isVisible(BUTTON_CLOSE_XP, 0)){
             clickClose();
-        }else {
+        }else if(WebDriverUtils.isVisible(OFF_POPUP_XP, 0)){
             clickOffPopup();
         }
     }

@@ -1,14 +1,8 @@
 package pageObjects.registration.classic;
 
-import enums.Page;
-import org.openqa.selenium.Keys;
-import pageObjects.core.AbstractPageObject;
-import pageObjects.registration.AdultContentPage;
-import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.validation.ValidationUtils;
 

@@ -15,6 +15,10 @@ public class UserData{
 	@Qualifier("phoneValidationRule")
 	private ValidationRule phoneValidationRule;
 
+    @Autowired
+    @Qualifier("mobilePhoneValidationRule")
+    private ValidationRule mobilePhoneValidationRule;
+
 	@Autowired
 	@Qualifier("countryPhoneCodeValidationRule")
 	private ValidationRule countryPhoneCodeValidationRule;
@@ -403,7 +407,7 @@ public class UserData{
         userData.setHouse(houseValidationRule.generateValidString());
         userData.setPhone(phoneValidationRule.generateValidString());
         userData.setPhoneAreaCode(countryPhoneCodeValidationRule.generateValidString());
-        userData.setMobile(phoneValidationRule.generateValidString());
+        userData.setMobile(mobilePhoneValidationRule.generateValidString());
         userData.setMobileAreaCode(countryPhoneCodeValidationRule.generateValidString());
 
         return userData;

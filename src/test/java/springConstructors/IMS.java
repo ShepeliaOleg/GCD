@@ -17,16 +17,34 @@ import java.util.HashMap;
 
 public class IMS extends WebDriverObject{
 
-	protected URL imsURL;
-	private static final int RETRIES = 10;
+    protected URL imsURL;
+
+    protected URL defaultImsURL;
+    private static final int RETRIES = 10;
 
     @Autowired
     @Qualifier("userData")
     private UserData defaultUserData;
 
-	public void setImsURL(URL imsURL){
-		this.imsURL=imsURL;
-	}
+    public URL getImsURL() {
+        if(imsURL!=null){
+            return imsURL;
+        }else {
+            return getDefaultImsURL();
+        }
+    }
+
+    public void setImsURL(URL imsURL) {
+        this.imsURL = imsURL;
+    }
+
+    public URL getDefaultImsURL() {
+        return defaultImsURL;
+    }
+
+    public void setDefaultImsURL(URL defaultImsURL) {
+        this.defaultImsURL = defaultImsURL;
+    }
 
 	private IMSHomePage navigateToIMS(){
         try{

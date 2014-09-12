@@ -1,8 +1,6 @@
 package pageObjects.registration.threeStep;
 
-import pageObjects.core.AbstractPage;
-import pageObjects.core.AbstractPageObject;
-import pageObjects.registration.AdultContentPage;
+import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
@@ -40,9 +38,9 @@ public class RegistrationPageStepOne extends RegistrationPage {
         return new RegistrationPageStepTwo();
     }
 
-    public AdultContentPage clickAdultContent(){
+    public AdultContentPopup clickAdultContent(){
         WebDriverUtils.click(LINK_ADULT_CONTENT_XP);
-        return new AdultContentPage();
+        return new AdultContentPopup();
     }
 
     private static void clickNext(){
