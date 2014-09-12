@@ -45,12 +45,8 @@ private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overla
     }
 
     protected void clickOffPopup(){
-        if(platform.equals(PLATFORM_DESKTOP)){
-            WebDriverUtils.click(OFF_POPUP_XP);
-        }else {
-            WebDriverUtils.click(Header.MENU_XP);
-        }
-
+        WebDriverUtils.click(OFF_POPUP_XP);
+        WebDriverUtils.waitFor(1000);
     }
 }
 

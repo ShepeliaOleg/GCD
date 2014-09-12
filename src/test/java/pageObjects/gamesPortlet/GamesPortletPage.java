@@ -19,7 +19,7 @@ public class GamesPortletPage extends AbstractPage{
 	private static final String TAG_GAME_NAME=							"data-name";
 	private static final String TAG_JACKPOT=							"data-game-jackpot";
 	private static final String TICKER_JACKPOT_XP= 						"//span[@class='game-jackpot']";
-	private static final String ROOT_XP=								"//*[contains(@id, 'WAR_gamesportlet')]";
+	private static final String ROOT_XP=								"//*[contains(@class, 'portlet-games-info')]";
 	private static final String GAMES_XP=								"//*[contains(@class, 'fn-game-item')]";
     private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
     private static final String FIRST_PAGE_GAMES_XP=                    BEGINNING_GAMES_XP + GAMES_XP;
@@ -60,8 +60,6 @@ public class GamesPortletPage extends AbstractPage{
 	public static final String ITEM_SORT_BY_NEW_XP=						"//a[@data-sortby='new']";
 	public static final String ITEM_SORT_BY_JACKPOTS=					"//a[@data-sortby='jackpotSize']";
 	public static final String ITEM_SORT_BY_NAME_XP=					"//a[@data-sortby='name']";
-
-
 	
 	private static final int RETRIES=50;
 
@@ -239,12 +237,21 @@ public class GamesPortletPage extends AbstractPage{
 		return new GamesPortletPage();
 	}
 
+    public boolean playDemoAndValidateUrl(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return new GameLaunchPopup(getMainWindowHandle(), playDemo()).isUrlValid();
+        }else{
+            return new GameLaunchPage(playDemo()).isUrlValid();
+        }
+    }
+
 	//Game item controls
-	public GameLaunchPopup playDemo(){
-		ArrayList<String> checkedGames=new ArrayList<String>();
-		int gameCount = WebDriverUtils.getXpathCount(GAMES_XP);
+	private String playDemo(){
+        String gameId = "";
+		ArrayList<String> checkedGames=new ArrayList<>();
+		int gameCount = WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP+GAMES_XP);
 		for(int i=1; i <= gameCount; i++){
-			String gameId= getGameID(i);
+			gameId = getGameID(i);
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
 				if(gameElement.isDemoPresent()){
@@ -258,14 +265,28 @@ public class GamesPortletPage extends AbstractPage{
 				WebDriverUtils.runtimeExceptionWithUrl("No demo game buttons found");
 			}
 		}
-		return new GameLaunchPopup(getMainWindowHandle());
+       return gameId;
 	}
 
-	public AbstractPageObject playReal(boolean isLoggedIn){
+    public boolean playRealAndValidateUrl(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return new GameLaunchPopup(getMainWindowHandle(), playReal()).isUrlValid();
+        }else{
+            return new GameLaunchPage(playDemo()).isUrlValid();
+        }
+    }
+
+    public LoginPopup playRealLoggedOut(){
+        playReal();
+        return new LoginPopup();
+    }
+
+	private String playReal(){
 		AbstractPageObject result;
-		ArrayList<String> checkedGames=new ArrayList<String>();
+        String gameId = "";
+		ArrayList<String> checkedGames=new ArrayList<>();
 		for(int i=0; i <= RETRIES; i++){
-			String gameId = getRandomGameID();
+			gameId = getRandomGameID();
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
 				if(gameElement.isRealPresent()){
@@ -279,12 +300,7 @@ public class GamesPortletPage extends AbstractPage{
 				WebDriverUtils.runtimeExceptionWithUrl("No real game buttons found");
 			}
 		}
-		if(isLoggedIn){
-			result=new GameLaunchPopup(getMainWindowHandle());
-		}else{
-			result=new LoginPopup();
-		}
-		return result;
+		return gameId;
 	}
 
     public AbstractPageObject playRealList(boolean isLoggedIn){
@@ -314,7 +330,7 @@ public class GamesPortletPage extends AbstractPage{
 	public GameInfoPopup clickInfo(){
 		ArrayList<String> checkedGames=null;
 		String gameId=null;
-		int gameCount = WebDriverUtils.getXpathCount(GAMES_XP);
+		int gameCount = WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP+GAMES_XP);
 		for(int i=1; i <= gameCount; i++){
 			gameId = getGameName(i);
 			if(checkedGames == null || (checkedGames != null && !checkedGames.contains(gameId))){

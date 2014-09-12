@@ -73,7 +73,7 @@ public class WebDriverFactory extends WebDriverObject{
                     break;
                 case "windows":
                 case "linux":
-                    getDesktopDriver(driver);
+                    driver = getDesktopDriver(driver);
                     break;
                 default:
                     throw new RuntimeException("OS was not set correctly");
@@ -86,7 +86,9 @@ public class WebDriverFactory extends WebDriverObject{
 
 	public static void shutDown(){
 		try{
-            webDriver.quit();
+            if(webDriver!=null){
+                webDriver.quit();
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

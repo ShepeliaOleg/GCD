@@ -30,11 +30,7 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
-		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-		String url = gameLaunchPopup.getWindowUrl();
-		gameLaunchPopup.close();
-		TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid: " + url);
+		TypeUtils.assertTrueWithLogs(gamesPortletPage.playDemoAndValidateUrl(), "Game url is valid");
     }
 
 //	/*2.1. Refine By: Top level*/
@@ -913,7 +909,7 @@ public class GamesPortletTest extends AbstractTest {
 //
 	/*15. Navigation types*/
 	/*15.1. Slider : next/back arrows navigation*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "desktop"})
 	public void sliderPaginationWorksCorrectly(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String firstPageGame = gamesPortletPage.getGameID(1,1);
@@ -979,11 +975,11 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"regression"})
 	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
-		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playReal(false);
+		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playRealLoggedOut();
 	}
 
 	/*30. Player launches game from list view*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "desktop"})
 	public void gameCanBeStartedFromListView(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);

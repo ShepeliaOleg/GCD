@@ -10,7 +10,6 @@ import utils.WebDriverUtils;
 public class GameElement extends AbstractPage{
 
 	private static final String TAG_JACKPOT=			"data-game-jackpot";
-	private static final String ROOT_XP=				"//*[contains(@id, 'WAR_gamesportlet')]";
 
 	private String ROOT_GAME;
 	private String buttonPlayReal;
@@ -25,7 +24,7 @@ public class GameElement extends AbstractPage{
 	private String gameID;
 
 	public GameElement(String gameID){
-		super(new String[]{ROOT_XP, "//*[@data-key='" + gameID + "']"});
+		super(new String[]{"//*[@data-key='" + gameID + "']"});
 		ROOT_GAME=				"//*[@data-key='" + gameID + "']";
 		buttonPlayReal=			ROOT_GAME + "//*[contains(@class, 'btn_type_play')]";
 		buttonPlayDemo=			ROOT_GAME + "//*[contains(@class, 'btn_type_play-demo')]";
@@ -60,8 +59,13 @@ public class GameElement extends AbstractPage{
 	}
 
 	public void clickPlayReal(){
-		WebDriverUtils.mouseOver(ROOT_GAME);
-		WebDriverUtils.click(buttonPlayReal);
+        if(platform.equals(PLATFORM_DESKTOP)) {
+            WebDriverUtils.mouseOver(ROOT_GAME);
+            WebDriverUtils.click(buttonPlayReal);
+        }else {
+            WebDriverUtils.click(ROOT_GAME);
+            new StartGamePopup().clickReal();
+        }
 	}
 
     public void clickPlayRealList(){
@@ -70,8 +74,13 @@ public class GameElement extends AbstractPage{
     }
 
 	public void clickPlayDemo(){
-		WebDriverUtils.mouseOver(ROOT_GAME);
-		WebDriverUtils.click(buttonPlayDemo);
+        if(platform.equals(PLATFORM_DESKTOP)){
+            WebDriverUtils.mouseOver(ROOT_GAME);
+            WebDriverUtils.click(buttonPlayDemo);
+        }else {
+            WebDriverUtils.click(ROOT_GAME);
+            new StartGamePopup().clickDemo();
+        }
 	}
 
 	public void clickTitle(){
@@ -103,13 +112,23 @@ public class GameElement extends AbstractPage{
 	}
 
 	public boolean isDemoPresent(){
-		WebDriverUtils.mouseOver(ROOT_GAME);
-		return WebDriverUtils.isVisible(buttonPlayDemo, 0);
+        if(platform.equals(PLATFORM_DESKTOP)){
+            WebDriverUtils.mouseOver(ROOT_GAME);
+            return WebDriverUtils.isVisible(buttonPlayDemo, 0);
+        }else {
+            WebDriverUtils.click(ROOT_GAME);
+            return new StartGamePopup().isDemoPresent();
+        }
 	}
 
 	public boolean isRealPresent(){
-		WebDriverUtils.mouseOver(ROOT_GAME);
-		return WebDriverUtils.isVisible(buttonPlayReal, 0);
+        if(platform.equals(PLATFORM_DESKTOP)){
+            WebDriverUtils.mouseOver(ROOT_GAME);
+            return WebDriverUtils.isVisible(buttonPlayReal, 0);
+        }else {
+            WebDriverUtils.click(ROOT_GAME);
+            return new StartGamePopup().isRealPresent();
+        }
 	}
 
 	public boolean isImagePresent(){
