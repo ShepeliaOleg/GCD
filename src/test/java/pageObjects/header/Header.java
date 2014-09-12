@@ -7,9 +7,13 @@ import pageObjects.menu.Menu;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
+import java.util.Collection;
+
 public class Header extends AbstractPageObject{
 	protected static final String ROOT_XP=	"//*[@class='main-header']";
 	public static final String BALANCE_AREA ="//*[contains(@class, 'main-header__balance')]";
+    //Desktop only
+    private static final String DROPDOWN_LANGUAGE_XP =	ROOT_XP + "//*[contains(@class, 'language-selector-replacer')]";
     //Mobile only
     public static final String MENU_XP =       ROOT_XP + "//*[contains(@class,'fn-open-menu')]";
 
@@ -35,4 +39,18 @@ public class Header extends AbstractPageObject{
         return new Menu();
     }
 
+    private Collection<String> getLanguageCodes() {
+        return WebDriverUtils.getListOfAttributeValues(DROPDOWN_LANGUAGE_XP, "data-lang");
+    }
+
+    public Collection<String> getLanguageCodesList() {
+        if (platform.equals(PLATFORM_DESKTOP)) {
+            return getLanguageCodes();
+        } else {
+            Menu menu = openMenu();
+            menu.showLanguageItems();
+            return menu.getLanguageCodes();
+        }
+
+    }
 }

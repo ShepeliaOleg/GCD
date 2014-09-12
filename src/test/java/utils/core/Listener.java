@@ -29,9 +29,9 @@ public class Listener extends TestListenerAdapter{
     private static final String COLOR_RED = "#FF9763";
     private static final String ENV_REPLACER = "ENVIRONMENT";
 
-    String[] list =                        {"BingoScheduleTest", "HomePageTest", "UpdateMyDetailsTest", "ChangePasswordTest",
-            "ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
-            "LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
+    String[] list = {"BannerTest", "BingoScheduleTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
+            "ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest",
+            "InternalTagsTest", "LanguageTest", "LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
             "RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest"};
 
 

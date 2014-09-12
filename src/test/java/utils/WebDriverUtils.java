@@ -374,6 +374,16 @@ public class WebDriverUtils extends WebDriverObject{
 		}
 		return null;
 	}
+    //List
+
+    public static List<String> getListOfAttributeValues(String xpath, String attributeName){
+        List<String> result = new ArrayList();
+        String xpathItems = xpath + "//ul/li";
+        for (int itemIndex=1; itemIndex <= getXpathCount(xpathItems); itemIndex++) {
+            result.add(getAttribute(xpathItems + "[" + itemIndex + "]", attributeName));
+        }
+        return result;
+    }
 
 	//Navigation
 

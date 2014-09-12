@@ -7,49 +7,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Defaults{
-	List<String> countryFullList;
-	List<String> currencyList;
-    String defaultCountryCode;
+	List<String> countryList;
+    String defaultCountry;
+    List<String> languageList;
+    List<String> currencyList;
 
-    public String getDefaultCountryCode() {
-        return defaultCountryCode;
+    public String getDefaultCountry() {
+        return defaultCountry;
     }
 
     public String getDefaultCountryName() {
-        return getCountryName(getFullInfoByCountryCode(defaultCountryCode));
+        return getCountryName(getCountryInfoByCode(defaultCountry));
     }
 
-	public List getCountryFullList(){
-		return countryFullList;
+	public List getCountryList(){
+		return countryList;
 	}
+
+    public List getLanguageList(){
+        return languageList;
+    }
 
     public List getCurrencyList(){
 		return currencyList;
 	}
 
-	public void setCountryFullList(List countryFullList){
-        this.countryFullList = countryFullList;
+	public void setCountryList(List countryList){
+        this.countryList = countryList;
+    }
+
+    public void setLanguageList(List languageList){
+        this.languageList = languageList;
     }
 
 	public void setCurrencyList(List currencyList){
 		this.currencyList = currencyList;
 	}
 
-    public void setDefaultCountryCode(String countryCode) {
-        this.defaultCountryCode = countryCode;
+    public void setDefaultCountry(String countryCode) {
+        this.defaultCountry = countryCode;
     }
 
-    public List<String> getCountriesCodesList() {
+    public List<String> getCountryCodesList() {
         List <String> countries = new ArrayList<String>();
-         for (String countryFullInfo:countryFullList) {
+         for (String countryFullInfo: countryList) {
              countries.add(getCountryCode(countryFullInfo));
          }
         return countries;
     }
 
-    private String getFullInfoByCountryCode(String countryCode) {
+    private String getCountryInfoByCode(String countryCode) {
         String countryFullInfo = null;
-        for (String countryFull:countryFullList) {
+        for (String countryFull: countryList) {
             if (countryFull.startsWith(countryCode)) {
                 countryFullInfo = countryFull;
                 break;
@@ -64,20 +73,20 @@ public class Defaults{
     }
 
     public String getPhoneCodeByCountryCode(String countryCode) {
-        String countryFullInfo = getFullInfoByCountryCode(countryCode);
+        String countryFullInfo = getCountryInfoByCode(countryCode);
 
         return getCountryPhoneCode(countryFullInfo);
     }
 
     public String getCountryNameByCountryCode(String countryCode) {
-        String countryFullInfo = getFullInfoByCountryCode(countryCode);
+        String countryFullInfo = getCountryInfoByCode(countryCode);
 
         return getCountryName(countryFullInfo);
     }
 
     public String getRandomCountryCode(){
-        int randomIndex = RandomUtils.generateRandomIntBetween(0, (countryFullList.size() - 1));
-        String countryFullInfo = countryFullList.get(randomIndex);
+        int randomIndex = RandomUtils.generateRandomIntBetween(0, (countryList.size() - 1));
+        String countryFullInfo = countryList.get(randomIndex);
 
         return getCountryCode(countryFullInfo);
     }

@@ -197,7 +197,7 @@ public class RegistrationTest extends AbstractTest{
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList(defaultUserData.getRandomUserData());
-		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountriesCodesList());
+		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountryCodesList());
         TypeUtils.assertTrueWithLogs(diff.isEmpty());
 	}
 
@@ -206,7 +206,7 @@ public class RegistrationTest extends AbstractTest{
     public void nationalityList(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         Collection<String> actualNationalitiesCodesList = registrationPage.registrationPageAllSteps().getNationalitiesCodesList();
-        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountriesCodesList());
+        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountryCodesList());
         TypeUtils.assertTrueWithLogs(diff.isEmpty());
     }
 
@@ -321,7 +321,7 @@ public class RegistrationTest extends AbstractTest{
 	public void countryCodePhoneCodeMappingDesktop(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageAllSteps registrationPageAllSteps = registrationPage.registrationPageAllSteps();
-		Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+		Collection<String> countriesCodesList = defaults.getCountryCodesList();
 		for (String countryCode : countriesCodesList) {
             registrationPageAllSteps.fillCountry(countryCode);
 			String phoneAreaCode = registrationPageAllSteps.getPhoneAreaCode();
@@ -334,7 +334,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"regression", "desktop"})
     public void countryCodeNamePrefix(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+        Collection<String> countriesCodesList = defaults.getCountryCodesList();
         for (String countryCode : countriesCodesList) {
             registrationPage.fillCountry(countryCode);
             String actualCountryName = registrationPage.getSelectedCountryName().trim();
@@ -348,7 +348,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void countryCodeNamePrefixMobile(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> countriesCodesList = defaults.getCountriesCodesList();
+        Collection<String> countriesCodesList = defaults.getCountryCodesList();
         registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
         for (String countryCode : countriesCodesList) {
             registrationPage.fillCountry(countryCode);
@@ -386,7 +386,7 @@ public class RegistrationTest extends AbstractTest{
 //		// stage 1
 //		boolean fillFieldsVisibleStage1 = registrationPage.isFindMyAddressButtonVisible();
 //		String randomCountryCode;
-//		String defaultCountryCode = defaults.getDefaultCountryCode();
+//		String defaultCountryCode = defaults.getDefaultCountry();
 //		do {
 //			randomCountryCode = defaults.getRandomCountryCode();
 //		}

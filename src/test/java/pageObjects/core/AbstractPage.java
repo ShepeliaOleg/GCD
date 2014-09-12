@@ -17,6 +17,8 @@ import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
+import java.util.Collection;
+
 public class AbstractPage extends AbstractPageObject{
 
 	private String mainWindowHandle;
@@ -154,6 +156,10 @@ public class AbstractPage extends AbstractPageObject{
 	public String getEnteredUsernameFromLoginForm(){
 		return loggedOutHeader().getUsernameText();
 	}
+
+    public Collection<String> getLanguageCodesList() {
+        return header().getLanguageCodesList();
+    }
 }
 
 

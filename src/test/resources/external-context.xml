@@ -2,8 +2,7 @@
 <beans default-init-method="true"
        xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="
-http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <bean id="iMS" class="springConstructors.IMS">
         <property name="imsURL" value="https://admin.demo.playtech.com/ims/?context=ims"/>

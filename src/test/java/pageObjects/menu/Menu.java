@@ -7,6 +7,8 @@ import pageObjects.core.AbstractPageObject;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
+import java.util.Collection;
+
 public class Menu extends AbstractPageObject {
 	protected static final String ROOT_XP =             "//*[contains(@class,'fn-slide-menu-wrapper')]";
     private static final String BUTTON_CLOSE_XP =       ROOT_XP + "//*[contains(@class,'fn-close-menu')]";
@@ -36,5 +38,13 @@ public class Menu extends AbstractPageObject {
 
     public LoggedOutMenu loggedOutMenu(){
         return new LoggedOutMenu();
+    }
+
+    public void showLanguageItems() {
+        WebDriverUtils.click(LANGUAGE_XP);
+    }
+
+    public Collection<String> getLanguageCodes() {
+        return WebDriverUtils.getListOfAttributeValues(LANGUAGE_XP, "data-lang");
     }
 }
