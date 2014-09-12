@@ -10,10 +10,12 @@ public class DriverData{
     public static String browser;
     public static String os;
     public static String platform;
+    public static String device;
     public static String defaultBaseUrl;
     public static String defaultBrowser;
     public static String defaultOs;
     public static String defaultPlatform;
+    public static String defaultDevice;
 
     public static String getBaseUrl(){
         if(baseUrl!=null){
@@ -63,6 +65,18 @@ public class DriverData{
         DriverData.platform = platform;
     }
 
+    public static String getDevice() {
+        if(device!=null) {
+            return device;
+        }else{
+            return getDefaultDevice();
+        }
+    }
+
+    public static void setDevice(String device) {
+        DriverData.device = device;
+    }
+
     public static String getDefaultBaseUrl() {
         return defaultBaseUrl;
     }
@@ -93,5 +107,13 @@ public class DriverData{
 
     public static void setDefaultPlatform(String defaultPlatform) {
         DriverData.defaultPlatform = defaultPlatform;
+    }
+
+    public static String getDefaultDevice() {
+        return defaultDevice;
+    }
+
+    public static void setDefaultDevice(String defaultDevice) {
+        DriverData.defaultDevice = defaultDevice;
     }
 }

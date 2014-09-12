@@ -2,23 +2,22 @@ package utils.core;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
+import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
 public class Listener extends TestListenerAdapter{
 
-	private static PrintWriter output;
+    private static PrintWriter output;
     private static String folder;
     private static String outFolder;
     private static String indexFilename;
@@ -30,23 +29,23 @@ public class Listener extends TestListenerAdapter{
     private static final String COLOR_RED = "#FF9763";
     private static final String ENV_REPLACER = "ENVIRONMENT";
 
-	String[] list =                        {"BingoScheduleTest", "HomePageTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
-			"ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
-			"LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
-			"RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest"};
+    String[] list =                        {"BingoScheduleTest", "HomePageTest", "UpdateMyDetailsTest", "ChangePasswordTest",
+            "ForgotPasswordTest", "GamesPortletTest", "InboxTest", "InternalTagsTest",
+            "LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
+            "RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest"};
 
 
-	@Override
-	public void onTestFailure(ITestResult iTestResult){
-		createScreenshot(iTestResult);
-		System.out.println(iTestResult.getName() + "--Test method failed\n");
-	}
+    @Override
+    public void onTestFailure(ITestResult iTestResult){
+        createScreenshot(iTestResult);
+        System.out.println(iTestResult.getName() + "--Test method failed\n");
+    }
 
-	@Override
-	public void onTestSuccess(ITestResult iTestResult){
-		createScreenshot(iTestResult);
-		System.out.println(iTestResult.getName()+ "--Test method passed\n");
-	}
+    @Override
+    public void onTestSuccess(ITestResult iTestResult){
+        createScreenshot(iTestResult);
+        System.out.println(iTestResult.getName()+ "--Test method passed\n");
+    }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult){
@@ -83,29 +82,29 @@ public class Listener extends TestListenerAdapter{
     }
 
 
-	@Override
-	public void onFinish(ITestContext testContext){
+    @Override
+    public void onFinish(ITestContext testContext){
         int passed = testContext.getPassedTests().getAllResults().size();
         int failed = testContext.getFailedTests().getAllResults().size();
         int ims = testContext.getSkippedTests().getAllResults().size();
         int total = passed+failed+ims;
-		String classname=null;
-		if(!testContext.getPassedTests().getAllResults().isEmpty()){
-			for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
-				classname = iTestResult.getTestClass().getName();
-			break;
-			}
-		}else if(!testContext.getFailedTests().getAllResults().isEmpty()){
-			for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
-				classname = iTestResult.getTestClass().getName();
-				break;
-			}
+        String classname=null;
+        if(!testContext.getPassedTests().getAllResults().isEmpty()){
+            for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
+                classname = iTestResult.getTestClass().getName();
+                break;
+            }
+        }else if(!testContext.getFailedTests().getAllResults().isEmpty()){
+            for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
+                classname = iTestResult.getTestClass().getName();
+                break;
+            }
         }else if(!testContext.getSkippedTests().getAllResults().isEmpty()){
             for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
                 classname = iTestResult.getTestClass().getName();
                 break;
+            }
         }
-    }
         if(classname!=null){
             writeToIndex(classname, total, passed, failed, ims);
             try{
@@ -121,7 +120,7 @@ public class Listener extends TestListenerAdapter{
             output.close();
         }
 
-	}
+    }
 
     private void writeToIndex(String classname, int total, int passed, int failed, int ims){
         String line;
@@ -213,15 +212,15 @@ public class Listener extends TestListenerAdapter{
     }
 
 
-	private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
+    private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
         output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
         output.println("<tr align=\"center\" valign=\"middle\" style=\"background-color:orange;color:white;\"><td width='30%'>Area</td><td width='15%'>Status</td><td width='15%'>Screenshot</td><td>Error</td></tr>");
-		addRows(iTestContext);
+        addRows(iTestContext);
         output.println("</table>");
         output.println("<br>");
-	}
+    }
 
     private void createIndex(){
         output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
@@ -235,13 +234,15 @@ public class Listener extends TestListenerAdapter{
         output.println("<br>");
     }
 
-	private void addRows(ITestContext iTestContext){
+    private void addRows(ITestContext iTestContext){
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
             output.println("<tr align='center' style='background-color:"+COLOR_GREEN+"'><td colspan='4'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
-                output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + test.getName() + "</td> ");
+                String name = test.getName();
+                output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + name + "</td> ");
                 output.println("<td align=\"center\" valign=\"middle\" class='passed'>passed</td> ");
-                output.println("<td align=\"center\" valign=\"middle\"><a href='" + test.getName() + ".jpg'>Screenshot</a></td><td></td></tr>");
+                output.println("<td align=\"center\" valign=\"middle\"><a href='"+ScreenOrientation.LANDSCAPE.value()+name
+                        +".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td><td></td></tr>");
             }
         }
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
@@ -250,65 +251,84 @@ public class Listener extends TestListenerAdapter{
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
                 output.println("<td align=\"center\" valign=\"middle\" class='failed'>failed</td> ");
-                output.println("<td align=\"center\" valign=\"middle\"><a href='" + name + ".jpg'>Screenshot</a></td>");
+                output.println("<td align=\"center\" valign=\"middle\"><a href='"+ScreenOrientation.LANDSCAPE.value()
+                        +name+".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
             }
         }
-		if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
+        if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
             output.println("<tr align='center'><td colspan='4'>Skipped Tests</td></tr>");
             for(ITestResult test:iTestContext.getSkippedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
-                output.println("<td align=\"center\" valign=\"middle\">Skipped</td> ");
-                output.println("<td align=\"center\" valign=\"middle\"><a href='" + test.getName() + ".jpg'>Screenshot</a></td>");
+                output.println("<td align='center' valign='middle'>Skipped</td> ");
+                output.println("<td align='center' valign='middle'><a href='"+name+".jpg'>Screenshot</a></td>");
                 output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
-	}
+    }
 
-	private void startHtmlPage(String pageName)
-	{
+    private void startHtmlPage(String pageName)
+    {
         output.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
         output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
         output.println("<head>\n");
         output.println("<title>"+pageName+"</title>" );
         output.println("<style media=\"screen\" type=\"text/css\">table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
-				".td1 {width:100px;}" +
-				".td2 {width:50px;}" +
-				".td3 {width:50px;}</style>");
+                ".td1 {width:100px;}" +
+                ".td2 {width:50px;}" +
+                ".td3 {width:50px;}</style>");
         output.println("</head>");
         output.println("<body><br/>");
-		Calendar cal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>");
-	}
+    }
 
-	private void endHtmlPage()
-	{
+    private void endHtmlPage()
+    {
         output.println("</div></div></div></div>");
         output.println("</body></html>");
-	}
+    }
 
-	private void createFolder(){
-		File file = new File(outFolder);
-		file.mkdirs();
-	}
+    private void createFolder(){
+        File file = new File(outFolder);
+        file.mkdirs();
+    }
 
-	private void createScreenshot(ITestResult iTestResult){
-		if(webDriver==null){
+    private void createScreenshot(ITestResult iTestResult){
+        if(webDriver==null){
             webDriver = WebDriverFactory.getWebDriver();
             baseUrl = WebDriverFactory.getBaseUrl();
         }
-		String imageName = iTestResult.getName()+".jpg";
-		File file = new File(outFolder +imageName);
-		File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
-		try  {
-			FileUtils.copyFile(scrFile, file);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-	}
+        String imageName = iTestResult.getName()+".jpg";
+        if(!WebDriverFactory.browser.equals("native")) {
+            writeScreenshot(ScreenOrientation.PORTRAIT.value() + imageName);
+            writeScreenshot(ScreenOrientation.LANDSCAPE.value() + imageName);
+        }else {
+            ScreenOrientation initialOrientation = WebDriverUtils.getOrientation();
+            writeScreenshot(initialOrientation.value()+imageName);
+            if(initialOrientation.equals(ScreenOrientation.LANDSCAPE)){
+                WebDriverUtils.setOrientation(ScreenOrientation.PORTRAIT);
+                writeScreenshot(ScreenOrientation.PORTRAIT.value()+imageName);
+            }else {
+                WebDriverUtils.setOrientation(ScreenOrientation.LANDSCAPE);
+                writeScreenshot(ScreenOrientation.LANDSCAPE.value()+imageName);
+            }
+            WebDriverUtils.setOrientation(initialOrientation);
+        }
+    }
+
+    private void writeScreenshot(String imageName){
+        File file = new File(outFolder +imageName);
+        File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
+        try  {
+            FileUtils.copyFile(scrFile, file);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
@@ -318,11 +338,11 @@ public class Listener extends TestListenerAdapter{
         }
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
-               if(fullException.length>1){
-                   return fullException[0]+ spoilerText(name, fullException[1]);
-               }else{
-                   return shortExc + spoilerText(name, fullException[0]);
-               }
+            if(fullException.length>1){
+                return fullException[0]+ spoilerText(name, fullException[1]);
+            }else{
+                return shortExc + spoilerText(name, fullException[0]);
+            }
         }else{
             return shortExc + spoilerText(name, exc);
         }

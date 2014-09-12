@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="lgG2" class="springConstructors.Device">
+        <property name="name" value="lgG2"/>
+        <property name="version" value="4.4.2"/>
+        <property name="serial" value="03a0b1fc8a12ca7a"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="galaxyS3" class="springConstructors.Device">
+        <property name="name" value="galaxyS3"/>
+        <property name="version" value="4.4.2"/>
+        <property name="serial" value="4df7e2d92fe3cfbf"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="galaxyS5" class="springConstructors.Device">
+        <property name="name" value="galaxyS5"/>
+        <property name="version" value="4.4.2"/>
+        <property name="serial" value="4d00d6174c67416d"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="galaxyNote3" class="springConstructors.Device">
+        <property name="name" value="galaxyNote3"/>
+        <property name="version" value="4.4.2"/>
+        <property name="serial" value="4d00b4d7604c90c3"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="galaxyTab3" class="springConstructors.Device">
+        <property name="name" value="galaxyTab3"/>
+        <property name="version" value="4.2.2"/>
+        <property name="serial" value="32000691b2c5a000"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="nexus10" class="springConstructors.Device">
+        <property name="name" value="nexus10"/>
+        <property name="version" value="4.4.4"/>
+        <property name="serial" value="R32D2046WBX"/>
+        <property name="remote" value="http://172.29.46.110:9515"/>
+    </bean>
+
+    <bean id="deviceData" class="springConstructors.DeviceData">
+        <property name="devices">
+            <list>
+                <ref bean="lgG2"/>
+                <ref bean="galaxyS3"/>
+                <ref bean="galaxyS5"/>
+                <ref bean="galaxyNote3"/>
+                <ref bean="galaxyTab3"/>
+                <ref bean="nexus10"/>
+            </list>
+        </property>
+    </bean>
+</beans>

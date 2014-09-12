@@ -1,5 +1,6 @@
 package utils;
 
+import io.selendroid.SelendroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -483,4 +484,18 @@ public class WebDriverUtils extends WebDriverObject{
 	public static void executeScript(String javascript){
 		((JavascriptExecutor) webDriver).executeScript(javascript);
 	}
+
+    //Mobile
+
+    public static void setOrientation(ScreenOrientation screenOrientation){
+        SelendroidDriver selendroidDriver = (SelendroidDriver)webDriver;
+        selendroidDriver.rotate(screenOrientation);
+        waitFor(1000);
+    }
+
+    public static ScreenOrientation getOrientation(){
+        SelendroidDriver selendroidDriver = (SelendroidDriver)webDriver;
+        return selendroidDriver.getOrientation();
+    }
+
 }
