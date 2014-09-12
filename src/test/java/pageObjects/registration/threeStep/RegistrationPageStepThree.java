@@ -16,6 +16,8 @@ import utils.WebDriverUtils;
 public class RegistrationPageStepThree extends RegistrationPage {
 
     private static final String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][3]";
+    private final static String FIELD_QUESTION_NAME = 								"verificationQuestion";
+    private final static String FIELD_ANSWER_NAME = 								"verificationAnswer";
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					ROOT_XP + "//*[@id='terms-checkbox']";
     private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
 
@@ -27,11 +29,21 @@ public class RegistrationPageStepThree extends RegistrationPage {
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
+        fillQuestion(userData.getVerificationQuestion());
+        fillAnswer(userData.getVerificationAnswer());
         setCurrency(userData.getCurrency());
         setTermsCheckbox(termsAndConditions);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
         WebDriverUtils.waitFor(1000);
         clickSubmit();
+    }
+
+    protected static void fillQuestion(String username){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_QUESTION_NAME), username);
+    }
+
+    protected static void fillAnswer(String username){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ANSWER_NAME), username);
     }
 
     private static RegistrationPageStepTwo clickPrevious(){

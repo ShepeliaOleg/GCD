@@ -1,6 +1,7 @@
 package pageObjects.external.ims;
 
 import pageObjects.core.AbstractPage;
+import springConstructors.IMS;
 import utils.WebDriverUtils;
 
 public class IMSLoginPage extends AbstractPage{
@@ -9,9 +10,6 @@ public class IMSLoginPage extends AbstractPage{
 	private static final String FIELD_USERNAME_XP=	"//*[@id='username']";
 	private static final String FIELD_PASSWORD_XP=	"//*[@id='pass']";
 	private static final String BUTTON_SUBMIT_XP=	"//*[@id='Submit']";
-
-    private static final String LOGIN=				"wpl_automation";
-    private static final String PASS=				"7895123Res";
 
 	public IMSLoginPage(){
 		super(new String[]{ROOT_XP});
@@ -31,8 +29,8 @@ public class IMSLoginPage extends AbstractPage{
 	}
 
 	public IMSHomePage logInToIMS(){
-		setUsername(FIELD_USERNAME_XP, LOGIN);
-		setPassword(FIELD_PASSWORD_XP, PASS);
+		setUsername(FIELD_USERNAME_XP, IMS.getImsLogin());
+		setPassword(FIELD_PASSWORD_XP, IMS.getImsPass());
 		return clickSubmit();
 	}
 }

@@ -578,7 +578,7 @@ public class RegistrationTest extends AbstractTest{
         UserData generatedUserData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.fillEmail(generatedUserData.getEmail());
-        registrationPage.registrationPageAllSteps().fillConfirmEmail(emailValidationRule.generateValidString());
+        registrationPage.registrationPageAllSteps().fillEmailVerification(emailValidationRule.generateValidString());
         String tooltipMessageText=ValidationUtils.getTooltipText(RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME);
         boolean usernameUsedMessageDisplayed=tooltipMessageText.equals("Emails don't match");
         TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected 'Emails don't match', Actual " + "'"+tooltipMessageText+"'");

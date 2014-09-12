@@ -17,16 +17,20 @@ import java.util.HashMap;
 
 public class IMS extends WebDriverObject{
 
-    protected URL imsURL;
+    protected static URL imsURL;
+    protected static URL defaultImsURL;
+    protected static String imsLogin;
+    protected static String imsPass;
+    protected static String defaultImsLogin;
+    protected static String defaultImsPass;
 
-    protected URL defaultImsURL;
     private static final int RETRIES = 10;
 
     @Autowired
     @Qualifier("userData")
     private UserData defaultUserData;
 
-    public URL getImsURL() {
+    public static URL getImsURL() {
         if(imsURL!=null){
             return imsURL;
         }else {
@@ -34,16 +38,56 @@ public class IMS extends WebDriverObject{
         }
     }
 
-    public void setImsURL(URL imsURL) {
-        this.imsURL = imsURL;
+    public static void setImsURL(URL imsURL) {
+        IMS.imsURL = imsURL;
     }
 
-    public URL getDefaultImsURL() {
+    public static String getImsLogin() {
+        if(imsLogin!=null){
+            return imsLogin;
+        }else {
+            return getDefaultImsLogin();
+        }
+    }
+
+    public static void setImsLogin(String imsLogin) {
+        IMS.imsLogin = imsLogin;
+    }
+
+    public static String getImsPass() {
+        if(imsPass!=null){
+            return imsPass;
+        }else {
+            return getDefaultImsPass();
+        }
+    }
+
+    public static void setImsPass(String imsPass) {
+        IMS.imsPass = imsPass;
+    }
+
+    public static URL getDefaultImsURL() {
         return defaultImsURL;
     }
 
-    public void setDefaultImsURL(URL defaultImsURL) {
-        this.defaultImsURL = defaultImsURL;
+    public static void setDefaultImsURL(URL defaultImsURL) {
+        IMS.defaultImsURL = defaultImsURL;
+    }
+
+    public static String getDefaultImsLogin() {
+        return defaultImsLogin;
+    }
+
+    public static void setDefaultImsLogin(String defaultImsLogin) {
+        IMS.defaultImsLogin = defaultImsLogin;
+    }
+
+    public static String getDefaultImsPass() {
+        return defaultImsPass;
+    }
+
+    public static void setDefaultImsPass(String defaultImsPass) {
+        IMS.defaultImsPass = defaultImsPass;
     }
 
 	private IMSHomePage navigateToIMS(){

@@ -7,7 +7,11 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 
     <bean id="iMS" class="springConstructors.IMS">
         <property name="imsURL" value="#{systemProperties['imsURL']}"/>
-        <property name="defaultimsURL" value="https://extdev2-admin.extdev.eu/ims/?context=ims"/>
+        <property name="imsLogin" value="#{systemProperties['imsLogin']}"/>
+        <property name="imsPass" value="#{systemProperties['imsPass']}"/>
+        <property name="defaultImsURL" value="https://extdev2-admin.extdev.eu/ims/?context=ims"/>
+        <property name="defaultImsLogin" value="wpl_automation"/>
+        <property name="defaultImsPass" value="7895123Res"/>
     </bean>
 
     <bean id="mailQ"
