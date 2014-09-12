@@ -92,7 +92,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		data.add(getLastName());
 		data.add(getBirthDate());
 		data.add(getEmail());
-		data.add(getCountry());
+		data.add(getCountryCode());
 		data.add(getCity());
 		data.add(getBillingAddress());
 		data.add(getPostcode());
@@ -223,7 +223,12 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		return getDropdownValue(FIELD_COUNTRY);
 	}
 
-	private String getPostcode(){
+    private String getCountryCode(){
+        return WebDriverUtils.getDropdownSelectedOptionValue(FIELD_COUNTRY);
+    }
+
+
+    private String getPostcode(){
 		return getInputContent(FIELD_ZIP);
 	}
 
@@ -353,5 +358,4 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private String getDropdownValue(String xpath){
 		return WebDriverUtils.getDropdownSelectedOptionText(xpath);
 	}
-
 }
