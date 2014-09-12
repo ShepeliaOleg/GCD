@@ -7,7 +7,7 @@ import org.testng.SkipException;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
-import pageObjects.account.UpdateMyDetailsPage;
+import pageObjects.account.ChangeMyDetailsPage;
 import pageObjects.banner.BannerPage;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
@@ -29,6 +29,7 @@ import pageObjects.login.WelcomePopup;
 import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
+import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
@@ -70,7 +71,7 @@ public class NavigationUtils extends WebDriverObject{
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
-            case changeMyDetails:                               return new UpdateMyDetailsPage();
+            case changeMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangePasswordPage();
             case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
@@ -92,8 +93,7 @@ public class NavigationUtils extends WebDriverObject{
             case inbox:                                         return new InboxPage();
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
-            case register:                                      return new RegistrationPageAllSteps();
-            case registerSteps:                                 return new RegistrationPageStepOne();
+            case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:
             case selfExclusion:                                 return new ResponsibleGamingPage();
@@ -106,7 +106,8 @@ public class NavigationUtils extends WebDriverObject{
         String suffix=configuredPages.toString();
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
-        abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
+//        abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
+        abstractPage = new AbstractPage();
         boolean isLoggedIn=abstractPage.isLoggedIn();
         switch (condition){
             case guest:
@@ -164,7 +165,7 @@ public class NavigationUtils extends WebDriverObject{
 			return processAfterRegistrationPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.TITLE_XP, 0)){
 		    return processReadTermsAndConditionsPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.IFRAME_XP, 0)){
+		}else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)){
             return processTermsAndConditionsPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(ChangePasswordPopup.BUTTON_SUBMIT_XP, 0)){
             return processChangePasswordPopup(exceptPage);
@@ -228,8 +229,7 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.acceptTermsAndConditionsPopup){
             return acceptTermsAndConditionsPopup;
         }else{
-            acceptTermsAndConditionsPopup.clickClose();
-            WebDriverUtils.waitForElementToDisappear(AcceptTermsAndConditionsPopup.BUTTON_ACCEPT_XP);
+            acceptTermsAndConditionsPopup.clickAccept();
             return null;
         }
     }
@@ -265,14 +265,16 @@ public class NavigationUtils extends WebDriverObject{
     }
 
     private static void processRegistrationError(){
-        if(WebDriverUtils.isVisible(RegistrationPageAllSteps.LABEL_ERROR_TIMEOUT_XP, 2)){
-            throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
-        }else{
-            if(WebDriverUtils.isVisible(RegistrationPageAllSteps.LABEL_MESSAGE_ERROR_XP)){
-                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(RegistrationPageAllSteps.LABEL_MESSAGE_ERROR_XP));
-            }else{
-                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
+        String errorXP = AbstractPage.PORTLET_ERROR_XP;
+        if(WebDriverUtils.isVisible(errorXP, 2)){
+            String errorText = WebDriverUtils.getElementText(errorXP);
+            if(errorText.contains("timeout")){
+                throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
+            }else {
+                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + errorText);
             }
+        }else{
+            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
         }
     }
 

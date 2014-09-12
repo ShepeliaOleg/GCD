@@ -12,6 +12,7 @@ import pageObjects.header.NavigationPanel;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LoginPopup;
 import pageObjects.login.LogoutPopup;
+import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
@@ -110,6 +111,10 @@ public class AbstractPage extends AbstractPageObject{
     //Mobile only
     public ChangePasswordPopup navigateToChangePassword(){
         return loggedInHeader().openMenu().loggedInMenu().navigateToChangePassword();
+    }
+
+    public ReferAFriendPopup navigateToReferAFriend() {
+        return header().openMenu().loggedInMenu().navigateToReferAFriend();
     }
 
 

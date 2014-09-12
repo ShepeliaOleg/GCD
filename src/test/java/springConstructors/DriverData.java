@@ -51,7 +51,7 @@ public class DriverData{
         DriverData.os = os;
     }
 
-    public String getPlatform() {
+    public static String getPlatform() {
         if(platform!=null){
             return platform;
         }else{
@@ -59,7 +59,7 @@ public class DriverData{
         }
     }
 
-    public void setPlatform(String platform) {
+    public static void setPlatform(String platform) {
         DriverData.platform = platform;
     }
 

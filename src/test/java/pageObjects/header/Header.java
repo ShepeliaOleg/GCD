@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.menu.Menu;
+import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
 public class Header extends AbstractPageObject{
@@ -33,7 +34,5 @@ public class Header extends AbstractPageObject{
         WebDriverUtils.click(MENU_XP);
         return new Menu();
     }
-
-
 
 }

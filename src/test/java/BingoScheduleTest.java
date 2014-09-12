@@ -19,19 +19,19 @@ public class BingoScheduleTest extends AbstractTest{
 	private BingoScheduleData bingoScheduleData;
 
 	/*POSITIVE*/
-
-	/* 1. Portlet is available */
-	@Test(groups = {"smoke"})
-	public void portletIsDisplayed() {
-		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
-	}
-
-	/* 2. Proper columns are displayed */
-	@Test(groups = {"regression"})
-	public void columns() {
-		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
-		Integer actualColumnsNumber = bingoSchedulePage.getColumnsNumber();
-		Integer expectedColumnsNumber = bingoScheduleData.getColumnsNumber();
-        TypeUtils.assertTrueWithLogs(actualColumnsNumber.equals(expectedColumnsNumber), "Column number is correct");
-	}
+//
+//	/* 1. Portlet is available */
+//	@Test(groups = {"smoke"})
+//	public void portletIsDisplayed() {
+//		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
+//	}
+//
+//	/* 2. Proper columns are displayed */
+//	@Test(groups = {"regression"})
+//	public void columns() {
+//		BingoSchedulePage bingoSchedulePage = (BingoSchedulePage) NavigationUtils.navigateToPage(ConfiguredPages.bingoLobbyFeed);
+//		Integer actualColumnsNumber = bingoSchedulePage.getColumnsNumber();
+//		Integer expectedColumnsNumber = bingoScheduleData.getColumnsNumber();
+//        TypeUtils.assertTrueWithLogs(actualColumnsNumber.equals(expectedColumnsNumber), "Column number is correct");
+//	}
 }

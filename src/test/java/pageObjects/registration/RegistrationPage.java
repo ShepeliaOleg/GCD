@@ -57,6 +57,10 @@ public class RegistrationPage extends AbstractPage{
         super(elements);
     }
 
+    public RegistrationPage(){
+        super(new String[]{ROOT_XP});
+    }
+
     public RegistrationPageAllSteps registrationPageAllSteps(){
         return new RegistrationPageAllSteps();
     }
@@ -113,7 +117,7 @@ public class RegistrationPage extends AbstractPage{
     /*Inputs*/
 
     protected static void fillGender(String title){
-        WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_GENDER_NAME), title);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME), title);
     }
 
     protected static void fillFirstName(String firstName){

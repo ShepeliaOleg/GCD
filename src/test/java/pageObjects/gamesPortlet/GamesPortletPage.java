@@ -2,9 +2,9 @@ package pageObjects.gamesPortlet;
 
 import enums.GameCategories;
 import enums.SortBy;
-import pageObjects.account.LoginPopup;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.login.LoginPopup;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
@@ -12,11 +12,6 @@ import utils.WebDriverUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-/**
- * User: sergiich
- * Date: 7/8/13
- */
 
 public class GamesPortletPage extends AbstractPage{
 	//General

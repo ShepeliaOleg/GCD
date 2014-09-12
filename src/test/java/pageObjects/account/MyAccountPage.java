@@ -35,9 +35,9 @@ public class MyAccountPage extends AbstractPage{
 		return new BalancePage();
 	}
 
-	public UpdateMyDetailsPage navigateToChangeMyDetails(){
+	public ChangeMyDetailsPage navigateToChangeMyDetails(){
 		WebDriverUtils.click(LINK_CHANGE_MY_DETAILS_XP);
-		return new UpdateMyDetailsPage();
+		return new ChangeMyDetailsPage();
 	}
 
 	public ChangePasswordPage navigateToChangeMyPassword(){
@@ -57,12 +57,6 @@ public class MyAccountPage extends AbstractPage{
 	public ResponsibleGamingPage navigateToResponsibleGaming(){
 		WebDriverUtils.click(LINK_RESPONSIBLE_GAMING_XP);
 		return new ResponsibleGamingPage();
-	}
-
-	public ReferAFriendPage navigateToReferAFriend(){
-		WebDriverUtils.click(LINK_REFER_A_FRIEND_XP);
-		WebDriverUtils.waitForElement(ReferAFriendPage.BUTTON_CONFIRM_XP);
-		return new ReferAFriendPage();
 	}
 
 //	public BingoPage navigateToBingoGamesHistory(){

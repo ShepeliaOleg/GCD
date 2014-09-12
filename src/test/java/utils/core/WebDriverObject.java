@@ -10,8 +10,8 @@ public class WebDriverObject{
     protected static String platform;
     protected static String timestamp = "noLogs";
 
-    protected static String PLATFORM_DESKTOP = "desktop";
-    protected static String PLATFORM_MOBILE = "mobile";
+    protected final static String PLATFORM_DESKTOP = "desktop";
+    protected final static String PLATFORM_MOBILE = "mobile";
 
     public static String getBaseUrl() {
         return baseUrl;

@@ -9,7 +9,7 @@ import utils.WebDriverUtils;
  * Date: 5/30/13
  */
 
-public class UpdateMyDetailsPage extends AbstractPage{
+public class ChangeMyDetailsPage extends AbstractPage{
 
 	public static final String ROOT_XP =		                "//*[contains(@id,'updatemydetails')]";
 	private static final String LABEL_CONFIRMATION_MESSAGE_XP=	"//*[contains(@class,'portlet-msg portlet-msg-info')]";
@@ -29,7 +29,7 @@ public class UpdateMyDetailsPage extends AbstractPage{
     private static final String CHECKBOX_NOTIFICATION_PHONE_XP=	"//*[@id='accountNotificationPhone']";
     private static final String CHECKBOX_NOTIFICATION_SMS_XP=	"//*[@id='accountNotificationSms']";
 
-    public UpdateMyDetailsPage(){
+    public ChangeMyDetailsPage(){
         super(new String[]{ROOT_XP, BUTTON_UPDATE_XP});
     }
 

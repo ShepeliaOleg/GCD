@@ -118,7 +118,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 	private void closeQuestionnaire(){
 		if(WebDriverUtils.isVisible(QuestionnairePopup.BUTTON_SUBMIT_XP)){
 			QuestionnairePopup questionnairePopup=new QuestionnairePopup();
-			questionnairePopup.clickClose();
+			questionnairePopup.closePopup();
 		}
 	}
 

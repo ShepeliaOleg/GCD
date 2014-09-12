@@ -163,7 +163,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*#6. Player is registered with currency selected*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression","desktop"})
 	public void validHeaderUnitBalance(){
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);

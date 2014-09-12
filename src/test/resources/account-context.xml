@@ -6,6 +6,7 @@
 
     <bean id="userData" class="springConstructors.UserData">
         <property name="title" value="Mr"/>
+        <property name="gender" value="M"/>
         <property name="firstName" value="Player"/>
         <property name="lastName" value="Automation"/>
         <property name="birthDay" value="1"/>
@@ -23,8 +24,8 @@
         <property name="mobileAreaCode" value="+38"/>
         <property name="mobile" value="7654321"/>
         <property name="username" value="#{systemProperties['username']}"/>
-        <property name="defaultUsername" value="testx1"/>
-        <property name="password" value="Asd123"/>
+        <property name="defaultUsername" value="autoLocal"/>
+        <property name="password" value="aut0Player"/>
         <property name="verificationQuestion" value="Name of your first pet?"/>
         <property name="verificationAnswer" value="Internet"/>
         <property name="currency" value="GBP"/>

@@ -18,7 +18,7 @@ public enum ConfiguredPages{
     bingoLobbyFeed("bingo-schedule-lobby"),
     bingoScheduleFeed("bingo-schedule-schedule"),
     bonusPage("bonus"),
-    changeMyDetails("myaccount1/update-my-details"),
+    changeMyDetails("update-my-details"),
     changeMyPassword("myaccount/change-my-password"),
     forgotPassword("forgot-password"),
     forgotUsername("forgot-password"),

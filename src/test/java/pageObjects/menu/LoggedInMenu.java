@@ -1,8 +1,7 @@
 package pageObjects.menu;
 
-import pageObjects.account.UpdateMyDetailsPage;
+import pageObjects.account.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.core.AbstractPage;
 import pageObjects.login.LogoutPopup;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
@@ -37,9 +36,9 @@ public class LoggedInMenu extends Menu {
         return new ReferAFriendPopup();
     }
 
-    public UpdateMyDetailsPage navigateToUpdateMyDetails(){
+    public ChangeMyDetailsPage navigateToUpdateMyDetails(){
         WebDriverUtils.click(UPDATE_MY_DETAILS_XP);
-        return new UpdateMyDetailsPage();
+        return new ChangeMyDetailsPage();
     }
 
     public ResponsibleGamingPage navigateToResponsibleGaming(){

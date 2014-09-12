@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
 public class Menu extends AbstractPageObject {
