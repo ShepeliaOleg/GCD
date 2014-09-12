@@ -20,7 +20,7 @@ public class Menu extends AbstractPageObject {
     private static final String CONTACT_US_XP =	        ROOT_XP + "//*[contains(@class,'micon-contact-us')]";
 
 	public Menu(){
-		super(new String[]{ROOT_XP, BUTTON_CLOSE_XP, HOME_XP, LANGUAGE_XP, GETTING_STARTED_XP, SUPPORT_XP, RESPONSIBLE_GAMING_XP, CONTACT_US_XP});
+		super(new String[]{ROOT_XP});
 	}
 
 	public Menu(String[] clickableBys){

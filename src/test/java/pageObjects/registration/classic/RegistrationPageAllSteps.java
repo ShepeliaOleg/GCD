@@ -1,14 +1,8 @@
 package pageObjects.registration.classic;
 
-import enums.Page;
-import org.openqa.selenium.Keys;
-import pageObjects.core.AbstractPageObject;
-import pageObjects.registration.AdultContentPage;
-import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.validation.ValidationUtils;
 
@@ -18,7 +12,7 @@ import java.util.List;
 
 public class RegistrationPageAllSteps extends RegistrationPage {
 
-    public final static String FIELD_EMAIL_VERIFICATION_NAME = 						"confirmEmail";
+    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					    "confirmEmail";
     protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"phoneAreaCode";
     protected final static String FIELD_ADDRESS2_NAME = 								"address2";
     protected final static String FIELD_HOUSE_NAME = 								    "house";
@@ -77,7 +71,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         fillBirthMonth(userData.getBirthMonth());
         fillBirthYear(userData.getBirthYear());
         fillEmail(userData.getEmail());
-        fillConfirmEmail(userData.getEmail());
+        fillEmailVerification(userData.getEmail());
         fillCountry(userData.getCountry());
         fillCity(userData.getCity());
         fillAddress(userData.getAddress());
@@ -92,7 +86,8 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     /*Inputs*/
 
-    public void fillConfirmEmail(String confirmEmail){
+
+    public static void fillEmailVerification(String confirmEmail){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
     }
 

@@ -190,6 +190,18 @@
         <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9) "/>
     </bean>
 
+    <bean id="mobilePhoneValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[+]{0,1}[0123456789]{5,10}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="11"/>
+        <property name="tooltipPositive" value="Please enter your phone number"/>
+        <property name="tooltipNegativeEmpty" value="Please enter your phone number (16 characters, country code included)"/>
+        <property name="tooltipNegativeShort" value="You may only use numbers (0-9) and + (6-11 digits)"/>
+        <property name="tooltipNegativeLong" value="You may only use numbers (0-9) and + (6-11 digits)"/>
+        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9) "/>
+    </bean>
+
     <bean id="usernameValidationRule" class="springConstructors.ValidationRule">
         <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{3,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{2,5}"/>-->
         <!--<property name="isMandatory" value="true"/>-->

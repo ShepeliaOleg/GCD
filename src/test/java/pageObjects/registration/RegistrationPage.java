@@ -35,8 +35,8 @@ public class RegistrationPage extends AbstractPage{
     protected final static String FIELD_POSTCODE_NAME = 								"zip";
     protected final static String DROPDOWN_COUNTRY_NAME = 								"countrycode";
     protected final static String FIELD_USERNAME_NAME = 								"userName";
-    protected final static String FIELD_PASSWORD_NAME = 								    "password";
-    public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					"passwordVerify";
+    protected final static String FIELD_PASSWORD_NAME = 								"password";
+    public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
     protected final static String DROPDOWN_CURRENCY_NAME = 						        "currencyCode";
     protected final static String FIELD_BONUSCODE_NAME = 								"coupon";
     protected final static String CHECKBOX_RECEIVE_BONUSES_XP=						    "//*[@id='nobonus'] | //*[@name='subscription']";
@@ -77,7 +77,6 @@ public class RegistrationPage extends AbstractPage{
         return new RegistrationPageStepOne().fillDataAndSubmit(userData).fillDataAndSubmit(userData);
     }
 
-
     /*General*/
 
     public AbstractPageObject registerUser(UserData userData){
@@ -100,7 +99,6 @@ public class RegistrationPage extends AbstractPage{
         }
         return NavigationUtils.closeAllPopups(expectedPage);
     }
-
 
     protected static void fillBonusAndPromotional(boolean isReceivePromotionalOffers, String bonusCode){
         setCheckboxReceivePromotional(isReceivePromotionalOffers);

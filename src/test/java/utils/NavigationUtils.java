@@ -157,7 +157,7 @@ public class NavigationUtils extends WebDriverObject{
 		if(WebDriverUtils.isVisible(LoaderPopup.ANIMATION_XP, 0)){
 			WebDriverUtils.waitForElementToDisappear(LoaderPopup.ANIMATION_XP, 30);
 			return null;
-		}else if(WebDriverUtils.isVisible(WelcomePopup.LABEL_CONTENTS, 0)){
+		}else if(WebDriverUtils.isVisible(AbstractPopup.BUTTON_CLOSE_XP, 0)&&!WebDriverUtils.isVisible(AbstractPopup.BUTTON_ACCEPT_XP, 0)){
 		    return processWelcomePopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
             return processLoginPopup(exceptPage);
@@ -183,7 +183,7 @@ public class NavigationUtils extends WebDriverObject{
         if (exceptPage == Page.welcomePopup){
             return welcomePopup;
         }else{
-            welcomePopup.clickClose();
+            welcomePopup.closePopup();
             return null;
         }
     }
