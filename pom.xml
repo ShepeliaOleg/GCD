@@ -12,7 +12,7 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>2.42.2</version>
+            <version>2.43.1</version>
         </dependency>
         <dependency>
             <groupId>io.selendroid</groupId>
@@ -28,16 +28,6 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.8.8</version>
-        </dependency>
-        <dependency>
-            <groupId>dk.brics.automaton</groupId>
-            <artifactId>automaton</artifactId>
-            <version>1.11-8</version>
-        </dependency>
-        <dependency>
-            <groupId>nl.flotsam</groupId>
-            <artifactId>xeger</artifactId>
-            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

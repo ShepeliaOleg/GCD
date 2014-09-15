@@ -97,6 +97,7 @@ public class RegistrationPage extends AbstractPage{
         }else {
             new RegistrationPageStepOne().registerNewUser(userData, termsAndConditions, promotions, bonusCode);
         }
+        WebDriverUtils.waitFor(5000);
         return NavigationUtils.closeAllPopups(expectedPage);
     }
 

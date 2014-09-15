@@ -374,6 +374,15 @@ public class WebDriverUtils extends WebDriverObject{
 		}
 		return null;
 	}
+
+    public static String getDropdownSelectedOptionValue(String xpath){
+        try{
+            return getDropdownSelectedOption(xpath).getAttribute("value").replace("[","").replace("]","").replace(",","").replace(" ","");
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return null;
+    }
     //List
 
     public static List<String> getListOfAttributeValues(String xpath, String attributeName){

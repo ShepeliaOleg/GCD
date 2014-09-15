@@ -5,6 +5,7 @@ import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
+import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -83,9 +84,9 @@ public class LoginPopup extends AbstractPopup{
         return new ForgotPasswordPopup();
     }
 
-    public RegistrationPageAllSteps clickRegistration(){
+    public RegistrationPage clickRegistration(){
         WebDriverUtils.click(LINK_REGISTER_XP);
-        return new RegistrationPageAllSteps();
+        return new RegistrationPage();
     }
 
 	public boolean validationErrorVisible(){

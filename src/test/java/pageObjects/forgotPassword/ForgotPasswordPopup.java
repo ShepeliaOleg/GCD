@@ -11,13 +11,11 @@ public class ForgotPasswordPopup extends AbstractPopup{
     public final static String ROOT_XP =            				"//*[contains(@class, 'fn-forgotpassword-form')]";
     private final static String FIELD_USERNAME_XP =             	ROOT_XP + "//*[@name='username']";
     public final static String FIELD_EMAIL_XP =                	    ROOT_XP + "//*[@name='email']";
-    private final static String DROPDOWN_BIRTH_DAY =            	ROOT_XP + "//select[@id='birthDay']";
-    private final static String DROPDOWN_BIRTH_MONTH =          	ROOT_XP + "//select[@id='birthMonth']";
-    private final static String DROPDOWN_BIRTH_YEAR =         	  	ROOT_XP + "//select[@id='birthYear']";
+    private final static String DROPDOWN_BIRTH_DAY =            	ROOT_XP + "//*[@id='birthDay']";
+    private final static String DROPDOWN_BIRTH_MONTH =          	ROOT_XP + "//*[@id='birthMonth']";
+    private final static String DROPDOWN_BIRTH_YEAR =         	  	ROOT_XP + "//*[@id='birthYear']";
     public final static String BUTTON_APPROVE_XP =             	    "//span[contains(@class, 'fn-forgotpassword')]";
-    private final static String[] ELEMENTS =                        new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP,
-                                                                    DROPDOWN_BIRTH_DAY, DROPDOWN_BIRTH_MONTH,
-                                                                    DROPDOWN_BIRTH_YEAR, BUTTON_APPROVE_XP};
+    private final static String[] ELEMENTS =                        new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP, BUTTON_APPROVE_XP};
 
     public ForgotPasswordPopup(){
         super(ELEMENTS);
