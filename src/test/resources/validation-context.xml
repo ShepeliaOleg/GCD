@@ -125,7 +125,7 @@
         <property name="tooltipNegativeEmpty" value="N/A"/>
         <property name="tooltipNegativeShort" value="Inserted address is invalid. Please enter 2- 65 characters"/>
         <property name="tooltipNegativeLong" value="Inserted address is invalid. Please enter 2- 65 characters"/>
-        <property name="tooltipNegativeInvalid" value="Inserted address is invalid. Please use letters (A-Z) (a-z) and numbers(0-9) and characters(.,'/\#&-), "/>
+        <property name="tooltipNegativeInvalid" value="Inserted address is invalid. Please use letters (A-Z) (a-z) and numbers(0-9) and characters(.,'/\#&amp;-), "/>
     </bean>
 
     <bean id="houseValidationRule" class="springConstructors.ValidationRule">
