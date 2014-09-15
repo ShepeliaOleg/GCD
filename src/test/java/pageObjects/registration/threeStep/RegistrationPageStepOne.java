@@ -28,9 +28,7 @@ public class RegistrationPageStepOne extends RegistrationPage {
     }
 
     public static RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
-        if(WebDriverUtils.isVisible(getXpathByName(DROPDOWN_TITLE_NAME))){
-            fillTitle(userData.getTitle());
-        }
+        fillTitle(userData.getTitle());
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
         fillBirthDay(userData.getBirthDay());

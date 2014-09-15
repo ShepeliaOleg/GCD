@@ -13,7 +13,7 @@ public class ValidationUtils extends WebDriverObject{
 
     private static final String PLACEHOLDER =               "$PLACEHOLDER$";
     private static final String NO_TOOLTIP =                "N/A";
-    public static final String STATUS_PASSED =              "valid";
+    public static final String STATUS_PASSED =              " valid";
     public static final String STATUS_FAILED =              "invalid";
     public static final String STATUS_NONE =                "NONE";
     private static final String TOOLTIP_STATUS_ERROR =      "tooltip-error";
@@ -26,7 +26,7 @@ public class ValidationUtils extends WebDriverObject{
 
     private static ArrayList<String> validateClick(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         clickField(xpath);
-        results.add(validationStatusIs(tooltipID, STATUS_NONE, ""));
+        results.add(validationStatusIs(tooltipID, STATUS_NONE, "click"));
         if(platform.equals(PLATFORM_DESKTOP)) {
             String tooltip = rule.getTooltipPositive();
             results = validateToolTips(results, tooltip, tooltipID, "", STATUS_PASSED);
@@ -37,9 +37,9 @@ public class ValidationUtils extends WebDriverObject{
     private static ArrayList<String> validateEmpty(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         inputFieldAndRefocus(xpath);
         if(rule.getIsMandatory().equals("true")){
-            results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "", STATUS_FAILED, STATUS_FAILED);
+            results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
         }else {
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "", STATUS_PASSED, STATUS_PASSED);
+            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "empty", STATUS_PASSED, STATUS_PASSED);
         }
         return results;
     }
@@ -47,9 +47,9 @@ public class ValidationUtils extends WebDriverObject{
     private static ArrayList<String> validateEmptyDropdown(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         refocusDropdown(xpath);
         if(rule.getIsMandatory().equals("true")){
-            results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "", STATUS_FAILED, STATUS_FAILED);
+            results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
         }else{
-            results = validateStatusAndToolTips(results, NO_TOOLTIP, tooltipID, "", STATUS_PASSED, STATUS_NONE);
+            results = validateStatusAndToolTips(results, NO_TOOLTIP, tooltipID, "empty", STATUS_PASSED, STATUS_NONE);
         }
         return results;
     }
@@ -218,11 +218,15 @@ public class ValidationUtils extends WebDriverObject{
     private static String getTooltipStatus(String id) {
         String xpath = getTooltipXpath(id);
         if(WebDriverUtils.isVisible(xpath, 0)){
-            String classValue = WebDriverUtils.getAttribute(xpath, "class");
-            if(classValue.contains(TOOLTIP_STATUS_ERROR)){
-                return STATUS_FAILED;
+            if(platform.equals(PLATFORM_DESKTOP)){
+                String classValue = WebDriverUtils.getAttribute(xpath, "class");
+                if(classValue.contains(TOOLTIP_STATUS_ERROR)){
+                    return STATUS_FAILED;
+                }else {
+                    return STATUS_PASSED;
+                }
             }else {
-                return STATUS_PASSED;
+                return STATUS_FAILED;
             }
         }else {
             return STATUS_NONE;
@@ -260,7 +264,7 @@ public class ValidationUtils extends WebDriverObject{
         if(platform.equals(PLATFORM_DESKTOP)){
             clickField(xpath);
         }
-        WebDriverUtils.waitFor(500);
+        WebDriverUtils.waitFor(1000);
     }
 
     private static void clickField(String xpath){
@@ -285,7 +289,7 @@ public class ValidationUtils extends WebDriverObject{
             WebDriverUtils.pressKey(Keys.TAB);
             clickField(xpath);
         }
-        WebDriverUtils.waitFor(500);
+        WebDriverUtils.waitFor(1000);
     }
 
 	public static void validateField(String xpath, ValidationRule rule, String tooltipID) {

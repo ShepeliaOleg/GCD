@@ -28,7 +28,7 @@ public class LanguageTest extends AbstractTest {
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         Collection<String> actualCountriesCodesList = homePage.getLanguageCodesList();
         Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getLanguageList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty());
+        TypeUtils.assertTrueWithLogs(diff.isEmpty(), diff.toString());
     }
 
 }

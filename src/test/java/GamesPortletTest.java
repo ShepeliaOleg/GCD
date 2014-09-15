@@ -27,7 +27,7 @@ public class GamesPortletTest extends AbstractTest {
 	private ValidationRule searchValidationRule;
 
 	/*1. Portlet is displayed, game can be launched */
-	@Test(groups = {"smoke"})
+	@Test(groups = {"regression", "smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
 		TypeUtils.assertTrueWithLogs(gamesPortletPage.playDemoAndValidateUrl(), "Game url is valid");
@@ -909,7 +909,7 @@ public class GamesPortletTest extends AbstractTest {
 //
 	/*15. Navigation types*/
 	/*15.1. Slider : next/back arrows navigation*/
-	@Test(groups = {"regression", "desktop"})
+	@Test(groups = {"regression"})
 	public void sliderPaginationWorksCorrectly(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String firstPageGame = gamesPortletPage.getGameID(1,1);

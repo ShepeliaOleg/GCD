@@ -220,6 +220,18 @@
         <property name="tooltipNegativeInvalid" value="You may only use letters (A-z) (a-z) and numbers (0-9) without spaces."/>
     </bean>
 
+    <bean id="questionValidationRule" class="springConstructors.ValidationRule">
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,160}"/>
+        <property name="isMandatory" value="true"/>
+        <property name="minLength" value="2"/>
+        <property name="maxLength" value="20"/>
+        <property name="tooltipPositive" value="Please choose a security question"/>
+        <property name="tooltipNegativeEmpty" value="Please choose a secret question"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeInvalid" value="N/A"/>
+    </bean>
+
     <bean id="answerValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/- ]{1,160}"/>
         <property name="isMandatory" value="true"/>
