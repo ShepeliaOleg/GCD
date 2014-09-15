@@ -38,7 +38,7 @@ import utils.core.WebDriverObject;
 
 public class NavigationUtils extends WebDriverObject{
 
-    private static final int POPUP_CHECK_RETRIES = 10;
+    private static final int POPUP_CHECK_RETRIES = 30;
     private static final int POPUP_WAIT_TIMEOUT = 10;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
@@ -130,11 +130,12 @@ public class NavigationUtils extends WebDriverObject{
 	public static AbstractPageObject closeAllPopups(Page exceptPage){
 		AbstractPageObject result = null;
 		int retries = 0;
-		while(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, POPUP_WAIT_TIMEOUT) && result==null){
-			result = checkPopups(exceptPage);
+		while((WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) || WebDriverUtils.isVisible("//*[contains(@class, 'progress')]", 1))&& result==null){
+            WebDriverUtils.waitFor(1000);
+            result = checkPopups(exceptPage);
 			retries++;
 			if(retries==POPUP_CHECK_RETRIES){
-				WebDriverUtils.runtimeExceptionWithUrl("Unrecognizable popup appeared or popup cannot be closed");
+				WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long");
 			}
 		}
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){

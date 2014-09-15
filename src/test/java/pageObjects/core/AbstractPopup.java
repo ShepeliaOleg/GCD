@@ -30,10 +30,12 @@ public abstract class AbstractPopup extends AbstractPageObject{
 
     private void clickClose(){
 		WebDriverUtils.click(BUTTON_CLOSE_XP);
+        WebDriverUtils.waitFor(1000);
 	}
 
     public void clickAccept(){
         WebDriverUtils.click(BUTTON_ACCEPT_XP);
+        WebDriverUtils.waitFor(1000);
     }
 
     public void closePopup(){
@@ -42,6 +44,7 @@ public abstract class AbstractPopup extends AbstractPageObject{
         }else if(WebDriverUtils.isVisible(OFF_POPUP_XP, 0)){
             clickOffPopup();
         }
+        WebDriverUtils.waitFor(1000);
     }
 
     protected void clickOffPopup(){
