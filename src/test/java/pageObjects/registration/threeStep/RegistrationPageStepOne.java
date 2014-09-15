@@ -28,7 +28,9 @@ public class RegistrationPageStepOne extends RegistrationPage {
     }
 
     public static RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
-        fillTitle(userData.getTitle());
+        if(WebDriverUtils.isVisible(getXpathByName(DROPDOWN_TITLE_NAME))){
+            fillTitle(userData.getTitle());
+        }
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
         fillBirthDay(userData.getBirthDay());
@@ -36,7 +38,9 @@ public class RegistrationPageStepOne extends RegistrationPage {
         fillBirthYear(userData.getBirthYear());
         fillGender(userData.getGender());
         fillEmail(userData.getEmail());
-        fillEmailVerification(userData.getEmail());
+        if(WebDriverUtils.isVisible(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME))){
+            fillEmailVerification(userData.getEmail());
+        }
         WebDriverUtils.waitFor(1000);
         clickNext();
         return new RegistrationPageStepTwo();

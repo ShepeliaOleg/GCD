@@ -302,8 +302,8 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression", "desktop"})
 	public void requiredFieldsLabelsMarkedWithStar(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect();
-        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
+		boolean checkboxTermsAndConditionsregressionErrorVisible=registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect();
+        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsregressionErrorVisible);
 	}
 
     /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
@@ -487,8 +487,8 @@ public class RegistrationTest extends AbstractTest{
 		UserData registeredUserData=defaultUserData.getRegisteredUserData();
 		generatedUserData.setUsername(registeredUserData.getUsername());
 		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
-        String actualValidationStatus = ValidationUtils.validationStatusIs(RegistrationPage.FIELD_USERNAME_XP, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
-        TypeUtils.assertTrueWithLogs(actualValidationStatus.equals(ValidationUtils.PASSED), actualValidationStatus);
+        String actualregressionStatus = ValidationUtils.validationStatusIs(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
+        TypeUtils.assertTrueWithLogs(actualregressionStatus.equals(ValidationUtils.PASSED), actualregressionStatus);
 	}
 
     /*3. Try to use invalid bonus code*/
@@ -510,44 +510,44 @@ public class RegistrationTest extends AbstractTest{
 //		UserData userData=defaultUserData.getRandomUserData();
 //		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 //		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
-//		boolean checkboxTermsAndConditionsValidationErrorVisible=registrationPage.checkboxTermsAndConditionsValidationErrorVisible();
-//        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsValidationErrorVisible);
+//		boolean checkboxTermsAndConditionsregressionErrorVisible=registrationPage.checkboxTermsAndConditionsregressionErrorVisible();
+//        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsregressionErrorVisible);
 //	}
 
-    /*VALIDATION*/
-    @Test(groups = {"registration","validation","desktop"})
-    public void genderDropdownValidation() {
+    /*regression*/
+    @Test(groups = {"registration","regression","desktop"})
+    public void genderDropdownregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateGender(genderValidationRule);
     }
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void firstnameFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void firstnameFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateFirstname(firstNameValidationRule);
 	}
 
-    @Test(groups = {"registration","validation","desktop"})
-    public void lastnameFieldValidation() {
+    @Test(groups = {"registration","regression","desktop"})
+    public void lastnameFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateLastname(lastNameValidationRule);
     }
 
-    @Test(groups = {"registration","validation","desktop"})
-    public void dateOfBirthValidation() {
+    @Test(groups = {"registration","regression","desktop"})
+    public void dateOfBirthregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateDateOfBirth(dateOfBirthValidationRule);
     }
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void emailFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void emailFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateEmail(emailValidationRule);
 	}
 
     /*#4. Email and email confirmation do not match*/
-    @Test(groups = {"registration","validation", "desktop"})
-    public void emailConfirmationValidation(){
+    @Test(groups = {"registration","regression", "desktop"})
+    public void emailConfirmationregression(){
         String message="";
         String xpath = RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_XP;
         String id = RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME;
@@ -556,7 +556,7 @@ public class RegistrationTest extends AbstractTest{
         String email = generatedUserData.getEmail();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().clickEmailConfirmation();
-        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
+        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_NONE, ""));
         String tooltip = "Please retype your email.";
         results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
         results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
@@ -573,7 +573,7 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-    @Test(groups = {"registration","validation", "desktop"})
+    @Test(groups = {"registration","regression", "desktop"})
     public void emailDoNotMatch(){
         UserData generatedUserData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -584,74 +584,74 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected 'Emails don't match', Actual " + "'"+tooltipMessageText+"'");
     }
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void stateFieldValidation() {
+    @Test(groups = {"registration","regression", "desktop"})
+    public void stateFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().validateState(stateValidationRule);
     }
 
-    @Test(groups = {"registration","validation","desktop"})
-    public void countryDropdownValidation() {
+    @Test(groups = {"registration","regression","desktop"})
+    public void countryDropdownregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateCountry(countryValidationRule,defaultUserData.getRandomUserData());
     }
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void cityFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void cityFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateCity(cityValidationRule,defaultUserData.getRandomUserData());
 	}
 
-	@Test(groups = {"registration","validation","desktop"})
-     public void address1FieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+     public void address1Fieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateAddress(addressValidationRule,defaultUserData.getRandomUserData());
     }
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void address2FieldValidation() {
+    @Test(groups = {"registration","regression", "desktop"})
+    public void address2Fieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().validateAddress2(address2ValidationRule);
     }
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void houseFieldValidation() {
+    @Test(groups = {"registration","regression", "desktop"})
+    public void houseFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().validateHouse(houseValidationRule);
     }
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void postcodeFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void postcodeFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule,defaultUserData.getRandomUserData());
 	}
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void phoneCountryCodeFieldValidation() {
+    @Test(groups = {"registration","regression", "desktop"})
+    public void phoneCountryCodeFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().validatePhoneCountryCode(countryPhoneCodeValidationRule);
     }
 
-	@Test(groups = {"registration","validation", "desktop"})
-	public void phoneFieldValidation() {
+	@Test(groups = {"registration","regression", "desktop"})
+	public void phoneFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registrationPageAllSteps().validatePhone(phoneValidationRule);
 	}
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void usernameFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void usernameFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateUsername(usernameValidationRule,defaultUserData.getRandomUserData());
 	}
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void passwordFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void passwordFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePassword(passwordValidationRule,defaultUserData.getRandomUserData());
 	}
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void passwordConfirmationValidation(){
+    @Test(groups = {"registration","regression", "desktop"})
+    public void passwordConfirmationregression(){
         String message="";
         String xpath = RegistrationPage.FIELD_PASSWORD_VERIFICATION_XP;
         String id = RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME;
@@ -660,7 +660,7 @@ public class RegistrationTest extends AbstractTest{
         String password = generatedUserData.getPassword();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.clickPasswordConfirmation();
-        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
+        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_NONE, ""));
         String tooltip = "Please reytpe your password.";
         results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
         results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
@@ -677,8 +677,8 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-//    @Test(groups = {"registration","validation", "mobile"})
-//    public void passwordConfirmationValidationMobile(){
+//    @Test(groups = {"registration","regression", "mobile"})
+//    public void passwordConfirmationregressionMobile(){
 //        String message="";
 //        String xpath = RegistrationPage.FIELD_PASSWORD_VERIFICATION_XP;
 //        String id = RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME;
@@ -688,7 +688,7 @@ public class RegistrationTest extends AbstractTest{
 //        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 //        registrationPage.registrationPageStepThree(generatedUserData);
 //        registrationPage.clickPasswordConfirmation();
-//        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
+//        results.add(ValidationUtils.regressionStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
 //        String tooltip = "Please reytpe your password.";
 //        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
 //        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
@@ -730,20 +730,20 @@ public class RegistrationTest extends AbstractTest{
 //        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected 'Sorry, Your passwords don't match', Actual " + "'"+errorMessageText+"'");
 //    }
 
-    @Test(groups = {"registration","validation", "desktop"})
-    public void answerFieldValidation() {
+    @Test(groups = {"registration","regression", "desktop"})
+    public void answerFieldregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageAllSteps().validateAnswer(answerValidationRule);
     }
 
-    @Test(groups = {"registration","validation","desktop"})
-    public void currencyDropdownValidation() {
+    @Test(groups = {"registration","regression","desktop"})
+    public void currencyDropdownregression() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validateCurrency(currencyValidationRule,defaultUserData.getRandomUserData());
     }
 
-	@Test(groups = {"registration","validation","desktop"})
-	public void bonusCodeFieldValidation() {
+	@Test(groups = {"registration","regression","desktop"})
+	public void bonusCodeFieldregression() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateBonusCode(bonusCodeValidationRule,defaultUserData.getRandomUserData());
 	}

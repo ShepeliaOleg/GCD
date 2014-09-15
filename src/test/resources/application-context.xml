@@ -15,7 +15,7 @@
         <property name="defaultBaseUrl" value="http://mobile-portal.playtechgaming.com/"/>
         <!--<property name="defaultBaseUrl" value="http://mob-adminpor.ee.playtech.corp:8080/"/>-->
         <!--<property name="defaultBaseUrl" value="http://eagle:flight@lpm-7regal-public-618179476.eu-west-1.elb.amazonaws.com/"/>-->
-        <property name="defaultBrowser" value="firefox"/>
+        <property name="defaultBrowser" value="chrome"/>
         <property name="defaultOs" value="windows"/>
         <property name="defaultPlatform" value="mobile"/>
         <property name="defaultDevice" value="lgG2"/>

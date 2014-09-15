@@ -29,8 +29,10 @@ public class RegistrationPageStepThree extends RegistrationPage {
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
-        fillQuestion(userData.getVerificationQuestion());
-        fillAnswer(userData.getVerificationAnswer());
+        if(WebDriverUtils.isVisible(getXpathByName(FIELD_QUESTION_NAME))){
+            fillQuestion(userData.getVerificationQuestion());
+            fillAnswer(userData.getVerificationAnswer());
+        }
         setCurrency(userData.getCurrency());
         setTermsCheckbox(termsAndConditions);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
