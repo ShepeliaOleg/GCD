@@ -148,7 +148,7 @@ public class NavigationUtils extends WebDriverObject{
 			}
 			result = homePage;
 		}else if(exceptPage == Page.registrationPage){
-			RegistrationPageAllSteps registrationPage = new RegistrationPageAllSteps();
+			RegistrationPage registrationPage = new RegistrationPage();
 			result=registrationPage;
 		}
 		return result;

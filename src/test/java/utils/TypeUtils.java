@@ -105,7 +105,9 @@ public class TypeUtils extends Assert {
         different.addAll(list2);
         Collection<T> same = getSameElementsFromLists(list1, list2);
         different.removeAll(same);
-
+        if(different.contains("")){
+            different.remove("");
+        }
         return different;
     }
 
