@@ -164,6 +164,15 @@ public class RegistrationPage extends AbstractPage{
         }
     }
 
+    public void fillEmailVerificationAndRefocus(String confirmEmail) {
+        String xpath = RegistrationPageStepOne.getEmailVerificationXpath();
+        if(platform.equals(PLATFORM_DESKTOP)){
+            xpath = RegistrationPageAllSteps.getEmailVerificationXpath();
+        }
+        ValidationUtils.inputFieldAndRefocus(xpath, confirmEmail);
+    }
+
+
     protected static void fillAddress(String address){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ADDRESS_NAME), address);
     }
@@ -190,6 +199,10 @@ public class RegistrationPage extends AbstractPage{
 
     public static void fillPasswordVerification(String confirmPassword){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME), confirmPassword);
+    }
+
+    public static void fillPasswordAndRefocus(String confirmPassword){
+        ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME), confirmPassword);
     }
 
     protected static void setCurrency(String currencyCode){
@@ -441,4 +454,6 @@ public class RegistrationPage extends AbstractPage{
     public void clickUsernameField() {
         WebDriverUtils.click(getXpathByName(FIELD_USERNAME_NAME));
     }
+
+
 }

@@ -28,7 +28,7 @@
         <property name="password" value="aut0Player"/>
         <property name="verificationQuestion" value="Name of your first pet?"/>
         <property name="verificationAnswer" value="Internet"/>
-        <property name="currency" value="GBP"/>
+        <property name="currency" value="EUR"/>
         <property name="coupon" value="Test"/>
         <property name="balanceMain"  value="£0.00"/>
         <property name="balanceTotal" value="£0.00"/>
