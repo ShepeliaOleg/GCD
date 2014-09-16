@@ -135,8 +135,7 @@ public class ValidationRule {
     }
 
     public String generateValidStringOverMaxSymbols(){
-        String allAllowedSymbols = getAllAllowedSymbols();
-        return generateValidStringWithMaxSymbols()+allAllowedSymbols.substring(allAllowedSymbols.length() - 1);
+        return generateValidStringWithMaxSymbols()+getValidChar();
     }
 
     private String generateValidStringWithMaxSymbols() {
