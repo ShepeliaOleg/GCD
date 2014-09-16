@@ -137,7 +137,8 @@
     </bean>
 
     <bean id="postcodeValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,6}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{0,5}"/>
+        <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,6}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{0,5}"/>-->
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,12}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="1"/>
         <property name="maxLength" value="12"/>
@@ -185,7 +186,8 @@
     </bean>
 
     <bean id="usernameValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{3,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{2,5}"/>
+        <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{3,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{2,5}"/>-->
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{5,16}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="5"/>
         <property name="maxLength" value="16"/>
