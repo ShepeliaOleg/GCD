@@ -12,6 +12,7 @@ import java.util.List;
 
 public class RegistrationPageAllSteps extends RegistrationPage {
 
+    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					        "confirmEmail";
     protected final static String FIELD_PHONE_XP = 									    "//*[@id='phoneNumber']";
     protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"phoneAreaCode";
 
@@ -80,6 +81,10 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     }
 
     /*Inputs*/
+
+    public static void fillEmailVerification(String confirmEmail){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
+    }
 
     private void fillPhone(String phone){
         WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_XP, phone);

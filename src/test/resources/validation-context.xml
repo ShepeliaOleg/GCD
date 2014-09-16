@@ -89,7 +89,8 @@
     </bean>
 
     <bean id="cityValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,16}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}"/>
+        <!--<property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,16}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}"/>-->
+        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,10}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,7}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
         <property name="maxLength" value="50"/>
@@ -150,7 +151,8 @@
     </bean>
 
     <bean id="countryPhoneCodeValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>
+        <!--<property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>-->
+        <property name="regexp" value="[+]{1,1}[0123456789]{1,4}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="1"/>
         <property name="maxLength" value="5"/>

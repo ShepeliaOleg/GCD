@@ -160,8 +160,8 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
-        HomePage homePage = (HomePage) PortalUtils.registerUser(userData,false,false);
-		boolean bonusesNotPresent=homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
+        RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(userData,false,false);
+		boolean bonusesNotPresent=registrationPage.getBalance().equals("£0.00") || registrationPage.getBalance().equals("£ 0.00");
         TypeUtils.assertTrueWithLogs(bonusesNotPresent);
 	}
 
@@ -553,8 +553,8 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void emailConfirmationValidation(){
         String message="";
-        String xpath = RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_XP;
-        String id = RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME;
+        String xpath = RegistrationPage.getEmailVerificationXpath();;
+        String id = RegistrationPage.getEmailVerificationName();
         ArrayList<String> results = new ArrayList<>();
         UserData generatedUserData=defaultUserData.getRandomUserData();
         String email = generatedUserData.getEmail();
@@ -584,7 +584,7 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.fillEmail(generatedUserData.getEmail());
         registrationPage.fillEmailVerification(emailValidationRule.generateValidString());
-        String tooltipMessageText=ValidationUtils.getTooltipText(RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME);
+        String tooltipMessageText=ValidationUtils.getTooltipText(RegistrationPage.getEmailVerificationName());
         boolean usernameUsedMessageDisplayed=tooltipMessageText.equals(message);
         TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+tooltipMessageText+"'");
     }

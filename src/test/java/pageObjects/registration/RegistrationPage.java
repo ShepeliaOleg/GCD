@@ -30,7 +30,6 @@ public class RegistrationPage extends AbstractPage{
     protected final static String DROPDOWN_BIRTHMONTH_NAME=								"birthMonth";
     protected final static String DROPDOWN_BIRTHYEAR_NAME=								"birthYear";
     protected final static String FIELD_EMAIL_NAME = 									"email";
-    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					        "confirmEmail";
     protected final static String FIELD_ADDRESS2_NAME = 								"address2";
     protected final static String FIELD_HOUSE_NAME = 								    "house";
     protected final static String FIELD_ANSWER_NAME = 								    "answer";
@@ -148,7 +147,11 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_NAME), email);
     }
     public static void fillEmailVerification(String confirmEmail){
-        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
+        if(platform.equals(PLATFORM_DESKTOP)){
+            RegistrationPageAllSteps.fillEmailVerification(confirmEmail);
+        }else {
+            RegistrationPageStepOne.fillEmailVerification(confirmEmail);
+        }
     }
 
     protected static void fillAddress(String address){
@@ -380,5 +383,21 @@ public class RegistrationPage extends AbstractPage{
 
     protected static String getXpathByName(String id){
         return FIELD_BASE_XP.replace(PLACEHOLDER, id);
+    }
+
+    public static String getEmailVerificationXpath(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return getXpathByName(RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME);
+        }else {
+            return getXpathByName(RegistrationPageStepOne.FIELD_EMAIL_VERIFICATION_NAME);
+        }
+    }
+
+    public static String getEmailVerificationName(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME;
+        }else {
+            return RegistrationPageStepOne.FIELD_EMAIL_VERIFICATION_NAME;
+        }
     }
 }

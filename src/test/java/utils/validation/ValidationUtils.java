@@ -116,7 +116,7 @@ public class ValidationUtils extends WebDriverObject{
             results.add("For symbols = '" + validationStatusString + "' validation status should be '"+STATUS_PASSED+"'");
         }
         if(!tooltipStatusString.isEmpty()){
-            results.add("For symbols = '" + tooltipStatusString + "' positive tooltip should not appear on click");
+            results.add("For symbols = '" + tooltipStatusString + "' tooltip should not appear on click");
         }
         return results;
     }
@@ -234,7 +234,11 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     public static String getTooltipText(String id) {
-        return WebDriverUtils.getElementText(getTooltipXpath(id));
+        if(WebDriverUtils.isVisible(getTooltipXpath(id))){
+            return WebDriverUtils.getElementText(getTooltipXpath(id));
+        }else {
+            return "No tooltip";
+        }
     }
 
 	private static String getValidationStatus(String id) {
