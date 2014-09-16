@@ -46,7 +46,8 @@ public class RegistrationPage extends AbstractPage{
     protected final static String CHECKBOX_RECEIVE_BONUSES_XP=						    "//*[@id='nobonus'] | //*[@name='subscription']";
     protected final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
 
-    protected final static String LABEL_USERNAME_SUGGESTION_XP = 						"//*[@class='fn-suggestion']/..";
+    protected final static String LABEL_USERNAME_SUGGESTION_LINK_XP = 					"//a[@class='fn-suggestion']";
+    protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
     protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-title='Terms & Conditions']";
 
     public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+DROPDOWN_BIRTHDAY_NAME+"']";
@@ -83,6 +84,15 @@ public class RegistrationPage extends AbstractPage{
     }
 
     /*General*/
+
+    public RegistrationPage fillAllFields(UserData userdata){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            RegistrationPageAllSteps.fillRegistrationForm(userdata, true, null);
+        }else{
+            registrationPageStepThree(userdata).fillData(userdata, true, true, null);
+        }
+        return new RegistrationPage();
+    }
 
     public AbstractPageObject registerUser(UserData userData){
         return registerUser(userData, Page.homePage);
@@ -170,7 +180,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_COUNTRY_NAME), countryCode);
     }
 
-    protected static void fillUsername(String username){
+    public static void fillUsername(String username){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_USERNAME_NAME), username);
     }
 
@@ -250,8 +260,35 @@ public class RegistrationPage extends AbstractPage{
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepThree(userData);
         }
+        inputAndRefocusUsername(username);
+        if(isSuggestionVisible()){
+            return WebDriverUtils.getElementText(LABEL_USERNAME_SUGGESTION_TOOLTIP_XP);
+        }else {
+            return "No username suggestion";
+        }
+    }
+
+    public boolean clickUsernameSuggestionAndValidateInput(String username, UserData userData){
+        String suggestion= getUsernameSuggestion(username, userData);
+        if(suggestion.equals("No username suggestion")){
+            return false;
+        }else {
+            String text = WebDriverUtils.getElementText(LABEL_USERNAME_SUGGESTION_LINK_XP);
+            WebDriverUtils.click(LABEL_USERNAME_SUGGESTION_LINK_XP);
+            WebDriverUtils.waitFor(1000);
+            return text.equals(getFilledUsername());
+        }
+    }
+
+    public static void inputAndRefocusUsername(String username){
         ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_USERNAME_NAME), username);
-        return WebDriverUtils.getElementText(LABEL_USERNAME_SUGGESTION_XP);
+    }
+
+    public static boolean isSuggestionVisible(){
+        return WebDriverUtils.isVisible(LABEL_USERNAME_SUGGESTION_TOOLTIP_XP, 0);
+    }
+    public static String getFilledUsername(){
+        return WebDriverUtils.getInputFieldText(getXpathByName(FIELD_USERNAME_NAME));
     }
 
     /* Fields validation */
@@ -399,5 +436,9 @@ public class RegistrationPage extends AbstractPage{
         }else {
             return RegistrationPageStepOne.FIELD_EMAIL_VERIFICATION_NAME;
         }
+    }
+
+    public void clickUsernameField() {
+        WebDriverUtils.click(getXpathByName(FIELD_USERNAME_NAME));
     }
 }

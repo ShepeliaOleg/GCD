@@ -28,6 +28,11 @@ public class RegistrationPageStepThree extends RegistrationPage {
 	}
 
     public static void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
+        fillData(userData,termsAndConditions, isReceiveBonusesChecked, bonusCode);
+        clickSubmit();
+    }
+
+    public static void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
@@ -37,7 +42,6 @@ public class RegistrationPageStepThree extends RegistrationPage {
         setTermsCheckbox(termsAndConditions);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
         WebDriverUtils.waitFor(1000);
-        clickSubmit();
     }
 
     protected static void fillQuestion(String username){

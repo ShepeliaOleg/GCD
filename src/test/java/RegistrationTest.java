@@ -471,6 +471,15 @@ public class RegistrationTest extends AbstractTest{
         iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
     }
 
+    /*#??. Suggestion does not appear on entering new username*/
+    @Test(groups = {"registration","regression"})
+    public void usernameSuggestionNoSuggestion(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String username=defaultUserData.getRandomUserData().getUsername();
+        String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData());
+        TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.equals("No username suggestion"), "Suggestion did not appear for unique username");
+    }
+
     /*#??. Suggestion appeared on entering already registered username*/
     @Test(groups = {"registration","regression"})
     public void usernameSuggestion(){
@@ -479,6 +488,54 @@ public class RegistrationTest extends AbstractTest{
         String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData());
         TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.startsWith("This username is already in use. Suggested username is:"), "Username suggestion message doesn't contain preamble: " + usernameSuggestionMessage);
         TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.contains(username.toUpperCase()), "Username suggestion message doesn't contain '" + username + "': '" + usernameSuggestionMessage + "'");
+    }
+
+    /*#??. Suggestion filled out*/
+    @Test(groups = {"registration","regression"})
+    public void usernameSuggestionClick(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String username=defaultUserData.getRegisteredUserData().getUsername();
+        boolean result = registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
+        TypeUtils.assertTrueWithLogs(result, "Suggestion entered after click");
+    }
+
+    /*#??. Suggestion disappers after refocus*/
+    @Test(groups = {"registration","regression"})
+    public void usernameSuggestionClickAfterFill(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String username=defaultUserData.getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
+        registrationPage.clickUsernameField();
+        WebDriverUtils.waitFor(1000);
+        TypeUtils.assertFalseWithLogs(registrationPage.isSuggestionVisible(), "Suggestion tooltip still visible after click");
+    }
+
+    /*#??. Field is editable after suggestion has been used*/
+    @Test(groups = {"registration","regression"})
+    public void usernameSuggestionEditableAfterFill(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String username=defaultUserData.getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
+        String newUsername = defaultUserData.getRandomUserData().getUsername();
+        RegistrationPage.fillUsername(newUsername);
+        TypeUtils.assertTrueWithLogs(newUsername.equals(registrationPage.getFilledUsername()), "username can be reentered");
+    }
+
+    /*#??. Suggestions are done on each Username field refocus*/
+    @Test(groups = {"registration","regression"})
+    public void usernameSuggestionAppearsEveryTime(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String username=defaultUserData.getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
+        String newUsername = defaultUserData.getRandomUserData().getUsername();
+        RegistrationPage.inputAndRefocusUsername(username);
+        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible second time");
+        RegistrationPage.inputAndRefocusUsername(username);
+        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible third time");
+        RegistrationPage.inputAndRefocusUsername(newUsername);
+        TypeUtils.assertFalseWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible on valid email  time");
+        RegistrationPage.inputAndRefocusUsername(username);
+        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible fourth time");
     }
 
     //    /*NEGATIVE*/

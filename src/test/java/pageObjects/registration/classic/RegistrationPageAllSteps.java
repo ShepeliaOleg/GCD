@@ -54,12 +54,12 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         clickSubmit();
     }
 
-    public void fillRegistrationForm(UserData userData,boolean isReceiveBonusesChecked, String bonusCode){
+    public static void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, String bonusCode){
         fillUserData(userData);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
     }
 
-    private void fillUserData(UserData userData){
+    private static void fillUserData(UserData userData){
         fillGender(userData.getGender());
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
@@ -86,11 +86,11 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
     }
 
-    private void fillPhone(String phone){
+    private static void fillPhone(String phone){
         WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_XP, phone);
     }
 
-    public void fillPhoneAreaCode(String phoneAreaCode){
+    public static void fillPhoneAreaCode(String phoneAreaCode){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), phoneAreaCode);
     }
 
