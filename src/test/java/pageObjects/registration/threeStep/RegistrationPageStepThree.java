@@ -5,8 +5,10 @@ import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
+import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.validation.ValidationUtils;
 
 /**
  * User: ivan
@@ -29,10 +31,8 @@ public class RegistrationPageStepThree extends RegistrationPage {
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
-        if(WebDriverUtils.isVisible(getXpathByName(FIELD_QUESTION_NAME))){
-            fillQuestion(userData.getVerificationQuestion());
-            fillAnswer(userData.getVerificationAnswer());
-        }
+        fillQuestion(userData.getVerificationQuestion());
+        fillAnswer(userData.getVerificationAnswer());
         setCurrency(userData.getCurrency());
         setTermsCheckbox(termsAndConditions);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
@@ -46,6 +46,14 @@ public class RegistrationPageStepThree extends RegistrationPage {
 
     protected static void fillAnswer(String username){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ANSWER_NAME), username);
+    }
+
+    public void validateQuestion(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByName(FIELD_QUESTION_NAME), rule, FIELD_QUESTION_NAME);
+    }
+
+    public void validateAnswer(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByName(FIELD_ANSWER_NAME), rule, FIELD_ANSWER_NAME);
     }
 
     private static RegistrationPageStepTwo clickPrevious(){

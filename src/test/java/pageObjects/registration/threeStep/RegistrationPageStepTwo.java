@@ -2,17 +2,21 @@ package pageObjects.registration.threeStep;
 
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
+import springConstructors.ValidationRule;
 import utils.WebDriverUtils;
+import utils.validation.ValidationUtils;
 
 public class RegistrationPageStepTwo extends RegistrationPage {
 
     private static final String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][2]";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";
     private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
-    private final static String FIELD_MOBILE_XP = 									ROOT_XP + "//*[@name='cellphone']";
+    private final static String FIELD_PHONE_MOBILE_NAME  = 					        "cellphone";
+    private final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 					"area";
+
 
     public RegistrationPageStepTwo(){
-		super(new String[]{ROOT_XP, BUTTON_NEXT_XP, BUTTON_PREVIOUS_XP, FIELD_MOBILE_XP, });
+		super(new String[]{ROOT_XP, BUTTON_NEXT_XP, BUTTON_PREVIOUS_XP});
 	}
 
     public static RegistrationPageStepThree fillDataAndSubmit(UserData userData){
@@ -20,7 +24,8 @@ public class RegistrationPageStepTwo extends RegistrationPage {
         fillCity(userData.getCity());
         fillPostCode(userData.getPostCode());
         fillCountry(userData.getCountry());
-        fillMobile(userData.getMobile());
+        fillMobile(userData.getPhone());
+        fillPhoneAreaCode(userData.getPhoneAreaCode());
         WebDriverUtils.waitFor(1000);
         clickNext();
         return new RegistrationPageStepThree();
@@ -36,6 +41,18 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     private static void fillMobile(String text){
-        WebDriverUtils.clearAndInputTextToField(FIELD_MOBILE_XP, text);
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_NAME), text);
+    }
+
+    public static void fillPhoneAreaCode(String phoneAreaCode){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), phoneAreaCode);
+    }
+
+    public void validatePhoneCountryCode(ValidationRule rule) {
+        ValidationUtils.validateField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), rule, FIELD_PHONE_COUNTRY_CODE_NAME);
+    }
+
+    public void validatePhone(ValidationRule rule) {
+        ValidationUtils.validateField(FIELD_PHONE_MOBILE_NAME, rule, FIELD_PHONE_MOBILE_NAME);
     }
 }

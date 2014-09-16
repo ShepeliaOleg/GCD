@@ -89,14 +89,10 @@
     </bean>
 
     <bean id="cityValidationRule" class="springConstructors.ValidationRule">
-        <!--<property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,16}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}"/>-->
-        <!--<property name="isMandatory" value="true"/>-->
-        <!--<property name="minLength" value="2"/>-->
-        <!--<property name="maxLength" value="50"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{2,20}"/>
+        <property name="regexp" value="[-]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{0,16}[, ]{0,2}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.]{1,15}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="2"/>
-        <property name="maxLength" value="20"/>
+        <property name="maxLength" value="50"/>
         <property name="tooltipPositive" value="Please enter the town or city you live in"/>
         <property name="tooltipNegativeEmpty" value="Please enter the town or city you live in."/>
         <property name="tooltipNegativeShort" value="Minimum 2 - maximum 50 characters"/>
@@ -153,27 +149,19 @@
     </bean>
 
     <bean id="countryPhoneCodeValidationRule" class="springConstructors.ValidationRule">
-        <!--<property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>-->
-        <!--<property name="isMandatory" value="true"/>-->
-        <!--<property name="minLength" value="1"/>-->
-        <!--<property name="maxLength" value="5"/>-->
-        <property name="regexp" value="[+]{1,1}[0123456789]{1,4}"/>
+        <property name="regexp" value="[+]{0,1}[0123456789]{1,4}"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="2"/>
+        <property name="minLength" value="1"/>
         <property name="maxLength" value="5"/>
         <property name="tooltipPositive" value="Please enter your phone number including area code"/>
         <property name="tooltipNegativeEmpty" value="Please enter a valid area code"/>
-        <property name="tooltipNegativeShort" value="Please enter a valid area code"/>
-        <property name="tooltipNegativeLong" value="Please enter a valid area code"/>
-        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9)"/>
+        <property name="tooltipNegativeShort" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Inserted area code is invalid. Please enter 1-5 characters"/>
+        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9) and + (optionally)"/>
     </bean>
 
     <bean id="phoneValidationRule" class="springConstructors.ValidationRule">
-        <!--<property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>-->
-        <!--<property name="isMandatory" value="true"/>-->
-        <!--<property name="minLength" value="6"/>-->
-        <!--<property name="maxLength" value="11"/>-->
-        <property name="regexp" value="[0123456789]{6,11}"/>
+        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="6"/>
         <property name="maxLength" value="11"/>
@@ -246,7 +234,7 @@
 
     <bean id="currencyValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="GBP@USD@EUR"/>
-        <property name="isMandatory" value="true"/>
+        <property name="isMandatory" value="false"/>
         <property name="minLength" value="0"/>
         <property name="maxLength" value="0"/>
         <property name="tooltipPositive" value="Please select currency for your account"/>

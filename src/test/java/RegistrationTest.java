@@ -583,7 +583,7 @@ public class RegistrationTest extends AbstractTest{
         UserData generatedUserData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.fillEmail(generatedUserData.getEmail());
-        registrationPage.registrationPageAllSteps().fillEmailVerification(emailValidationRule.generateValidString());
+        registrationPage.fillEmailVerification(emailValidationRule.generateValidString());
         String tooltipMessageText=ValidationUtils.getTooltipText(RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME);
         boolean usernameUsedMessageDisplayed=tooltipMessageText.equals(message);
         TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+tooltipMessageText+"'");
@@ -592,7 +592,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void stateFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageAllSteps().validateState(stateValidationRule);
+        registrationPage.registrationPageAllSteps().validateState(stateValidationRule, defaultUserData.getRandomUserData());
     }
 
     @Test(groups = {"registration","regression"})
@@ -616,13 +616,13 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void address2FieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageAllSteps().validateAddress2(address2ValidationRule);
+        registrationPage.registrationPageAllSteps().validateAddress2(address2ValidationRule,defaultUserData.getRandomUserData());
     }
 
     @Test(groups = {"registration","regression"})
     public void houseFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageAllSteps().validateHouse(houseValidationRule);
+        registrationPage.registrationPageAllSteps().validateHouse(houseValidationRule,defaultUserData.getRandomUserData());
     }
 
 	@Test(groups = {"registration","regression"})
@@ -737,9 +737,15 @@ public class RegistrationTest extends AbstractTest{
     }
 
     @Test(groups = {"registration","regression"})
+    public void questionFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.validateAnswer(questionValidationRule,defaultUserData.getRandomUserData());
+    }
+
+    @Test(groups = {"registration","regression"})
     public void answerFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageAllSteps().validateAnswer(answerValidationRule);
+        registrationPage.validateAnswer(answerValidationRule,defaultUserData.getRandomUserData());
     }
 
     @Test(groups = {"registration","regression"})

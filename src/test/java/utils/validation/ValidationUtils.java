@@ -254,10 +254,12 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     public static void inputFieldAndRefocus(String xpath, String input){
-        if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
-        }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
-            WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_XP, "+111");
+        if(platform.equals(PLATFORM_DESKTOP)){
+            if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP)){
+                WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
+            }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
+                WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP, "+111");
+            }
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);

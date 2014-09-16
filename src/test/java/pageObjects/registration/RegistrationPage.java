@@ -30,11 +30,16 @@ public class RegistrationPage extends AbstractPage{
     protected final static String DROPDOWN_BIRTHMONTH_NAME=								"birthMonth";
     protected final static String DROPDOWN_BIRTHYEAR_NAME=								"birthYear";
     protected final static String FIELD_EMAIL_NAME = 									"email";
+    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					        "confirmEmail";
+    protected final static String FIELD_ADDRESS2_NAME = 								"address2";
+    protected final static String FIELD_HOUSE_NAME = 								    "house";
+    protected final static String FIELD_ANSWER_NAME = 								    "answer";
     protected final static String FIELD_ADDRESS_NAME = 								    "address";
     protected final static String FIELD_CITY_NAME = 									"city";
+    protected final static String FIELD_STATE_NAME = 									"state";
     protected final static String FIELD_POSTCODE_NAME = 								"zip";
     protected final static String DROPDOWN_COUNTRY_NAME = 								"countrycode";
-    public final static String FIELD_USERNAME_NAME = 								"userName";
+    public final static String FIELD_USERNAME_NAME = 								    "userName";
     protected final static String FIELD_PASSWORD_NAME = 								"password";
     public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
     protected final static String DROPDOWN_CURRENCY_NAME = 						        "currencyCode";
@@ -48,7 +53,8 @@ public class RegistrationPage extends AbstractPage{
     public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+DROPDOWN_BIRTHDAY_NAME+"']";
     public final static String DROPDOWN_BIRTHMONTH_XP=								    "//*[@name='"+DROPDOWN_BIRTHMONTH_NAME+"']";
     public final static String DROPDOWN_BIRTHYEAR_XP=								    "//*[@name='"+DROPDOWN_BIRTHYEAR_NAME+"']";
-    public final static String FIELD_PHONE_COUNTRY_CODE_XP=								"//*[@name='phoneAreaCode']";
+    public final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
+    public final static String FIELD_PHONE_COUNTRY_CODE_MOBILE_XP=						"//*[@name='area']";
     public final static String FIELD_PHONE_XP=								            "//*[@name='phoneNumber']";
     public final static String FIELD_USERNAME_XP=								        "//*[@name='"+FIELD_USERNAME_NAME+"']";
     public final static String FIELD_PASSWORD_VERIFICATION_XP=							"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
@@ -137,8 +143,12 @@ public class RegistrationPage extends AbstractPage{
     protected static void fillBirthYear(String birthYear){
         WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), birthYear);
     }
+
     public static void fillEmail(String email){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_NAME), email);
+    }
+    public static void fillEmailVerification(String confirmEmail){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
     }
 
     protected static void fillAddress(String address){
@@ -291,6 +301,22 @@ public class RegistrationPage extends AbstractPage{
         ValidationUtils.validateField(getXpathByName(FIELD_POSTCODE_NAME), rule, FIELD_POSTCODE_NAME);
     }
 
+    public void validatePhone(ValidationRule rule, UserData userData){
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepTwo(userData).validatePhone(rule, userData);
+        }else {
+            registrationPageAllSteps().validatePhone(rule, userData);
+        }
+    }
+
+    public void validatePhoneAreaCode(ValidationRule rule, UserData userData){
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepTwo(userData).validatePhoneAreaCode(rule, userData);
+        }else {
+            registrationPageAllSteps().validatePhoneAreaCode(rule, userData);
+        }
+    }
+
     public void validateUsername(ValidationRule rule, UserData userData) {
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepThree(userData);
@@ -303,6 +329,39 @@ public class RegistrationPage extends AbstractPage{
             registrationPageStepThree(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_PASSWORD_NAME), rule, FIELD_PASSWORD_NAME);
+    }
+
+    public void validateState(ValidationRule rule, UserData userData) {
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepTwo(userData);
+        }
+        ValidationUtils.validateField(getXpathByName(FIELD_STATE_NAME), rule, FIELD_STATE_NAME);
+    }
+
+    public void validateAddress2(ValidationRule rule, UserData userData) {
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepTwo(userData);
+        }
+        ValidationUtils.validateField(getXpathByName(FIELD_ADDRESS2_NAME), rule, FIELD_ADDRESS2_NAME);
+    }
+
+    public void validateHouse(ValidationRule rule, UserData userData) {
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepTwo(userData);
+        }
+        ValidationUtils.validateField(getXpathByName(FIELD_HOUSE_NAME), rule, FIELD_HOUSE_NAME);
+    }
+
+    public void validateQuestion(ValidationRule rule, UserData userData) {
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepThree(userData).validateQuestion(rule, userData);
+        }
+    }
+
+    public void validateAnswer(ValidationRule rule, UserData userData) {
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepThree(userData).validateAnswer(rule, userData);
+        }
     }
 
     public void validateCurrency(ValidationRule rule, UserData userData) {

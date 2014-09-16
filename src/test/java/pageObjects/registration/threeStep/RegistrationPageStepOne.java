@@ -36,9 +36,7 @@ public class RegistrationPageStepOne extends RegistrationPage {
         fillBirthYear(userData.getBirthYear());
         fillGender(userData.getGender());
         fillEmail(userData.getEmail());
-        if(WebDriverUtils.isVisible(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME))){
-            fillEmailVerification(userData.getEmail());
-        }
+        fillEmailVerification(userData.getEmail());
         WebDriverUtils.waitFor(1000);
         clickNext();
         return new RegistrationPageStepTwo();
@@ -48,7 +46,7 @@ public class RegistrationPageStepOne extends RegistrationPage {
         WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_TITLE_NAME), title);
     }
 
-    private static void fillEmailVerification(String confirmEmail){
+    public static void fillEmailVerification(String confirmEmail){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
     }
 

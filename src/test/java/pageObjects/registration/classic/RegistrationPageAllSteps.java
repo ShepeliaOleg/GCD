@@ -12,13 +12,9 @@ import java.util.List;
 
 public class RegistrationPageAllSteps extends RegistrationPage {
 
-    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					    "confirmEmail";
-    protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"phoneAreaCode";
-    protected final static String FIELD_ADDRESS2_NAME = 								"address2";
-    protected final static String FIELD_HOUSE_NAME = 								    "house";
-    protected final static String FIELD_ANSWER_NAME = 								    "answer";
-
     protected final static String FIELD_PHONE_XP = 									    "//*[@id='phoneNumber']";
+    protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"phoneAreaCode";
+
     protected final static String LABEL_GENDER_XP=									    "//label[@for='gender']";
     protected final static String LABEL_FIRSTNAME_XP =								    "//label[@for='firstname']";
     protected final static String LABEL_LASTNAME_XP=									"//label[@for='lastname']";
@@ -42,7 +38,6 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     //optional
     protected final static String BUTTON_FILL_FIELDS_XP= 								"//*[@id='fillFields']";
-    protected final static String FIELD_STATE_NAME = 									"state";
     protected final static String DROPDOWN_NATIONALITY_XP=							    "//select[@id='nationality']";
     public final static String FIELD_EMAIL_VERIFICATION_XP=                              "//*[@name='"+FIELD_EMAIL_VERIFICATION_NAME+"']";
 
@@ -86,17 +81,12 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     /*Inputs*/
 
-
-    public static void fillEmailVerification(String confirmEmail){
-        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME), confirmEmail);
-    }
-
-    private void fillPhoneAreaCode(String phoneAreaCode){
-        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), phoneAreaCode);
-    }
-
     private void fillPhone(String phone){
         WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_XP, phone);
+    }
+
+    public void fillPhoneAreaCode(String phoneAreaCode){
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), phoneAreaCode);
     }
 
     /*Utility*/
@@ -136,18 +126,6 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     /*Validation*/
 
-    public void validateState(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_STATE_NAME), rule, FIELD_STATE_NAME);
-    }
-
-    public void validateAddress2(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_ADDRESS2_NAME), rule, FIELD_ADDRESS2_NAME);
-    }
-
-    public void validateHouse(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_HOUSE_NAME), rule, FIELD_HOUSE_NAME);
-    }
-
     public void validatePhoneCountryCode(ValidationRule rule) {
         ValidationUtils.validateField(getXpathByName(FIELD_PHONE_COUNTRY_CODE_NAME), rule, FIELD_PHONE_COUNTRY_CODE_NAME);
     }
@@ -156,9 +134,6 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         ValidationUtils.validateField(FIELD_PHONE_XP, rule, FIELD_PHONE_COUNTRY_CODE_NAME);
     }
 
-    public void validateAnswer(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_ANSWER_NAME), rule, FIELD_ANSWER_NAME);
-    }
     private boolean labelMarkedAsRequired(String xpath){
         String labelText=WebDriverUtils.getElementText(xpath);
         return labelText.endsWith("*");
