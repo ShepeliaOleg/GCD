@@ -158,12 +158,12 @@ public class NavigationUtils extends WebDriverObject{
 		if(WebDriverUtils.isVisible(LoaderPopup.ANIMATION_XP, 0)){
 			WebDriverUtils.waitForElementToDisappear(LoaderPopup.ANIMATION_XP, 30);
 			return null;
+        }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.AFTER_REG_ROOT_XP, 0)){
+            return processAfterRegistrationPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(AbstractPopup.BUTTON_CLOSE_XP, 0)&&!WebDriverUtils.isVisible(AbstractPopup.BUTTON_ACCEPT_XP, 0)){
 		    return processWelcomePopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
             return processLoginPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(AfterRegistrationPopup.BUTTON_DEPOSIT_XP, 0)){
-			return processAfterRegistrationPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.TITLE_XP, 0)){
 		    return processReadTermsAndConditionsPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)){
@@ -209,7 +209,7 @@ public class NavigationUtils extends WebDriverObject{
             return afterRegistrationPopup;
         }else{
             afterRegistrationPopup.closePopup();
-            WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.BUTTON_DEPOSIT_XP);
+            WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.AFTER_REG_ROOT_XP);
             return null;
         }
     }

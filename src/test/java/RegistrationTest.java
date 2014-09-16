@@ -555,15 +555,12 @@ public class RegistrationTest extends AbstractTest{
     /*3. Try to use invalid bonus code*/
 	@Test(groups = {"registration","regression"})
 	public void registrationWithInvalidBonusCoupon() {
-		String invalidBonusCoupon = bonusCodeValidationRule.generateValidString();
-		UserData userData = defaultUserData.getRandomUserData();
+        String invalidBonusCoupon = bonusCodeValidationRule.generateValidString();
+        UserData userData = defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        HomePage homePage= (HomePage) registrationPage.registerUser(userData, "invalid", Page.homePage);
-		//boolean bonusErrorPresent = registrationPage.isBonusCodeErrorPresent();
-        //TypeUtils.assertTrueWithLogs(bonusErrorPresent);
-        boolean noBonus = homePage.getBalance().equals("£0.00") || homePage.getBalance().equals("£ 0.00");
-        TypeUtils.assertTrueWithLogs(noBonus);
-	}
+        registrationPage = (RegistrationPage) registrationPage.registerUser(userData, "invalid", Page.registrationPage);
+        TypeUtils.assertTrueWithLogs(registrationPage.getPortletErrorMessage().equals("Coupon code is not found or not available"));
+    }
 
 //    /*#6. Try to clickLogin registration form without accepting T&C (without checking check box)*/
 //	@Test(groups = {"regression"})
