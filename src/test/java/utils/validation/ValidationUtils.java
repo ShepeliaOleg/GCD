@@ -103,7 +103,7 @@ public class ValidationUtils extends WebDriverObject{
         for(char a: allAllowedSymbols.toCharArray()){
             char validChar = rule.getValidChar();
             String character = String.valueOf(a);
-            if(character.equals("@")&&rule.getRegexp().contains("[@]")){
+            if(excludeSpecificChar(rule, character)){
                 continue;
             }
             character = escapeSymbol(character);
@@ -380,6 +380,12 @@ public class ValidationUtils extends WebDriverObject{
             character  = "\\" + character;
         }
         return character;
+    }
+
+    private static boolean excludeSpecificChar(ValidationRule rule, String character) {
+        boolean email = ((character.equals("@")||character.equals("."))&&rule.getRegexp().contains("[@]"));
+        boolean city = (character.equals("-")&&rule.getRegexp().contains("[-]"));
+        return (email||city);
     }
 
 }
