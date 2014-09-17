@@ -710,7 +710,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     @Test(groups = {"registration","regression"})
-    public void phoneCountryCodeFieldValidation() {
+    public void phoneAreaCodeFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.validatePhoneAreaCode(countryPhoneCodeValidationRule, defaultUserData.getRandomUserData());
     }

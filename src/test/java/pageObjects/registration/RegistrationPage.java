@@ -356,17 +356,17 @@ public class RegistrationPage extends AbstractPage{
 
     public void validatePhone(ValidationRule rule, UserData userData){
         if(platform.equals(PLATFORM_MOBILE)){
-            registrationPageStepTwo(userData).validatePhone(rule, userData);
+            registrationPageStepTwo(userData).validatePhoneField(rule);
         }else {
-            registrationPageAllSteps().validatePhone(rule, userData);
+            registrationPageAllSteps().validatePhoneField(rule);
         }
     }
 
     public void validatePhoneAreaCode(ValidationRule rule, UserData userData){
         if(platform.equals(PLATFORM_MOBILE)){
-            registrationPageStepTwo(userData).validatePhoneAreaCode(rule, userData);
+            registrationPageStepTwo(userData).validatePhoneAreaCodeField(rule);
         }else {
-            registrationPageAllSteps().validatePhoneAreaCode(rule, userData);
+            registrationPageAllSteps().validatePhoneAreaCodeField(rule);
         }
     }
 
