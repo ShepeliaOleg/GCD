@@ -152,7 +152,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
-		boolean bonusesPresent=homePage.getBalance().equals("£10.00") || homePage.getBalance().equals("£ 10.00");
+		boolean bonusesPresent=homePage.getBalance().equals("£1.00") || homePage.getBalance().equals("£ 1.00");
         TypeUtils.assertTrueWithLogs(bonusesPresent);
 	}
 
@@ -160,9 +160,10 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(userData,false,false);
-		boolean bonusesNotPresent=registrationPage.getBalance().equals("£0.00") || registrationPage.getBalance().equals("£ 0.00");
-        TypeUtils.assertTrueWithLogs(bonusesNotPresent);
+        RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(userData,true,true, "invalid", Page.registrationPage);
+        String message = registrationPage.getPortletErrorMessage();
+        String expectedMessage = "Coupon code is not found or not available";
+        TypeUtils.assertTrueWithLogs(message.equals(expectedMessage), "Expected '"+expectedMessage+"', found '"+message+"'");
 	}
 
     /*#6. Player is registered with currency selected*/
