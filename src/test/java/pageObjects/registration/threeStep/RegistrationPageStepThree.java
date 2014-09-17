@@ -52,11 +52,11 @@ public class RegistrationPageStepThree extends RegistrationPage {
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ANSWER_NAME), username);
     }
 
-    public void validateQuestion(ValidationRule rule) {
+    public void validateQuestionField(ValidationRule rule) {
         ValidationUtils.validateField(getXpathByName(FIELD_QUESTION_NAME), rule, FIELD_QUESTION_NAME);
     }
 
-    public void validateAnswer(ValidationRule rule) {
+    public void validateAnswerField(ValidationRule rule) {
         ValidationUtils.validateField(getXpathByName(FIELD_ANSWER_NAME), rule, FIELD_ANSWER_NAME);
     }
 

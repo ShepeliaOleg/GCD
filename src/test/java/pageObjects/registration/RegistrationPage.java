@@ -407,13 +407,13 @@ public class RegistrationPage extends AbstractPage{
 
     public void validateQuestion(ValidationRule rule, UserData userData) {
         if(platform.equals(PLATFORM_MOBILE)){
-            registrationPageStepThree(userData).validateQuestion(rule, userData);
+            registrationPageStepThree(userData).validateQuestionField(rule);
         }
     }
 
     public void validateAnswer(ValidationRule rule, UserData userData) {
         if(platform.equals(PLATFORM_MOBILE)){
-            registrationPageStepThree(userData).validateAnswer(rule, userData);
+            registrationPageStepThree(userData).validateAnswerField(rule);
         }
     }
 

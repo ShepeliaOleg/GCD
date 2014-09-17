@@ -807,10 +807,11 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageStepThree(generatedUserData);
         registrationPage.fillPassword(generatedUserData.getPassword());
-        registrationPage.fillPasswordAndRefocus(passwordValidationRule.generateValidString());
+        String validPass = passwordValidationRule.generateValidString();
+        registrationPage.fillPasswordAndRefocus(validPass);
         String errorMessageText=ValidationUtils.getTooltipText(RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME);
         boolean emailUsedMessageDisplayed=errorMessageText.equals(message);
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+errorMessageText+"'");
+        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+errorMessageText+"', for value '"+validPass+"'");
     }
 
     @Test(groups = {"registration","regression"})
