@@ -770,13 +770,14 @@ public class RegistrationTest extends AbstractTest{
         String password = generatedUserData.getPassword();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageStepThree(generatedUserData);
-        registrationPage.fillPasswordAndRefocus("");
-        results.add(ValidationUtils.validationStatusIs(xpath, ValidationUtils.STATUS_NONE, ""));
-        String tooltip = "Please reytpe your password.";
-        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
-        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
-        registrationPage.fillPasswordAndRefocus(password);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, password, ValidationUtils.STATUS_PASSED);
+        registrationPage.fillPassword(password);
+        registrationPage.fillPasswordVerificationAndRefocus("");
+        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_FAILED, "empty"));
+        String tooltip = "Please retype your password.";
+        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_FAILED, "empty"));
+        results.add(ValidationUtils.tooltipTextIs(id, tooltip, "empty"));
+        registrationPage.fillPasswordVerificationAndRefocus(password);
+        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, password, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
         for(String result:results){
             if(!result.equals(ValidationUtils.PASSED)){
                 message += "<div>" + result + "</div>";
@@ -808,7 +809,7 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.registrationPageStepThree(generatedUserData);
         registrationPage.fillPassword(generatedUserData.getPassword());
         String validPass = passwordValidationRule.generateValidString();
-        registrationPage.fillPasswordAndRefocus(validPass);
+        registrationPage.fillPasswordVerificationAndRefocus(validPass);
         String errorMessageText=ValidationUtils.getTooltipText(RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME);
         boolean emailUsedMessageDisplayed=errorMessageText.equals(message);
         TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+errorMessageText+"', for value '"+validPass+"'");

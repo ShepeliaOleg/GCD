@@ -179,7 +179,7 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     private static ArrayList<String> validateToolTips(ArrayList<String> results, String tooltip, String tooltipID, String value, String tooltipStatus ){
-        if(tooltip.equals(NO_TOOLTIP)){
+        if(tooltip.equals(NO_TOOLTIP)||tooltip.equals(STATUS_NONE)){
             results.add(tooltipStatusIs(tooltipID, STATUS_NONE, value));
         }else {
             results.add(tooltipStatusIs(tooltipID, tooltipStatus, value));

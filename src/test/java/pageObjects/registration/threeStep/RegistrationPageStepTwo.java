@@ -43,7 +43,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     private static void fillMobile(String text){
-        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_NAME), text);
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_NAME_FOR_XP), text);
     }
 
     public static void fillPhoneAreaCode(String phoneAreaCode){

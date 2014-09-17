@@ -202,7 +202,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME), confirmPassword);
     }
 
-    public static void fillPasswordAndRefocus(String confirmPassword){
+    public static void fillPasswordVerificationAndRefocus(String confirmPassword){
         ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME), confirmPassword);
     }
 
