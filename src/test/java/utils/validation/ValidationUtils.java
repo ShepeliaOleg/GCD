@@ -36,10 +36,14 @@ public class ValidationUtils extends WebDriverObject{
 
     private static ArrayList<String> validateEmpty(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         inputFieldAndRefocus(xpath);
+        String passedStatus = STATUS_PASSED;
+        if(platform.equals(PLATFORM_MOBILE)){
+            passedStatus = STATUS_NONE;
+        }
         if(rule.getIsMandatory().equals("true")){
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
         }else {
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "empty", STATUS_PASSED, STATUS_PASSED);
+            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "empty", passedStatus, STATUS_PASSED);
         }
         return results;
     }
