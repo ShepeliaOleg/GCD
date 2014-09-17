@@ -137,13 +137,9 @@ public class ValidationUtils extends WebDriverObject{
             inputDateOfBirthAndRefocus(xpath);
             results = validateStatusAndToolTips(results, NO_TOOLTIP, tooltipID, "Valid Date Of Birth", STATUS_PASSED, STATUS_NONE);
         }else{
-            String status = STATUS_PASSED;
-            if(platform.equals(PLATFORM_MOBILE)){
-                status = STATUS_NONE;
-            }
             for(String value:rule.getDropdownValues()){
                 inputDropdownAndRefocus(xpath, value);
-                results = validateStatusAndToolTips(results, NO_TOOLTIP, tooltipID, value, status, STATUS_NONE);
+                results = validateStatusAndToolTips(results, NO_TOOLTIP, tooltipID, value, STATUS_PASSED, STATUS_NONE);
             }
         }
         return results;

@@ -23,7 +23,8 @@ public class RegistrationPage extends AbstractPage{
     protected final static String BONUS_CODE_VALID = 			                        "TEST";
     protected final static String BONUS_CODE_INVALID = 		                            "HELL";
 
-    protected final static String DROPDOWN_GENDER_NAME=		                            "sex";
+    protected final static String DROPDOWN_GENDER_NAME=		                            "gender";
+    protected final static String DROPDOWN_GENDER_NAME_FOR_XPATH=		                "sex";
     protected final static String FIELD_FIRSTNAME_NAME =				 				"firstname";
     protected final static String FIELD_LASTNAME_NAME = 								"lastname";
     protected final static String DROPDOWN_BIRTHDAY_NAME=								"birthDay";
@@ -130,7 +131,7 @@ public class RegistrationPage extends AbstractPage{
     /*Inputs*/
 
     protected static void fillGender(String title){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME), title);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME_FOR_XPATH), title);
     }
 
     protected static void fillFirstName(String firstName){
@@ -307,7 +308,7 @@ public class RegistrationPage extends AbstractPage{
     /* Fields validation */
 
     public void validateGender(ValidationRule rule) {
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_GENDER_NAME), rule, DROPDOWN_GENDER_NAME);
+        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_GENDER_NAME_FOR_XPATH), rule, DROPDOWN_GENDER_NAME);
     }
 
     public void validateFirstname(ValidationRule rule) {
