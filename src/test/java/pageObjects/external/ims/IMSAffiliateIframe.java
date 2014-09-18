@@ -3,16 +3,17 @@ package pageObjects.external.ims;
 import pageObjects.core.AbstractIframe;
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 5/21/14.
- */
-
 public class IMSAffiliateIframe extends AbstractIframe {
 
-    private static final String LABEL_BANNER = "//table[@class='result']//tr[2]//td[5]";
+    private static final String LABEL_PROFILE = "//table[@class='result']//tr[2]//td[4]//a";
+    private static final String LABEL_BANNER =  "//table[@class='result']//tr[2]//td[5]";
 
     public IMSAffiliateIframe(String iframeId){
         super(iframeId);
+    }
+
+    public String getLabelProfile(){
+        return WebDriverUtils.getElementText(LABEL_PROFILE);
     }
 
     public String getLabelBanner(){

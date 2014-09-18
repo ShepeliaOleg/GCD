@@ -153,11 +153,15 @@ public class IMS extends WebDriverObject{
 		return allValuesAreCorrect;
 	}
 
-    public void validateAffiliate(String username, String advert, String banner, String profile, String url, String customTitle, String customValue){
-        navigateToPlayedDetails(username).checkAffiliateData(advert, profile, customTitle, customValue, banner, url);
+    public void validateAffiliate(String username, AffiliateData affiliateData){
+        validateAffiliate(username, affiliateData.getAdvertiser(), affiliateData.getProfile(), affiliateData.getBanner(), affiliateData.getUrl(), affiliateData.getCreferer());
     }
 
-    public void validateAffiliate(String username, String advert){
+    private void validateAffiliate(String username, String advert, String profile, String banner, String url, String creferer){
+        navigateToPlayedDetails(username).checkAffiliateData(advert, profile, banner, url, creferer);
+    }
+
+    private void validateAffiliate(String username, String advert){
         navigateToPlayedDetails(username).checkAffiliateData(advert);
     }
 

@@ -12,6 +12,7 @@ import pageObjects.header.NavigationPanel;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LoginPopup;
 import pageObjects.login.LogoutPopup;
+import pageObjects.menu.Menu;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
@@ -110,6 +111,22 @@ public class AbstractPage extends AbstractPageObject{
         return loggedOutHeader().login(userData, rememberMeEnable, page);
     }
 
+    public Collection<String> getLanguageCodesList() {
+        if (platform.equals(PLATFORM_DESKTOP)) {
+            return header().getLanguageCodes();
+        } else {
+            return openMenu().getLanguageCodes();
+        }
+    }
+
+    public void setLanguage(String languageCode) {
+        if (platform.equals(PLATFORM_DESKTOP)) {
+            header().setLanguage(languageCode);
+        } else {
+            openMenu().setLanguage(languageCode);
+        }
+    }
+
     //Mobile only
     public ChangePasswordPopup navigateToChangePassword(){
         return loggedInHeader().openMenu().loggedInMenu().navigateToChangePassword();
@@ -119,6 +136,9 @@ public class AbstractPage extends AbstractPageObject{
         return header().openMenu().loggedInMenu().navigateToReferAFriend();
     }
 
+    public Menu openMenu() {
+        return header().openMenu();
+    }
 
     //Desktop only
 //	public GamesPortletPage navigateToCasino(){
@@ -157,9 +177,6 @@ public class AbstractPage extends AbstractPageObject{
 		return loggedOutHeader().getUsernameText();
 	}
 
-    public Collection<String> getLanguageCodesList() {
-        return header().getLanguageCodesList();
-    }
 }
 
 

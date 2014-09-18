@@ -34,4 +34,12 @@
         <constructor-arg value="@mailinator.com"/>
     </bean>
 
+    <bean id="affiliate" class="springConstructors.AffiliateData">
+        <constructor-arg value="defaultic"/>
+        <constructor-arg value="v2"/>
+        <constructor-arg value="v3"/>
+        <constructor-arg value="v4"/>
+        <constructor-arg value="Ctag:12333"/>
+        <constructor-arg value="Ctag:111%3btrackingid5:222"/> <!--%3b-->
+    </bean>
 </beans>

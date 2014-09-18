@@ -1,7 +1,6 @@
 package pageObjects.core;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pageObjects.header.Header;
 import utils.WebDriverUtils;
 
 public abstract class AbstractPopup extends AbstractPageObject{

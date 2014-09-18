@@ -119,7 +119,11 @@ public class UserData{
         }
 	}
 
-	public void setUsername(String username){
+    public String getUsernameUppercase() {
+        return getUsername().toUpperCase();
+    }
+
+    public void setUsername(String username){
 		this.username=username;
 	}
 
