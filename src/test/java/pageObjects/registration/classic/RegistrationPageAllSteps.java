@@ -40,8 +40,8 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     //optional
     protected final static String BUTTON_FILL_FIELDS_XP= 								"//*[@id='fillFields']";
     protected final static String DROPDOWN_NATIONALITY_XP=							    "//select[@id='nationality']";
-    public final static String FIELD_EMAIL_VERIFICATION_XP=                              "//*[@name='"+FIELD_EMAIL_VERIFICATION_NAME+"']";
-
+    public final static String FIELD_EMAIL_VERIFICATION_XP=                             "//*[@name='"+FIELD_EMAIL_VERIFICATION_NAME+"']";
+    public final static String LOADING_ANIMATION_XP=                                    "//*[@class='registration-overlay']";
 
     public RegistrationPageAllSteps(){
         super(new String[]{FIELD_PHONE_XP});

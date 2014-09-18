@@ -32,6 +32,7 @@ import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
+import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
@@ -40,6 +41,7 @@ public class NavigationUtils extends WebDriverObject{
 
     private static final int POPUP_CHECK_RETRIES = 30;
     private static final int POPUP_WAIT_TIMEOUT = 10;
+    private static String LOADING_ANIMATION;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
         return navigateToPage(PlayerCondition.any, configuredPages, null);
@@ -130,7 +132,7 @@ public class NavigationUtils extends WebDriverObject{
 	public static AbstractPageObject closeAllPopups(Page exceptPage){
 		AbstractPageObject result = null;
 		int retries = 0;
-		while((WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) || WebDriverUtils.isVisible("//*[contains(@class, 'progress')]", 1))&& result==null){
+		while((registrationNotFinished())&& result==null){
             WebDriverUtils.waitFor(1000);
             result = checkPopups(exceptPage);
 			retries++;
@@ -154,9 +156,19 @@ public class NavigationUtils extends WebDriverObject{
 		return result;
 	}
 
+    private static boolean registrationNotFinished(){
+        if(platform.equals(PLATFORM_MOBILE)){
+            LOADING_ANIMATION = RegistrationPageStepThree.LOADING_ANIMATION_XP;
+        }else {
+            LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
+        }
+        return WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3) ||
+                WebDriverUtils.isVisible(LOADING_ANIMATION, 1);
+    }
+
 	private static AbstractPageObject checkPopups(Page exceptPage){
-		if(WebDriverUtils.isVisible(LoaderPopup.ANIMATION_XP, 0)){
-			WebDriverUtils.waitForElementToDisappear(LoaderPopup.ANIMATION_XP, 30);
+		if(WebDriverUtils.isVisible(LOADING_ANIMATION, 0)){
+			WebDriverUtils.waitForElementToDisappear(LOADING_ANIMATION, 30);
 			return null;
         }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.AFTER_REG_ROOT_XP, 0)){
             return processAfterRegistrationPopup(exceptPage);
