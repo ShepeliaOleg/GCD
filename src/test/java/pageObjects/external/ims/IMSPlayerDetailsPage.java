@@ -5,7 +5,9 @@ import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * User: sergiich
@@ -107,21 +109,27 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		return data;
 	}
 
-    public void checkAffiliateData(String advertiser, String profile, String bTag, String bTagRes, String banner, String url){
+    public void checkAffiliateData(String advertiser, String profile, String banner, String url, String creferer){
         checkAdvertiser(advertiser+" ("+profile+")");
-        checkBTAG(bTag, bTagRes);
-        checkBanner(advertiser, banner);
+        checkUrl(url);
+        checkCreferer(creferer);
+        checkBanner(advertiser, profile, banner);
     }
 
     public void checkAffiliateData(String advertiser){
-        checkAdvertiser(advertiser+" (-)");
+        checkAdvertiser(advertiser + " (-)");
     }
 
-    private void checkBanner(String advertiser, String banner){
+    private void checkBanner(String advertiser, String profile, String banner){
         WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
-        String imsBanner = new IMSAffiliatePage().navigateToAffiliateIframe().getLabelBanner();
+        IMSAffiliateIframe imsAffiliateIframe = new IMSAffiliatePage().navigateToAffiliateIframe();
+        String imsProfile = imsAffiliateIframe.getLabelProfile();
+        String imsBanner =  imsAffiliateIframe.getLabelBanner();
         if(!imsBanner.equals(banner)){
             WebDriverUtils.runtimeExceptionWithUrl("Banner parameter was not correct - <div>Expected: " + banner + "</div><div>Actual: " + imsBanner + "</div>");
+        }
+        if(!imsProfile.equals(profile)){
+            WebDriverUtils.runtimeExceptionWithUrl("Profile parameter was not correct - <div>Expected: " + profile + "</div><div>Actual: " + imsProfile + "</div>");
         }
     }
 
@@ -135,19 +143,51 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private String getAdvertiser(){
         return getTextAndTrim(LABEL_ADVERTISER);
     }
-
-    private void checkBTAG(String bTag, String bTagRes){
-        String bTagElement = "*[contains(text(), '"+bTag+"')]";
-        if (!WebDriverUtils.isVisible("//"+bTagElement)){
-            WebDriverUtils.click(LINK_CUSTOM_FIELDS);
-            WebDriverUtils.waitForElement("//"+bTagElement);
+    private void checkUrl(String url) {
+        String xpath = "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
+        if (WebDriverUtils.isElementVisible(xpath, 1)) {
+            String imsUrl = WebDriverUtils.getAttribute(xpath, "href");
+            if(!("javascript:displ('" + url + "');").equals(imsUrl)){
+                WebDriverUtils.runtimeExceptionWithUrl("Referrer URL is wrong. <div>Expected: " + url + "Actual: " + imsUrl + "</div>");
+            }
+        } else {
+            WebDriverUtils.runtimeExceptionWithUrl("Referrer URL is not passed to IMS. Element not found by xpath: " + xpath);
         }
-        if(!WebDriverUtils.isVisible("//*[preceding-sibling::"+bTagElement+" and contains(text(), '"+bTagRes+"')]")){
+    }
+
+    private void checkCreferer(String name, String value){
+        String nameXpath = "*[contains(text(), '"+name+"')]";
+        if (!WebDriverUtils.isVisible("//"+ nameXpath, 0)){
+            WebDriverUtils.click(LINK_CUSTOM_FIELDS);
+            WebDriverUtils.waitForElement("//"+ nameXpath);
+        }
+        if(!WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]")){
             WebDriverUtils.runtimeExceptionWithUrl("Parameters in custom fields were not found");
         }
     }
 
+    private void checkCreferer(String crefererFull) {
+        List<String> crefererList = new ArrayList<>();
 
+        if (crefererFull.contains("%3b")) {
+            crefererList = Arrays.asList(crefererFull.split("%3b"));
+        } else {
+            crefererList.add(crefererFull);
+        }
+
+        for (String creferer : crefererList) {
+            List<String> itemList = parseCreferer(creferer);
+            checkCreferer(itemList.get(0), itemList.get(1));
+        }
+
+    }
+
+    private List<String> parseCreferer(String creferer) {
+        if (!creferer.contains(":")) {
+            WebDriverUtils.runtimeExceptionWithUrl("Creferer should be properly defined as 'name:value' pair. Actual creferer value is '" + creferer + "'");
+        }
+        return Arrays.asList(creferer.split(":"));
+    }
 	private String getUsername(){
 		return getTextAndTrim(LABEL_USERNAME);
 	}

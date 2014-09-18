@@ -8,6 +8,7 @@ import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Header extends AbstractPageObject{
 	protected static final String ROOT_XP=	"//*[@class='main-header']";
@@ -39,18 +40,13 @@ public class Header extends AbstractPageObject{
         return new Menu();
     }
 
-    private Collection<String> getLanguageCodes() {
-        return WebDriverUtils.getListOfAttributeValues(DROPDOWN_LANGUAGE_XP, "data-lang");
+    public Collection<String> getLanguageCodes() {
+        List<String> languages = WebDriverUtils.getListOfAttributeValues(DROPDOWN_LANGUAGE_XP, "data-lang");
+        languages.add(WebDriverUtils.getAttribute(DROPDOWN_LANGUAGE_XP + "//span", "class").replace("icon-flag ", ""));
+        return languages;
     }
 
-    public Collection<String> getLanguageCodesList() {
-        if (platform.equals(PLATFORM_DESKTOP)) {
-            return getLanguageCodes();
-        } else {
-            Menu menu = openMenu();
-            menu.showLanguageItems();
-            return menu.getLanguageCodes();
-        }
-
+    public void setLanguage(String language) {
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_LANGUAGE_XP, language);
     }
 }

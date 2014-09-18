@@ -9,14 +9,12 @@ import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
-import springConstructors.Defaults;
-import springConstructors.IMS;
-import springConstructors.UserData;
-import springConstructors.ValidationRule;
+import springConstructors.*;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
 import utils.core.WebDriverObject;
 import utils.validation.ValidationUtils;
@@ -119,6 +117,10 @@ public class RegistrationTest extends AbstractTest{
 	@Autowired
 	@Qualifier("defaults")
 	private Defaults defaults;
+
+    @Autowired
+    @Qualifier("affiliate")
+    private AffiliateData affiliateData;
 	
 	/*POSITIVE*/
 	
@@ -449,50 +451,45 @@ public class RegistrationTest extends AbstractTest{
 //        }
 //	}
 //
-    @Test(groups = {"registration","regression", "affiliate"})
-	public void affiliateSupportCookieAll(){
-        String advertiser="advert1";
-        String banner="v2";
-        String profile="v3";
-        String url="v4";
-        String customTitle="BTAG";
-        String customValue="12333";
-        UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.clearCookies();
-        WebDriverUtils.addCookie("banner_domainclick", advertiser+","+banner+","+profile+","+url+","+customTitle+":"+customValue, WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
-        WebDriverUtils.refreshPage();
-        //registrationPage = new RegistrationPage();
-        registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
-	}
+@Test(groups = {"registration","regression", "affiliate"})
+public void affiliateSupportCookieAll(){
+    UserData userData = defaultUserData.getRandomUserData();
+    AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+    RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+    AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
 
-    @Test(groups = {"registration","regression", "affiliate"})
-    public void affiliateSupportCookieFirst(){
-        String advertiser="advert1";
-        UserData userData = defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.clearCookies();
-        WebDriverUtils.addCookie("banner_domainclick", advertiser+",,,,", WebDriverObject.getBaseUrl().replace("http:", "").replace("/", ""),"/", new Date(115,1,1));
-        WebDriverUtils.refreshPage();
-        registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser);
+    if (affiliateCookie.isPresent()) {
+        affiliateCookie.delete();
     }
+
+    affiliateCookie.add();
+    WebDriverUtils.refreshPage();
+    registrationPage.registerUser(userData);
+    iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+}
+
+//    @Test(groups = {"registration","regression", "affiliate"})
+//    public void affiliateSupportCookieFirst(){
+//        String advertiser="advert1";
+//        UserData userData = defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        WebDriverUtils.clearCookies();
+//        AffiliateCookie affiliateCookie = new AffiliateCookie("12333");
+//        affiliateCookie.add();
+//        WebDriverUtils.refreshPage();
+//        registrationPage.registerUser(userData);
+//        iMS.validateAffiliate(userData.getUsername(), advertiser);
+//    }
 
     @Test(groups = {"registration","regression", "affiliate"})
     public void affiliateSupportURL(){
-        String advertiser="advert1";
-        String banner="v2";
-        String profile="v3";
-        String url="v4";
-        String customTitle="BTAG";
-        String customValue="12333";
         UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         WebDriverUtils.clearCookies();
-        WebDriverUtils.navigateToInternalURL("register?advertiser="+advertiser+"&profileid="+profile+"&bannerid="+banner+"&refererurl="+url+"&creferer="+customTitle+":"+customValue);
+        WebDriverUtils.navigateToInternalURL(affiliateDataSingle.getRelativeURL());
         registrationPage.registerUser(userData);
-        iMS.validateAffiliate(userData.getUsername(), advertiser, banner, profile, url, customTitle, customValue);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
     /*#??. Suggestion does not appear on entering new username*/

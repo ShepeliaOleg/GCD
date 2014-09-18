@@ -394,17 +394,35 @@ public class WebDriverUtils extends WebDriverObject{
         return result;
     }
 
-	//Navigation
+    //Cookie
+
+    public static String getCookieValue(String name) {
+        return webDriver.manage().getCookieNamed(name).getValue();
+    }
 
     public static void clearCookies(){
         webDriver.manage().deleteAllCookies();
     }
+
 
     public static void addCookie(String name, String value, String domain, String path, Date expiry){
         Cookie cookie = new Cookie(name, value, domain, path, expiry);
         webDriver.manage().addCookie(cookie);
     }
 
+    public static Cookie getCookie(String cookieName) {
+        return webDriver.manage().getCookieNamed(cookieName);
+    }
+
+    public static boolean isCookieExists(String cookieName) {
+        return getCookie(cookieName) != null;
+    }
+
+    public static void deleteCookie(String cookieName) {
+        webDriver.manage().deleteCookieNamed(cookieName);
+    }
+
+	//Navigation
 
 	public static String getCurrentUrl(){
 		return webDriver.getCurrentUrl();
@@ -517,4 +535,10 @@ public class WebDriverUtils extends WebDriverObject{
         return selendroidDriver.getOrientation();
     }
 
+    public static String getDomain() {
+        String baseUrl = WebDriverObject.getBaseUrl();
+        int firstDotIndex = baseUrl.indexOf(".");
+
+        return baseUrl.substring(firstDotIndex).replace("/", "").replace(":8080", "");
+    }
 }
