@@ -28,7 +28,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     protected final static String LABEL_CITY_XP=										"//label[@for='city']";
     protected final static String LABEL_STATE_XP=										"//label[@for='state']";
     protected final static String LABEL_POSTCODE_XP=									"//label[@for='zip']";
-    protected final static String LABEL_COUNTRY_XP=									    "//span[following-sibling::div/*[@name='"+DROPDOWN_COUNTRY_NAME+"']]";
+    protected final static String LABEL_COUNTRY_XP=									    "//span[following-sibling::div/*[@name='"+ DROPDOWN_COUNTRY_VALIDATION_NAME +"']]";
     protected final static String LABEL_PHONE_XP=										"//span[following-sibling::div/span/*[@id='phoneNumber']]";
     protected final static String LABEL_USERNAME_XP=									ROOT_XP + "//label[@for='" + FIELD_USERNAME_NAME + "']";
     protected final static String LABEL_PASSWORD_XP=									ROOT_XP + "//label[@for='" + FIELD_PASSWORD_NAME + "']";

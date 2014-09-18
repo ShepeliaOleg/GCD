@@ -23,11 +23,12 @@ public class RegistrationPage extends AbstractPage{
     protected final static String BONUS_CODE_VALID = 			                        "TEST";
     protected final static String BONUS_CODE_INVALID = 		                            "HELL";
 
-    protected final static String DROPDOWN_GENDER_NAME=		                            "gender";
-    protected final static String DROPDOWN_GENDER_NAME_FOR_XPATH=		                "sex";
+    protected final static String DROPDOWN_GENDER_VALIDATION_NAME =		                "gender";
+    protected final static String DROPDOWN_GENDER_NAME =		                        "sex";
     protected final static String FIELD_FIRSTNAME_NAME =				 				"firstname";
     protected final static String FIELD_LASTNAME_NAME = 								"lastname";
-    protected final static String DROPDOWN_BIRTHDAY_NAME=								"birthDay";
+    protected final static String DROPDOWN_BIRTHDATE_VALIDATION_NAME =					"birthdate";
+    protected final static String DROPDOWN_BIRTHDAY_NAME =						        "birthDay";
     protected final static String DROPDOWN_BIRTHMONTH_NAME=								"birthMonth";
     protected final static String DROPDOWN_BIRTHYEAR_NAME=								"birthYear";
     protected final static String FIELD_EMAIL_NAME = 									"email";
@@ -38,8 +39,8 @@ public class RegistrationPage extends AbstractPage{
     protected final static String FIELD_CITY_NAME = 									"city";
     protected final static String FIELD_STATE_NAME = 									"state";
     protected final static String FIELD_POSTCODE_NAME = 								"zip";
-    protected final static String DROPDOWN_COUNTRY_NAME = 								"country";
-    protected final static String DROPDOWN_COUNTRY_NAME_FOR_XPATH = 					"countrycode";
+    protected final static String DROPDOWN_COUNTRY_VALIDATION_NAME = 					"country";
+    protected final static String DROPDOWN_COUNTRY_NAME = 					            "countrycode";
     public final static String FIELD_USERNAME_NAME = 								    "userName";
     protected final static String FIELD_PASSWORD_NAME = 								"password";
     public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
@@ -52,7 +53,7 @@ public class RegistrationPage extends AbstractPage{
     protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
     protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-title='Terms & Conditions']";
 
-    public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+DROPDOWN_BIRTHDAY_NAME+"']";
+    public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+ DROPDOWN_BIRTHDAY_NAME +"']";
     public final static String DROPDOWN_BIRTHMONTH_XP=								    "//*[@name='"+DROPDOWN_BIRTHMONTH_NAME+"']";
     public final static String DROPDOWN_BIRTHYEAR_XP=								    "//*[@name='"+DROPDOWN_BIRTHYEAR_NAME+"']";
     public final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
@@ -132,7 +133,7 @@ public class RegistrationPage extends AbstractPage{
     /*Inputs*/
 
     protected static void fillGender(String title){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME_FOR_XPATH), title);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME), title);
     }
 
     protected static void fillFirstName(String firstName){
@@ -188,7 +189,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public static void fillCountry(String countryCode){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH), countryCode);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_COUNTRY_NAME), countryCode);
     }
 
     public static void fillUsername(String username){
@@ -239,7 +240,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public String getSelectedCountryName(){
-        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH)).getText().trim();
+        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_COUNTRY_NAME)).getText().trim();
     }
 
     public String getSelectedCurrency(){
@@ -261,7 +262,7 @@ public class RegistrationPage extends AbstractPage{
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepTwo(userData);
         }
-        return WebDriverUtils.getDropdownOptionsValue(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH));
+        return WebDriverUtils.getDropdownOptionsValue(getXpathByName(DROPDOWN_COUNTRY_NAME));
     }
 
     public Collection<String> getCurrencyList(UserData userData) {
@@ -309,7 +310,7 @@ public class RegistrationPage extends AbstractPage{
     /* Fields validation */
 
     public void validateGender(ValidationRule rule) {
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_GENDER_NAME_FOR_XPATH), rule, DROPDOWN_GENDER_NAME);
+        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_GENDER_NAME), rule, DROPDOWN_GENDER_VALIDATION_NAME);
     }
 
     public void validateFirstname(ValidationRule rule) {
@@ -321,7 +322,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateDateOfBirth(ValidationRule rule) {
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_BIRTHDAY_NAME), rule, DROPDOWN_BIRTHDAY_NAME);
+        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), rule, DROPDOWN_BIRTHDATE_VALIDATION_NAME);
     }
 
     public void validateEmail(ValidationRule rule) {
@@ -332,7 +333,7 @@ public class RegistrationPage extends AbstractPage{
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepTwo(userData);
         }
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH), rule, DROPDOWN_COUNTRY_NAME);
+        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_COUNTRY_NAME), rule, DROPDOWN_COUNTRY_VALIDATION_NAME);
     }
 
     public void validateCity(ValidationRule rule, UserData userData) {

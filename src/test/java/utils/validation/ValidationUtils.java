@@ -295,8 +295,8 @@ public class ValidationUtils extends WebDriverObject{
 
     private static void refocusDropdown(String xpath){
         WebDriverUtils.pressKey(Keys.TAB);
+        WebDriverUtils.pressKey(Keys.TAB);
         if(platform.equals(PLATFORM_DESKTOP)){
-            WebDriverUtils.pressKey(Keys.TAB);
             clickField(xpath);
         }
         WebDriverUtils.waitFor(500);

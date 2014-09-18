@@ -15,7 +15,7 @@ public class RegistrationPageStepOne extends RegistrationPage {
 
     private final static String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][1]";
     private final static String DROPDOWN_TITLE_NAME =                               "title";
-    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					"emailVerify";
+    public final static String FIELD_EMAIL_VERIFICATION_NAME = 					    "emailVerify";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";
     protected final static String LINK_ADULT_CONTENT_XP=							"//*[@data-article-id='18PLUS']";
 

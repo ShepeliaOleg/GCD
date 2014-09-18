@@ -11,9 +11,9 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     private static final String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][2]";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";
     private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
-    private final static String FIELD_PHONE_MOBILE_NAME  = 					        "phone";
+    private final static String FIELD_PHONE_MOBILE_VALIDATION_NAME = 				"phone";
+    private final static String FIELD_PHONE_MOBILE_NAME = 					        "cellphone";
     private final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 					"area";
-    private final static String FIELD_PHONE_MOBILE_NAME_FOR_XP  = 					"cellphone";
 
 
 
@@ -43,7 +43,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     private static void fillMobile(String text){
-        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_NAME_FOR_XP), text);
+        WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_NAME), text);
     }
 
     public static void fillPhoneAreaCode(String phoneAreaCode){
@@ -55,6 +55,6 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     public void validatePhoneField(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_PHONE_MOBILE_NAME_FOR_XP), rule, FIELD_PHONE_MOBILE_NAME);
+        ValidationUtils.validateField(getXpathByName(FIELD_PHONE_MOBILE_NAME), rule, FIELD_PHONE_MOBILE_VALIDATION_NAME);
     }
 }
