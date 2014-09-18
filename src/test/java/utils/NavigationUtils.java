@@ -96,6 +96,7 @@ public class NavigationUtils extends WebDriverObject{
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
             case registerNoClientType:
+            case registerClientType:
             case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:
@@ -159,8 +160,8 @@ public class NavigationUtils extends WebDriverObject{
     private static boolean registrationNotFinished(){
         LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
         return WebDriverUtils.isVisible(RegistrationPageStepThree.LOADING_ANIMATION_XP, 1)||
-                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3) ||
-                WebDriverUtils.isVisible(LOADING_ANIMATION, 1);
+                WebDriverUtils.isVisible(LOADING_ANIMATION, 1)||
+                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3);
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){

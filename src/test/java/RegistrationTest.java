@@ -307,9 +307,9 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void registrationWithClientType(){
         UserData userData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientType);
         registrationPage.registerUser(userData);
-        String expectedClientType = "casino";
+        String expectedClientType = "test";
         String clientType = iMS.getClientType(userData);
         TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
     }

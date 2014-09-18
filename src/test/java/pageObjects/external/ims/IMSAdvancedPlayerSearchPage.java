@@ -47,7 +47,7 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 	}
 
 	public IMSPlayerDetailsPage search(String username){
-		String userLink = "//a[contains(text(), '"+username+"')]";
+		String userLink = "//a[contains(text(), '"+username.toUpperCase()+"')]";
 		if(!WebDriverUtils.isVisible(userLink, 0)){
 			resetDate();
 			clickBoth();
