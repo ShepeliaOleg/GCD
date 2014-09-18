@@ -162,7 +162,7 @@ public class IMS extends WebDriverObject{
     }
 
 	public IMSPlayerDetailsPage navigateToPlayedDetails(String username){
-		return navigateToIMS().clickPlayerManagement().clickPlayerSearch().search(username);
+		return navigateToIMS().clickPlayerManagement().clickAdvancedPlayerSearch().search(username);
 	}
 
 	public IMSTemplateToolsPage navigateToTemplateTools(){
@@ -240,5 +240,9 @@ public class IMS extends WebDriverObject{
     public void unFreezeWelcomeMessages(){
         navigateToTemplateTools().clickLoginDatabase().navigateToWelcomeMessage().setFreezeStateAndUpdate(false);
 
+    }
+
+    public String getClientType(UserData userData){
+        return navigateToPlayedDetails(userData.getUsername()).getClientType();
     }
 }

@@ -58,6 +58,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String FIELD_MOBILE=								"//*[@id='cellphone']";
 	private static final String FIELD_VERIFICATION_QUESTION=				"//*[@id='verificationquestion']";
 	private static final String FIELD_VERIFICATION_ANSWER=					"//*[@id='verificationanswer']";
+    private static final String FIELD_CLIENT_TYPE=                          "//*[preceding-sibling::*[contains(text(), 'Sign up client type:')]][1]";
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
@@ -358,4 +359,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private String getDropdownValue(String xpath){
 		return WebDriverUtils.getDropdownSelectedOptionText(xpath);
 	}
+
+    public String getClientType() {
+        return WebDriverUtils.getElementText(FIELD_CLIENT_TYPE);
+    }
 }

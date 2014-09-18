@@ -303,6 +303,29 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
 	}
 
+    /*Client type empty*/
+    @Test(groups = {"registration","regression"})
+    public void registrationWithClientType(){
+        UserData userData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.registerUser(userData);
+        String expectedClientType = "casino";
+        String clientType = iMS.getClientType(userData);
+        TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
+    }
+
+    /*Client type empty*/
+    @Test(groups = {"registration","regression"})
+    public void registrationWithoutClientType(){
+        UserData userData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerNoClientType);
+        registrationPage.registerUser(userData);
+        String expectedClientType = "";
+        String clientType = iMS.getClientType(userData);
+        TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
+
+    }
+
     /*#19. All required fields are marked with asterisks*/
 	@Test(groups = {"registration","regression", "desktop"})
 	public void requiredFieldsLabelsMarkedWithStar(){

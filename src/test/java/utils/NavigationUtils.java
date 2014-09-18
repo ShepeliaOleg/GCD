@@ -95,6 +95,7 @@ public class NavigationUtils extends WebDriverObject{
             case inbox:                                         return new InboxPage();
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
+            case registerNoClientType:
             case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:
@@ -133,7 +134,6 @@ public class NavigationUtils extends WebDriverObject{
 		AbstractPageObject result = null;
 		int retries = 0;
 		while((registrationNotFinished())&& result==null){
-            WebDriverUtils.waitFor(1000);
             result = checkPopups(exceptPage);
 			retries++;
 			if(retries==POPUP_CHECK_RETRIES){
@@ -157,12 +157,9 @@ public class NavigationUtils extends WebDriverObject{
 	}
 
     private static boolean registrationNotFinished(){
-        if(platform.equals(PLATFORM_MOBILE)){
-            LOADING_ANIMATION = RegistrationPageStepThree.LOADING_ANIMATION_XP;
-        }else {
-            LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
-        }
-        return WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3) ||
+        LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
+        return WebDriverUtils.isVisible(RegistrationPageStepThree.LOADING_ANIMATION_XP, 1)||
+                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3) ||
                 WebDriverUtils.isVisible(LOADING_ANIMATION, 1);
     }
 
