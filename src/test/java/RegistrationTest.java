@@ -815,11 +815,11 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+errorMessageText+"', for value '"+validPass+"'");
     }
 
-    @Test(groups = {"registration","regression"})
-    public void questionFieldValidation() {
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.validateQuestion(questionValidationRule,defaultUserData.getRandomUserData());
-    }
+//    @Test(groups = {"registration","regression"})
+//    public void questionFieldValidation() {
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        registrationPage.validateQuestion(questionValidationRule,defaultUserData.getRandomUserData());
+//    }
 
     @Test(groups = {"registration","regression"})
     public void answerFieldValidation() {

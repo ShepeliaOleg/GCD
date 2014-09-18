@@ -65,7 +65,7 @@
     </bean>
 
     <bean id="stateValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-,]{1,20}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-,]{1,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-,]{0,9}"/>
         <property name="isMandatory" value="false"/>
         <property name="minLength" value="0"/>
         <property name="maxLength" value="20"/>

@@ -36,10 +36,14 @@ public class ValidationUtils extends WebDriverObject{
 
     private static ArrayList<String> validateEmpty(String xpath, ValidationRule rule, ArrayList<String> results, String tooltipID) {
         inputFieldAndRefocus(xpath);
+        String status = STATUS_PASSED;
+        if(platform.equals(PLATFORM_MOBILE)){
+            status = STATUS_NONE;
+        }
         if(rule.getIsMandatory().equals("true")){
             results = validateStatusAndToolTips(results, rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
         }else {
-            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "empty", STATUS_PASSED, STATUS_PASSED);
+            results = validateStatusAndToolTips(results, rule.getTooltipPositive(), tooltipID, "empty", STATUS_PASSED, status);
         }
         return results;
     }
@@ -175,7 +179,7 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     private static ArrayList<String> validateToolTips(ArrayList<String> results, String tooltip, String tooltipID, String value, String tooltipStatus ){
-        if(tooltip.equals(NO_TOOLTIP)||tooltip.equals(STATUS_NONE)){
+        if(tooltip.equals(NO_TOOLTIP)||tooltip.equals(STATUS_NONE)||tooltipStatus.equals(STATUS_NONE)){
             results.add(tooltipStatusIs(tooltipID, STATUS_NONE, value));
         }else {
             results.add(tooltipStatusIs(tooltipID, tooltipStatus, value));
@@ -270,7 +274,7 @@ public class ValidationUtils extends WebDriverObject{
         if(platform.equals(PLATFORM_DESKTOP)){
             clickField(xpath);
         }
-        WebDriverUtils.waitFor(1000);
+        WebDriverUtils.waitFor(500);
     }
 
     private static void clickField(String xpath){
@@ -295,7 +299,7 @@ public class ValidationUtils extends WebDriverObject{
             WebDriverUtils.pressKey(Keys.TAB);
             clickField(xpath);
         }
-        WebDriverUtils.waitFor(1000);
+        WebDriverUtils.waitFor(500);
     }
 
 	public static void validateField(String xpath, ValidationRule rule, String tooltipID) {

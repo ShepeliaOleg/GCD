@@ -38,7 +38,8 @@ public class RegistrationPage extends AbstractPage{
     protected final static String FIELD_CITY_NAME = 									"city";
     protected final static String FIELD_STATE_NAME = 									"state";
     protected final static String FIELD_POSTCODE_NAME = 								"zip";
-    protected final static String DROPDOWN_COUNTRY_NAME = 								"countrycode";
+    protected final static String DROPDOWN_COUNTRY_NAME = 								"country";
+    protected final static String DROPDOWN_COUNTRY_NAME_FOR_XPATH = 					"countrycode";
     public final static String FIELD_USERNAME_NAME = 								    "userName";
     protected final static String FIELD_PASSWORD_NAME = 								"password";
     public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
@@ -187,7 +188,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public static void fillCountry(String countryCode){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_COUNTRY_NAME), countryCode);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH), countryCode);
     }
 
     public static void fillUsername(String username){
@@ -238,7 +239,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public String getSelectedCountryName(){
-        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_COUNTRY_NAME)).getText().trim();
+        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH)).getText().trim();
     }
 
     public String getSelectedCurrency(){
@@ -260,7 +261,7 @@ public class RegistrationPage extends AbstractPage{
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepTwo(userData);
         }
-        return WebDriverUtils.getDropdownOptionsValue(getXpathByName(DROPDOWN_COUNTRY_NAME));
+        return WebDriverUtils.getDropdownOptionsValue(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH));
     }
 
     public Collection<String> getCurrencyList(UserData userData) {
@@ -331,7 +332,7 @@ public class RegistrationPage extends AbstractPage{
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepTwo(userData);
         }
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_COUNTRY_NAME), rule, DROPDOWN_COUNTRY_NAME);
+        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_COUNTRY_NAME_FOR_XPATH), rule, DROPDOWN_COUNTRY_NAME);
     }
 
     public void validateCity(ValidationRule rule, UserData userData) {
