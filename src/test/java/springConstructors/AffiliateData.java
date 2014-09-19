@@ -1,6 +1,7 @@
 package springConstructors;
 
 public class AffiliateData {
+    private String defaultAdvertiser;
     private String advertiser;
     private String profile;
     private String banner;
@@ -9,7 +10,8 @@ public class AffiliateData {
     private String crefererSingle;
     private String crefererMultiple;
 
-    public AffiliateData(String advertiser, String profile, String banner, String url, String crefererSingle, String crefererMultiple) {
+    public AffiliateData(String defaultAdvertiser, String advertiser, String profile, String banner, String url, String crefererSingle, String crefererMultiple) {
+        this.defaultAdvertiser = defaultAdvertiser;
         this.advertiser = advertiser;
         this.profile = profile;
         this.banner = banner;
@@ -24,6 +26,14 @@ public class AffiliateData {
         this.banner = banner;
         this.url = url;
         this.creferer = creferer;
+    }
+
+    public String getDefaultAdvertiser() {
+        return defaultAdvertiser;
+    }
+
+    public void setDefaultAdvertiser(String defaultAdvertiser) {
+        this.defaultAdvertiser = defaultAdvertiser;
     }
 
     public String getAdvertiser() {
@@ -92,5 +102,9 @@ public class AffiliateData {
 
     public AffiliateData getAffiliateDataMultiple() {
         return new AffiliateData(advertiser, profile, banner, url, crefererMultiple);
+    }
+
+    public AffiliateData getAffiliateDataDefaultAdvertiser() {
+        return new AffiliateData(defaultAdvertiser, profile, banner, url, crefererSingle);
     }
 }

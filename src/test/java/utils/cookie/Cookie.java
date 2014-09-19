@@ -19,11 +19,14 @@ public abstract class Cookie {
     }
 
     public void add() {
+        delete();
         WebDriverUtils.addCookie(name, value, domain, path, expiry);
     }
 
     public void delete() {
-        WebDriverUtils.deleteCookie(name);
+        if (isPresent()) {
+            WebDriverUtils.deleteCookie(name);
+        }
     }
 
     public boolean isPresent() {

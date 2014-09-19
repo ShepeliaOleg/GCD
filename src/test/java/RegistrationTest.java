@@ -466,36 +466,110 @@ public class RegistrationTest extends AbstractTest{
 //        }
 //	}
 //
+ /*B-10271*/
+    /*1*/
 @Test(groups = {"registration","regression", "affiliate"})
-public void affiliateSupportCookieAll(){
+public void affiliateCookieSingleCreferrer(){
     UserData userData = defaultUserData.getRandomUserData();
     AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
     RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
     AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
-
-    if (affiliateCookie.isPresent()) {
-        affiliateCookie.delete();
-    }
-
     affiliateCookie.add();
     WebDriverUtils.refreshPage();
     registrationPage.registerUser(userData);
     iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
 }
 
-//    @Test(groups = {"registration","regression", "affiliate"})
-//    public void affiliateSupportCookieFirst(){
-//        String advertiser="advert1";
-//        UserData userData = defaultUserData.getRandomUserData();
-//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-//        WebDriverUtils.clearCookies();
-//        AffiliateCookie affiliateCookie = new AffiliateCookie("12333");
-//        affiliateCookie.add();
-//        WebDriverUtils.refreshPage();
-//        registrationPage.registerUser(userData);
-//        iMS.validateAffiliate(userData.getUsername(), advertiser);
-//    }
+    /*2*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieAdvertisingNotExists(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        affiliateDataSingle.setAdvertiser("notExists");
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
 
+    /*3*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieMultipleCreferrer(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataMultiple = affiliateData.getAffiliateDataMultiple();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataMultiple);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataMultiple);
+    }
+
+    /*4*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieNoReferrerUrl(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        affiliateDataSingle.setUrl("");
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+    /*5*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieBannerIsRegexp(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        affiliateDataSingle.setBanner("*");
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+    /*6*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieSingleNoBannerNoProfileNoCreferrer(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        affiliateDataSingle.setBanner("");
+        affiliateDataSingle.setProfile("");
+        affiliateDataSingle.setCreferer("");
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+
+    /*7*/
+    @Test(groups = {"registration","regression", "affiliate"})
+    public void affiliateCookieSingleNoAdvertiserNoReferrerUrl(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        affiliateDataSingle.setAdvertiser("");
+        affiliateDataSingle.setUrl("");
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        WebDriverUtils.refreshPage();
+        registrationPage.registerUser(userData);
+        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+    /*11*/
     @Test(groups = {"registration","regression", "affiliate"})
     public void affiliateSupportURL(){
         UserData userData = defaultUserData.getRandomUserData();
