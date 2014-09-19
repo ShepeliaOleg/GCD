@@ -103,9 +103,11 @@
 
     <bean id="addressValidationRule" class="springConstructors.ValidationRule">
         <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,80}[&amp;./\- ]{0,4}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,72}[&amp;./\-]{0,4}"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,20}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{2,20}"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="1"/>
+        <!--<property name="minLength" value="2"/>-->
+        <!--<property name="maxLength" value="160"/>-->
+        <property name="minLength" value="2"/>
         <property name="maxLength" value="20"/>
         <property name="tooltipPositive" value="Please enter your address"/>
         <property name="tooltipNegativeEmpty" value="Please enter your address (up to 160 characters)"/>
