@@ -656,7 +656,7 @@ public void affiliateSupportCookieAll(){
         results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
         registrationPage.fillEmail(email);
         ValidationUtils.inputFieldAndRefocus(xpath, email);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, email, ValidationUtils.STATUS_PASSED);
+        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
         for(String result:results){
             if(!result.equals(ValidationUtils.PASSED)){
                 message += "<div>" + result + "</div>";
@@ -679,7 +679,7 @@ public void affiliateSupportCookieAll(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.fillEmail(email);
         ValidationUtils.inputFieldAndRefocus(xpath, email);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, email, ValidationUtils.STATUS_PASSED);
+        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
         for(String result:results){
             if(!result.equals(ValidationUtils.PASSED)){
                 message += "<div>" + result + "</div>";
