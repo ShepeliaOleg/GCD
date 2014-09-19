@@ -6,10 +6,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 @ContextConfiguration(locations={"/spring-config.xml"})
 @Listeners(Listener.class)
 public class AbstractTest extends AbstractTestNGSpringContextTests{

@@ -16,12 +16,10 @@ import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
 import utils.validation.ValidationUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 
 public class RegistrationTest extends AbstractTest{
@@ -131,22 +129,39 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(homePage.isLoggedIn());
 	}
 
+    /*#2. Registration with receive bonuses check box checked*/
+    @Test(groups = {"registration","regression"})
+    public void receivePromotionOffersDefaultState(){
+        UserData userData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        TypeUtils.assertTrueWithLogs(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
+    }
+
+    @Test(groups = {"registration","regression"})
+    public void receivePromotionOffersText(){
+        String expectedText = "I would like to receive great bonuses and exciting offers";
+        UserData userData=defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        String actualText = registrationPage.getReceivePromotionsCheckboxText(userData);
+        TypeUtils.assertTrueWithLogs(actualText.equals(expectedText), "Expected '"+expectedText+"', but it is '"+actualText+"'");
+    }
+
 	/*#2. Registration with receive bonuses check box checked*/
 	@Test(groups = {"registration","regression"})
-	public void receiveBonusesIsCheckedInIMS(){
+	public void receivePromotionOffersIsCheckedInIMS(){
 		UserData userData=defaultUserData.getRandomUserData();
 		PortalUtils.registerUser(userData,true);
 		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS);
+		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS, "Promotion checkboxes are checked");
 	}
 
     /*#3. Registration with receive bonuses check box unchecked*/
 	@Test(groups = {"registration","regression"})
-	public void receiveBonusesIsNotCheckedInIMS(){
+	public void receivePromotionOffersIsNotCheckedInIMS(){
 		UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData,false);
 		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS);
+        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS, "Promotion checkboxes are not checked");
 	}
 
     /*#4. Registration with bonus code provided*/
@@ -305,13 +320,13 @@ public class RegistrationTest extends AbstractTest{
         TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
 	}
 
-    /*Client type empty*/
+    /*Client type poker*/
     @Test(groups = {"registration","regression"})
     public void registrationWithClientType(){
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientType);
         registrationPage.registerUser(userData);
-        String expectedClientType = "test";
+        String expectedClientType = "poker";
         String clientType = iMS.getClientType(userData);
         TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
     }
@@ -322,7 +337,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerNoClientType);
         registrationPage.registerUser(userData);
-        String expectedClientType = "";
+        String expectedClientType = "casino";
         String clientType = iMS.getClientType(userData);
         TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
 
@@ -340,7 +355,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression", "desktop"})
 	public void defaultCheckboxesState(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean receiveBonusesChecked=registrationPage.getCheckboxStateReceiveBonuses(defaultUserData.getRandomUserData());
+		boolean receiveBonusesChecked=registrationPage.getReceivePromotionsCheckboxState(defaultUserData.getRandomUserData());
 //		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
         TypeUtils.assertTrueWithLogs(receiveBonusesChecked == true); // && (termsAndConditionsChecked == false));
 	}

@@ -46,12 +46,13 @@ public class RegistrationPage extends AbstractPage{
     public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
     protected final static String DROPDOWN_CURRENCY_NAME = 						        "currencyCode";
     protected final static String FIELD_BONUSCODE_NAME = 								"coupon";
-    protected final static String CHECKBOX_RECEIVE_BONUSES_XP=						    "//*[@id='nobonus'] | //*[@name='subscription']";
+    protected final static String CHECKBOX_RECEIVE_BONUSES_XP=						    "//*[@name='subscription']";
     protected final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
 
     protected final static String LABEL_USERNAME_SUGGESTION_LINK_XP = 					"//a[@class='fn-suggestion']";
     protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
     protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-title='Terms & Conditions']";
+    protected final static String LABEL_RECEIVE_PROMOTIONS_XP=							"//label[@for='subscription-checkbox']";
 
     public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+ DROPDOWN_BIRTHDAY_NAME +"']";
     public final static String DROPDOWN_BIRTHMONTH_XP=								    "//*[@name='"+DROPDOWN_BIRTHMONTH_NAME+"']";
@@ -247,11 +248,18 @@ public class RegistrationPage extends AbstractPage{
         return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_CURRENCY_NAME)).getText();
     }
 
-    public boolean getCheckboxStateReceiveBonuses(UserData userData){
+    public boolean getReceivePromotionsCheckboxState(UserData userData){
         if(platform.equals(PLATFORM_MOBILE)){
             registrationPageStepThree(userData);
         }
         return WebDriverUtils.getCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP);
+    }
+
+    public String getReceivePromotionsCheckboxText(UserData userData){
+        if(platform.equals(PLATFORM_MOBILE)){
+            registrationPageStepThree(userData);
+        }
+        return WebDriverUtils.getElementText(LABEL_RECEIVE_PROMOTIONS_XP);
     }
 
     public void clickPasswordConfirmation(){

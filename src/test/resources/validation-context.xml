@@ -102,10 +102,11 @@
     </bean>
 
     <bean id="addressValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,80}[&amp;./\- ]{0,4}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,72}[&amp;./\-]{0,4}"/>
+        <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,80}[&amp;./\- ]{0,4}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,72}[&amp;./\-]{0,4}"/>-->
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#']{1,20}"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="2"/>
-        <property name="maxLength" value="160"/>
+        <property name="minLength" value="1"/>
+        <property name="maxLength" value="20"/>
         <property name="tooltipPositive" value="Please enter your address"/>
         <property name="tooltipNegativeEmpty" value="Please enter your address (up to 160 characters)"/>
         <property name="tooltipNegativeShort" value="Inserted address is invalid. Please enter 2- 160 characters"/>
@@ -139,7 +140,7 @@
 
     <bean id="postcodeValidationRule" class="springConstructors.ValidationRule">
         <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,6}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{0,5}"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_/\#]{1,12}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,12}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="1"/>
         <property name="maxLength" value="12"/>
@@ -164,7 +165,8 @@
     </bean>
 
     <bean id="phoneValidationRule" class="springConstructors.ValidationRule">
-        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
+        <!--<property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>-->
+        <property name="regexp" value="[0123456789]{6,10}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="6"/>
         <property name="maxLength" value="11"/>
@@ -189,10 +191,12 @@
 
     <bean id="usernameValidationRule" class="springConstructors.ValidationRule">
         <!--<property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{3,10}[ ]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{2,5}"/>-->
-        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{5,16}"/>
+        <property name="regexp" value="[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_@]{6,10}"/>
         <property name="isMandatory" value="true"/>
-        <property name="minLength" value="5"/>
-        <property name="maxLength" value="16"/>
+        <!--<property name="minLength" value="5"/>-->
+        <!--<property name="maxLength" value="16"/>-->
+        <property name="minLength" value="6"/>
+        <property name="maxLength" value="10"/>
         <property name="tooltipPositive" value="Choose a Username between 5-16 characters long."/>
         <property name="tooltipNegativeEmpty" value="Sorry, your username must be between 5-16 characters long."/>
         <property name="tooltipNegativeShort" value="Length must be 5-16 characters"/>
