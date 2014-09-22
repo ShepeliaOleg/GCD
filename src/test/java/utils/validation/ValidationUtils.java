@@ -381,7 +381,8 @@ public class ValidationUtils extends WebDriverObject{
     private static boolean excludeSpecificChar(ValidationRule rule, String character) {
         boolean email = ((character.equals("@")||character.equals("."))&&rule.getRegexp().contains("[@]"));
         boolean city = (character.equals("-")&&rule.getRegexp().contains("[-]"));
-        return (email||city);
+        boolean areaCode = (character.equals("+")&&rule.getRegexp().contains("[+]"));
+        return (email||city||areaCode);
     }
 
 }
