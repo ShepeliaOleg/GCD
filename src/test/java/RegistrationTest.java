@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.Page;
+import enums.PasswordStrength;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -420,6 +421,47 @@ public class RegistrationTest extends AbstractTest{
         String selectedCountryName = registrationPage.getSelectedCountryName();
         TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
         // TypeUtils.assertTrueWithLogs(registrationPage.isFindMyAddressButtonVisible());
+    }
+
+    /* Password strength*/
+    @Test(groups = {"registration", "regression", "desktop"})
+    public void passwordStrength(){
+        ArrayList<String> results = new ArrayList<>();
+        String resultMessage = "";
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaa", PasswordStrength.zero);
+        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAA", PasswordStrength.zero);
+        results = RegistrationPage.verifyPasswordStrength(results, "000000", PasswordStrength.zero);
+        results = RegistrationPage.verifyPasswordStrength(results, "0000aa", PasswordStrength.one);
+        results = RegistrationPage.verifyPasswordStrength(results, "0000AA", PasswordStrength.one);
+        results = RegistrationPage.verifyPasswordStrength(results, "00aaAA", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "@0aaAA", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "0000@@", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaAAA", PasswordStrength.one);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaa", PasswordStrength.one);
+        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAAAA", PasswordStrength.one);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaAA", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaa00", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "000000@@", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaAA", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "@@aaaaAA", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "@@00aaAA", PasswordStrength.four);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaaaaaa", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAAAAAAAA", PasswordStrength.two);
+        results = RegistrationPage.verifyPasswordStrength(results, "00AAAAAAAAAA", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaaaaaa", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaaaaAA", PasswordStrength.three);
+        results = RegistrationPage.verifyPasswordStrength(results, "@@aaaaaaaaAA", PasswordStrength.four);
+        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaaaaAA", PasswordStrength.four);
+        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaa@@AA", PasswordStrength.five);
+        for(String result:results){
+            if(!result.equals("passed")){
+                resultMessage += "<div>"+result+"</div>";
+            }
+        }
+        if(!resultMessage.isEmpty()){
+            WebDriverUtils.runtimeExceptionWithUrl(resultMessage);
+        }
     }
 
 

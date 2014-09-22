@@ -1,6 +1,7 @@
 package pageObjects.registration;
 
 import enums.Page;
+import enums.PasswordStrength;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
@@ -13,6 +14,7 @@ import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.validation.ValidationUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class RegistrationPage extends AbstractPage{
@@ -62,6 +64,8 @@ public class RegistrationPage extends AbstractPage{
     public final static String FIELD_PHONE_XP=								            "//*[@name='phoneNumber']";
     public final static String FIELD_USERNAME_XP=								        "//*[@name='"+FIELD_USERNAME_NAME+"']";
     public final static String FIELD_PASSWORD_VERIFICATION_XP=							"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
+    private static final String PASSWORD_METER_XP =                                     "//*[@class='password-meter']/*[1]";
+    private static final String PASSWORD_STRENGTH_TOOLTIP =                             "//*[contains(@class, 'password-meter_message')]/p";
 
     public RegistrationPage(String[] elements){
         super(elements);
@@ -313,6 +317,41 @@ public class RegistrationPage extends AbstractPage{
     }
     public static String getFilledUsername(){
         return WebDriverUtils.getInputFieldText(getXpathByName(FIELD_USERNAME_NAME));
+    }
+
+    public static String getPasswordStrength(){
+        return WebDriverUtils.getAttribute(PASSWORD_METER_XP, "class");
+    }
+
+    public static String getPasswordStrengthTooltip(){
+        return WebDriverUtils.getElementText(PASSWORD_STRENGTH_TOOLTIP);
+    }
+
+    public static String passwordStrengthEquals(String value, PasswordStrength expectedStrength){
+        fillPassword(value);
+        String actualStrength = getPasswordStrength();
+        if(expectedStrength.toString().equals(actualStrength)){
+            return "passed";
+        }else {
+            return "Value '"+value+"', expected '"+expectedStrength+"', but actual '"+actualStrength+"'";
+        }
+    }
+
+    public static String passwordStrengthTooltipEquals(String value, PasswordStrength expectedStrength){
+        WebDriverUtils.waitFor(500);
+        String actualTooltip = getPasswordStrengthTooltip();
+        String expectedTooltip = expectedStrength.getTooltip();
+        if(expectedTooltip.equals(actualTooltip)){
+            return "passed";
+        }else {
+            return "Value '"+value+"', expected '"+expectedTooltip+"', but actual '"+actualTooltip+"'";
+        }
+    }
+
+    public static ArrayList<String> verifyPasswordStrength(ArrayList results, String value, PasswordStrength expectedStrength){
+        results.add(passwordStrengthEquals(value, expectedStrength));
+        results.add(passwordStrengthTooltipEquals(value, expectedStrength));
+        return results;
     }
 
     /* Fields validation */
