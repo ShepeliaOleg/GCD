@@ -35,7 +35,7 @@ public class RegistrationPage extends AbstractPage{
     protected final static String DROPDOWN_BIRTHYEAR_NAME=								"birthYear";
     protected final static String FIELD_EMAIL_NAME = 									"email";
     protected final static String FIELD_ADDRESS2_NAME = 								"address2";
-    protected final static String FIELD_HOUSE_NAME = 								    "house";
+    protected final static String FIELD_HOUSE_NAME = 								    "address3";
     protected final static String FIELD_ANSWER_NAME = 								    "answer";
     protected final static String FIELD_ADDRESS_NAME = 								    "address";
     protected final static String FIELD_CITY_NAME = 									"city";
