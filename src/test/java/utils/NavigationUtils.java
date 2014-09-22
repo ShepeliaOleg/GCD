@@ -137,7 +137,8 @@ public class NavigationUtils extends WebDriverObject{
 		while((registrationNotFinished())&& result==null){
             result = checkPopups(exceptPage);
 			retries++;
-			if(retries==POPUP_CHECK_RETRIES){
+            WebDriverUtils.waitFor();
+            if(retries==POPUP_CHECK_RETRIES){
 				WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long");
 			}
 		}
