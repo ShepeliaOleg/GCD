@@ -826,7 +826,7 @@ public void affiliateCookieSingleCreferrer(){
 
     @Test(groups = {"registration","regression"})
     public void countryDropdownValidation() {
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerNoClientType);
         registrationPage.validateCountry(countryValidationRule,defaultUserData.getRandomUserData());
     }
 
