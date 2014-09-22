@@ -161,8 +161,7 @@
     </bean>
 
     <bean id="phoneValidationRule" class="springConstructors.ValidationRule">
-        <!--<property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>-->
-        <property name="regexp" value="[0123456789]{6,10}"/>
+        <property name="regexp" value="[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}[ ]{0,1}[0123456789]{2,3}"/>
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="6"/>
         <property name="maxLength" value="11"/>
@@ -229,7 +228,7 @@
         <property name="tooltipPositive" value="Please enter answer to security question"/>
         <property name="tooltipNegativeEmpty" value="Answer to the security question is required"/>
         <property name="tooltipNegativeShort" value="N/A"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Length must be 1-160 characters"/>
         <property name="tooltipNegativeInvalid" value="Sorry, invalid character used, please try again You may only use letters (A-Z) (a-z) and (/-)"/>
     </bean>
 
