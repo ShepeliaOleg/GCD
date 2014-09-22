@@ -15,6 +15,7 @@ public enum ConfiguredPages{
     bannerNavigationBullets("banner_bullets"),
     bannerNavigationButtons("banner_buttons"),
     bannerWebContent("banner_webcontent"),
+    bannerWebContentGame("banner_webcontent_game"),
     bingoLobbyFeed("bingo-schedule-lobby"),
     bingoScheduleFeed("bingo-schedule-schedule"),
     bonusPage("bonus"),
@@ -47,7 +48,8 @@ public enum ConfiguredPages{
     registerNoClientType("register_no_client_type"),
     referAFriend("myaccount1/refer-a-friend"),
     responsibleGaming("myaccount1/responsible-gaming"),
-    selfExclusion("myaccount1/responsible-gaming");
+    selfExclusion("myaccount1/responsible-gaming"),
+    webContentGame("web_content_game_launch");
 
     private final String name;
 

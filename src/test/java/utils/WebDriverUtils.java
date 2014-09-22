@@ -15,6 +15,7 @@ import utils.logs.LogUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class WebDriverUtils extends WebDriverObject{
 
@@ -466,13 +467,17 @@ public class WebDriverUtils extends WebDriverObject{
 		return webDriver.getWindowHandle();
 	}
 
+    public static Set<String> getWindowHandles(){
+        return webDriver.getWindowHandles();
+    }
+
     public static void openAdditionalSession(){
         WebDriverFactory webDriverFactory = new WebDriverFactory();
         webDriverFactory.switchToAdditionalWebDriver();
     }
 
 	public static void switchToOtherWindow(String mainWindowHandle){
-		for(String winHandle : webDriver.getWindowHandles()){
+		for(String winHandle : getWindowHandles()){
 			if(!winHandle.equals(mainWindowHandle)){
 				switchToWindow(winHandle);
 			}

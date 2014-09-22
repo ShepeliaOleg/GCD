@@ -201,8 +201,8 @@
         <property name="isMandatory" value="true"/>
         <property name="minLength" value="5"/>
         <property name="maxLength" value="10"/>
-        <property name="tooltipPositive" value="Choose a password between 5-10 characters long.  Use letters and numbers only without spaces."/>
-        <property name="tooltipNegativeEmpty" value="Choose a password between 5-10 characters long.  Use letters and numbers only without spaces."/>
+        <property name="tooltipPositive" value="Choose a password between 5-10 characters long. Use letters and numbers only without spaces."/>
+        <property name="tooltipNegativeEmpty" value="Choose a password between 5-10 characters long. Use letters and numbers only without spaces."/>
         <property name="tooltipNegativeShort" value="Password: Password: 5-10 chars"/>
         <property name="tooltipNegativeLong" value="Password: Password: 5-10 chars"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (A-z) (a-z) and numbers (0-9) without spaces."/>

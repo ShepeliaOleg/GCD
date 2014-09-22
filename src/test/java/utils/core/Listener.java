@@ -32,7 +32,7 @@ public class Listener extends TestListenerAdapter{
     String[] list = {"BannerTest", "BingoScheduleTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
             "ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest",
             "InternalTagsTest", "LanguageTest", "LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
-            "RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest"};
+            "RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest", "WebContentTest"};
 
 
     @Override

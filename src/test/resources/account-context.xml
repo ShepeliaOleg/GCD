@@ -24,7 +24,7 @@
         <property name="mobileAreaCode" value="+38"/>
         <property name="mobile" value="7654321"/>
         <property name="username" value="#{systemProperties['username']}"/>
-        <property name="defaultUsername" value="autoLocal"/>
+        <property name="defaultUsername" value="AASSDDX"/>
         <property name="password" value="aut0Player"/>
         <property name="verificationQuestion" value="Name of your first pet?"/>
         <property name="verificationAnswer" value="Internet"/>
