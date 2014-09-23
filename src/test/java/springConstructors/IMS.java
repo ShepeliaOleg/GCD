@@ -153,16 +153,24 @@ public class IMS extends WebDriverObject{
 		return allValuesAreCorrect;
 	}
 
+    public void validateNoAffiliate(String username, AffiliateData affiliateData){
+        validateNoAffiliate(username, affiliateData.getDefaultAdvertiser());
+    }
+
     public void validateAffiliate(String username, AffiliateData affiliateData){
-        validateAffiliate(username, affiliateData.getAdvertiser(), affiliateData.getProfile(), affiliateData.getBanner(), affiliateData.getUrl(), affiliateData.getCreferer());
+        validateAffiliate(username, affiliateData, true);
     }
 
-    private void validateAffiliate(String username, String advert, String profile, String banner, String url, String creferer){
-        navigateToPlayedDetails(username).checkAffiliateData(advert, profile, banner, url, creferer);
+    public void validateAffiliate(String username, AffiliateData affiliateData, boolean creferrerIsExists) {
+        validateAffiliate(username, affiliateData.getAdvertiser(), affiliateData.getBanner(), affiliateData.getProfile(), affiliateData.getUrl(), affiliateData.getCreferer(), creferrerIsExists);
     }
 
-    private void validateAffiliate(String username, String advert){
-        navigateToPlayedDetails(username).checkAffiliateData(advert);
+    private void validateAffiliate(String username, String advert, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
+        navigateToPlayedDetails(username).checkAffiliateData(advert, banner, profile, url, creferrer, creferrerIsExists);
+    }
+
+    private void validateNoAffiliate(String username, String advertiser){
+        navigateToPlayedDetails(username).checkAffiliateData(advertiser);
     }
 
 	public IMSPlayerDetailsPage navigateToPlayedDetails(String username){
@@ -249,4 +257,5 @@ public class IMS extends WebDriverObject{
     public String getClientType(UserData userData){
         return navigateToPlayedDetails(userData.getUsernameUppercase()).getClientType();
     }
+
 }

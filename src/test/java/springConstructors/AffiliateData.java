@@ -3,27 +3,27 @@ package springConstructors;
 public class AffiliateData {
     private String defaultAdvertiser;
     private String advertiser;
-    private String profile;
     private String banner;
+    private String profile;
     private String url;
     private String creferer;
     private String crefererSingle;
     private String crefererMultiple;
 
-    public AffiliateData(String defaultAdvertiser, String advertiser, String profile, String banner, String url, String crefererSingle, String crefererMultiple) {
+    public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String crefererSingle, String crefererMultiple) {
         this.defaultAdvertiser = defaultAdvertiser;
         this.advertiser = advertiser;
-        this.profile = profile;
         this.banner = banner;
+        this.profile = profile;
         this.url = url;
         this.crefererSingle = crefererSingle;
         this.crefererMultiple = crefererMultiple;
     }
 
-    public AffiliateData(String advertiser, String profile, String banner, String url, String creferer) {
+    public AffiliateData(String advertiser, String banner, String profile, String url, String creferer) {
         this.advertiser = advertiser;
-        this.profile = profile;
         this.banner = banner;
+        this.profile = profile;
         this.url = url;
         this.creferer = creferer;
     }
@@ -93,18 +93,14 @@ public class AffiliateData {
     }
 
     public String getRelativeURL() {
-        return "register?advertiser="+getAdvertiser()+"&profileid="+getProfile()+"&bannerid="+getBanner()+"&refererurl="+getUrl()+"&creferer="+getCreferer();
+        return "?advertiser="+getAdvertiser()+"&profileid="+getProfile()+"&bannerid="+getBanner()+"&refererurl="+getUrl()+"&creferer="+getCreferer();
     }
 
     public AffiliateData getAffiliateDataSingle() {
-        return new AffiliateData(advertiser, profile, banner, url, crefererSingle);
+        return new AffiliateData(advertiser, banner, profile, url, crefererSingle);
     }
 
     public AffiliateData getAffiliateDataMultiple() {
-        return new AffiliateData(advertiser, profile, banner, url, crefererMultiple);
-    }
-
-    public AffiliateData getAffiliateDataDefaultAdvertiser() {
-        return new AffiliateData(defaultAdvertiser, profile, banner, url, crefererSingle);
+        return new AffiliateData(advertiser, banner, profile, url, crefererMultiple);
     }
 }

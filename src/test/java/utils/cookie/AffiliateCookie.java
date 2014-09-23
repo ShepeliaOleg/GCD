@@ -8,4 +8,8 @@ public class AffiliateCookie extends Cookie {
     public AffiliateCookie(AffiliateData affiliateData) {
         super(name, affiliateData.getAdvertiser()+","+affiliateData.getProfile()+","+affiliateData.getBanner()+","+affiliateData.getUrl()+","+affiliateData.getCreferer());
     }
+
+    public AffiliateCookie(String value) {
+        super(name, value);
+    }
 }

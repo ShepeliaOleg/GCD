@@ -40,8 +40,8 @@
     <bean id="affiliate" class="springConstructors.AffiliateData">
         <constructor-arg value="defaultic"/>                    <!--default advertiser-->
         <constructor-arg value="advert1"/>                      <!--custom existing advertiser-->
-        <constructor-arg value="v2"/>                           <!--profile-->
-        <constructor-arg value="v3"/>                           <!--banner-->
+        <constructor-arg value="v2"/>                           <!--banner-->
+        <constructor-arg value="v3"/>                           <!--profile-->
         <constructor-arg value="v4"/>                           <!--referrerUrl-->
         <constructor-arg value="Ctag:12333"/>                   <!--creferrer single-->
         <constructor-arg value="Ctag:111%3btrackingid5:222"/>   <!--creferrer multiple (%3b)-->
