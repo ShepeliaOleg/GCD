@@ -11,12 +11,10 @@ import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
-import java.util.ArrayList;
-
 public class WebcontentPage extends AbstractPage{
 
     private static final String GAMELAUNCH_XP = "//*[@class='fn-launch-game']";
-    private static final String IMAGE_XP =      "/img";
+    private static final String IMAGE_XP =      GAMELAUNCH_XP + "/img";
     private static final String BUTTON_XP =     "//*[contains(@class, 'btn')][contains(@class, 'play')]";
 
     public WebcontentPage(){
