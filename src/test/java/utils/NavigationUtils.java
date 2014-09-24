@@ -4,11 +4,13 @@ import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.SkipException;
+import pageObjects.AdminPage;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.ChangeMyDetailsPage;
 import pageObjects.banner.BannerPage;
+import pageObjects.banner.BannerPageProfileID;
 import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
@@ -20,7 +22,6 @@ import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.gamesPortlet.GamesPortletPage;
-import pageObjects.generalPopups.LoaderPopup;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
@@ -31,7 +32,6 @@ import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
-import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.webcontent.WebcontentPage;
@@ -58,6 +58,7 @@ public class NavigationUtils extends WebDriverObject{
     public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
         navigateToPortal(condition, configuredPages, userData);
         switch (configuredPages){
+            case admin:                                         return new AdminPage();
             case balance:                                       return new BalancePage();
             case banner5seconds:
             case bannerGame:
@@ -71,6 +72,15 @@ public class NavigationUtils extends WebDriverObject{
             case bannerNavigationBullets:
             case bannerNavigationButtons:
             case bannerWebContent:                              return new BannerPage();
+            case bannerProfileNoProfileOneSlide:
+            case bannerProfileNoProfileTwoSlides:
+            case bannerProfileSingleProfileOneSlide:
+            case bannerProfileMultiProfileOneSlide:
+            case bannerProfileSingleSameProfileTwoSlides:
+            case bannerProfileSingleProfileOneOfTwoSlides:
+            case bannerProfileSingleDiffProfilesTwoSlides:
+            case bannerProfileMultiProfileTwoSlides:
+            case bannerProfileMultiProfileOneOfTwoSlides:       return new BannerPageProfileID();
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
@@ -109,27 +119,31 @@ public class NavigationUtils extends WebDriverObject{
     }
 
     private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData){
-        AbstractPage abstractPage;
         String suffix=configuredPages.toString();
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
-//        abstractPage = (AbstractPage) closeAllPopups(Page.homePage);
-        abstractPage = new AbstractPage();
-        boolean isLoggedIn=abstractPage.isLoggedIn();
+        AbstractPage abstractPage = new AbstractPage();
         switch (condition){
             case guest:
-                if(isLoggedIn==true){
-                    abstractPage.logout();
-                }
+                logoutIfLoggedIn(abstractPage);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case loggedIn:
-                if(isLoggedIn==true){
-                    abstractPage.logout();
-                }
+                logoutIfLoggedIn(abstractPage);
                 abstractPage.login(userData);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
+            case admin:
+                logoutIfLoggedIn(abstractPage);
+                PortalUtils.loginAdmin();
+                WebDriverUtils.navigateToInternalURL(suffix);
+                break;
+        }
+    }
+
+    private static void logoutIfLoggedIn(AbstractPage abstractPage){
+        if(abstractPage.isLoggedIn()==true){
+            abstractPage.logout();
         }
     }
 

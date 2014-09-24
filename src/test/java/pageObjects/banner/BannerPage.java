@@ -14,7 +14,7 @@ public class BannerPage extends AbstractPage {
     private static final int    TIMEOUT_NOW =                       0;
     private static final int    TIMEOUT_SHORT =                     1;
     private static final int    TIMEOUT_LONG =                      10;
-	private static final String ROOT_XP =                           "//*[contains(@class,'portlet-banner')]/..";
+	protected static final String ROOT_XP =                           "//*[contains(@class,'portlet-banner')]/..";
     private static final String TITLE_XP =                          ROOT_XP + "//span[contains(@class,'title')]";
     private static final String BODY_XP =                           ROOT_XP + "//ul[contains(@class,'paging')]";
     private static final String LIST_XP =                           "//li";
@@ -29,6 +29,11 @@ public class BannerPage extends AbstractPage {
 	public BannerPage(){
 		super(new String[]{ROOT_XP, TITLE_XP, BODY_XP});
 	}
+
+    public BannerPage(String[] visible){
+        super(visible);
+    }
+
 
     public int getSlidesCount() {
         return WebDriverUtils.getXpathCount(SLIDES_XP);
@@ -103,7 +108,7 @@ public class BannerPage extends AbstractPage {
         return 0;
     }
 
-    private void showNextSlide() {
+    public void showNextSlide() {
         WebDriverUtils.click(NAVIGATION_ARROW_NEXT_XP);
     }
 
@@ -155,11 +160,8 @@ public class BannerPage extends AbstractPage {
     }
 
     public BannerNavigationType getNavigationType() {
-        boolean arrowNextVisible =  WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW);
-        boolean arrowPreviousVisible =  WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW);
-        boolean arrowsVisible = arrowNextVisible || arrowPreviousVisible;
+        boolean arrowsVisible = WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW) ||  WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW);
         boolean bulletsVisible = WebDriverUtils.isVisible(NAVIGATION_BULLETS_XP, TIMEOUT_NOW);
-        boolean buttonsVisible = WebDriverUtils.isVisible(NAVIGATION_BUTTONS_XP, TIMEOUT_NOW);
 
         if (arrowsVisible && bulletsVisible) {
             return BannerNavigationType.arrowsAndBullets;
@@ -167,7 +169,7 @@ public class BannerPage extends AbstractPage {
             return BannerNavigationType.arrows;
         } else if (bulletsVisible) {
             return BannerNavigationType.bullets;
-        } else if (buttonsVisible) {
+        } else if (WebDriverUtils.isVisible(NAVIGATION_BUTTONS_XP, TIMEOUT_NOW)) {
             return BannerNavigationType.buttons;
         } else
             return BannerNavigationType.none;
@@ -202,4 +204,6 @@ public class BannerPage extends AbstractPage {
             return new LoginPopup();
         }
     }
+
+
 }

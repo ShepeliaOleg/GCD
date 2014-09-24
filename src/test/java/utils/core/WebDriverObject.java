@@ -1,6 +1,9 @@
 package utils.core;
 
 import org.openqa.selenium.WebDriver;
+import utils.WebDriverUtils;
+
+import java.util.ArrayList;
 
 public class WebDriverObject{
 
@@ -8,8 +11,8 @@ public class WebDriverObject{
     protected static String baseUrl;
     protected static WebDriver logDriver;
     protected static String platform;
-    protected static String timestamp = "noLogs";
 
+    protected static String timestamp = "noLogs";
     protected final static String PLATFORM_DESKTOP = "desktop";
     protected final static String PLATFORM_MOBILE = "mobile";
 
@@ -24,4 +27,6 @@ public class WebDriverObject{
 	public static void setWebDriver(WebDriver webDriver){
 		WebDriverObject.webDriver=webDriver;
 	}
+
+
 }

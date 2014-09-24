@@ -3,7 +3,9 @@ package utils;
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
+import pageObjects.AdminPage;
 import pageObjects.HomePage;
+import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
@@ -13,6 +15,10 @@ public class PortalUtils extends WebDriverObject{
 
     private static HomePage navigateToHome(){
         return (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+    }
+
+    private static AdminPage navigateToAdmin(){
+        return (AdminPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.admin);
     }
 
     private static RegistrationPage navigateToRegistration() {
@@ -51,5 +57,9 @@ public class PortalUtils extends WebDriverObject{
 
     public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, String bonusCode, Page expectedPage){
         return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, bonusCode, expectedPage);
+    }
+
+    public static AbstractPage loginAdmin() {
+        return navigateToAdmin().loginAdmin();
     }
 }

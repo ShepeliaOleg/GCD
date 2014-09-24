@@ -1,7 +1,7 @@
 package enums;
 
 public enum ConfiguredPages{
-
+    admin("admin"),
     balance("myaccount1/balance"),
     banner5seconds("banner_5_seconds"),
     bannerGame("banner_game"),
@@ -16,6 +16,15 @@ public enum ConfiguredPages{
     bannerNavigationButtons("banner_buttons"),
     bannerWebContent("banner_webcontent"),
     bannerWebContentGame("banner_webcontent_game"),
+    bannerProfileNoProfileOneSlide("profile_id_0_1"),
+    bannerProfileNoProfileTwoSlides("profile_id_0_2"),
+    bannerProfileSingleProfileOneSlide("profile_id_single_1_1"),
+    bannerProfileMultiProfileOneSlide("profile_id_multi_1_1"),
+    bannerProfileSingleSameProfileTwoSlides("profile_id_single_same_2_2"),
+    bannerProfileSingleProfileOneOfTwoSlides("profile_id_single_same_1_2"),
+    bannerProfileSingleDiffProfilesTwoSlides("profile_id_single_diff_2_2"),
+    bannerProfileMultiProfileTwoSlides("profile_id_multi_2_2"),
+    bannerProfileMultiProfileOneOfTwoSlides("profile_id_multi_1_2"),
     bingoLobbyFeed("bingo-schedule-lobby"),
     bingoScheduleFeed("bingo-schedule-schedule"),
     bonusPage("bonus"),

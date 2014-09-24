@@ -63,6 +63,8 @@ public class UserData{
 	private String mobile;
 	private String username;
     private String defaultUsername;
+    private String profileUsername;
+    private String defaultProfileUsername;
 	private String password;
 	private String verificationQuestion;
 	private String verificationAnswer;
@@ -133,6 +135,26 @@ public class UserData{
 
     public void setDefaultUsername(String username){
         this.defaultUsername=username;
+    }
+
+    public String getProfileUsername(){
+        if(profileUsername!=null) {
+            return profileUsername;
+        }else {
+            return getDefaultProfileUsername();
+        }
+    }
+
+    public void setProfileUsername(String profileUsername){
+        this.profileUsername=profileUsername;
+    }
+
+    public String getDefaultProfileUsername(){
+        return defaultProfileUsername;
+    }
+
+    public void setDefaultProfileUsername(String defaultProfileUsername){
+        this.defaultProfileUsername=defaultProfileUsername;
     }
 
 	public String getMobile(){
@@ -393,6 +415,12 @@ public class UserData{
 	public UserData getRegisteredUserData() {
 		return cloneUserData();
 	}
+
+    public UserData getRegisteredUserDataWithProfileID() {
+        UserData userData = cloneUserData();
+        userData.setUsername(getProfileUsername());
+        return userData;
+    }
 
 	public UserData getForgotPasswordUserData() {
 		UserData userData = getRegisteredUserData();

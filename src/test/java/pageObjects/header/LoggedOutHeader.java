@@ -23,8 +23,12 @@ public class LoggedOutHeader extends Header{
 		super(new String[]{BUTTON_LOGIN_XP});
 	}
 
-    public LoginPopup clickButtonLogin(){
+    public void clickButtonLogin(){
         WebDriverUtils.click(BUTTON_LOGIN_XP);
+    }
+
+    public LoginPopup navigateToLoginPopup(){
+        clickButtonLogin();
         return new LoginPopup();
     }
 
@@ -32,7 +36,7 @@ public class LoggedOutHeader extends Header{
         if(platform.equals(PLATFORM_DESKTOP)){
             WebDriverUtils.click(LINK_FORGOT_PASSWORD_XP);
         }else {
-            clickButtonLogin().clickForgotPassword();
+            navigateToLoginPopup().clickForgotPassword();
         }
         return new ForgotPasswordPopup();
     }
@@ -50,7 +54,7 @@ public class LoggedOutHeader extends Header{
         if(platform.equals(PLATFORM_DESKTOP)){
             return fillLoginFormAndSubmit(userData, rememberMeEnable, expectedPage);
         }else {
-            return clickButtonLogin().login(userData, rememberMeEnable, expectedPage);
+            return navigateToLoginPopup().login(userData, rememberMeEnable, expectedPage);
         }
     }
 

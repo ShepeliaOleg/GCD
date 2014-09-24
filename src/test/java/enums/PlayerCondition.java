@@ -7,4 +7,5 @@ public enum PlayerCondition {
     any,
     guest,
     loggedIn,
+    admin
 }

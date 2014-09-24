@@ -80,7 +80,7 @@ public class AbstractPage extends AbstractPageObject{
     }
 
     public LoginPopup navigateToLoginForm(){
-        return loggedOutHeader().clickButtonLogin();
+        return loggedOutHeader().navigateToLoginPopup();
     }
 
     public LogoutPopup navigateToLogoutPopup(){
