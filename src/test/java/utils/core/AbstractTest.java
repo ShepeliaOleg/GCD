@@ -49,7 +49,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
 
     protected void assertFalse(boolean actual, String message){
         if(actual){
-            results.add("Should not be false, but it is true. "+message);
+            results.add("Should be false, but it is true. "+message);
         }
     }
 

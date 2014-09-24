@@ -125,25 +125,38 @@ public class NavigationUtils extends WebDriverObject{
         AbstractPage abstractPage = new AbstractPage();
         switch (condition){
             case guest:
+                logoutAdminIfLoggedIn(abstractPage);
                 logoutIfLoggedIn(abstractPage);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case loggedIn:
+                logoutAdminIfLoggedIn(abstractPage);
                 logoutIfLoggedIn(abstractPage);
                 abstractPage.login(userData);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case admin:
-                logoutIfLoggedIn(abstractPage);
-                PortalUtils.loginAdmin();
+                if(!abstractPage.isAdminLoggedIn()){
+                    logoutIfLoggedIn(abstractPage);
+                    PortalUtils.loginAdmin();
+                }
                 WebDriverUtils.navigateToInternalURL(suffix);
+                break;
+            case any:
+                logoutAdminIfLoggedIn(abstractPage);
                 break;
         }
     }
 
     private static void logoutIfLoggedIn(AbstractPage abstractPage){
-        if(abstractPage.isLoggedIn()==true){
+        if(abstractPage.isLoggedIn()){
             abstractPage.logout();
+        }
+    }
+
+    private static void logoutAdminIfLoggedIn(AbstractPage abstractPage){
+        if(abstractPage.isAdminLoggedIn()){
+            abstractPage.logoutAdmin();
         }
     }
 

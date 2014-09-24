@@ -14,7 +14,7 @@ public class BannerPage extends AbstractPage {
     private static final int    TIMEOUT_NOW =                       0;
     private static final int    TIMEOUT_SHORT =                     1;
     private static final int    TIMEOUT_LONG =                      10;
-	protected static final String ROOT_XP =                           "//*[contains(@class,'portlet-banner')]/..";
+	protected static final String ROOT_XP =                         "//*[contains(@class,'portlet-banner')]/..";
     private static final String TITLE_XP =                          ROOT_XP + "//span[contains(@class,'title')]";
     private static final String BODY_XP =                           ROOT_XP + "//ul[contains(@class,'paging')]";
     private static final String LIST_XP =                           "//li";

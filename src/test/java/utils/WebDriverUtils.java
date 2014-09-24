@@ -158,6 +158,20 @@ public class WebDriverUtils extends WebDriverObject{
         return true;
     }
 
+    public static boolean isClickable(String xpath){
+        return isVisible(xpath, TIMEOUT);
+    }
+
+    public static boolean isClickable(String xpath, long timeout){
+        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        try{
+            wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
+        }catch(TimeoutException e){
+            return false;
+        }
+        return true;
+    }
+
     public static boolean isElementVisible(String xpath){
         return isVisible(xpath) && isElementDimensionsPositive(xpath);
     }

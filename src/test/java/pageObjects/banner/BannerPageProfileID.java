@@ -21,6 +21,6 @@ public class BannerPageProfileID extends BannerPage{
     }
 
     public static boolean slideProfileVisible(String profile){
-        return WebDriverUtils.isVisible(PROFILE_IDENTIFIER.replace(PLACEHOLDER, profile), 2);
+        return WebDriverUtils.isVisible(PROFILE_IDENTIFIER.replace(PLACEHOLDER, profile), 4);
     }
 }

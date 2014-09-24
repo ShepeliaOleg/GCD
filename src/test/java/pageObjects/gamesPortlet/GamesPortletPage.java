@@ -106,7 +106,7 @@ public class GamesPortletPage extends AbstractPage{
 		return id;
 	}
 
-    public String getGameID(int index, int page){
+    public String getGameID(int page, int index){
         return WebDriverUtils.getAttribute("//ul["+page+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
     }
 

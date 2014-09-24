@@ -913,14 +913,14 @@ public class GamesPortletTest extends AbstractTest {
 	public void sliderPaginationWorksCorrectly(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String firstPageGame = gamesPortletPage.getGameID(1,1);
-        String secondPageGame = gamesPortletPage.getGameID(1,2);
+        String secondPageGame = gamesPortletPage.getGameID(2,1);
 		gamesPortletPage = gamesPortletPage.clickNextButton();
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.isGamePresent(secondPageGame), "Second page game visible");
-        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(firstPageGame), "First page game visible");
+        assertTrue(gamesPortletPage.isGamePresent(secondPageGame), "Game from second page visible");
+        assertFalse(gamesPortletPage.isGamePresent(firstPageGame), "Game from first page visible");
         gamesPortletPage = gamesPortletPage.clickPreviousButton();
-        TypeUtils.assertTrueWithLogs(gamesPortletPage.isGamePresent(firstPageGame), "First page game visible");
-        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(secondPageGame), "Second page game visible");
-
+        assertTrue(gamesPortletPage.isGamePresent(firstPageGame), "Game from first page visible");
+        assertFalse(gamesPortletPage.isGamePresent(secondPageGame), "Game from second page visible");
+        validate();
 	}
 
 //	/*15.3. Navigation types - To Fit*/

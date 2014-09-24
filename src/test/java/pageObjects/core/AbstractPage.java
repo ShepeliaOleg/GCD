@@ -1,6 +1,7 @@
 package pageObjects.core;
 
 import enums.Page;
+import pageObjects.AdminPage;
 import pageObjects.account.MyAccountPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
@@ -58,6 +59,10 @@ public class AbstractPage extends AbstractPageObject{
         return header().isLoggedIn();
     }
 
+    public boolean isAdminLoggedIn(){
+        return WebDriverUtils.isVisible(AdminPage.DOCKBAR_XP, 0);
+    }
+
     public boolean isUsernameDisplayed(UserData userData){
         return loggedInHeader().isUsernameDisplayed(userData);
     }
@@ -75,9 +80,20 @@ public class AbstractPage extends AbstractPageObject{
         return waitForLogout();
     }
 
+    public AbstractPage logoutAdmin(){
+        new AdminPage().clickLogout();
+        return waitForAdminLogout();
+    }
+
     public AbstractPage waitForLogout(){
         return header().waitForLogout();
     }
+
+    public AbstractPage waitForAdminLogout(){
+        WebDriverUtils.waitForElementToDisappear(AdminPage.DOCKBAR_XP, 30);
+        return new AbstractPage();
+    }
+
 
     public LoginPopup navigateToLoginForm(){
         return loggedOutHeader().navigateToLoginPopup();
