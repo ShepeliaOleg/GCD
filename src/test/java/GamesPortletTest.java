@@ -909,7 +909,7 @@ public class GamesPortletTest extends AbstractTest {
 //
 	/*15. Navigation types*/
 	/*15.1. Slider : next/back arrows navigation*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "desktop"})
 	public void sliderPaginationWorksCorrectly(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
 		String firstPageGame = gamesPortletPage.getGameID(1,1);

@@ -81,7 +81,7 @@ public class AbstractPage extends AbstractPageObject{
     }
 
     public AbstractPage logoutAdmin(){
-        new AdminPage().clickLogout();
+        AdminPage.clickLogout();
         return waitForAdminLogout();
     }
 

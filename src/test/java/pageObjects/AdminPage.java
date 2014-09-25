@@ -42,7 +42,7 @@ public class AdminPage extends AbstractPage {
         return new AbstractPage();
     }
 
-    public void clickLogout(){
+    public static void clickLogout(){
         WebDriverUtils.click(BUTTON_LOGOUT_XP);
     }
 

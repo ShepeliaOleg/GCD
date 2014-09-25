@@ -280,7 +280,6 @@ public class UserData{
 		this.birthDay=birthDay;
 	}
 
-
 	public String getLastName(){
 		return lastName;
 	}
