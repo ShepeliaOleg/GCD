@@ -1,4 +1,4 @@
-package pageObjects;
+package pageObjects.admin;
 
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;

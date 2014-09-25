@@ -1,7 +1,7 @@
 package pageObjects.core;
 
 import enums.Page;
-import pageObjects.AdminPage;
+import pageObjects.admin.AdminPage;
 import pageObjects.account.MyAccountPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;

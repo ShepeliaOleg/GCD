@@ -1,5 +1,6 @@
 package utils;
 
+import enums.ConfiguredPages;
 import io.selendroid.SelendroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -501,6 +502,14 @@ public class WebDriverUtils extends WebDriverObject{
 	public static void switchToWindow(String handle){
 		webDriver.switchTo().window(handle);
 	}
+
+    public static boolean isGameLaunched(ConfiguredPages page){
+        if(getWindowHandles().size() == 1&&getCurrentUrl().contains(page.toString())){
+            return false;
+        }else {
+            return true;
+        }
+    }
 
 	//iFrame
 

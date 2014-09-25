@@ -3,7 +3,7 @@ package utils;
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
-import pageObjects.AdminPage;
+import pageObjects.admin.AdminPage;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;

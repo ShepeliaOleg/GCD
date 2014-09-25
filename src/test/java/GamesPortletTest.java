@@ -983,8 +983,7 @@ public class GamesPortletTest extends AbstractTest {
 	public void gameCanBeStartedFromListView(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
-        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-		gameLaunchPopup.close();
+        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
         TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 	}
 

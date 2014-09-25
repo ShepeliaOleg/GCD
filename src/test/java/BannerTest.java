@@ -222,8 +222,7 @@ public class BannerTest extends AbstractTest{
         LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
         loginPopup.login(defaultUserData.getRegisteredUserData());
         GameLaunchPopup gameLaunchPopup = new GameLaunchPopup(bannerPage.getMainWindowHandle());
-        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-        gameLaunchPopup.close();
+        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
         TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
     }
 
@@ -233,8 +232,7 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGame, defaultUserData.getRegisteredUserData());
         TypeUtils.assertTrueWithLogs(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
         GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) bannerPage.clickSlide(1);
-        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
-        gameLaunchPopup.close();
+        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
         TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
     }
 

@@ -2,28 +2,33 @@ package pageObjects.webcontent;
 
 import enums.ConfiguredPages;
 import enums.GameLaunch;
-import enums.PlayerCondition;
+import pageObjects.admin.AdminCanNotPlayPopup;
+import pageObjects.banner.BannerPage;
 import pageObjects.core.AbstractPage;
-import pageObjects.gamesPortlet.GameElement;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
-public class WebcontentPage extends AbstractPage{
+public class WebContentPage extends AbstractPage{
 
-    private static final String GAMELAUNCH_XP = "//*[@class='fn-launch-game']";
+    private static final String GAMELAUNCH_XP = "//*[contains(@class,'fn-launch-game')]";
     private static final String IMAGE_XP =      GAMELAUNCH_XP + "/img";
-    private static final String BUTTON_XP =     "//*[contains(@class, 'btn')][contains(@class, 'play')]";
+    private static final String BUTTON_XP =     GAMELAUNCH_XP + "[contains(@class, 'btn')]";
 
-    public WebcontentPage(){
+    public WebContentPage(){
         super(new String[]{IMAGE_XP});
     }
 
     public LoginPopup clickLoggedOut(GameLaunch type){
         clickByType(type);
         return new LoginPopup();
+    }
+
+    public AdminCanNotPlayPopup clickAdmin(GameLaunch type){
+        clickByType(type);
+        return new AdminCanNotPlayPopup();
     }
 
     private void clickButton(){
@@ -53,7 +58,7 @@ public class WebcontentPage extends AbstractPage{
             loginPopup.login(userData);
         }
         if(platform.equals(PLATFORM_DESKTOP)){
-            return new GameLaunchPopup(getMainWindowHandle(), gameID).isUrlValid();
+            return new GameLaunchPopup(getMainWindowHandle(), gameID).checkUrlAndClose();
         }else{
             return new GameLaunchPage(gameID).isUrlValid();
         }
@@ -71,13 +76,8 @@ public class WebcontentPage extends AbstractPage{
         }
     }
 
-    public boolean validateGameNotLaunched(ConfiguredPages page){
-        if(WebDriverUtils.getWindowHandles().size() == 1&&WebDriverUtils.getCurrentUrl().contains(page.toString())){
-        return true;
-        }else {
-            return false;
-        }
+    public void clickNextSlide(){
+        new BannerPage().showNextSlide();
     }
-
 
 }

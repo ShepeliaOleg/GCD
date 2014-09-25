@@ -31,9 +31,9 @@ public class GameLaunchPopup extends AbstractBrowserWindow {
 	}
 
     public boolean checkUrlAndClose(){
-        boolean valid = isUrlValid();
+        boolean isValid = isUrlValid();
         close();
-        return valid;
+        return isValid;
     }
 
 

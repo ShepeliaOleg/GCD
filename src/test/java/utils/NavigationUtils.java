@@ -4,7 +4,7 @@ import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.SkipException;
-import pageObjects.AdminPage;
+import pageObjects.admin.AdminPage;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
@@ -34,7 +34,7 @@ import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
-import pageObjects.webcontent.WebcontentPage;
+import pageObjects.webcontent.WebContentPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
 
@@ -113,7 +113,7 @@ public class NavigationUtils extends WebDriverObject{
             case responsibleGaming:
             case selfExclusion:                                 return new ResponsibleGamingPage();
             case bannerWebContentGame:
-            case webContentGame:                                return new WebcontentPage();
+            case webContentGame:                                return new WebContentPage();
             default: throw new RuntimeException("Unexpected input in navigateToPage method");
         }
     }
@@ -169,7 +169,7 @@ public class NavigationUtils extends WebDriverObject{
 			retries++;
             WebDriverUtils.waitFor();
             if(retries==POPUP_CHECK_RETRIES){
-				WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long");
+                tooLongError();
 			}
 		}
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
@@ -188,16 +188,25 @@ public class NavigationUtils extends WebDriverObject{
 		return result;
 	}
 
+    private static void tooLongError(){
+        WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long (more than 30s)");
+    }
+
     private static boolean registrationNotFinished(){
         LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
         return WebDriverUtils.isVisible(RegistrationPageStepThree.LOADING_ANIMATION_XP, 1)||
                 WebDriverUtils.isVisible(LOADING_ANIMATION, 1)||
-                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 3);
+                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) ||
+                !new AbstractPage().isLoggedIn();
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){
 		if(WebDriverUtils.isVisible(LOADING_ANIMATION, 0)){
-			WebDriverUtils.waitForElementToDisappear(LOADING_ANIMATION, 30);
+            try {
+                WebDriverUtils.waitForElementToDisappear(LOADING_ANIMATION, 30);
+            }catch (Exception e){
+                tooLongError();
+            }
 			return null;
         }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.AFTER_REG_ROOT_XP, 0)){
             return processAfterRegistrationPopup(exceptPage);

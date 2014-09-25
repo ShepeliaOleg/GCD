@@ -27,7 +27,7 @@ public class BannerPage extends AbstractPage {
     private static final String NAVIGATION_BUTTONS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_number')]";
 
 	public BannerPage(){
-		super(new String[]{ROOT_XP, TITLE_XP, BODY_XP});
+		super(new String[]{ROOT_XP});
 	}
 
     public BannerPage(String[] visible){
@@ -110,6 +110,7 @@ public class BannerPage extends AbstractPage {
 
     public void showNextSlide() {
         WebDriverUtils.click(NAVIGATION_ARROW_NEXT_XP);
+        WebDriverUtils.waitFor();
     }
 
     private void showPreviousSlide() {
