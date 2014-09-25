@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.login.LoginPopup;
-import pageObjects.webcontent.WebContentPage;
+import pageObjects.WebContentPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.TypeUtils;

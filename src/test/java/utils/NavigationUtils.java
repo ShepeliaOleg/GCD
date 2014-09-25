@@ -34,7 +34,7 @@ import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
-import pageObjects.webcontent.WebContentPage;
+import pageObjects.WebContentPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
 

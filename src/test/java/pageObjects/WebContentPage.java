@@ -1,4 +1,4 @@
-package pageObjects.webcontent;
+package pageObjects;
 
 import enums.GameLaunch;
 import pageObjects.admin.AdminCanNotPlayPopup;
