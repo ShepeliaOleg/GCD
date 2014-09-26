@@ -317,7 +317,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void registrationWithClientType(){
         UserData userData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientType);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
         registrationPage.registerUser(userData);
         validateEquals("poker", iMS.getClientType(userData), "Client type -");
     }
@@ -480,7 +480,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -494,7 +493,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
@@ -505,11 +503,10 @@ public class RegistrationTest extends AbstractTest{
     public void affiliateCookieCreffererNotExists(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
-        affiliateDataSingle.setCreferer("notExists:123");
+        affiliateDataSingle.setCreferrer("notExists:123");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle, false);
     }
@@ -522,7 +519,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataMultiple);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataMultiple);
     }
@@ -536,7 +532,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -550,7 +545,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -562,11 +556,10 @@ public class RegistrationTest extends AbstractTest{
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setBanner("");
         affiliateDataSingle.setProfile("");
-        affiliateDataSingle.setCreferer("");
+        affiliateDataSingle.setCreferrer("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -581,7 +574,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
@@ -593,11 +585,10 @@ public class RegistrationTest extends AbstractTest{
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setUrl("");
-        affiliateDataSingle.setCreferer("");
+        affiliateDataSingle.setCreferrer("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getBanner() + "," + affiliateDataSingle.getProfile());
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -610,7 +601,6 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getProfile() + "," + affiliateDataSingle.getCrefererSingle());
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateNoAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
@@ -623,87 +613,91 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie("");
         affiliateCookie.add();
-        WebDriverUtils.refreshPage();
         registrationPage.registerUser(userData);
         iMS.validateNoAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
     /*12*/
+    @Test(groups = {"registration","regression", "affiliate", "cookie"})
+    public void affiliateCookieAfterCookie(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataCookie1 = affiliateData.getAffiliateDataSingle();
+        affiliateDataCookie1.setAdvertiser("advertiser");
+        affiliateDataCookie1.setBanner("banner");
+        affiliateDataCookie1.setProfile("profile");
+        affiliateDataCookie1.setUrl("url");
+        affiliateDataCookie1.setCreferrer("creferrer");
+        AffiliateData affiliateDataCookie2 = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        AffiliateCookie affiliateCookie1 = new AffiliateCookie(affiliateDataCookie1);
+        affiliateCookie1.add();
+        AffiliateCookie affiliateCookie2 = new AffiliateCookie(affiliateDataCookie2);
+        affiliateCookie2.add();
+        registrationPage.registerUser(userData);
+        iMS.validateNoAffiliate(userData.getUsernameUppercase(), affiliateDataCookie2);
+    }
+
+    /*13*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrlSingleCreferrer(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*13*/
+    /*14*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrlAdvertiserNotExists(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setAdvertiser("notExists");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*14*/
+    /*15*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrlCreffererNotExists(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
-        affiliateDataSingle.setCreferer("notExists:123");
+        affiliateDataSingle.setCreferrer("notExists:123");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle, false);
     }
 
-    /*15*/
+    /*16*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrlMultipleCreferrer(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataMultiple = affiliateData.getAffiliateDataMultiple();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataMultiple.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataMultiple);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataMultiple);
     }
 
-    /*16*/
+    /*17*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrl4Parameters(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setUrl("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*17*/
+    /*18*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrl3Parameters(){
         UserData userData = defaultUserData.getRandomUserData();
@@ -711,52 +705,61 @@ public class RegistrationTest extends AbstractTest{
         affiliateDataSingle.setBanner("");
         affiliateDataSingle.setAdvertiser("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*18*/
+    /*19*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrl2Parameters(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setProfile("");
         affiliateDataSingle.setUrl("");
-        affiliateDataSingle.setCreferer("");
+        affiliateDataSingle.setCreferrer("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*19*/
+    /*20*/
     @Test(groups = {"registration","regression", "affiliate", "url"})
     public void affiliateUrl1Parameter(){
         UserData userData = defaultUserData.getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
-        affiliateDataSingle.setAdvertiser("");
-        affiliateDataSingle.setBanner("");
-        affiliateDataSingle.setProfile("");
-        affiliateDataSingle.setUrl("");
+        affiliateDataSingle.setAdvertiser("advertiser");
+        affiliateDataSingle.setBanner("banner");
+        affiliateDataSingle.setProfile("profile");
+        affiliateDataSingle.setUrl("url");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie("");
-        affiliateCookie.delete();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataSingle.getRelativeURL());
-        TypeUtils.assertFalseWithLogs(affiliateCookie.isPresent(), "Affiliate cookie should not be created on affiliate URL request, but it present.");
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
     }
 
-    /*20*/
+    /*21*/
+    @Test(groups = {"registration","regression", "affiliate", "url"})
+    public void affiliateUrlAfterUrl(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataUrl1 = affiliateData.getAffiliateDataSingle();
+        affiliateDataUrl1.setAdvertiser("advertiser");
+        affiliateDataUrl1.setBanner("banner");
+        affiliateDataUrl1.setProfile("profile");
+        affiliateDataUrl1.setUrl("url");
+        affiliateDataUrl1.setCreferrer("creferrer");
+        AffiliateData affiliateDataUrl2 = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl1);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl2);
+        registrationPage.registerUser(userData);
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataUrl2);
+    }
+
+    /*22*/
     @Test(groups = {"registration","regression", "affiliate", "cookie", "url"})
     public void affiliateCookieAndUrl(){
         UserData userData = defaultUserData.getRandomUserData();
@@ -766,13 +769,90 @@ public class RegistrationTest extends AbstractTest{
         affiliateDataCookie.setBanner("banner");
         affiliateDataCookie.setProfile("profile");
         affiliateDataCookie.setUrl("url");
-        affiliateDataCookie.setCreferer("name:value");
+        affiliateDataCookie.setCreferrer("name:value");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
-        WebDriverUtils.navigateToInternalURL(ConfiguredPages.register.toString() + affiliateDataUrl.getRelativeURL());
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
         registrationPage.registerUser(userData);
         iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataUrl);
+    }
+
+
+    /*B-11324 Creferrer*/
+    /*2*/
+    @Test(groups = {"registration","regression", "affiliate", "creferrer"})
+    public void affiliateCreferrerRegistrationPreference(){
+        UserData userData = defaultUserData.getRandomUserData();
+        String creferrerRegistration = affiliateData.getCreferrerRegistrationPortletProperty();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        registrationPage.registerUser(userData);
+        iMS.validateCreferrer(userData.getUsernameUppercase(), creferrerRegistration);
+    }
+
+    /*3*/
+    @Test(groups = {"registration","regression", "affiliate", "creferrer", "cookie"})
+    public void affiliateCreferrerRegistrationPreferenceAndCookie(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
+        affiliateCookie.add();
+        registrationPage.registerUser(userData);
+        affiliateDataSingle.addCreferer(affiliateData.getCreferrerRegistrationPortletProperty());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+    /*4*/
+    @Test(groups = {"registration","regression", "affiliate", "url"})
+    public void affiliateCreferrerRegistrationPreferenceAndUrl(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        registrationPage.registerUser(userData);
+        affiliateDataSingle.addCreferer(affiliateData.getCreferrerRegistrationPortletProperty());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataSingle);
+    }
+
+    /*5.1*/
+    @Test(groups = {"registration","regression", "affiliate", "cookie", "url"})
+    public void affiliateCreferrerRegistrationPreferenceAndCookieAndUrlCookieFirst(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataCookie = affiliateData.getAffiliateDataSingle();
+        affiliateDataCookie.setAdvertiser("advertiser");
+        affiliateDataCookie.setBanner("banner");
+        affiliateDataCookie.setProfile("profile");
+        affiliateDataCookie.setUrl("url");
+        affiliateDataCookie.setCreferrer("creferrer");
+        AffiliateData affiliateDataUrl = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
+        affiliateCookie.add();
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
+        registrationPage.registerUser(userData);
+        affiliateDataUrl.addCreferer(affiliateData.getCreferrerRegistrationPortletProperty());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataUrl);
+    }
+
+    /*5.2*/
+    @Test(groups = {"registration","regression", "affiliate", "cookie", "url"})
+    public void affiliateCreferrerRegistrationPreferenceAndCookieAndUrlUrlFirst(){
+        UserData userData = defaultUserData.getRandomUserData();
+        AffiliateData affiliateDataUrl = affiliateData.getAffiliateDataSingle();
+        affiliateDataUrl.setAdvertiser("advertiser");
+        affiliateDataUrl.setBanner("banner");
+        affiliateDataUrl.setProfile("profile");
+        affiliateDataUrl.setUrl("url");
+        affiliateDataUrl.setCreferrer("creferrer");
+        AffiliateData affiliateDataCookie = affiliateData.getAffiliateDataSingle();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
+        affiliateCookie.add();
+        registrationPage.registerUser(userData);
+        affiliateDataCookie.addCreferer(affiliateData.getCreferrerRegistrationPortletProperty());
+        iMS.validateAffiliate(userData.getUsernameUppercase(), affiliateDataCookie);
     }
 
     /*#??. Suggestion does not appear on entering new username*/

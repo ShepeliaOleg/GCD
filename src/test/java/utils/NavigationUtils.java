@@ -35,7 +35,10 @@ import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.webcontent.WebContentPage;
+import springConstructors.AffiliateData;
 import springConstructors.UserData;
+import utils.cookie.AffiliateCookie;
+import utils.core.AbstractTest;
 import utils.core.WebDriverObject;
 
 public class NavigationUtils extends WebDriverObject{
@@ -107,7 +110,7 @@ public class NavigationUtils extends WebDriverObject{
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
             case registerNoClientType:
-            case registerClientType:
+            case registerClientTypeCreferrer:
             case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:
@@ -329,5 +332,13 @@ public class NavigationUtils extends WebDriverObject{
         }
     }
 
-
+    public static void navigateToAffiliateURL(ConfiguredPages page, AffiliateData affiliateData) {
+        WebDriverUtils.navigateToInternalURL(page.toString() + affiliateData.getRelativeURL());
+        AffiliateCookie affiliateCookie = new AffiliateCookie("");
+        if (affiliateCookie.isPresent()) {
+            affiliateCookie.validateValue(affiliateData);
+        }   else {
+            AbstractTest.results.add("Affiliate cookie should be created on affiliate URL request, but it is absent.");
+        }
+    }
 }

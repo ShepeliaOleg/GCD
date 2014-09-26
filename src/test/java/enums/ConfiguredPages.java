@@ -53,7 +53,7 @@ public enum ConfiguredPages{
     liveTableFinder("live-casino"),
     myAccount("myaccount1"),
 	register("register"),
-    registerClientType("register_client_type"),
+    registerClientTypeCreferrer("register_client_type_creferrer"),
     registerNoClientType("register_no_client_type"),
     referAFriend("myaccount1/refer-a-friend"),
     responsibleGaming("myaccount1/responsible-gaming"),
