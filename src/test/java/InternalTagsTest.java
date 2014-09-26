@@ -30,21 +30,21 @@ public class InternalTagsTest extends AbstractTest{
 	private UserData defaultUserData;
 
     /*1. Internal tags are replaced with "-" for guest user.*/
-//	@Test(groups = {"regression"})
-//	public void checkInternalTagsForGuestUser(){
-//        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.internalTags);
-//        internalTagsPage.compareTags(true, null);
-//        internalTagsPage.compareTags(false, null);
-//	}
-//
-//    /*2. Internal tags availability on web content portlet*/
-//	@Test(groups = {"regression"})
-//	public void checkWorkingInternalTagsOnWebContentPortlet(){
-//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
-//		HashMap imsData = iMS.getInternalTagsData();
-//        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
-//        internalTagsPage.compareTags(true, imsData);
-//	}
+	@Test(groups = {"regression"})
+	public void checkInternalTagsForGuestUser(){
+        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.internalTags);
+        internalTagsPage.compareTags(true, null);
+        internalTagsPage.compareTags(false, null);
+	}
+
+    /*2. Internal tags availability on web content portlet*/
+	@Test(groups = {"regression"})
+	public void checkWorkingInternalTagsOnWebContentPortlet(){
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+		HashMap imsData = iMS.getInternalTagsData();
+        InternalTagsPage internalTagsPage = (InternalTagsPage) NavigationUtils.navigateToPage(ConfiguredPages.internalTags);
+        internalTagsPage.compareTags(true, imsData);
+	}
 //
 //    /*3. Internal tags availability on multiview portlet*/
 //	@Test(groups = {"regression"})

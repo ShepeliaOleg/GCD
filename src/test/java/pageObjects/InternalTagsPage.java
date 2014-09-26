@@ -2,6 +2,7 @@ package pageObjects;
 
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.HashMap;
 
@@ -15,12 +16,34 @@ public class InternalTagsPage extends AbstractPage{
 	private static final String ROOT_XP=				"//*[@class='portlet-title-text']";
 	private static final String ARTICLE_XP=				"//div[contains(@id, 'article')]";
 	private static final String MULTIVIEW_ARTICLE_XP=	"//div[contains(@id, 'multiview')]";
-	private static final String[] INTERNAL_TAGS = 		{"casino-gaming-balance", "bingo-gaming-balance",
-														"poker-gaming-balance", "sportsbook-gaming-balance", "total-bonus-balance", "withdrawable-balance",
-														"internal-wallet-total-real-balance", "user-currency", "user-name", "messages", "comp-points", "user-first-name", "user-last-name"};
-	private static final String[] GUEST_TAGS = 			{"[CASINO_GAMING_BALANCE]","[BINGO_GAMING_BALANCE]",
-														"[POKER_GAMING_BALANCE]","[SPORTSBOOK_GAMING_BALANCE]","[TOTAL_BONUS_BALANCE]","[WITHDRAWABLE_BALANCE]",
-														"[INTERNAL_WALLET_TOTAL_REAL_BALANCE]","£","-","-","-","-","-"};
+	private static final String[] INTERNAL_TAGS = 		{
+            "bonus-balance","bonus-pending-winnings","ringfenced-real-balance","bingo-bonus","all-games-bonus","games-bonus",
+            "all-multiplayer-bonus","all-numbers-bonus","all-scratchcards-bonus","all-casino-bonus","casino-loyalty",
+            "loyalty-level","loyalty-period-points","loyalty-redeemable-points","loyalty-next-level","loyalty-next-level-points",
+            "loyalty-next-level-due-date","comp-points","user-ipointsbalance","pokerviplevel","points-required-current-levelname",
+            "ipoints2nextlevel","nextviplevel","nextviplevelname","user-currency","casino-gaming-balance","credit-amount",
+            "user-name","user-first-name","user-last-name","poker-launch-link","user-currency","pending-withdrawals",
+            "real-gaming-balance","casino-table-real-balance","broken-games-real-balance","broken-games-bonus-balance",
+            "main-real-balance","total-bonus-balance","unread-messages-count","is-credit-user","poker-online-players"
+    };
+
+	private static final HashMap<String,String> GUEST_TAGS = new HashMap(){{
+        put(INTERNAL_TAGS[0], "");put(INTERNAL_TAGS[1], "");put(INTERNAL_TAGS[2], "");
+        put(INTERNAL_TAGS[3], "");put(INTERNAL_TAGS[4], "");put(INTERNAL_TAGS[5], "");
+        put(INTERNAL_TAGS[6], "");put(INTERNAL_TAGS[7], "");put(INTERNAL_TAGS[8], "");
+        put(INTERNAL_TAGS[9], "");put(INTERNAL_TAGS[10], "");put(INTERNAL_TAGS[11], "");
+        put(INTERNAL_TAGS[12], "");put(INTERNAL_TAGS[13], "");put(INTERNAL_TAGS[14], "");
+        put(INTERNAL_TAGS[15], "");put(INTERNAL_TAGS[16], "");put(INTERNAL_TAGS[17], "");
+        put(INTERNAL_TAGS[18], "");put(INTERNAL_TAGS[19], "");put(INTERNAL_TAGS[20], "");
+        put(INTERNAL_TAGS[21], "");put(INTERNAL_TAGS[22], "");put(INTERNAL_TAGS[23], "");
+        put(INTERNAL_TAGS[24], "");put(INTERNAL_TAGS[25], "");put(INTERNAL_TAGS[26], "");
+        put(INTERNAL_TAGS[27], "");put(INTERNAL_TAGS[28], "");put(INTERNAL_TAGS[29], "");
+        put(INTERNAL_TAGS[30], "");put(INTERNAL_TAGS[31], "");put(INTERNAL_TAGS[32], "");
+        put(INTERNAL_TAGS[33], "");put(INTERNAL_TAGS[34], "");put(INTERNAL_TAGS[35], "");
+        put(INTERNAL_TAGS[36], "");put(INTERNAL_TAGS[37], "");put(INTERNAL_TAGS[38], "");
+        put(INTERNAL_TAGS[39], "");put(INTERNAL_TAGS[40], "");put(INTERNAL_TAGS[41], "");
+
+    }};
 
 	public InternalTagsPage(){
 		super(new String[]{ROOT_XP});
@@ -65,30 +88,12 @@ public class InternalTagsPage extends AbstractPage{
 	}
 
 	private void compareMaps(HashMap tagsPage){
-		String result="";
-		boolean hasErrors = false;
-		for(int i=0;i<INTERNAL_TAGS.length;i++){
-			if(!tagsPage.get(INTERNAL_TAGS[i]).equals(GUEST_TAGS[i])){
-				result = result+"<div> Expected: "+GUEST_TAGS[i]+" | Actual: "+tagsPage.get(INTERNAL_TAGS[i]+"</div>");
-				hasErrors = true;
-			}
-		}
-		if(hasErrors){
-			WebDriverUtils.runtimeExceptionWithUrl(result);
-		}
+        compareMaps(tagsPage, GUEST_TAGS);
 	}
 
-	private void compareMaps(HashMap tagsPage, HashMap tagsIms){
-		String result="";
-		boolean hasErrors = false;
-		for(int i=0;i<INTERNAL_TAGS.length;i++){
-			if(!tagsPage.get(INTERNAL_TAGS[i]).equals(tagsIms.get(INTERNAL_TAGS[i]))){
-				result = result+"<div> Expected: "+tagsIms.get(INTERNAL_TAGS[i])+" | Actual: "+tagsPage.get(INTERNAL_TAGS[i])+"</div>";
-				hasErrors = true;
-			}
-		}
-		if(hasErrors){
-			WebDriverUtils.runtimeExceptionWithUrl(result);
-		}
-	}
+	private void compareMaps(HashMap tagsPage, HashMap tagsIms) {
+        for (String tag:INTERNAL_TAGS) {
+            AbstractTest.assertEquals(tagsIms.get(tag), tagsPage.get(tag), "Internal tag '" + tag + "' -");
+        }
+    }
 }

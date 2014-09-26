@@ -141,12 +141,12 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private void checkBanner(String advertiser, String banner, String profile){
         WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
         IMSAffiliateIframe imsAffiliateIframe = new IMSAffiliatePage().navigateToAffiliateIframe();
-        AbstractTest.assertEquals(banner, imsAffiliateIframe.getLabelBanner(), "Banner -");
-        AbstractTest.assertEquals(profile, imsAffiliateIframe.getLabelProfile(), "Profile -");
+        AbstractTest.assertEquals(banner, imsAffiliateIframe.getLabelBanner(), "Banner");
+        AbstractTest.assertEquals(profile, imsAffiliateIframe.getLabelProfile(), "Profile");
     }
 
     private void checkAdvertiser(String advertiser){
-        AbstractTest.assertEquals(advertiser, getAdvertiser(), "Advertiser -");
+        AbstractTest.assertEquals(advertiser, getAdvertiser(), "Advertiser");
     }
 
     private String getAdvertiser(){
@@ -156,7 +156,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private void checkUrl(String url) {
         if (WebDriverUtils.isElementVisible(REFERRER_XP, 1)) {
             String imsUrl = WebDriverUtils.getAttribute(REFERRER_XP, "href");
-            AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url -");
+            AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url");
         } else {
             AbstractTest.addError("Referrer URL is not by xpath: "+REFERRER_XP);
         }
@@ -168,7 +168,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
             WebDriverUtils.click(LINK_CUSTOM_FIELDS);
             AbstractTest.assertTrue(WebDriverUtils.isVisible("//" + nameXpath, 1), "Custom field '//" + nameXpath + "' is visible -");
         }
-        AbstractTest.assertTrue(WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]"), "Parameters in custom fields are present -");
+        AbstractTest.assertTrue(WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]"), "Parameters in custom fields are present");
     }
 
     private void checkNoCreferrerCustomField(String name){

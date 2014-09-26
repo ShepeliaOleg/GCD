@@ -113,6 +113,10 @@ public class BannerPage extends AbstractPage {
         WebDriverUtils.waitFor();
     }
 
+    public static boolean isNextArrowVisible() {
+        return WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, 1);
+    }
+
     private void showPreviousSlide() {
         WebDriverUtils.click(NAVIGATION_ARROW_PREV_XP);
     }

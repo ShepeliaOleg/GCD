@@ -54,49 +54,49 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
 
     public static void assertTrue(boolean actual, String message){
         if(!actual){
-            addError(message + " Expected TRUE, actual FALSE.");
+            addError(message + " - Expected TRUE, actual FALSE.");
         }
     }
 
     protected void validateTrue(boolean actual, String message){
         if(!actual){
-            failTest(message + " Expected TRUE, actual FALSE.");
+            failTest(message + " - Expected TRUE, actual FALSE.");
         }
     }
 
     public static void assertFalse(boolean actual, String message){
         if(actual){
-            addError(message + " Expected FALSE, actual TRUE.");
+            addError(message + " - Expected FALSE, actual TRUE.");
         }
     }
 
     protected void validateFalse(boolean actual, String message){
         if(actual){
-            failTest(message + " Expected FALSE, actual TRUE.");
+            failTest(message + " - Expected FALSE, actual TRUE.");
         }
     }
 
     public static void assertEquals(Object expected, Object actual, String message){
         if(!expected.equals(actual)){
-            addError(message + " Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
+            addError(message + " - Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
         }
     }
 
     protected void validateEquals(Object expected, Object actual, String message){
         if(!expected.equals(actual)){
-            failTest(message + " Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
+            failTest(message + " - Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
         }
     }
 
     protected void assertNotEquals(Object expected, Object actual, String message){
         if(expected.equals(actual)){
-            addError(message + " Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
+            addError(message + " - Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
         }
     }
 
     protected void validateNotEquals(Object expected, Object actual, String message){
         if(expected.equals(actual)){
-            failTest(message + " Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
+            failTest(message + " - Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
         }
     }
 

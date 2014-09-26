@@ -2,9 +2,6 @@ package pageObjects.banner;
 
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 9/24/2014.
- */
 public class BannerPageProfileID extends BannerPage{
 
     private static final String PROFILE_IDENTIFIER =                "//*[@class='"+PLACEHOLDER+"']";

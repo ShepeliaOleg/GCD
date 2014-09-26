@@ -165,7 +165,7 @@ public class BannerTest extends AbstractTest{
     public void bannerNavigationNone() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
-        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.none, "Expected navigation type is 'None'.");
+        TypeUtils.assertEqualsWithLogs(BannerNavigationType.none, bannerPage.getNavigationType(), "Expected navigation type is 'None'.");
     }
 
     /* 11. Banner as link*/
@@ -177,7 +177,7 @@ public class BannerTest extends AbstractTest{
         ExternalPage externalPage = new ExternalPage(bannerPage.getMainWindowHandle());
         String currentUrl = WebDriverUtils.getCurrentUrl();
         externalPage.close();
-        assertEquals(currentUrl, "https://www.google.com.ua/", "Banner should link to 'https://www.google.com.ua/', but '" + currentUrl + "' is opened.");
+        assertEquals("https://www.google.com.ua/", currentUrl, "Banner should link to 'https://www.google.com.ua/', but '" + currentUrl + "' is opened.");
 
     }
 
@@ -187,10 +187,10 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerInRotation);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 2, "Expected number of slides is 2.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is not image content type.");
+        assertTrue(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is image");
         assertTrue(slidesTypes.get(1).equals(BannerSlideType.webContent), "Second slide is not WebContent content type.");
-        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
-        assertTrue(bannerPage.slideIsDisplayed(2), "Second slide is not displayed.");
+        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
+        assertTrue(bannerPage.slideIsDisplayed(2), "Second slide is displayed");
 
     }
     /* 13. Time to display*/
@@ -198,33 +198,31 @@ public class BannerTest extends AbstractTest{
     public void banner5seconds() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.banner5seconds);
         int slidesNumber = bannerPage.getSlidesCount();
-        assertTrue(slidesNumber == 2, "Expected number of slides is 2.");
+        assertTrue(slidesNumber == 2, "Number of slides is 2. -");
         long appearingOfSecondSlide = bannerPage.whenSlideDisplayed(2);
         long appearingOfFirstSlide =  bannerPage.whenSlideDisplayed(1);
         long timeToDisplay = appearingOfFirstSlide - appearingOfSecondSlide;
-        assertTrue(4900 < timeToDisplay && timeToDisplay < 5100, "Slides should switch each 5 seconds, but it took " + timeToDisplay + " ms.");
+        assertTrue(4900 < timeToDisplay && timeToDisplay < 5100, "(Actual: '"+timeToDisplay+"ms')Slides switched after 5 sec");
     }
 
     /* 14. Game launch from banner as guest user*/
     @Test(groups = {"regression"})
     public void bannerLaunchGameGuestPlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGame);
-        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
         LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
         loginPopup.login(defaultUserData.getRegisteredUserData());
         GameLaunchPopup gameLaunchPopup = new GameLaunchPopup(bannerPage.getMainWindowHandle());
-        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
-        assertTrue(correctGamePopupUrl, "Game url is valid");
+        assertTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
     }
 
     /* 15. Game launch from banner as logged in player*/
     @Test(groups = {"regression"})
     public void bannerLaunchGameLoggedInPlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGame, defaultUserData.getRegisteredUserData());
-        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
+        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
         GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) bannerPage.clickSlide(1);
-        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
-        assertTrue(correctGamePopupUrl, "Game url is valid");
+        assertTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
     }
 
     /*profile ID - Player with profileID*/
@@ -307,7 +305,7 @@ public class BannerTest extends AbstractTest{
             if(notPresent!=null){
                 assertFalse(BannerPageProfileID.slideProfileVisible(notPresent+first), notPresent+firstPage);
             }
-            if(BannerPageProfileID.isBannerPresent()){
+            if(BannerPageProfileID.isNextArrowVisible()){
                 bannerPage.showNextSlide();
             }
             if(present2!=null){

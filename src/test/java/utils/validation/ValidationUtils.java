@@ -147,15 +147,15 @@ public class ValidationUtils extends WebDriverObject{
     }
 
 	public static void assertValidationStatus(String id, String expectedStatus, String value) {
-        AbstractTest.assertEquals(expectedStatus, getValidationStatus(id), "Validation status for '"+value+"' -");
+        AbstractTest.assertEquals(expectedStatus, getValidationStatus(id), "Validation status for '"+value+"'");
 	}
 
     public static void assertTooltipStatus(String id, String expectedStatus, String value) {
-        AbstractTest.assertEquals(expectedStatus, getTooltipStatus(id), "Tooltip status for '"+value+"' -");
+        AbstractTest.assertEquals(expectedStatus, getTooltipStatus(id), "Tooltip status for '"+value+"'");
     }
 
     public static void assertTooltipText(String id, String expectedText, String value) {
-        AbstractTest.assertEquals(expectedText, getTooltipText(id), "Tooltip text for '"+value+"' -");
+        AbstractTest.assertEquals(expectedText, getTooltipText(id), "Tooltip text for '"+value+"'");
     }
 
     private static String getTooltipStatus(String id) {
