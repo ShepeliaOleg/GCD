@@ -49,7 +49,7 @@ public enum ConfiguredPages{
 	gamesNavigationStyleCategoryTabsRefineByLeft ("navigation-styles/category-tabs-refine-by-left"),
     home("home"),
     inbox("myaccount1/inbox"),
-    internalTags("internal-tags"),
+    internalTags("internal_tags"),
     liveTableFinder("live-casino"),
     myAccount("myaccount1"),
 	register("register"),
