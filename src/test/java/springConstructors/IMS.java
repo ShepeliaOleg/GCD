@@ -9,6 +9,7 @@ import pageObjects.external.ims.*;
 import pageObjects.inbox.InboxPage;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.core.WebDriverObject;
 
 import java.net.URL;
@@ -134,23 +135,13 @@ public class IMS extends WebDriverObject{
         }
     }
 
-	public boolean validateRegisterData(UserData userData){
+	public void validateRegisterData(UserData userData){
 		IMSPlayerDetailsPage imsPlayerDetailsPage=navigateToPlayedDetails(userData.getUsername());
 		ArrayList<String> imsRegisterData=imsPlayerDetailsPage.getRegisterData();
 		ArrayList<String> wplRegisterData=userData.getRegisterData();
-		boolean allValuesAreCorrect=true;
-
 		for(int i=0; i < wplRegisterData.size(); i++){
-			allValuesAreCorrect=wplRegisterData.get(i).equalsIgnoreCase(imsRegisterData.get(i));
-			if(allValuesAreCorrect == false){
-				String errorMessage="\n Error in line " + i + "\n";
-				for(int x=0; x < wplRegisterData.size(); x++){
-					errorMessage=errorMessage.concat("<div>(" + x + ") - " + wplRegisterData.get(x) + " = " + imsRegisterData.get(x) + "</div>\n");
-				}
-				WebDriverUtils.runtimeExceptionWithUrl(errorMessage);
-			}
+            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data - ");
 		}
-		return allValuesAreCorrect;
 	}
 
     public void validateNoAffiliate(String username, AffiliateData affiliateData){

@@ -2,10 +2,7 @@ package utils.core;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
+import org.testng.annotations.*;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         return message;
     }
 
-    protected void addError(String message){
+    public static void addError(String message){
         results.add(message);
     }
 
@@ -55,49 +52,52 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         validate();
     }
 
-    protected void assertTrue(boolean actual, String message){
+    public static void assertTrue(boolean actual, String message){
         if(!actual){
-            addError("Should be true, but it is false. "+message);
+            addError(message + " Expected TRUE, actual FALSE.");
         }
     }
 
     protected void validateTrue(boolean actual, String message){
         if(!actual){
-            failTest("Should be true, but it is false. "+message);
+            failTest(message + " Expected TRUE, actual FALSE.");
         }
     }
 
-    protected void assertFalse(boolean actual, String message){
+    public static void assertFalse(boolean actual, String message){
         if(actual){
-            results.add("Should be false, but it is true. "+message);
+            addError(message + " Expected FALSE, actual TRUE.");
         }
     }
 
     protected void validateFalse(boolean actual, String message){
-        assertFalse(actual, message);
-        validate();
+        if(actual){
+            failTest(message + " Expected FALSE, actual TRUE.");
+        }
     }
 
-    protected void assertEquals(Object expected, Object actual, String message){
+    public static void assertEquals(Object expected, Object actual, String message){
         if(!expected.equals(actual)){
-            results.add("Should be equal: Expected '" + expected.toString() + "', actual '" + actual.toString() + "'. " + message);
+            addError(message + " Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
         }
     }
 
     protected void validateEquals(Object expected, Object actual, String message){
-        assertEquals(expected, actual, message);
-        validate();
+        if(!expected.equals(actual)){
+            failTest(message + " Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
+        }
     }
 
     protected void assertNotEquals(Object expected, Object actual, String message){
         if(expected.equals(actual)){
-            results.add("Should not be equal: Expected '"+expected.toString()+"', actual '"+actual.toString()+"'. "+message);
+            addError(message + " Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
         }
     }
 
     protected void validateNotEquals(Object expected, Object actual, String message){
-        assertNotEquals(expected, actual, message);
-        validate();
+        if(expected.equals(actual)){
+            failTest(message + " Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
+        }
     }
 
 

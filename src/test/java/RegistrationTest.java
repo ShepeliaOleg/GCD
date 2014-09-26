@@ -17,10 +17,9 @@ import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
+import utils.core.WebDriverObject;
 import utils.validation.ValidationUtils;
-import java.util.ArrayList;
 import java.util.Collection;
-
 
 public class RegistrationTest extends AbstractTest{
 
@@ -126,7 +125,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","smoke"})
 	public void validUserRegistration() {
         HomePage homePage = PortalUtils.registerUser(defaultUserData.getRandomUserData());
-        TypeUtils.assertTrueWithLogs(homePage.isLoggedIn());
+        validateTrue(homePage.isLoggedIn(), "User is logged in - ");
 	}
 
     /*#2. Registration with receive bonuses check box checked*/
@@ -134,16 +133,14 @@ public class RegistrationTest extends AbstractTest{
     public void receivePromotionOffersDefaultState(){
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        TypeUtils.assertTrueWithLogs(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
+        validateTrue(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default - ");
     }
 
     @Test(groups = {"registration","regression"})
     public void receivePromotionOffersText(){
-        String expectedText = "I would like to receive great bonuses and exciting offers";
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String actualText = registrationPage.getReceivePromotionsCheckboxText(userData);
-        TypeUtils.assertTrueWithLogs(actualText.equals(expectedText), "Expected '"+expectedText+"', but it is '"+actualText+"'");
+        validateEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(userData), "Promotional offers checkbox text - ");
     }
 
 	/*#2. Registration with receive bonuses check box checked*/
@@ -152,7 +149,7 @@ public class RegistrationTest extends AbstractTest{
 		UserData userData=defaultUserData.getRandomUserData();
 		PortalUtils.registerUser(userData,true);
 		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-		TypeUtils.assertTrueWithLogs(receiveBonusesCheckedInIMS, "Promotion checkboxes are checked");
+		validateTrue(receiveBonusesCheckedInIMS, "Promotion checkboxes are checked in IMS -");
 	}
 
     /*#3. Registration with receive bonuses check box unchecked*/
@@ -161,7 +158,7 @@ public class RegistrationTest extends AbstractTest{
 		UserData userData=defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData,false);
 		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
-        TypeUtils.assertTrueWithLogs(!receiveBonusesNotCheckedInIMS, "Promotion checkboxes are not checked");
+        validateFalse(receiveBonusesNotCheckedInIMS, "Promotion checkboxes are checked in IMS -");
 	}
 
     /*#4. Registration with bonus code provided*/
@@ -169,8 +166,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
-		boolean bonusesPresent=homePage.getBalance().equals("£1.00") || homePage.getBalance().equals("£ 1.00");
-        TypeUtils.assertTrueWithLogs(bonusesPresent);
+        validateEquals("£ 1.00", homePage.getBalance(), "User balance -");
 	}
 
     /*#5. Registration without bonus code provided*/
@@ -178,21 +174,20 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithOutBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(userData,true,true, "invalid", Page.registrationPage);
-        String message = registrationPage.getPortletErrorMessage();
-        String expectedMessage = "Coupon code is not found or not available";
-        TypeUtils.assertTrueWithLogs(message.equals(expectedMessage), "Expected '"+expectedMessage+"', found '"+message+"'");
+        validateEquals("Coupon code is not found or not available" , registrationPage.getPortletErrorMessage(), "No bonus error message -");
 	}
 
     /*#6. Player is registered with currency selected*/
 	@Test(groups = {"registration","regression","desktop"})
 	public void validHeaderUnitBalance(){
+        String currency = "GBP";
+        String currencySign = "£";
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
         HomePage homePage=(HomePage)registrationPage.registerUser(userData, true, false, null, Page.homePage);
-		String currencyInHeader=homePage.getBalance();
-        TypeUtils.assertTrueWithLogs(defaultCurrencyInRegistrationForm.contains("GBP"));
-        TypeUtils.assertTrueWithLogs(currencyInHeader.contains("£"));
+        assertTrue(defaultCurrencyInRegistrationForm.contains(currency), "Default register currency is '"+currency+"' -");
+        assertTrue(homePage.getBalance().contains(currencySign), "Currency sign in header is '"+currency+"' -");
 	}
 
     /*#7. After registration web content*/
@@ -206,11 +201,10 @@ public class RegistrationTest extends AbstractTest{
     /*#10. After-registration redirect*/
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationRedirect(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        HomePage homePage=(HomePage)registrationPage.registerUser(userData);
+        String afterRegistrationPage = "/admin";
+		PortalUtils.registerUser(defaultUserData.getRandomUserData());
 		String actualUrl=WebDriverUtils.getCurrentUrl();
-        TypeUtils.assertTrueWithLogs(actualUrl.endsWith("/admin"));
+        assertTrue(actualUrl.endsWith(afterRegistrationPage), "Moved to afterRegistration page '"+afterRegistrationPage+"' -");
 	}
 
     /*#11. The list of supported countries is correct*/
@@ -219,7 +213,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList(defaultUserData.getRandomUserData());
 		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountryCodesList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty(), diff.toString());
+        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Country codes correspond with configuration -");
 	}
 
     /*#??. The list of supported nationalities is correct*/
@@ -228,7 +222,7 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         Collection<String> actualNationalitiesCodesList = registrationPage.registrationPageAllSteps().getNationalitiesCodesList();
         Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountryCodesList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty());
+        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Nationality codes correspond with configuration -");
     }
 
     /*#12. The list of supported currencies is correct*/
@@ -237,7 +231,7 @@ public class RegistrationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		Collection<String> actualCurrencyList=registrationPage.getCurrencyList(defaultUserData.getRandomUserData());
 		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty(), diff.toString());
+        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Currency codes correspond with configuration -");
 	}
 
 //    /*#13. T&C web content is shown when clicking on T&C link*/
@@ -316,8 +310,7 @@ public class RegistrationTest extends AbstractTest{
 		UserData userData=defaultUserData.getRandomUserData();
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.registerUser(userData);
-		boolean registrationValuesAreCorrect=iMS.validateRegisterData(userData);
-        TypeUtils.assertTrueWithLogs(registrationValuesAreCorrect);
+		iMS.validateRegisterData(userData);
 	}
 
     /*Client type poker*/
@@ -326,9 +319,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientType);
         registrationPage.registerUser(userData);
-        String expectedClientType = "poker";
-        String clientType = iMS.getClientType(userData);
-        TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
+        validateEquals("poker", iMS.getClientType(userData), "Client type -");
     }
 
     /*Client type empty*/
@@ -337,9 +328,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerNoClientType);
         registrationPage.registerUser(userData);
-        String expectedClientType = "casino";
-        String clientType = iMS.getClientType(userData);
-        TypeUtils.assertTrueWithLogs(clientType.equals(expectedClientType), "Expected '"+expectedClientType+"', actual '"+clientType+"'");
+        validateEquals("casino", iMS.getClientType(userData), "Client type -");
 
     }
 
@@ -347,17 +336,14 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression", "desktop"})
 	public void requiredFieldsLabelsMarkedWithStar(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean checkboxTermsAndConditionsregressionErrorVisible=registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect();
-        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsregressionErrorVisible);
+        validateTrue(registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect(), "T&C validation error visible -");
 	}
 
-    /*#20. By default T&C check box is unchecked while "I'd like to receive bonuses" is checked*/
-	@Test(groups = {"registration","regression", "desktop"})
+    /*#20. By default T&C check box is unchecked by default*/
+	@Test(groups = {"registration","regression", "mobile"})
 	public void defaultCheckboxesState(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		boolean receiveBonusesChecked=registrationPage.getReceivePromotionsCheckboxState(defaultUserData.getRandomUserData());
-//		boolean termsAndConditionsChecked=registrationPage.getCheckboxStateTermsAndConditions();
-        TypeUtils.assertTrueWithLogs(receiveBonusesChecked == true); // && (termsAndConditionsChecked == false));
+        validateTrue(registrationPage.registrationPageStepThree(defaultUserData.getRandomUserData()).getTermsCheckbox(), "T&C checkbox checked by default -");
 	}
 
     /*#22. Country - countryCode code and phone prefix mapping*/
@@ -365,12 +351,9 @@ public class RegistrationTest extends AbstractTest{
 	public void countryCodePhoneCodeMappingDesktop(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageAllSteps registrationPageAllSteps = registrationPage.registrationPageAllSteps();
-		Collection<String> countriesCodesList = defaults.getCountryCodesList();
-		for (String countryCode : countriesCodesList) {
+		for (String countryCode : defaults.getCountryCodesList()) {
             registrationPageAllSteps.fillCountry(countryCode);
-			String phoneAreaCode = registrationPageAllSteps.getPhoneAreaCode();
-			String expectedAreaCode = defaults.getPhoneCodeByCountryCode(countryCode);
-            TypeUtils.assertEqualsWithLogs(phoneAreaCode, "+" + expectedAreaCode, "Phone area code \"" + phoneAreaCode + "\" is not equal to expected area code \"" + expectedAreaCode + "\" on selecting \'" + countryCode + "\" country code.");
+            assertEquals("+" + defaults.getPhoneCodeByCountryCode(countryCode), registrationPageAllSteps.getPhoneAreaCode(), "Phone area code for '"+countryCode+"' -");
 		}
 	}
 
@@ -378,13 +361,9 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression", "desktop"})
     public void countryCodeNamePrefix(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> countriesCodesList = defaults.getCountryCodesList();
-        for (String countryCode : countriesCodesList) {
+        for (String countryCode : defaults.getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
-            String actualCountryName = registrationPage.getSelectedCountryName().trim();
-            String expectedCountryName = defaults.getCountryNameByCountryCode(countryCode);
-            TypeUtils.assertEqualsWithLogs(actualCountryName, expectedCountryName, "Country name (" + actualCountryName + ") is not equal to expected country name (" + expectedCountryName + ") on selecting '" + countryCode + "' country code.");
-
+            assertEquals(defaults.getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"' -");
         }
     }
 
@@ -392,14 +371,10 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression", "mobile"})
     public void countryCodeNamePrefixMobile(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> countriesCodesList = defaults.getCountryCodesList();
         registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
-        for (String countryCode : countriesCodesList) {
+        for (String countryCode : defaults.getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
-            String actualCountryName = registrationPage.getSelectedCountryName().trim();
-            String expectedCountryName = defaults.getCountryNameByCountryCode(countryCode);
-            TypeUtils.assertEqualsWithLogs(actualCountryName, expectedCountryName, "Country name (" + actualCountryName + ") is not equal to expected country name (" + expectedCountryName + ") on selecting '" + countryCode + "' country code.");
-
+            assertEquals(defaults.getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"' -");
         }
     }
 
@@ -407,9 +382,8 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression", "desktop"})
 	public void defaultCountry(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		String selectedCountryName = registrationPage.getSelectedCountryName();
-        TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
-		// TypeUtils.assertTrueWithLogs(registrationPage.isFindMyAddressButtonVisible());
+        assertEquals(defaults.getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name -");
+		// assertTrue(registrationPage.isFindMyAddressButtonVisible());
 	}
 
     /*#23. Default selected countryCode*/
@@ -417,50 +391,40 @@ public class RegistrationTest extends AbstractTest{
     public void defaultCountryMobile(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
-        String selectedCountryName = registrationPage.getSelectedCountryName();
-        TypeUtils.assertTrueWithLogs(selectedCountryName.equals(defaults.getDefaultCountryName()), "Selected country by default is \"" + selectedCountryName + "\" but we expect \"" + defaults.getDefaultCountryName() + "\"");
-        // TypeUtils.assertTrueWithLogs(registrationPage.isFindMyAddressButtonVisible());
+        assertEquals(defaults.getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name -");
+        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
     }
 
     /* Password strength*/
     @Test(groups = {"registration", "regression", "desktop"})
     public void passwordStrength(){
-        ArrayList<String> results = new ArrayList<>();
         String resultMessage = "";
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaa", PasswordStrength.zero);
-        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAA", PasswordStrength.zero);
-        results = RegistrationPage.verifyPasswordStrength(results, "000000", PasswordStrength.zero);
-        results = RegistrationPage.verifyPasswordStrength(results, "0000aa", PasswordStrength.one);
-        results = RegistrationPage.verifyPasswordStrength(results, "0000AA", PasswordStrength.one);
-        results = RegistrationPage.verifyPasswordStrength(results, "00aaAA", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "@0aaAA", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "0000@@", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaAAA", PasswordStrength.one);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaa", PasswordStrength.one);
-        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAAAA", PasswordStrength.one);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaAA", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaa00", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "000000@@", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaAA", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "@@aaaaAA", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "@@00aaAA", PasswordStrength.four);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaaaaaa", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "AAAAAAAAAAAA", PasswordStrength.two);
-        results = RegistrationPage.verifyPasswordStrength(results, "00AAAAAAAAAA", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaaaaaa", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "aaaaaaaaaaAA", PasswordStrength.three);
-        results = RegistrationPage.verifyPasswordStrength(results, "@@aaaaaaaaAA", PasswordStrength.four);
-        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaaaaAA", PasswordStrength.four);
-        results = RegistrationPage.verifyPasswordStrength(results, "00aaaaaa@@AA", PasswordStrength.five);
-        for(String result:results){
-            if(!result.equals("passed")){
-                resultMessage += "<div>"+result+"</div>";
-            }
-        }
-        if(!resultMessage.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(resultMessage);
-        }
+        registrationPage.assertPasswordStrength("aaaaaa", PasswordStrength.zero);
+        registrationPage.assertPasswordStrength("AAAAAA", PasswordStrength.zero);
+        registrationPage.assertPasswordStrength("000000", PasswordStrength.zero);
+        registrationPage.assertPasswordStrength("0000aa", PasswordStrength.one);
+        registrationPage.assertPasswordStrength("0000AA", PasswordStrength.one);
+        registrationPage.assertPasswordStrength("00aaAA", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("@0aaAA", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("0000@@", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("aaaAAA", PasswordStrength.one);
+        registrationPage.assertPasswordStrength("aaaaaaaa", PasswordStrength.one);
+        registrationPage.assertPasswordStrength("AAAAAAAA", PasswordStrength.one);
+        registrationPage.assertPasswordStrength("aaaaaaAA", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("aaaaaa00", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("000000@@", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("00aaaaAA", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("@@aaaaAA", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("@@00aaAA", PasswordStrength.four);
+        registrationPage.assertPasswordStrength("aaaaaaaaaaaa", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("AAAAAAAAAAAA", PasswordStrength.two);
+        registrationPage.assertPasswordStrength("00AAAAAAAAAA", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("00aaaaaaaaaa", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("aaaaaaaaaaAA", PasswordStrength.three);
+        registrationPage.assertPasswordStrength("@@aaaaaaaaAA", PasswordStrength.four);
+        registrationPage.assertPasswordStrength("00aaaaaaaaAA", PasswordStrength.four);
+        registrationPage.assertPasswordStrength("00aaaaaa@@AA", PasswordStrength.five);
     }
 
 
@@ -482,9 +446,9 @@ public class RegistrationTest extends AbstractTest{
 //		// stage 3
 //		registrationPage.fillCountry(defaultCountryCode);
 //		boolean fillFieldsVisibleStage3 = registrationPage.isFindMyAddressButtonVisible();
-//        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage1);
+//        assertTrue(fillFieldsVisibleStage1);
 //        TypeUtils.assertFalse(fillFieldsVisibleStage2);
-//        TypeUtils.assertTrueWithLogs(fillFieldsVisibleStage3);
+//        assertTrue(fillFieldsVisibleStage3);
 //	}
 //
 //    /*#25. Enter zipcode - City/Address1/Address2/House number updated on Fill all fields click and are editable*/
@@ -816,8 +780,7 @@ public class RegistrationTest extends AbstractTest{
     public void usernameSuggestionNoSuggestion(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         String username=defaultUserData.getRandomUserData().getUsername();
-        String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData());
-        TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.equals("No username suggestion"), "Suggestion did not appear for unique username");
+        assertEquals("No username suggestion", registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData()), "Suggestion for unique username -");
     }
 
     /*#??. Suggestion appeared on entering already registered username*/
@@ -826,8 +789,8 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         String username=defaultUserData.getRegisteredUserData().getUsername();
         String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData());
-        TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.startsWith("This username is already in use. Suggested username is:"), "Username suggestion message doesn't contain preamble: " + usernameSuggestionMessage);
-        TypeUtils.assertTrueWithLogs(usernameSuggestionMessage.contains(username.toUpperCase()), "Username suggestion message doesn't contain '" + username + "': '" + usernameSuggestionMessage + "'");
+        assertTrue(usernameSuggestionMessage.startsWith("This username is already in use. Suggested username is:"), "(Actual: '"+usernameSuggestionMessage+"')Username suggestion message contains preamble -");
+        assertTrue(usernameSuggestionMessage.contains(username.toUpperCase()), "(Actual: '"+usernameSuggestionMessage+"')Username suggestion message contains '" + username + "' -");
     }
 
     /*#??. Suggestion filled out*/
@@ -835,8 +798,7 @@ public class RegistrationTest extends AbstractTest{
     public void usernameSuggestionClick(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         String username=defaultUserData.getRegisteredUserData().getUsername();
-        boolean result = registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
-        TypeUtils.assertTrueWithLogs(result, "Suggestion entered after click");
+        assertTrue(registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData()), "Suggestion entered after click");
     }
 
     /*#??. Suggestion disappers after refocus*/
@@ -847,7 +809,7 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
         registrationPage.clickUsernameField();
         WebDriverUtils.waitFor(1000);
-        TypeUtils.assertFalseWithLogs(registrationPage.isSuggestionVisible(), "Suggestion tooltip still visible after click");
+        assertFalse(registrationPage.isSuggestionVisible(), "Suggestion tooltip still visible after click");
     }
 
     /*#??. Field is editable after suggestion has been used*/
@@ -858,7 +820,7 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
         String newUsername = defaultUserData.getRandomUserData().getUsername();
         RegistrationPage.fillUsername(newUsername);
-        TypeUtils.assertTrueWithLogs(newUsername.equals(registrationPage.getFilledUsername()), "username can be reentered");
+        assertEquals(newUsername, registrationPage.getFilledUsername(), "Username can be reentered -");
     }
 
     /*#??. Suggestions are done on each Username field refocus*/
@@ -869,13 +831,13 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
         String newUsername = defaultUserData.getRandomUserData().getUsername();
         RegistrationPage.inputAndRefocusUsername(username);
-        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible second time");
+        assertTrue(registrationPage.isSuggestionVisible(), "Suggestion visible second time -");
         RegistrationPage.inputAndRefocusUsername(username);
-        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible third time");
+        assertTrue(registrationPage.isSuggestionVisible(), "Suggestion visible third time -");
         RegistrationPage.inputAndRefocusUsername(newUsername);
-        TypeUtils.assertFalseWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible on valid email  time");
+        assertFalse(registrationPage.isSuggestionVisible(), "Suggestion visible on valid email -");
         RegistrationPage.inputAndRefocusUsername(username);
-        TypeUtils.assertTrueWithLogs(RegistrationPage.isSuggestionVisible(), "Suggestion visible fourth time");
+        assertTrue(registrationPage.isSuggestionVisible(), "Suggestion visible fourth time");
     }
 
     //    /*NEGATIVE*/
@@ -888,8 +850,7 @@ public class RegistrationTest extends AbstractTest{
 		UserData registeredUserData=defaultUserData.getRegisteredUserData();
 		generatedUserData.setUsername(registeredUserData.getUsername());
 		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
-        String actualregressionStatus = ValidationUtils.validationStatusIs(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
-        TypeUtils.assertTrueWithLogs(actualregressionStatus.equals(ValidationUtils.PASSED), actualregressionStatus);
+        ValidationUtils.assertValidationStatus(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
 	}
 
     /*3. Try to use invalid bonus code*/
@@ -899,7 +860,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData = defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage = (RegistrationPage) registrationPage.registerUser(userData, "invalid", Page.registrationPage);
-        TypeUtils.assertTrueWithLogs(registrationPage.getPortletErrorMessage().equals("Coupon code is not found or not available"));
+        assertEquals("Coupon code is not found or not available", registrationPage.getPortletErrorMessage(), "Invalid bonus error message -");
     }
 
 //    /*#6. Try to clickLogin registration form without accepting T&C (without checking check box)*/
@@ -909,7 +870,7 @@ public class RegistrationTest extends AbstractTest{
 //		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 //		registrationPage=(RegistrationPage) registrationPage.registerUser(userData, false, false, false);
 //		boolean checkboxTermsAndConditionsregressionErrorVisible=registrationPage.checkboxTermsAndConditionsregressionErrorVisible();
-//        TypeUtils.assertTrueWithLogs(checkboxTermsAndConditionsregressionErrorVisible);
+//        assertTrue(checkboxTermsAndConditionsregressionErrorVisible);
 //	}
 
     /*regression*/
@@ -944,66 +905,28 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*#4. Email and email confirmation do not match*/
-    @Test(groups = {"registration","regression","desktop"})
+    @Test(groups = {"registration","regression"})
     public void emailConfirmationValidation(){
-        String message="";
-        String xpath = RegistrationPage.getEmailVerificationXpath();;
         String id = RegistrationPage.getEmailVerificationName();
-        ArrayList<String> results = new ArrayList<>();
-        UserData generatedUserData=defaultUserData.getRandomUserData();
-        String email = generatedUserData.getEmail();
+        String email = defaultUserData.getRandomUserData().getEmail();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageAllSteps().clickEmailConfirmation();
-        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_NONE, ""));
-        String tooltip = "Please retype your email.";
-        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
-        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
+        if(WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_DESKTOP)){
+            registrationPage.registrationPageAllSteps().clickEmailConfirmation();
+            ValidationUtils.assertValidationStatus(id, ValidationUtils.STATUS_NONE, "");
+            ValidationUtils.assertTooltipStatus(id, ValidationUtils.STATUS_PASSED, "");
+            ValidationUtils.assertTooltipText(id, "Please retype your email.", "");
+        }
         registrationPage.fillEmail(email);
-        ValidationUtils.inputFieldAndRefocus(xpath, email);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
-        for(String result:results){
-            if(!result.equals(ValidationUtils.PASSED)){
-                message += "<div>" + result + "</div>";
-            }
-        }
-        if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(message);
-        }
-    }
-
-    /*#4. Email and email confirmation do not match*/
-    @Test(groups = {"registration","regression","mobile"})
-    public void emailConfirmationValidationMobile(){
-        String message="";
-        String xpath = RegistrationPage.getEmailVerificationXpath();;
-        String id = RegistrationPage.getEmailVerificationName();
-        ArrayList<String> results = new ArrayList<>();
-        UserData generatedUserData=defaultUserData.getRandomUserData();
-        String email = generatedUserData.getEmail();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.fillEmail(email);
-        ValidationUtils.inputFieldAndRefocus(xpath, email);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
-        for(String result:results){
-            if(!result.equals(ValidationUtils.PASSED)){
-                message += "<div>" + result + "</div>";
-            }
-        }
-        if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(message);
-        }
+        ValidationUtils.inputFieldAndRefocus(RegistrationPage.getEmailVerificationXpath(), email);
+        ValidationUtils.validateStatusAndToolTips(ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
     }
 
     @Test(groups = {"registration","regression"})
     public void emailDoNotMatch(){
-        String message = "Emails dont match";
-        UserData generatedUserData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.fillEmail(generatedUserData.getEmail());
+        registrationPage.fillEmail(defaultUserData.getRandomUserData().getEmail());
         registrationPage.fillEmailVerificationAndRefocus(emailValidationRule.generateValidString());
-        String tooltipMessageText=ValidationUtils.getTooltipText(RegistrationPage.getEmailVerificationName());
-        boolean usernameUsedMessageDisplayed=tooltipMessageText.equals(message);
-        TypeUtils.assertTrueWithLogs(usernameUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+tooltipMessageText+"'");
+        assertEquals("Emails dont match", ValidationUtils.getTooltipText(RegistrationPage.getEmailVerificationName()), "Tooltip text -");
     }
 
     @Test(groups = {"registration","regression"})
@@ -1072,86 +995,36 @@ public class RegistrationTest extends AbstractTest{
 		registrationPage.validatePassword(passwordValidationRule,defaultUserData.getRandomUserData());
 	}
 
-    @Test(groups = {"registration","regression", "desktop"})
+    @Test(groups = {"registration","regression"})
     public void passwordConfirmationValidation(){
-        String message="";
-        String xpath = RegistrationPage.FIELD_PASSWORD_VERIFICATION_XP;
         String id = RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME;
-        ArrayList<String> results = new ArrayList<>();
         UserData generatedUserData=defaultUserData.getRandomUserData();
         String password = generatedUserData.getPassword();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.clickPasswordConfirmation();
-        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_NONE, ""));
-        String tooltip = "Please reytpe your password.";
-        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_PASSED, ""));
-        results.add(ValidationUtils.tooltipTextIs(id, tooltip, ""));
-        registrationPage.fillPassword(password);
-        ValidationUtils.inputFieldAndRefocus(xpath, password);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, xpath, id, password, ValidationUtils.STATUS_PASSED);
-        for(String result:results){
-            if(!result.equals(ValidationUtils.PASSED)){
-                message += "<div>" + result + "</div>";
-            }
+        if(WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)){
+            registrationPage.registrationPageStepThree(generatedUserData);
         }
-        if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(message);
-        }
-    }
-
-    @Test(groups = {"registration","regression", "mobile"})
-    public void passwordConfirmationValidationMobile(){
-        String message="";
-        String xpath = RegistrationPage.FIELD_PASSWORD_VERIFICATION_XP;
-        String id = RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME;
-        ArrayList<String> results = new ArrayList<>();
-        UserData generatedUserData=defaultUserData.getRandomUserData();
-        String password = generatedUserData.getPassword();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageStepThree(generatedUserData);
         registrationPage.fillPassword(password);
         registrationPage.fillPasswordVerificationAndRefocus("");
-        results.add(ValidationUtils.validationStatusIs(id, ValidationUtils.STATUS_FAILED, "empty"));
-        String tooltip = "Please retype your password.";
-        results.add(ValidationUtils.tooltipStatusIs(id, ValidationUtils.STATUS_FAILED, "empty"));
-        results.add(ValidationUtils.tooltipTextIs(id, tooltip, "empty"));
+        ValidationUtils.assertValidationStatus(id, ValidationUtils.STATUS_FAILED, "empty");
+        ValidationUtils.assertTooltipStatus(id, ValidationUtils.STATUS_FAILED, "empty");
+        ValidationUtils.assertTooltipText(id, "Please retype your password.", "empty");
         registrationPage.fillPasswordVerificationAndRefocus(password);
-        results = ValidationUtils.validateStatusAndToolTips(results, ValidationUtils.STATUS_NONE, id, password, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
-        for(String result:results){
-            if(!result.equals(ValidationUtils.PASSED)){
-                message += "<div>" + result + "</div>";
-            }
-        }
-        if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(message);
-        }
+        ValidationUtils.validateStatusAndToolTips(ValidationUtils.STATUS_NONE, id, password, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
     }
 
     /*#5. Password & Confirmation do not match*/
-    @Test(groups = {"registration","regression", "desktop"})
+    @Test(groups = {"registration","regression"})
     public void passwordDoNotMatch(){
         UserData generatedUserData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.fillPassword(generatedUserData.getPassword());
-        registrationPage.fillPasswordVerification(passwordValidationRule.generateValidString());
-        String errorMessageText=ValidationUtils.getTooltipText(RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME);
-        boolean emailUsedMessageDisplayed=errorMessageText.equals("Sorry, Your passwords don't match");
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected 'Sorry, Your passwords don't match', Actual " + "'"+errorMessageText+"'");
-    }
-
-    /*#5. Password & Confirmation do not match*/
-    @Test(groups = {"registration","regression", "mobile"})
-    public void passwordDoNotMatchMobile(){
-        String message = "Passwords are not the same";
-        UserData generatedUserData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageStepThree(generatedUserData);
+        if(WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)){
+            registrationPage.registrationPageStepThree(generatedUserData);
+        }
         registrationPage.fillPassword(generatedUserData.getPassword());
         String validPass = passwordValidationRule.generateValidString();
         registrationPage.fillPasswordVerificationAndRefocus(validPass);
-        String errorMessageText=ValidationUtils.getTooltipText(RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME);
-        boolean emailUsedMessageDisplayed=errorMessageText.equals(message);
-        TypeUtils.assertTrueWithLogs(emailUsedMessageDisplayed, "Expected '"+message+"', Actual " + "'"+errorMessageText+"', for value '"+validPass+"'");
+        assertEquals("Passwords are not the same", ValidationUtils.getTooltipText(RegistrationPage.FIELD_PASSWORD_VERIFICATION_NAME), "Tooltip text for '"+validPass+"' -");
     }
 
 //    @Test(groups = {"registration","regression"})

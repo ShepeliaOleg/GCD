@@ -10,12 +10,13 @@ public class WebDriverObject{
 	public static WebDriver webDriver;
     protected static String baseUrl;
     protected static WebDriver logDriver;
+
     protected static String platform;
 
     protected static String timestamp = "noLogs";
-    protected final static String PLATFORM_DESKTOP = "desktop";
-    protected final static String PLATFORM_MOBILE = "mobile";
 
+    public final static String PLATFORM_DESKTOP = "desktop";
+    public final static String PLATFORM_MOBILE = "mobile";
     public static String getBaseUrl() {
         return baseUrl;
     }
@@ -27,6 +28,10 @@ public class WebDriverObject{
 	public static void setWebDriver(WebDriver webDriver){
 		WebDriverObject.webDriver=webDriver;
 	}
+
+    public static String getPlatform() {
+        return platform;
+    }
 
 
 }

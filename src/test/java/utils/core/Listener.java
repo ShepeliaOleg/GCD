@@ -43,6 +43,7 @@ public class Listener extends TestListenerAdapter{
 
     @Override
     public void onTestSuccess(ITestResult iTestResult){
+        AbstractTest.validate();
         createScreenshot(iTestResult);
         System.out.println(iTestResult.getName()+ "--Test method passed\n");
     }

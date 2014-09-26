@@ -12,6 +12,7 @@ import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
 
 import java.util.ArrayList;
@@ -150,15 +151,15 @@ public class RegistrationPage extends AbstractPage{
     }
 
     protected static void fillBirthDay(String birthDay){
-        WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_BIRTHDAY_NAME), birthDay);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHDAY_NAME), birthDay);
     }
 
     protected static void fillBirthMonth(String birthMonth){
-        WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_BIRTHMONTH_NAME), birthMonth);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHMONTH_NAME), birthMonth);
     }
 
     protected static void fillBirthYear(String birthYear){
-        WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), birthYear);
+        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), birthYear);
     }
 
     public static void fillEmail(String email){
@@ -312,7 +313,7 @@ public class RegistrationPage extends AbstractPage{
         ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_USERNAME_NAME), username);
     }
 
-    public static boolean isSuggestionVisible(){
+    public boolean isSuggestionVisible(){
         return WebDriverUtils.isVisible(LABEL_USERNAME_SUGGESTION_TOOLTIP_XP, 0);
     }
     public static String getFilledUsername(){
@@ -327,31 +328,19 @@ public class RegistrationPage extends AbstractPage{
         return WebDriverUtils.getElementText(PASSWORD_STRENGTH_TOOLTIP);
     }
 
-    public static String passwordStrengthEquals(String value, PasswordStrength expectedStrength){
+    public static void assertPasswordStrengthStatus(String value, PasswordStrength expectedStrength){
         fillPassword(value);
-        String actualStrength = getPasswordStrength();
-        if(expectedStrength.toString().equals(actualStrength)){
-            return "passed";
-        }else {
-            return "Value '"+value+"', expected '"+expectedStrength+"', but actual '"+actualStrength+"'";
-        }
+        AbstractTest.assertEquals(expectedStrength.toString(), getPasswordStrength(), "Password strength status for '"+value+"'");
     }
 
-    public static String passwordStrengthTooltipEquals(String value, PasswordStrength expectedStrength){
+    public static void assertPasswordStrengthTooltip(String value, PasswordStrength expectedStrength){
         WebDriverUtils.waitFor(500);
-        String actualTooltip = getPasswordStrengthTooltip();
-        String expectedTooltip = expectedStrength.getTooltip();
-        if(expectedTooltip.equals(actualTooltip)){
-            return "passed";
-        }else {
-            return "Value '"+value+"', expected '"+expectedTooltip+"', but actual '"+actualTooltip+"'";
-        }
+        AbstractTest.assertEquals(expectedStrength.getTooltip(), getPasswordStrengthTooltip(), "Password strength tooltip for '"+value+"'");
     }
 
-    public static ArrayList<String> verifyPasswordStrength(ArrayList results, String value, PasswordStrength expectedStrength){
-        results.add(passwordStrengthEquals(value, expectedStrength));
-        results.add(passwordStrengthTooltipEquals(value, expectedStrength));
-        return results;
+    public void assertPasswordStrength(String value, PasswordStrength expectedStrength){
+        assertPasswordStrengthStatus(value, expectedStrength);
+        assertPasswordStrengthTooltip(value, expectedStrength);
     }
 
     /* Fields validation */

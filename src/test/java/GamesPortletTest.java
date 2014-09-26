@@ -9,13 +9,8 @@ import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
 public class GamesPortletTest extends AbstractTest {
 
 	@Autowired
@@ -30,7 +25,7 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"regression", "smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
-		TypeUtils.assertTrueWithLogs(gamesPortletPage.playDemoAndValidateUrl(), "Game url is valid");
+		validateTrue(gamesPortletPage.playDemoAndValidateUrl(), "Game url is valid");
     }
 
 //	/*2.1. Refine By: Top level*/
@@ -920,7 +915,6 @@ public class GamesPortletTest extends AbstractTest {
         gamesPortletPage = gamesPortletPage.clickPreviousButton();
         assertTrue(gamesPortletPage.isGamePresent(firstPageGame), "Game from first page visible");
         assertFalse(gamesPortletPage.isGamePresent(secondPageGame), "Game from second page visible");
-        validate();
 	}
 
 //	/*15.3. Navigation types - To Fit*/
@@ -983,8 +977,7 @@ public class GamesPortletTest extends AbstractTest {
 	public void gameCanBeStartedFromListView(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
-        boolean correctGamePopupUrl = gameLaunchPopup.checkUrlAndClose();
-        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
+        validateTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
 	}
 
 }

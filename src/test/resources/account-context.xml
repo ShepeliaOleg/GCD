@@ -9,8 +9,8 @@
         <property name="gender" value="M"/>
         <property name="firstName" value="Player"/>
         <property name="lastName" value="Automation"/>
-        <property name="birthDay" value="1"/>
-        <property name="birthMonth" value="January"/>
+        <property name="birthDay" value="01"/>
+        <property name="birthMonth" value="01"/>
         <property name="birthYear" value="1985"/>
         <property name="email" value="test@playtech.com"/>
         <property name="country" value="ES"/>

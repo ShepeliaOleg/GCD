@@ -3,6 +3,7 @@ package pageObjects.external.ims;
 import enums.Page;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,6 +66,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
     private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
+    private static final String REFERRER_XP=                                "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
 
 	public IMSPlayerDetailsPage(){
 		super(new String[]{ROOT_XP, BLOCK_XP, BALANCES_XP});
@@ -111,9 +113,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 
     public void checkAffiliateData(String advertiser, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
         checkAdvertiser(advertiser+" ("+profile+")");
-
         checkUrl(url);
-
         for (String item : parseCreferrer(creferrer)) {
             List<String> creferrerNameValue = getCreferrerNameValue(item);
             if (creferrerIsExists) {
@@ -122,7 +122,6 @@ public class IMSPlayerDetailsPage extends AbstractPage{
                 checkNoCreferrerCustomField(creferrerNameValue.get(0));
             }
         }
-
         checkBanner(advertiser, banner, profile);
     }
 
@@ -133,35 +132,24 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private void checkBanner(String advertiser, String banner, String profile){
         WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
         IMSAffiliateIframe imsAffiliateIframe = new IMSAffiliatePage().navigateToAffiliateIframe();
-        String imsProfile = imsAffiliateIframe.getLabelProfile();
-        String imsBanner =  imsAffiliateIframe.getLabelBanner();
-        if(!imsBanner.equals(banner)){
-            WebDriverUtils.runtimeExceptionWithUrl("Banner parameter was not correct - <div>Expected: " + banner + "</div><div>Actual: " + imsBanner + "</div>");
-        }
-        if(!imsProfile.equals(profile)){
-            WebDriverUtils.runtimeExceptionWithUrl("Profile parameter was not correct - <div>Expected: " + profile + "</div><div>Actual: " + imsProfile + "</div>");
-        }
+        AbstractTest.assertEquals(banner, imsAffiliateIframe.getLabelBanner(), "Banner -");
+        AbstractTest.assertEquals(profile, imsAffiliateIframe.getLabelProfile(), "Profile -");
     }
 
     private void checkAdvertiser(String advertiser){
-        String imsAdvertiser=getAdvertiser();
-        if(!advertiser.equals(imsAdvertiser)){
-            WebDriverUtils.runtimeExceptionWithUrl("Advertiser was wrong. <div>Expected: " + advertiser + "Actual: " + imsAdvertiser + "</div>");
-        }
+        AbstractTest.assertEquals(advertiser, getAdvertiser(), "Advertiser -");
     }
 
     private String getAdvertiser(){
         return getTextAndTrim(LABEL_ADVERTISER);
     }
+
     private void checkUrl(String url) {
-        String xpath = "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
-        if (WebDriverUtils.isElementVisible(xpath, 1)) {
-            String imsUrl = WebDriverUtils.getAttribute(xpath, "href");
-            if(!("javascript:displ('" + url + "');").equals(imsUrl)){
-                WebDriverUtils.runtimeExceptionWithUrl("Referrer URL is wrong. <div>Expected: " + url + "Actual: " + imsUrl + "</div>");
-            }
+        if (WebDriverUtils.isElementVisible(REFERRER_XP, 1)) {
+            String imsUrl = WebDriverUtils.getAttribute(REFERRER_XP, "href");
+            AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url -");
         } else {
-            WebDriverUtils.runtimeExceptionWithUrl("Referrer URL is not passed to IMS. Element not found by xpath: " + xpath);
+            AbstractTest.addError("Referrer URL is not by xpath: "+REFERRER_XP);
         }
     }
 
@@ -169,28 +157,21 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         String nameXpath = "*[contains(text(), '"+name+"')]";
         if (!WebDriverUtils.isVisible("//"+ nameXpath, 0)){
             WebDriverUtils.click(LINK_CUSTOM_FIELDS);
-            if (WebDriverUtils.isVisible("//" + nameXpath, 1)) {
-                WebDriverUtils.runtimeExceptionWithUrl("Existing custom field was not found in IMS by xpath: '//" + nameXpath + "'");
-            }
+            AbstractTest.assertTrue(WebDriverUtils.isVisible("//" + nameXpath, 1), "Custom field '//" + nameXpath + "' is visible -");
         }
-        if(!WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]")){
-            WebDriverUtils.runtimeExceptionWithUrl("Parameters in custom fields were not found");
-        }
+        AbstractTest.assertTrue(WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]"), "Parameters in custom fields are present -");
     }
 
     private void checkNoCreferrerCustomField(String name){
-        String nameXpath = "*[contains(text(), '"+name+"')]";
-        if (!WebDriverUtils.isVisible("//"+ nameXpath, 0)){
+        String nameXpath = "//*[contains(text(), '"+name+"')]";
+        if (!WebDriverUtils.isVisible(nameXpath, 0)){
             WebDriverUtils.click(LINK_CUSTOM_FIELDS);
         }
-        if (WebDriverUtils.isVisible("//"+ nameXpath, 1)){
-            WebDriverUtils.runtimeExceptionWithUrl("Not existing custom field was created in IMS by affiliate request with creferrer parameter.");
-        }
+        AbstractTest.assertFalse(WebDriverUtils.isVisible(nameXpath, 1), "Non-existing custom field was created");
     }
 
     private List<String> parseCreferrer(String creferrerFull) {
         List<String> creferrerList = new ArrayList<>();
-
         if (creferrerFull.contains("%3b")) {
             creferrerList = Arrays.asList(creferrerFull.split("%3b"));
         } else {
@@ -205,6 +186,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         }
         return Arrays.asList(creferrer.split(":"));
     }
+
 	private String getUsername(){
 		return getTextAndTrim(LABEL_USERNAME);
 	}

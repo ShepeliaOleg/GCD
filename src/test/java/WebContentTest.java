@@ -182,7 +182,7 @@ public class WebContentTest extends AbstractTest{
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image);
         loginPopup.close();
-        TypeUtils.assertTrueWithLogs(!WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
     }
 
     /*Banner - Guest login popup cancel image slide 2*/
@@ -192,7 +192,7 @@ public class WebContentTest extends AbstractTest{
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image);
         loginPopup.close();
-        TypeUtils.assertTrueWithLogs(!WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
     }
 
     /*Banner - Player play image slide 1*/

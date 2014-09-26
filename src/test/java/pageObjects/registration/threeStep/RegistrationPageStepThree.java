@@ -71,6 +71,10 @@ public class RegistrationPageStepThree extends RegistrationPage {
         WebDriverUtils.setCheckBoxState(CHECKBOX_TERMS_AND_CONDITION_XP, state);
     }
 
+    public static boolean getTermsCheckbox(){
+        return WebDriverUtils.getCheckBoxState(CHECKBOX_TERMS_AND_CONDITION_XP);
+    }
+
     public boolean setTermsCheckbox(){
         return WebDriverUtils.getCheckBoxState(CHECKBOX_TERMS_AND_CONDITION_XP);
     }
