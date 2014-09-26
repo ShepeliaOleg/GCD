@@ -245,7 +245,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*1. Try to clickLogin FP form with incorrect email (valida but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void invalidPasswordRecovery(){
-        UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
+        UserData userData=defaultUserData.getRegisteredUserData();
         userData.setEmail("incorrectemail@mailService.com");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -256,7 +256,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyDateOfBirthLessThan18(){
-        UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
+        UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setBirthYear("2000");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -267,7 +267,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectDateOfBirth(){
-        UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
+        UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setBirthDay("23"); // set incorrect date of birth
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -278,7 +278,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*4. Try to clickLogin FP form with not existing username*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectUsername(){
-        UserData userData=defaultUserData.getRegisteredUserData().cloneUserData();
+        UserData userData=defaultUserData.getRegisteredUserData();
 		userData.setUsername("incorrectUsername"); // set incorrect username
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -324,7 +324,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*7. When you are logged in with temporary password and on forced Change Password form enters incorrect old password you are shown an error.*/
 	@Test(groups = {"regression"})
 	public void incorrectOldPassword(){
-		UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
+		UserData userData = defaultUserData.getForgotPasswordUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());

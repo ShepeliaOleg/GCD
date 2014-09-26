@@ -34,15 +34,15 @@ public class ForgotPasswordPopup extends AbstractPopup{
     }
 
 	private static void fillBirthDay(String birthDay){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_BIRTH_DAY, birthDay);
+		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTH_DAY, birthDay);
 	}
 
 	private static void fillBirthMonth(String birthMonth){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_BIRTH_MONTH, birthMonth);
+		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTH_MONTH, birthMonth);
 	}
 
 	private static void fillBirthYear(String birthYear){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_BIRTH_YEAR, birthYear);
+		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTH_YEAR, birthYear);
 	}
 
     public void clickSubmit(){
