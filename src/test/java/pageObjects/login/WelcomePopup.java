@@ -8,12 +8,7 @@ import utils.WebDriverUtils;
  * Date: 4/19/13
  */
 
-public class WelcomePopup extends AbstractPopup{
-    public static final String LABEL_CONTENTS = ROOT_XP + "//p[contains(text(), 'Welcome, Player!')]";
-
-	public WelcomePopup(){
-		super(new String[]{});
-	}
+public class WelcomePopup extends AbstractPopup {
 }
 
 

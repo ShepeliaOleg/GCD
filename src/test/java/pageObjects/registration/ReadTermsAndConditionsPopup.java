@@ -9,10 +9,10 @@ import pageObjects.core.AbstractPopup;
 
 public class ReadTermsAndConditionsPopup extends AbstractPopup{
 
-	public static final String TITLE_XP=ROOT_XP + "//strong[contains(text(),'TERMS AND CONDITIONS')]";
+	public static final String ROOT_XP = AbstractPopup.ROOT_XP + "//strong[contains(text(),'TERMS AND CONDITIONS')]";
 
 	public ReadTermsAndConditionsPopup(){
-		super(new String[]{TITLE_XP});
+		super(new String[]{ROOT_XP});
 	}
 
 }

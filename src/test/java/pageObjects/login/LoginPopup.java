@@ -17,6 +17,7 @@ import utils.WebDriverUtils;
  */
 
 public class LoginPopup extends AbstractPopup{
+
     public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
     private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
     private static final String CHECKBOX_REMEMBERME_XP=		ROOT_XP + "//*[@id='rememberme']";

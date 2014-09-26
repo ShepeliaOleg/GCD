@@ -32,18 +32,38 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
 	}
 
     protected static void validate() {
-        String message = "";
-        for(String result:results){
-            message += "<div>" + result + "</div>";
-        }
+        String message = collectResults();
         if(!message.isEmpty()){
             WebDriverUtils.runtimeExceptionWithUrl(message);
         }
     }
 
+    protected static String collectResults() {
+        String message = "";
+        for(String result:results){
+            message += "<div>" + result + "</div>";
+        }
+        return message;
+    }
+
+    protected void addError(String message){
+        results.add(message);
+    }
+
+    protected void failTest(String message){
+        addError(message);
+        validate();
+    }
+
     protected void assertTrue(boolean actual, String message){
         if(!actual){
-            results.add("Should be true, but it is false. "+message);
+            addError("Should be true, but it is false. "+message);
+        }
+    }
+
+    protected void validateTrue(boolean actual, String message){
+        if(!actual){
+            failTest("Should be true, but it is false. "+message);
         }
     }
 
@@ -53,10 +73,20 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         }
     }
 
+    protected void validateFalse(boolean actual, String message){
+        assertFalse(actual, message);
+        validate();
+    }
+
     protected void assertEquals(Object expected, Object actual, String message){
         if(!expected.equals(actual)){
             results.add("Should be equal: Expected '" + expected.toString() + "', actual '" + actual.toString() + "'. " + message);
         }
+    }
+
+    protected void validateEquals(Object expected, Object actual, String message){
+        assertEquals(expected, actual, message);
+        validate();
     }
 
     protected void assertNotEquals(Object expected, Object actual, String message){
@@ -64,4 +94,11 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
             results.add("Should not be equal: Expected '"+expected.toString()+"', actual '"+actual.toString()+"'. "+message);
         }
     }
+
+    protected void validateNotEquals(Object expected, Object actual, String message){
+        assertNotEquals(expected, actual, message);
+        validate();
+    }
+
+
 }

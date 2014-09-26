@@ -34,7 +34,7 @@ import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
-import pageObjects.WebContentPage;
+import pageObjects.webcontent.WebContentPage;
 import springConstructors.UserData;
 import utils.core.WebDriverObject;
 
@@ -208,23 +208,23 @@ public class NavigationUtils extends WebDriverObject{
                 tooLongError();
             }
 			return null;
-        }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.AFTER_REG_ROOT_XP, 0)){
+        }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)){
             return processAfterRegistrationPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(AbstractPopup.BUTTON_CLOSE_XP, 0)&&!WebDriverUtils.isVisible(AbstractPopup.BUTTON_ACCEPT_XP, 0)){
-		    return processWelcomePopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
             return processLoginPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.TITLE_XP, 0)){
-		    return processReadTermsAndConditionsPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)){
+        }else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.ROOT_XP, 0)){
+            return processReadTermsAndConditionsPopup(exceptPage);
+        }else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)){
             return processTermsAndConditionsPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(ChangePasswordPopup.BUTTON_SUBMIT_XP, 0)){
+        }else if(WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)){
             return processChangePasswordPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)){
-		    return processOkBonus(exceptPage);
-		}else if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
-			return processAcceptDecline(exceptPage);
-		}else{
+        }else if(WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)){
+            return processOkBonus(exceptPage);
+        }else if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
+            return processAcceptDecline(exceptPage);
+        }else if(WebDriverUtils.isVisible(WelcomePopup.ROOT_XP, 0)){
+            return processWelcomePopup(exceptPage);
+        }else{
 			return null;
 		}
 	}
@@ -259,7 +259,7 @@ public class NavigationUtils extends WebDriverObject{
             return afterRegistrationPopup;
         }else{
             afterRegistrationPopup.closePopup();
-            WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.AFTER_REG_ROOT_XP);
+            WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.ROOT_XP);
             return null;
         }
     }
@@ -270,7 +270,7 @@ public class NavigationUtils extends WebDriverObject{
             return readTermsAndConditionsPopup;
         }else{
             readTermsAndConditionsPopup.closePopup();
-            WebDriverUtils.waitForElementToDisappear(ReadTermsAndConditionsPopup.TITLE_XP);
+            WebDriverUtils.waitForElementToDisappear(ReadTermsAndConditionsPopup.ROOT_XP);
             return null;
         }
     }
