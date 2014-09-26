@@ -2,6 +2,7 @@ package pageObjects.external.ims;
 
 import enums.Page;
 import pageObjects.core.AbstractPage;
+import springConstructors.AffiliateData;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -111,9 +112,16 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 
     public void checkAffiliateData(String advertiser, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
         checkAdvertiser(advertiser+" ("+profile+")");
-
         checkUrl(url);
+        checkCreferrer(creferrer, creferrerIsExists);
+        checkBanner(advertiser, banner, profile);
+    }
 
+    public void  checkCreferrer(String creferrer) {
+        checkCreferrer(creferrer, true);
+    }
+
+    private void checkCreferrer(String creferrer, boolean creferrerIsExists) {
         for (String item : parseCreferrer(creferrer)) {
             List<String> creferrerNameValue = getCreferrerNameValue(item);
             if (creferrerIsExists) {
@@ -122,8 +130,6 @@ public class IMSPlayerDetailsPage extends AbstractPage{
                 checkNoCreferrerCustomField(creferrerNameValue.get(0));
             }
         }
-
-        checkBanner(advertiser, banner, profile);
     }
 
     public void checkAffiliateData(String advertiser){
@@ -169,7 +175,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         String nameXpath = "*[contains(text(), '"+name+"')]";
         if (!WebDriverUtils.isVisible("//"+ nameXpath, 0)){
             WebDriverUtils.click(LINK_CUSTOM_FIELDS);
-            if (WebDriverUtils.isVisible("//" + nameXpath, 1)) {
+            if (!WebDriverUtils.isVisible("//" + nameXpath, 1)) {
                 WebDriverUtils.runtimeExceptionWithUrl("Existing custom field was not found in IMS by xpath: '//" + nameXpath + "'");
             }
         }
@@ -191,8 +197,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private List<String> parseCreferrer(String creferrerFull) {
         List<String> creferrerList = new ArrayList<>();
 
-        if (creferrerFull.contains("%3b")) {
-            creferrerList = Arrays.asList(creferrerFull.split("%3b"));
+        if (creferrerFull.contains(AffiliateData.ASCII_CODE_SEMICOLON)) {
+            creferrerList = Arrays.asList(creferrerFull.split(AffiliateData.ASCII_CODE_SEMICOLON));
         } else {
             creferrerList.add(creferrerFull);
         }
@@ -203,7 +209,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         if (!creferrer.contains(":")) {
             WebDriverUtils.runtimeExceptionWithUrl("Creferrer should be properly defined as 'name:value' pair. Actual creferrer value is '" + creferrer + "'");
         }
-        return Arrays.asList(creferrer.split(":"));
+        return Arrays.asList(creferrer.split(AffiliateData.ASCII_CODE_COLON));
     }
 	private String getUsername(){
 		return getTextAndTrim(LABEL_USERNAME);

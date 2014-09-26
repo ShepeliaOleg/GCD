@@ -162,7 +162,7 @@ public class IMS extends WebDriverObject{
     }
 
     public void validateAffiliate(String username, AffiliateData affiliateData, boolean creferrerIsExists) {
-        validateAffiliate(username, affiliateData.getAdvertiser(), affiliateData.getBanner(), affiliateData.getProfile(), affiliateData.getUrl(), affiliateData.getCreferer(), creferrerIsExists);
+        validateAffiliate(username, affiliateData.getAdvertiser(), affiliateData.getBanner(), affiliateData.getProfile(), affiliateData.getUrl(), affiliateData.getCreferrer(), creferrerIsExists);
     }
 
     private void validateAffiliate(String username, String advert, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
@@ -171,6 +171,10 @@ public class IMS extends WebDriverObject{
 
     private void validateNoAffiliate(String username, String advertiser){
         navigateToPlayedDetails(username).checkAffiliateData(advertiser);
+    }
+
+    public void validateCreferrer(String username, String creferrer) {
+        navigateToPlayedDetails(username).checkCreferrer(creferrer);
     }
 
 	public IMSPlayerDetailsPage navigateToPlayedDetails(String username){

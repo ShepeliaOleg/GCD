@@ -43,7 +43,8 @@
         <constructor-arg value="v2"/>                           <!--banner-->
         <constructor-arg value="v3"/>                           <!--profile-->
         <constructor-arg value="v4"/>                           <!--referrerUrl-->
-        <constructor-arg value="Ctag:12333"/>                   <!--creferrer single-->
-        <constructor-arg value="Ctag:111%3btrackingid5:222"/>   <!--creferrer multiple (%3b)-->
+        <constructor-arg value="Ctag:123"/>                     <!--creferrer1-->
+        <constructor-arg value="trackingid5:456"/>              <!--creferrer2-->
+        <constructor-arg value="Favourite Game:Poker"/>         <!--creferrer registration portlet property value-->
     </bean>
 </beans>

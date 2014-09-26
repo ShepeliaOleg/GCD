@@ -6,26 +6,32 @@ public class AffiliateData {
     private String banner;
     private String profile;
     private String url;
-    private String creferer;
-    private String crefererSingle;
-    private String crefererMultiple;
+    private String creferrer;
+    private String creferrer1;
+    private String creferrer2;
+    private String creferrerRegistrationPortletProperty;
 
-    public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String crefererSingle, String crefererMultiple) {
+    public static final String ASCII_CODE_COMMA =      "%2C";    // ,
+    public static final String ASCII_CODE_COLON =      "%3A";    // :
+    public static final String ASCII_CODE_SEMICOLON =  "%3B";    // ;
+
+    public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String creferrer1, String creferrer2, String creferrerRegistrationPortletProperty) {
         this.defaultAdvertiser = defaultAdvertiser;
         this.advertiser = advertiser;
         this.banner = banner;
         this.profile = profile;
         this.url = url;
-        this.crefererSingle = crefererSingle;
-        this.crefererMultiple = crefererMultiple;
+        this.creferrer1 = creferrer1;
+        this.creferrer2 = creferrer2;
+        this.creferrerRegistrationPortletProperty = creferrerRegistrationPortletProperty;
     }
 
-    public AffiliateData(String advertiser, String banner, String profile, String url, String creferer) {
+    public AffiliateData(String advertiser, String banner, String profile, String url, String creferrer) {
         this.advertiser = advertiser;
         this.banner = banner;
         this.profile = profile;
         this.url = url;
-        this.creferer = creferer;
+        this.creferrer = creferrer;
     }
 
     public String getDefaultAdvertiser() {
@@ -68,39 +74,69 @@ public class AffiliateData {
         this.url = url;
     }
 
-    public String getCreferer() {
-        return creferer;
+    public String getCreferrer() {
+        return creferrer;
     }
 
-    public void setCreferer(String creferer) {
-        this.creferer = creferer;
+    public void setCreferrer(String creferrer) {
+        this.creferrer = creferrer;
+    }
+
+    public String getCreferrer1() {
+        return creferrer1;
+    }
+
+    public void setCreferrer1(String creferrer1) {
+        this.creferrer1 = creferrer1;
+    }
+
+    public String getCreferrer2() {
+        return creferrer2;
+    }
+
+    public void setCreferrer2(String creferrer2) {
+        this.creferrer2 = creferrer2;
     }
 
     public String getCrefererSingle() {
-        return crefererSingle;
+        return creferrer1;
     }
 
-    public void setCrefererSingle(String crefererSingle) {
-        this.crefererSingle = crefererSingle;
+    private String getCrefererMultiple() {
+        return creferrer1 + ASCII_CODE_SEMICOLON + creferrer2;
     }
 
-    public String getCrefererMultiple() {
-        return crefererMultiple;
+    public String getCreferrerRegistrationPortletProperty() {
+        return creferrerRegistrationPortletProperty;
     }
 
-    public void setCrefererMultiple(String crefererMultiple) {
-        this.crefererMultiple = crefererMultiple;
+    public void setCreferrerRegistrationPortletProperty(String creferrerRegistrationPortletProperty) {
+        this.creferrerRegistrationPortletProperty = creferrerRegistrationPortletProperty;
     }
 
     public String getRelativeURL() {
-        return "?advertiser="+getAdvertiser()+"&profileid="+getProfile()+"&bannerid="+getBanner()+"&refererurl="+getUrl()+"&creferer="+getCreferer();
+        return "?advertiser=" + getAdvertiser() +  "&bannerid=" + getBanner() + "&profileid=" + getProfile() +"&refererurl=" + getUrl() + "&creferrer=" + getCreferrer();
     }
 
     public AffiliateData getAffiliateDataSingle() {
-        return new AffiliateData(advertiser, banner, profile, url, crefererSingle);
+        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCrefererSingle());
     }
 
+
     public AffiliateData getAffiliateDataMultiple() {
-        return new AffiliateData(advertiser, banner, profile, url, crefererMultiple);
+        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCrefererMultiple());
+    }
+
+    public void addCreferer(String creferrer) {
+        if (getCreferrer() == null) {
+            setCreferrer(creferrer);
+        } else {
+            setCreferrer(getCreferrer() + ASCII_CODE_SEMICOLON + creferrer);
+        }
+    }
+
+    public String getValue() {
+
+        return getAdvertiser() + ASCII_CODE_COMMA + getBanner() + ASCII_CODE_COMMA + getProfile() + ASCII_CODE_COMMA + getUrl() + ASCII_CODE_COMMA + getCreferrer();
     }
 }
