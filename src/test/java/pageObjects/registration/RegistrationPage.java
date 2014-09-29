@@ -65,8 +65,8 @@ public class RegistrationPage extends AbstractPage{
     public final static String FIELD_PHONE_XP=								            "//*[@name='phoneNumber']";
     public final static String FIELD_USERNAME_XP=								        "//*[@name='"+FIELD_USERNAME_NAME+"']";
     public final static String FIELD_PASSWORD_VERIFICATION_XP=							"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
-    private static final String PASSWORD_METER_XP =                                     "//*[@class='password-meter']/*[1]";
-    private static final String PASSWORD_STRENGTH_TOOLTIP =                             "//*[contains(@class, 'password-meter_message')]/p";
+    private final static String PASSWORD_METER_XP =                                     "//*[@class='password-meter']/*[1]";
+    private final static String PASSWORD_STRENGTH_TOOLTIP =                             "//*[contains(@class, 'password-meter_message')]/p";
 
     public RegistrationPage(String[] elements){
         super(elements);
@@ -85,11 +85,11 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public RegistrationPageStepTwo registrationPageStepTwo(UserData userData){
-        return new RegistrationPageStepOne().fillDataAndSubmit(userData);
+        return registrationPageStepOne().fillDataAndSubmit(userData);
     }
 
     public RegistrationPageStepThree registrationPageStepThree(UserData userData){
-        return new RegistrationPageStepOne().fillDataAndSubmit(userData).fillDataAndSubmit(userData);
+        return registrationPageStepTwo(userData).fillDataAndSubmit(userData);
     }
 
     /*General*/

@@ -5,12 +5,6 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
-
-/**
- * User: ivan
- * Date: 7/31/13
- */
-
 public class RegistrationPageStepOne extends RegistrationPage {
 
     private final static String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][1]";

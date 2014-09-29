@@ -10,6 +10,8 @@ import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
+import pageObjects.registration.threeStep.RegistrationPageStepThree;
+import pageObjects.registration.threeStep.RegistrationPageStepTwo;
 import springConstructors.*;
 import utils.NavigationUtils;
 import utils.PortalUtils;
@@ -852,6 +854,38 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.registerUser(userData);
         affiliateDataCookie.addCreferer(affiliateData.getCreferrerRegistrationPortletProperty());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataCookie);
+    }
+
+    /*B-11233*/
+
+    /*1*/
+    @Test(groups = {"registration", "regression", "desktop"})
+    public void countryCurrencySinglePage(){
+        UserData userData = defaultUserData.getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        //RegistrationPageAllSteps registrationPageAllSteps = registrationPage.registrationPageAllSteps();
+        String currency;
+        for (String countryCode : defaults.getCountryCodesList()) {
+            registrationPage.fillCountry(countryCode);
+            currency = defaults.getCurrencyByCountryCode(countryCode);
+            assertEquals(currency, registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+        }
+    }
+
+    /*2*/
+    @Test(groups = {"registration", "regression", "mobile"})
+    public void countryCurrencyThreeStep(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree(defaultUserData.getRandomUserData());
+        RegistrationPageStepTwo registrationPageStepTwo;
+        String currency;
+        for (String countryCode : defaults.getCountryCodesList()) {
+            registrationPageStepTwo = registrationPageStepThree.clickPrevious();
+            registrationPage.fillCountry(countryCode);
+            registrationPageStepTwo.clickNext();
+            currency = defaults.getCurrencyByCountryCode(countryCode);
+            assertEquals(currency, registrationPage.getSelectedCurrency().trim(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+        }
     }
 
     /*#??. Suggestion does not appear on entering new username*/

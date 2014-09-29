@@ -1,19 +1,10 @@
 package pageObjects.registration.threeStep;
 
-import enums.Page;
-import pageObjects.core.AbstractPage;
-import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.validation.ValidationUtils;
-
-/**
- * User: ivan
- * Date: 7/31/13
- */
 
 public class RegistrationPageStepThree extends RegistrationPage {
 
@@ -62,7 +53,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         ValidationUtils.validateField(getXpathByName(FIELD_ANSWER_NAME), rule, FIELD_ANSWER_NAME);
     }
 
-    private static RegistrationPageStepTwo clickPrevious(){
+    public static RegistrationPageStepTwo clickPrevious(){
         WebDriverUtils.click(BUTTON_PREVIOUS_XP);
         return new RegistrationPageStepTwo();
     }
