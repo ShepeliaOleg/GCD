@@ -328,7 +328,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
-        TypeUtils.assertTrueWithLogs(changePasswordPopup.errorMessageAppeared(),"errorMessageAppeared");
+        assertTrue(changePasswordPopup.isPortletErrorVisible(),"errorMessageAppeared");
 	}
 
     /*8. New password which has been used recently*/
@@ -349,7 +349,7 @@ public class ForgotPasswordTest extends AbstractTest{
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		changePasswordPopup.fillFormAndSubmit(tempPassword, oldPassword);
-        TypeUtils.assertTrueWithLogs(changePasswordPopup.errorMessageAppeared(),"errorMessageAppeared");
+        assertTrue(changePasswordPopup.isPortletErrorVisible(), "errorMessageAppeared");
 	}
 
     /*VALIDATION*/
