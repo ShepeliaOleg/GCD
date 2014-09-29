@@ -20,38 +20,39 @@ public class WebContentPage extends AbstractPage{
         super(new String[]{IMAGE_XP});
     }
 
-    public LoginPopup clickLoggedOut(GameLaunch type){
-        clickByType(type);
+    public LoginPopup clickLoggedOut(GameLaunch type, int page){
+        clickByType(type, page);
         return new LoginPopup();
     }
 
-    public AdminCanNotPlayPopup clickAdmin(GameLaunch type){
-        clickByType(type);
+    public AdminCanNotPlayPopup clickAdmin(GameLaunch type, int page){
+        clickByType(type, page);
         return new AdminCanNotPlayPopup();
     }
 
-    private void clickButton(){
-        WebDriverUtils.click(BUTTON_XP);
+    private void clickButton(int page){
+        WebDriverUtils.click("//li["+page+"]"+BUTTON_XP);
     }
 
-    private void clickImage(){
-        WebDriverUtils.click(IMAGE_XP);
+    private void clickImage(int page){
+        WebDriverUtils.click("//li["+page+"]"+IMAGE_XP);
     }
 
-    private String clickByType(GameLaunch type){
-        if(type.equals(GameLaunch.button)){
-            clickButton();
-            return getGameID(BUTTON_XP);
-        }else if (type.equals(GameLaunch.image)){
-            clickImage();
-            return getGameID(GAMELAUNCH_XP);
-        }else {
-            throw new RuntimeException("Unknown game launch type");
+    private String clickByType(GameLaunch type, int page){
+        switch (type){
+            case button:
+                clickButton(page);
+                return getGameID("//li["+page+"]"+BUTTON_XP);
+            case image:
+                clickImage(page);
+                return getGameID("//li["+page+"]"+IMAGE_XP+"/..");
+            default:
+                throw new RuntimeException("Unknown game launch type");
         }
     }
 
-    public boolean playAndValidateUrl(GameLaunch type, UserData userData){
-        String gameID = clickByType(type);
+    public boolean playAndValidateUrl(GameLaunch type, int page, UserData userData){
+        String gameID = clickByType(type, page);
         if(userData!=null){
             LoginPopup loginPopup = new LoginPopup();
             loginPopup.login(userData);
@@ -63,16 +64,12 @@ public class WebContentPage extends AbstractPage{
         }
     }
 
-    public boolean playAndValidateUrl(GameLaunch type){
-        return playAndValidateUrl(type, null);
+    public boolean playAndValidateUrl(GameLaunch type, int page){
+        return playAndValidateUrl(type, page, null);
     }
 
     private String getGameID(String xpath){
-        try{
-            return WebDriverUtils.getAttribute(xpath, "data-game-code");
-        }catch (Exception e){
-            return WebDriverUtils.getAttribute(xpath, "data-gamecode");
-        }
+        return WebDriverUtils.getAttribute(xpath, "data-game-code");
     }
 
     public void clickNextSlide(){
