@@ -87,8 +87,14 @@ public class RandomUtils{
 	}
 
     public static int generateRandomIntBetween(int min, int max) {
-        Random random = new Random();
-        return min + random.nextInt(max - min + 1);
+        if(max==0){
+            return 0;
+        }else if(max==min){
+            return max;
+        }else {
+            Random random = new Random();
+            return min + random.nextInt(max - min);
+        }
     }
 
     private static <T> List<T> getElementsFromListByIndexes(List<T> list, List<Integer> indexes) {

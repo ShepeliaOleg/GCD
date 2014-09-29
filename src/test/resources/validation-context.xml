@@ -72,7 +72,7 @@
         <property name="tooltipPositive" value="Please enter your State (Optional)"/>
         <property name="tooltipNegativeEmpty" value="N/A"/>
         <property name="tooltipNegativeShort" value="N/A"/>
-        <property name="tooltipNegativeLong" value="N/A"/>
+        <property name="tooltipNegativeLong" value="Inserted address is invalid. Please enter 0-20 characters"/>
         <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z) and (.-,)"/>
     </bean>
 

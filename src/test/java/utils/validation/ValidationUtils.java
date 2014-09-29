@@ -107,15 +107,17 @@ public class ValidationUtils extends WebDriverObject{
 
 	private static void validateTooShort(String xpath, ValidationRule rule, String tooltipID) {
 		int min = rule.getMinLength();
-		if (min < 0) {
-            throw new RuntimeException("Minimum value for validation rule should be positive, actual value: " + min);
-        } else if (min > 1) {
-			int randomLength = RandomUtils.generateRandomIntBetween(1, min - 1);
-			String randomTooShort = rule.generateValidStringWithMinSymbols().substring(0, randomLength);
-            inputFieldAndRefocus(xpath, randomTooShort);
-            validateStatusAndToolTips(rule.getTooltipNegativeShort(), tooltipID, randomTooShort, STATUS_FAILED, STATUS_FAILED);
+        if(!rule.getRegexp().contains("[@]")){
+            if (min < 0) {
+                throw new RuntimeException("Minimum value for validation rule should be positive, actual value: " + min);
+            } else if (min > 1) {
+                int randomLength = RandomUtils.generateRandomIntBetween(1, min - 1);
+                String randomTooShort = rule.generateValidStringWithMinSymbols().substring(0, randomLength);
+                inputFieldAndRefocus(xpath, randomTooShort);
+                validateStatusAndToolTips(rule.getTooltipNegativeShort(), tooltipID, randomTooShort, STATUS_FAILED, STATUS_FAILED);
+            }
         }
-	}
+    }
 
 	private static void validateTooLong(String xpath, ValidationRule rule, String tooltipID) {
 		int max = rule.getMaxLength();
