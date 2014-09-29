@@ -28,20 +28,20 @@ public class InternalTagsPage extends AbstractPage{
     };
 
 	private static final HashMap<String,String> GUEST_TAGS = new HashMap(){{
-        put(INTERNAL_TAGS[0], "");put(INTERNAL_TAGS[1], "");put(INTERNAL_TAGS[2], "");
-        put(INTERNAL_TAGS[3], "");put(INTERNAL_TAGS[4], "");put(INTERNAL_TAGS[5], "");
-        put(INTERNAL_TAGS[6], "");put(INTERNAL_TAGS[7], "");put(INTERNAL_TAGS[8], "");
-        put(INTERNAL_TAGS[9], "");put(INTERNAL_TAGS[10], "");put(INTERNAL_TAGS[11], "");
-        put(INTERNAL_TAGS[12], "");put(INTERNAL_TAGS[13], "");put(INTERNAL_TAGS[14], "");
-        put(INTERNAL_TAGS[15], "");put(INTERNAL_TAGS[16], "");put(INTERNAL_TAGS[17], "");
-        put(INTERNAL_TAGS[18], "");put(INTERNAL_TAGS[19], "");put(INTERNAL_TAGS[20], "");
-        put(INTERNAL_TAGS[21], "");put(INTERNAL_TAGS[22], "");put(INTERNAL_TAGS[23], "");
-        put(INTERNAL_TAGS[24], "");put(INTERNAL_TAGS[25], "");put(INTERNAL_TAGS[26], "");
-        put(INTERNAL_TAGS[27], "");put(INTERNAL_TAGS[28], "");put(INTERNAL_TAGS[29], "");
-        put(INTERNAL_TAGS[30], "");put(INTERNAL_TAGS[31], "");put(INTERNAL_TAGS[32], "");
-        put(INTERNAL_TAGS[33], "");put(INTERNAL_TAGS[34], "");put(INTERNAL_TAGS[35], "");
-        put(INTERNAL_TAGS[36], "");put(INTERNAL_TAGS[37], "");put(INTERNAL_TAGS[38], "");
-        put(INTERNAL_TAGS[39], "");put(INTERNAL_TAGS[40], "");put(INTERNAL_TAGS[41], "");
+        put(INTERNAL_TAGS[0], "-");put(INTERNAL_TAGS[1], "-");put(INTERNAL_TAGS[2], "-");
+        put(INTERNAL_TAGS[3], "-");put(INTERNAL_TAGS[4], "-");put(INTERNAL_TAGS[5], "-");
+        put(INTERNAL_TAGS[6], "-");put(INTERNAL_TAGS[7], "-");put(INTERNAL_TAGS[8], "-");
+        put(INTERNAL_TAGS[9], "-");put(INTERNAL_TAGS[10], "-");put(INTERNAL_TAGS[11], "-");
+        put(INTERNAL_TAGS[12], "-");put(INTERNAL_TAGS[13], "-");put(INTERNAL_TAGS[14], "-");
+        put(INTERNAL_TAGS[15], "-");put(INTERNAL_TAGS[16], "-");put(INTERNAL_TAGS[17], "-");
+        put(INTERNAL_TAGS[18], "-");put(INTERNAL_TAGS[19], "-");put(INTERNAL_TAGS[20], "-");
+        put(INTERNAL_TAGS[21], "-");put(INTERNAL_TAGS[22], "-");put(INTERNAL_TAGS[23], "-");
+        put(INTERNAL_TAGS[24], "-");put(INTERNAL_TAGS[25], "-");put(INTERNAL_TAGS[26], "-");
+        put(INTERNAL_TAGS[27], "-");put(INTERNAL_TAGS[28], "-");put(INTERNAL_TAGS[29], "-");
+        put(INTERNAL_TAGS[30], "-");put(INTERNAL_TAGS[31], "-");put(INTERNAL_TAGS[32], "-");
+        put(INTERNAL_TAGS[33], "-");put(INTERNAL_TAGS[34], "-");put(INTERNAL_TAGS[35], "-");
+        put(INTERNAL_TAGS[36], "-");put(INTERNAL_TAGS[37], "-");put(INTERNAL_TAGS[38], "-");
+        put(INTERNAL_TAGS[39], "-");put(INTERNAL_TAGS[40], "-");put(INTERNAL_TAGS[41], "-");
 
     }};
 

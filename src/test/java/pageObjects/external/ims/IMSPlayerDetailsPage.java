@@ -70,7 +70,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private static final String REFERRER_XP=                                "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
 
 	public IMSPlayerDetailsPage(){
-		super(new String[]{ROOT_XP, BLOCK_XP, BALANCES_XP});
+		super(new String[]{ROOT_XP, BUTTON_FAILED_LOGINS});
 	}
 
 	public HashMap getInternalTagsData(HashMap hashMap){
