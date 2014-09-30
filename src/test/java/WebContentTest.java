@@ -43,7 +43,7 @@ public class WebContentTest extends AbstractTest{
     }
 
     /*Web content display - Admin play button*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void displayButtonLaunchGameAdmin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.webContentGame);
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.button, 1);
@@ -81,7 +81,7 @@ public class WebContentTest extends AbstractTest{
     }
 
     /*Web content display - Admin play image*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void displayImageLaunchGameAdmin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.webContentGame);
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.image, 1);
@@ -147,14 +147,14 @@ public class WebContentTest extends AbstractTest{
     }
 
     /*Banner - Admin play button slide 1*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void bannerButtonLaunchGameAdmin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.button, 1);
     }
 
     /*Banner - Admin play button slide 2*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void bannerButtonLaunchGameAdminSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
@@ -211,14 +211,14 @@ public class WebContentTest extends AbstractTest{
     }
 
     /*Banner - Admin play image slide 1*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void bannerImageLaunchGameAdmin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.image, 1);
     }
 
     /*Banner - Admin play image slide 2*/
-    @Test(groups = {"webcontent","regression"})
+    @Test(groups = {"admin"})
     public void bannerImageLaunchGameAdminSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();

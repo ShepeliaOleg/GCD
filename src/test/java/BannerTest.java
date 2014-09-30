@@ -271,7 +271,7 @@ public class BannerTest extends AbstractTest{
     }
 
     /*profile ID - Admin */
-    @Test(groups = {"regression", "banner"})
+    @Test(groups = {"admin"})
     public void profileIDAdmin() {
         PortalUtils.loginAdmin();
         checkProfileID(PlayerCondition.admin, ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
@@ -290,7 +290,7 @@ public class BannerTest extends AbstractTest{
     }
 
     private void checkProfileID(PlayerCondition playerCondition, ConfiguredPages page, String present, String notPresent, String present2,  String notPresent2){
-        String pageName = "is Visible on page "+ page.toString();
+        String pageName = " is Visible on page "+ page.toString();
         String first = "_1";
         String second = "_2";
         String firstPage = first+pageName;
