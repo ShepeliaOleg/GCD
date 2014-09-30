@@ -50,5 +50,6 @@ public class Menu extends AbstractPageObject {
 
     public void setLanguage(String languageCode) {
         WebDriverUtils.setCustomDropdownOptionByValue(LANGUAGE_XP, languageCode);
+        WebDriverUtils.waitForElementToDisappear(ROOT_XP);
     }
 }

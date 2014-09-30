@@ -2,26 +2,23 @@ package springConstructors;
 
 import utils.RandomUtils;
 import utils.WebDriverUtils;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Defaults{
 	List<String> countryList;
-    String defaultCountry;
-    List<String> languageList;
     List<String> currencyList;
+    List<String> languageList;
+    String defaultCountry;
     String defaultCurrency;
-
-//    private static final String LANGUAGE_COOKIE_NAME = "";
+    String defaultLanguage;
 
     public String getDefaultCountry() {
         return defaultCountry;
     }
 
     public String getDefaultCountryName() {
-        return getCountryName(getCountryByCode(defaultCountry));
+        return getCountryName(getCountryByCode(getDefaultCountry()));
     }
 
 	public List getCountryList(){
@@ -60,6 +57,14 @@ public class Defaults{
         this.defaultCurrency = defaultCurrency;
     }
 
+    public String getDefaultLanguage() {
+        return defaultLanguage;
+    }
+
+    public void setDefaultLanguage(String defaultLanguage) {
+        this.defaultLanguage = defaultLanguage;
+    }
+
     private List<String> getList(List<String> list, int index) {
         List <String> result = new ArrayList<String>();
         for (String item: list) {
@@ -69,10 +74,10 @@ public class Defaults{
     }
 
     public List<String> getCountryCodesList() {
-        return getList(countryList, 0);
+        return getList(getCountryList(), 0);
     }
     public List<String> getLanguageCodesList() {
-        return getList(languageList, 0);
+        return getList(getLanguageList(), 0);
     }
 
     private String getFullByPrefix(List<String> list, String prefix) {
@@ -94,7 +99,11 @@ public class Defaults{
     }
 
     public String getCurrencyByCountryCode(String countryCode) {
-        return getCountryCurrency(getCountryByCode(countryCode));
+        return getCountryCurrencyLogical(getCountryByCode(countryCode));
+    }
+
+    public String getLanguageUrlByLanguageCode(String languageCode) {
+        return getLanguageUrlCodeLogical(getLanguageByCode(languageCode));
     }
 
     private String getLanguageByCode(String languageCode) {
@@ -115,11 +124,11 @@ public class Defaults{
     }
 
     public String getRandomCountryCode(){
-        return getCountryCode(getRandomItemFromList(countryList));
+        return getCountryCode(getRandomItemFromList(getCountryList()));
     }
 
     public String getRandomLanguageCode() {
-        return getLanguageCode(getRandomItemFromList(languageList));
+        return getLanguageCode(getRandomItemFromList(getLanguageList()));
     }
 
     private String getPartByIndex(String input, int partIndex) {
@@ -127,16 +136,12 @@ public class Defaults{
         return splitted[partIndex];
     }
 
-    private String getCountryCode(String countryFull) {
-        return getPartByIndex(countryFull, 0);
+    private String getCountryCode(String country) {
+        return getPartByIndex(country, 0);
     }
 
-    private String getLanguageCode(String language) {
-        return getPartByIndex(language, 0);
-    }
-
-    private String getCountryName(String countryFull) {
-        return getPartByIndex(countryFull, 1);
+    private String getCountryName(String country) {
+        return getPartByIndex(country, 1);
     }
 
     private String getCountryPhoneCode(String country) {
@@ -144,7 +149,27 @@ public class Defaults{
     }
 
     private String getCountryCurrency(String country) {
-        String currency = getPartByIndex(country, 3);
+        return getPartByIndex(country, 3);
+    }
+
+    private String getLanguageCode(String language) {
+        return getPartByIndex(language, 0);
+    }
+
+    private String getLanguageName(String language) {
+        return getPartByIndex(language, 1);
+    }
+
+    private String getLanguageUrlCode(String language) {
+        return getPartByIndex(language, 2);
+    }
+
+    public String getLanguageNameByCode(String languageCode) {
+        return getLanguageName(getLanguageByCode(languageCode));
+    }
+
+    private String getCountryCurrencyLogical(String country) {
+        String currency = getCountryCurrency(country);
         List<String> allowedCurrencies = getCurrencyList();
         if (allowedCurrencies.contains(currency)) {
             return currency;
@@ -152,19 +177,16 @@ public class Defaults{
             return getDefaultCurrency();
     }
 
-//    public void addLanguageCookie(String languageCode) {
-//        WebDriverUtils.addCookie(LANGUAGE_COOKIE_NAME, languageCode, "domain", "/", new Date(115,1,1));
-//    }
-
-    public void getLanguageValue(String languageCode) {
-        getPartByIndex(getLanguageByCode(languageCode), 2);
+    private String getLanguageUrlCodeLogical(String language) {
+        String urlLanguageCode = getLanguageUrlCode(language);
+        String languageCode    = getLanguageCode(language);
+        if (languageCode.equals(getDefaultLanguage())) {
+            return "";
+        } else if (urlLanguageCode.equals("none")) {
+            return languageCode.substring(0,2) + "/";
+        } else {
+            return urlLanguageCode + "/";
+        }
     }
 
-//    public boolean languageCookieExists() {
-//        return WebDriverUtils.isCookieExists(LANGUAGE_COOKIE_NAME);
-//    }
-//
-//    public String getLanguageCookieValue() {
-//        return WebDriverUtils.getCookieValue(LANGUAGE_COOKIE_NAME);
-//    }
 }
