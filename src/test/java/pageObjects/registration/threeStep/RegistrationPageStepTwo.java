@@ -33,7 +33,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
         return new RegistrationPageStepThree();
     }
 
-    private static void clickNext(){
+    public static void clickNext(){
         WebDriverUtils.click(BUTTON_NEXT_XP);
     }
 

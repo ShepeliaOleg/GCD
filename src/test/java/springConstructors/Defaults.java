@@ -12,8 +12,9 @@ public class Defaults{
     String defaultCountry;
     List<String> languageList;
     List<String> currencyList;
+    String defaultCurrency;
 
-    private static final String LANGUAGE_COOKIE_NAME = "";
+//    private static final String LANGUAGE_COOKIE_NAME = "";
 
     public String getDefaultCountry() {
         return defaultCountry;
@@ -51,6 +52,14 @@ public class Defaults{
         this.defaultCountry = countryCode;
     }
 
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
+
     private List<String> getList(List<String> list, int index) {
         List <String> result = new ArrayList<String>();
         for (String item: list) {
@@ -82,6 +91,10 @@ public class Defaults{
 
     private String getCountryByCode(String countryCode) {
         return getFullByPrefix(countryList, countryCode);
+    }
+
+    public String getCurrencyByCountryCode(String countryCode) {
+        return getCountryCurrency(getCountryByCode(countryCode));
     }
 
     private String getLanguageByCode(String languageCode) {
@@ -130,19 +143,28 @@ public class Defaults{
         return getPartByIndex(country, 2);
     }
 
-    public void addLanguageCookie(String languageCode) {
-        WebDriverUtils.addCookie(LANGUAGE_COOKIE_NAME, languageCode, "domain", "/", new Date(115,1,1));
+    private String getCountryCurrency(String country) {
+        String currency = getPartByIndex(country, 3);
+        List<String> allowedCurrencies = getCurrencyList();
+        if (allowedCurrencies.contains(currency)) {
+            return currency;
+        } else
+            return getDefaultCurrency();
     }
+
+//    public void addLanguageCookie(String languageCode) {
+//        WebDriverUtils.addCookie(LANGUAGE_COOKIE_NAME, languageCode, "domain", "/", new Date(115,1,1));
+//    }
 
     public void getLanguageValue(String languageCode) {
         getPartByIndex(getLanguageByCode(languageCode), 2);
     }
 
-    public boolean languageCookieExists() {
-        return WebDriverUtils.isCookieExists(LANGUAGE_COOKIE_NAME);
-    }
-
-    public String getLanguageCookieValue() {
-        return WebDriverUtils.getCookieValue(LANGUAGE_COOKIE_NAME);
-    }
+//    public boolean languageCookieExists() {
+//        return WebDriverUtils.isCookieExists(LANGUAGE_COOKIE_NAME);
+//    }
+//
+//    public String getLanguageCookieValue() {
+//        return WebDriverUtils.getCookieValue(LANGUAGE_COOKIE_NAME);
+//    }
 }
