@@ -6,11 +6,7 @@ import pageObjects.HomePage;
 import springConstructors.Defaults;
 import springConstructors.UserData;
 import utils.NavigationUtils;
-import utils.TypeUtils;
-import utils.WebDriverUtils;
-import utils.cookie.LanguageCookie;
 import utils.core.AbstractTest;
-import java.util.Collection;
 
 public class LanguageTest extends AbstractTest {
 
@@ -28,7 +24,7 @@ public class LanguageTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void countryList(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
-        assertEqualCollections(defaults.getLanguageCodesList(), homePage.getLanguageCodesList(), "Language list corresponds with config");
+        assertEqualsCollections(defaults.getLanguageCodesList(), homePage.getLanguageCodesList(), "Language list corresponds with config");
     }
 
 //    @Test(groups = {"regression"})

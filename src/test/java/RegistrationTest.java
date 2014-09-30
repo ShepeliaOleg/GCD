@@ -213,27 +213,21 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> actualCountriesCodesList = registrationPage.getCountriesCodesList(defaultUserData.getRandomUserData());
-		Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getCountryCodesList());
-        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Country codes correspond with configuration");
+        assertEqualsCollections(defaults.getCountryCodesList(), registrationPage.getCountriesCodesList(defaultUserData.getRandomUserData()), "Country codes correspond with configuration");
 	}
 
     /*#??. The list of supported nationalities is correct*/
     @Test(groups = {"registration","spanish", "desktop"})
     public void nationalityList(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        Collection<String> actualNationalitiesCodesList = registrationPage.registrationPageAllSteps().getNationalitiesCodesList();
-        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualNationalitiesCodesList, defaults.getCountryCodesList());
-        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Nationality codes correspond with configuration");
+        assertEqualsCollections(defaults.getCountryCodesList(), registrationPage.registrationPageAllSteps().getNationalitiesCodesList(),"Nationality codes correspond with configuration");
     }
 
     /*#12. The list of supported currencies is correct*/
 	@Test(groups = {"registration","regression"})
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		Collection<String> actualCurrencyList=registrationPage.getCurrencyList(defaultUserData.getRandomUserData());
-		Collection<String> diff= TypeUtils.getDiffElementsFromLists(actualCurrencyList, defaults.getCurrencyList());
-        assertTrue(diff.isEmpty(), "(Actual diff: '"+diff.toString()+"')Currency codes correspond with configuration");
+        assertEqualsCollections(defaults.getCurrencyList(), registrationPage.getCurrencyList(defaultUserData.getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
 //    /*#13. T&C web content is shown when clicking on T&C link*/

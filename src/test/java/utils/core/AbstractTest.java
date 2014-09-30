@@ -89,13 +89,13 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         }
     }
 
-    public static boolean assertEqualCollections(Collection expected, Collection actual, String message){
+    public static boolean assertEqualsCollections(Collection expected, Collection actual, String message){
         Collection diff = TypeUtils.getDiffElementsFromLists(expected, actual);
         return addErrorIf(!diff.isEmpty(), expected, actual, "(Diff: " + diff.toString() + ") "+message);
     }
 
-    public static void validateEqualCollections(Collection expected, Collection actual, String message){
-        if(assertEqualCollections(expected, actual, message)){
+    public static void validateEqualsCollections(Collection expected, Collection actual, String message){
+        if(assertEqualsCollections(expected, actual, message)){
             validate();
         }
     }
