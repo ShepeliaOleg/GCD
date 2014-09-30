@@ -860,31 +860,25 @@ public class RegistrationTest extends AbstractTest{
 
     /*1*/
     @Test(groups = {"registration", "regression", "desktop"})
-    public void countryCurrencySinglePage(){
-        UserData userData = defaultUserData.getRandomUserData();
+    public void countryCurrencySinglePageRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        //RegistrationPageAllSteps registrationPageAllSteps = registrationPage.registrationPageAllSteps();
-        String currency;
         for (String countryCode : defaults.getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
-            currency = defaults.getCurrencyByCountryCode(countryCode);
-            assertEquals(currency, registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+            assertEquals(defaults.getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }
     }
 
     /*2*/
     @Test(groups = {"registration", "regression", "mobile"})
-    public void countryCurrencyThreeStep(){
+    public void countryCurrencyThreeStepRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree(defaultUserData.getRandomUserData());
         RegistrationPageStepTwo registrationPageStepTwo;
-        String currency;
         for (String countryCode : defaults.getCountryCodesList()) {
             registrationPageStepTwo = registrationPageStepThree.clickPrevious();
             registrationPage.fillCountry(countryCode);
             registrationPageStepTwo.clickNext();
-            currency = defaults.getCurrencyByCountryCode(countryCode);
-            assertEquals(currency, registrationPage.getSelectedCurrency().trim(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+            assertEquals(defaults.getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }
     }
 
