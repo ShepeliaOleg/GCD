@@ -1,6 +1,7 @@
 package pageObjects.webcontent;
 
 import enums.GameLaunch;
+import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.core.AbstractPage;
@@ -39,16 +40,22 @@ public class WebContentPage extends AbstractPage{
     }
 
     private String clickByType(GameLaunch type, int page){
-        switch (type){
-            case button:
-                clickButton(page);
-                return getGameID("//li["+page+"]"+BUTTON_XP);
-            case image:
-                clickImage(page);
-                return getGameID("//li["+page+"]"+IMAGE_XP+"/..");
-            default:
-                throw new RuntimeException("Unknown game launch type");
+        String multiPage;
+        if(WebDriverUtils.isVisible(BannerPage.ROOT_XP, 1)){
+            multiPage = "//li["+page+"]";
+        }else {
+            multiPage = "";
         }
+        clickGame(type);
+        return getGameID(type, multiPage);
+    }
+
+    private void clickGame(GameLaunch type){
+        String xpath = BUTTON_XP;
+        if(type.equals(GameLaunch.image)){
+            xpath = IMAGE_XP;
+        }
+        WebDriverUtils.click(xpath);
     }
 
     public boolean playAndValidateUrl(GameLaunch type, int page, UserData userData){
@@ -68,8 +75,14 @@ public class WebContentPage extends AbstractPage{
         return playAndValidateUrl(type, page, null);
     }
 
-    private String getGameID(String xpath){
-        return WebDriverUtils.getAttribute(xpath, "data-game-code");
+    private String getGameID(GameLaunch type, String multiPage){
+        String xpath;
+        if(type.equals(GameLaunch.image)){
+            xpath=IMAGE_XP + "/..";
+        }else {
+            xpath = BUTTON_XP;
+        }
+        return WebDriverUtils.getAttribute(multiPage+xpath, "data-game-code");
     }
 
     public void clickNextSlide(){
