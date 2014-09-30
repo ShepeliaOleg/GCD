@@ -14,7 +14,7 @@ public class Header extends AbstractPageObject{
 	protected static final String ROOT_XP=	"//*[@class='main-header']";
 	public static final String BALANCE_AREA ="//*[contains(@class, 'main-header__balance')]";
     //Desktop only
-    private static final String DROPDOWN_LANGUAGE_XP =	ROOT_XP + "//*[contains(@class, 'language-selector-replacer')]";
+    private static final String DROPDOWN_LANGUAGE_XP =	"//*[contains(@class, 'fn-language-trigger')]";
     //Mobile only
     public static final String MENU_XP =       ROOT_XP + "//*[contains(@class,'fn-open-menu')]";
 
@@ -41,12 +41,14 @@ public class Header extends AbstractPageObject{
     }
 
     public Collection<String> getLanguageCodes() {
-        List<String> languages = WebDriverUtils.getListOfAttributeValues(DROPDOWN_LANGUAGE_XP, "data-lang");
-        languages.add(WebDriverUtils.getAttribute(DROPDOWN_LANGUAGE_XP + "//span", "class").replace("icon-flag ", ""));
+        List<String> languages = WebDriverUtils.getCustomDropdownOptionsValue(DROPDOWN_LANGUAGE_XP);
+        languages.add(WebDriverUtils.getCustomDropdownSelectedOptionValue(DROPDOWN_LANGUAGE_XP));
         return languages;
     }
 
     public void setLanguage(String language) {
-        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_LANGUAGE_XP, language);
+        if(!WebDriverUtils.getCustomDropdownSelectedOptionValue(DROPDOWN_LANGUAGE_XP).equals(language)){
+            WebDriverUtils.setCustomDropdownOptionByValue(DROPDOWN_LANGUAGE_XP, language);
+        }
     }
 }

@@ -3,9 +3,11 @@ package utils.core;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.*;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 @ContextConfiguration(locations={"/spring-config.xml"})
 @Listeners(Listener.class)
@@ -47,58 +49,68 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         results.add(message);
     }
 
-    protected void failTest(String message){
-        addError(message);
-        validate();
-    }
-
-    public static void assertTrue(boolean actual, String message){
-        if(!actual){
-            addError(message + " - Expected TRUE, actual FALSE.");
-        }
+    public static boolean assertTrue(boolean actual, String message){
+        return addErrorIf(!actual, "TRUE", "FALSE", message);
     }
 
     protected void validateTrue(boolean actual, String message){
-        if(!actual){
-            failTest(message + " - Expected TRUE, actual FALSE.");
+        if(assertTrue(actual, message)){
+            validate();
         }
     }
 
-    public static void assertFalse(boolean actual, String message){
-        if(actual){
-            addError(message + " - Expected FALSE, actual TRUE.");
-        }
+    public static boolean assertFalse(boolean actual, String message){
+        return addErrorIf(actual, "FALSE", "TRUE", message);
     }
 
     protected void validateFalse(boolean actual, String message){
-        if(actual){
-            failTest(message + " - Expected FALSE, actual TRUE.");
+        if(assertFalse(actual, message)){
+            validate();
         }
     }
 
-    public static void assertEquals(Object expected, Object actual, String message){
-        if(!expected.equals(actual)){
-            addError(message + " - Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
-        }
+    public static boolean assertEquals(Object expected, Object actual, String message){
+        return addErrorIf(!equals(expected, actual), expected, actual, message);
     }
 
     protected void validateEquals(Object expected, Object actual, String message){
-        if(!expected.equals(actual)){
-            failTest(message + " - Expected '" + expected.toString() + "', actual '" + actual.toString() + "'.");
+        if(assertEquals(expected, actual, message)){
+            validate();
         }
     }
 
-    protected void assertNotEquals(Object expected, Object actual, String message){
-        if(expected.equals(actual)){
-            addError(message + " - Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
-        }
+    protected boolean assertNotEquals(Object expected, Object actual, String message){
+        return addErrorIf(equals(expected, actual), expected, actual, message);
     }
 
     protected void validateNotEquals(Object expected, Object actual, String message){
-        if(expected.equals(actual)){
-            failTest(message + " - Expected '" + expected.toString() + "' to be not equal to '" + actual.toString() + "'.");
+        if(assertNotEquals(expected, actual, message)){
+            validate();
         }
     }
 
+    public static boolean assertEqualCollections(Collection expected, Collection actual, String message){
+        Collection diff = TypeUtils.getDiffElementsFromLists(expected, actual);
+        return addErrorIf(!diff.isEmpty(), expected, actual, "(Diff: " + diff.toString() + ") "+message);
+    }
+
+    public static void validateEqualCollections(Collection expected, Collection actual, String message){
+        if(assertEqualCollections(expected, actual, message)){
+            validate();
+        }
+    }
+
+    private static boolean equals(Object expected, Object actual) {
+        return expected.equals(actual);
+    }
+
+    private static boolean addErrorIf(boolean condition, Object expected, Object actual, String message) {
+        if(condition){
+            addError(message + " - Expected '" + expected.toString() + "', Actual '" + actual.toString() + "'.");
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }

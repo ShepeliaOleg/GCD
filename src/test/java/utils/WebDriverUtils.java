@@ -90,7 +90,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static void click(String xpath){
         try {
-            webDriver.findElement(By.xpath(xpath)).click();
+            getElement(xpath).click();
         }catch (WebDriverException e){
             runtimeExceptionWithUrl("Could not click element by xpath: " + xpath);
         }
@@ -98,7 +98,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static String getAttribute(String xpath, String attribute){
         try{
-            return webDriver.findElement(By.xpath(xpath)).getAttribute(attribute);
+            return getElement(xpath).getAttribute(attribute);
         }catch(NoSuchElementException e){
             runtimeExceptionWithUrl("Could not find element by Xpath: " + xpath);
         }
@@ -107,7 +107,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static int getElementHeight(String xpath){
         try{
-            return webDriver.findElement(By.xpath(xpath)).getSize().getHeight();
+            return getElement(xpath).getSize().getHeight();
         }catch(NoSuchElementException e){
             runtimeExceptionWithUrl("Could not find element: " + xpath);
         }
@@ -116,7 +116,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static int getElementWidth(String xpath){
         try{
-            return webDriver.findElement(By.xpath(xpath)).getSize().getWidth();
+            return getElement(xpath).getSize().getWidth();
         }catch(NoSuchElementException e){
             runtimeExceptionWithUrl("Could not find element: " + xpath);
         }
@@ -125,9 +125,9 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static String getElementText(String xpath){
         try{
-            return webDriver.findElement(By.xpath(xpath)).getText();
+            return getElement(xpath).getText();
         }catch(NoSuchElementException e){
-            runtimeExceptionWithUrl("Could not find element by Xpath: " + xpath);
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
         }
         return null;
     }
@@ -138,7 +138,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     public static String getElementText(WebDriver webDriver, String xpath){
         try{
-            return webDriver.findElement(By.xpath(xpath)).getText();
+            return getElement(xpath).getText();
         }catch(NoSuchElementException e){
             runtimeExceptionWithUrl("Could not find element by Xpath: " + xpath);
         }
@@ -190,9 +190,9 @@ public class WebDriverUtils extends WebDriverObject{
 	public static void mouseOver(String xpath){
 		try{
 			Actions actions=new Actions(webDriver);
-			actions.moveToElement(webDriver.findElement(By.xpath(xpath))).perform();
+			actions.moveToElement(getElement(xpath)).perform();
 		}catch(NoSuchElementException e){
-			runtimeExceptionWithUrl("Could not find element by Xpath: " + xpath);
+			runtimeExceptionWithUrl("Could not find element: " + xpath);
 		}
 
 	}
@@ -219,7 +219,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     protected static void clearField(String xpath){
         try{
-            webDriver.findElement(By.xpath(xpath)).clear();
+            getElement(xpath).clear();
         }catch(NoSuchElementException e){
             runtimeExceptionWithUrl("Could not find element: " + xpath);
         }
@@ -227,7 +227,7 @@ public class WebDriverUtils extends WebDriverObject{
 
 	public static String getInputFieldText(String xpath){
 		try{
-			return webDriver.findElement(By.xpath(xpath)).getAttribute("value");
+			return getElement(xpath).getAttribute("value");
 		}catch(NoSuchElementException e){
 			runtimeExceptionWithUrl("Could not find element: " + xpath);
 		}
@@ -236,16 +236,16 @@ public class WebDriverUtils extends WebDriverObject{
 
 	public static void inputTextToField(String xpath, String text){
 		try{
-			webDriver.findElement(By.xpath(xpath)).sendKeys(text);
+			getElement(xpath).sendKeys(text);
 		}catch(NoSuchElementException e){
-			runtimeExceptionWithUrl("Could not find element: " + webDriver.findElement(By.xpath(xpath)));
+			runtimeExceptionWithUrl("Could not find element: " + xpath);
 		}
 	}
 
 	public static void inputTextToField(String xpath, String text, int sleepTimeMillisec){
 		for(int i=0; i < text.length(); i++){
 			try{
-				webDriver.findElement(By.xpath(xpath)).sendKeys(text.charAt(i) + "");
+				getElement(xpath).sendKeys(text.charAt(i) + "");
 				Thread.sleep(sleepTimeMillisec);
 			}catch(InterruptedException e){
 				runtimeExceptionWithUrl("Sleep failed");
@@ -275,7 +275,7 @@ public class WebDriverUtils extends WebDriverObject{
 
 	public static boolean getCheckBoxState(String xpath){
 		try{
-			return webDriver.findElement(By.xpath(xpath)).isSelected();
+			return getElement(xpath).isSelected();
 		}catch(NoSuchElementException e){
 			runtimeExceptionWithUrl("Could not find element: " + xpath);
 		}
@@ -285,7 +285,7 @@ public class WebDriverUtils extends WebDriverObject{
 	public static void setCheckBoxState(String xpath, boolean desiredState){
 		try{
 			if(getCheckBoxState(xpath)!= desiredState){
-				webDriver.findElement(By.xpath(xpath)).click();
+				getElement(xpath).click();
 			}
 		}catch(NoSuchElementException e){
 			runtimeExceptionWithUrl("Could not find element: " + xpath);
@@ -299,7 +299,7 @@ public class WebDriverUtils extends WebDriverObject{
 	//Dropdown
 
     private static Select createDropdown(String xpath){
-        return new Select(webDriver.findElement(By.xpath(xpath)));
+        return new Select(getElement(xpath));
     }
 
     public static WebElement getDropdownLastOption(String xpath){
@@ -399,6 +399,102 @@ public class WebDriverUtils extends WebDriverObject{
         }
         return null;
     }
+
+    //Custom dropdown
+
+    public static void setCustomDropdownOptionByText(String xpath, String text){
+        try{
+            String list = openCustomDropdown(xpath);
+            click(list+"//li[contains(text(), '"+text+"')]");
+            waitForElementToDisappear(list);
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element " + xpath + " with text '" + text + "'");
+        }
+    }
+
+    public static void setCustomDropdownOptionByValue(String xpath, String value){
+        try{
+            String list = openCustomDropdown(xpath);
+            click(list+"//li[@data-lang ='"+value+"']");
+            waitForElementToDisappear(list);
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element " + xpath + " with value '" + value + "'");
+        }
+    }
+
+    public static List<String> getCustomDropdownOptionsText(String xpath){
+        List<String> optionsText= new ArrayList<>();
+        try{
+            for(WebElement option:getCustomDropdownOptions(xpath)){
+                optionsText.add(option.getText());
+            }
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return optionsText;
+    }
+
+    public static List<String> getCustomDropdownOptionsValue(String xpath){
+        List<String> optionsValue = new ArrayList<>();
+        try{
+            for(WebElement option:getCustomDropdownOptions(xpath)){
+                optionsValue.add(option.getAttribute("data-lang"));
+            }
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return optionsValue;
+    }
+
+    public static String getCustomDropdownSelectedOptionText(String xpath){
+        try{
+            return getCustomDropdownSelectedOption(xpath).getText();
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return null;
+    }
+
+    public static String getCustomDropdownSelectedOptionValue(String xpath){
+        try{
+            WebElement option = getCustomDropdownSelectedOption(xpath);
+            if(platform.equals(PLATFORM_MOBILE)){
+                return option.getAttribute("data-lang");
+            }else {
+                return option.getAttribute("class").split(" ")[1];
+            }
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return null;
+    }
+
+    public static WebElement getCustomDropdownSelectedOption(String xpath){
+        try{
+            if(platform.equals(PLATFORM_MOBILE)){
+                String list = getFollowingElement(xpath);
+                return getElement(list+"//li[contains(@class, 'selected')]");
+            }else {
+                return getElement(xpath+"//span");
+            }
+        }catch(NoSuchElementException e){
+            runtimeExceptionWithUrl("Could not find element: " + xpath);
+        }
+        return null;
+    }
+
+    private static String openCustomDropdown(String xpath){
+        String list = getFollowingElement(xpath);
+        click(xpath);
+        waitForElement(list);
+        return list;
+    }
+
+    public static List<WebElement> getCustomDropdownOptions(String xpath){
+        String list = getFollowingElement(xpath);
+        return webDriver.findElements(By.xpath(list+"//li"));
+    }
+
     //List
 
     public static List<String> getListOfAttributeValues(String xpath, String attributeName){
@@ -420,11 +516,11 @@ public class WebDriverUtils extends WebDriverObject{
         webDriver.manage().deleteAllCookies();
     }
 
-
     public static void addCookie(String name, String value, String domain, String path, Date expiry){
         Cookie cookie = new Cookie(name, value, domain, path, expiry);
         webDriver.manage().addCookie(cookie);
     }
+
 
     public static Cookie getCookie(String cookieName) {
         return webDriver.manage().getCookieNamed(cookieName);
@@ -522,7 +618,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
     public static void switchToIframeByXpath(String iframeXpath){
-        webDriver.switchTo().frame(webDriver.findElement(By.xpath(iframeXpath)));
+        webDriver.switchTo().frame(getElement(iframeXpath));
     }
 
 	//Exceptions
@@ -564,9 +660,29 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static String getDomain() {
-        String baseUrl = WebDriverObject.getBaseUrl();
         int firstDotIndex = baseUrl.indexOf(".");
-
         return baseUrl.substring(firstDotIndex).replace("/", "").replace(":8080", "");
     }
+
+    private static WebElement getElement(String xpath) {
+        return webDriver.findElement(By.xpath(xpath));
+    }
+
+    private static String getFollowingElement(String xpath, int index) {
+        return "//*[preceding-sibling::"+xpath.substring(2)+"]["+index+"]";
+    }
+
+    private static String getFollowingElement(String xpath) {
+        return "//*[preceding-sibling::"+xpath.substring(2)+"]";
+    }
+
+    private static String getPrecedingElement(String xpath, int index) {
+        return "//*[following-sibling::"+xpath.substring(2)+"]["+index+"]";
+    }
+
+    private static String getPrecedingElement(String xpath) {
+        return "//*[following-sibling::"+xpath.substring(2)+"]";
+    }
+
+
 }

@@ -99,11 +99,11 @@ public class TypeUtils extends Assert {
         return similar;
     }
 
-    public static <T> Collection<T> getDiffElementsFromLists(Collection<T> list1, Collection<T> list2) {
+    public static <T> Collection<T> getDiffElementsFromLists(Collection<T> expected, Collection<T> actual) {
         Collection<T> different = new HashSet<T>();
-        different.addAll(list1);
-        different.addAll(list2);
-        Collection<T> same = getSameElementsFromLists(list1, list2);
+        different.addAll(expected);
+        different.addAll(actual);
+        Collection<T> same = getSameElementsFromLists(expected, actual);
         different.removeAll(same);
         if(different.contains("")){
             different.remove("");

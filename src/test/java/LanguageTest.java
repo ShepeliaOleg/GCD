@@ -28,9 +28,7 @@ public class LanguageTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void countryList(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
-        Collection<String> actualCountriesCodesList = homePage.getLanguageCodesList();
-        Collection<String> diff=TypeUtils.getDiffElementsFromLists(actualCountriesCodesList, defaults.getLanguageCodesList());
-        TypeUtils.assertTrueWithLogs(diff.isEmpty(), diff.toString());
+        assertEqualCollections(defaults.getLanguageCodesList(), homePage.getLanguageCodesList(), "Language list corresponds with config");
     }
 
 //    @Test(groups = {"regression"})
