@@ -7,6 +7,7 @@ import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
+import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
@@ -73,9 +74,9 @@ public class LoginPopup extends AbstractPopup{
         fillPassword(userData.getPassword());
         clickLogin();
         try{
-            WebDriverUtils.waitForElementToDisappear(BUTTON_LOGIN_XP, 10);
+            WebDriverUtils.waitForElementToDisappear(RegistrationPageStepThree.LOADING_ANIMATION_XP, 30);
         }catch (Exception e){
-            e.printStackTrace();
+            NavigationUtils.tooLongError();
         }
         return NavigationUtils.closeAllPopups(expectedPage);
     }

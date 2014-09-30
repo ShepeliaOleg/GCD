@@ -45,7 +45,6 @@ public class NavigationUtils extends WebDriverObject{
 
     private static final int POPUP_CHECK_RETRIES = 30;
     private static final int POPUP_WAIT_TIMEOUT = 10;
-    private static String LOADING_ANIMATION;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
         return navigateToPage(PlayerCondition.any, configuredPages, null);
@@ -191,27 +190,23 @@ public class NavigationUtils extends WebDriverObject{
 		return result;
 	}
 
-    private static void tooLongError(){
-        WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long (more than 30s)");
+    public static void tooLongError(){
+//        WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long (more than 30s)");
+        throw new SkipException("Registration/Login takes too long (more than 30s)");
     }
 
     private static boolean registrationNotFinished(){
-        LOADING_ANIMATION = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
-        return WebDriverUtils.isVisible(RegistrationPageStepThree.LOADING_ANIMATION_XP, 1)||
-                WebDriverUtils.isVisible(LOADING_ANIMATION, 1)||
-                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) ||
-                !new AbstractPage().isLoggedIn();
+        String loader = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
+        if(platform.equals(PLATFORM_MOBILE)){
+            loader = RegistrationPageStepThree.LOADING_ANIMATION_XP;
+        }
+        return WebDriverUtils.isVisible(loader, 1)||
+               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) ||
+               !new AbstractPage().isLoggedIn();
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){
-		if(WebDriverUtils.isVisible(LOADING_ANIMATION, 0)){
-            try {
-                WebDriverUtils.waitForElementToDisappear(LOADING_ANIMATION, 30);
-            }catch (Exception e){
-                tooLongError();
-            }
-			return null;
-        }else if(WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)){
+        if(WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)){
             return processAfterRegistrationPopup(exceptPage);
 		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
             return processLoginPopup(exceptPage);
