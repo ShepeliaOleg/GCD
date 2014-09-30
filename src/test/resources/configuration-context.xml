@@ -258,48 +258,48 @@
         </property>
         <property name="languageList">
             <list>
-                <!--<value>code@name@translation</value>-->
-                <value>ar_SA@@</value>
-                <value>bg_BG@@</value>
-                <value>ca_ES@@</value>
-                <value>cs_CZ@@</value>
-                <value>da_DK@@</value>
-                <value>de_DE@@</value>
-                <value>el_GR@@</value>
-                <value>en_AU@@</value>
-                <value>en_GB@@</value>
-                <value>en_CA@@</value>
-                <value>en_US@@</value>
-                <value>es_ES@@</value>
-                <value>et_EE@@</value>
-                <value>fi_FI@@</value>
-                <value>fr_FR@@</value>
-                <value>ga_IE@@</value>
-                <value>hi_IN@@</value>
-                <value>hu_HU@@</value>
-                <value>it_IT@@</value>
-                <value>iw_IL@@</value>
-                <value>ja_JP@@</value>
-                <value>ka_GE@@</value>
-                <value>ko_KR@@</value>
-                <value>my_MM@@</value>
-                <value>nl_NL@@</value>
-                <value>no_NO@@</value>
-                <value>pl_PL@@</value>
-                <value>pt_BR@@</value>
-                <value>pt_PT@@</value>
-                <value>ro_RO@@</value>
-                <value>ru_RU@@</value>
-                <value>sv_SE@@</value>
-                <value>sk_SK@@</value>
-                <value>sr_RS@@</value>
-                <value>th_TH@@</value>
-                <value>tr_TR@@</value>
-                <value>uk_UA@@</value>
-                <value>vi_VN@@</value>
-                <value>zh_CN@@</value>
-                <value>zh_SG@@</value>
-                <value>zh_TW@@</value>
+                <!--<value>code@name@urlcode@translation</value>-->
+                <value>ar_SA@none@none</value>
+                <value>bg_BG@none@none</value>
+                <value>ca_ES@none@none</value>
+                <value>cs_CZ@none@none</value>
+                <value>da_DK@none@none</value>
+                <value>de_DE@none@none</value>
+                <value>el_GR@none@none</value>
+                <value>en_AU@none@en_AU</value>
+                <value>en_GB@English@en_GB</value>
+                <value>en_CA@none@en_CA</value>
+                <value>en_US@none@none</value>
+                <value>es_ES@Español@none</value>
+                <value>et_EE@none@none</value>
+                <value>fi_FI@none@none</value>
+                <value>fr_FR@none@none</value>
+                <value>ga_IE@none@none</value>
+                <value>hi_IN@none@none</value>
+                <value>hu_HU@none@none</value>
+                <value>it_IT@Italiano@none</value>
+                <value>iw_IL@none@none</value>
+                <value>ja_JP@none@none</value>
+                <value>ka_GE@Georgian@none</value>
+                <value>ko_KR@none@none</value>
+                <value>my_MM@none@none</value>
+                <value>nl_NL@none@none</value>
+                <value>no_NO@none@none</value>
+                <value>pl_PL@none@none</value>
+                <value>pt_BR@none@pt_BR</value>
+                <value>pt_PT@none@pt</value>
+                <value>ro_RO@none@none</value>
+                <value>ru_RU@Русский@none</value>
+                <value>sv_SE@none@none</value>
+                <value>sk_SK@none@none</value>
+                <value>sr_RS@none@none</value>
+                <value>th_TH@none@none</value>
+                <value>tr_TR@Turkish@none</value>
+                <value>uk_UA@Українська@none</value>
+                <value>vi_VN@none@none</value>
+                <value>zh_CN@none@zh_CN</value>
+                <value>zh_SG@none@zh_SG</value>
+                <value>zh_TW@中文 (中国)@zh_TW</value>
             </list>
         </property>
         <property name="currencyList">
@@ -317,6 +317,9 @@
         </property>
         <property name="defaultCurrency">
             <value>GBP</value>
+        </property>
+        <property name="defaultLanguage">
+            <value>en_US</value>
         </property>
     </bean>
 </beans>

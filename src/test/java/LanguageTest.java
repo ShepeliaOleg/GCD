@@ -6,6 +6,7 @@ import pageObjects.HomePage;
 import springConstructors.Defaults;
 import springConstructors.UserData;
 import utils.NavigationUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class LanguageTest extends AbstractTest {
@@ -25,6 +26,16 @@ public class LanguageTest extends AbstractTest {
     public void countryList(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         assertEqualsCollections(defaults.getLanguageCodesList(), homePage.getLanguageCodesList(), "Language list corresponds with config");
+    }
+
+    /*#2. */
+    @Test(groups = {"regression"})
+    public void urlUpdatedOnLanguageChange(){
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
+        for (String languageCode : defaults.getLanguageCodesList()) {
+            homePage.setLanguage(languageCode);
+            assertEquals(defaults.getLanguageUrlByLanguageCode(languageCode), WebDriverUtils.getCurrentUrl().replace(WebDriverUtils.getBaseUrl(), "").replace(ConfiguredPages.home.toString(), ""), "Url for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
+        }
     }
 
 //    @Test(groups = {"regression"})
