@@ -28,6 +28,8 @@ public class Listener extends TestListenerAdapter{
     private static final String COLOR_GREEN = "#B2F5A6";
     private static final String COLOR_RED = "#FF9763";
     private static final String ENV_REPLACER = "ENVIRONMENT";
+    private static final String SKIP_EXCEPTION = "org.testng.SkipException";
+    private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
 
     String[] list = {"BannerTest", "BingoScheduleTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
             "ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest",
@@ -333,19 +335,20 @@ public class Listener extends TestListenerAdapter{
 
     private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
-        String shortExc="Uncaught Error";
-        if(exc.contains(":")){
-            shortExc=exc.substring(0, exc.indexOf(":"));
+        if(exc.startsWith(SKIP_EXCEPTION)){
+            exc=exc.replace(SKIP_EXCEPTION, "Skipped");
+        }else if(exc.startsWith(RUNTIME_EXCEPTION)){
+            exc=exc.replace(RUNTIME_EXCEPTION, "Error");
         }
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
             if(fullException.length>1){
                 return fullException[0]+ spoilerText(name, fullException[1]);
             }else{
-                return shortExc + spoilerText(name, fullException[0]);
+                return fullException[0];
             }
         }else{
-            return shortExc + spoilerText(name, exc);
+            return exc;
         }
     }
 
