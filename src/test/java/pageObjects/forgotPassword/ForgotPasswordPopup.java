@@ -1,6 +1,5 @@
 package pageObjects.forgotPassword;
 
-import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPopup;
 import springConstructors.UserData;

@@ -9,7 +9,6 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 import utils.WebDriverUtils;
-import utils.core.WebDriverFactory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -31,10 +30,13 @@ public class Listener extends TestListenerAdapter{
     private static final String SKIP_EXCEPTION = "org.testng.SkipException";
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
 
-    String[] list = {"BannerTest", "BingoScheduleTest", "ChangeMyDetailsTest", "ChangeMyPasswordTest",
-            "ForgotPasswordTest", "ForgotUsernameTest", "GamesPortletTest", "InboxTest",
-            "InternalTagsTest", "LanguageTest", "LiveTableFinderTest", "LoginTest", "PushMessagesTest", "ReferAFriendTest",
-            "RegistrationTest", "ResponsibleGamingTest", "SelfExclusionTest", "WebContentTest"};
+    String[] list = {"BannerGameLaunchTest","BannerGeneralTest","BannerProfileIDTest","BingoScheduleTest",
+            "ChangeMyDetailsTest", "ChangeMyPasswordTest","ForgotPasswordTest", "ForgotUsernameTest",
+            "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
+            "LiveTableFinderTest","LoginGeneralTest","LoginLogoutConfirmationTest","LoginValidationTest",
+            "PushMessagesTest","ReferAFriendTest","RegistrationAffiliateTest","RegistrationGeneralTest",
+            "RegistrationUsernameSuggestionTest","RegistrationValidationTest","ResponsibleGamingTest",
+            "SelfExclusionTest", "WebContentTest"};
 
 
     @Override
@@ -137,7 +139,7 @@ public class Listener extends TestListenerAdapter{
                 line = replaceStringWithInt(line, classname + "Passed", passed);
                 line = replaceStringWithInt(line, classname + "Failed", failed);
                 line = replaceStringWithInt(line, classname + "Ims", ims);
-                line = replaceStringWithString(line, " style=\"display:none;\"><td><a href ='"+folder+classname, "><td><a href ='"+folder+classname);
+                line = replaceStringWithString(line, " style='display:none;'><td><a href ='"+folder+classname, "><td><a href ='"+folder+classname);
                 if (failed>0){
                     line = paintRed(line, classname);
                 }
@@ -218,8 +220,8 @@ public class Listener extends TestListenerAdapter{
     private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
-        output.println("<table border=\"1\" style=\"background-color:yellow;border:1px black;width:90%;border-collapse:collapse;\">");
-        output.println("<tr align=\"center\" valign=\"middle\" style=\"background-color:orange;color:white;\"><td width='30%'>Area</td><td width='15%'>Status</td><td width='15%'>Screenshot</td><td>Error</td></tr>");
+        output.println("<table border='1' style='background-color:yellow;border:1px black;width:90%;border-collapse:collapse;'>");
+        output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='30%'>Area</td><td width='15%'>Status</td><td width='15%'>Screenshot</td><td>Error</td></tr>");
         addRows(iTestContext);
         output.println("</table>");
         output.println("<br>");
@@ -227,10 +229,10 @@ public class Listener extends TestListenerAdapter{
 
     private void createIndex(){
         output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
-        output.println("<table border=\"1\" style=\"background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;\">");
-        output.println("<tr style=\"background-color:orange;color:white;\"><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>IMS Registration/Login Issues(Skipped)</td></tr>");
+        output.println("<table border='1' style='background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;'>");
+        output.println("<tr style='background-color:orange;color:white;'><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>IMS Registration/Login Issues(Skipped)</td></tr>");
         for(String area:list){
-            output.println("<tr style=\"display:none;\"><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
+            output.println("<tr style='display:none;'><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
         output.println("<tr><td>TOTAL</td><td id='total'>0</td><td id='passed'>0</td><td id='failed'>0</td><td id='ims'>0</td></tr>");
         output.println("</table>");
@@ -243,8 +245,8 @@ public class Listener extends TestListenerAdapter{
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + name + "</td> ");
-                output.println("<td align=\"center\" valign=\"middle\" class='passed'>passed</td> ");
-                output.println("<td align=\"center\" valign=\"middle\"><a href='"+ScreenOrientation.LANDSCAPE.value()+name
+                output.println("<td align='center' valign='middle' class='passed'>passed</td> ");
+                output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()+name
                         +".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td><td></td></tr>");
             }
         }
@@ -253,8 +255,8 @@ public class Listener extends TestListenerAdapter{
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
-                output.println("<td align=\"center\" valign=\"middle\" class='failed'>failed</td> ");
-                output.println("<td align=\"center\" valign=\"middle\"><a href='"+ScreenOrientation.LANDSCAPE.value()
+                output.println("<td align='center' valign='middle' class='failed'>failed</td>");
+                output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()
                         +name+".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
             }
@@ -265,7 +267,8 @@ public class Listener extends TestListenerAdapter{
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
                 output.println("<td align='center' valign='middle'>Skipped</td> ");
-                output.println("<td align='center' valign='middle'><a href='"+name+".jpg'>Screenshot</a></td>");
+                output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()
+                        +name+".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td>");
                 output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
@@ -273,18 +276,18 @@ public class Listener extends TestListenerAdapter{
 
     private void startHtmlPage(String pageName)
     {
-        output.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">\n");
-        output.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
-        output.println("<head>\n");
+        output.println("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>");
+        output.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
+        output.println("<head>");
         output.println("<title>"+pageName+"</title>" );
-        output.println("<style media=\"screen\" type=\"text/css\">table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
+        output.println("<style media='screen' type='text/css'>table {table-layout:fixed;overflow:hidden;word-wrap:break-word;}" +
                 ".td1 {width:100px;}" +
                 ".td2 {width:50px;}" +
                 ".td3 {width:50px;}</style>");
         output.println("</head>");
         output.println("<body><br/>");
         Calendar cal = Calendar.getInstance();
-        output.println("<br/><div align=\"right\">Test finished on: " + cal.getTime() + "</div><br/><br/>");
+        output.println("<br/><div align='right'>Test finished on: " + cal.getTime() + "</div><br/><br/>");
     }
 
     private void endHtmlPage()
@@ -361,9 +364,9 @@ public class Listener extends TestListenerAdapter{
     private String spoilerText(String name, String message){
         String showId = "show_id_"+name+"";
         String spoilerId = "spoiler_id_"+name+"";
-        return " <a id=\""+showId+"\" onclick=\"document.getElementById('"+spoilerId+"').style.display='';" +
-                " document.getElementById('"+showId+"').style.display='none';\" class=\"link\">[More]</a>" +
-                "<div id=\""+spoilerId+"\" style=\"display: none\"><a onclick=\"document.getElementById('"+spoilerId+"').style.display='none';" +
-                " document.getElementById('"+showId+"').style.display='';\" class=\"link\">[Hide]</a><br>"+message+"</div>";
+        return " <a id='"+showId+"' onclick='document.getElementById('"+spoilerId+"').style.display='';" +
+                " document.getElementById('"+showId+"').style.display='none';' class='link'>[More]</a>" +
+                "<div id='"+spoilerId+"' style='display: none'><a onclick='document.getElementById('"+spoilerId+"').style.display='none';" +
+                " document.getElementById('"+showId+"').style.display='';' class='link'>[Hide]</a><br>"+message+"</div>";
     }
 }

@@ -1,6 +1,7 @@
 package utils.cookie;
 
 import utils.WebDriverUtils;
+
 import java.util.Date;
 
 public abstract class Cookie {

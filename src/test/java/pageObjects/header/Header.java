@@ -4,7 +4,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.menu.Menu;
-import pageObjects.referAFriend.ReferAFriendPopup;
 import utils.WebDriverUtils;
 
 import java.util.Collection;

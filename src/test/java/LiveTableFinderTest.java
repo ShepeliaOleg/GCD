@@ -1,17 +1,6 @@
-import enums.ConfiguredPages;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
-import pageObjects.liveCasino.DealerImagePopup;
-import pageObjects.liveCasino.LiveCasinoPage;
-import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
-import utils.NavigationUtils;
-import utils.RandomUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 /**

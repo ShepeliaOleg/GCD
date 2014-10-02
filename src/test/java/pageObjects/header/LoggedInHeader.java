@@ -1,7 +1,6 @@
 package pageObjects.header;
 
 import pageObjects.account.MyAccountPage;
-import pageObjects.core.AbstractPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LogoutPopup;
 import springConstructors.UserData;

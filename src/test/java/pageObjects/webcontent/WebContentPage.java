@@ -1,7 +1,6 @@
 package pageObjects.webcontent;
 
 import enums.GameLaunch;
-import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.core.AbstractPage;

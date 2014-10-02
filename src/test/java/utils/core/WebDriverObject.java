@@ -1,9 +1,6 @@
 package utils.core;
 
 import org.openqa.selenium.WebDriver;
-import utils.WebDriverUtils;
-
-import java.util.ArrayList;
 
 public class WebDriverObject{
 

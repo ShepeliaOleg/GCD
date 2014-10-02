@@ -1,7 +1,6 @@
 package pageObjects.login;
 
 import pageObjects.core.AbstractPopup;
-import utils.WebDriverUtils;
 
 /*
  * User: ivanva

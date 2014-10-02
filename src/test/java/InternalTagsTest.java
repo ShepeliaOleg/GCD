@@ -1,19 +1,8 @@
-import enums.ConfiguredPages;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.InternalTagsPage;
-import pageObjects.account.BalancePage;
 import springConstructors.IMS;
 import springConstructors.UserData;
-import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
-
-import java.util.HashMap;
 
 /**
  * User: sergiich

@@ -3,7 +3,6 @@ package pageObjects.account;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.core.AbstractPage;
 import pageObjects.inbox.InboxPage;
-import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import utils.WebDriverUtils;
 

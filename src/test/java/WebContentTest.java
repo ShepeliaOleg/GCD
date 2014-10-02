@@ -9,7 +9,6 @@ import pageObjects.login.LoginPopup;
 import pageObjects.webcontent.WebContentPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 

@@ -1,18 +1,6 @@
-import enums.ConfiguredPages;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.annotations.Test;
-import pageObjects.core.AbstractPage;
-import pageObjects.header.Header;
-import pageObjects.responsibleGaming.ResponsibleGamingPage;
-import pageObjects.responsibleGaming.SelfExcludeConfirmPopup;
-import pageObjects.responsibleGaming.SelfExcludePopup;
 import springConstructors.UserData;
-import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.TypeUtils;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class SelfExclusionTest extends AbstractTest{

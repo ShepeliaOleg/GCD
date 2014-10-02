@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.external.mail.MailServicePage;
-import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
 import utils.NavigationUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class ReferAFriendTest extends AbstractTest{

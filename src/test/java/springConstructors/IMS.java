@@ -250,7 +250,7 @@ public class IMS extends WebDriverObject{
     }
 
     public String getClientType(UserData userData){
-        return navigateToPlayedDetails(userData.getUsernameUppercase()).getClientType();
+        return navigateToPlayedDetails(userData.getUsername()).getClientType();
     }
 
 }

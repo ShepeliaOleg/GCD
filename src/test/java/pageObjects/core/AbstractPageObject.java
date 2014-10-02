@@ -1,9 +1,6 @@
 package pageObjects.core;
 
 import utils.WebDriverUtils;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import utils.core.WebDriverObject;
 
 public abstract class AbstractPageObject extends WebDriverObject {

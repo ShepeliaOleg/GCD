@@ -1,23 +1,8 @@
-import enums.ConfiguredPages;
-import enums.Page;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.bonus.*;
-import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.changePassword.ChangedPasswordPopup;
-import pageObjects.core.AbstractPage;
-import pageObjects.login.ForceLogoutPopup;
-import pageObjects.login.WelcomePopup;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 /**

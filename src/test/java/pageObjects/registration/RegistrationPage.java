@@ -15,7 +15,6 @@ import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class RegistrationPage extends AbstractPage{

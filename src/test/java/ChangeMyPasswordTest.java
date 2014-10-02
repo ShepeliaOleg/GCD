@@ -1,20 +1,14 @@
 import enums.ConfiguredPages;
-import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.external.ims.IMSPlayerDetailsPage;
-import pageObjects.login.LoginPopup;
 import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class ChangeMyPasswordTest extends AbstractTest{
