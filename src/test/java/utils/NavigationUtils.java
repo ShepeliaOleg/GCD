@@ -64,6 +64,7 @@ public class NavigationUtils extends WebDriverObject{
             case balance:                                       return new BalancePage();
             case banner5seconds:
             case bannerGame:
+            case bannerGameTwoSlides:
             case bannerHtml:
             case bannerImage:
             case bannerInRotation:
