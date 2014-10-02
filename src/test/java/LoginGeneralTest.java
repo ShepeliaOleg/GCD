@@ -136,30 +136,36 @@ public class LoginGeneralTest extends AbstractTest {
 	@Test(groups = {"regression"})
 	public void loginWithLowerCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername("lowercase");
+		userData.setUsername(userData.getUsernameLowercase());
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		homePage=(HomePage)homePage.login(userData);
-        assertTrue(homePage.isUsernameDisplayed(userData),"Username is displayed after login");
+        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
+        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
+        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
+        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
 	}
 
 	/*11.2 Case-sensitive login*/
 	@Test(groups = {"regression"})
 	public void loginWithUpperCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername("UPPERCASE");
+		userData.setUsername(userData.getUsernameUppercase());
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		homePage=(HomePage)homePage.login(userData);
-        assertTrue(homePage.isUsernameDisplayed(userData),"Username is displayed after login");
+        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
+        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
+        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
+        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
 	}
 
 	/*11.3 Case-sensitive login*/
 	@Test(groups = {"regression"})
 	public void loginWithMixedCaseUsername(){
 		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername("MiXeDcAsE");
+		userData.setUsername(userData.getUsernameMixedcase());
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		homePage=(HomePage)homePage.login(userData);
-        assertTrue(homePage.isUsernameDisplayed(userData),"Username is displayed after login");
+        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
+        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
+        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
+        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
 	}
 
     /*#12.1 Links work on popup*/

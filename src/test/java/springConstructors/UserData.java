@@ -125,6 +125,16 @@ public class UserData{
         return getUsername().toUpperCase();
     }
 
+    public String getUsernameLowercase() {
+        return getUsername().toLowerCase();
+    }
+
+    public String getUsernameMixedcase() {
+        String username = getUsername();
+        int length = username.length();
+        return username.substring(0,length).toLowerCase() + username.substring(length).toUpperCase();
+    }
+
     public void setUsername(String username){
 		this.username=username;
 	}
