@@ -167,9 +167,9 @@
         <property name="maxLength" value="11"/>
         <property name="tooltipPositive" value="Please enter your phone number"/>
         <property name="tooltipNegativeEmpty" value="Please enter a valid phone number"/>
-        <property name="tooltipNegativeShort" value="You may only use numbers (0-9) and + (6-11 digits)"/>
-        <property name="tooltipNegativeLong" value="You may only use numbers (0-9) and + (6-11 digits)"/>
-        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9) "/>
+        <property name="tooltipNegativeShort" value="You may only use numbers (0-9) (6-11 digits)"/>
+        <property name="tooltipNegativeLong" value="You may only use numbers (0-9) (6-11 digits)"/>
+        <property name="tooltipNegativeInvalid" value="You may only use numbers (0-9)"/>
     </bean>
 
     <bean id="mobilePhoneValidationRule" class="springConstructors.ValidationRule">

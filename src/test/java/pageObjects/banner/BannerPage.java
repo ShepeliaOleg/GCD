@@ -2,10 +2,13 @@ package pageObjects.banner;
 
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
+import enums.GameLaunch;
+import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.core.AbstractPage;
-import pageObjects.core.AbstractPageObject;
+import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
+import springConstructors.UserData;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -26,6 +29,9 @@ public class BannerPage extends AbstractPage {
     private static final String NAVIGATION_ARROW_NEXT_XP =          NAVIGATION_XP + "//*[contains(@class,'next')]";
     private static final String NAVIGATION_BULLETS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_bullet')]";
     private static final String NAVIGATION_BUTTONS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_number')]";
+
+    private static final String HULK_GAME = "hlk2";
+    private static final String MISTER_CASH_BACK_GAME = "mrkb";
 
 	public BannerPage(){
 		super(new String[]{ROOT_XP});
@@ -184,10 +190,8 @@ public class BannerPage extends AbstractPage {
     public boolean arrowsDisplayed() {
         int slidesCount = getSlidesCount();
         int currentSlideIndex = getDisplayedSlideIndex(slidesCount);
-
         boolean arrowNextVisible =  WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW);
         boolean arrowPreviousVisible =  WebDriverUtils.isVisible(NAVIGATION_ARROW_NEXT_XP, TIMEOUT_NOW);
-
         if (currentSlideIndex == 1) {
             return !arrowPreviousVisible && arrowNextVisible;
         } else if (currentSlideIndex == slidesCount) {
@@ -195,20 +199,43 @@ public class BannerPage extends AbstractPage {
         } else {
             return arrowPreviousVisible && arrowNextVisible;
         }
-
     }
 
-    public AbstractPageObject clickSlide(int slideIndex) {
-        return clickSlide(getSlideXpathByIndex(slideIndex));
+    public void clickSlide(int slideIndex) {
+        WebDriverUtils.click(getSlideXpathByIndex(slideIndex));
     }
 
-    private AbstractPageObject clickSlide(String xpath) {
-        WebDriverUtils.click(xpath);
-        if (isLoggedIn()) {
-            return new GameLaunchPopup(getMainWindowHandle());
-        } else {
-            return new LoginPopup();
+    public LoginPopup clickGameLoggedOut(int page){
+        clickSlide(page);
+        return new LoginPopup();
+    }
+
+    public AdminCanNotPlayPopup clickGameAdmin(int page){
+        clickSlide(page);
+        return new AdminCanNotPlayPopup();
+    }
+
+    public boolean clickGameAndValidateUrl(int page, UserData userData){
+        String game;
+        if(page==1){
+            game = HULK_GAME;
+        }else {
+            game = MISTER_CASH_BACK_GAME;
         }
+        clickSlide(page);
+        if(userData!=null){
+            LoginPopup loginPopup = new LoginPopup();
+            loginPopup.login(userData);
+        }
+        if(platform.equals(PLATFORM_DESKTOP)){
+            return new GameLaunchPopup(getMainWindowHandle(), game).checkUrlAndClose();
+        }else{
+            return new GameLaunchPage(game).isUrlValid();
+        }
+    }
+
+    public boolean clickGameAndValidateUrl(int page){
+        return clickGameAndValidateUrl(page, null);
     }
 
 

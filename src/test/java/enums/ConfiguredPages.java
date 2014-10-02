@@ -5,6 +5,7 @@ public enum ConfiguredPages{
     balance("myaccount1/balance"),
     banner5seconds("banner_5_seconds"),
     bannerGame("banner_game"),
+    bannerGameTwoSlides("banner_game_two_slides"),
     bannerHtml("banner_html"),
     bannerImage("banner_image"),
     bannerInRotation("banner_in_rotation"),

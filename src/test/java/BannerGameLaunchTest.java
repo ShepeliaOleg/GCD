@@ -1,10 +1,8 @@
-import enums.BannerNavigationType;
-import enums.BannerSlideType;
-import enums.ConfiguredPages;
-import enums.PlayerCondition;
+import enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.external.ExternalPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
@@ -23,23 +21,75 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Qualifier("userData")
     private UserData defaultUserData;
 
-	/* 14. Game launch from banner as guest user*/
-    @Test(groups = {"regression"})
-    public void bannerLaunchGameGuestPlayer() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGame);
-        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
-        LoginPopup loginPopup = (LoginPopup) bannerPage.clickSlide(1);
-        loginPopup.login(defaultUserData.getRegisteredUserData());
-        GameLaunchPopup gameLaunchPopup = new GameLaunchPopup(bannerPage.getMainWindowHandle());
-        assertTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
+    /*Banner - Guest login popup register*/
+    @Test(groups = {"regression", "banner"})
+    public void bannerImageLaunchGameGuestRegister() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut( 1);
+        loginPopup.clickRegistration().registerUser(defaultUserData.getRandomUserData());
     }
 
-    /* 15. Game launch from banner as logged in player*/
-    @Test(groups = {"regression"})
-    public void bannerLaunchGameLoggedInPlayer() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGame, defaultUserData.getRegisteredUserData());
-        assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
-        GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) bannerPage.clickSlide(1);
-        assertTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
+    /*Banner - Guest login popup login image slide 1*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGameGuestLogin() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
+        bannerPage.clickGameAndValidateUrl(2, defaultUserData.getRegisteredUserData());
+    }
+
+    /*Banner - Guest login popup login image slide 2*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGameGuestLoginSlide2() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
+        bannerPage.showNextSlide();
+        bannerPage.clickGameAndValidateUrl(2, defaultUserData.getRegisteredUserData());
+    }
+
+    /*Banner - Guest login popup cancel image slide 1*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGameGuestCancel() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(1);
+        loginPopup.close();
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+    }
+
+    /*Banner - Guest login popup cancel image slide 2*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGameGuestCancelSlide2() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
+        bannerPage.showNextSlide();
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(2);
+        loginPopup.close();
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+    }
+
+    /*Banner - Player play image slide 1*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGamePlayer() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        bannerPage.clickGameAndValidateUrl(1);
+    }
+
+    /*Banner - Player play image slide 2*/
+    @Test(groups = {"regression","banner"})
+    public void bannerImageLaunchGamePlayerSlide2() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        bannerPage.showNextSlide();
+        bannerPage.clickGameAndValidateUrl(2);
+    }
+
+    /*Banner - Admin play image slide 1*/
+    @Test(groups = {"admin"})
+    public void bannerImageLaunchGameAdmin() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerGameTwoSlides);
+        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(1);
+    }
+
+    /*Banner - Admin play image slide 2*/
+    @Test(groups = {"admin"})
+    public void bannerImageLaunchGameAdminSlide2() {
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerGameTwoSlides);
+        bannerPage.showNextSlide();
+        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(2);
     }
 }

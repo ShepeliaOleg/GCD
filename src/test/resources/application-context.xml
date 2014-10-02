@@ -15,10 +15,10 @@
         <!--<property name="defaultBaseUrl" value="http://mob-7regal-adminpor.wpl.ptec:8080/"/>-->
         <!--<property name="defaultBaseUrl" value="http://portal-admin2.7regal.com/"/>-->
         <!--<property name="defaultPlatform" value="desktop"/>-->
-        <!--<property name="defaultBaseUrl" value="http://mob-adminpor.ee.playtech.corp:8080/"/>-->
-        <property name="defaultBaseUrl" value="http://cache2mobile-portal.playtechgaming.com/"/>
+        <property name="defaultBaseUrl" value="http://mob-adminpor.ee.playtech.corp:8080/"/>
+        <!--<property name="defaultBaseUrl" value="http://cache2mobile-portal.playtechgaming.com/"/>-->
         <property name="defaultPlatform" value="mobile"/>
-        <property name="defaultBrowser" value="firefox"/>
+        <property name="defaultBrowser" value="chrome"/>
         <property name="defaultOs" value="windows"/>
         <property name="defaultDevice" value="galaxyS3"/>
     </bean>
