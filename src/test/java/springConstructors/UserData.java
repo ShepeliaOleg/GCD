@@ -130,9 +130,8 @@ public class UserData{
     }
 
     public String getUsernameMixedcase() {
-        String username = getUsername();
-        int length = username.length();
-        return username.substring(0,length).toLowerCase() + username.substring(length).toUpperCase();
+        int half = getUsername().length()/2;
+        return  getUsernameLowercase().substring(0,half)+getUsernameUppercase().substring(half);
     }
 
     public void setUsername(String username){
