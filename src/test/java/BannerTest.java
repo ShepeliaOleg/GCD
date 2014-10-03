@@ -19,7 +19,7 @@ import utils.core.AbstractTest;
 
 import java.util.List;
 
-public class BannerGeneralTest extends AbstractTest{
+public class BannerTest extends AbstractTest{
 
     @Autowired
     @Qualifier("userData")

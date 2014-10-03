@@ -21,7 +21,7 @@ import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
 
-public class RegistrationGeneralTest extends AbstractTest{
+public class RegistrationTest extends AbstractTest{
 
 	@Autowired
 	@Qualifier("userData")

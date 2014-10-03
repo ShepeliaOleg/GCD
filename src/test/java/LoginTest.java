@@ -19,7 +19,7 @@ import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class LoginGeneralTest extends AbstractTest {
+public class LoginTest extends AbstractTest {
 
 	@Autowired
 	@Qualifier("userData")
