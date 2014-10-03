@@ -62,4 +62,8 @@ public class PortalUtils extends WebDriverObject{
     public static AbstractPage loginAdmin() {
         return navigateToAdmin().loginAdmin();
     }
+
+    public static AbstractPage logout() {
+        return new AbstractPage().logout();
+    }
 }

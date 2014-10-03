@@ -4,6 +4,7 @@ import enums.Page;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.changePassword.ChangePasswordPopup;
+import pageObjects.footer.Footer;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.header.Header;
@@ -46,6 +47,10 @@ public class AbstractPage extends AbstractPageObject{
 	public Header header(){
 		return new Header();
 	}
+
+    private Footer footer(){
+        return new Footer();
+    }
 
 	public LoggedInHeader loggedInHeader(){
 		return new LoggedInHeader();
@@ -192,6 +197,10 @@ public class AbstractPage extends AbstractPageObject{
 	public String getEnteredUsernameFromLoginForm(){
 		return loggedOutHeader().getUsernameText();
 	}
+
+    public String getFooterText() {
+        return footer().getFooterText();
+    }
 
 }
 

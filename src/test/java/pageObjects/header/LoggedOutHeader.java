@@ -87,6 +87,10 @@ public class LoggedOutHeader extends Header{
 		return NavigationUtils.closeAllPopups(expectedPage);
 	}
 
+    public String getLoginButtonText() {
+        return WebDriverUtils.getElementText(BUTTON_LOGIN_XP);
+    }
+
 	/* VALIDATION */
 
 //	public void validateUsername(ValidationRule rule) {
