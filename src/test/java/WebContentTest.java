@@ -22,7 +22,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression"})
     public void displayButtonLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
-        webContentPage.playAndValidateUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
     }
 
     /*Web content display - Guest login popup cancel button*/
@@ -38,7 +38,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression"})
     public void displayButtonLaunchGamePlayer() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
-        webContentPage.playAndValidateUrl(GameLaunch.button, 1);
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
 
     /*Web content display - Admin play button*/
@@ -52,7 +52,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression"})
     public void displayImageLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
-        webContentPage.playAndValidateUrl(GameLaunch.image, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1, defaultUserData.getRegisteredUserData());
     }
 
     /*Web content display - Guest login popup register*/
@@ -76,7 +76,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression"})
     public void displayImageLaunchGamePlayer() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
-        webContentPage.playAndValidateUrl(GameLaunch.image, 1);
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
     /*Web content display - Admin play image*/
@@ -90,7 +90,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
-        webContentPage.playAndValidateUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login button slide 2*/
@@ -98,7 +98,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerButtonLaunchGameGuestLoginSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
-        webContentPage.playAndValidateUrl(GameLaunch.button, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 2, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel button slide 1*/
@@ -133,7 +133,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerButtonLaunchGamePlayer() {
         UserData userData = defaultUserData.getRegisteredUserData();
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, userData);
-        webContentPage.playAndValidateUrl(GameLaunch.button, 1);
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
 
     /*Banner - Player play button slide 2*/
@@ -142,7 +142,7 @@ public class WebContentTest extends AbstractTest{
         UserData userData = defaultUserData.getRegisteredUserData();
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.clickNextSlide();
-        webContentPage.playAndValidateUrl(GameLaunch.button, 2);
+        webContentPage.playAndAssertUrl(GameLaunch.button, 2);
     }
 
     /*Banner - Admin play button slide 1*/
@@ -164,7 +164,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
-        webContentPage.playAndValidateUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -172,7 +172,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerImageLaunchGameGuestLoginSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
-        webContentPage.playAndValidateUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel image slide 1*/
@@ -181,7 +181,7 @@ public class WebContentTest extends AbstractTest{
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 1);
         loginPopup.close();
-        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 
     /*Banner - Guest login popup cancel image slide 2*/
@@ -191,14 +191,14 @@ public class WebContentTest extends AbstractTest{
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 2);
         loginPopup.close();
-        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 
     /*Banner - Player play image slide 1*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayer() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
-        webContentPage.playAndValidateUrl(GameLaunch.image, 1);
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
     /*Banner - Player play image slide 2*/
@@ -206,7 +206,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerImageLaunchGamePlayerSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
         webContentPage.clickNextSlide();
-        webContentPage.playAndValidateUrl(GameLaunch.image, 2);
+        webContentPage.playAndAssertUrl(GameLaunch.image, 2);
     }
 
     /*Banner - Admin play image slide 1*/

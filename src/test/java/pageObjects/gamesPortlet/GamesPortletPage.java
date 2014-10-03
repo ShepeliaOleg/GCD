@@ -5,6 +5,7 @@ import enums.SortBy;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.login.LoginPopup;
+import utils.NavigationUtils;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
@@ -237,16 +238,8 @@ public class GamesPortletPage extends AbstractPage{
 		return new GamesPortletPage();
 	}
 
-    public boolean playDemoAndValidateUrl(){
-        if(platform.equals(PLATFORM_DESKTOP)){
-            return new GameLaunchPopup(getMainWindowHandle(), playDemo()).isUrlValid();
-        }else{
-            return new GameLaunchPage(playDemo()).isUrlValid();
-        }
-    }
-
-	//Game item controls
-	private String playDemo(){
+    //Game item controls
+	public void playDemoAndAssertUrl(){
         String gameId = "";
 		ArrayList<String> checkedGames=new ArrayList<>();
 		int gameCount = WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP+GAMES_XP);
@@ -265,24 +258,19 @@ public class GamesPortletPage extends AbstractPage{
 				WebDriverUtils.runtimeExceptionWithUrl("No demo game buttons found");
 			}
 		}
-       return gameId;
+       NavigationUtils.assertGameLaunch(gameId);
 	}
-
-    public boolean playRealAndValidateUrl(){
-        if(platform.equals(PLATFORM_DESKTOP)){
-            return new GameLaunchPopup(getMainWindowHandle(), playReal()).isUrlValid();
-        }else{
-            return new GameLaunchPage(playDemo()).isUrlValid();
-        }
-    }
 
     public LoginPopup playRealLoggedOut(){
         playReal();
         return new LoginPopup();
     }
 
+    public void playRealAndAssertURL(){
+        NavigationUtils.assertGameLaunch(playReal());
+    }
+
 	private String playReal(){
-		AbstractPageObject result;
         String gameId = "";
 		ArrayList<String> checkedGames=new ArrayList<>();
 		for(int i=0; i <= RETRIES; i++){
@@ -300,7 +288,7 @@ public class GamesPortletPage extends AbstractPage{
 				WebDriverUtils.runtimeExceptionWithUrl("No real game buttons found");
 			}
 		}
-		return gameId;
+        return gameId;
 	}
 
     public AbstractPageObject playRealList(boolean isLoggedIn){

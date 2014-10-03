@@ -6,6 +6,7 @@ public enum Page{
 	afterRegistrationPopup,
 	changePasswordPopup,
 	forcedPasswordChange,
+    gameLaunch,
 	homePage,
 	loginPopup,
 	logout,

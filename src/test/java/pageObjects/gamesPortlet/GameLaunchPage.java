@@ -2,6 +2,7 @@ package pageObjects.gamesPortlet;
 
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 public class GameLaunchPage extends AbstractPage {
 
@@ -11,16 +12,16 @@ public class GameLaunchPage extends AbstractPage {
 
     public GameLaunchPage(String gameID){
         super(new String[]{ROOT_XP});
-        this.gameID = gameID;
+        GameLaunchPage.gameID = gameID;
     }
 
     public String getUrl(){
         return WebDriverUtils.getCurrentUrl();
     }
 
-	public boolean isUrlValid(){
+	private boolean isUrlValid(){
 		String url;
-		for (int i=0; i<30; i++){
+		for (int i=0; i<=30; i++){
 			url=getUrl();
 				if(url.contains(CORRECT_GAME_URL.replace(PLACEHOLDER, gameID))){
 					return true;
@@ -29,4 +30,8 @@ public class GameLaunchPage extends AbstractPage {
 		}
 		return false;
 	}
+
+    public void assertGameLaunch(){
+        AbstractTest.assertTrue(isUrlValid(), "Game '"+gameID+"' launched");
+    }
 }
