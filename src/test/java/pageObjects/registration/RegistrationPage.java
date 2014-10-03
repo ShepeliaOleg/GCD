@@ -14,17 +14,15 @@ import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
-
 import java.util.Collection;
+import java.util.List;
 
 public class RegistrationPage extends AbstractPage{
 
     protected final static String ROOT_XP =                                             "//*[contains(@class, 'fn-register-content')]";
     protected final static String FIELD_BASE_XP =                                       ROOT_XP + "//*[@name='"+PLACEHOLDER+"']";
-
     protected final static String BONUS_CODE_VALID = 			                        "TEST";
     protected final static String BONUS_CODE_INVALID = 		                            "HELL";
-
     protected final static String DROPDOWN_GENDER_VALIDATION_NAME =		                "gender";
     protected final static String DROPDOWN_GENDER_NAME =		                        "sex";
     protected final static String FIELD_FIRSTNAME_NAME =				 				"firstname";
@@ -33,6 +31,9 @@ public class RegistrationPage extends AbstractPage{
     protected final static String DROPDOWN_BIRTHDAY_NAME =						        "birthDay";
     protected final static String DROPDOWN_BIRTHMONTH_NAME=								"birthMonth";
     protected final static String DROPDOWN_BIRTHYEAR_NAME=								"birthYear";
+    public    final static String DROPDOWN_BIRTHDAY_XP =                                getXpathByName(DROPDOWN_BIRTHDAY_NAME);
+    public    final static String DROPDOWN_BIRTHMONTH_XP =                              getXpathByName(DROPDOWN_BIRTHMONTH_NAME);
+    public    final static String DROPDOWN_BIRTHYEAR_XP =                               getXpathByName(DROPDOWN_BIRTHYEAR_NAME);
     protected final static String FIELD_EMAIL_NAME = 									"email";
     protected final static String FIELD_ADDRESS2_NAME = 								"address2";
     protected final static String FIELD_HOUSE_NAME = 								    "address3";
@@ -43,29 +44,24 @@ public class RegistrationPage extends AbstractPage{
     protected final static String FIELD_POSTCODE_NAME = 								"zip";
     protected final static String DROPDOWN_COUNTRY_VALIDATION_NAME = 					"country";
     protected final static String DROPDOWN_COUNTRY_NAME = 					            "countrycode";
-    public final static String FIELD_USERNAME_NAME = 								    "userName";
+    public    final static String FIELD_USERNAME_NAME = 								"userName";
     protected final static String FIELD_PASSWORD_NAME = 								"password";
-    public final static String FIELD_PASSWORD_VERIFICATION_NAME = 					    "passwordVerify";
+    public    final static String FIELD_PASSWORD_VERIFICATION_NAME = 					"passwordVerify";
     protected final static String DROPDOWN_CURRENCY_NAME = 						        "currencyCode";
     protected final static String FIELD_BONUSCODE_NAME = 								"coupon";
     protected final static String CHECKBOX_RECEIVE_BONUSES_XP=						    "//*[@name='subscription']";
     protected final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
-
     protected final static String LABEL_USERNAME_SUGGESTION_LINK_XP = 					"//a[@class='fn-suggestion']";
     protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
     protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-title='Terms & Conditions']";
     protected final static String LABEL_RECEIVE_PROMOTIONS_XP=							"//label[@for='subscription-checkbox']";
-
-    public final static String DROPDOWN_BIRTHDAY_XP=								    "//*[@name='"+ DROPDOWN_BIRTHDAY_NAME +"']";
-    public final static String DROPDOWN_BIRTHMONTH_XP=								    "//*[@name='"+DROPDOWN_BIRTHMONTH_NAME+"']";
-    public final static String DROPDOWN_BIRTHYEAR_XP=								    "//*[@name='"+DROPDOWN_BIRTHYEAR_NAME+"']";
-    public final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
-    public final static String FIELD_PHONE_COUNTRY_CODE_MOBILE_XP=						"//*[@name='area']";
-    public final static String FIELD_PHONE_XP=								            "//*[@name='phoneNumber']";
-    public final static String FIELD_USERNAME_XP=								        "//*[@name='"+FIELD_USERNAME_NAME+"']";
-    public final static String FIELD_PASSWORD_VERIFICATION_XP=							"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
-    private final static String PASSWORD_METER_XP =                                     "//*[@class='password-meter']/*[1]";
-    private final static String PASSWORD_STRENGTH_TOOLTIP =                             "//*[contains(@class, 'password-meter_message')]/p";
+    public    final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
+    public    final static String FIELD_PHONE_COUNTRY_CODE_MOBILE_XP=					"//*[@name='area']";
+    public    final static String FIELD_PHONE_XP=								        "//*[@name='phoneNumber']";
+    public    final static String FIELD_USERNAME_XP=								    "//*[@name='"+FIELD_USERNAME_NAME+"']";
+    public    final static String FIELD_PASSWORD_VERIFICATION_XP=						"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
+    private   final static String PASSWORD_METER_XP =                                   "//*[@class='password-meter']/*[1]";
+    private   final static String PASSWORD_STRENGTH_TOOLTIP =                           "//*[contains(@class, 'password-meter_message')]/p";
 
     public RegistrationPage(String[] elements){
         super(elements);
@@ -150,15 +146,19 @@ public class RegistrationPage extends AbstractPage{
     }
 
     protected static void fillBirthDay(String birthDay){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHDAY_NAME), birthDay);
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHDAY_XP, birthDay);
     }
 
     protected static void fillBirthMonth(String birthMonth){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHMONTH_NAME), birthMonth);
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHMONTH_XP, birthMonth);
     }
 
     protected static void fillBirthYear(String birthYear){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), birthYear);
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHYEAR_XP, birthYear);
+    }
+
+    public static List<String> getBirthYearList() {
+        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_BIRTHYEAR_XP);
     }
 
     public static void fillEmail(String email){
@@ -245,11 +245,11 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public String getSelectedCountryName(){
-        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_COUNTRY_NAME)).getText().trim();
+        return WebDriverUtils.getDropdownSelectedOptionText(getXpathByName(DROPDOWN_COUNTRY_NAME));
     }
 
     public String getSelectedCurrency(){
-        return WebDriverUtils.getDropdownSelectedOption(getXpathByName(DROPDOWN_CURRENCY_NAME)).getText();
+        return WebDriverUtils.getDropdownSelectedOptionText(getXpathByName(DROPDOWN_CURRENCY_NAME));
     }
 
     public boolean getReceivePromotionsCheckboxState(UserData userData){
@@ -357,7 +357,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateDateOfBirth(ValidationRule rule) {
-        ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_BIRTHYEAR_NAME), rule, DROPDOWN_BIRTHDATE_VALIDATION_NAME);
+        ValidationUtils.validateDropdown(DROPDOWN_BIRTHYEAR_XP, rule, DROPDOWN_BIRTHDATE_VALIDATION_NAME);
     }
 
     public void validateEmail(ValidationRule rule) {
