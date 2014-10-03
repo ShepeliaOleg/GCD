@@ -25,7 +25,7 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"regression", "smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
-		validateTrue(gamesPortletPage.playDemoAndValidateUrl(), "Game url is valid");
+		gamesPortletPage.playDemoAndAssertUrl();
     }
 
 //	/*2.1. Refine By: Top level*/
@@ -977,7 +977,7 @@ public class GamesPortletTest extends AbstractTest {
 	public void gameCanBeStartedFromListView(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
-        validateTrue(gameLaunchPopup.checkUrlAndClose(), "Game url is valid");
+        gameLaunchPopup.assertGameLaunchAndClose();
 	}
 
 }

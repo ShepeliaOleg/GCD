@@ -33,7 +33,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndValidateUrl(2, defaultUserData.getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(2, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -41,7 +41,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGameGuestLoginSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        bannerPage.clickGameAndValidateUrl(2, defaultUserData.getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(2, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel image slide 1*/
@@ -67,7 +67,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
-        bannerPage.clickGameAndValidateUrl(1);
+        bannerPage.clickGameAndAssertUrl(1);
     }
 
     /*Banner - Player play image slide 2*/
@@ -75,7 +75,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGamePlayerSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
         bannerPage.showNextSlide();
-        bannerPage.clickGameAndValidateUrl(2);
+        bannerPage.clickGameAndAssertUrl(2);
     }
 
     /*Banner - Admin play image slide 1*/

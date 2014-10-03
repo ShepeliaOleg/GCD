@@ -2,10 +2,11 @@ package pageObjects.gamesPortlet;
 
 import pageObjects.core.AbstractBrowserWindow;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 public class GameLaunchPopup extends AbstractBrowserWindow {
 
-	private static final String VALID_GAME_URL="/launchcasino.html";
+    private static final String CORRECT_GAME_URL="game="+PLACEHOLDER;
     private static final String NO_FLASH_URL="/flashless.html";
     private static String gameID = "";
 
@@ -15,14 +16,14 @@ public class GameLaunchPopup extends AbstractBrowserWindow {
 
     public GameLaunchPopup(String mainWindowHandle, String gameID){
         super(mainWindowHandle);
-        this.gameID = gameID;
+        GameLaunchPopup.gameID = gameID;
     }
 
-	public boolean isUrlValid(){
+	private boolean isUrlValid(){
 		String url;
 		for (int i=0; i<30; i++){
 			url=getWindowUrl();
-				if((url.contains(VALID_GAME_URL)&&url.contains(gameID)) || url.contains(NO_FLASH_URL)){
+				if(url.contains(CORRECT_GAME_URL.replace(PLACEHOLDER, gameID))){
 					return true;
 				}else
 					WebDriverUtils.waitFor(1000);
@@ -30,10 +31,9 @@ public class GameLaunchPopup extends AbstractBrowserWindow {
 		return false;
 	}
 
-    public boolean checkUrlAndClose(){
-        boolean isValid = isUrlValid();
+    public void assertGameLaunchAndClose(){
+        AbstractTest.assertTrue(isUrlValid(), "Game '"+gameID+"' launched");
         close();
-        return isValid;
     }
 
 

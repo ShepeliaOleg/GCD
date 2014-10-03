@@ -1,6 +1,7 @@
 package pageObjects.webcontent;
 
 import enums.GameLaunch;
+import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.core.AbstractPage;
@@ -8,6 +9,7 @@ import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
+import utils.NavigationUtils;
 import utils.WebDriverUtils;
 
 public class WebContentPage extends AbstractPage{
@@ -45,33 +47,29 @@ public class WebContentPage extends AbstractPage{
         }else {
             multiPage = "";
         }
-        clickGame(type);
+        clickGame(type, multiPage);
         return getGameID(type, multiPage);
     }
 
-    private void clickGame(GameLaunch type){
+    private void clickGame(GameLaunch type, String multipage){
         String xpath = BUTTON_XP;
         if(type.equals(GameLaunch.image)){
             xpath = IMAGE_XP;
         }
-        WebDriverUtils.click(xpath);
+        WebDriverUtils.click(multipage+xpath);
     }
 
-    public boolean playAndValidateUrl(GameLaunch type, int page, UserData userData){
+    public void playAndAssertUrl(GameLaunch type, int page, UserData userData){
         String gameID = clickByType(type, page);
         if(userData!=null){
             LoginPopup loginPopup = new LoginPopup();
-            loginPopup.login(userData);
+            loginPopup.login(userData, false, Page.gameLaunch);
         }
-        if(platform.equals(PLATFORM_DESKTOP)){
-            return new GameLaunchPopup(getMainWindowHandle(), gameID).checkUrlAndClose();
-        }else{
-            return new GameLaunchPage(gameID).isUrlValid();
-        }
+        NavigationUtils.assertGameLaunch(gameID);
     }
 
-    public boolean playAndValidateUrl(GameLaunch type, int page){
-        return playAndValidateUrl(type, page, null);
+    public void playAndAssertUrl(GameLaunch type, int page){
+        playAndAssertUrl(type, page, null);
     }
 
     private String getGameID(GameLaunch type, String multiPage){

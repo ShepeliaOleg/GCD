@@ -21,6 +21,8 @@ import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
+import pageObjects.gamesPortlet.GameLaunchPage;
+import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
@@ -178,6 +180,9 @@ public class NavigationUtils extends WebDriverObject{
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
 			WebDriverUtils.runtimeExceptionWithUrl(exceptPage.toString() + " was expected, but never appeared.");
 		}
+        if(exceptPage==Page.gameLaunch){
+            return result;
+        }
 		if(exceptPage == Page.homePage){
 			HomePage homePage = new HomePage();
 			if(!homePage.isLoggedIn()){
@@ -202,8 +207,7 @@ public class NavigationUtils extends WebDriverObject{
             loader = RegistrationPageStepThree.LOADING_ANIMATION_XP;
         }
         return WebDriverUtils.isVisible(loader, 1)||
-               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1) ||
-               !new AbstractPage().isLoggedIn();
+               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1);
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){
@@ -335,6 +339,14 @@ public class NavigationUtils extends WebDriverObject{
             affiliateCookie.validateValue(affiliateData);
         }   else {
             AbstractTest.results.add("Affiliate cookie should be created on affiliate URL request, but it is absent.");
+        }
+    }
+
+    public static void assertGameLaunch(String gameID) {
+        if(platform.equals(PLATFORM_DESKTOP)){
+            new GameLaunchPopup(new AbstractPage().getMainWindowHandle(), gameID).assertGameLaunchAndClose();
+        }else{
+            new GameLaunchPage(gameID).assertGameLaunch();
         }
     }
 }

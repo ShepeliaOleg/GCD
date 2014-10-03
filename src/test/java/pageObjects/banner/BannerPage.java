@@ -3,12 +3,14 @@ package pageObjects.banner;
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
 import enums.GameLaunch;
+import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.core.AbstractPage;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
+import utils.NavigationUtils;
 import utils.WebDriverUtils;
 
 import java.util.ArrayList;
@@ -215,27 +217,23 @@ public class BannerPage extends AbstractPage {
         return new AdminCanNotPlayPopup();
     }
 
-    public boolean clickGameAndValidateUrl(int page, UserData userData){
+    public void clickGameAndAssertUrl(int slideIndex, UserData userData){
         String game;
-        if(page==1){
+        if(slideIndex==1){
             game = HULK_GAME;
         }else {
             game = MISTER_CASH_BACK_GAME;
         }
-        clickSlide(page);
+        clickSlide(slideIndex);
         if(userData!=null){
             LoginPopup loginPopup = new LoginPopup();
-            loginPopup.login(userData);
+            loginPopup.login(userData, false, Page.gameLaunch);
         }
-        if(platform.equals(PLATFORM_DESKTOP)){
-            return new GameLaunchPopup(getMainWindowHandle(), game).checkUrlAndClose();
-        }else{
-            return new GameLaunchPage(game).isUrlValid();
-        }
+        NavigationUtils.assertGameLaunch(game);
     }
 
-    public boolean clickGameAndValidateUrl(int page){
-        return clickGameAndValidateUrl(page, null);
+    public void clickGameAndAssertUrl(int page){
+        clickGameAndAssertUrl(page, null);
     }
 
 
