@@ -259,47 +259,47 @@
         <property name="languageList">
             <list>
                 <!--<value>code@name@urlcode@translation</value>-->
-                <value>ar_SA@none@none</value>
-                <value>bg_BG@none@none</value>
-                <value>ca_ES@none@none</value>
-                <value>cs_CZ@none@none</value>
-                <value>da_DK@none@none</value>
-                <value>de_DE@none@none</value>
-                <value>el_GR@none@none</value>
-                <value>en_AU@none@en_AU</value>
-                <value>en_GB@English@en_GB</value>
-                <value>en_CA@none@en_CA</value>
-                <value>en_US@none@none</value>
-                <value>es_ES@Español@none</value>
-                <value>et_EE@none@none</value>
-                <value>fi_FI@none@none</value>
-                <value>fr_FR@none@none</value>
-                <value>ga_IE@none@none</value>
-                <value>hi_IN@none@none</value>
-                <value>hu_HU@none@none</value>
-                <value>it_IT@Italiano@none</value>
-                <value>iw_IL@none@none</value>
-                <value>ja_JP@none@none</value>
-                <value>ka_GE@Georgian@none</value>
-                <value>ko_KR@none@none</value>
-                <value>my_MM@none@none</value>
-                <value>nl_NL@none@none</value>
-                <value>no_NO@none@none</value>
-                <value>pl_PL@none@none</value>
-                <value>pt_BR@none@pt_BR</value>
-                <value>pt_PT@none@pt</value>
-                <value>ro_RO@none@none</value>
-                <value>ru_RU@Русский@none</value>
-                <value>sv_SE@none@none</value>
-                <value>sk_SK@none@none</value>
-                <value>sr_RS@none@none</value>
-                <value>th_TH@none@none</value>
-                <value>tr_TR@Turkish@none</value>
-                <value>uk_UA@Українська@none</value>
-                <value>vi_VN@none@none</value>
-                <value>zh_CN@none@zh_CN</value>
-                <value>zh_SG@none@zh_SG</value>
-                <value>zh_TW@中文 (中国)@zh_TW</value>
+                <value>ar_SA@none@none@مرخصة ومنظمة من قبل هيئة مكافحة القمار آلديرني</value>
+                <value>bg_BG@none@none@Лицензиран и регулиран от Alderney Gambling Control комисия</value>
+                <value>ca_ES@none@none@Autoritzat i regulat per la Comissió de Control del Joc de Alderney</value>
+                <value>cs_CZ@none@none@Licencovaná a regulovaná podle Alderney Gambling Control Commission</value>
+                <value>da_DK@none@none@Licenseret og reguleret af Alderney Gambling Control Commission</value>
+                <value>de_DE@none@none@Lizenziert durch die Alderney Gambling Control Commission</value>
+                <value>el_GR@none@none@Άδεια και ελέγχεται από την Επιτροπή Ελέγχου Τυχερών Παιχνιδιών του Alderney</value>
+                <value>en_AU@none@en_AU@Licensed and regulated by the Alderney Gambling Control Commission (AU)</value>
+                <value>en_GB@English@en_GB@Licensed and regulated by the Alderney Gambling Control Commission (UK)</value>
+                <value>en_CA@none@en_CA@Licensed and regulated by the Alderney Gambling Control Commission (CA)</value>
+                <value>en_US@none@none@Licensed and regulated by the Alderney Gambling Control Commission</value>
+                <value>es_ES@Español@none@Autorizado y regulado por la Comisión de Control del Juego de Alderney</value>
+                <value>et_EE@none@none@Litsentseeritud ja reguleeritud Alderney Gambling Control Commission</value>
+                <value>fi_FI@none@none@Lisensoinnista ja sääntelystä Alderney Gambling Control Commissionin</value>
+                <value>fr_FR@none@none@Autorisé et réglementé par la Commission de contrôle des jeux de hasard Alderney</value>
+                <value>ga_IE@none@none@Ceadúnaithe agus rialaithe ag an gCoimisiún Alderney Rialaithe Cearrbhachais</value>
+                <value>hi_IN@none@none@आइल ऑफ़ जुआ नियंत्रण आयोग द्वारा लाइसेंस और विनियमित</value>
+                <value>hu_HU@none@none@Engedélyezett és szabályozott az Alderney Gambling Control Commission</value>
+                <value>it_IT@Italiano@none@Concesso in licenza e regolamentato dalla Commissione di gioco di controllo Alderney</value>
+                <value>iw_IL@none@none@מורשה ומוסדר על ידי ועדת פיקוח ההימורים Alderney</value>
+                <value>ja_JP@none@none@オルダニーギャンブルコントロール委員会によるライセンスおよび規制</value>
+                <value>ka_GE@Georgian@none@ლიცენზირებულია და რეგულირდება Alderney სათამაშო საკონტროლო კომისიის</value>
+                <value>ko_KR@none@none@올더 도박 통제위원회에 의해 허가 및 규제</value>
+                <value>my_MM@none@none@অলডার্নে জুয়া কন্ট্রোল কমিশনের লাইসেন্সপ্রাপ্ত এবং নিয়ন্ত্রিত</value>
+                <value>nl_NL@none@none@Bevoegd en gereguleerd door de Alderney Gambling Control Commission</value>
+                <value>no_NO@none@none@Lisensiert og regulert av Alderney Gambling Control Commission</value>
+                <value>pl_PL@none@none@Licencjonowane i regulowane przez Komisję Kontroli Hazardu Alderney</value>
+                <value>pt_BR@none@pt_BR@Licenciados e regulamentados pela Comissão Alderney Gambling Controle</value>
+                <value>pt_PT@none@pt@Licenciado e regulamentado pela Comissão Alderney Gambling Controle</value>
+                <value>ro_RO@none@none@Licențiat și reglementat de Comisia Alderney Gambling Control al</value>
+                <value>ru_RU@Русский@none@Лицензированный и регулируется Комиссией Олдерни по азартным играм</value>
+                <value>sv_SE@none@none@Licensierad och reglerad av Alderney Gambling Control Commission</value>
+                <value>sk_SK@none@none@Licencovaná a regulovaná podľa Alderney Gambling Control Commission</value>
+                <value>sr_RS@none@none@Лиценцу и регулисано Алдернеи Гамблинг Цонтрол Комисије</value>
+                <value>th_TH@none@none@ได้รับใบอนุญาตและควบคุมโดยคณะกรรมการควบคุมการพนัน Alderney</value>
+                <value>tr_TR@Turkish@none@Alderney Kumar Kontrol Komisyonu tarafından lisanslanmıştır ve denetlenmektedir</value>
+                <value>uk_UA@Українська@none@Ліцензований і регулюється комісією Олдерні з азартних ігор</value>
+                <value>vi_VN@none@none@Cấp phép và quy định của Ủy ban Cờ bạc Alderney kiểm soát</value>
+                <value>zh_CN@none@zh_CN@授权和监管的奥尔德尼岛赌博管制委员会</value>
+                <value>zh_SG@none@zh_SG@領牌及調節通過奧爾德尼博彩監察委員會</value>
+                <value>zh_TW@中文 (中国)@zh_TW@授權和監管的奧爾德尼島賭博管制委員會</value>
             </list>
         </property>
         <property name="currencyList">

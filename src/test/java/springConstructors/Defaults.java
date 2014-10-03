@@ -2,12 +2,11 @@ package springConstructors;
 
 import utils.RandomUtils;
 import utils.WebDriverUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Defaults{
-	List<String> countryList;
+    List<String> countryList;
     List<String> currencyList;
     List<String> languageList;
     String defaultCountry;
@@ -22,19 +21,19 @@ public class Defaults{
         return getCountryName(getCountryByCode(getDefaultCountry()));
     }
 
-	public List getCountryList(){
-		return countryList;
-	}
+    public List getCountryList(){
+        return countryList;
+    }
 
     public List getLanguageList(){
         return languageList;
     }
 
     public List getCurrencyList(){
-		return currencyList;
-	}
+        return currencyList;
+    }
 
-	public void setCountryList(List countryList){
+    public void setCountryList(List countryList){
         this.countryList = countryList;
     }
 
@@ -42,9 +41,9 @@ public class Defaults{
         this.languageList = languageList;
     }
 
-	public void setCurrencyList(List currencyList){
-		this.currencyList = currencyList;
-	}
+    public void setCurrencyList(List currencyList){
+        this.currencyList = currencyList;
+    }
 
     public void setDefaultCountry(String countryCode) {
         this.defaultCountry = countryCode;
@@ -103,14 +102,6 @@ public class Defaults{
         return getCountryCurrencyLogical(getCountryByCode(countryCode));
     }
 
-    public String getLanguageUrlByLanguageCode(String languageCode) {
-        return getLanguageUrlCodeLogical(getLanguageByCode(languageCode));
-    }
-
-    private String getLanguageByCode(String languageCode) {
-        return getFullByPrefix(languageList, languageCode);
-    }
-
     public String getPhoneCodeByCountryCode(String countryCode) {
         return getCountryPhoneCode(getCountryByCode(countryCode));
     }
@@ -126,10 +117,6 @@ public class Defaults{
 
     public String getRandomCountryCode(){
         return getCountryCode(getRandomItemFromList(getCountryList()));
-    }
-
-    public String getRandomLanguageCode() {
-        return getLanguageCode(getRandomItemFromList(getLanguageList()));
     }
 
     private String getPartByIndex(String input, int partIndex) {
@@ -165,8 +152,28 @@ public class Defaults{
         return getPartByIndex(language, 2);
     }
 
+    private String getLanguageTranslation(String language) {
+        return getPartByIndex(language, 3);
+    }
+
+    public String getRandomLanguageCode() {
+        return getLanguageCode(getRandomItemFromList(getLanguageList()));
+    }
+
     public String getLanguageNameByCode(String languageCode) {
-        return getLanguageName(getLanguageByCode(languageCode));
+        return getLanguageName(getLanguageByLanguageCode(languageCode));
+    }
+
+    public String getLanguageUrlByLanguageCode(String languageCode) {
+        return getLanguageUrlCodeLogical(getLanguageByLanguageCode(languageCode));
+    }
+
+    private String getLanguageByLanguageCode(String languageCode) {
+        return getFullByPrefix(languageList, languageCode);
+    }
+
+    public String getLanguageTranslationByLanguageCode(String languageCode) {
+        return getLanguageTranslation(getLanguageByLanguageCode(languageCode));
     }
 
     private String getCountryCurrencyLogical(String country) {
@@ -184,10 +191,9 @@ public class Defaults{
         if (languageCode.equals(getDefaultLanguage())) {
             return "";
         } else if (urlLanguageCode.equals("none")) {
-            return languageCode.substring(0,2) + "/";
+            return languageCode.substring(0,2);
         } else {
-            return urlLanguageCode + "/";
+            return urlLanguageCode;
         }
     }
-
 }
