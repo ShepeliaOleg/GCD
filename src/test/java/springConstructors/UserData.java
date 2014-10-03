@@ -2,14 +2,20 @@ package springConstructors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import utils.WebDriverUtils;
+import utils.core.WebDriverObject;
 
 import java.util.ArrayList;
 
-public class UserData{
+public class UserData extends WebDriverObject{
 
 	@Autowired
 	@Qualifier("usernameValidationRule")
 	private ValidationRule usernameValidationRule;
+
+    @Autowired
+    @Qualifier("usernameDesktopValidationRule")
+    private ValidationRule usernameDesktopValidationRule;
 
 	@Autowired
 	@Qualifier("phoneValidationRule")
@@ -19,6 +25,10 @@ public class UserData{
     @Qualifier("mobilePhoneValidationRule")
     private ValidationRule mobilePhoneValidationRule;
 
+    @Autowired
+    @Qualifier("mobileCountryPhoneCodeValidationRule")
+    private ValidationRule mobileCountryPhoneCodeValidationRule;
+
 	@Autowired
 	@Qualifier("countryPhoneCodeValidationRule")
 	private ValidationRule countryPhoneCodeValidationRule;
@@ -26,6 +36,10 @@ public class UserData{
 	@Autowired
 	@Qualifier("addressValidationRule")
 	private ValidationRule addressValidationRule;
+
+    @Autowired
+    @Qualifier("addressDesktopValidationRule")
+    private ValidationRule addressDesktopValidationRule;
 
 	@Autowired
 	@Qualifier("houseValidationRule")
@@ -35,9 +49,17 @@ public class UserData{
 	@Qualifier("postcodeValidationRule")
 	private ValidationRule postcodeValidationRule;
 
+    @Autowired
+    @Qualifier("postcodeDesktopValidationRule")
+    private ValidationRule postcodeDesktopValidationRule;
+
 	@Autowired
 	@Qualifier("cityValidationRule")
 	private ValidationRule cityValidationRule;
+
+    @Autowired
+    @Qualifier("cityDesktopValidationRule")
+    private ValidationRule cityDesktopValidationRule;
 
 	@Autowired
 	@Qualifier("defaults")
@@ -437,18 +459,38 @@ public class UserData{
 	}
 
     public UserData getRandomUserData() {
+        ValidationRule validationRule;
         UserData userData = getRegisteredUserData();
-        userData.setUsername(usernameValidationRule.generateValidString());
+        if(platform.equals(PLATFORM_DESKTOP)){
+            validationRule = usernameDesktopValidationRule;
+        }else {
+            validationRule = usernameValidationRule;
+        }
+        userData.setUsername(validationRule.generateValidString());
         userData.setCountry(countryList.getRandomCountryCode());
-        userData.setCity(cityValidationRule.generateValidString());
-        userData.setPostCode(postcodeValidationRule.generateValidString());
-        userData.setAddress(addressValidationRule.generateValidString());
-        userData.setAddress2(addressValidationRule.generateValidString());
+        if(platform.equals(PLATFORM_DESKTOP)){
+            validationRule = cityDesktopValidationRule;
+        }else {
+            validationRule = cityValidationRule;
+        }
+        userData.setCity(validationRule.generateValidString());
+        if(platform.equals(PLATFORM_DESKTOP)){
+            validationRule = postcodeDesktopValidationRule;
+        }else {
+            validationRule = postcodeValidationRule;
+        }
+        userData.setPostCode(validationRule.generateValidString());
+        if(platform.equals(PLATFORM_DESKTOP)){
+            validationRule = addressDesktopValidationRule;
+        }else {
+            validationRule = addressValidationRule;
+        }
+        userData.setAddress(validationRule.generateValidString());
         userData.setHouse(houseValidationRule.generateValidString());
         userData.setPhone(phoneValidationRule.generateValidString());
         userData.setPhoneAreaCode(countryPhoneCodeValidationRule.generateValidString());
         userData.setMobile(mobilePhoneValidationRule.generateValidString());
-        userData.setMobileAreaCode(countryPhoneCodeValidationRule.generateValidString());
+        userData.setMobileAreaCode(mobileCountryPhoneCodeValidationRule.generateValidString());
 
         return userData;
     }

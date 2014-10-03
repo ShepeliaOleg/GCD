@@ -136,7 +136,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     }
 
     public void validatePhoneField(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_PHONE_XP), rule, FIELD_PHONE_COUNTRY_CODE_NAME);
+        ValidationUtils.validateField(FIELD_PHONE_COUNTRY_CODE_NAME, rule, FIELD_PHONE_COUNTRY_CODE_NAME);
     }
 
     private boolean labelMarkedAsRequired(String xpath){

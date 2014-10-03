@@ -66,12 +66,12 @@ public class RegistrationValidationTest extends AbstractTest{
 	private ValidationRule postcodeValidationRule;
 
 	@Autowired
-	@Qualifier("countryPhoneCodeValidationRule")
-	private ValidationRule countryPhoneCodeValidationRule;
+	@Qualifier("mobileCountryPhoneCodeValidationRule")
+	private ValidationRule mobileCountryPhoneCodeValidationRule;
 
 	@Autowired
-	@Qualifier("phoneValidationRule")
-	private ValidationRule phoneValidationRule;
+	@Qualifier("mobilePhoneValidationRule")
+	private ValidationRule mobilePhoneValidationRule;
 
     @Autowired
     @Qualifier("usernameValidationRule")
@@ -204,13 +204,13 @@ public class RegistrationValidationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void phoneAreaCodeFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.validatePhoneAreaCode(countryPhoneCodeValidationRule, defaultUserData.getRandomUserData());
+        registrationPage.validatePhoneAreaCode(mobileCountryPhoneCodeValidationRule, defaultUserData.getRandomUserData());
     }
 
 	@Test(groups = {"registration","regression"})
 	public void phoneFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.validatePhone(phoneValidationRule, defaultUserData.getRandomUserData());
+		registrationPage.validatePhone(mobilePhoneValidationRule, defaultUserData.getRandomUserData());
 	}
 
 	@Test(groups = {"registration","regression","desktop"})
