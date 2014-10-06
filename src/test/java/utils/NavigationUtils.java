@@ -46,7 +46,7 @@ import utils.core.WebDriverObject;
 public class NavigationUtils extends WebDriverObject{
 
     private static final int POPUP_CHECK_RETRIES = 30;
-    private static final int POPUP_WAIT_TIMEOUT = 10;
+    private static final int POPUP_WAIT_TIMEOUT = 7;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
         return navigateToPage(PlayerCondition.any, configuredPages, null);
@@ -212,7 +212,7 @@ public class NavigationUtils extends WebDriverObject{
         }
         return WebDriverUtils.isVisible(loader, 0)||
                WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)||
-               counter<5;
+               counter<POPUP_WAIT_TIMEOUT;
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){
