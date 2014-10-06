@@ -15,11 +15,14 @@ import pageObjects.registration.threeStep.RegistrationPageStepTwo;
 import springConstructors.Defaults;
 import springConstructors.IMS;
 import springConstructors.UserData;
+import utils.DateUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
+
+import java.util.List;
 
 public class RegistrationTest extends AbstractTest{
 
@@ -404,6 +407,21 @@ public class RegistrationTest extends AbstractTest{
             registrationPageStepTwo.clickNext();
             assertEquals(defaults.getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }
+    }
+
+    /*B-13316*/
+    /*1*/
+    @Test(groups = {"registration", "regression", "desktop"})
+    public void birthDayYearChangingMechanism(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        List<String> availableBirthYears = registrationPage.getBirthYearList();
+        int currentYear = DateUtils.getCurrentYear();
+        String firstYear = String.valueOf(currentYear - 18);
+        String lastYear = String.valueOf(currentYear - 100);
+        assertEquals(84, availableBirthYears.size(), "Number of available options in birth year dropdown.");
+        assertEquals(firstYear, availableBirthYears.get(1), "First available option in birth year dropdown.");
+        assertEquals(lastYear, availableBirthYears.get(83), "Last available option in birth year dropdown.");
+
     }
 
     /*NEGATIVE*/

@@ -12,7 +12,6 @@ import utils.core.WebDriverFactory;
 import utils.core.WebDriverObject;
 import utils.logs.Log;
 import utils.logs.LogUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -132,7 +131,7 @@ public class WebDriverUtils extends WebDriverObject{
         return null;
     }
 
-    public static String getElementValue(WebElement webElement){
+    private static String getElementValue(WebElement webElement){
         return webElement.getAttribute("value");
     }
 
@@ -302,7 +301,7 @@ public class WebDriverUtils extends WebDriverObject{
         return new Select(getElement(xpath));
     }
 
-    public static WebElement getDropdownLastOption(String xpath){
+    private static WebElement getDropdownLastOption(String xpath){
         WebElement option=null;
         try{
             List<WebElement> options=getDropdownOptions(xpath);
@@ -332,7 +331,7 @@ public class WebDriverUtils extends WebDriverObject{
         }
     }
 
-    public static List<WebElement> getDropdownOptions(String xpath){
+    private static List<WebElement> getDropdownOptions(String xpath){
         List<WebElement> options=null;
         try{
             Select dropdown=createDropdown(xpath);
@@ -371,7 +370,7 @@ public class WebDriverUtils extends WebDriverObject{
         return optionsValue;
     }
 
-	public static WebElement getDropdownSelectedOption(String xpath){
+	private static WebElement getDropdownSelectedOption(String xpath){
 		WebElement option=null;
 		try{
 			Select dropdown=createDropdown(xpath);
@@ -384,7 +383,7 @@ public class WebDriverUtils extends WebDriverObject{
 
 	public static String getDropdownSelectedOptionText(String xpath){
 		try{
-			return getDropdownSelectedOption(xpath).getText();
+			return getDropdownSelectedOption(xpath).getText().trim();
 		}catch(NoSuchElementException e){
 			runtimeExceptionWithUrl("Could not find element: " + xpath);
 		}
@@ -469,7 +468,7 @@ public class WebDriverUtils extends WebDriverObject{
         return null;
     }
 
-    public static WebElement getCustomDropdownSelectedOption(String xpath){
+    private static WebElement getCustomDropdownSelectedOption(String xpath){
         try{
             if(platform.equals(PLATFORM_MOBILE)){
                 String list = getFollowingElement(xpath);
@@ -490,7 +489,7 @@ public class WebDriverUtils extends WebDriverObject{
         return list;
     }
 
-    public static List<WebElement> getCustomDropdownOptions(String xpath){
+    private static List<WebElement> getCustomDropdownOptions(String xpath){
         String list = getFollowingElement(xpath);
         return webDriver.findElements(By.xpath(list+"//li"));
     }

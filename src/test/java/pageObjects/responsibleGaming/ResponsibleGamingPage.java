@@ -7,7 +7,6 @@ import pageObjects.core.AbstractPage;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -61,12 +60,12 @@ public class ResponsibleGamingPage extends AbstractPage{
 		WebDriverUtils.setDropdownOptionByText(DROPDOWN_TIME_PER_SESSION_XP, timePerSessionValue);
 	}
 
-	private WebElement getTimePerSessionSelectedOption(){
-		return WebDriverUtils.getDropdownSelectedOption(DROPDOWN_TIME_PER_SESSION_XP);
+	private String getTimePerSessionSelectedOption(){
+		return WebDriverUtils.getDropdownSelectedOptionText(DROPDOWN_TIME_PER_SESSION_XP);
 	}
 
-	private List<WebElement> getTimePerSessionLimitOptions(){
-		return WebDriverUtils.getDropdownOptions(DROPDOWN_TIME_PER_SESSION_XP);
+	private List<String> getTimePerSessionLimitOptionsText(){
+		return WebDriverUtils.getDropdownOptionsText(DROPDOWN_TIME_PER_SESSION_XP);
 	}
 
     /*
@@ -123,10 +122,10 @@ public class ResponsibleGamingPage extends AbstractPage{
 	}
 
 	public void setRandomTimePerSession(){
-		List<WebElement> allOptions=getTimePerSessionLimitOptions();
-		WebElement randomOptionsWebElements=RandomUtils.getRandomElementsFromList(allOptions, 1).get(0);
+		List<String> allOptions= getTimePerSessionLimitOptionsText();
+		String randomOptionText=RandomUtils.getRandomElementsFromList(allOptions, 1).get(0);
 
-		setTimePerSession(randomOptionsWebElements.getText());
+		setTimePerSession(randomOptionText);
 	}
 
 	private List<String> sortLimits(List<WebElement> options) {
@@ -206,12 +205,12 @@ public class ResponsibleGamingPage extends AbstractPage{
 		setDepositLimit(type, "0");
 	}
 
-	private List<WebElement> getDepositLimits(DepositLimits type){
-		return WebDriverUtils.getDropdownOptions(type.getXpath());
+	private List<String> getDepositLimits(DepositLimits type){
+		return WebDriverUtils.getDropdownOptionsValue(type.getXpath());
 	}
 
 	private String getRandomLimit(DepositLimits type){
-		return RandomUtils.getRandomElementsFromList(getDepositLimits(type), 1, 1).get(0).getAttribute("value");
+		return RandomUtils.getRandomElementsFromList(getDepositLimits(type), 1, 1).get(0);
 	}
 
 	public void checkErrors(boolean daily, boolean weekly, boolean monthly){
