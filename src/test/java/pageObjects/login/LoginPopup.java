@@ -73,9 +73,9 @@ public class LoginPopup extends AbstractPopup{
         fillPassword(userData.getPassword());
         clickLogin();
         try{
-            WebDriverUtils.waitForElementToDisappear(RegistrationPageStepThree.LOADING_ANIMATION_XP, 30);
+            WebDriverUtils.waitForElementToDisappear(BUTTON_LOGIN_XP, 30);
         }catch (Exception e){
-            NavigationUtils.tooLongError();
+            NavigationUtils.registrationError();
         }
         return NavigationUtils.closeAllPopups(expectedPage);
     }

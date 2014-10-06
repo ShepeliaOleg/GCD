@@ -168,13 +168,15 @@ public class NavigationUtils extends WebDriverObject{
 	//Popups
 	public static AbstractPageObject closeAllPopups(Page exceptPage){
 		AbstractPageObject result = null;
+        int counter = 0;
 		int retries = 0;
-		while((registrationNotFinished())&& result==null){
+		while((registrationNotFinished(counter))&& result==null){
             result = checkPopups(exceptPage);
 			retries++;
+            counter++;
             WebDriverUtils.waitFor();
             if(retries==POPUP_CHECK_RETRIES){
-                tooLongError();
+                registrationError();
 			}
 		}
 		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
@@ -186,28 +188,31 @@ public class NavigationUtils extends WebDriverObject{
 		if(exceptPage == Page.homePage){
 			HomePage homePage = new HomePage();
 			if(!homePage.isLoggedIn()){
-                processRegistrationError();
+                registrationError();
 			}
 			result = homePage;
 		}else if(exceptPage == Page.registrationPage){
-			RegistrationPage registrationPage = new RegistrationPage();
-			result=registrationPage;
+            result = new RegistrationPage();
 		}
 		return result;
 	}
 
-    public static void tooLongError(){
-//        WebDriverUtils.runtimeExceptionWithUrl("Registration/Login takes too long (more than 30s)");
-        throw new SkipException("Registration/Login takes too long (more than 30s)");
+    public static void registrationError(){
+        if(WebDriverUtils.isVisible(AbstractPage.PORTLET_ERROR_XP, 0)){
+            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(AbstractPage.PORTLET_ERROR_XP));
+        }else{
+            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
+        }
     }
 
-    private static boolean registrationNotFinished(){
+    private static boolean registrationNotFinished(int counter){
         String loader = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
         if(platform.equals(PLATFORM_MOBILE)){
             loader = RegistrationPageStepThree.LOADING_ANIMATION_XP;
         }
-        return WebDriverUtils.isVisible(loader, 1)||
-               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1);
+        return WebDriverUtils.isVisible(loader, 0)||
+               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)||
+               counter<5;
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){
@@ -315,20 +320,6 @@ public class NavigationUtils extends WebDriverObject{
         }else{
             acceptDeclineBonusPopup.decline();
             return null;
-        }
-    }
-
-    private static void processRegistrationError(){
-        String errorXP = AbstractPage.PORTLET_ERROR_XP;
-        if(WebDriverUtils.isVisible(errorXP, 2)){
-            String errorText = WebDriverUtils.getElementText(errorXP);
-            if(errorText.contains("timeout")){
-                throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
-            }else {
-                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + errorText);
-            }
-        }else{
-            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
         }
     }
 
