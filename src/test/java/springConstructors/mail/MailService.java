@@ -42,6 +42,7 @@ public abstract class MailService extends WebDriverObject{
             return new MailinatorPage();
         } else {
             AbstractTest.failTest("Unknown mail service: " + mailServiceUrl);
+            return null;
         }
 	}
 

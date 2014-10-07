@@ -97,8 +97,10 @@ public class BannerPage extends AbstractPage {
     private long whenSlideDisplayed(String xpath, long timer) {
         if (slideIsDisplayed(xpath, timer)) {
             return System.currentTimeMillis();
-        } else
-            AbstractTest.failTest("Expected slide '" + xpath +"' did not appear in '" + timer + "' sec");
+        } else {
+            AbstractTest.failTest("Expected slide '" + xpath + "' did not appear in '" + timer + "' sec");
+            return 0;
+        }
     }
 
     public long whenSlideDisplayed(int slideIndex) {
