@@ -215,7 +215,7 @@ public class NavigationUtils extends WebDriverObject{
             }else {
                 return LoginStatus.popup;
             }
-        }else if(PortalUtils.isLoggedIn()&&!WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1)){
+        }else if(PortalUtils.isLoggedIn()&&!WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
             return LoginStatus.loggedIn;
         }else{
             return LoginStatus.wait;
