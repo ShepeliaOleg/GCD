@@ -92,17 +92,17 @@ public class IMS extends WebDriverObject{
     }
 
 	private IMSHomePage navigateToIMS(){
+        IMSHomePage imsHomePage;
         try{
-            IMSHomePage imsHomePage;
             webDriver.navigate().to(getImsURL());
             if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
-                imsHomePage=new IMSLoginPage().logInToIMS();
+                imsHomePage=new IMSLoginPage().logInToIMS(getImsLogin(), getImsPass());
             }else{
                 imsHomePage=new IMSHomePage();
             }
             return imsHomePage;
         }catch (RuntimeException e){
-            AbstractTest.skipTest("IMS issue" + e.getMessage());
+            AbstractTest.skipTest("IMS issue " + e.getMessage());
         }
         return null;
 	}

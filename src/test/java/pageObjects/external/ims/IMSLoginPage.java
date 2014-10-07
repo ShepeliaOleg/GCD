@@ -1,5 +1,7 @@
 package pageObjects.external.ims;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.core.AbstractPage;
 import springConstructors.IMS;
 import utils.WebDriverUtils;
@@ -28,9 +30,9 @@ public class IMSLoginPage extends AbstractPage{
 		return new IMSHomePage();
 	}
 
-	public IMSHomePage logInToIMS(){
-		setUsername(FIELD_USERNAME_XP, new IMS().getImsLogin());
-		setPassword(FIELD_PASSWORD_XP, new IMS().getImsPass());
+	public IMSHomePage logInToIMS(String login, String pass){
+		setUsername(FIELD_USERNAME_XP, login);
+		setPassword(FIELD_PASSWORD_XP, pass);
 		return clickSubmit();
 	}
 }

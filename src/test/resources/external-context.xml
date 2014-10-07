@@ -8,7 +8,7 @@
         <property name="imsURL" value="#{systemProperties['imsURL']}"/>
         <property name="imsLogin" value="#{systemProperties['imsLogin']}"/>
         <property name="imsPass" value="#{systemProperties['imsPass']}"/>
-        <property name="defaultImsURL" value="https://extdev1-Admin.extdev.eu/ims/?context=ims"/>
+        <property name="defaultImsURL" value="https://extdev1-admin.extdev.eu/ims/?context=ims"/>
         <property name="defaultImsLogin" value="wpl_automation"/>
         <property name="defaultImsPass" value="7895123Res"/>
         <!--<property name="defaultImsURL" value="https://admin.demo.playtech.com/ims/?context=ims"/>-->
