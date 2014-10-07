@@ -89,15 +89,6 @@ public class RegistrationPage extends AbstractPage{
 
     /*General*/
 
-    public RegistrationPage fillAllFields(UserData userdata){
-        if(platform.equals(PLATFORM_DESKTOP)){
-            RegistrationPageAllSteps.fillRegistrationForm(userdata, true, null);
-        }else{
-            registrationPageStepThree(userdata).fillData(userdata, true, true, null);
-        }
-        return new RegistrationPage();
-    }
-
     public AbstractPageObject registerUser(UserData userData){
         return registerUser(userData, Page.homePage);
     }
@@ -112,11 +103,15 @@ public class RegistrationPage extends AbstractPage{
 
     public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode, Page expectedPage){
         if(platform.equals(PLATFORM_DESKTOP)){
-            new RegistrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
-        }else {
-            new RegistrationPageStepOne().registerNewUser(userData, termsAndConditions, promotions, bonusCode);
+            registrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
+        }else{
+            registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, bonusCode);
         }
-        return NavigationUtils.closeAllPopups(expectedPage);
+        if(expectedPage.equals(Page.registrationPage)){
+            return new RegistrationPage();
+        }else {
+            return NavigationUtils.closeAllPopups(expectedPage);
+        }
     }
 
     protected static void fillBonusAndPromotional(boolean isReceivePromotionalOffers, String bonusCode){
@@ -129,6 +124,19 @@ public class RegistrationPage extends AbstractPage{
             }
         }
 
+    }
+
+    public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            RegistrationPageAllSteps.fillRegistrationForm(userData, promotions, bonusCode);
+        }else{
+            registrationPageStepThree(userData).fillData(userData, termsAndConditions, promotions, bonusCode);
+        }
+        return new RegistrationPage();
+    }
+
+    public void fillAllFieldsAndSubmit(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
+        fillAllFields(userData, termsAndConditions, promotions, bonusCode).clickSubmit();
     }
 
     /*Inputs*/
@@ -225,7 +233,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.setCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP, desiredState);
     }
 
-    protected static void clickSubmit(){
+    protected void clickSubmit(){
         WebDriverUtils.click(BUTTON_SUBMIT_XP);
     }
 
@@ -264,10 +272,6 @@ public class RegistrationPage extends AbstractPage{
             registrationPageStepThree(userData);
         }
         return WebDriverUtils.getElementText(LABEL_RECEIVE_PROMOTIONS_XP);
-    }
-
-    public void clickPasswordConfirmation(){
-        WebDriverUtils.click(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME));
     }
 
     public Collection<String> getCountriesCodesList(UserData userData) {

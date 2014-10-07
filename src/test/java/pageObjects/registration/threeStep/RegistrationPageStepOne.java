@@ -17,11 +17,11 @@ public class RegistrationPageStepOne extends RegistrationPage {
         super(new String[]{ROOT_XP, BUTTON_NEXT_XP, LINK_ADULT_CONTENT_XP});
     }
 
-    public static void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
+    public void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
         fillDataAndSubmit(userData).fillDataAndSubmit(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, bonusCode);
     }
 
-    public static RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
+    public RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
         fillTitle(userData.getTitle());
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());

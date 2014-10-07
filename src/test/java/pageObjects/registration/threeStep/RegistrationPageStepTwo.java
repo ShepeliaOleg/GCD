@@ -21,7 +21,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
 		super(new String[]{ROOT_XP, BUTTON_NEXT_XP, BUTTON_PREVIOUS_XP});
 	}
 
-    public static RegistrationPageStepThree fillDataAndSubmit(UserData userData){
+    public RegistrationPageStepThree fillDataAndSubmit(UserData userData){
         fillAddress(userData.getAddress());
         fillCity(userData.getCity());
         fillPostCode(userData.getPostCode());

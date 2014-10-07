@@ -1,6 +1,7 @@
 package utils;
 
 import enums.ConfiguredPages;
+import enums.LoginStatus;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.SkipException;
@@ -131,18 +132,18 @@ public class NavigationUtils extends WebDriverObject{
         switch (condition){
             case guest:
                 logoutAdminIfLoggedIn(abstractPage);
-                logoutIfLoggedIn(abstractPage);
+                logoutIfLoggedIn();
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case loggedIn:
                 logoutAdminIfLoggedIn(abstractPage);
-                logoutIfLoggedIn(abstractPage);
+                logoutIfLoggedIn();
                 abstractPage.login(userData);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case admin:
                 if(!abstractPage.isAdminLoggedIn()){
-                    logoutIfLoggedIn(abstractPage);
+                    logoutIfLoggedIn();
                     PortalUtils.loginAdmin();
                 }
                 WebDriverUtils.navigateToInternalURL(suffix);
@@ -153,9 +154,9 @@ public class NavigationUtils extends WebDriverObject{
         }
     }
 
-    private static void logoutIfLoggedIn(AbstractPage abstractPage){
-        if(abstractPage.isLoggedIn()){
-            abstractPage.logout();
+    private static void logoutIfLoggedIn(){
+        if(PortalUtils.isLoggedIn()){
+            PortalUtils.logout();
         }
     }
 
@@ -165,37 +166,56 @@ public class NavigationUtils extends WebDriverObject{
         }
     }
 
-	//Popups
-	public static AbstractPageObject closeAllPopups(Page exceptPage){
-		AbstractPageObject result = null;
+    public static AbstractPageObject closeAllPopups(Page expectedPage) {
+        AbstractPageObject abstractPageObject;
         int counter = 0;
-		int retries = 0;
-		while((registrationNotFinished(counter))&& result==null){
-            result = checkPopups(exceptPage);
-			retries++;
-            counter++;
-            WebDriverUtils.waitFor();
-            if(retries==POPUP_CHECK_RETRIES){
-                registrationError();
-			}
-		}
-		if(exceptPage!=Page.homePage && exceptPage!=Page.registrationPage && result==null){
-			WebDriverUtils.runtimeExceptionWithUrl(exceptPage.toString() + " was expected, but never appeared.");
-		}
-        if(exceptPage==Page.gameLaunch){
-            return result;
+        if(!expectedPage.equals(Page.gameLaunch)){
+            while (true) {
+                if (counter == POPUP_CHECK_RETRIES) {
+                    registrationError();
+                }
+                switch (getStatus()) {
+                    case wait:
+                        counter++;
+                        break;
+                    case loginPopup:
+                        if(expectedPage.equals(Page.loginPopup)){
+                            return new LoginPopup();
+                        }else {
+                            registrationError();
+                        }
+                        break;
+                    case loggedIn:
+                        if(expectedPage.equals(Page.homePage)){
+                            return new HomePage();
+                        }else {
+                            WebDriverUtils.runtimeExceptionWithUrl(expectedPage.toString() + " was expected, but never appeared.");
+                        }
+                    case popup:
+                        abstractPageObject = checkPopups(expectedPage);
+                        if (abstractPageObject != null) {
+                            return abstractPageObject;
+                        }
+                }
+            }
+        }else {
+            return null;
         }
-		if(exceptPage == Page.homePage){
-			HomePage homePage = new HomePage();
-			if(!homePage.isLoggedIn()){
-                registrationError();
-			}
-			result = homePage;
-		}else if(exceptPage == Page.registrationPage){
-            result = new RegistrationPage();
-		}
-		return result;
-	}
+    }
+
+    private static LoginStatus getStatus(){
+        if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1)){
+            if(WebDriverUtils.isVisible(LoginPopup.BUTTON_LOGIN_XP, 0)){
+                return LoginStatus.loginPopup;
+            }else {
+                return LoginStatus.popup;
+            }
+        }else if(PortalUtils.isLoggedIn()&&!WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1)){
+            return LoginStatus.loggedIn;
+        }else{
+            return LoginStatus.wait;
+        }
+    }
 
     public static void registrationError(){
         if(WebDriverUtils.isVisible(AbstractPage.PORTLET_ERROR_XP, 0)){
@@ -203,16 +223,6 @@ public class NavigationUtils extends WebDriverObject{
         }else{
             WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
         }
-    }
-
-    private static boolean registrationNotFinished(int counter){
-        String loader = RegistrationPageAllSteps.LOADING_ANIMATION_XP;
-        if(platform.equals(PLATFORM_MOBILE)){
-            loader = RegistrationPageStepThree.LOADING_ANIMATION_XP;
-        }
-        return WebDriverUtils.isVisible(loader, 0)||
-               WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)||
-               counter<POPUP_WAIT_TIMEOUT;
     }
 
 	private static AbstractPageObject checkPopups(Page exceptPage){

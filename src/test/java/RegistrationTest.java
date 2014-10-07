@@ -433,7 +433,7 @@ public class RegistrationTest extends AbstractTest{
 		UserData generatedUserData=defaultUserData.getRandomUserData();
 		UserData registeredUserData=defaultUserData.getRegisteredUserData();
 		generatedUserData.setUsername(registeredUserData.getUsername());
-		registrationPage=(RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
+		registrationPage = (RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
         ValidationUtils.assertValidationStatus(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
 	}
 

@@ -29,6 +29,10 @@ public class PortalUtils extends WebDriverObject{
         navigateToHome().login(userData);
     }
 
+    public static boolean isLoggedIn(){
+        return new AbstractPage().isLoggedIn();
+    }
+
     public static HomePage registerUser(UserData userData){
         return (HomePage)registerUser(userData, false);
     }

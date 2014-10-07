@@ -20,12 +20,12 @@ public class RegistrationPageStepThree extends RegistrationPage {
 		super(new String[]{ROOT_XP, BUTTON_PREVIOUS_XP,BUTTON_SUBMIT_XP});
 	}
 
-    public static void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
+    public void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
         fillData(userData,termsAndConditions, isReceiveBonusesChecked, bonusCode);
         clickSubmit();
     }
 
-    public static void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
+    public void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
