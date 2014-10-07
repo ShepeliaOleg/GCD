@@ -1,5 +1,6 @@
 package pageObjects.external.ims;
 
+import org.testng.SkipException;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 
@@ -47,15 +48,18 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 	}
 
 	public IMSPlayerDetailsPage search(String username){
-		String userLink = "//a[contains(text(), '"+username+"')]";
+		String userLink = "//a[contains(text(), '"+username+"')] | //a[contains(text(), '"+username.toUpperCase()+"')]";
 		if(!WebDriverUtils.isVisible(userLink, 0)){
 			resetDate();
 			clickBoth();
 			inputUsername(username);
 			clickSearch();
-			WebDriverUtils.waitForElement(userLink, 30);
 		}
-		WebDriverUtils.click(userLink);
-		return new IMSPlayerDetailsPage();
+        if(WebDriverUtils.isVisible(userLink, 30)) {
+            WebDriverUtils.click(userLink);
+        }else{
+            throw new SkipException("User was not found on IMS");
+        }
+        return new IMSPlayerDetailsPage();
 	}
 }
