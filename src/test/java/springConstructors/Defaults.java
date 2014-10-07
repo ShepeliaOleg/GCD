@@ -2,6 +2,8 @@ package springConstructors;
 
 import utils.RandomUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,7 +91,7 @@ public class Defaults{
             }
         }
         if (result == null) {
-            WebDriverUtils.runtimeExceptionWithUrl("\"" + prefix + "\" code could not be found in list");
+            AbstractTest.failTest("\"" + prefix + "\" code could not be found in list");
         }
         return result;
     }

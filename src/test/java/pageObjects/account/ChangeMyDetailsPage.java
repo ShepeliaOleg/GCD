@@ -3,6 +3,7 @@ package pageObjects.account;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /*
  * User: ivanva
@@ -174,7 +175,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
         if (WebDriverUtils.isVisible(xpath, 1)) {
             return WebDriverUtils.getElementText(xpath);
         } else {
-			WebDriverUtils.runtimeExceptionWithUrl("Expected message is not visible: " + xpath);
+            AbstractTest.failTest("Expected message is not visible: " + xpath);
         }
 		return null;
     }

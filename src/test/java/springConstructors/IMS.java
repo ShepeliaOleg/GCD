@@ -18,12 +18,12 @@ import java.util.HashMap;
 
 public class IMS extends WebDriverObject{
 
-    protected static URL imsURL;
-    protected static URL defaultImsURL;
-    protected static String imsLogin;
-    protected static String imsPass;
-    protected static String defaultImsLogin;
-    protected static String defaultImsPass;
+    protected URL imsURL;
+    protected URL defaultImsURL;
+    protected String imsLogin;
+    protected String imsPass;
+    protected String defaultImsLogin;
+    protected String defaultImsPass;
 
     private static final int RETRIES = 10;
 
@@ -31,7 +31,7 @@ public class IMS extends WebDriverObject{
     @Qualifier("userData")
     private UserData defaultUserData;
 
-    public static URL getImsURL() {
+    public URL getImsURL() {
         if(imsURL!=null){
             return imsURL;
         }else {
@@ -39,11 +39,11 @@ public class IMS extends WebDriverObject{
         }
     }
 
-    public static void setImsURL(URL imsURL) {
-        IMS.imsURL = imsURL;
+    public void setImsURL(URL imsURL) {
+        this.imsURL = imsURL;
     }
 
-    public static String getImsLogin() {
+    public String getImsLogin() {
         if(imsLogin!=null){
             return imsLogin;
         }else {
@@ -51,11 +51,11 @@ public class IMS extends WebDriverObject{
         }
     }
 
-    public static void setImsLogin(String imsLogin) {
-        IMS.imsLogin = imsLogin;
+    public void setImsLogin(String imsLogin) {
+        this.imsLogin = imsLogin;
     }
 
-    public static String getImsPass() {
+    public String getImsPass() {
         if(imsPass!=null){
             return imsPass;
         }else {
@@ -63,32 +63,32 @@ public class IMS extends WebDriverObject{
         }
     }
 
-    public static void setImsPass(String imsPass) {
-        IMS.imsPass = imsPass;
+    public void setImsPass(String imsPass) {
+        this.imsPass = imsPass;
     }
 
-    public static URL getDefaultImsURL() {
+    public URL getDefaultImsURL() {
         return defaultImsURL;
     }
 
-    public static void setDefaultImsURL(URL defaultImsURL) {
-        IMS.defaultImsURL = defaultImsURL;
+    public void setDefaultImsURL(URL defaultImsURL) {
+        this.defaultImsURL = defaultImsURL;
     }
 
-    public static String getDefaultImsLogin() {
+    public String getDefaultImsLogin() {
         return defaultImsLogin;
     }
 
-    public static void setDefaultImsLogin(String defaultImsLogin) {
-        IMS.defaultImsLogin = defaultImsLogin;
+    public void setDefaultImsLogin(String defaultImsLogin) {
+        this.defaultImsLogin = defaultImsLogin;
     }
 
-    public static String getDefaultImsPass() {
+    public String getDefaultImsPass() {
         return defaultImsPass;
     }
 
-    public static void setDefaultImsPass(String defaultImsPass) {
-        IMS.defaultImsPass = defaultImsPass;
+    public void setDefaultImsPass(String defaultImsPass) {
+        this.defaultImsPass = defaultImsPass;
     }
 
 	private IMSHomePage navigateToIMS(){
@@ -96,19 +96,15 @@ public class IMS extends WebDriverObject{
             IMSHomePage imsHomePage;
             webDriver.navigate().to(getImsURL());
             if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
-                IMSLoginPage imsLoginPage=new IMSLoginPage();
-                imsHomePage=imsLoginPage.logInToIMS();
+                imsHomePage=new IMSLoginPage().logInToIMS();
             }else{
                 imsHomePage=new IMSHomePage();
             }
             return imsHomePage;
         }catch (RuntimeException e){
-            if (e.getMessage().contains(IMSHomePage.LINK_TAB_PLAYER_MANAGEMENT_XP)){
-                throw new SkipException("IMS timeout"+e.getMessage());
-            }else{
-                throw new RuntimeException(e.getMessage());
-            }
+            AbstractTest.skipTest("IMS issue" + e.getMessage());
         }
+        return null;
 	}
 
     public HashMap getInternalTagsData(){
@@ -121,7 +117,7 @@ public class IMS extends WebDriverObject{
             InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(ConfiguredPages.inbox);
 			hashMap.put("messages", String.valueOf(inboxPage.getNumberOfUnreadMessages()));
 		}catch(RuntimeException e){
-			WebDriverUtils.runtimeExceptionWithUrl("Inbox is not available");
+            AbstractTest.failTest("Inbox is not available");
 		}
 		return navigateToPlayedDetails(userData.getUsername()).getInternalTagsData(hashMap);
 	}
@@ -129,9 +125,7 @@ public class IMS extends WebDriverObject{
     public void validateNotificationCheckboxes(UserData userData, boolean state) {
         IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
         for(boolean imsState:imsPlayerDetailsPage.getNotificationCheckboxesState()){
-            if(imsState==state){
-                WebDriverUtils.runtimeExceptionWithUrl("Notifications state did not update<div>Expected: " + state + ", Found: " + !imsState + "</div>");
-            }
+            AbstractTest.validateNotEquals(state, imsState, "Notifications state did not update");
         }
     }
 
@@ -232,12 +226,8 @@ public class IMS extends WebDriverObject{
 					break;
 			}
 		}catch(RuntimeException e){
-			if (e.getMessage().contains(IMSChangePassPopup.LABEL_PASSWORD_CHANGED)){
-				throw new SkipException("IMS timeout "+e.getMessage());
-			}else{
-				throw new RuntimeException(e.getMessage());
-			}
-		}
+            AbstractTest.skipTest("IMS issue "+e.getMessage());
+        }
 	}
 
     public void freezeWelcomeMessages(){

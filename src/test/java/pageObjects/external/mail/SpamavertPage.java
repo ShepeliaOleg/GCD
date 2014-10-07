@@ -2,6 +2,7 @@ package pageObjects.external.mail;
 
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,11 +56,6 @@ public class SpamavertPage extends MailServicePage {
 
     @Override
 	public void waitForPasswordEmail(long timeout){
-		try{
-			WebDriverUtils.waitForElementToDisappear(WAITING_DIALOG_XP, timeout);
-		}catch(RuntimeException e){
-			WebDriverUtils.runtimeExceptionWithUrl("Email was not received after waiting for " + timeout + " seconds");
-		}
-
+        AbstractTest.validateTrue(WebDriverUtils.isVisible(WAITING_DIALOG_XP, timeout), "Email was received after '" + timeout + "' seconds");
 	}
 }

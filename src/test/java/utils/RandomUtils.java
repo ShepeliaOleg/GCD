@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import utils.core.AbstractTest;
 import utils.validation.RegexNode;
 import utils.validation.ValidationUtils;
 
@@ -44,7 +45,7 @@ public class RandomUtils{
                 result+=RandomStringUtils.random(length, symbols);
             }
         }catch (ArrayIndexOutOfBoundsException e){
-            throw new RuntimeException("Failed to generate by rule '"+regex+"'," +
+            AbstractTest.failTest("Failed to generate by rule '"+regex+"'," +
                     " failed on '"+tempNode+"': min '"+min+"'," +
                     " max '"+max+"', length '"+length+"'," +
                     " symbols '"+symbols+"'");
@@ -79,7 +80,7 @@ public class RandomUtils{
 
 	public static <T> List<T> getRandomElementsFromList(List<T> list, int number, int offset) {
 		if (number >= list.size()) {
-			WebDriverUtils.runtimeExceptionWithUrl("You're requested more items than array had");
+            AbstractTest.failTest("You're requested more items than array had");
 		}
 		List<Integer> randomIndexes = getRandomIndexes(number, list.size(),offset);
 		List<T> randomItems = getElementsFromListByIndexes(list, randomIndexes);
@@ -102,7 +103,7 @@ public class RandomUtils{
         final int listSize = list.size();
         for (Integer idx : indexes) {
             if (idx >= listSize) {
-				WebDriverUtils.runtimeExceptionWithUrl("Index " + idx + " can't be more than " + listSize);
+                AbstractTest.failTest("Index " + idx + " can't be more than " + listSize);
             }
             T elt = list.get(idx);
             selected.add(elt);
@@ -116,7 +117,7 @@ public class RandomUtils{
             option = optionDefaultValue;
             }
         if (option == null) {
-			WebDriverUtils.runtimeExceptionWithUrl(optionName + " parameter is not defined");
+            AbstractTest.failTest(optionName + " parameter is not defined");
         }
         return option;
         }

@@ -14,8 +14,6 @@ public class RegistrationPageStepThree extends RegistrationPage {
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					ROOT_XP + "//*[@id='terms-checkbox']";
     private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
 
-    public static final String LOADING_ANIMATION_XP =                               "//*[contains(@class, 'progress')]";
-
     public RegistrationPageStepThree(){
 		super(new String[]{ROOT_XP, BUTTON_PREVIOUS_XP,BUTTON_SUBMIT_XP});
 	}

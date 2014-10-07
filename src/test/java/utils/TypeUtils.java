@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 
-public class TypeUtils extends Assert {
+public class TypeUtils{
 
     private static int getIntegerValueFromString(String string){
         int value;
@@ -41,50 +41,6 @@ public class TypeUtils extends Assert {
 
     public static boolean listAContainsListB(List<String> listA, List<String> listB){
         return listA.containsAll(listB);
-    }
-
-    public static <T> void assertEqualsWithLogs(T actual, T expected){
-       assertEqualsWithLogs(actual, expected, "");
-    }
-
-    public static <T> void assertEqualsWithLogs(T actual, T expected, java.lang.String message){
-        try{
-            assertEquals(actual, expected, message);
-        }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
-        }
-    }
-
-    public static void assertTrueWithLogs(boolean condition, java.lang.String message){
-        try{
-            assertTrue(condition, message);
-        }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
-        }
-    }
-
-    public static void assertFalseWithLogs(boolean condition, java.lang.String message){
-        try{
-            assertFalse(condition, message);
-        }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
-        }
-    }
-
-    public static void assertTrueWithLogs(boolean condition){
-        try{
-            assertTrue(condition);
-        }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
-        }
-    }
-
-    public static void assertFalseWithLogs(boolean condition){
-        try{
-            assertFalse(condition);
-        }catch (AssertionError e){
-            WebDriverUtils.runtimeExceptionWithUrl(e.getMessage());
-        }
     }
 
     public static String decodeBase64(String encodedString) {

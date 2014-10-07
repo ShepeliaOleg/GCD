@@ -29,8 +29,8 @@ public class IMSLoginPage extends AbstractPage{
 	}
 
 	public IMSHomePage logInToIMS(){
-		setUsername(FIELD_USERNAME_XP, IMS.getImsLogin());
-		setPassword(FIELD_PASSWORD_XP, IMS.getImsPass());
+		setUsername(FIELD_USERNAME_XP, new IMS().getImsLogin());
+		setPassword(FIELD_PASSWORD_XP, new IMS().getImsPass());
 		return clickSubmit();
 	}
 }

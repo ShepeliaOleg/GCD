@@ -191,7 +191,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 
     private List<String> getCreferrerNameValue(String creferrer) {
         if (!creferrer.contains(":")) {
-            WebDriverUtils.runtimeExceptionWithUrl("Creferrer should be properly defined as 'name:value' pair. Actual creferrer value is '" + creferrer + "'");
+            AbstractTest.failTest("Creferrer should be properly defined as 'name:value' pair. Actual creferrer value is '" + creferrer + "'");
         }
         return Arrays.asList(creferrer.split(AffiliateData.ASCII_CODE_COLON));
     }

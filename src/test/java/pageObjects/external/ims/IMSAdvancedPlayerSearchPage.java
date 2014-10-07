@@ -3,6 +3,7 @@ package pageObjects.external.ims;
 import org.testng.SkipException;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich
@@ -58,7 +59,7 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
         if(WebDriverUtils.isVisible(userLink, 30)) {
             WebDriverUtils.click(userLink);
         }else{
-            throw new SkipException("User was not found on IMS");
+            AbstractTest.skipTest("User was not found on IMS");
         }
         return new IMSPlayerDetailsPage();
 	}

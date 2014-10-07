@@ -1,5 +1,6 @@
 package springConstructors;
 
+import utils.core.AbstractTest;
 import utils.core.WebDriverFactory;
 
 import java.net.MalformedURLException;
@@ -23,7 +24,8 @@ public class DeviceData {
                 return device;
             }
         }
-        throw new RuntimeException("Device \"" + name + "\" is not found.");
+        AbstractTest.failTest("Device '" + name + "' is not found.");
+        return null;
     }
 
     public static String getSerialByName(String name) {
@@ -39,7 +41,7 @@ public class DeviceData {
         try {
             remote = new URL(url);
         } catch (MalformedURLException e) {
-            throw new RuntimeException("Remote URL for \'" + name + "\' device is empty or incorrect.");
+            AbstractTest.failTest("Remote URL for '" + name + "' is empty or incorrect.");
         }
         return remote;
     }

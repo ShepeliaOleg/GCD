@@ -2,10 +2,12 @@ package utils.core;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.SkipException;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.Collection;
 public class AbstractTest extends AbstractTestNGSpringContextTests{
 
     public static ArrayList<String> results = new ArrayList<>();
+    private static int counter;
+    private static String name;
 
 	@BeforeClass(alwaysRun = true)
 	protected void setUp() throws Exception{
@@ -25,6 +29,8 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
     @BeforeMethod(alwaysRun = true)
     protected void clean(){
         results.clear();
+        counter = 0;
+        name = RandomUtils.generateString("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 15);
     }
 
 	@AfterClass(alwaysRun = true)
@@ -35,7 +41,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
     protected static void validate() {
         String message = collectResults();
         if(!message.isEmpty()){
-            WebDriverUtils.runtimeExceptionWithUrl(message);
+            throw new RuntimeException(message);
         }
     }
 
@@ -48,14 +54,26 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
     }
 
     public static void addError(String message){
-        results.add(message);
+        String fileName = name + String.valueOf(counter++);
+        String[] names = new Listener().createScreenshot(fileName);
+        results.add(message+"(<a href='"+names[0]+"'>P</a>/<a href='"+names[1]+"'>L</a>/<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>)");
+    }
+
+    public static void failTest(String message){
+        addError(message);
+        validate();
+    }
+
+    public static void skipTest(String message){
+        validate();
+        throw new SkipException(message + "<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>");
     }
 
     public static boolean assertTrue(boolean actual, String message){
         return addErrorIf(!actual, "TRUE", "FALSE", message);
     }
 
-    protected void validateTrue(boolean actual, String message){
+    public static void validateTrue(boolean actual, String message){
         if(assertTrue(actual, message)){
             validate();
         }
@@ -75,25 +93,17 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         return addErrorIf(!equals(expected, actual), expected, actual, message);
     }
 
-    protected void validateEquals(Object expected, Object actual, String message){
+    protected static void validateEquals(Object expected, Object actual, String message){
         if(assertEquals(expected, actual, message)){
             validate();
         }
     }
 
-    public static boolean assertTextVisible(String text, String message){
-        return addErrorIf(!WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
-    }
-
-    public static boolean assertTextInvisible(String text, String message){
-        return addErrorIf(WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
-    }
-
-    protected boolean assertNotEquals(Object expected, Object actual, String message){
+    protected static boolean assertNotEquals(Object expected, Object actual, String message){
         return addErrorIf(equals(expected, actual), expected, actual, message);
     }
 
-    protected void validateNotEquals(Object expected, Object actual, String message){
+    public static void validateNotEquals(Object expected, Object actual, String message){
         if(assertNotEquals(expected, actual, message)){
             validate();
         }
@@ -108,6 +118,14 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         if(assertEqualsCollections(expected, actual, message)){
             validate();
         }
+    }
+
+    public static boolean assertTextVisible(String text, String message){
+        return addErrorIf(!WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
+    }
+
+    public static boolean assertTextInvisible(String text, String message){
+        return addErrorIf(WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
     }
 
     private static boolean equals(Object expected, Object actual) {

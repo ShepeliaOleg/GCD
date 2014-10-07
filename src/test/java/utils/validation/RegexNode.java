@@ -1,6 +1,7 @@
 package utils.validation;
 
 import utils.TypeUtils;
+import utils.core.AbstractTest;
 
 /**
  * Created by sergiich on 8/27/2014.
@@ -28,7 +29,8 @@ public class RegexNode {
         if(start!=-1){
             return (node.substring(start, end)).replace(TEXT_START, "").replace(TEXT_END, "");
         }else{
-            throw new RuntimeException("Node: '"+node+"' had no symbols info");
+            AbstractTest.failTest("Node: '"+node+"' had no symbols info");
+            return null;
         }
     }
 
@@ -51,7 +53,8 @@ public class RegexNode {
         if(start!=-1){
             return (node.substring(start, end));
         }else{
-            throw new RuntimeException("Node: '"+node+"' had no length info");
+            AbstractTest.failTest("Node: '" + node + "' had no length info");
+            return null;
         }
     }
 

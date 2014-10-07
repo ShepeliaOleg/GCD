@@ -2,6 +2,7 @@ package utils.logs;
 
 import enums.LogCategory;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -85,7 +86,7 @@ public class Log{
 	public void checkEntriesArePresent(){
 		for(LogEntry entry:logs){
 			if(entry.contains("noLogs")){
-				WebDriverUtils.runtimeExceptionWithUrl("Not all registration logs appeared");
+                AbstractTest.failTest("Not all registration logs appeared");
 			}
 		}
 	}

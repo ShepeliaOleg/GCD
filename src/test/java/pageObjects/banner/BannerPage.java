@@ -12,6 +12,7 @@ import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +98,7 @@ public class BannerPage extends AbstractPage {
         if (slideIsDisplayed(xpath, timer)) {
             return System.currentTimeMillis();
         } else
-            throw new RuntimeException("Expected slide by xpath: '" + xpath +"' was not appeared after " + timer + " seconds.");
+            AbstractTest.failTest("Expected slide '" + xpath +"' did not appear in '" + timer + "' sec");
     }
 
     public long whenSlideDisplayed(int slideIndex) {
@@ -165,11 +166,11 @@ public class BannerPage extends AbstractPage {
                         showSlideButtons(slideIndex);
                     break;
                     case none:
-                        WebDriverUtils.runtimeExceptionWithUrl("Cannot show slide " + slideIndex + ". There is no navigation items present.");
+                        AbstractTest.failTest("Cannot show slide " + slideIndex + ". There is no navigation items present.");
                 }
             }
         }   else {
-            WebDriverUtils.runtimeExceptionWithUrl("Cannot show slide " + slideIndex + ". Slide index is out of range.");
+            AbstractTest.failTest("Cannot show slide " + slideIndex + ". Slide index is out of range.");
         }
     }
 

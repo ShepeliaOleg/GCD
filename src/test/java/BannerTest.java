@@ -39,7 +39,7 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.image), "There is no slide with image content present.");
+        assertEquals(BannerSlideType.image, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with Image is not displayed.");
     }
 
@@ -49,7 +49,7 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerHtml);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.html), "There is no slide with HTML content present.");
+        assertEquals(BannerSlideType.html, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with HTML is not displayed.");
     }
 
@@ -59,7 +59,7 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerWebContent);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.webContent), "There is no slide with WebContent content present.");
+        assertEquals(BannerSlideType.webContent, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with WebContent is not displayed.");
     }
 
@@ -69,9 +69,9 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerMixed);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 3, "Expected number of slides is 3.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is not image content type.");
-        assertTrue(slidesTypes.get(1).equals(BannerSlideType.html),       "Second slide is not HTML content type.");
-        assertTrue(slidesTypes.get(2).equals(BannerSlideType.webContent), "Third slide is not WebContent content type.");
+        assertEquals(BannerSlideType.image, slidesTypes.get(0),     "First slide");
+        assertEquals(BannerSlideType.html, slidesTypes.get(1),      "Second slide");
+        assertEquals(BannerSlideType.webContent, slidesTypes.get(2),"Third slide");
         assertTrue(bannerPage.slideIsDisplayed(1, 10), "First slide with image was not displayed.");
         assertTrue(bannerPage.slideIsDisplayed(2, 10), "Second slide with HTML was not displayed");
         assertTrue(bannerPage.slideIsDisplayed(3, 10), "Third slide with WebContent was not displayed.");
@@ -81,7 +81,7 @@ public class BannerTest extends AbstractTest{
     @Test(groups = {"regression"})
     public void bannerNavigationButtons() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationButtons);
-        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.buttons, "Expected navigation type is 'Buttons'.");
+        assertEquals(BannerNavigationType.buttons, bannerPage.getNavigationType(), "Navigation type");
         bannerPage.showSlide(1);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking first button.");
         bannerPage.showSlide(2);
@@ -94,7 +94,7 @@ public class BannerTest extends AbstractTest{
     @Test(groups = {"regression"})
     public void bannerNavigationArrows() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrows);
-        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.arrows, "Expected navigation type is 'Arrows'.");
+        assertEquals(BannerNavigationType.arrows, bannerPage.getNavigationType(), "Navigation type");
         bannerPage.showSlide(1);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking next arrow.");
         assertTrue(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
@@ -118,7 +118,7 @@ public class BannerTest extends AbstractTest{
     public void bannerNavigationArrowsBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationArrowsBullets);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
-        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.arrowsAndBullets, "Expected navigation type is 'Arrows and Bullets'.");
+        assertEquals(BannerNavigationType.arrowsAndBullets, bannerPage.getNavigationType(), "Navigation type");
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide was not displayed after clicking next arrow.");
         assertTrue(bannerPage.arrowsDisplayed(),   "Only Next arrow should be displayed on first slide.");
         bannerPage.showSlide(2);
@@ -150,7 +150,7 @@ public class BannerTest extends AbstractTest{
     public void bannerNavigationBullets() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerNavigationBullets);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
-        TypeUtils.assertEqualsWithLogs(bannerPage.getNavigationType(), BannerNavigationType.bullets, "Expected navigation type is 'Bullets'.");
+        assertEquals(BannerNavigationType.bullets, bannerPage.getNavigationType(), "Navigation type");
         bannerPage.showSlide(3);
         assertTrue(bannerPage.slideIsDisplayed(3), "Third slide was not displayed after clicking third bullet.");
         bannerPage.showSlide(1);
@@ -164,7 +164,7 @@ public class BannerTest extends AbstractTest{
     public void bannerNavigationNone() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is not displayed.");
-        TypeUtils.assertEqualsWithLogs(BannerNavigationType.none, bannerPage.getNavigationType(), "Expected navigation type is 'None'.");
+        assertEquals(BannerNavigationType.none, bannerPage.getNavigationType(), "Navigation type");
     }
 
     /* 11. Banner as link*/
@@ -186,8 +186,8 @@ public class BannerTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerInRotation);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
         assertTrue(slidesTypes.size() == 2, "Expected number of slides is 2.");
-        assertTrue(slidesTypes.get(0).equals(BannerSlideType.image),      "First slide is image");
-        assertTrue(slidesTypes.get(1).equals(BannerSlideType.webContent), "Second slide is not WebContent content type.");
+        assertEquals(BannerSlideType.image, slidesTypes.get(0), "First slide");
+        assertEquals(BannerSlideType.webContent, slidesTypes.get(1), "Second slide");
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
         assertTrue(bannerPage.slideIsDisplayed(2), "Second slide is displayed");
 

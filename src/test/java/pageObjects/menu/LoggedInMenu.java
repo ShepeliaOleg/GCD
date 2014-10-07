@@ -1,6 +1,7 @@
 package pageObjects.menu;
 
 import pageObjects.account.ChangeMyDetailsPage;
+import pageObjects.account.deposit.DepositPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.login.LogoutPopup;
 import pageObjects.referAFriend.ReferAFriendPopup;
@@ -31,23 +32,28 @@ public class LoggedInMenu extends Menu {
         return new LogoutPopup();
     }
 
-    public ReferAFriendPopup navigateToReferAFriend(){
+    public ReferAFriendPopup clickReferAFriend(){
         WebDriverUtils.click(REFER_A_FRIEND_XP);
         return new ReferAFriendPopup();
     }
 
-    public ChangeMyDetailsPage navigateToUpdateMyDetails(){
+    public ChangeMyDetailsPage clickUpdateMyDetails(){
         WebDriverUtils.click(UPDATE_MY_DETAILS_XP);
         return new ChangeMyDetailsPage();
     }
 
-    public ResponsibleGamingPage navigateToResponsibleGaming(){
+    public ResponsibleGamingPage clickResponsibleGaming(){
         WebDriverUtils.click(RESPONSIBLE_GAMING_XP);
         return new ResponsibleGamingPage();
     }
 
-    public ChangePasswordPopup navigateToChangePassword(){
+    public ChangePasswordPopup clickChangePassword(){
         WebDriverUtils.click(CHANGE_PASSWORD_XP);
         return new ChangePasswordPopup();
+    }
+
+    public DepositPage clickDeposit() {
+        WebDriverUtils.click(DEPOSIT_XP);
+        return new DepositPage();
     }
 }

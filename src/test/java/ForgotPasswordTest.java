@@ -114,7 +114,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"successfulPopupVisible");
+        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"successfulPopupVisible");
 		MailServicePage mailServicePage = mailService.navigateToInbox(email);
 		mailServicePage.waitForEmail();
 		String password = mailServicePage.getPasswordFromLetter();
@@ -123,7 +123,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 		String newPassword = passwordValidationRule.generateValidString();
 		ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
-        TypeUtils.assertTrueWithLogs(changedPasswordPopup.successfulMessageAppeared(),"successfullyChangedPasswordMessageAppeared");
+        assertTrue(changedPasswordPopup.successfulMessageAppeared(),"successfullyChangedPasswordMessageAppeared");
 	}
 
     /*7. login with new password*/
@@ -237,7 +237,7 @@ public class ForgotPasswordTest extends AbstractTest{
         userData.setPassword(newPassword);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
-		TypeUtils.assertTrueWithLogs(imsPlayerDetailsPage.getPassword().equals(newPassword),"Password is set on ims");
+        assertTrue(imsPlayerDetailsPage.getPassword().equals(newPassword),"Password is set on ims");
 	}
 
     /*NEGATIVE*/
@@ -250,7 +250,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
+        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
@@ -261,7 +261,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
+        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
@@ -272,7 +272,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
+        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*4. Try to clickLogin FP form with not existing username*/
@@ -283,7 +283,7 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordInvalid(userData);
-        TypeUtils.assertTrueWithLogs(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
+        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
 	}
 
     /*5. Restore password and try to login with old password*/

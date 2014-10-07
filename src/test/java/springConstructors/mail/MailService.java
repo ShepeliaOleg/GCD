@@ -8,6 +8,7 @@ import pageObjects.external.mail.SpamavertPage;
 import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.core.WebDriverObject;
 
 import java.net.URL;
@@ -40,7 +41,7 @@ public abstract class MailService extends WebDriverObject{
         if (mailServiceUrl.toString().contains("mailinator")) {
             return new MailinatorPage();
         } else {
-            throw new RuntimeException("Unknown mail service: " + mailServiceUrl);
+            AbstractTest.failTest("Unknown mail service: " + mailServiceUrl);
         }
 	}
 

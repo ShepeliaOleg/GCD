@@ -2,6 +2,7 @@ package utils.logs;
 
 import enums.LogCategory;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich
@@ -30,7 +31,7 @@ public class LogEntry{
 
 	public void containsErrorWithException(){
 		if(containsError()){
-			WebDriverUtils.runtimeExceptionWithUrl("\n Error code is: " + getError());
+            AbstractTest.failTest("Log contains error: " + getError());
 		}
 	}
 
@@ -41,10 +42,11 @@ public class LogEntry{
 	public boolean containsParameter(String parameter){
 		return entry.contains(parameter);
 	}
+
 	public void containsParameters(String[] parameters){
 		for(int i=0;i<parameters.length;i++){
 			if(!containsParameter(parameters[i])){
-				WebDriverUtils.runtimeExceptionWithUrl("Some parameters were not correct, - " + parameters[i]);
+                AbstractTest.addError("Parameter is not correct - " + parameters[i]);
 			}
 		}
 	}

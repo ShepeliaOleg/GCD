@@ -102,6 +102,10 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode, Page expectedPage){
+        System.out.println("Registering user: \n"
+                + userData.getUsername()+"\n"
+                + userData.getCountry()+"\n"
+                + userData.getCurrency()+"\n");
         if(platform.equals(PLATFORM_DESKTOP)){
             registrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
         }else{

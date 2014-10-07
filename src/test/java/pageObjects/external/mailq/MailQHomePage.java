@@ -2,6 +2,7 @@ package pageObjects.external.mailq;
 
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /**
  * User: sergiich
@@ -60,7 +61,7 @@ public class MailQHomePage extends AbstractPage{
 			clickLatestSubject();
 			return new MailQReplyPage();
 		}else{
-			WebDriverUtils.runtimeExceptionWithUrl("The message did not appear after " + RETRIES + " retries");
+            AbstractTest.failTest("The message did not appear after " + RETRIES + " retries");
 		}
 		return null;
 	}

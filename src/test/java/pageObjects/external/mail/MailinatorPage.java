@@ -1,6 +1,7 @@
 package pageObjects.external.mail;
 
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,11 +46,6 @@ public class MailinatorPage extends MailServicePage {
 
     @Override
     public void waitForPasswordEmail(long timeout){
-        try{
-            WebDriverUtils.waitForElement(MAILLIST_ITEM_XP, timeout);
-        }catch(RuntimeException e){
-            WebDriverUtils.runtimeExceptionWithUrl("Email was not received after waiting for " + timeout + " seconds");
-        }
-
+        AbstractTest.validateTrue(WebDriverUtils.isVisible(MAILLIST_ITEM_XP, timeout), "Email was received after '"+timeout+"' seconds");
     }
 }

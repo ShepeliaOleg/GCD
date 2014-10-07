@@ -13,18 +13,6 @@ import utils.core.WebDriverObject;
 
 public class PortalUtils extends WebDriverObject{
 
-    private static HomePage navigateToHome(){
-        return (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-    }
-
-    private static AdminPage navigateToAdmin(){
-        return (AdminPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.admin);
-    }
-
-    private static RegistrationPage navigateToRegistration() {
-        return (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-    }
-
     public static void loginUser(UserData userData){
         navigateToHome().login(userData);
     }
@@ -69,5 +57,17 @@ public class PortalUtils extends WebDriverObject{
 
     public static AbstractPage logout() {
         return new AbstractPage().logout();
+    }
+
+    private static HomePage navigateToHome(){
+        return (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+    }
+
+    private static AdminPage navigateToAdmin(){
+        return (AdminPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.admin);
+    }
+
+    private static RegistrationPage navigateToRegistration() {
+        return (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
     }
 }

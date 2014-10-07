@@ -47,7 +47,6 @@ import utils.core.WebDriverObject;
 public class NavigationUtils extends WebDriverObject{
 
     private static final int POPUP_CHECK_RETRIES = 30;
-    private static final int POPUP_WAIT_TIMEOUT = 7;
 
     public static AbstractPage navigateToPage(ConfiguredPages configuredPages){
         return navigateToPage(PlayerCondition.any, configuredPages, null);
@@ -55,7 +54,7 @@ public class NavigationUtils extends WebDriverObject{
 
 	public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
         if (condition.equals(PlayerCondition.player)){
-            WebDriverUtils.runtimeExceptionWithUrl("No userdata set for logged in user");
+            AbstractTest.failTest("No userdata set for logged in user");
         }
         return navigateToPage(condition, configuredPages, null);
     }
@@ -125,7 +124,8 @@ public class NavigationUtils extends WebDriverObject{
             case selfExclusion:                                 return new ResponsibleGamingPage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
-            default: throw new RuntimeException("Unexpected input in navigateToPage method");
+            default: AbstractTest.failTest("Unexpected input in navigateToPage method");
+                return null;
         }
     }
 
@@ -194,7 +194,7 @@ public class NavigationUtils extends WebDriverObject{
                         if(expectedPage.equals(Page.homePage)){
                             return new HomePage();
                         }else {
-                            WebDriverUtils.runtimeExceptionWithUrl(expectedPage.toString() + " was expected, but never appeared.");
+                            AbstractTest.failTest(expectedPage.toString() + " was expected, but never appeared.");
                         }
                     case popup:
                         abstractPageObject = checkPopups(expectedPage);
@@ -224,9 +224,9 @@ public class NavigationUtils extends WebDriverObject{
 
     public static void registrationError(){
         if(WebDriverUtils.isVisible(AbstractPage.PORTLET_ERROR_XP, 0)){
-            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(AbstractPage.PORTLET_ERROR_XP));
+            AbstractTest.failTest("Registration/Login failed : " + WebDriverUtils.getElementText(AbstractPage.PORTLET_ERROR_XP));
         }else{
-            WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed");
+            AbstractTest.failTest("Registration/Login failed");
         }
     }
 
@@ -268,9 +268,9 @@ public class NavigationUtils extends WebDriverObject{
             return loginPopup;
         }else{
             if(WebDriverUtils.isVisible(LoginPopup.LABEL_TIMEOUT_ERROR_XP, 2)){
-                throw new SkipException("IMS timeout"+ WebDriverUtils.getUrlAndLogs());
+                AbstractTest.skipTest("IMS timeout");
             }else{
-                WebDriverUtils.runtimeExceptionWithUrl("Registration/Login failed : " + WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
+                AbstractTest.failTest("Registration/Login failed : " + WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
             }
         }
         return null;
@@ -313,7 +313,7 @@ public class NavigationUtils extends WebDriverObject{
         if(exceptPage == Page.changePasswordPopup){
             return changePasswordPopup;
         }else{
-            WebDriverUtils.runtimeExceptionWithUrl("Password change prompt appeared");
+            AbstractTest.failTest("Password change prompt appeared");
         }
         return null;
     }

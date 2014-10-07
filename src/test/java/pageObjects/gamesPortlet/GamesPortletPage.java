@@ -9,6 +9,7 @@ import utils.NavigationUtils;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -120,23 +121,7 @@ public class GamesPortletPage extends AbstractPage{
 	}
 
     public void correctGamesAreDisplayed(GameCategories category){
-        ArrayList<String> expectedGames = category.getGames();
-        ArrayList<String> presentGames = getAllGameIDs();
-        Collection<String> result = TypeUtils.getDiffElementsFromLists(expectedGames, presentGames);
-        if(!result.isEmpty()){
-            ArrayList<String> didNotAppear = new ArrayList<>();
-            ArrayList<String> shouldNotAppear = new ArrayList<>();
-            for(String gamecode:result){
-                if(expectedGames.contains(gamecode)){
-                    didNotAppear.add(gamecode);
-                }
-                if(presentGames.contains(gamecode)){
-                    shouldNotAppear.add(gamecode);
-                }
-            }
-            WebDriverUtils.runtimeExceptionWithUrl("Error in games presentation. <div>Did not appear: " + didNotAppear.toString()
-                    + "</div><div>Extra games appeared: " + shouldNotAppear.toString() + "</div>");
-        }
+        AbstractTest.assertEqualsCollections(category.getGames(), getAllGameIDs(), "Game IDs correspond");
     }
 
 	public boolean allNavigationControlsAreHidden() {
@@ -255,7 +240,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithUrl("No demo game buttons found");
+				AbstractTest.failTest("No demo game buttons found");
 			}
 		}
        NavigationUtils.assertGameLaunch(gameId);
@@ -285,7 +270,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithUrl("No real game buttons found");
+                AbstractTest.failTest("No real game buttons found");
 			}
 		}
         return gameId;
@@ -310,7 +295,7 @@ public class GamesPortletPage extends AbstractPage{
 		if(gameElement.isRealPresent()){
 			gameElement.clickPlayReal();
 		}else{
-			WebDriverUtils.runtimeExceptionWithUrl("No real game button found");
+            AbstractTest.failTest("No real game button found");
 		}
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
@@ -331,7 +316,7 @@ public class GamesPortletPage extends AbstractPage{
 				}
 			}
 			if(i == RETRIES){
-				WebDriverUtils.runtimeExceptionWithUrl("No Info buttons found");
+                AbstractTest.failTest("No Info buttons found");
 			}
 		}
 		return new GameInfoPopup(gameId);
@@ -407,7 +392,7 @@ public class GamesPortletPage extends AbstractPage{
         if(isActiveCategoryTabPresent()){
             return getActiveCategoryTabXp().equals(category.getUrl());
         }
-        WebDriverUtils.runtimeExceptionWithUrl("Active category is not present");
+        AbstractTest.failTest("Active category is not present");
         return false;
     }
 
@@ -419,7 +404,7 @@ public class GamesPortletPage extends AbstractPage{
         if(isActiveSubcategoryTabPresent()){
             return getActiveSubcategoryTabXp().equals(category.getUrl());
         }
-        WebDriverUtils.runtimeExceptionWithUrl("Active category is not present");
+        AbstractTest.failTest("Active category is not present");
         return false;
     }
 
@@ -537,11 +522,11 @@ public class GamesPortletPage extends AbstractPage{
     }
 
     public void checkNavigation(boolean refineBy, boolean topCategory, boolean topSubCategory, boolean leftCategory, boolean leftSubCategory){
-        TypeUtils.assertEqualsWithLogs(refineByDropDownIsPresent(),refineBy,"refineByDropdownIsPresent");
-        TypeUtils.assertEqualsWithLogs(topCategoryMenuIsPresent(),topCategory,"topCategoryMenuIsPresent");
-        TypeUtils.assertEqualsWithLogs(topSubcategoryMenuIsPresent(),topSubCategory,"topSubcategoriesMenuIsDisplayed");
-        TypeUtils.assertEqualsWithLogs(leftCategoryMenuIsPresent(),leftCategory,"leftCategoriesMenuIsDisplayed");
-        TypeUtils.assertEqualsWithLogs(leftSubcategoryMenuIsPresent(),leftSubCategory,"leftSubcategoriesMenuIsDisplayed");
+        AbstractTest.assertEquals(refineBy,refineByDropDownIsPresent(),"RefineBy Dropdown Present");
+        AbstractTest.assertEquals(topCategory,topCategoryMenuIsPresent(),"TopCategory Menu Present");
+        AbstractTest.assertEquals(topSubCategory,topSubcategoryMenuIsPresent(),"TopSubcategories Menu Displayed");
+        AbstractTest.assertEquals(leftCategory,leftCategoryMenuIsPresent(),"LeftCategories Menu Displayed");
+        AbstractTest.assertEquals(leftSubCategory,leftSubcategoryMenuIsPresent(),"LeftSubcategories Menu Displayed");
     }
 
     private void waitForGamesLoad(){

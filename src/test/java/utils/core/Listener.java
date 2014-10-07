@@ -41,7 +41,6 @@ public class Listener extends TestListenerAdapter{
 
     @Override
     public void onTestFailure(ITestResult iTestResult){
-        createScreenshot(iTestResult);
         System.out.println(iTestResult.getName() + "--Test method failed\n");
     }
 
@@ -220,8 +219,8 @@ public class Listener extends TestListenerAdapter{
     private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
         output.println("<h2>Env: "+baseUrl+"</h2>");
-        output.println("<table border='1' style='background-color:yellow;border:1px black;width:90%;border-collapse:collapse;'>");
-        output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='30%'>Area</td><td width='15%'>Status</td><td width='15%'>Screenshot</td><td>Error</td></tr>");
+        output.println("<table border='1' style='background-color:yellow;border:1px black;width:100%;border-collapse:collapse;'>");
+        output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='20%'>Area</td><td width='5%'>Status</td><td>Result</td></tr>");
         addRows(iTestContext);
         output.println("</table>");
         output.println("<br>");
@@ -241,35 +240,34 @@ public class Listener extends TestListenerAdapter{
 
     private void addRows(ITestContext iTestContext){
         if(!iTestContext.getPassedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:"+COLOR_GREEN+"'><td colspan='4'>Passed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:"+COLOR_GREEN+"'><td colspan='3'>Passed tests</td></tr>");
             for(ITestResult test:iTestContext.getPassedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_GREEN+"'><td>" + name + "</td> ");
                 output.println("<td align='center' valign='middle' class='passed'>passed</td> ");
                 output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()+name
-                        +".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td><td></td></tr>");
+                        +".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td></tr>");
             }
         }
         if(!iTestContext.getFailedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center' style='background-color:"+COLOR_RED+"'><td colspan='4'>Failed tests</td></tr>");
+            output.println("<tr align='center' style='background-color:"+COLOR_RED+"'><td colspan='3'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
                 output.println("<td align='center' valign='middle' class='failed'>failed</td>");
-                output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()
-                        +name+".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td>");
                 output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
             }
         }
         if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
-            output.println("<tr align='center'><td colspan='4'>Skipped Tests</td></tr>");
+            output.println("<tr align='center'><td colspan='3'>Skipped Tests</td></tr>");
             for(ITestResult test:iTestContext.getSkippedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
                 output.println("<td align='center' valign='middle'>Skipped</td> ");
-                output.println("<td align='center' valign='middle'><a href='"+ScreenOrientation.LANDSCAPE.value()
-                        +name+".jpg'>Landscape</a>, <a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a></td>");
-                output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
+                output.println("<td>"+createSpoiler(test.getThrowable(), name)+"<div>" +
+                        "<a href='"+ScreenOrientation.LANDSCAPE.value()+name+".jpg'>Landscape</a>, " +
+                        "<a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a>" +
+                        "</div></td></tr>");
             }
         }
     }
@@ -301,27 +299,34 @@ public class Listener extends TestListenerAdapter{
         file.mkdirs();
     }
 
-    private void createScreenshot(ITestResult iTestResult){
+    public void createScreenshot(ITestResult iTestResult){
+        createScreenshot(iTestResult.getName());
+    }
+
+    public String[] createScreenshot(String name){
         if(webDriver==null){
             webDriver = WebDriverFactory.getWebDriver();
             baseUrl = WebDriverFactory.getBaseUrl();
         }
-        String imageName = iTestResult.getName()+".jpg";
+        String imageName = name+".jpg";
+        String landscape = ScreenOrientation.LANDSCAPE.value() + imageName;
+        String portrait = ScreenOrientation.PORTRAIT.value() + imageName;
         if(!WebDriverFactory.browser.equals("native")) {
-            writeScreenshot(ScreenOrientation.PORTRAIT.value() + imageName);
-            writeScreenshot(ScreenOrientation.LANDSCAPE.value() + imageName);
+            writeScreenshot(portrait);
+            writeScreenshot(landscape);
         }else {
             ScreenOrientation initialOrientation = WebDriverUtils.getOrientation();
             writeScreenshot(initialOrientation.value()+imageName);
             if(initialOrientation.equals(ScreenOrientation.LANDSCAPE)){
                 WebDriverUtils.setOrientation(ScreenOrientation.PORTRAIT);
-                writeScreenshot(ScreenOrientation.PORTRAIT.value()+imageName);
+                writeScreenshot(portrait);
             }else {
                 WebDriverUtils.setOrientation(ScreenOrientation.LANDSCAPE);
-                writeScreenshot(ScreenOrientation.LANDSCAPE.value()+imageName);
+                writeScreenshot(landscape);
             }
             WebDriverUtils.setOrientation(initialOrientation);
         }
+        return new String[] {portrait, landscape};
     }
 
     private void writeScreenshot(String imageName){
@@ -354,12 +359,6 @@ public class Listener extends TestListenerAdapter{
             return exc;
         }
     }
-
-//    private String createDateFolder() {
-//        Calendar cal = Calendar.getInstance();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy_MM_dd_'at'_HH_mm");
-//        return "/" + format.format(cal.getTime());
-//    }
 
     private String spoilerText(String name, String message){
         String showId = "show_id_"+name+"";

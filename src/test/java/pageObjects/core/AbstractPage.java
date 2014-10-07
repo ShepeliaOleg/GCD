@@ -1,6 +1,7 @@
 package pageObjects.core;
 
 import enums.Page;
+import pageObjects.account.deposit.DepositPage;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.changePassword.ChangePasswordPopup;
@@ -150,15 +151,19 @@ public class AbstractPage extends AbstractPageObject{
 
     //Mobile only
     public ChangePasswordPopup navigateToChangePassword(){
-        return loggedInHeader().openMenu().loggedInMenu().navigateToChangePassword();
+        return loggedInHeader().openMenu().loggedInMenu().clickChangePassword();
     }
 
     public ReferAFriendPopup navigateToReferAFriend() {
-        return header().openMenu().loggedInMenu().navigateToReferAFriend();
+        return header().openMenu().loggedInMenu().clickReferAFriend();
     }
 
     public Menu openMenu() {
         return header().openMenu();
+    }
+
+    public DepositPage navigateToDepositPage(){
+        return header().openMenu().loggedInMenu().clickDeposit();
     }
 
     //Desktop only

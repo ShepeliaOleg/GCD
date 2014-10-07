@@ -7,6 +7,8 @@ import pageObjects.core.AbstractPage;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -161,7 +163,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 					small = parseLimit(filteredOrderedLimits.get(1));
 					counter++;
 					if(counter>=300){
-						WebDriverUtils.runtimeExceptionWithUrl("Wrong deposit limits configuration");
+                        AbstractTest.failTest("Wrong deposit limits configuration");
 					}
 				}while(big<=med || med<=small);
 				finalLimits.put(filteredOrderedLimits.get(3),big);
@@ -174,7 +176,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 					small = parseLimit(filteredOrderedLimits.get(1));
 					counter++;
 					if(counter>=300){
-						WebDriverUtils.runtimeExceptionWithUrl("Wrong deposit limits configuration");
+                        AbstractTest.failTest("Wrong deposit limits configuration");
 					}
 				}while(med<=small);
 				finalLimits.put(filteredOrderedLimits.get(2),med);
@@ -214,9 +216,9 @@ public class ResponsibleGamingPage extends AbstractPage{
 	}
 
 	public void checkErrors(boolean daily, boolean weekly, boolean monthly){
-		TypeUtils.assertEqualsWithLogs(dailyValidationErrorMessageVisible(), daily, "dailyErrorVisible");
-		TypeUtils.assertEqualsWithLogs(weeklyValidationErrorMessageVisible(), weekly, "weeklyErrorVisible");
-		TypeUtils.assertEqualsWithLogs(monthlyValidationErrorMessageVisible(), monthly, "monthlyErrorVisible");
+        AbstractTest.assertEquals(daily, dailyValidationErrorMessageVisible(), "Daily Error Visible");
+        AbstractTest.assertEquals(weekly, weeklyValidationErrorMessageVisible(), "Weekly Error Visible");
+        AbstractTest.assertEquals(monthly, monthlyValidationErrorMessageVisible(), "Monthly Error Visible");
 	}
 
 }

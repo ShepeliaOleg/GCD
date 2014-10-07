@@ -2,6 +2,7 @@ package pageObjects.referAFriend;
 
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 /*
  * User: ivanva
@@ -68,20 +69,10 @@ public class ReferAFriendPage extends AbstractPage{
         return WebDriverUtils.isVisible(MESSAGE_XP);
     }
 
-	public boolean notificationMessageIsSuccessful(){
-		boolean result = false;
-
-        if (notificationMessageDisplayed()) {
-            String message = WebDriverUtils.getElementText(MESSAGE_XP);
-            if(message.contains(MESSAGE_SENT)){
-                result = true;
-            } else if(message.contains(MESSAGE_SAME)){
-                result = false;
-            }else{
-				WebDriverUtils.runtimeExceptionWithUrl("Not expected message appeared");
-            }
-        }
- 		return result;
+	public void validateNotificationMessageIsSuccessful(){
+        AbstractTest.validateTrue(notificationMessageDisplayed(), "Notification message displayed");
+        String message = WebDriverUtils.getElementText(MESSAGE_XP);
+        AbstractTest.assertTrue(message.contains(MESSAGE_SENT), "Notification message contains '"+MESSAGE_SENT+"'");
 	}
 
 //    public void validateName(ValidationRule rule) {
