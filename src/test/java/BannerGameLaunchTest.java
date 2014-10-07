@@ -4,16 +4,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
-import pageObjects.external.ExternalPage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-
-import java.util.List;
 
 public class BannerGameLaunchTest extends AbstractTest{
 
@@ -66,14 +61,14 @@ public class BannerGameLaunchTest extends AbstractTest{
     /*Banner - Player play image slide 1*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayer() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
         bannerPage.clickGameAndAssertUrl(1);
     }
 
     /*Banner - Player play image slide 2*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayerSlide2() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
         bannerPage.showNextSlide();
         bannerPage.clickGameAndAssertUrl(2);
     }

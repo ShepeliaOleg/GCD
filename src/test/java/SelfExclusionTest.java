@@ -31,7 +31,7 @@ public class SelfExclusionTest extends AbstractTest{
 //    /* 2. Close self-exclusion popup */
 //	@Test(groups = {"regression"})
 //	public void cancelSelfExclusion(){
-//		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.selfExclusion, defaultUserData.getRegisteredUserData());
+//		ResponsibleGamingPage responsibleGamingPage = (ResponsibleGamingPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.selfExclusion, defaultUserData.getRegisteredUserData());
 //		SelfExcludePopup selfExcludePopup = responsibleGamingPage.navigateToSelfExclude();
 //		selfExcludePopup.closePopup();
 //		TypeUtils.assertTrueWithLogs(new AbstractPage().isLoggedIn(), "Logged in");

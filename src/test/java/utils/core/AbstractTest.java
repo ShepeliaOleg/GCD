@@ -8,7 +8,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -80,6 +79,14 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
         if(assertEquals(expected, actual, message)){
             validate();
         }
+    }
+
+    public static boolean assertTextVisible(String text, String message){
+        return addErrorIf(!WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
+    }
+
+    public static boolean assertTextInvisible(String text, String message){
+        return addErrorIf(WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
     }
 
     protected boolean assertNotEquals(Object expected, Object actual, String message){

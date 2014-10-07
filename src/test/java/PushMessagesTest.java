@@ -44,7 +44,7 @@ public class PushMessagesTest extends AbstractTest{
 //	@Test(groups = {"regression", "push"})
 //	public void pushLogout(){
 //        HomePage homePage;
-//		NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+//		NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
 //		iMS.sendPushMessage(Page.logout);
 //		try{
 //			WebDriverUtils.waitForElement(ForceLogoutPopup.LOGOUT_POPUP, 300);
@@ -75,7 +75,7 @@ public class PushMessagesTest extends AbstractTest{
 //	@Test(groups = {"regression", "push"})
 //	public void updateBalanceBonus(){
 //        UserData userData = defaultUserData.getRegisteredUserData();
-//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 //		String balance = homePage.getBalance();
 //		iMS.sendPushMessage(Page.okBonus, BONUS_AMOUNT);
 //		NavigationUtils.closeAllPopups(Page.homePage);
@@ -98,7 +98,7 @@ public class PushMessagesTest extends AbstractTest{
 //	@Test(groups = {"regression", "push"})
 //	public void pushMessageBuyIn(){
 //		UserData userData = defaultUserData.getRegisteredUserData();
-//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 //		String balance = homePage.getBalance();
 //        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 //		BuyInPopup buyInPopup = bonusPage.clickBuyIn();
@@ -111,7 +111,7 @@ public class PushMessagesTest extends AbstractTest{
 //	@Test(groups = {"regression", "push"})
 //	public void pushMessageFreeBonus(){
 //        UserData userData = defaultUserData.getRegisteredUserData();
-//		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+//		HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 //		String balance = homePage.getBalance();
 //        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 //		FreeBonusPopup freeBonusPopup = bonusPage.clickFreeBonus();
@@ -124,7 +124,7 @@ public class PushMessagesTest extends AbstractTest{
 //	@Test(groups = {"regression", "push"})
 //	public void pushMessagePromoCode(){
 //        UserData userData = defaultUserData.getRegisteredUserData();
-//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+//        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 //		String balance = homePage.getBalance();
 //        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 //		OkBonusPopup okBonusPopup = bonusPage.submitCode();
@@ -175,7 +175,7 @@ public class PushMessagesTest extends AbstractTest{
 //		new AbstractPage().logout();
 //		try{
 //			iMS.freezeWelcomeMessages();
-//			homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+//			homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 //			homePage.isLoggedIn();
 //		}
 //		finally{

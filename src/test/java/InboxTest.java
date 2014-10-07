@@ -39,7 +39,7 @@ public class InboxTest extends AbstractTest{
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountInboxPage() {
 //        UserData userData = defaultUserData.getRegisteredUserData();
-//		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, userData);
+//		InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, userData);
 //	}
 //
 //    /*2. Message is successfully sent and displayed in MailQ*/
@@ -86,14 +86,14 @@ public class InboxTest extends AbstractTest{
 //    /*5. Player views the list of sent messages*/
 //	@Test(groups = {"regression"})
 //	public void checkListOfSentMessages(){
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //        TypeUtils.assertTrueWithLogs(inboxPage.clickSentItems().isMessageListPresent(),"isMessageListPresent");
 //	}
 //
 //    /*6. Player views the list of received messages*/
 //	@Test(groups = {"regression"})
 //	public void checkListOfReceivedMessages(){
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //        TypeUtils.assertTrueWithLogs(inboxPage.isMessageListPresent(),"isMessageListPresent");
 //	}
 //
@@ -101,7 +101,7 @@ public class InboxTest extends AbstractTest{
 //	@Test(groups = {"regression"})
 //	public void sendMessageAndCheckItsPresenceInSentItems(){
 //        String emailText = emailSubjectValidationRule.generateValidString();
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 //		inboxPage = sendMessagePopup.sendMessage(emailText);
 //		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -130,7 +130,7 @@ public class InboxTest extends AbstractTest{
 //	@Test(groups = {"regression"})
 //	public void deleteSentMessageFromListInSentItems(){
 //        String emailText = emailSubjectValidationRule.generateValidString();
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 //		inboxPage = sendMessagePopup.sendMessage(emailText);
 //		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -144,7 +144,7 @@ public class InboxTest extends AbstractTest{
 //	@Test(groups = {"regression"})
 //	public void deleteSentMessageFromViewMessagePopupInSentItems(){
 //        String emailText = emailSubjectValidationRule.generateValidString();
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //		SendMessagePopup sendMessagePopup = inboxPage.clickSendMessage();
 //		inboxPage = sendMessagePopup.sendMessage(emailText);
 //		SentItemsPage sentItemsPage = inboxPage.clickSentItems();
@@ -192,7 +192,7 @@ public class InboxTest extends AbstractTest{
 //    /*13. Pagination on Inbox portlet*/
 //	@Test(groups = {"regression"})
 //	public void checkPaginationWorksCorrectly(){
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //		SentItemsPage sentItemsPage=inboxPage.clickSentItems();
 //		String firstPageSubject=sentItemsPage.getFirstMessageSubject();
 //		sentItemsPage=sentItemsPage.clickNextPage();
@@ -241,7 +241,7 @@ public class InboxTest extends AbstractTest{
 //    /*1. Empty subject and body*/
 //	@Test(groups = {"regression"})
 //	public void sendEmptyMessageAndCheckValidationAppears(){
-//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
+//        InboxPage inboxPage = (InboxPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.inbox, defaultUserData.getRegisteredUserData());
 //		SendMessagePopup sendMessagePopup=inboxPage.clickSendMessage();
 //		TypeUtils.assertTrueWithLogs(sendMessagePopup.sendEmptyMessage().isErrorPresent(), "Error present");
 //	}

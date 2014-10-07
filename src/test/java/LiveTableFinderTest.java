@@ -65,7 +65,7 @@ public class LiveTableFinderTest extends AbstractTest{
 //	/*6. Find a table – launch game as a player and play*/
 //	@Test(groups = {"regression"})
 //	public void loggedInUserPlayGame(){
-//        LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.liveTableFinder, defaultUserData.getRegisteredUserData());
+//        LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.liveTableFinder, defaultUserData.getRegisteredUserData());
 //		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
 //		GameLaunchPopup gameLaunchPopup=(GameLaunchPopup) liveCasinoPage.clickPlay(index, true);
 //		boolean isUrlValid=gameLaunchPopup.isUrlValid();

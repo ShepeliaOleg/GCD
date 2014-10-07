@@ -55,13 +55,13 @@ public class ChangeMyDetailsTest extends AbstractTest{
 //	/* 1. Portlet is displayed */
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-//		UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//		UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //	}
 
     /* 1. Portlet is displayed */
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
     }
 
 //
@@ -101,7 +101,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 //		updateMyDetailsPage.editDetails(userData);
 //        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
 //        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
-//        updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
+//        updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, userData);
 //        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsKeptAfterRelogin"+userData.print());
 //	}
 //
@@ -109,7 +109,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 //	@Test(groups = {"regression"})
 //	public void userInfoNotChangedIfNoChangesSaved(){
 //        UserData userData=defaultUserData.getRegisteredUserData();
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, userData);
+//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, userData);
 //		updateMyDetailsPage.submitChanges();
 //        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"message appeared");
 //        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsNotUpdated"+userData.print());
@@ -242,49 +242,49 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	/*2. Address field validation*/
 //	@Test(groups = {"validation"})
 //	public void addressFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validateAddress(addressValidationRule);
 //	}
 
 	/*3. City field validation*/
 //	@Test(groups = {"validation"})
 //	public void cityFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validateCity(cityValidationRule);
 //	}
 //
 //	/*4. Post Code field validation*/
 //	@Test(groups = {"validation"})
 //	public void postCodeFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validatePostcode(postcodeValidationRule);
 //	}
 //
 //	/*5. Phone field validation*/
 //	@Test(groups = {"validation"})
 //	public void phoneFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validatePhone(phoneValidationRule);
 //	}
 //
 //	/*6. Mobile Field validation*/
 //	@Test(groups = {"validation"})
 //	public void mobileFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validateMobile(phoneValidationRule);
 //	}
 //
 //	/*7. Email field validation*/
 //	@Test(groups = {"validation"})
 //	public void emailFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validateEmail(emailValidationRule);
 //	}
 //
 //	/*8. Email Verification field validation*/
 //	@Test(groups = {"validation"})
 //	public void verificationEmailFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
 //		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
 //	}
 }

@@ -35,13 +35,13 @@ public class ReferAFriendTest extends AbstractTest{
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountReferAFriendPage() {
 //        UserData userData = defaultUserData.getRegisteredUserData();
-//		ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, userData);
+//		ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, userData);
 //	}
 
     /* 1. Portlet is displayed */
     @Test(groups = {"smoke", "mobile"})
     public void portletIsDisplayedOnMyAccountReferAFriendPopup() {
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
         ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
     }
 
@@ -50,7 +50,7 @@ public class ReferAFriendTest extends AbstractTest{
 //	public void successfulMessageAppearedOnCorrectRequest() {
 //        String username1 = nameValidationRule.generateValidString();
 //        String email1 = emailValidationRule.generateValidString();
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 //		referAFriendPage.send();
 //        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
@@ -61,7 +61,7 @@ public class ReferAFriendTest extends AbstractTest{
 //	public void recommendationEmailReceivedOnCorrectRequest(){
 //        String username = nameValidationRule.generateValidString();
 //        String email = mailService.generateEmail();
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		referAFriendPage.fillFirstRecipientInfo(username, email);
 //		referAFriendPage.send();
 //        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
@@ -77,7 +77,7 @@ public class ReferAFriendTest extends AbstractTest{
 //        String email1 = emailValidationRule.generateValidString();
 //        String username2 = nameValidationRule.generateValidString();
 //        String email2 = emailValidationRule.generateValidString();
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //        referAFriendPage.fillFirstRecipientInfo(username1, email1);
 //		referAFriendPage.fillSecondRecipientInfo(username2, email2);
 //		referAFriendPage.send();
@@ -89,7 +89,7 @@ public class ReferAFriendTest extends AbstractTest{
 //    /* 1. Name field is filled out while email field is empty */
 //	@Test(groups = {"regression"})
 //	public void failMessageAppearedOnSendingEmptyEmail(){
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		String username1 = nameValidationRule.generateValidString();
 //		referAFriendPage.fillFirstRecipientInfo(username1, "");
 //		referAFriendPage.send();
@@ -99,7 +99,7 @@ public class ReferAFriendTest extends AbstractTest{
 //    /* 2. Email field is filled out while name field is empty */
 //	@Test(groups = {"regression"})
 //	public void failMessageAppearedOnSendingEmptyName(){
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		String username1 = nameValidationRule.generateValidString();
 //		String email1 = emailValidationRule.generateValidString();
 //		referAFriendPage.fillFirstRecipientInfo("", email1);
@@ -110,7 +110,7 @@ public class ReferAFriendTest extends AbstractTest{
 //    /* 3. Specify one email for several referrals */
 //	@Test(groups = {"regression"})
 //	public void successfulMessageAppearedOnSendingMultipleUsersIncorrectRequest(){
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		String username1 = nameValidationRule.generateValidString();
 //		String email1 = emailValidationRule.generateValidString();
 //		String username2 = nameValidationRule.generateValidString();
@@ -125,7 +125,7 @@ public class ReferAFriendTest extends AbstractTest{
 //	public void failMessageAppearedOnSendingAlreadySentEmail(){
 //        String username1 = nameValidationRule.generateValidString();
 //        String email1 = emailValidationRule.generateValidString();
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		referAFriendPage.fillFirstRecipientInfo(username1, email1);
 //		referAFriendPage.send();
 //        TypeUtils.assertTrueWithLogs(referAFriendPage.notificationMessageIsSuccessful(),"messageSuccessful");
@@ -139,14 +139,14 @@ public class ReferAFriendTest extends AbstractTest{
 //	/*1. Name field validation*/
 //	@Test(groups = {"validation"})
 //	public void nameFieldValidation(){
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		referAFriendPage.validateName(nameValidationRule);
 //	}
 //
 //	/*2. Email field validation*/
 //	@Test(groups = {"validation"})
 //	public void emailFieldValidation(){
-//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
+//        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, defaultUserData.getRegisteredUserData());
 //		referAFriendPage.validateEmail(emailValidationRule);
 //	}
 }

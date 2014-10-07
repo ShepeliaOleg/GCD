@@ -158,6 +158,14 @@ public class WebDriverUtils extends WebDriverObject{
         return true;
     }
 
+    public static boolean isTextVisible(String text) {
+        return isVisible(getElementXpathWithText(text), 1);
+    }
+
+    private static String getElementXpathWithText(String text) {
+        return "//*[text()='" + text + "']";
+    }
+
     public static boolean isClickable(String xpath){
         return isVisible(xpath, TIMEOUT);
     }
@@ -682,6 +690,4 @@ public class WebDriverUtils extends WebDriverObject{
     private static String getPrecedingElement(String xpath) {
         return "//*[following-sibling::"+xpath.substring(2)+"]";
     }
-
-
 }

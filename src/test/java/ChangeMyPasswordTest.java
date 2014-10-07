@@ -30,13 +30,13 @@ public class ChangeMyPasswordTest extends AbstractTest{
 //	/* 1. Portlet is displayed */
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountChangeMyPasswordPage() {
-//		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+//		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
 //	}
 
     /*1. Portlet is displayed in popup*/
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnPopup(){
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
         ChangePasswordPopup changePasswordPopup = homePage.navigateToChangePassword();
 
     }
@@ -61,7 +61,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 //        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
 //		changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
 //		userData.setPassword(newPass);
-//		TypeUtils.assertTrueWithLogs(NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData).isLoggedIn(), "Logged in");
+//		TypeUtils.assertTrueWithLogs(NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData).isLoggedIn(), "Logged in");
 //	}
 //
 //	/*5. IMS Player Details Page*/

@@ -359,34 +359,34 @@ public class UserData extends WebDriverObject{
 		return balanceTotal;
 	}
 
-	public UserData cloneUserData(){
+	private UserData cloneUserData(){
 		UserData clonedUserData=new UserData();
-		clonedUserData.title=title;
-		clonedUserData.firstName=firstName;
-		clonedUserData.lastName=lastName;
-		clonedUserData.birthDay=birthDay;
-		clonedUserData.birthMonth=birthMonth;
-		clonedUserData.birthYear=birthYear;
-		clonedUserData.email=email;
-		clonedUserData.country=country;
-		clonedUserData.city=city;
-		clonedUserData.address=address;
-        clonedUserData.address2=address2;
-		clonedUserData.house=house;
-		clonedUserData.postCode=postCode;
-		clonedUserData.phoneAreaCode=phoneAreaCode;
-		clonedUserData.phone=phone;
-		clonedUserData.mobileAreaCode=mobileAreaCode;
-		clonedUserData.mobile=mobile;
-		clonedUserData.username=getUsername();
-		clonedUserData.password=password;
-		clonedUserData.verificationQuestion=verificationQuestion;
-		clonedUserData.verificationAnswer=verificationAnswer;
-		clonedUserData.currency=currency;
-		clonedUserData.coupon=coupon;
-		clonedUserData.balanceMain=balanceMain;
-		clonedUserData.balanceTotal=balanceTotal;
-        clonedUserData.gender=gender;
+		clonedUserData.title=           getTitle();
+		clonedUserData.firstName=       getFirstName();
+		clonedUserData.lastName=        getLastName();
+		clonedUserData.birthDay=        getBirthDay();
+		clonedUserData.birthMonth=      getBirthMonth();
+		clonedUserData.birthYear=       getBirthYear();
+        clonedUserData.email=           getEmail();
+		clonedUserData.country=         getCountry();
+		clonedUserData.city=            getCity();
+		clonedUserData.address=         getAddress();
+        clonedUserData.address2=        getAddress2();
+		clonedUserData.house=           getHouse();
+		clonedUserData.postCode=        getPostCode();
+		clonedUserData.phoneAreaCode=   getPhoneAreaCode();
+		clonedUserData.phone=           getPhone();
+		clonedUserData.mobileAreaCode=  getMobileAreaCode();
+		clonedUserData.mobile=          getMobile();
+		clonedUserData.username=        getUsername();
+		clonedUserData.password=        getPassword();
+		clonedUserData.verificationQuestion=getVerificationQuestion();
+		clonedUserData.verificationAnswer=getVerificationAnswer();
+		clonedUserData.currency=        getCurrency();
+		clonedUserData.coupon=          getCoupon();
+		clonedUserData.balanceMain=     getBalanceMain();
+		clonedUserData.balanceTotal=    getBalanceTotal();
+        clonedUserData.gender=          getGender();
 		return clonedUserData;
 	}
 
@@ -447,7 +447,7 @@ public class UserData extends WebDriverObject{
 	}
 
     public UserData getRegisteredUserDataWithProfileID() {
-        UserData userData = cloneUserData();
+        UserData userData = getRegisteredUserData();
         userData.setUsername(getProfileUsername());
         return userData;
     }
