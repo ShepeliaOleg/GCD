@@ -48,19 +48,15 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 	}
 
 	public IMSPlayerDetailsPage search(String username){
-		String userLink = "//a[contains(text(), '"+username+"')]";
-        String userLinkUppercase = "//a[contains(text(), '"+username.toUpperCase()+"')]";
-		if(!WebDriverUtils.isVisible(userLink, 0)&&!WebDriverUtils.isVisible(userLinkUppercase, 0)){
+		String userLink = "//a[contains(text(), '"+username+"')] | //a[contains(text(), '"+username.toUpperCase()+"')]";
+		if(!WebDriverUtils.isVisible(userLink, 0)){
 			resetDate();
 			clickBoth();
 			inputUsername(username);
 			clickSearch();
 		}
-        WebDriverUtils.waitForElement("//*[@id='list-grid']", 30);
-        if(WebDriverUtils.isVisible(userLink, 0)){
+        if(WebDriverUtils.isVisible(userLink, 30)) {
             WebDriverUtils.click(userLink);
-        }else if(WebDriverUtils.isVisible(userLinkUppercase, 0)){
-            WebDriverUtils.click(userLinkUppercase);
         }else{
             throw new SkipException("User was not found on IMS");
         }
