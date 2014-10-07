@@ -146,7 +146,7 @@ public class ForgotPasswordTest extends AbstractTest{
         ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
         changedPasswordPopup.closePopup();
 		userData.setPassword(newPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 	}
 
 //    /*8. Cancel resetting password */
@@ -235,7 +235,7 @@ public class ForgotPasswordTest extends AbstractTest{
         String newPassword = passwordValidationRule.generateValidString();
         ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
         userData.setPassword(newPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.home, userData);
+        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
 		TypeUtils.assertTrueWithLogs(imsPlayerDetailsPage.getPassword().equals(newPassword),"Password is set on ims");
 	}

@@ -37,7 +37,7 @@ public class WebContentTest extends AbstractTest{
     /*Web content display - Player play button*/
     @Test(groups = {"webcontent","regression"})
     public void displayButtonLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
 
@@ -75,7 +75,7 @@ public class WebContentTest extends AbstractTest{
     /*Web content display - Player play image*/
     @Test(groups = {"webcontent","regression"})
     public void displayImageLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
@@ -132,7 +132,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGamePlayer() {
         UserData userData = defaultUserData.getRegisteredUserData();
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, userData);
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
 
@@ -140,7 +140,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGamePlayerSlide2() {
         UserData userData = defaultUserData.getRegisteredUserData();
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, userData);
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.button, 2);
     }
@@ -197,14 +197,14 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Player play image slide 1*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
     /*Banner - Player play image slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayerSlide2() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.loggedIn, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.image, 2);
     }

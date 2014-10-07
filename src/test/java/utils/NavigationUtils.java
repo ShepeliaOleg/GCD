@@ -53,7 +53,7 @@ public class NavigationUtils extends WebDriverObject{
     }
 
 	public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages){
-        if (condition.equals(PlayerCondition.loggedIn)){
+        if (condition.equals(PlayerCondition.player)){
             WebDriverUtils.runtimeExceptionWithUrl("No userdata set for logged in user");
         }
         return navigateToPage(condition, configuredPages, null);
@@ -111,6 +111,11 @@ public class NavigationUtils extends WebDriverObject{
             case inbox:                                         return new InboxPage();
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
+            case permissions_page_admin:
+            case permissions_page_all:
+            case permissions_page_guest:
+            case permissions_page_player:
+            case permissions_portlet:                           return new AbstractPage();
             case registerNoClientType:
             case registerClientTypeCreferrer:
             case register:                                      return new RegistrationPage();
@@ -134,7 +139,7 @@ public class NavigationUtils extends WebDriverObject{
                 logoutIfLoggedIn(abstractPage);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
-            case loggedIn:
+            case player:
                 logoutAdminIfLoggedIn(abstractPage);
                 logoutIfLoggedIn(abstractPage);
                 abstractPage.login(userData);
