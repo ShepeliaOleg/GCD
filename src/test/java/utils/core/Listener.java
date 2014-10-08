@@ -41,6 +41,7 @@ public class Listener extends TestListenerAdapter{
 
     @Override
     public void onTestFailure(ITestResult iTestResult){
+        initData();
         System.out.println(iTestResult.getName() + "--Test method failed\n");
     }
 
@@ -272,8 +273,7 @@ public class Listener extends TestListenerAdapter{
         }
     }
 
-    private void startHtmlPage(String pageName)
-    {
+    private void startHtmlPage(String pageName){
         output.println("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.1//EN http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'>");
         output.println("<html xmlns='http://www.w3.org/1999/xhtml'>");
         output.println("<head>");
@@ -303,11 +303,15 @@ public class Listener extends TestListenerAdapter{
         createScreenshot(iTestResult.getName());
     }
 
-    public String[] createScreenshot(String name){
+    private void initData(){
         if(webDriver==null){
             webDriver = WebDriverFactory.getWebDriver();
             baseUrl = WebDriverFactory.getBaseUrl();
         }
+    }
+
+    public String[] createScreenshot(String name){
+        initData();
         String imageName = name+".jpg";
         String landscape = ScreenOrientation.LANDSCAPE.value() + imageName;
         String portrait = ScreenOrientation.PORTRAIT.value() + imageName;
