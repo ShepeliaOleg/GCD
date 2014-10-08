@@ -55,7 +55,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
 
     public static void addError(String message){
         String fileName = name + String.valueOf(counter++);
-        String[] names = new Listener().createScreenshot(fileName);
+        String[] names = Listener.createScreenshot(fileName);
         results.add(message+"(<a href='"+names[0]+"'>P</a>/<a href='"+names[1]+"'>L</a>/<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>)");
     }
 

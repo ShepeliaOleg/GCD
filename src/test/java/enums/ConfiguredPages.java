@@ -31,6 +31,7 @@ public enum ConfiguredPages{
     bonusPage("bonus"),
     changeMyDetails("update-my-details"),
     changeMyPassword("myaccount/change-my-password"),
+    deposit("deposit"),
     forgotPassword("forgot-password"),
     forgotUsername("forgot-password"),
     gamesCasinoPage("home"),

@@ -9,6 +9,7 @@ import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.ChangeMyDetailsPage;
+import pageObjects.account.deposit.DepositPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
@@ -91,6 +92,7 @@ public class NavigationUtils extends WebDriverObject{
             case bonusPage:                                     return new BonusPage();
             case changeMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangePasswordPage();
+            case deposit:                                       return new DepositPage();
             case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
             case gamesFavourites:
@@ -124,7 +126,8 @@ public class NavigationUtils extends WebDriverObject{
             case selfExclusion:                                 return new ResponsibleGamingPage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
-            default: AbstractTest.failTest("Unexpected input in navigateToPage method");
+            default:
+                AbstractTest.failTest("Unexpected input in navigateToPage method");
                 return null;
         }
     }

@@ -20,8 +20,6 @@ public class Listener extends TestListenerAdapter{
     private static String folder;
     private static String outFolder;
     private static String indexFilename;
-    private WebDriver webDriver;
-    private String baseUrl;
     private static final String INDEX = "/index.html";
     private static final String CUSTOM = "target/custom";
     private static final String COLOR_GREEN = "#B2F5A6";
@@ -31,7 +29,7 @@ public class Listener extends TestListenerAdapter{
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
-            "ChangeMyDetailsTest", "ChangeMyPasswordTest","ForgotPasswordTest", "ForgotUsernameTest",
+            "ChangeMyDetailsTest", "ChangeMyPasswordTest","DepositMethodsTest","ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest","LoginValidationTest",
             "PermissionsTest", "PushMessagesTest","ReferAFriendTest","RegistrationAffiliateTest",
@@ -41,7 +39,6 @@ public class Listener extends TestListenerAdapter{
 
     @Override
     public void onTestFailure(ITestResult iTestResult){
-        initData();
         System.out.println(iTestResult.getName() + "--Test method failed\n");
     }
 
@@ -170,7 +167,7 @@ public class Listener extends TestListenerAdapter{
 
     private String addEnv(String line){
         if(line.contains(ENV_REPLACER)){
-            line = line.replace(ENV_REPLACER, baseUrl);
+            line = line.replace(ENV_REPLACER, WebDriverFactory.getBaseUrl());
         }
         return line;
     }
@@ -219,7 +216,7 @@ public class Listener extends TestListenerAdapter{
 
     private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
-        output.println("<h2>Env: "+baseUrl+"</h2>");
+        output.println("<h2>Env: "+WebDriverFactory.getBaseUrl()+"</h2>");
         output.println("<table border='1' style='background-color:yellow;border:1px black;width:100%;border-collapse:collapse;'>");
         output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='20%'>Area</td><td width='5%'>Status</td><td>Result</td></tr>");
         addRows(iTestContext);
@@ -303,15 +300,7 @@ public class Listener extends TestListenerAdapter{
         createScreenshot(iTestResult.getName());
     }
 
-    private void initData(){
-        if(webDriver==null){
-            webDriver = WebDriverFactory.getWebDriver();
-            baseUrl = WebDriverFactory.getBaseUrl();
-        }
-    }
-
-    public String[] createScreenshot(String name){
-        initData();
+    public static String[] createScreenshot(String name){
         String imageName = name+".jpg";
         String landscape = ScreenOrientation.LANDSCAPE.value() + imageName;
         String portrait = ScreenOrientation.PORTRAIT.value() + imageName;
@@ -333,14 +322,13 @@ public class Listener extends TestListenerAdapter{
         return new String[] {portrait, landscape};
     }
 
-    private void writeScreenshot(String imageName){
+    private static void writeScreenshot(String imageName){
         File file = new File(outFolder +imageName);
-        File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
+        File scrFile = ((TakesScreenshot)WebDriverFactory.getWebDriver()).getScreenshotAs(OutputType.FILE);
         try  {
             FileUtils.copyFile(scrFile, file);
         }
-        catch (IOException e)
-        {
+        catch (IOException e){
             e.printStackTrace();
         }
     }
