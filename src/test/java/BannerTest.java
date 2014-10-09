@@ -38,7 +38,7 @@ public class BannerTest extends AbstractTest{
     public void bannerImage() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-        assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
+        validateEquals(1, slidesTypes.size(), "Number of slides");
         assertEquals(BannerSlideType.image, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with Image is not displayed.");
     }
@@ -48,7 +48,7 @@ public class BannerTest extends AbstractTest{
     public void bannerHtml() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerHtml);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-        assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
+        validateEquals(1, slidesTypes.size(), "Number of slides");
         assertEquals(BannerSlideType.html, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with HTML is not displayed.");
     }
@@ -58,7 +58,7 @@ public class BannerTest extends AbstractTest{
     public void bannerWebContent() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerWebContent);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-        assertTrue(slidesTypes.size() == 1, "Expected number of slides is 1.");
+        validateEquals(1, slidesTypes.size(), "Number of slides");
         assertEquals(BannerSlideType.webContent, slidesTypes.get(0), "Slide type");
         assertTrue(bannerPage.slideIsDisplayed(1), "Slide with WebContent is not displayed.");
     }
@@ -68,7 +68,7 @@ public class BannerTest extends AbstractTest{
     public void bannerMixed() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerMixed);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-        assertTrue(slidesTypes.size() == 3, "Expected number of slides is 3.");
+        validateEquals(3, slidesTypes.size(), "Number of slides");
         assertEquals(BannerSlideType.image, slidesTypes.get(0),     "First slide");
         assertEquals(BannerSlideType.html, slidesTypes.get(1),      "Second slide");
         assertEquals(BannerSlideType.webContent, slidesTypes.get(2),"Third slide");
@@ -185,7 +185,7 @@ public class BannerTest extends AbstractTest{
     public void bannerInRotation() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerInRotation);
         List<BannerSlideType> slidesTypes = bannerPage.getSlidesTypes();
-        assertTrue(slidesTypes.size() == 2, "Expected number of slides is 2.");
+        validateEquals(2, slidesTypes.size(), "Number of slides");
         assertEquals(BannerSlideType.image, slidesTypes.get(0), "First slide");
         assertEquals(BannerSlideType.webContent, slidesTypes.get(1), "Second slide");
         assertTrue(bannerPage.slideIsDisplayed(1), "First slide is displayed");
@@ -197,7 +197,7 @@ public class BannerTest extends AbstractTest{
     public void banner5seconds() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.banner5seconds);
         int slidesNumber = bannerPage.getSlidesCount();
-        assertTrue(slidesNumber == 2, "Number of slides is 2. -");
+        validateEquals(2, slidesNumber, "Number of slides");
         long appearingOfSecondSlide = bannerPage.whenSlideDisplayed(2);
         long appearingOfFirstSlide =  bannerPage.whenSlideDisplayed(1);
         long timeToDisplay = appearingOfFirstSlide - appearingOfSecondSlide;
