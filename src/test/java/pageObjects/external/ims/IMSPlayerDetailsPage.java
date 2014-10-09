@@ -91,7 +91,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	}
 
 	public ArrayList<String> getRegisterData(){
-		ArrayList<String> data=new ArrayList<String>();
+		ArrayList<String> data=new ArrayList<>();
 		data.add(getTitle());
 		data.add(getGender());
 		data.add(getFirstName());
@@ -103,9 +103,9 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		data.add(getBillingAddress());
 		data.add(getPostcode());
 		data.add(getPhone());
-		data.add(getMobile());
+//		data.add(getMobile());
 		data.add(getUsername());
-		data.add(getPassword());
+//		data.add(getPassword());
 		data.add(getVerificationQuestion());
 		data.add(getVerificationAnswer());
 		data.add(getCurrency());

@@ -228,9 +228,8 @@ public class RegistrationTest extends AbstractTest{
     /*#17. IMS Player Details Page*/
 	@Test(groups = {"registration","regression"})
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		registrationPage.registerUser(userData);
+        UserData userData = defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
 		iMS.validateRegisterData(userData);
 	}
 
