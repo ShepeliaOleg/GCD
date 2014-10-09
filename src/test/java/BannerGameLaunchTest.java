@@ -45,7 +45,7 @@ public class BannerGameLaunchTest extends AbstractTest{
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         LoginPopup loginPopup = bannerPage.clickGameLoggedOut(1);
         loginPopup.close();
-        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerGameTwoSlides), "Game is not launched");
     }
 
     /*Banner - Guest login popup cancel image slide 2*/
@@ -55,7 +55,7 @@ public class BannerGameLaunchTest extends AbstractTest{
         bannerPage.showNextSlide();
         LoginPopup loginPopup = bannerPage.clickGameLoggedOut(2);
         loginPopup.close();
-        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
+        validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerGameTwoSlides), "Game is not launched");
     }
 
     /*Banner - Player play image slide 1*/

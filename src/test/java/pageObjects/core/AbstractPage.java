@@ -147,6 +147,7 @@ public class AbstractPage extends AbstractPageObject{
         } else {
             openMenu().setLanguage(languageCode);
         }
+        WebDriverUtils.waitFor();
     }
 
     //Mobile only
