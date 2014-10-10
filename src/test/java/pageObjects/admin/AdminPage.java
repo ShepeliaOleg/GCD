@@ -11,8 +11,8 @@ public class AdminPage extends AbstractPage {
     private final static String FIELD_PASSWORD_XP = "//*[@id='_58_password']";
     private final static String BUTTON_LOGIN_XP = ROOT_XP+"//*[@class='btn']";
     private final static String BUTTON_LOGOUT_XP = "//*[@class='sign-out']";
-    private final static String LOGIN = "test";
-    private final static String PASSWORD = LOGIN;
+    private final static String LOGIN = "sergii.chernyavskiy";
+    private final static String PASSWORD = "9875321Res";
 
     public AdminPage(){
         super(new String[]{ROOT_XP});
