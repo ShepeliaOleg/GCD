@@ -38,7 +38,7 @@
     </bean>
 
     <bean id="affiliate" class="springConstructors.AffiliateData">
-        <constructor-arg value="defaultic"/>                    <!--default advertiser-->
+        <constructor-arg value="default55"/>                    <!--default advertiser-->
         <constructor-arg value="advert1"/>                      <!--custom existing advertiser-->
         <constructor-arg value="v2"/>                           <!--banner-->
         <constructor-arg value="v3"/>                           <!--profile-->

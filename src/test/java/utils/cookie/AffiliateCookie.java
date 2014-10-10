@@ -17,6 +17,6 @@ public class AffiliateCookie extends Cookie {
     public void validateValue(AffiliateData affiliateData) {
         String actualCookieValue = getValue();
         String expectedCookieValue = affiliateData.getValue();
-        AbstractTest.assertEquals(actualCookieValue, expectedCookieValue, "Incorrect affiliate data was passed to cookie value from url parameters.");
+        AbstractTest.assertEquals(expectedCookieValue, actualCookieValue, "Incorrect affiliate data was passed to cookie value from url parameters.");
     }
 }
