@@ -1,9 +1,5 @@
 package springConstructors;
 
-/**
- * User: sergiich
- * Date: 4/11/14
- */
 public class DriverData{
 
     public static String baseUrl;
@@ -11,18 +7,9 @@ public class DriverData{
     public static String os;
     public static String platform;
     public static String device;
-    public static String defaultBaseUrl;
-    public static String defaultBrowser;
-    public static String defaultOs;
-    public static String defaultPlatform;
-    public static String defaultDevice;
 
     public static String getBaseUrl(){
-        if(baseUrl!=null){
-            return baseUrl;
-        }else{
-            return getDefaultBaseUrl();
-        }
+        return baseUrl;
     }
 
     public static void setBaseUrl(String baseUrl){
@@ -30,11 +17,7 @@ public class DriverData{
     }
 
 	public static String getBrowser(){
-		if(browser!=null){
-            return browser;
-        }else{
-            return getDefaultBrowser();
-        }
+        return browser;
 	}
 
     public static void setBrowser(String browser){
@@ -42,11 +25,7 @@ public class DriverData{
     }
 
     public static String getOs() {
-        if(os!=null){
-            return os;
-        }else{
-            return getDefaultOs();
-        }
+        return os;
     }
 
     public static void setOs(String os) {
@@ -54,11 +33,7 @@ public class DriverData{
     }
 
     public static String getPlatform() {
-        if(platform!=null){
-            return platform;
-        }else{
-            return getDefaultPlatform();
-        }
+        return platform;
     }
 
     public static void setPlatform(String platform) {
@@ -66,54 +41,11 @@ public class DriverData{
     }
 
     public static String getDevice() {
-        if(device!=null) {
-            return device;
-        }else{
-            return getDefaultDevice();
-        }
+        return device;
     }
 
     public static void setDevice(String device) {
         DriverData.device = device;
     }
 
-    public static String getDefaultBaseUrl() {
-        return defaultBaseUrl;
-    }
-
-    public static void setDefaultBaseUrl(String defaultBaseUrl) {
-        DriverData.defaultBaseUrl = defaultBaseUrl;
-    }
-
-    public static String getDefaultBrowser() {
-        return defaultBrowser;
-    }
-
-    public static void setDefaultBrowser(String defaultBrowser) {
-        DriverData.defaultBrowser = defaultBrowser;
-    }
-
-    public static String getDefaultOs() {
-        return defaultOs;
-    }
-
-    public static void setDefaultOs(String defaultOs) {
-        DriverData.defaultOs = defaultOs;
-    }
-
-    public static String getDefaultPlatform() {
-        return defaultPlatform;
-    }
-
-    public static void setDefaultPlatform(String defaultPlatform) {
-        DriverData.defaultPlatform = defaultPlatform;
-    }
-
-    public static String getDefaultDevice() {
-        return defaultDevice;
-    }
-
-    public static void setDefaultDevice(String defaultDevice) {
-        DriverData.defaultDevice = defaultDevice;
-    }
 }

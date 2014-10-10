@@ -13,12 +13,20 @@ import utils.core.WebDriverObject;
 
 public class PortalUtils extends WebDriverObject{
 
+    public static void loginUser(){
+        navigateToHome().login(getUserData().getRegisteredUserData());
+    }
+
     public static void loginUser(UserData userData){
         navigateToHome().login(userData);
     }
 
     public static boolean isLoggedIn(){
         return new AbstractPage().isLoggedIn();
+    }
+
+    public static HomePage registerUser(){
+        return (HomePage)registerUser(getUserData().getRegisteredUserData(), false);
     }
 
     public static HomePage registerUser(UserData userData){

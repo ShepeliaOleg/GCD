@@ -19,11 +19,8 @@ import java.util.HashMap;
 public class IMS extends WebDriverObject{
 
     protected URL imsURL;
-    protected URL defaultImsURL;
     protected String imsLogin;
     protected String imsPass;
-    protected String defaultImsLogin;
-    protected String defaultImsPass;
 
     private static final int RETRIES = 10;
 
@@ -32,11 +29,7 @@ public class IMS extends WebDriverObject{
     private UserData defaultUserData;
 
     public URL getImsURL() {
-        if(imsURL!=null){
-            return imsURL;
-        }else {
-            return getDefaultImsURL();
-        }
+        return imsURL;
     }
 
     public void setImsURL(URL imsURL) {
@@ -44,11 +37,7 @@ public class IMS extends WebDriverObject{
     }
 
     public String getImsLogin() {
-        if(imsLogin!=null){
-            return imsLogin;
-        }else {
-            return getDefaultImsLogin();
-        }
+        return imsLogin;
     }
 
     public void setImsLogin(String imsLogin) {
@@ -56,39 +45,11 @@ public class IMS extends WebDriverObject{
     }
 
     public String getImsPass() {
-        if(imsPass!=null){
-            return imsPass;
-        }else {
-            return getDefaultImsPass();
-        }
+        return imsPass;
     }
 
     public void setImsPass(String imsPass) {
         this.imsPass = imsPass;
-    }
-
-    public URL getDefaultImsURL() {
-        return defaultImsURL;
-    }
-
-    public void setDefaultImsURL(URL defaultImsURL) {
-        this.defaultImsURL = defaultImsURL;
-    }
-
-    public String getDefaultImsLogin() {
-        return defaultImsLogin;
-    }
-
-    public void setDefaultImsLogin(String defaultImsLogin) {
-        this.defaultImsLogin = defaultImsLogin;
-    }
-
-    public String getDefaultImsPass() {
-        return defaultImsPass;
-    }
-
-    public void setDefaultImsPass(String defaultImsPass) {
-        this.defaultImsPass = defaultImsPass;
     }
 
 	private IMSHomePage navigateToIMS(){

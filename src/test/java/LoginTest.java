@@ -18,8 +18,10 @@ import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.AbstractTestRunner;
+import utils.core.WebDriverObject;
 
-public class LoginTest extends AbstractTest {
+public class LoginTest extends AbstractTest{
 
 	@Autowired
 	@Qualifier("userData")
@@ -34,7 +36,7 @@ public class LoginTest extends AbstractTest {
 	/*1. Valid user login*/
 	@Test(groups = {"smoke","desktop"})
 	public void validUserLoginHeader() {
-		UserData userData = defaultUserData.getRegisteredUserData();
+		UserData userData = WebDriverObject.getUserData().getRegisteredUserData();
         PortalUtils.loginUser(userData);
 		validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
 	}

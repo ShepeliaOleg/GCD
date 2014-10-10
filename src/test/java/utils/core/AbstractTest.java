@@ -1,5 +1,7 @@
 package utils.core;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.SkipException;
@@ -7,36 +9,15 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
+import springConstructors.AdminUserData;
+import springConstructors.UserData;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@ContextConfiguration(locations={"/spring-config.xml"})
-@Listeners(Listener.class)
-public class AbstractTest extends AbstractTestNGSpringContextTests{
-
-    public static ArrayList<String> results = new ArrayList<>();
-    private static int counter;
-    private static String name;
-
-	@BeforeClass(alwaysRun = true)
-	protected void setUp() throws Exception{
-		new WebDriverFactory().initializeWebDrivers();
-	}
-
-    @BeforeMethod(alwaysRun = true)
-    protected void clean(){
-        results.clear();
-        counter = 0;
-        name = RandomUtils.generateString("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 15);
-    }
-
-	@AfterClass(alwaysRun = true)
-	protected void tearDown() throws Exception{
-		WebDriverFactory.shutDown();
-	}
+public class AbstractTest extends AbstractTestRunner{
 
     protected static void validate() {
         String message = collectResults();

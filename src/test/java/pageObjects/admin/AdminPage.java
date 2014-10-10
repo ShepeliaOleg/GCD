@@ -11,8 +11,6 @@ public class AdminPage extends AbstractPage {
     private final static String FIELD_PASSWORD_XP = "//*[@id='_58_password']";
     private final static String BUTTON_LOGIN_XP = ROOT_XP+"//*[@class='btn']";
     private final static String BUTTON_LOGOUT_XP = "//*[@class='sign-out']";
-    private final static String LOGIN = "sergii.chernyavskiy";
-    private final static String PASSWORD = "9875321Res";
 
     public AdminPage(){
         super(new String[]{ROOT_XP});
@@ -23,11 +21,11 @@ public class AdminPage extends AbstractPage {
     }
 
     private void fillUsername(){
-        WebDriverUtils.inputTextToField(FIELD_USERNAME_XP, LOGIN);
+        WebDriverUtils.inputTextToField(FIELD_USERNAME_XP, getAdminUserData().getAdminUsername());
     }
 
     private void fillPassword(){
-        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, PASSWORD);
+        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, getAdminUserData().getAdminUsername());
     }
 
     public AbstractPage loginAdmin() {
