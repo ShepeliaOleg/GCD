@@ -6,6 +6,7 @@ import utils.core.WebDriverObject;
 public abstract class AbstractPageObject extends WebDriverObject {
 
 	public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error')] | //*[contains(@class, 'info__content')]";
+    private static final String MAIN_SITE_LOADER = "//*[@class='main-site-loader']";
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final int TIMEOUT =              30;
 
@@ -33,6 +34,7 @@ public abstract class AbstractPageObject extends WebDriverObject {
 	}
 
     private void validate(String[] clickableBys, String[] invisibleBys){
+        WebDriverUtils.waitForElementToDisappear(MAIN_SITE_LOADER);
         if(clickableBys!=null){
             for(String xpath:clickableBys){
                 WebDriverUtils.waitForElement(xpath, TIMEOUT);
