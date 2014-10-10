@@ -57,6 +57,7 @@ public enum ConfiguredPages{
     permissions_page_all("permissions_page_all"),
     permissions_page_guest("permissions_page_guest"),
     permissions_page_player("permissions_page_player"),
+    permissions_page_player_guest("permissions_page_player_guest"),
     permissions_portlet("permissions_portlet"),
     register("register"),
     registerClientTypeCreferrer("register_client_type_creferrer"),

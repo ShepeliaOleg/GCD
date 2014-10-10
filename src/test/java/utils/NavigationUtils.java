@@ -115,6 +115,7 @@ public class NavigationUtils extends WebDriverObject{
             case permissions_page_all:
             case permissions_page_guest:
             case permissions_page_player:
+            case permissions_page_player_guest:
             case permissions_portlet:                           return new AbstractPage();
             case registerNoClientType:
             case registerClientTypeCreferrer:

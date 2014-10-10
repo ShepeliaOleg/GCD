@@ -121,11 +121,11 @@ public class AbstractTest extends AbstractTestNGSpringContextTests{
     }
 
     public static boolean assertTextVisible(String text, String message){
-        return addErrorIf(!WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
+        return assertTrue(WebDriverUtils.isTextVisible(text), message);
     }
 
     public static boolean assertTextInvisible(String text, String message){
-        return addErrorIf(WebDriverUtils.isTextVisible(text), "TRUE", "FALSE", message);
+        return assertFalse(WebDriverUtils.isTextVisible(text), message);
     }
 
     private static boolean equals(Object expected, Object actual) {
