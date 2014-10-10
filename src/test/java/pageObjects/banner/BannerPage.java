@@ -34,7 +34,7 @@ public class BannerPage extends AbstractPage {
     private static final String NAVIGATION_BUTTONS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_number')]";
 
     private static final String HULK_GAME = "hlk2";
-    private static final String MISTER_CASH_BACK_GAME = "mrkb";
+    private static final String MISTER_CASH_BACK_GAME = "mrcb";
 
 	public BannerPage(){
 		super(new String[]{ROOT_XP});
