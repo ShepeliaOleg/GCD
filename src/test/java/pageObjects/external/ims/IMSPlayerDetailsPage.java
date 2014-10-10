@@ -183,6 +183,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         List<String> creferrerList = new ArrayList<>();
         if (creferrerFull.contains(AffiliateData.ASCII_CODE_SEMICOLON)) {
             creferrerList = Arrays.asList(creferrerFull.split(AffiliateData.ASCII_CODE_SEMICOLON));
+        } else if (creferrerFull.contains(AffiliateData.SEMICOLON)) {
+            creferrerList = Arrays.asList(creferrerFull.split(AffiliateData.SEMICOLON));
         } else {
             creferrerList.add(creferrerFull);
         }
@@ -190,10 +192,14 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     }
 
     private List<String> getCreferrerNameValue(String creferrer) {
-        if (!creferrer.contains(":")) {
+        if (!creferrer.contains(AffiliateData.ASCII_CODE_COLON) && !creferrer.contains(AffiliateData.COLON)) {
             AbstractTest.failTest("Creferrer should be properly defined as 'name:value' pair. Actual creferrer value is '" + creferrer + "'");
         }
-        return Arrays.asList(creferrer.split(AffiliateData.ASCII_CODE_COLON));
+        if (creferrer.contains(AffiliateData.ASCII_CODE_COLON)) {
+            return Arrays.asList(creferrer.split(AffiliateData.ASCII_CODE_COLON));
+        } else {
+            return Arrays.asList(creferrer.split(AffiliateData.COLON));
+        }
     }
 
 	private String getUsername(){

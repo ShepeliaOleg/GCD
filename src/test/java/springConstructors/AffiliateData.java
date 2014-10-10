@@ -15,6 +15,10 @@ public class AffiliateData {
     public static final String ASCII_CODE_COLON =      "%3A";    // :
     public static final String ASCII_CODE_SEMICOLON =  "%3B";    // ;
 
+    public static final String COMMA =      ",";
+    public static final String COLON =      ":";
+    public static final String SEMICOLON =  ";";
+
     public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String creferrer1, String creferrer2, String creferrerRegistrationPortletProperty) {
         this.defaultAdvertiser = defaultAdvertiser;
         this.advertiser = advertiser;
@@ -136,7 +140,6 @@ public class AffiliateData {
     }
 
     public String getValue() {
-
         return getAdvertiser() + ASCII_CODE_COMMA + getBanner() + ASCII_CODE_COMMA + getProfile() + ASCII_CODE_COMMA + getUrl() + ASCII_CODE_COMMA + getCreferrer();
     }
 }

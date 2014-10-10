@@ -53,7 +53,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
 
@@ -134,7 +134,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle);
         affiliateCookie.add();
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
 
@@ -216,7 +216,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
 
@@ -229,7 +229,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle, false);
     }
 
@@ -266,7 +266,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
 
@@ -296,7 +296,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateDataSingle.getDefaultAdvertiser());
+        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         iMS.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
 
