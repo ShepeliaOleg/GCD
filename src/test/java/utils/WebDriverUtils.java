@@ -548,6 +548,20 @@ public class WebDriverUtils extends WebDriverObject{
 		return webDriver.getCurrentUrl();
 	}
 
+    public static String getCurrentLanguageCode(){
+        String leftover = getCurrentUrl().replace(getBaseUrl(), "");
+        int index = leftover.indexOf("/");
+        if(index!=-1){
+            return leftover.substring(0, index);
+        }else {
+            if(leftover.length()==2||leftover.length()==5){
+                return leftover;
+            }else {
+                return "";
+            }
+        }
+    }
+
 	public static void navigateToInternalURL(String relativeURL){
 		String url=baseUrl + relativeURL;
         navigateToURL(url);

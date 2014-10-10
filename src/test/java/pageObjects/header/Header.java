@@ -36,6 +36,7 @@ public class Header extends AbstractPageObject{
 
     public Menu openMenu() {
         WebDriverUtils.click(MENU_XP);
+        WebDriverUtils.waitFor();
         return new Menu();
     }
 

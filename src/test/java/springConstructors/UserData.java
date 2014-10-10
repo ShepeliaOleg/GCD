@@ -254,12 +254,12 @@ public class UserData extends WebDriverObject{
 
     public String getFullAddress (){
         String fullAddress = getAddress();
-        if ((getHouse().equals("")==false)&& (getHouse().equals(null)==false)){
-            fullAddress =  getHouse().concat(" ").concat(fullAddress);
-        }
-        if ((getAddress2().equals("")==false) && (getAddress2().equals(null)==false)){
-            fullAddress = fullAddress.concat(" ").concat(getAddress2());
-        }
+//        if (getHouse()!=null){
+//            fullAddress =  getHouse().concat(" ").concat(fullAddress);
+//        }
+//        if (getAddress2()!=null){
+//            fullAddress = fullAddress.concat(" ").concat(getAddress2());
+//        }
         return fullAddress;
     }
 
@@ -393,54 +393,37 @@ public class UserData extends WebDriverObject{
     public ArrayList<String> getRegisterData () {
         ArrayList<String> data=new ArrayList<>();
         data.add(getTitle().toLowerCase());
-        data.add(getGender());
+        data.add(getFormattedGender());
         data.add(getFirstName());
         data.add(getLastName());
-        data.add(getNumericBirthDate());
+        data.add(getFormattedBirthDate());
         data.add(getEmail());
         data.add(getCountry());
         data.add(getCity());
         data.add(getFullAddress());
         data.add(getPostCode().toLowerCase());
         data.add(getPhoneAreaCode() + getPhone());
-        data.add(getMobileAreaCode() + getMobile());
+//        data.add(getMobileAreaCode() + getMobile());
         data.add(getUsername());
-        data.add(getPassword());
+//        data.add(getPassword());
         data.add(getVerificationQuestion());
         data.add(getVerificationAnswer());
         data.add(getCurrency());
         return data;
     }
 
-	private String getNumericBirthDate(){
-		String month=null;
-		if(getBirthMonth().equals("January")){
-			month="01";
-		}else if(getBirthMonth().equals("February")){
-			month="02";
-		}else if(getBirthMonth().equals("March")){
-			month="03";
-		}else if(getBirthMonth().equals("April")){
-			month="04";
-		}else if(getBirthMonth().equals("May")){
-			month="05";
-		}else if(getBirthMonth().equals("June")){
-			month="06";
-		}else if(getBirthMonth().equals("July")){
-			month="07";
-		}else if(getBirthMonth().equals("August")){
-			month="08";
-		}else if(getBirthMonth().equals("September")){
-			month="09";
-		}else if(getBirthMonth().equals("October")){
-			month="10";
-		}else if(getBirthMonth().equals("November")){
-			month="11";
-		}else if(getBirthMonth().equals("December")){
-			month="12";
-		}
-		return getBirthYear() + "-" + month + "-" + getBirthDay();
+	private String getFormattedBirthDate(){
+		return getBirthYear()+"-"+getBirthMonth()+"-"+getBirthDay();
 	}
+
+    private String getFormattedGender(){
+        String gender = getGender();
+        if(gender.equals("M")){
+            return "MALE";
+        }else {
+            return "FEMALE";
+        }
+    }
 
 	public UserData getRegisteredUserData() {
 		return cloneUserData();

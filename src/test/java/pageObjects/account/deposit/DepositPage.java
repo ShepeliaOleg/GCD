@@ -3,6 +3,7 @@ package pageObjects.account.deposit;
 import pageObjects.account.AddCardPopup;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 
 public class DepositPage extends AbstractPage{
 
@@ -14,12 +15,17 @@ public class DepositPage extends AbstractPage{
     private static final String FIELD_PROMO_CODE_XP = "//*[@name='promoCode']";
     private static final String FIELD_ACCOUNT_XP = "//*[@name='accountId']";
     private static final String FIELD_PASSWORD_CODE_XP = "//*[@name='accountPwd']";
+    private static final String CONTENT_LOADER_XP = "//*[@class='content__loader']";
 
     private static final String MONEYBOOKERS = "Moneybookers";
     private static final String PAYPAL = "PayPal";
     private static final String WEBMONEY = "WebMoney";
     private static final String NETELLER = "NETeller";
     private static final String QIWI = "QIWI via Safecharge";
+
+    public DepositPage(){
+        super(new String[]{BUTTON_ADD_CARD_XP}, new String[]{CONTENT_LOADER_XP});
+    }
 
     private AddCardPopup clickAddCard(){
         WebDriverUtils.click(BUTTON_ADD_CARD_XP);
@@ -41,6 +47,19 @@ public class DepositPage extends AbstractPage{
             WebDriverUtils.inputTextToField(body+FIELD_PASSWORD_CODE_XP, password);
         }
         WebDriverUtils.click(body+BUTTON_XP);
+    }
+
+    private void assertInterfaceByType(String method, String[] fields){
+        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method);
+        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, method);
+        WebDriverUtils.click(header);
+        AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
+        for(String field:fields){
+            AbstractTest.assertTrue(WebDriverUtils.isVisible(body+field, 0), "'"+field+"' is present on '"+method+"' form");
+        }
+        AbstractTest.assertTrue(WebDriverUtils.isVisible(body+BUTTON_XP, 0), "'"+BUTTON_XP+"' is present on '"+method+"' form");
+        WebDriverUtils.click(header);
+        WebDriverUtils.waitForElementToDisappear(body);
     }
 
     public MoneyBookersDepositPage depositMoneybookers(String amount, String promoCode){
@@ -67,6 +86,12 @@ public class DepositPage extends AbstractPage{
         depositByType(QIWI, amount, promoCode, account, null);
         return new QIWIDepositPage();
     }
+
+    public void assertQIWIInterface(){
+        assertInterfaceByType(QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PROMO_CODE_XP});
+    }
+
+
 
 
 

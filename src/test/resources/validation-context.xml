@@ -184,7 +184,6 @@
         <property name="tooltipNegativeInvalid" value="You may only use letters (A-Z) (a-z), numbers (0-9) and (_- / \#)"/>
     </bean>
 
-
     <bean id="countryPhoneCodeValidationRule" class="springConstructors.ValidationRule">
         <property name="regexp" value="[+]{1,1}[0123456789]{2,3}"/>
         <property name="isMandatory" value="true"/>

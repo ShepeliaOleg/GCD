@@ -40,8 +40,7 @@ public class LanguageTest extends AbstractTest {
             if (shortLanguageCode.length() == 2) {
                 WebDriverUtils.navigateToInternalURL(shortLanguageCode);
                 WebDriverUtils.waitFor(TIMEOUT);
-                assertEquals(WebDriverUtils.getBaseUrl() + shortLanguageCode, WebDriverUtils.getCurrentUrl().replace("/" + ConfiguredPages.home.toString(), ""), "Url for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
-                assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation of login button for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
+                assertLanguageChange(homePage, languageCode, shortLanguageCode);
             }
         }
     }
@@ -51,11 +50,9 @@ public class LanguageTest extends AbstractTest {
     public void languageChangedOnAddingLanguageCode5ToUrl(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : defaults.getLanguageCodesList()) {
-            String shortLanguageCode = defaults.getLanguageUrlByLanguageCode(languageCode);
             WebDriverUtils.navigateToInternalURL(languageCode);
             WebDriverUtils.waitFor(TIMEOUT);
-            assertEquals(WebDriverUtils.getBaseUrl() + shortLanguageCode, WebDriverUtils.getCurrentUrl().replace("/" + ConfiguredPages.home.toString(), ""), "Url for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
-            assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation of login button for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
+            assertLanguageChange(homePage, languageCode, defaults.getLanguageUrlByLanguageCode(languageCode));
         }
     }
 
@@ -63,9 +60,7 @@ public class LanguageTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void pageOpenedInDefaultLanguage(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
-        String defaultLanguageCode = defaults.getDefaultLanguage();
-        assertEquals(WebDriverUtils.getBaseUrl(), WebDriverUtils.getCurrentUrl().replace(ConfiguredPages.home.toString(), ""), "Url for default language " + defaults.getLanguageNameByCode(defaultLanguageCode) + " (" + defaultLanguageCode + ").");
-        assertEquals(defaults.getLanguageTranslationByLanguageCode(defaultLanguageCode), homePage.getFooterText(), "Translation of login button for default language" + defaults.getLanguageNameByCode(defaultLanguageCode) + " (" + defaultLanguageCode + ").");
+        assertLanguageChange(homePage, defaults.getDefaultLanguage(), "");
     }
 
     /*#9. */
@@ -73,10 +68,8 @@ public class LanguageTest extends AbstractTest {
     public void urlUpdatedOnLanguageChange(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : defaults.getLanguageCodesList()) {
-            String shortLanguageCode = defaults.getLanguageUrlByLanguageCode(languageCode);
             homePage.setLanguage(languageCode);
-            assertEquals(WebDriverUtils.getBaseUrl() + shortLanguageCode, WebDriverUtils.getCurrentUrl().replace("/" + ConfiguredPages.home.toString(), ""), "Url for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
-            assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation of login button for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
+            assertLanguageChange(homePage, languageCode, defaults.getLanguageUrlByLanguageCode(languageCode));
         }
     }
 
@@ -86,12 +79,17 @@ public class LanguageTest extends AbstractTest {
         UserData userData = defaultUserData.getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : defaults.getLanguageCodesList()) {
-            String shortLanguageCode = defaults.getLanguageUrlByLanguageCode(languageCode);
             homePage.setLanguage(languageCode);
             PortalUtils.loginUser(userData);
-            assertEquals(WebDriverUtils.getBaseUrl() + shortLanguageCode, WebDriverUtils.getCurrentUrl().replace("/" + ConfiguredPages.home.toString(), ""), "Url for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
-            assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation of login button for " + defaults.getLanguageNameByCode(languageCode) + " (" + languageCode + ") language.");
+            assertLanguageChange(homePage, languageCode, defaults.getLanguageUrlByLanguageCode(languageCode));
             PortalUtils.logout();
         }
     }
+
+    private void assertLanguageChange(HomePage homePage, String languageCode, String shortLanguageCode) {
+        String langName = defaults.getLanguageNameByCode(languageCode);
+        assertEquals(shortLanguageCode, WebDriverUtils.getCurrentLanguageCode(), "Url for " + langName + " (" + languageCode + ")");
+        assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation for " + langName + " (" + languageCode + ")");
+    }
+
 }

@@ -134,7 +134,7 @@ public class IMS extends WebDriverObject{
 		ArrayList<String> imsRegisterData=imsPlayerDetailsPage.getRegisterData();
 		ArrayList<String> wplRegisterData=userData.getRegisterData();
 		for(int i=0; i < wplRegisterData.size(); i++){
-            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data - ");
+            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data");
 		}
 	}
 
