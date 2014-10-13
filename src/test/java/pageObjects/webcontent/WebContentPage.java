@@ -47,8 +47,9 @@ public class WebContentPage extends AbstractPage{
         }else {
             multiPage = "";
         }
+        String gameId = getGameID(type, multiPage);
         clickGame(type, multiPage);
-        return getGameID(type, multiPage);
+        return gameId;
     }
 
     private void clickGame(GameLaunch type, String multipage){

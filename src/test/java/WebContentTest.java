@@ -164,7 +164,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
-        webContentPage.playAndAssertUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1, defaultUserData.getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
