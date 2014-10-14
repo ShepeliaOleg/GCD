@@ -124,12 +124,14 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     }
 
     private void checkCreferrer(String creferrer, boolean creferrerIsExists) {
-        for (String item : parseCreferrer(creferrer)) {
-            List<String> creferrerNameValue = getCreferrerNameValue(item);
-            if (creferrerIsExists) {
-                checkCreferrerCustomField(creferrerNameValue.get(0), creferrerNameValue.get(1));
-            } else {
-                checkNoCreferrerCustomField(creferrerNameValue.get(0));
+        if (!creferrer.isEmpty()) {
+            for (String item : parseCreferrer(creferrer)) {
+                List<String> creferrerNameValue = getCreferrerNameValue(item);
+                if (creferrerIsExists) {
+                    checkCreferrerCustomField(creferrerNameValue.get(0), creferrerNameValue.get(1));
+                } else {
+                    checkNoCreferrerCustomField(creferrerNameValue.get(0));
+                }
             }
         }
     }
