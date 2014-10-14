@@ -7,7 +7,7 @@ public class AffiliateCookie extends Cookie {
     private static final String name = "banner_domainclick";
 
     public AffiliateCookie(AffiliateData affiliateData) {
-        super(name, affiliateData.getAdvertiser()+AffiliateData.ASCII_CODE_COMMA+affiliateData.getProfile()+AffiliateData.ASCII_CODE_COMMA+affiliateData.getBanner()+AffiliateData.ASCII_CODE_COMMA+affiliateData.getUrl()+AffiliateData.ASCII_CODE_COMMA+affiliateData.getCreferrer());
+        super(name, affiliateData.getAdvertiser()+AffiliateData.COMMA+affiliateData.getProfile()+AffiliateData.COMMA+affiliateData.getBanner()+AffiliateData.COMMA+affiliateData.getUrl()+AffiliateData.COMMA+affiliateData.getCreferrer());
     }
 
     public AffiliateCookie(String value) {

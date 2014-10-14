@@ -107,7 +107,7 @@ public class AffiliateData {
     }
 
     private String getCrefererMultiple() {
-        return creferrer1 + ASCII_CODE_SEMICOLON + creferrer2;
+        return creferrer1 + SEMICOLON + creferrer2;
     }
 
     public String getCreferrerRegistrationPortletProperty() {
@@ -135,11 +135,11 @@ public class AffiliateData {
         if (getCreferrer() == null) {
             setCreferrer(creferrer);
         } else {
-            setCreferrer(getCreferrer() + ASCII_CODE_SEMICOLON + creferrer);
+            setCreferrer(getCreferrer() + SEMICOLON + creferrer);
         }
     }
 
     public String getValue() {
-        return getAdvertiser() + ASCII_CODE_COMMA + getBanner() + ASCII_CODE_COMMA + getProfile() + ASCII_CODE_COMMA + getUrl() + ASCII_CODE_COMMA + getCreferrer();
+        return getAdvertiser() + COMMA + getBanner() + COMMA + getProfile() + COMMA + getUrl() + COMMA + getCreferrer();
     }
 }
