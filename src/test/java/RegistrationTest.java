@@ -85,14 +85,14 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
-        validateEquals("£ 1.00", homePage.getBalance(), "User balance -");
+        validateEquals("€ 1.00", homePage.getBalance(), "User balance -");
 	}
 
     /*#5. Registration without bonus code provided*/
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
         HomePage homePage = PortalUtils.registerUser(defaultUserData.getRandomUserData());
-        validateEquals("£ 0.00", homePage.getBalance(), "User balance -");
+        validateEquals("€ 0.00", homePage.getBalance(), "User balance -");
     }
 
     /*3. Try to use invalid bonus code*/
@@ -104,18 +104,18 @@ public class RegistrationTest extends AbstractTest{
         assertEquals("Coupon code is not found or not available", registrationPage.getPortletErrorMessage(), "Invalid bonus error message");
     }
 
-    /*#6. Player is registered with currency selected*/
-	@Test(groups = {"registration","regression","desktop"})
-	public void validHeaderUnitBalance(){
-        String currency = "GBP";
-        String currencySign = "£";
-        UserData userData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
-        HomePage homePage=(HomePage)registrationPage.registerUser(userData, true, false, null, Page.homePage);
-        assertTrue(defaultCurrencyInRegistrationForm.contains(currency), "Default register currency is '"+currency+"'");
-        assertTrue(homePage.getBalance().contains(currencySign), "Currency sign in header is '"+currency+"'");
-	}
+//    /*#6. Player is registered with currency selected*/
+//	@Test(groups = {"registration","regression"})
+//	public void validHeaderUnitBalance(){
+//        String currency = "GBP";
+//        String currencySign = "£";
+//        UserData userData=defaultUserData.getRandomUserData();
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
+//        HomePage homePage=(HomePage)registrationPage.registerUser(userData, true, false, null, Page.homePage);
+//        assertTrue(defaultCurrencyInRegistrationForm.contains(currency), "Default register currency is '"+currency+"'");
+//        assertTrue(homePage.getBalance().contains(currencySign), "Currency sign in header is '"+currency+"'");
+//	}
 
     /*#7. After registration web content*/
 	@Test(groups = {"registration","regression"})

@@ -56,14 +56,17 @@ public class ForgotPasswordPopup extends AbstractPopup{
 		fillBirthYear(userData.getBirthYear());
 	}
 
-    public ForgotPasswordConfirmationPopup submitValidData(){
+    public void submitValidData(){
         clickSubmit();
-        return new ForgotPasswordConfirmationPopup();
+        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = new ForgotPasswordConfirmationPopup();
+        if(platform.equals(PLATFORM_DESKTOP)){
+            forgotPasswordConfirmationPopup.closePopup();
+        }
     }
 
-    public ForgotPasswordConfirmationPopup recoverPasswordValid(UserData userData){
+    public void recoverPasswordValid(UserData userData){
         fillUserData(userData);
-        return submitValidData();
+        submitValidData();
     }
 
     public ForgotPasswordPopup recoverPasswordInvalid(UserData userData){

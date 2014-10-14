@@ -18,7 +18,6 @@ import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.PortalUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class ForgotPasswordTest extends AbstractTest{
@@ -64,98 +63,53 @@ public class ForgotPasswordTest extends AbstractTest{
 	
 	/*2. Submit correct data 3. Check confirmation popup*/
 	@Test(groups = {"regression"})
-	public void validPasswordRecovery(){
-        UserData userData = defaultUserData.getRandomUserData();
+	public UserData validPasswordRecovery(){
+        UserData userData=defaultUserData.getRandomUserData();
+        userData.setEmail(mailService.generateEmail());
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
+        forgotPasswordPopup.recoverPasswordValid(userData);
+        return userData;
 	}
 
     /*4. Check email */
 	@Test(groups = {"regression"})
 	public void validPasswordRecoveryEmailReceived(){
-		UserData userData=defaultUserData.getRandomUserData();
-        String email= mailService.generateEmail();
-		userData.setEmail(email);
-		PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-        MailServicePage mailServicePage = mailService.navigateToInbox(email);
+        MailServicePage mailServicePage = mailService.navigateToInbox(validPasswordRecovery().getEmail());
 		mailServicePage.waitForEmail();
 	}
 
     /*5. login with temporary password*/
 	@Test(groups = {"regression"})
 	public void ableToLoginWithNewPassword() {
-		UserData userData = defaultUserData.getRandomUserData();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-        MailServicePage mailServicePage = mailService.navigateToInbox(email);
-        mailServicePage.waitForEmail();
-		String password = mailServicePage.getPasswordFromLetter();
-		userData.setPassword(password);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+        UserData userData = validPasswordRecovery();
+        loginWithTempPassword(userData);
 	}
 
     /*6. change temporary password (popup shown after login)*/
 	@Test(groups = {"regression"})
-	public void setNewPasswordAfterRecovery() {
-		UserData userData = defaultUserData.getRandomUserData();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"successfulPopupVisible");
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
-		String password = mailServicePage.getPasswordFromLetter();
-		userData.setPassword(password);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-		String newPassword = passwordValidationRule.generateValidString();
-		ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
-        assertTrue(changedPasswordPopup.successfulMessageAppeared(),"successfullyChangedPasswordMessageAppeared");
+	public UserData setNewPasswordAfterRecovery() {
+        UserData userData = validPasswordRecovery();
+        String newPassword = passwordValidationRule.generateValidString();
+		loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
+        userData.setPassword(newPassword);
+        return userData;
 	}
 
     /*7. login with new password*/
 	@Test(groups = {"regression"})
 	public void setNewPasswordAfterRecoveryAndLogin() {
-		UserData userData = defaultUserData.getRandomUserData();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = forgotPasswordPopup.recoverPasswordValid(userData);
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
-		String password = mailServicePage.getPasswordFromLetter();
-		userData.setPassword(password);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-		String newPassword = passwordValidationRule.generateValidString();
-        ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
-        changedPasswordPopup.closePopup();
-		userData.setPassword(newPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, setNewPasswordAfterRecovery());
 	}
 
-//    /*8. Cancel resetting password */
+//    /*8. Cancel resetting password and login with old pass*/
 //	@Test(groups = {"regression"})
 //	public void cancelPasswordChange(){
 //		UserData userData=defaultUserData.getRandomUserData();
 //        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-//		homePage=forgotPasswordPopup.fillDataAndCancel(userData);
+//		forgotPasswordPopup.fillDataAndClosePopup(userData).login(userData);
 //	}
 
 //    /*9. Links work on popup - Login*/
@@ -182,13 +136,13 @@ public class ForgotPasswordTest extends AbstractTest{
 //		ContactUsPopup contactUsPopup = forgotPasswordPopup.navigateToContactUs();
 //	}
 
-    /*10. Close popup without resetting*/
+    /*10. Close popup without resetting and login*/
 	@Test(groups = {"regression"})
 	public void closePasswordChangePopup(){
 		UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-		forgotPasswordPopup.fillDataAndClosePopup(userData);
+		forgotPasswordPopup.fillDataAndClosePopup(userData).login(userData);
 	}
 
 //	/*11. Logs*/
@@ -219,25 +173,9 @@ public class ForgotPasswordTest extends AbstractTest{
     /*12. IMS Player Details Page shows new password*/
 	@Test(groups = {"regression"})
 	public void checkPasswordIsChangedInIMS() {
-		UserData userData = defaultUserData.getRandomUserData();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPasswordValid(userData);
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
-		String password = mailServicePage.getPasswordFromLetter();
-		userData.setPassword(password);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-        String newPassword = passwordValidationRule.generateValidString();
-        ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(password, newPassword);
-        userData.setPassword(newPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+		UserData userData = setNewPasswordAfterRecovery();
 		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
-        assertTrue(imsPlayerDetailsPage.getPassword().equals(newPassword),"Password is set on ims");
+        assertTrue(imsPlayerDetailsPage.getPassword().equals(userData.getPassword()),"Password is set on ims");
 	}
 
     /*NEGATIVE*/
@@ -301,22 +239,15 @@ public class ForgotPasswordTest extends AbstractTest{
     /*6. Login with temporary password stops working after password is changed*/
 	@Test(groups = {"regression"})
 	public void tryToLoginWithTempPassAfterPassChanged() {
-        UserData userData = defaultUserData.getRandomUserData();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPasswordValid(userData);
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
-		String tempPassword = mailServicePage.getPasswordFromLetter();
-		userData.setPassword(tempPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+        UserData userData = validPasswordRecovery();
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        String tempPassword = mailServicePage.getPasswordFromLetter();
         String newPassword = passwordValidationRule.generateValidString();
-        ChangedPasswordPopup changedPasswordPopup = changePasswordPopup.fillFormAndSubmit(tempPassword, newPassword);
-        userData.setPassword(newPassword);
+        userData.setPassword(tempPassword);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+        changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
 	}
@@ -334,21 +265,15 @@ public class ForgotPasswordTest extends AbstractTest{
     /*8. New password which has been used recently*/
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
-		UserData userData = defaultUserData.getRandomUserData();
-		String oldPassword = userData.getPassword();
-		String email = mailService.generateEmail();
-		userData.setEmail(email);
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPasswordValid(userData);
-		MailServicePage mailServicePage = mailService.navigateToInbox(email);
-		mailServicePage.waitForEmail();
-		String tempPassword = mailServicePage.getPasswordFromLetter();
+        UserData userData = validPasswordRecovery();
+        String oldPassword = userData.getPassword();
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        String tempPassword = mailServicePage.getPasswordFromLetter();
         userData.setPassword(tempPassword);
-        homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-		changePasswordPopup.fillFormAndSubmit(tempPassword, oldPassword);
+        changePasswordPopup.fillFormAndSubmit(tempPassword, oldPassword);
         assertTrue(changePasswordPopup.isPortletErrorVisible(), "errorMessageAppeared");
 	}
 
@@ -387,4 +312,13 @@ public class ForgotPasswordTest extends AbstractTest{
 //        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 //		changePasswordPopup.validateNewPassword(passwordValidationRule);
 //	}
+
+    private ChangePasswordPopup loginWithTempPassword(UserData userData) {
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        String password = mailServicePage.getPasswordFromLetter();
+        userData.setPassword(password);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        return (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+    }
 }
