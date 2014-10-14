@@ -105,7 +105,7 @@ public class RegistrationPage extends AbstractPage{
         System.out.println("Registering user: \n"
                 + userData.getUsername()+"\n"
                 + userData.getCountry()+"\n"
-                + userData.getCurrency()+"\n");
+                + userData.getCurrencyName()+"\n");
         if(platform.equals(PLATFORM_DESKTOP)){
             registrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
         }else{

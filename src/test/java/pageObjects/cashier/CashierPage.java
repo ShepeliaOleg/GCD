@@ -1,5 +1,6 @@
 package pageObjects.cashier;
 
+import enums.PaymentMethod;
 import pageObjects.account.AddCardPopup;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
@@ -19,15 +20,6 @@ public class CashierPage extends AbstractPage{
     protected static final String FIELD_ACCOUNT_ADD_XP = "//*[@name='"+ADD+"']";
     protected static final String FIELD_PASSWORD_CODE_XP = "//*[@name='accountPwd']";
 
-    protected static final String MONEYBOOKERS = "Moneybookers";
-    protected static final String PAYPAL = "PayPal";
-    protected static final String WEBMONEY = "WebMoney";
-    protected static final String NETELLER = "NETeller";
-    protected static final String QIWI = "QIWI via Safecharge";
-
-    protected static final String QIWI_ACCOUNT = "9260366832";
-    protected static final String QIWI_ACCOUNT_2 = "9852887726";
-
     public CashierPage(){
         super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
     }
@@ -37,9 +29,10 @@ public class CashierPage extends AbstractPage{
         return new AddCardPopup();
     }
 
-    private void assertInterfaceByType(String method, String[] fields){
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method);
-        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, method);
+    protected void assertInterfaceByType(PaymentMethod method, String[] fields){
+        String name = method.getName();
+        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
+        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
         WebDriverUtils.click(header);
         AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
         for(String field:fields){
@@ -50,44 +43,51 @@ public class CashierPage extends AbstractPage{
         WebDriverUtils.waitForElementToDisappear(body);
     }
 
-    protected void addAccountByType(String method, String account) {
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method);
+    public void addAccountByType(PaymentMethod method) {
+        String name = method.getName();
+        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
         if(!WebDriverUtils.isVisible(body)){
-            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, method));
+            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }
         WebDriverUtils.setDropdownOptionByValue(body+FIELD_ACCOUNT_XP, ADD);
         WebDriverUtils.waitForElement(body+FIELD_ACCOUNT_ADD_XP);
-        WebDriverUtils.clearAndInputTextToField(body+FIELD_ACCOUNT_ADD_XP, account);
+        WebDriverUtils.clearAndInputTextToField(body+FIELD_ACCOUNT_ADD_XP, method.getSecondaryAccount());
     }
 
-    protected void closeAddAccountField(String method, String account) {
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method);
-        WebDriverUtils.setDropdownOptionByValue(body+FIELD_ACCOUNT_XP, account);
+    public void closeAddAccountField(PaymentMethod method) {
+        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method.getName());
+        WebDriverUtils.setDropdownOptionByValue(body+FIELD_ACCOUNT_XP, method.getAccount());
         WebDriverUtils.waitForElementToDisappear(body+FIELD_ACCOUNT_ADD_XP);
     }
 
-    protected void processPaymentByType(String method, String amount, String promoCode, String account, String password){
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method);
+    protected void processPaymentByType(PaymentMethod method, String amount){
+        String name = method.getName();
+        String account = method.getAccount();
+        String password = method.getPassword();
+        String promoCode = method.getPromoCode();
+        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
+        String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
+        String fieldAccount = body+FIELD_ACCOUNT_XP;
+        String fieldPassword = body+FIELD_PASSWORD_CODE_XP;
         if(!WebDriverUtils.isVisible(body)){
-            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, method));
+            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }
         WebDriverUtils.inputTextToField(body+FIELD_AMOUNT_XP, amount);
-        if(promoCode!=null){
-            WebDriverUtils.inputTextToField(body+FIELD_PROMO_CODE_XP, promoCode);
+        if(WebDriverUtils.isVisible(fieldPromoCode, 0)){
+            WebDriverUtils.inputTextToField(fieldPromoCode, promoCode);
         }
-        if(account!=null){
-            WebDriverUtils.inputTextToField(body+FIELD_ACCOUNT_XP, account);
+        if(WebDriverUtils.isVisible(fieldAccount, 0)){
+            WebDriverUtils.inputTextToField(fieldAccount, account);
         }
-        if(password!=null){
-            WebDriverUtils.inputTextToField(body+FIELD_PASSWORD_CODE_XP, password);
+        if(WebDriverUtils.isVisible(fieldPassword, 0)){
+            WebDriverUtils.inputTextToField(fieldPassword, password);
         }
         WebDriverUtils.click(body+BUTTON_XP);
     }
 
-    public void assertQIWIInterface(){
-        assertInterfaceByType(QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PROMO_CODE_XP});
-    }
+
+
 
 }

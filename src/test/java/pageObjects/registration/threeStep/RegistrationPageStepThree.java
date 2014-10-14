@@ -29,7 +29,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         fillPasswordVerification(userData.getPassword());
         fillQuestion(userData.getVerificationQuestion());
         fillAnswer(userData.getVerificationAnswer());
-        setCurrency(userData.getCurrency());
+        setCurrency(userData.getCurrencyName());
         setTermsCheckbox(termsAndConditions);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
         WebDriverUtils.waitFor(1000);

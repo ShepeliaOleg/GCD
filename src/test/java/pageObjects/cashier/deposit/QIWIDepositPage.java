@@ -1,5 +1,6 @@
 package pageObjects.cashier.deposit;
 
+import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.core.AbstractPage;
@@ -14,22 +15,17 @@ public class QIWIDepositPage extends AbstractPage{
     private static final String PAY_BUTTON = "//*[@class='orangeBtn']";
     private static final String PASSWORD_XP = "//*[@name='password']";
     private static final String PROVIDER_COMMISION_XP = "//*[contains(@class, 'providerComm')]";
-    private final String ACCOUNT;
-    private final String AMOUNT;
 
-    private static final String PASSWORD = "ABCD1234";
     private static final String PASSWORD_INCORRECT = "incorrect";
 
-    public QIWIDepositPage(String account, String amount){
+    public QIWIDepositPage(){
         super(new String[]{ROOT_XP});
-        ACCOUNT = account;
-        AMOUNT = amount;
     }
 
     public TransactionSuccessfulPopup pay(){
         clickButtonPay();
         WebDriverUtils.waitForElement(PASSWORD_XP);
-        fillPassword(PASSWORD);
+        fillPassword(PaymentMethod.QIWI.getPassword());
         clickButtonPay();
         WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
         clickButtonPay();
@@ -60,11 +56,11 @@ public class QIWIDepositPage extends AbstractPage{
         WebDriverUtils.clearAndInputTextToField(PASSWORD_XP, password);
     }
 
-    public void assertAccount(){
-        AbstractTest.assertEquals(ACCOUNT, getPhone(), "Account");
+    public void assertAccount(String account){
+        AbstractTest.assertEquals(account, getPhone(), "Account");
     }
 
-    public void assertAmount(){
-        AbstractTest.assertEquals(AMOUNT, getAmount(), "Amount");
+    public void assertAmount(String amount){
+        AbstractTest.assertEquals(amount, getAmount(), "Amount");
     }
 }

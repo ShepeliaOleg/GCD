@@ -1,5 +1,6 @@
 package pageObjects.cashier.deposit;
 
+import enums.PaymentMethod;
 import pageObjects.cashier.CashierPage;
 
 public class DepositPage extends CashierPage{
@@ -8,33 +9,25 @@ public class DepositPage extends CashierPage{
         super();
     }
 
-    public MoneyBookersDepositPage depositMoneybookers(String amount, String promoCode){
-        processPaymentByType(MONEYBOOKERS, amount, promoCode, null, null);
-        return new MoneyBookersDepositPage();
+    /*Paypal*/
+
+    public void assertPayPalInterface(){
+        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP});
     }
 
-    public PayPalDepositPage depositPayPal(String amount, String promoCode){
-        processPaymentByType(PAYPAL, amount, promoCode, null, null);
+    public PayPalDepositPage depositPayPal(String amount){
+        processPaymentByType(PaymentMethod.PayPal, amount);
         return new PayPalDepositPage();
     }
 
-    public WebMoneyDepositPage depositWebmoney(String amount, String promoCode){
-        processPaymentByType(WEBMONEY, amount, promoCode, null, null);
-        return new WebMoneyDepositPage();
-    }
+    /*QIWI*/
 
-    public NETellerDepositPage depositNETeller(String amount, String promoCode, String account, String password){
-        processPaymentByType(NETELLER, amount, promoCode, account, password);
-        return new NETellerDepositPage();
-    }
-
-    public QIWIDepositPage depositQIWI(String amount, String promoCode){
-        processPaymentByType(QIWI, amount, promoCode, QIWI_ACCOUNT, null);
-        return new QIWIDepositPage(QIWI_ACCOUNT, amount);
+    public void assertQIWIInterface(){
+        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PROMO_CODE_XP});
     }
 
     public QIWIDepositPage depositQIWI(String amount){
-        processPaymentByType(QIWI, amount, null, QIWI_ACCOUNT, null);
-        return new QIWIDepositPage(QIWI_ACCOUNT, amount);
+        processPaymentByType(PaymentMethod.QIWI, amount);
+        return new QIWIDepositPage();
     }
 }

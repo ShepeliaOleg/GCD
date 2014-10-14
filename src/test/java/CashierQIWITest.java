@@ -1,7 +1,9 @@
 import enums.ConfiguredPages;
+import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.withdraw.WithdrawConfirmationPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.cashier.deposit.DepositPage;
@@ -27,88 +29,91 @@ public class CashierQIWITest extends AbstractTest{
 
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIDepositInterfaceIsFunctional(){
+    public void qIWIDepositInterfaceIsFunctional(){
         PortalUtils.registerUser(getRussianUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertQIWIInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIWithdrawInterfaceIsFunctionalExistingUser(){
-        QIWISuccessfulDeposit();
+    public void qIWIWithdrawInterfaceIsFunctionalExistingUser(){
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.assertQIWIInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWISuccessfulDeposit(){
+    public void qIWISuccessfulDeposit(){
         PortalUtils.registerUser(getRussianUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
-        qiwiDepositPage.assertAccount();
-        qiwiDepositPage.assertAmount();
+        qiwiDepositPage.assertAccount(PaymentMethod.QIWI.getAccount());
+        qiwiDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
         assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
-    @Test(groups = {"regression", "mobile"})
-    public void QIWIUnSuccessfulDeposit(){
-        PortalUtils.registerUser(getRussianUser());
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
-        qiwiDepositPage.assertAccount();
-        qiwiDepositPage.assertAmount();
-        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = qiwiDepositPage.payInvalid();
-        transactionUnSuccessfulPopup.closePopup();
-        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
-    }
+    /*Case is not actual yet*/
+//    @Test(groups = {"regression", "mobile"})
+//    public void QIWIUnSuccessfulDeposit(){
+//        PortalUtils.registerUser(getRussianUser());
+//        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+//        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
+//        qiwiDepositPage.assertAccount();
+//        qiwiDepositPage.assertAmount();
+//        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = qiwiDepositPage.payInvalid();
+//        transactionUnSuccessfulPopup.closePopup();
+//        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
+//    }
 
     @Test(groups = {"regression", "mobile"})
-     public void QIWIWithdrawAssertPopup() {
-        QIWISuccessfulDeposit();
+     public void qIWIWithdrawAssertPopup() {
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawConfirmationPopup withdrawConfirmationPopup = withdrawPage.navigateToWithdrawQIWIConfirmationPopup(AMOUNT);
+        WithdrawConfirmationPopup withdrawConfirmationPopup = withdrawPage.navigateToWithdrawConfirmationPopup(PaymentMethod.QIWI, AMOUNT);
+        withdrawConfirmationPopup.assertAccount(PaymentMethod.QIWI.getAccount());
+        withdrawConfirmationPopup.assertAmount(AMOUNT);
         withdrawConfirmationPopup.closePopup();
         assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIWithdrawForExistingUser() {
-        QIWISuccessfulDeposit();
+    public void qIWIWithdrawForExistingUser() {
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdrawQIWI(AMOUNT);
+        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.QIWI, AMOUNT);
         withdrawSuccessfulPopup.closePopup();
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIWithdrawForExistingUserAddAccount() {
-        QIWISuccessfulDeposit();
+    public void qIWIWithdrawForExistingUserAddAccount() {
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdrawQIWIAddAccount(AMOUNT);
+        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdrawAddingAccount(PaymentMethod.QIWI, AMOUNT);
         withdrawSuccessfulPopup.closePopup();
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIWithdrawForExistingUserAddAccountClose() {
-        QIWISuccessfulDeposit();
+    public void qIWIWithdrawForExistingUserAddAccountClose() {
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.addQIWIAccount();
-        withdrawPage.closeQIWIAccount();
+        withdrawPage.addAccountByType(PaymentMethod.QIWI);
+        withdrawPage.closeAddAccountField(PaymentMethod.QIWI);
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWICancelWithdrawForExistingUser() {
-        QIWISuccessfulDeposit();
+    public void qIWICancelWithdrawForExistingUser() {
+        qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.cancelWithdrawQIWI(AMOUNT);
+        withdrawPage.cancelWithdraw(PaymentMethod.QIWI, AMOUNT);
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void QIWIWithdrawForNewUser() {
+    public void qIWIWithdrawForNewUser() {
         PortalUtils.registerUser(getRussianUser());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         assertTrue(withdrawPage.isQIWINewUserNotificationPresent(), "User informed that he should deposit first");
@@ -116,7 +121,7 @@ public class CashierQIWITest extends AbstractTest{
 
     private UserData getRussianUser(){
         UserData userData = defaultUserData.getRandomUserData();
-        userData.setCurrency(CURRENCY);
+        userData.setCurrency(CURRENCY+"@");
         userData.setCountry(COUNTRY);
         return userData;
     }

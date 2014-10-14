@@ -2,7 +2,6 @@ package springConstructors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import utils.WebDriverUtils;
 import utils.core.WebDriverObject;
 
 import java.util.ArrayList;
@@ -85,9 +84,22 @@ public class UserData extends WebDriverObject{
 		this.coupon=coupon;
 	}
 
-	public String getCurrency(){
-		return currency;
+    public String getCurrency(){
+        return currency;
+    }
+
+	public String getCurrencyName(){
+		return getCurrency().split("@")[0];
 	}
+
+    public String getCurrencySign(){
+        String[] fullCurrency = getCurrency().split("@");
+        if(fullCurrency.length>1){
+            return fullCurrency[1];
+        }else {
+            return fullCurrency[0];
+        }
+    }
 
 	public void setCurrency(String currency){
 		this.currency=currency;
@@ -366,7 +378,7 @@ public class UserData extends WebDriverObject{
 //        data.add(getPassword());
         data.add(getVerificationQuestion());
         data.add(getVerificationAnswer());
-        data.add(getCurrency());
+        data.add(getCurrencyName());
         return data;
     }
 

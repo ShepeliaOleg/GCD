@@ -77,7 +77,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
-        setCurrency(userData.getCurrency());
+        setCurrency(userData.getCurrencyName());
     }
 
     /*Inputs*/
