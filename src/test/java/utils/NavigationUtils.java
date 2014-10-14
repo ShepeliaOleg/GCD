@@ -4,12 +4,12 @@ import enums.ConfiguredPages;
 import enums.LoginStatus;
 import enums.Page;
 import enums.PlayerCondition;
-import org.testng.SkipException;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.ChangeMyDetailsPage;
-import pageObjects.account.deposit.DepositPage;
+import pageObjects.cashier.withdraw.WithdrawPage;
+import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
@@ -35,8 +35,6 @@ import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
-import pageObjects.registration.classic.RegistrationPageAllSteps;
-import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.webcontent.WebContentPage;
 import springConstructors.AffiliateData;
@@ -127,6 +125,7 @@ public class NavigationUtils extends WebDriverObject{
             case selfExclusion:                                 return new ResponsibleGamingPage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
+            case withdraw:                                      return new WithdrawPage();
             default:
                 AbstractTest.failTest("Unexpected input in navigateToPage method");
                 return null;

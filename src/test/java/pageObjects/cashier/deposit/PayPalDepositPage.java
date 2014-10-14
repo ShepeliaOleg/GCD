@@ -1,4 +1,4 @@
-package pageObjects.account.deposit;
+package pageObjects.cashier.deposit;
 
 import pageObjects.core.AbstractPage;
 

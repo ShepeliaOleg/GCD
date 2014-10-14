@@ -1,7 +1,7 @@
 package pageObjects.menu;
 
 import pageObjects.account.ChangeMyDetailsPage;
-import pageObjects.account.deposit.DepositPage;
+import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.login.LogoutPopup;
 import pageObjects.referAFriend.ReferAFriendPopup;

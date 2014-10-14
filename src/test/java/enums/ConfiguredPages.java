@@ -66,7 +66,8 @@ public enum ConfiguredPages{
     referAFriend("refer_a_friend"),
     responsibleGaming("responsible_gaming"),
     selfExclusion("responsible_gaming"),
-    webContentGame("web_content_game_launch");
+    webContentGame("web_content_game_launch"),
+    withdraw("withdraw");
 
     private final String name;
 

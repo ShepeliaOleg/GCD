@@ -72,12 +72,16 @@ public class LoginPopup extends AbstractPopup{
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         clickLogin();
-        try{
-            WebDriverUtils.waitForElementToDisappear(BUTTON_LOGIN_XP, 30);
-        }catch (Exception e){
-            NavigationUtils.registrationError();
+        if(expectedPage.equals(Page.loginPopup)){
+            return new LoginPopup();
+        }else {
+            try{
+                WebDriverUtils.waitForElementToDisappear(BUTTON_LOGIN_XP, 30);
+            }catch (Exception e){
+                NavigationUtils.registrationError();
+            }
+            return NavigationUtils.closeAllPopups(expectedPage);
         }
-        return NavigationUtils.closeAllPopups(expectedPage);
     }
 
     public ForgotPasswordPopup clickForgotPassword(){
