@@ -10,6 +10,7 @@ public class AffiliateData {
     private String creferrer1;
     private String creferrer2;
     private String creferrerRegistrationPortletProperty;
+    private String noProfile;
 
     public static final String ASCII_CODE_COMMA =      "%2C";    // ,
     public static final String ASCII_CODE_COLON =      "%3A";    // :
@@ -19,7 +20,7 @@ public class AffiliateData {
     public static final String COLON =      ":";
     public static final String SEMICOLON =  ";";
 
-    public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String creferrer1, String creferrer2, String creferrerRegistrationPortletProperty) {
+    public AffiliateData(String defaultAdvertiser, String advertiser, String banner, String profile, String url, String creferrer1, String creferrer2, String creferrerRegistrationPortletProperty, String noProfile) {
         this.defaultAdvertiser = defaultAdvertiser;
         this.advertiser = advertiser;
         this.banner = banner;
@@ -28,6 +29,7 @@ public class AffiliateData {
         this.creferrer1 = creferrer1;
         this.creferrer2 = creferrer2;
         this.creferrerRegistrationPortletProperty = creferrerRegistrationPortletProperty;
+        this.noProfile = noProfile;
     }
 
     public AffiliateData(String advertiser, String banner, String profile, String url, String creferrer) {
@@ -118,6 +120,14 @@ public class AffiliateData {
         this.creferrerRegistrationPortletProperty = creferrerRegistrationPortletProperty;
     }
 
+    public String getNoProfile() {
+        return noProfile;
+    }
+
+    public void setNoProfile(String noProfile) {
+        this.noProfile = noProfile;
+    }
+
     public String getRelativeURL() {
         return "?advertiser=" + getAdvertiser() +  "&bannerid=" + getBanner() + "&profileid=" + getProfile() +"&refererurl=" + getUrl() + "&creferrer=" + getCreferrer();
     }
@@ -131,7 +141,7 @@ public class AffiliateData {
         return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCrefererMultiple());
     }
 
-    public void addCreferer(String creferrer) {
+    public void addCreferrer(String creferrer) {
         if (getCreferrer() == null) {
             setCreferrer(creferrer);
         } else {

@@ -28,6 +28,11 @@ public class IMS extends WebDriverObject{
     @Qualifier("userData")
     private UserData defaultUserData;
 
+    @Autowired
+    @Qualifier("affiliate")
+    private AffiliateData affiliateData;
+
+
     public URL getImsURL() {
         return imsURL;
     }
@@ -99,8 +104,8 @@ public class IMS extends WebDriverObject{
 		}
 	}
 
-    public void validateNoAffiliate(String username, AffiliateData affiliateData){
-        validateNoAffiliate(username, affiliateData.getDefaultAdvertiser());
+    public void validateNoAffiliate(String username){
+        validateNoAffiliate(username, affiliateData.getDefaultAdvertiser(), affiliateData.getNoProfile());
     }
 
     public void validateAffiliate(String username, AffiliateData affiliateData){
@@ -115,8 +120,8 @@ public class IMS extends WebDriverObject{
         navigateToPlayedDetails(username).checkAffiliateData(advert, banner, profile, url, creferrer, creferrerIsExists);
     }
 
-    private void validateNoAffiliate(String username, String advertiser){
-        navigateToPlayedDetails(username).checkAffiliateData(advertiser);
+    private void validateNoAffiliate(String username, String advertiser, String noProfile){
+        navigateToPlayedDetails(username).checkAffiliateData(advertiser, noProfile);
     }
 
     public void validateCreferrer(String username, String creferrer) {
