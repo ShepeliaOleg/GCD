@@ -1,8 +1,11 @@
 package pageObjects.cashier.withdraw;
 
 import pageObjects.cashier.CashierPage;
+import utils.WebDriverUtils;
 
 public class WithdrawPage extends CashierPage {
+
+    private static final String QIWI_NEW_USER_XP = "//*[contains(text(), 'You need to deposit via QIWI to withdraw')]";
 
     public WithdrawPage(){
         super();
@@ -42,5 +45,9 @@ public class WithdrawPage extends CashierPage {
 
     public void addAccount(String method, String account){
         addAccountByType(method, account);
+    }
+
+    public boolean isQIWINewUserNotificationPresent() {
+        return WebDriverUtils.isVisible(QIWI_NEW_USER_XP);
     }
 }
