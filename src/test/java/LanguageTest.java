@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.core.AbstractPage;
 import springConstructors.Defaults;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -87,10 +88,10 @@ public class LanguageTest extends AbstractTest {
         }
     }
 
-    private void assertLanguageChange(HomePage homePage, String languageCode, String shortLanguageCode) {
-        String langName = defaults.getLanguageNameByCode(languageCode);
-        assertEquals(shortLanguageCode, WebDriverUtils.getCurrentLanguageCode(), "Url for " + langName + " (" + languageCode + ")");
-        assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), homePage.getFooterText(), "Translation for " + langName + " (" + languageCode + ")");
+    private void assertLanguageChange(AbstractPage page, String languageCode, String shortLanguageCode) {
+        String languageName = defaults.getLanguageNameByCode(languageCode);
+        assertEquals(shortLanguageCode, WebDriverUtils.getCurrentLanguageCode(), "Url for " + languageName + " (" + languageCode + ")");
+        assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), page.getFooterText(), "Translation for " + languageName + " (" + languageCode + ")");
     }
 
 }

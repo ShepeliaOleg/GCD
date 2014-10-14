@@ -136,8 +136,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         }
     }
 
-    public void checkAffiliateData(String advertiser){
-        checkAdvertiser(advertiser + " (-)");
+    public void checkAffiliateData(String advertiser, String noProfile){
+        checkAdvertiser(advertiser + " (" + noProfile + ")");
     }
 
     private void checkBanner(String advertiser, String banner, String profile){
