@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.admin.AdminPage;
 import pageObjects.registration.AdultContentPopup;
+import pageObjects.registration.AfterRegistrationPage;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
@@ -92,7 +94,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
         UserData userData = defaultUserData.getRandomUserData();
-        HomePage homePage = PortalUtils.registerUser();
+        HomePage homePage = PortalUtils.registerUser(userData);
         validateEquals(userData.getCurrencySign()+" 0.00", homePage.getBalance(), "User balance");
     }
 
@@ -129,10 +131,8 @@ public class RegistrationTest extends AbstractTest{
     /*#10. After-registration redirect*/
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationRedirect(){
-        String afterRegistrationPage = "/admin";
 		PortalUtils.registerUser(defaultUserData.getRandomUserData());
-		String actualUrl=WebDriverUtils.getCurrentUrl();
-        assertTrue(actualUrl.endsWith(afterRegistrationPage), "Moved to afterRegistration page '"+afterRegistrationPage+"'");
+        AfterRegistrationPage afterRegistrationPage = new AfterRegistrationPage();
 	}
 
     /*#11. The list of supported countries is correct*/

@@ -8,7 +8,6 @@ import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.PayPalDepositPage;
 import pageObjects.cashier.withdraw.WithdrawConfirmationPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.cashier.withdraw.WithdrawSuccessfulPopup;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -67,8 +66,7 @@ public class CashierPayPalTest extends AbstractTest{
     public void payPalWithdrawForExistingUser() {
         UserData userData = payPalValidDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
-        withdrawSuccessfulPopup.closePopup();
+        withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
@@ -77,18 +75,16 @@ public class CashierPayPalTest extends AbstractTest{
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
-        withdrawSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
+        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUserAddAccount() {
         UserData userData = payPalValidDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
-        withdrawSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
+        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

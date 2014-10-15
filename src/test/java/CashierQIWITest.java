@@ -3,14 +3,11 @@ import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.withdraw.WithdrawConfirmationPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.QIWIDepositPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
-import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.cashier.withdraw.WithdrawSuccessfulPopup;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -82,8 +79,7 @@ public class CashierQIWITest extends AbstractTest{
     public void qIWIWithdrawForExistingUser() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.QIWI, AMOUNT);
-        withdrawSuccessfulPopup.closePopup();
+        withdrawPage.withdraw(PaymentMethod.QIWI, AMOUNT);
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
@@ -91,8 +87,7 @@ public class CashierQIWITest extends AbstractTest{
     public void qIWIWithdrawForExistingUserAddAccount() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdrawAddingAccount(PaymentMethod.QIWI, AMOUNT);
-        withdrawSuccessfulPopup.closePopup();
+        withdrawPage.withdrawAddingAccount(PaymentMethod.QIWI, AMOUNT);
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 

@@ -14,15 +14,15 @@ public class WithdrawPage extends CashierPage {
         super();
     }
 
-    public WithdrawSuccessfulPopup withdraw(PaymentMethod type, String amount){
+    public void withdraw(PaymentMethod type, String amount){
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount);
         withdrawConfirmationPopup.clickAccept();
-        return new WithdrawSuccessfulPopup();
+        new WithdrawSuccessfulNotification();
     }
 
-    public WithdrawSuccessfulPopup withdrawAddingAccount(PaymentMethod type, String amount){
+    public void withdrawAddingAccount(PaymentMethod type, String amount){
         addAccountByType(type);
-        return withdraw(type, amount);
+        withdraw(type, amount);
     }
 
     public void cancelWithdraw(PaymentMethod type, String amount){

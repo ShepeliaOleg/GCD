@@ -3,11 +3,6 @@ package pageObjects.changePassword;
 import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/11/14
- */
-
 public class ChangedPasswordPopup extends AbstractPopup{
     public static final String ROOT_XP =            "//*[contains(@class, 'popup_type_info ') or @class='info__content']";
 	public final static String BUTTON_OK_XP=				"//*[@title='ok']";

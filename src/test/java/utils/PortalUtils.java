@@ -26,7 +26,7 @@ public class PortalUtils extends WebDriverObject{
     }
 
     public static HomePage registerUser(){
-        return (HomePage)registerUser(getUserData().getRegisteredUserData(), false);
+        return (HomePage)registerUser(getUserData().getRandomUserData(), false);
     }
 
     public static HomePage registerUser(UserData userData){

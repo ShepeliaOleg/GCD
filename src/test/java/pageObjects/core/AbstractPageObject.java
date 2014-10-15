@@ -1,11 +1,12 @@
 package pageObjects.core;
 
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.core.WebDriverObject;
 
 public abstract class AbstractPageObject extends WebDriverObject {
 
-	public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error')] | //*[contains(@class, 'info__content')]";
+	public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
     private static final String MAIN_SITE_LOADER = "//*[@class='main-site-loader']";
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
     private static final int TIMEOUT =              30;
@@ -48,11 +49,16 @@ public abstract class AbstractPageObject extends WebDriverObject {
     }
 
     public boolean isPortletErrorVisible(){
-        return WebDriverUtils.isVisible(PORTLET_ERROR_XP);
+        return WebDriverUtils.isVisible(PORTLET_ERROR_XP,2);
     }
 
     public String getPortletErrorMessage() {
-        return WebDriverUtils.getElementText(PORTLET_ERROR_XP);
+        if(isPortletErrorVisible()){
+            return WebDriverUtils.getElementText(PORTLET_ERROR_XP);
+        }else {
+            AbstractTest.failTest("Expected error message, but it did not appear");
+            return null;
+        }
     }
 }
 
