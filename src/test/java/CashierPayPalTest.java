@@ -69,13 +69,13 @@ public class CashierPayPalTest extends AbstractTest{
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
         withdrawSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForNewUser() {
         UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+        PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         WithdrawSuccessfulPopup withdrawSuccessfulPopup = withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
         withdrawSuccessfulPopup.closePopup();
@@ -104,7 +104,7 @@ public class CashierPayPalTest extends AbstractTest{
         UserData userData = payPalValidDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
     
 }

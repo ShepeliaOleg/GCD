@@ -109,7 +109,7 @@ public class CashierQIWITest extends AbstractTest{
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.QIWI, AMOUNT);
-        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

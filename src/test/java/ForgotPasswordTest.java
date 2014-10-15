@@ -73,34 +73,18 @@ public class ForgotPasswordTest extends AbstractTest{
         return userData;
 	}
 
-    /*4. Check email */
-	@Test(groups = {"regression"})
-	public void validPasswordRecoveryEmailReceived(){
-        MailServicePage mailServicePage = mailService.navigateToInbox(validPasswordRecovery().getEmail());
-		mailServicePage.waitForEmail();
-	}
-
-    /*5. login with temporary password*/
-	@Test(groups = {"regression"})
-	public void ableToLoginWithNewPassword() {
-        UserData userData = validPasswordRecovery();
-        loginWithTempPassword(userData);
-	}
-
     /*6. change temporary password (popup shown after login)*/
 	@Test(groups = {"regression"})
-	public UserData setNewPasswordAfterRecovery() {
+	public UserData setNewPasswordAfterRecoveryAndLogin() {
         UserData userData = validPasswordRecovery();
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        userData.setPassword(mailServicePage.getPasswordFromLetter());
         String newPassword = passwordValidationRule.generateValidString();
-		loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
+        loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
         userData.setPassword(newPassword);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         return userData;
-	}
-
-    /*7. login with new password*/
-	@Test(groups = {"regression"})
-	public void setNewPasswordAfterRecoveryAndLogin() {
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, setNewPasswordAfterRecovery());
 	}
 
 //    /*8. Cancel resetting password and login with old pass*/
@@ -174,7 +158,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*12. IMS Player Details Page shows new password*/
 	@Test(groups = {"regression"})
 	public void checkPasswordIsChangedInIMS() {
-		UserData userData = setNewPasswordAfterRecovery();
+		UserData userData = setNewPasswordAfterRecoveryAndLogin();
 		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
         assertTrue(imsPlayerDetailsPage.getPassword().equals(userData.getPassword()),"Password is set on ims");
 	}
@@ -256,7 +240,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*7. When you are logged in with temporary password and on forced Change Password form enters incorrect old password you are shown an error.*/
 	@Test(groups = {"regression"})
 	public void incorrectOldPassword(){
-		UserData userData = defaultUserData.getForgotPasswordUserData();
+		UserData userData = defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());

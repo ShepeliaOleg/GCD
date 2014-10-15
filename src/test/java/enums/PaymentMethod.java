@@ -2,7 +2,7 @@ package enums;
 
 public enum PaymentMethod {
     QIWI("QIWI via Safecharge", "9260366832", "9852887726", "ABCD1234", "wallettest11", ""),
-    PayPal("playtech.mobile.mobile-cashier.method.paypal.title", "revita_1222083012_per@800pay.com","","222249464", "", "");
+    PayPal("playtech.mobile.mobile-cashier.method.paypal.title", "revita_1222083012_per@800pay.com","test@800pay.com","222249464", "222249464", "");
 
     PaymentMethod(String name, String account, String secondaryAccount, String password, String secondaryPassword, String promoCode){
         this.name = name;

@@ -21,7 +21,7 @@ public class RegistrationPage extends AbstractPage{
 
     protected final static String ROOT_XP =                                             "//*[contains(@class, 'fn-register-content')]";
     protected final static String FIELD_BASE_XP =                                       ROOT_XP + "//*[@name='"+PLACEHOLDER+"']";
-    protected final static String BONUS_CODE_VALID = 			                        "TEST";
+    protected final static String BONUS_CODE_VALID = 			                        "AUTOFREE";
     protected final static String BONUS_CODE_INVALID = 		                            "HELL";
     protected final static String DROPDOWN_GENDER_VALIDATION_NAME =		                "gender";
     protected final static String DROPDOWN_GENDER_NAME =		                        "sex";
