@@ -13,6 +13,10 @@ public class UserData extends WebDriverObject{
 	private ValidationRule usernameValidationRule;
 
     @Autowired
+    @Qualifier("emailValidationRule")
+    private ValidationRule emailValidationRule;
+
+    @Autowired
     @Qualifier("mobileCountryPhoneCodeValidationRule")
     private ValidationRule mobileCountryPhoneCodeValidationRule;
 
@@ -414,6 +418,7 @@ public class UserData extends WebDriverObject{
     public UserData getRandomUserData() {
         UserData userData = getRegisteredUserData();
         userData.setUsername(usernameValidationRule.generateValidString());
+        userData.setEmail(emailValidationRule.generateValidString());
         userData.setCountry(countryList.getRandomCountryCode());
         userData.setCity(cityValidationRule.generateValidString());
         userData.setPostCode(postcodeValidationRule.generateValidString());

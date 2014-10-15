@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.admin.AdminPage;
-import pageObjects.registration.AdultContentPopup;
-import pageObjects.registration.AfterRegistrationPage;
-import pageObjects.registration.AfterRegistrationPopup;
-import pageObjects.registration.RegistrationPage;
+import pageObjects.core.AbstractPage;
+import pageObjects.login.LoginPopup;
+import pageObjects.registration.*;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.registration.threeStep.RegistrationPageStepTwo;
@@ -48,6 +47,17 @@ public class RegistrationTest extends AbstractTest{
         HomePage homePage = PortalUtils.registerUser(defaultUserData.getRandomUserData());
         validateTrue(homePage.isLoggedIn(), "User is logged in");
 	}
+
+    /* Frozen user registration*/
+    @Test(groups = {"registration","smoke"})
+    public void frozenUserRegistration() {
+        UserData userData = defaultUserData.getRandomUserData();
+        userData.setFirstName("freezeMe");
+        PortalUtils.registerUser(userData, Page.registrationPage);
+        new FrozenNotificationPopup().closePopup();
+        new AbstractPage();
+        assertTrue(WebDriverUtils.getCurrentUrl().contains(ConfiguredPages.home.toString()), "Player redirected to root");
+    }
 
     /*#2. Registration with receive bonuses check box checked*/
     @Test(groups = {"registration","regression"})
