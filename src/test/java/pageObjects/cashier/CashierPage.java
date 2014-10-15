@@ -70,7 +70,7 @@ public class CashierPage extends AbstractPage{
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
         String fieldAccount = body+FIELD_ACCOUNT_XP;
         String fieldPassword = body+FIELD_PASSWORD_CODE_XP;
-        if(!WebDriverUtils.isVisible(body)){
+        if(!WebDriverUtils.isVisible(body, 0)){
             WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }

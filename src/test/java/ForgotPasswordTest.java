@@ -140,6 +140,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void closePasswordChangePopup(){
 		UserData userData=defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
 		forgotPasswordPopup.fillDataAndClosePopup(userData).login(userData);

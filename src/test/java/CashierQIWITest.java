@@ -25,7 +25,7 @@ public class CashierQIWITest extends AbstractTest{
 
     private static final String CURRENCY = "RUB";
     private static final String COUNTRY = "RU";
-    private static final String AMOUNT = "5.0";
+    private static final String AMOUNT = "5.00";
 
 
     @Test(groups = {"regression", "mobile"})

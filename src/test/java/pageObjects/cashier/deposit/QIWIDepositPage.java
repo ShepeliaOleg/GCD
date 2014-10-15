@@ -10,16 +10,18 @@ import utils.core.AbstractTest;
 public class QIWIDepositPage extends AbstractPage{
 
     private static final String ROOT_XP = "//*[@class='paymentContent']";
-    private static final String PHONE_XP = "*//[@id='phone']";
+    private static final String PHONE_XP = "//*[@id='phone']";
     private static final String AMOUNT_XP = "//*[@class='payment-description_cnt_fields_i'][2]/strong";
     private static final String PAY_BUTTON = "//*[@class='orangeBtn']";
+    private static final String DROPDOWN_CURRENCY_XP = "//*[@id='ui-id-1-button']";
+    private static final String CURRENCY_RUB_XP = "//*[@id='ui-id-5']";
     private static final String PASSWORD_XP = "//*[@name='password']";
-    private static final String PROVIDER_COMMISION_XP = "//*[contains(@class, 'providerComm')]";
 
+    private static final String PROVIDER_COMMISION_XP = "//*[contains(@class, 'providerComm')]";
     private static final String PASSWORD_INCORRECT = "incorrect";
 
     public QIWIDepositPage(){
-        super(new String[]{ROOT_XP});
+        super(new String[]{ROOT_XP, PAY_BUTTON, PHONE_XP, AMOUNT_XP});
     }
 
     public TransactionSuccessfulPopup pay(){
@@ -28,6 +30,12 @@ public class QIWIDepositPage extends AbstractPage{
         fillPassword(PaymentMethod.QIWI.getPassword());
         clickButtonPay();
         WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
+        clickDropdown();
+        if(getRUBIntegerAmount()>getRUBIntegerBalance()){
+            AbstractTest.skipTest("Not enough money on card balance");
+        }
+        clickRUB();
+        WebDriverUtils.waitForElement(PAY_BUTTON);
         clickButtonPay();
         return new TransactionSuccessfulPopup();
     }
@@ -41,7 +49,7 @@ public class QIWIDepositPage extends AbstractPage{
     }
 
     private String getPhone(){
-        return WebDriverUtils.getElementText(PHONE_XP).replace("+7", "");
+        return WebDriverUtils.getAttribute(PHONE_XP, "value").replace("+7", "");
     }
 
     private String getAmount(){
@@ -50,6 +58,22 @@ public class QIWIDepositPage extends AbstractPage{
 
     private void clickButtonPay(){
         WebDriverUtils.click(PAY_BUTTON);
+    }
+
+    private void clickDropdown(){
+        WebDriverUtils.click(DROPDOWN_CURRENCY_XP);
+    }
+
+    private void clickRUB(){
+        WebDriverUtils.click(CURRENCY_RUB_XP);
+    }
+
+    private int getRUBIntegerBalance(){
+        return Integer.parseInt(WebDriverUtils.getElementText(CURRENCY_RUB_XP).replace("С кошелька:", "").replace("RUB", "").replace(",", "").trim());
+    }
+
+    private int getRUBIntegerAmount(){
+        return Integer.parseInt(getAmount().replace(",", ""));
     }
 
     private void fillPassword(String password){
@@ -61,6 +85,6 @@ public class QIWIDepositPage extends AbstractPage{
     }
 
     public void assertAmount(String amount){
-        AbstractTest.assertEquals(amount, getAmount(), "Amount");
+        AbstractTest.assertEquals(amount.replace(",","").replace(".",""), getAmount().replace(",","").replace(".",""), "Amount");
     }
 }
