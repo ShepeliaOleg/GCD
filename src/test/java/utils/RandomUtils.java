@@ -139,7 +139,7 @@ public class RandomUtils{
         new WebDriverFactory().switchToAdditionalWebDriver();
         WebDriverUtils.navigateToURL("http://www.getcreditcardnumbers.com/");
         WebDriverUtils.waitForElement("//*[@action='/generated-credit-card-numbers']");
-        String result = WebDriverUtils.getElementText("//*[contains(@class, 'mastercard')]/li");
+        String result = WebDriverUtils.getElementText("//*[contains(@class, 'visa')]/li");
         WebDriverFactory.switchToMainWebDriver();
         return result;
     }
