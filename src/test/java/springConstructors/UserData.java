@@ -2,15 +2,26 @@ package springConstructors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import utils.RandomUtils;
 import utils.core.WebDriverObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class UserData extends WebDriverObject{
 
 	@Autowired
 	@Qualifier("usernameValidationRule")
 	private ValidationRule usernameValidationRule;
+
+    @Autowired
+    @Qualifier("genderValidationRule")
+    private ValidationRule genderValidationRule;
+
+    @Autowired
+    @Qualifier("titleValidationRule")
+    private ValidationRule titleValidationRule;
 
     @Autowired
     @Qualifier("emailValidationRule")
@@ -409,14 +420,10 @@ public class UserData extends WebDriverObject{
         return userData;
     }
 
-	public UserData getForgotPasswordUserData() {
-		UserData userData = getRegisteredUserData();
-		userData.setUsername("autoForgot");
-		return userData;
-	}
-
     public UserData getRandomUserData() {
         UserData userData = getRegisteredUserData();
+        userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));
+        userData.setTitle(RandomUtils.getRandomElementsFromList(getTitleList(), 1).get(0));
         userData.setUsername(usernameValidationRule.generateValidString());
         userData.setEmail(emailValidationRule.generateValidString());
         userData.setCountry(countryList.getRandomCountryCode());
@@ -430,6 +437,14 @@ public class UserData extends WebDriverObject{
         userData.setMobileAreaCode(mobileCountryPhoneCodeValidationRule.generateValidString());
 
         return userData;
+    }
+
+    private List<String> getGenderList(){
+        return Arrays.asList(genderValidationRule.getRegexp().split("@"));
+    }
+
+    private List<String> getTitleList(){
+        return Arrays.asList(titleValidationRule.getRegexp().split("@"));
     }
 
     public String print(){

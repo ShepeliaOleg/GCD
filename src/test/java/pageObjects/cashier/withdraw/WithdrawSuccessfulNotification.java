@@ -9,6 +9,5 @@ public class WithdrawSuccessfulNotification extends AbstractNotification{
 
     public WithdrawSuccessfulNotification(){
         super(new String[] {MESSAGE_XP});
-        WebDriverUtils.waitForElementToDisappear(MESSAGE_XP, 30);
     }
 }

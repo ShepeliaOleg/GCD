@@ -226,8 +226,14 @@ public class NavigationUtils extends WebDriverObject{
     }
 
     public static void registrationError(){
-        if(WebDriverUtils.isVisible(AbstractPage.PORTLET_ERROR_XP, 0)){
-            AbstractTest.failTest("Registration/Login failed : " + WebDriverUtils.getElementText(AbstractPage.PORTLET_ERROR_XP));
+        String portletError = AbstractPage.PORTLET_ERROR_XP;
+        if(WebDriverUtils.isVisible(portletError, 0)){
+            String portletErrorText = WebDriverUtils.getElementText(portletError);
+            if(portletErrorText.equals("Server system error")){
+                AbstractTest.skipTest("Registration failed with 'Server system error'");
+            }else {
+                AbstractTest.failTest("Registration/Login failed : " + portletErrorText);
+            }
         }else{
             AbstractTest.failTest("Registration/Login failed");
         }

@@ -2,6 +2,7 @@ package pageObjects.cashier.deposit;
 
 import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
+import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -15,6 +16,7 @@ public class PayPalDepositPage extends AbstractPage{
     private static final String FIELD_LOGIN_PASSWORD_XP = "//*[@id='login_password']";
     private static final String LINK_LOGIN_XP = "//*[@id='loadLogin']";
     private static final String BUTTON_CONTINUE_XP = "//*[@id='continue']";
+    private static final String LINK_CANCEL = "//*[@name='cancel_return']";
 
     public PayPalDepositPage(){
         super(new String[]{ROOT_XP});
@@ -39,5 +41,16 @@ public class PayPalDepositPage extends AbstractPage{
         WebDriverUtils.waitForElement(BUTTON_CONTINUE_XP, 30);
         WebDriverUtils.click(BUTTON_CONTINUE_XP);
         return new TransactionSuccessfulPopup();
+    }
+
+    private void clickCancel(){
+        WebDriverUtils.click(LINK_CANCEL);
+
+    }
+
+    public TransactionUnSuccessfulPopup cancelDeposit(){
+        clickCancel();
+        WebDriverUtils.waitForElementToDisappear(ROOT_XP, 30);
+        return new TransactionUnSuccessfulPopup();
     }
 }

@@ -17,6 +17,8 @@ public class AbstractNotification extends AbstractPageObject{
 
     public AbstractNotification(String[] clickableBys, String[] invisibleBys, String rootXp) {
         super(ArrayUtils.addAll(clickableBys, new String[]{rootXp}), invisibleBys);
-        WebDriverUtils.waitFor(1000);
+        if(clickableBys[0]!=null){
+            WebDriverUtils.waitForElementToDisappear(clickableBys[0], 30);
+        }
     }
 }

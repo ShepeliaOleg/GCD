@@ -1,7 +1,7 @@
 package pageObjects.cashier;
 
 import enums.PaymentMethod;
-import pageObjects.account.AddCardPopup;
+import pageObjects.account.AddCardPage;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -24,9 +24,13 @@ public class CashierPage extends AbstractPage{
         super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
     }
 
-    private AddCardPopup clickAddCard(){
+    public AddCardPage clickAddCard(){
         WebDriverUtils.click(BUTTON_ADD_CARD_XP);
-        return new AddCardPopup();
+        return new AddCardPage();
+    }
+
+    public void addCard(){
+        AddCardPage addCardPage = clickAddCard();
     }
 
     protected void assertInterfaceByType(PaymentMethod method, String[] fields){
@@ -88,6 +92,7 @@ public class CashierPage extends AbstractPage{
     }
 
 
-
-
+    public void isCardPresent(String card) {
+        AbstractTest.assertTextInvisible(card, "'"+card+"' card added");
+    }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
+import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.PayPalDepositPage;
 import pageObjects.cashier.withdraw.WithdrawConfirmationPopup;
@@ -38,16 +39,19 @@ public class CashierPayPalTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public UserData payPalValidDeposit(){
+    public void payPalValidDeposit(){
+        payPalDeposit();
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void payPalCancelDeposit(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
-        payPalDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
-        transactionSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
-        return userData;
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = payPalDepositPage.cancelDeposit();;
+        transactionUnSuccessfulPopup.closePopup();
+        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -62,9 +66,10 @@ public class CashierPayPalTest extends AbstractTest{
         assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
+
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUser() {
-        UserData userData = payPalValidDeposit();
+        UserData userData = payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
@@ -76,12 +81,12 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
+        assertEquals(userData.getCurrencySign() + " 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUserAddAccount() {
-        UserData userData = payPalValidDeposit();
+        UserData userData = payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
@@ -97,10 +102,22 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalCancelWithdrawForExistingUser() {
-        UserData userData = payPalValidDeposit();
+        UserData userData = payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
-    
+
+    private UserData payPalDeposit(){
+        UserData userData = defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
+        payPalDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        return userData;
+    }
+
 }

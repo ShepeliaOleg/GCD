@@ -2,6 +2,7 @@ package utils;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 import utils.validation.RegexNode;
 import utils.validation.ValidationUtils;
 
@@ -131,6 +132,15 @@ public class RandomUtils{
             }
         }
 
+        return result;
+    }
+
+    public static String getValidCardNumber(){
+        new WebDriverFactory().switchToAdditionalWebDriver();
+        WebDriverUtils.navigateToURL("http://www.getcreditcardnumbers.com/");
+        WebDriverUtils.waitForElement("//*[@action='/generated-credit-card-numbers']");
+        String result = WebDriverUtils.getElementText("//*[contains(@class, 'mastercard')]/li");
+        WebDriverFactory.switchToMainWebDriver();
         return result;
     }
 }

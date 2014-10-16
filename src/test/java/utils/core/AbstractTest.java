@@ -35,9 +35,13 @@ public class AbstractTest extends AbstractTestRunner{
     }
 
     public static void addError(String message){
+        results.add(message+getScreenshot());
+    }
+
+    private static String getScreenshot(){
         String fileName = name + String.valueOf(counter++);
         String[] names = Listener.createScreenshot(fileName);
-        results.add(message+"(<a href='"+names[0]+"'>P</a>/<a href='"+names[1]+"'>L</a>/<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>)");
+        return "(<a href='"+names[0]+"'>P</a>/<a href='"+names[1]+"'>L</a>/<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>)";
     }
 
     public static void failTest(String message){
@@ -46,8 +50,13 @@ public class AbstractTest extends AbstractTestRunner{
     }
 
     public static void skipTest(String message){
-        validate();
-        throw new SkipException(message + "<a href='"+WebDriverUtils.getCurrentUrl()+"'>URL</a>");
+        String results = collectResults();
+        if(!results.isEmpty()){
+            throw new SkipException(message + getScreenshot()+"Errors found: "+results);
+        }else {
+            throw new SkipException(message + getScreenshot());
+        }
+
     }
 
     public static boolean assertTrue(boolean actual, String message){

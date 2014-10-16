@@ -112,13 +112,8 @@ public class Defaults{
         return getCountryName(getCountryByCode(countryCode));
     }
 
-    private String getRandomItemFromList(List<String> list) {
-        int randomIndex = RandomUtils.generateRandomIntBetween(0, (list.size() - 1));
-        return list.get(randomIndex);
-    }
-
     public String getRandomCountryCode(){
-        return getCountryCode(getRandomItemFromList(getCountryList()));
+        return getCountryCode((String)RandomUtils.getRandomElementsFromList(getCountryList(),1).get(0));
     }
 
     private String getPartByIndex(String input, int partIndex) {
@@ -159,7 +154,7 @@ public class Defaults{
     }
 
     public String getRandomLanguageCode() {
-        return getLanguageCode(getRandomItemFromList(getLanguageList()));
+        return getLanguageCode((String)RandomUtils.getRandomElementsFromList(getLanguageList(), 1).get(0));
     }
 
     public String getLanguageNameByCode(String languageCode) {

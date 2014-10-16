@@ -29,7 +29,7 @@ public class Listener extends TestListenerAdapter{
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
-            "ChangeMyDetailsTest", "ChangeMyPasswordTest","CashierQIWITest","CashierPayPalTest","ForgotPasswordTest", "ForgotUsernameTest",
+            "ChangeMyDetailsTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierQIWITest","CashierPayPalTest","ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest","LoginValidationTest",
             "PermissionsTest", "PushMessagesTest","ReferAFriendTest","RegistrationAffiliateTest",
@@ -251,9 +251,9 @@ public class Listener extends TestListenerAdapter{
             output.println("<tr align='center' style='background-color:"+COLOR_RED+"'><td colspan='3'>Failed tests</td></tr>");
             for(ITestResult test:iTestContext.getFailedTests().getAllResults()){
                 String name = test.getName();
-                output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + test.getName() + "</td> ");
+                output.println("<tr style='background-color:"+COLOR_RED+"'><td>" + name + "</td> ");
                 output.println("<td align='center' valign='middle' class='failed'>failed</td>");
-                output.println("<td>" + createSpoiler(test.getThrowable(), name) + "</td></tr>");
+                output.println("<td>" + createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
         if(!iTestContext.getSkippedTests().getAllResults().isEmpty()){
@@ -262,10 +262,7 @@ public class Listener extends TestListenerAdapter{
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
                 output.println("<td align='center' valign='middle'>Skipped</td> ");
-                output.println("<td>"+createSpoiler(test.getThrowable(), name)+"<div>" +
-                        "<a href='"+ScreenOrientation.LANDSCAPE.value()+name+".jpg'>Landscape</a>, " +
-                        "<a href='"+ScreenOrientation.PORTRAIT.value()+name+".jpg'>Portrait</a>" +
-                        "</div></td></tr>");
+                output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
     }
