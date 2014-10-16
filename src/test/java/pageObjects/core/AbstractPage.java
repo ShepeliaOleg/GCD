@@ -204,7 +204,7 @@ public class AbstractPage extends AbstractPageObject{
 		return loggedOutHeader().getUsernameText();
 	}
 
-    public String getFooterText() {
+    public String getTranslationText() {
         return footer().getFooterText();
     }
 

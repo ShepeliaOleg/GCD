@@ -60,6 +60,10 @@ public abstract class AbstractPageObject extends WebDriverObject {
             return null;
         }
     }
+
+    public String getTranslationText() {
+        return null;
+    }
 }
 
 

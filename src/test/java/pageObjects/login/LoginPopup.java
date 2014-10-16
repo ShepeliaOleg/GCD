@@ -11,11 +11,6 @@ import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 
-/**
- * User: ivan
- * Date: 8/09/13
- */
-
 public class LoginPopup extends AbstractPopup{
 
     public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";

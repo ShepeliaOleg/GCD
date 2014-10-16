@@ -9,6 +9,8 @@ public abstract class AbstractPopup extends AbstractPageObject{
 	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')] | "+ ROOT_XP + "//*[contains(@class, 'fn-decline')]";
 	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
     private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overlay')]";
+    protected final static String TITLE_XP = "//*[@class='popup-modal__title']";
+    private final static String CONTENT_XP = "//*[@class='popup-modal__content']";
 
 	public AbstractPopup(){
 		this(null);
@@ -49,6 +51,18 @@ public abstract class AbstractPopup extends AbstractPageObject{
     protected void clickOffPopup(){
         WebDriverUtils.click(OFF_POPUP_XP);
         WebDriverUtils.waitFor(1000);
+    }
+
+    public String getTranslationText() {
+        return getContentText();
+    }
+
+    protected String getContentText() {
+        return WebDriverUtils.getElementText(CONTENT_XP);
+    }
+
+    protected String getCTitleText() {
+        return WebDriverUtils.getElementText(TITLE_XP);
     }
 }
 
