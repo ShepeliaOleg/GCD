@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPageObject;
+import pageObjects.login.WelcomePopup;
 import springConstructors.Defaults;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -76,22 +78,24 @@ public class LanguageTest extends AbstractTest {
     }
 
     /*#10. */
-    @Test(groups = {"regression"})
-    public void loginAfterLanguageChange(){
+    @Test(groups = {"regression, login, mobile"})
+    public void loginAfterLanguageChangeWelcomeMessage(){
         UserData userData = defaultUserData.getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : defaults.getLanguageCodesList()) {
             homePage.setLanguage(languageCode);
-            PortalUtils.loginUser(userData);
-            assertLanguageChange(homePage, languageCode, defaults.getLanguageUrlByLanguageCode(languageCode));
+            WelcomePopup welcomePopup = (WelcomePopup) homePage.login(userData, Page.welcomePopup);
+            assertLanguageChange(welcomePopup, languageCode, defaults.getLanguageUrlByLanguageCode(languageCode));
+            welcomePopup.closePopup();
             PortalUtils.logout();
         }
     }
 
-    private void assertLanguageChange(AbstractPage page, String languageCode, String shortLanguageCode) {
+    private void assertLanguageChange(AbstractPageObject page, String languageCode, String shortLanguageCode) {
         String languageName = defaults.getLanguageNameByCode(languageCode);
         assertEquals(shortLanguageCode, WebDriverUtils.getCurrentLanguageCode(), "Url for " + languageName + " (" + languageCode + ")");
-        assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), page.getFooterText(), "Translation for " + languageName + " (" + languageCode + ")");
+
+        assertEquals(defaults.getLanguageTranslationByLanguageCode(languageCode), page.getTranslationText(), "Translation for " + languageName + " (" + languageCode + ")");
     }
 
 }
