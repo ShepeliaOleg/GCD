@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.account.AddCardPage;
 import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
@@ -110,14 +111,27 @@ public class CashierAddCardTest extends AbstractTest{
 
     /*valid card is added, correct message*/
     @Test(groups = {"regression", "mobile"})
-    public void addValidCard(){
+    public void addValidCardFromWithdraw(){
+        UserData userData = defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        AddCardPage addCardPage = withdrawPage.clickAddCard();
+        String card = RandomUtils.getValidCardNumber();
+        addCardPage.addValidCard(card);
+        withdrawPage = new WithdrawPage();
+        withdrawPage.isCardPresent(card);
+    }
+
+    /*valid card is added, correct message*/
+    @Test(groups = {"regression", "mobile"})
+    public void addValidCardFromDeposit(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
         String card = RandomUtils.getValidCardNumber();
         addCardPage.addValidCard(card);
-        depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage = new DepositPage();
         depositPage.isCardPresent(card);
     }
 
