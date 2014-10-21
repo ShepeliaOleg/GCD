@@ -3,7 +3,7 @@ package pageObjects.core;
 import org.apache.commons.lang3.ArrayUtils;
 import utils.WebDriverUtils;
 
-public abstract class AbstractPopup extends AbstractPageObject{
+public class AbstractPopup extends AbstractPageObject{
 
 	public final static String ROOT_XP=			    "//*[contains(@class, 'popup-modal__inner')]";
 	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')] | "+ ROOT_XP + "//*[contains(@class, 'fn-decline')]";

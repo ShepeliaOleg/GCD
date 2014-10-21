@@ -40,46 +40,18 @@ public class CashierQIWITest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void qIWISuccessfulDeposit(){
-        PortalUtils.registerUser(getRussianUser());
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
-        qiwiDepositPage.assertAccount(PaymentMethod.QIWI.getAccount());
-        qiwiDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
-        transactionSuccessfulPopup.closePopup();
-        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
-    }
-
-    /*Case is not actual yet*/
-//    @Test(groups = {"regression", "mobile"})
-//    public void QIWIUnSuccessfulDeposit(){
-//        PortalUtils.registerUser(getRussianUser());
-//        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-//        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
-//        qiwiDepositPage.assertAccount();
-//        qiwiDepositPage.assertAmount();
-//        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = qiwiDepositPage.payInvalid();
-//        transactionUnSuccessfulPopup.closePopup();
-//        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
-//    }
-
-    @Test(groups = {"regression", "mobile"})
-     public void qIWIWithdrawAssertPopup() {
+     public void qIWIWithdrawAssertPopupAndClose() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawConfirmationPopup withdrawConfirmationPopup = withdrawPage.navigateToWithdrawConfirmationPopup(PaymentMethod.QIWI, AMOUNT);
-        withdrawConfirmationPopup.assertAccount(PaymentMethod.QIWI.getAccount());
-        withdrawConfirmationPopup.assertAmount(AMOUNT);
-        withdrawConfirmationPopup.closePopup();
+        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
         assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void qIWIWithdrawForExistingUser() {
+    public void qIWIDepositWithdrawForExistingUser() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdraw(PaymentMethod.QIWI, AMOUNT);
+        withdrawPage.withdrawSuccessful(PaymentMethod.QIWI, AMOUNT);
         assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
     }
 
@@ -100,14 +72,6 @@ public class CashierQIWITest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void qIWICancelWithdrawForExistingUser() {
-        qIWISuccessfulDeposit();
-        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.cancelWithdraw(PaymentMethod.QIWI, AMOUNT);
-        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
-    }
-
-    @Test(groups = {"regression", "mobile"})
     public void qIWIWithdrawForNewUser() {
         PortalUtils.registerUser(getRussianUser());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
@@ -119,6 +83,17 @@ public class CashierQIWITest extends AbstractTest{
         userData.setCurrency(CURRENCY+"@");
         userData.setCountry(COUNTRY);
         return userData;
+    }
+
+    private void qIWISuccessfulDeposit(){
+        PortalUtils.registerUser(getRussianUser());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWI(AMOUNT);
+        qiwiDepositPage.assertAccount(PaymentMethod.QIWI.getAccount());
+        qiwiDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
 }

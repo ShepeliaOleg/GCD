@@ -72,6 +72,6 @@ public class TypeUtils{
     }
 
     public static int convertBalance(String balance){
-        return Integer.parseInt(balance.substring(0, balance.indexOf('.')).replace(",", "").replace("£", ""));
+        return Integer.parseInt(balance.replace(",", "").replace(".", "").replace("£", "").replace("$", "").replace("€",""));
     }
 }

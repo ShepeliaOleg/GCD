@@ -79,7 +79,7 @@ public class PushMessagesTest extends AbstractTest{
 //		String balance = homePage.getBalance();
 //		iMS.sendPushMessage(Page.okBonus, BONUS_AMOUNT);
 //		NavigationUtils.closeAllPopups(Page.homePage);
-//		Assert.assertTrue(homePage.compareBalances(balance)==Integer.parseInt(BONUS_AMOUNT));
+//		Assert.assertTrue(homePage.getBalanceChange(balance)==Integer.parseInt(BONUS_AMOUNT));
 //	}
 //
 //	/*7. Push messages for bonus opt in/out */
@@ -104,7 +104,7 @@ public class PushMessagesTest extends AbstractTest{
 //		BuyInPopup buyInPopup = bonusPage.clickBuyIn();
 //		BonusBuyInPopup bonusBuyInPopup = buyInPopup.clickBuyIn();
 //		bonusBuyInPopup.confirmBuyIn();
-//		Assert.assertTrue(homePage.compareBalances(balance)==20);
+//		Assert.assertTrue(homePage.getBalanceChange(balance)==20);
 //	}
 //
 //	/*9. Push message for free bonus*/
@@ -117,7 +117,7 @@ public class PushMessagesTest extends AbstractTest{
 //		FreeBonusPopup freeBonusPopup = bonusPage.clickFreeBonus();
 //		OkBonusPopup okBonusPopup = freeBonusPopup.clickFreeBonus();
 //		okBonusPopup.close();
-//		Assert.assertTrue(homePage.compareBalances(balance)==10);
+//		Assert.assertTrue(homePage.getBalanceChange(balance)==10);
 //	}
 //
 //	/*10. Push message for promo code redemption*/
@@ -129,7 +129,7 @@ public class PushMessagesTest extends AbstractTest{
 //        BonusPage bonusPage = (BonusPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusPage);
 //		OkBonusPopup okBonusPopup = bonusPage.submitCode();
 //		okBonusPopup.close();
-//		Assert.assertTrue(homePage.compareBalances(balance)==10);
+//		Assert.assertTrue(homePage.getBalanceChange(balance)==10);
 //	}
 //
 //	/*11.  Accept/Decline push message - Accept*/

@@ -239,27 +239,34 @@ public class NavigationUtils extends WebDriverObject{
         }
     }
 
-	private static AbstractPageObject checkPopups(Page exceptPage){
-        if(WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)){
+	private static AbstractPageObject checkPopups(Page exceptPage) {
+        if (WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)) {
             return processAfterRegistrationPopup(exceptPage);
-		}else if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)){
+        } else if (WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)) {
             return processLoginPopup(exceptPage);
-        }else if(WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.ROOT_XP, 0)){
+        } else if (WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.ROOT_XP, 0)) {
             return processReadTermsAndConditionsPopup(exceptPage);
-        }else if(WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)){
+        } else if (WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)) {
             return processTermsAndConditionsPopup(exceptPage);
-        }else if(WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)){
+        } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
             return processChangePasswordPopup(exceptPage);
-        }else if(WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)){
+        } else if (WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)) {
             return processOkBonus(exceptPage);
-        }else if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
+        } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)) {
             return processAcceptDecline(exceptPage);
-        }else if(WebDriverUtils.isVisible(WelcomePopup.ROOT_XP, 0)){
+        } else if (WebDriverUtils.isVisible(WelcomePopup.TITLE_XP, 0)) {
             return processWelcomePopup(exceptPage);
+        } else if (WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
+            processGenericPopup();
+            return null;
         }else{
 			return null;
 		}
 	}
+
+    private static void processGenericPopup(){
+        new AbstractPopup().closePopup();
+    }
 
     private static WelcomePopup processWelcomePopup(Page exceptPage){
         WelcomePopup welcomePopup=new WelcomePopup();

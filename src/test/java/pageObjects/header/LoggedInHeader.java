@@ -32,7 +32,7 @@ public class LoggedInHeader extends Header{
         return (getUsername().contains(userData.getUsername()));
     }
 
-    public int compareBalances(String oldBalance){
+    public int getBalanceChange(String oldBalance){
         return TypeUtils.convertBalance(getBalance()) - TypeUtils.convertBalance(oldBalance);
     }
 

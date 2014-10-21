@@ -2,6 +2,8 @@ package pageObjects.cashier.withdraw;
 
 import enums.PaymentMethod;
 import pageObjects.cashier.CashierPage;
+import pageObjects.cashier.TransactionUnSuccessfulPopup;
+import springConstructors.UserData;
 import utils.WebDriverUtils;
 
 public class WithdrawPage extends CashierPage {
@@ -14,7 +16,7 @@ public class WithdrawPage extends CashierPage {
         super();
     }
 
-    public void withdraw(PaymentMethod type, String amount){
+    public void withdrawSuccessful(PaymentMethod type, String amount){
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount);
         withdrawConfirmationPopup.clickAccept();
         new WithdrawSuccessfulNotification();
@@ -22,7 +24,7 @@ public class WithdrawPage extends CashierPage {
 
     public void withdrawAddingAccount(PaymentMethod type, String amount){
         addAccountByType(type);
-        withdraw(type, amount);
+        withdrawSuccessful(type, amount);
     }
 
     public void cancelWithdraw(PaymentMethod type, String amount){
@@ -30,9 +32,25 @@ public class WithdrawPage extends CashierPage {
         withdrawConfirmationPopup.closePopup();
     }
 
-    public WithdrawConfirmationPopup navigateToWithdrawConfirmationPopup(PaymentMethod method, String amount){
+    private WithdrawConfirmationPopup navigateToWithdrawConfirmationPopup(PaymentMethod method, String amount){
         processPaymentByType(method, amount);
         return new WithdrawConfirmationPopup();
+    }
+
+    public void assertWithdrawConfirmationPopupAndClose(PaymentMethod method, String amount){
+        WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(method, amount);
+        withdrawConfirmationPopup.assertAccount(method.getAccount());
+        withdrawConfirmationPopup.assertAmount(amount);
+        withdrawConfirmationPopup.closePopup();
+    }
+
+    public void assertCardInterface(PaymentMethod paymentMethod){
+        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_CVV_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public void withdrawExpired(PaymentMethod card, String amount) {
+        processPaymentByType(card, amount, true);
+
     }
 
     /*PAYPAL*/
@@ -54,5 +72,18 @@ public class WithdrawPage extends CashierPage {
 
     public void assertQIWIInterface(){
         assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+    }
+
+    /*ENVOY*/
+
+    public void assertEnvoyInterface(UserData userData){
+        assertInterfaceByType(PaymentMethod.Envoy, new String[]{FIELD_AMOUNT_XP}, userData);
+    }
+
+    public TransactionUnSuccessfulPopup withdrawEnvoy(String amount){
+        WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(PaymentMethod.Envoy, amount);
+        withdrawConfirmationPopup.clickAccept();
+        new WithdrawEnvoyPage().cancel();
+        return new TransactionUnSuccessfulPopup();
     }
 }

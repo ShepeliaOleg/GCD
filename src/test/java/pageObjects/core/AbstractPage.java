@@ -77,8 +77,8 @@ public class AbstractPage extends AbstractPageObject{
         return loggedInHeader().getBalance();
     }
 
-    public int compareBalances(String balance){
-        return loggedInHeader().compareBalances(balance);
+    public int getBalanceChange(String balance){
+        return loggedInHeader().getBalanceChange(balance);
     }
 
     public AbstractPage logout(){

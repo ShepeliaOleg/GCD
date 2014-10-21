@@ -39,11 +39,6 @@ public class CashierPayPalTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalValidDeposit(){
-        payPalDeposit();
-    }
-
-    @Test(groups = {"regression", "mobile"})
     public void payPalCancelDeposit(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -55,23 +50,20 @@ public class CashierPayPalTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawAssertPopup(){
+    public void payPalWithdrawAssertPopupAndClose(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        WithdrawConfirmationPopup withdrawConfirmationPopup = withdrawPage.navigateToWithdrawConfirmationPopup(PaymentMethod.PayPal, AMOUNT);
-        withdrawConfirmationPopup.assertAccount(PaymentMethod.PayPal.getAccount());
-        withdrawConfirmationPopup.assertAmount(AMOUNT);
-        withdrawConfirmationPopup.closePopup();
+        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
         assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawForExistingUser() {
+    public void payPalDepositWithdrawForExistingUser() {
         UserData userData = payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
+        withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
@@ -80,7 +72,7 @@ public class CashierPayPalTest extends AbstractTest{
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdraw(PaymentMethod.PayPal, AMOUNT);
+        withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign() + " 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
@@ -94,7 +86,7 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUserAddAccountClose() {
-        payPalValidDeposit();
+        payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.addAccountByType(PaymentMethod.PayPal);
         withdrawPage.closeAddAccountField(PaymentMethod.PayPal);

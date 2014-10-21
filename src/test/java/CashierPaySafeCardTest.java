@@ -1,0 +1,69 @@
+import enums.ConfiguredPages;
+import enums.PaymentMethod;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.testng.annotations.Test;
+import pageObjects.cashier.TransactionUnSuccessfulPopup;
+import pageObjects.cashier.deposit.PayPalDepositPage;
+import pageObjects.cashier.deposit.PaySafeCardDepositPage;
+import pageObjects.cashier.withdraw.WithdrawConfirmationPopup;
+import pageObjects.cashier.withdraw.WithdrawPage;
+import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.cashier.deposit.QIWIDepositPage;
+import pageObjects.cashier.TransactionSuccessfulPopup;
+import pageObjects.core.AbstractPage;
+import springConstructors.UserData;
+import utils.NavigationUtils;
+import utils.PortalUtils;
+import utils.core.AbstractTest;
+
+public class CashierPaySafeCardTest extends AbstractTest{
+
+    @Autowired
+    @Qualifier("userData")
+    private UserData defaultUserData;
+
+    private static final String CURRENCY = "EUR";
+    private static final String COUNTRY = "NL";
+    private static final String AMOUNT = "1.00";
+
+
+    @Test(groups = {"regression", "mobile"})
+    public void paySafeCardDepositInterfaceIsFunctional(){
+        PortalUtils.registerUser(getEURUser());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage.assertPaySafeCardInterface();
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void paySafeCardSuccessfulDeposit(){
+        UserData userData = getEURUser();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        PaySafeCardDepositPage paySafeCardDepositPage = depositPage.depositPaySafeCard(AMOUNT);
+        paySafeCardDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+    }
+
+
+    @Test(groups = {"regression", "mobile"})
+    public void paySafeCardCancelDeposit(){
+        UserData userData = getEURUser();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        PaySafeCardDepositPage paySafeCardDepositPage = depositPage.depositPaySafeCard(AMOUNT);
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = paySafeCardDepositPage.cancelDeposit();
+        transactionUnSuccessfulPopup.closePopup();
+        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+    }
+
+    private UserData getEURUser(){
+        UserData userData = defaultUserData.getRandomUserData();
+        userData.setCurrency(CURRENCY+"@€");
+        userData.setCountry(COUNTRY);
+        return userData;
+    }
+
+}

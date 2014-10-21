@@ -1,5 +1,6 @@
 package utils;
 
+import enums.PaymentMethod;
 import org.apache.commons.lang3.RandomStringUtils;
 import utils.core.AbstractTest;
 import utils.core.WebDriverFactory;
@@ -135,7 +136,11 @@ public class RandomUtils{
         return result;
     }
 
-    public static String getValidCardNumber(){
+    public static String getValidCardNumber(PaymentMethod paymentMethod){
+        String card = "mastercard";
+        if(paymentMethod.equals(PaymentMethod.Visa)){
+            card="visa";
+        }
         new WebDriverFactory().switchToAdditionalWebDriver();
         WebDriverUtils.navigateToURL("http://www.getcreditcardnumbers.com/");
         WebDriverUtils.waitForElement("//*[@action='/generated-credit-card-numbers']");

@@ -420,6 +420,13 @@ public class UserData extends WebDriverObject{
         return userData;
     }
 
+    public UserData getCardUserData() {
+        UserData userData = getRegisteredUserData();
+        userData.setUsername("greesnm");
+        userData.setPassword("123asdQ");
+        return userData;
+    }
+
     public UserData getRandomUserData() {
         UserData userData = getRegisteredUserData();
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));
@@ -452,5 +459,4 @@ public class UserData extends WebDriverObject{
                 +getCountry()+"</div><div>"+getFullAddress()+"</div><div>"+getCity()+"</div><div>"+getPostCode()+"</div><div>"
                 +getPhoneAreaCode()+getPhone()+"</div><div>"+getMobileAreaCode()+getMobile()+"</div><div>"+getEmail()+"</div>";
     }
-
 }

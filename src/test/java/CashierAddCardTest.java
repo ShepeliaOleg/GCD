@@ -1,4 +1,5 @@
 import enums.ConfiguredPages;
+import enums.PaymentMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
@@ -60,7 +61,7 @@ public class CashierAddCardTest extends AbstractTest{
         addCardPage = addCardPage.addInvalidCard();
         addCardPage.assertInvalidMessage();
         depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        depositPage.isCardPresent(AddCardPage.INVALID_CARD);
+        assertFalse(depositPage.isCardVisible(PaymentMethod.Visa, AddCardPage.INVALID_CARD), "Card visible");
     }
 
     /*valid but unsupported card is not added, correct message*/
@@ -73,13 +74,13 @@ public class CashierAddCardTest extends AbstractTest{
         addCardPage = addCardPage.addUnsupportedCard();
         addCardPage.assertUnsupportedMessage();
         depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        depositPage.isCardPresent(AddCardPage.UNSUPPORTED_CARD);
+        assertFalse(depositPage.isCardVisible(PaymentMethod.Discover, AddCardPage.UNSUPPORTED_CARD), "Card visible");
     }
 
     /*already used by same user card is not added, correct message*/
     @Test(groups = {"regression", "mobile"})
     public void addAlreadyUsedCard(){
-        String card = RandomUtils.getValidCardNumber();
+        String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -94,7 +95,7 @@ public class CashierAddCardTest extends AbstractTest{
     /*already used by other user is not added, correct message*/
     @Test(groups = {"regression", "mobile"})
     public void addAlreadyUsedByOtherPlayerCard(){
-        String card = RandomUtils.getValidCardNumber();
+        String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -107,32 +108,34 @@ public class CashierAddCardTest extends AbstractTest{
         addCardPage = depositPage.clickAddCard();
         addCardPage.addCard(card);
         addCardPage.assertCardUsedMessage();
+        depositPage = new DepositPage();
+        assertFalse(depositPage.isCardVisible(PaymentMethod.Visa, card), "Card visible");
     }
 
     /*valid card is added, correct message*/
     @Test(groups = {"regression", "mobile"})
-    public void addValidCardFromWithdraw(){
+    public void addValidCardFromWithdrawMasterCard(){
+        String card = RandomUtils.getValidCardNumber(PaymentMethod.MasterCard);
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         AddCardPage addCardPage = withdrawPage.clickAddCard();
-        String card = RandomUtils.getValidCardNumber();
         addCardPage.addValidCard(card);
         withdrawPage = new WithdrawPage();
-        withdrawPage.isCardPresent(card);
+        assertTrue(withdrawPage.isCardVisible(PaymentMethod.MasterCard, card), "Card visible");
     }
 
     /*valid card is added, correct message*/
     @Test(groups = {"regression", "mobile"})
-    public void addValidCardFromDeposit(){
+    public void addValidCardFromDepositVisa(){
+        String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
-        String card = RandomUtils.getValidCardNumber();
         addCardPage.addValidCard(card);
         depositPage = new DepositPage();
-        depositPage.isCardPresent(card);
+        assertTrue(depositPage.isCardVisible(PaymentMethod.Visa, card), "Card visible");
     }
 
 
