@@ -241,7 +241,7 @@ public class GamesPortletPage extends AbstractPage{
 				AbstractTest.failTest("No demo game buttons found");
 			}
 		}
-       NavigationUtils.assertGameLaunch(gameId);
+       NavigationUtils.assertGameLaunch(gameId, 0);
 	}
 
     public LoginPopup playRealLoggedOut(){
@@ -250,7 +250,7 @@ public class GamesPortletPage extends AbstractPage{
     }
 
     public void playRealAndAssertURL(){
-        NavigationUtils.assertGameLaunch(playReal());
+        NavigationUtils.assertGameLaunch(playReal(), 1);
     }
 
 	private String playReal(){

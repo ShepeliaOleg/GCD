@@ -30,9 +30,6 @@ public class BannerPage extends AbstractPage {
     private static final String NAVIGATION_BULLETS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_bullet')]";
     private static final String NAVIGATION_BUTTONS_XP =             NAVIGATION_XP + LIST_XP + "[contains(@class,'_number')]";
 
-    private static final String HULK_GAME = "hlk2";
-    private static final String MISTER_CASH_BACK_GAME = "mrcb";
-
 	public BannerPage(){
 		super(new String[]{ROOT_XP});
 	}
@@ -220,16 +217,16 @@ public class BannerPage extends AbstractPage {
     public void clickGameAndAssertUrl(int slideIndex, UserData userData){
         String game;
         if(slideIndex==1){
-            game = HULK_GAME;
+            game = GameLaunchPage.IFRAME_GAME_1;
         }else {
-            game = MISTER_CASH_BACK_GAME;
+            game = GameLaunchPage.IFRAME_GAME_2;
         }
         clickSlide(slideIndex);
         if(userData!=null){
             LoginPopup loginPopup = new LoginPopup();
             loginPopup.login(userData, false, Page.gameLaunch);
         }
-        NavigationUtils.assertGameLaunch(game);
+        NavigationUtils.assertGameLaunch(game, 1);
     }
 
     public void clickGameAndAssertUrl(int page){

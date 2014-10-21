@@ -68,9 +68,9 @@ public class LiveTableFinderTest extends AbstractTest{
 //        LiveCasinoPage liveCasinoPage= (LiveCasinoPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.liveTableFinder, defaultUserData.getRegisteredUserData());
 //		int index=RandomUtils.generateRandomIntBetween(1, liveCasinoPage.getNumberOfRows());
 //		GameLaunchPopup gameLaunchPopup=(GameLaunchPopup) liveCasinoPage.clickPlay(index, true);
-//		boolean isUrlValid=gameLaunchPopup.isUrlValid();
+//		boolean iFrameGameUrlIsValid=gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
-//		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
+//		TypeUtils.assertTrueWithLogs(iFrameGameUrlIsValid,"game url valid");
 //	}
 //
 //	/*7. Find a table – launch game as a guest, login and play*/
@@ -82,9 +82,9 @@ public class LiveTableFinderTest extends AbstractTest{
 //		LoginPopup loginPopup=(LoginPopup) liveCasinoPage.clickPlay(index, false);
 //		HomePage homePage = (HomePage) loginPopup.login(userData);
 //		GameLaunchPopup gameLaunchPopup = homePage.switchToGameWindow();
-//		boolean isUrlValid=gameLaunchPopup.isUrlValid();
+//		boolean iFrameGameUrlIsValid=gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
-//		TypeUtils.assertTrueWithLogs(isUrlValid,"game url valid");
+//		TypeUtils.assertTrueWithLogs(iFrameGameUrlIsValid,"game url valid");
 //	}
 //
 //    /*8. Find a table – View Info about a dealer*/

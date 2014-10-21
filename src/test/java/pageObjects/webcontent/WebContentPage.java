@@ -64,7 +64,7 @@ public class WebContentPage extends AbstractPage{
             LoginPopup loginPopup = new LoginPopup();
             loginPopup.login(userData, false, Page.gameLaunch);
         }
-        NavigationUtils.assertGameLaunch(gameID);
+        NavigationUtils.assertGameLaunch(gameID, 1);
     }
 
     public void playAndAssertUrl(GameLaunch type, int page){
