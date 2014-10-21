@@ -1,14 +1,18 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.gamesPortlet.GameIncorrectId;
+import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class GamesPortletTest extends AbstractTest {
@@ -835,11 +839,11 @@ public class GamesPortletTest extends AbstractTest {
 //	public void demoAndRealGameCanBeStartedFromItemViewStyleOne(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleOne, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        boolean correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
@@ -852,11 +856,11 @@ public class GamesPortletTest extends AbstractTest {
 //	public void demoAndRealGameCanBeStartedFromItemViewStyleTwo(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleTwo, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        boolean correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //        gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
@@ -869,7 +873,7 @@ public class GamesPortletTest extends AbstractTest {
 //	public void demoAndRealGameCanBeStartedFromItemViewStyleThree(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleThree, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        boolean correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		try{
@@ -877,7 +881,7 @@ public class GamesPortletTest extends AbstractTest {
 //		}catch(RuntimeException e){
 //			gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playRealFromTitle(true);
 //		}
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
@@ -890,11 +894,11 @@ public class GamesPortletTest extends AbstractTest {
 //	public void demoAndRealGameCanBeStartedFromItemViewStyleFour(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleFour, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playDemo();
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        boolean correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 1 is valid");
 //		gameLaunchPopup = (GameLaunchPopup)gamesPortletPage.playReal(true);
-//        correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url 2 is valid");
 //		GameInfoPopup gameInfoPopup = gamesPortletPage.clickInfo();
@@ -922,7 +926,7 @@ public class GamesPortletTest extends AbstractTest {
 //	public void toFitModeIsDisplayedAndGameCanBeStarted(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
 //		GameLaunchPopup gameLaunchPopup = gamesPortletPage.playReal(RandomUtils.generateRandomIntBetween(26, gamesPortletPage.getAllGameNames().size()));
-//        boolean correctGamePopupUrl = gameLaunchPopup.isUrlValid();
+//        boolean correctGamePopupUrl = gameLaunchPopup.iFrameGameUrlIsValid();
 //		gameLaunchPopup.close();
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 //	}
@@ -979,5 +983,119 @@ public class GamesPortletTest extends AbstractTest {
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
         gameLaunchPopup.assertGameLaunchAndClose();
 	}
+
+    /*B-13152 Load game by URL */
+    /*iFrame game*/
+    /*1. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlPlayer(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1);
+        assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode by default.");
+    }
+
+    /*2. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlPlayerRealMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1, 1);
+        assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
+    }
+
+    /*3. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlPlayerDemoMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1, 0);
+        assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
+        assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
+    }
+
+    /*4. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlGuestPlay(){
+        LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
+        assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid after login.");
+    }
+
+    /*5. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlGuestPlayRealMode(){
+        LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1, 1);
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
+        assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid after login.");
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
+    }
+    /*redirect game*/
+    /*6. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlPlayer(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.REDIRECT_GAME_1);
+        assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode by default.");
+    }
+
+    /*7. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlPlayerRealMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.REDIRECT_GAME_1, 1);
+        assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
+    }
+
+    /*8. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlPlayerDemoMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.REDIRECT_GAME_1, 0);
+        assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
+        assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
+    }
+
+    /*9. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlGuestPlay(){
+        LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.REDIRECT_GAME_1);
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
+        assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid after login.");
+    }
+
+    /*10. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlGuestPlayDemoMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage)  NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.REDIRECT_GAME_1, 0);
+        assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
+        assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
+    }
+
+    /*other*/
+    /*11. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlGuestCancel(){
+        LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
+        loginPopup.close();
+        assertFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.home), "Game is not launched after cancel login.");
+    }
+
+    /*12. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlPlayerIncorrectGameId(){
+        GameIncorrectId gameIncorrectId = (GameIncorrectId) NavigationUtils.launchGameByUrl(PlayerCondition.player, "incorrectGameId");
+        assertFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.home), "Game with incorrect code is not launched.");
+    }
+
+    /*13. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchIFrameGameByUrlPlayerIncorrectGameMode(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1, 2);
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
+    }
+
+    /*14. */
+    @Test(groups = {"regression", "smoke"})
+    public void launchRedirectGameByUrlPlayerIncorrectGameId(){
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.NO_DEMO_GAME, 0);
+        assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
+    }
+
 
 }

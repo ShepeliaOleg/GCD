@@ -54,6 +54,10 @@ public class LoginPopup extends AbstractPopup{
         WebDriverUtils.click(BUTTON_LOGIN_XP);
     }
 
+    public AbstractPage login(Page expectedPage){
+        return (AbstractPage) this.login(getUserData().getRegisteredUserData(), false, expectedPage);
+    }
+
     public AbstractPage login(UserData userData){
         return (AbstractPage)this.login(userData,false, Page.homePage);
     }
