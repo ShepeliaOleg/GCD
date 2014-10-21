@@ -8,8 +8,6 @@ import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.ChangeMyDetailsPage;
-import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
@@ -17,6 +15,8 @@ import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPage;
@@ -146,6 +146,9 @@ public class NavigationUtils extends WebDriverObject{
             case player:
                 logoutAdminIfLoggedIn(abstractPage);
                 logoutIfLoggedIn();
+                if(WebDriverUtils.isVisible(LoginPopup.BUTTON_LOGIN_XP, 0)){
+                    new LoginPopup().close();
+                }
                 abstractPage.login(userData);
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;

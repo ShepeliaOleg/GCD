@@ -17,14 +17,20 @@ public class WithdrawPage extends CashierPage {
     }
 
     public void withdrawSuccessful(PaymentMethod type, String amount){
+        withdrawSuccessful(type, amount, type.getAccount());
+    }
+
+    public void withdrawSuccessful(PaymentMethod type, String amount, String account){
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount);
+        withdrawConfirmationPopup.assertAccount(account);
+        withdrawConfirmationPopup.assertAmount(amount);
         withdrawConfirmationPopup.clickAccept();
         new WithdrawSuccessfulNotification();
     }
 
     public void withdrawAddingAccount(PaymentMethod type, String amount){
         addAccountByType(type);
-        withdrawSuccessful(type, amount);
+        withdrawSuccessful(type, amount, type.getSecondaryAccount());
     }
 
     public void cancelWithdraw(PaymentMethod type, String amount){
@@ -39,8 +45,6 @@ public class WithdrawPage extends CashierPage {
 
     public void assertWithdrawConfirmationPopupAndClose(PaymentMethod method, String amount){
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(method, amount);
-        withdrawConfirmationPopup.assertAccount(method.getAccount());
-        withdrawConfirmationPopup.assertAmount(amount);
         withdrawConfirmationPopup.closePopup();
     }
 
@@ -85,5 +89,33 @@ public class WithdrawPage extends CashierPage {
         withdrawConfirmationPopup.clickAccept();
         new WithdrawEnvoyPage().cancel();
         return new TransactionUnSuccessfulPopup();
+    }
+
+    /*MONEYBOOKERS*/
+
+    public void assertMoneyBookersInterface() {
+        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{FIELD_AMOUNT_XP});
+    }
+
+    /*NETELLER*/
+
+    public void assertNetellerInterfaceNew() {
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+    }
+
+    public void assertNetellerInterfaceExisting() {
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP});
+    }
+
+    public void withdrawNetellerInvalidAccount(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount, "111122223333", PaymentMethod.Neteller.getPassword());
+        new WithdrawConfirmationPopup().clickAccept();
+        new TransactionUnSuccessfulPopup().closePopup();
+    }
+
+    public void withdrawNetellerInvalidEmail(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount, "test@playtech.com", PaymentMethod.Neteller.getPassword());
+        new WithdrawConfirmationPopup().clickAccept();
+        new TransactionUnSuccessfulPopup().closePopup();
     }
 }

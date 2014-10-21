@@ -1,9 +1,10 @@
-import enums.*;
+import enums.ConfiguredPages;
+import enums.Page;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.login.WelcomePopup;
 import springConstructors.Defaults;

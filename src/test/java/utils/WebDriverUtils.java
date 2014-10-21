@@ -11,8 +11,7 @@ import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
 import utils.core.WebDriverFactory;
 import utils.core.WebDriverObject;
-import utils.logs.Log;
-import utils.logs.LogUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -2,7 +2,6 @@ package utils;
 
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
 
 import java.util.ArrayList;
 import java.util.Collection;

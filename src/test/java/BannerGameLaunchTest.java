@@ -1,4 +1,5 @@
-import enums.*;
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;

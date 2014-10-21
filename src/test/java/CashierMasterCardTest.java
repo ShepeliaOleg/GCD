@@ -56,7 +56,7 @@ public class CashierMasterCardTest extends AbstractTest{
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         balance = withdrawPage.getBalance();
         withdrawPage.withdrawSuccessful(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), depositPage.getBalanceChange(balance), "Balance change after withdraw");
+        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})

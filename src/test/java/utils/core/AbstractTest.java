@@ -1,20 +1,9 @@
 package utils.core;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.SkipException;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Listeners;
-import springConstructors.AdminUserData;
-import springConstructors.UserData;
-import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
-import java.util.ArrayList;
+
 import java.util.Collection;
 
 public class AbstractTest extends AbstractTestRunner{

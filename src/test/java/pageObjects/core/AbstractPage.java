@@ -1,9 +1,9 @@
 package pageObjects.core;
 
 import enums.Page;
-import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPage;
+import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.footer.Footer;
 import pageObjects.forgotPassword.ForgotPasswordPopup;

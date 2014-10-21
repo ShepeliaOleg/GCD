@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -30,14 +29,13 @@ public class Listener extends TestListenerAdapter{
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
             "ChangeMyDetailsTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
-            "CashierMasterCardTest", "CashierPayPalTest", "CashierPaySafeCardTest", "CashierQIWITest",
-            "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
+            "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest",
+            "CashierPaySafeCardTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest","LoginValidationTest",
             "PermissionsTest", "PushMessagesTest","ReferAFriendTest","RegistrationAffiliateTest",
             "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest",
             "ResponsibleGamingTest", "SelfExclusionTest", "WebContentTest"};
-
 
     @Override
     public void onTestFailure(ITestResult iTestResult){

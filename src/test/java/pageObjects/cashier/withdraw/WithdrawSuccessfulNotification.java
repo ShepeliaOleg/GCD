@@ -1,7 +1,6 @@
 package pageObjects.cashier.withdraw;
 
 import pageObjects.core.AbstractNotification;
-import utils.WebDriverUtils;
 
 public class WithdrawSuccessfulNotification extends AbstractNotification{
 

@@ -6,7 +6,6 @@ import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
-import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;

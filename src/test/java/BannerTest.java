@@ -1,19 +1,13 @@
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
 import enums.ConfiguredPages;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.banner.BannerPage;
-import pageObjects.banner.BannerPageProfileID;
 import pageObjects.external.ExternalPage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
-import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 

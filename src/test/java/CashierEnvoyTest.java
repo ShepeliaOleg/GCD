@@ -1,6 +1,5 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
-import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
@@ -8,7 +7,6 @@ import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.EnvoyDepositPage;
-import pageObjects.cashier.deposit.PayPalDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;

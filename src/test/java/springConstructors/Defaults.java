@@ -1,7 +1,6 @@
 package springConstructors;
 
 import utils.RandomUtils;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 import java.util.ArrayList;

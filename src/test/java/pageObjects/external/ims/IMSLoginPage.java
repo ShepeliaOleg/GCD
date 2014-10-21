@@ -1,9 +1,6 @@
 package pageObjects.external.ims;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import pageObjects.core.AbstractPage;
-import springConstructors.IMS;
 import utils.WebDriverUtils;
 
 public class IMSLoginPage extends AbstractPage{

@@ -3,6 +3,7 @@ package pageObjects.cashier.deposit;
 import enums.PaymentMethod;
 import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
+import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import springConstructors.UserData;
 import utils.core.AbstractTest;
 
@@ -70,5 +71,42 @@ public class DepositPage extends CashierPage{
 
     public void assertEnvoyInterface(UserData userData){
         assertInterfaceByType(PaymentMethod.Envoy, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP}, userData);
+    }
+
+    /*MONEYBOOKERS*/
+
+    public void assertMoneyBookersInterface() {
+        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public MoneyBookersDepositPage depositMoneyBookers(String amount) {
+        processPaymentByType(PaymentMethod.MoneyBookers, amount);
+        return new MoneyBookersDepositPage();
+    }
+
+    /*NETELLER*/
+
+
+    public void assertNetellerInterfaceExisting() {
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP, FIELD_PASSWORD_CODE_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public void assertNetellerInterfaceNew() {
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_CODE_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public TransactionSuccessfulPopup depositNeteller(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount);
+        return new TransactionSuccessfulPopup();
+    }
+
+    public void depositNetellerInvalidAccount(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount, "111144443333", PaymentMethod.Neteller.getPassword());
+        new TransactionUnSuccessfulPopup().closePopup();
+    }
+
+    public void depositNetellerInvalidPassword(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount, PaymentMethod.Neteller.getAccount(), "111222");
+        new TransactionUnSuccessfulPopup().closePopup();
     }
 }

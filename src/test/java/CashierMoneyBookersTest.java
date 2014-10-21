@@ -1,12 +1,13 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
-import pageObjects.cashier.deposit.PayPalDepositPage;
+import pageObjects.cashier.deposit.MoneyBookersDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
@@ -14,7 +15,7 @@ import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
 
-public class CashierPayPalTest extends AbstractTest{
+public class CashierMoneyBookersTest extends AbstractTest{
 
     @Autowired
     @Qualifier("userData")
@@ -24,91 +25,99 @@ public class CashierPayPalTest extends AbstractTest{
 
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalDepositInterfaceIsFunctional(){
+    public void moneyBookersDepositInterfaceIsFunctional(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        depositPage.assertPayPalInterface();
+        depositPage.assertMoneyBookersInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawInterfaceIsFunctional(){
+    public void moneyBookersWithdrawInterfaceIsFunctional(){
         PortalUtils.registerUser(defaultUserData.getRandomUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.assertPayPalInterface();
+        withdrawPage.assertMoneyBookersInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalCancelDeposit(){
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
-        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = payPalDepositPage.cancelDeposit();;
+    public void moneyBookersCancelDeposit(){
+        UserData userData = getMoneyBookersUser();
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
+        String balance = depositPage.getBalance();
+        MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = moneyBookersDepositPage.cancelDeposit();;
         transactionUnSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals(balance, depositPage.getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawAssertPopupAndClose(){
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+    public void moneyBookersWithdrawAssertPopupAndClose(){
+        moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        String balance = withdrawPage.getBalance();
         withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
-        assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(balance, withdrawPage.getBalance(), "Balance");
     }
 
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalDepositWithdrawForExistingUser() {
-        UserData userData = payPalDeposit();
+    public void moneyBookersDepositWithdrawForExistingUser() {
+        moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
+        String balance = withdrawPage.getBalance();
+        withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
+        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawForNewUser() {
+    public void moneyBookersWithdrawForNewUser() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
+        withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
         assertEquals(userData.getCurrencySign() + " 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawForExistingUserAddAccount() {
-        UserData userData = payPalDeposit();
+    public void moneyBookersWithdrawForExistingUserAddAccount() {
+        UserData userData = moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
+        withdrawPage.withdrawAddingAccount(PaymentMethod.MoneyBookers, AMOUNT);
         assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalWithdrawForExistingUserAddAccountClose() {
-        payPalDeposit();
+    public void moneyBookersWithdrawForExistingUserAddAccountClose() {
+        moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.addAccountByType(PaymentMethod.PayPal);
-        withdrawPage.closeAddAccountField(PaymentMethod.PayPal);
+        withdrawPage.addAccountByType(PaymentMethod.MoneyBookers);
+        withdrawPage.closeAddAccountField(PaymentMethod.MoneyBookers);
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void payPalCancelWithdrawForExistingUser() {
-        UserData userData = payPalDeposit();
+    public void moneyBookersCancelWithdrawForExistingUser() {
+        UserData userData = moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.cancelWithdraw(PaymentMethod.PayPal, AMOUNT);
+        withdrawPage.cancelWithdraw(PaymentMethod.MoneyBookers, AMOUNT);
         assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
-    private UserData payPalDeposit(){
-        UserData userData = defaultUserData.getRandomUserData();
+    private UserData moneyBookersDeposit(){
+        UserData userData = getMoneyBookersUser();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
-        payPalDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
+        String balance = depositPage.getBalance();
+        MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
+        moneyBookersDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT.replace(".", ""), depositPage.getBalanceChange(balance), "Balance change after deposit");
         return userData;
     }
 
+    private UserData getMoneyBookersUser(){
+        UserData userData = defaultUserData.getRandomUserData();
+        userData.setUsername("test-mb");
+        userData.setPassword("123asdQ");
+        return userData;
+    }
 }

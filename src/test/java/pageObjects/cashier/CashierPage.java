@@ -97,6 +97,10 @@ public class CashierPage extends AbstractPage{
         WebDriverUtils.click(fillFields(method, amount, expired)+BUTTON_XP);
     }
 
+    protected void processPaymentByType(PaymentMethod method, String amount, String account, String password){
+        WebDriverUtils.click(fillFields(method, amount, account, password)+BUTTON_XP);
+    }
+
     protected void processPaymentByType(PaymentMethod method, String amount, String promocode){
         String body = fillFields(method, amount);
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
@@ -104,17 +108,20 @@ public class CashierPage extends AbstractPage{
         WebDriverUtils.click(body+BUTTON_XP);
     }
 
-    private String fillFields(PaymentMethod method, String amount){
-        return fillFields(method, amount, false);
-    }
-
     private String fillFields(PaymentMethod method, String amount, boolean expired){
-        String name = method.getName();
         String account = method.getAccount();
         if(expired){
             account = method.getSecondaryAccount();
         }
-        String password = method.getPassword();
+        return fillFields(method, amount,account, method.getPassword());
+    }
+
+    private String fillFields(PaymentMethod method, String amount){
+        return fillFields(method, amount,method.getAccount(), method.getPassword());
+    }
+
+    private String fillFields(PaymentMethod method, String amount, String account, String password){
+        String name = method.getName();
         String promoCode = method.getPromoCode();
         String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
@@ -141,7 +148,6 @@ public class CashierPage extends AbstractPage{
         }
         return body;
     }
-
 
     public boolean isCardVisible(PaymentMethod method, String card) {
         String name = method.getName();

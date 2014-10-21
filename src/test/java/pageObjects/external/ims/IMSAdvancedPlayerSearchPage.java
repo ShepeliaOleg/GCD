@@ -1,6 +1,5 @@
 package pageObjects.external.ims;
 
-import org.testng.SkipException;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;

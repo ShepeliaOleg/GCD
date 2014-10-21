@@ -2,12 +2,9 @@ package pageObjects.banner;
 
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
-import enums.GameLaunch;
 import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.core.AbstractPage;
-import pageObjects.gamesPortlet.GameLaunchPage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;

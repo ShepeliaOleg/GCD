@@ -7,12 +7,10 @@ import pageObjects.core.AbstractPageObject;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
 import utils.RandomUtils;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GamesPortletPage extends AbstractPage{

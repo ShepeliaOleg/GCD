@@ -1,7 +1,6 @@
 package utils.logs;
 
 import enums.LogCategory;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 import java.util.ArrayList;

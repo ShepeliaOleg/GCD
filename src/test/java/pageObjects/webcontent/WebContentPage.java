@@ -5,8 +5,6 @@ import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.core.AbstractPage;
-import pageObjects.gamesPortlet.GameLaunchPage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;

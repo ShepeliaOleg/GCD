@@ -1,7 +1,6 @@
 package pageObjects.cashier;
 
 import pageObjects.core.AbstractNotification;
-import utils.WebDriverUtils;
 
 public class CardAddedNotification extends AbstractNotification{
 
