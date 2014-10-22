@@ -47,7 +47,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /* Frozen user registration*/
-    @Test(groups = {"registration","smoke"})
+    @Test(groups = {"registration"})
     public void frozenUserRegistration() {
         UserData userData = defaultUserData.getRandomUserData();
         userData.setFirstName("freezeMe");
