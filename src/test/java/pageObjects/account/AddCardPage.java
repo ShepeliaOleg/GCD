@@ -169,7 +169,7 @@ public class AddCardPage extends AbstractPage{
         AbstractTest.assertEquals(userData.getFirstName(), getFirstName(), "First name");
         AbstractTest.assertEquals(userData.getLastName(), getLastName(), "Last name");
         AbstractTest.assertEquals(userData.getCountry(), getDropdownCountry(), "Country");
-        AbstractTest.assertEquals(userData.getPostCode().toUpperCase(), getPostcode(), "Postcode");
+        AbstractTest.assertEquals(userData.getPostCode(), getPostcode(), "Postcode");
         AbstractTest.assertEquals(userData.getFullAddress(), getAddress(), "Address");
         AbstractTest.assertEquals(userData.getCity(), getCity(), "City");
     }

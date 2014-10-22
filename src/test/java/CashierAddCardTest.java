@@ -39,8 +39,8 @@ public class CashierAddCardTest extends AbstractTest{
     /*check FillUserdataCheckbox - data is correct, uncheck - data is deleted, overwrite - overwritten*/
     @Test(groups = {"regression", "mobile"})
     public void checkboxFillData(){
-        UserData userData = defaultUserData.getRegisteredUserData();
-        PortalUtils.loginUser(userData);
+        UserData userData = defaultUserData.getRandomUserData();
+        PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
         addCardPage.setCheckboxFillUserData(true);

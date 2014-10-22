@@ -19,10 +19,10 @@ public class GeneralTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void sessionIsSavedAfterVisitingExternalResource(){
         UserData userData = defaultUserData.getRegisteredUserData();
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         WebDriverUtils.navigateToURL("http://www.google.com/");
         WebDriverUtils.waitForPageToLoad();
-        homePage = (HomePage) NavigationUtils.navigateToPage(ConfiguredPages.home);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(ConfiguredPages.home);
         assertTrue(homePage.isLoggedIn(), "Is still logged in");
     }
 }
