@@ -32,7 +32,7 @@ public class DepositPage extends CashierPage{
     /*Paypal*/
 
     public void assertPayPalInterface(){
-        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(PaymentMethod.PayPal, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP});
     }
 
     public PayPalDepositPage depositPayPal(String amount){

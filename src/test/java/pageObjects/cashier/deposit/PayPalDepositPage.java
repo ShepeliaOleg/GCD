@@ -9,7 +9,6 @@ import utils.core.AbstractTest;
 
 public class PayPalDepositPage extends AbstractPage{
 
-    private static final String ROOT_XP = "//*[@id='html-rosetta-container']";
     private static final String AMOUNT_XP = "//*[@class='amount']";
     private static final String BUTTON_LOGIN_XP = "//*[@id='submitLogin']";
     private static final String FIELD_LOGIN_EMAIL_XP = "//*[@id='login_email']";
@@ -19,7 +18,7 @@ public class PayPalDepositPage extends AbstractPage{
     private static final String LINK_CANCEL = "//*[@name='cancel_return']";
 
     public PayPalDepositPage(){
-        super(new String[]{ROOT_XP});
+        super(new String[]{AMOUNT_XP});
     }
 
     private String getAmount(){
@@ -50,7 +49,7 @@ public class PayPalDepositPage extends AbstractPage{
 
     public TransactionUnSuccessfulPopup cancelDeposit(){
         clickCancel();
-        WebDriverUtils.waitForElementToDisappear(ROOT_XP, 30);
+        WebDriverUtils.waitForElementToDisappear(LINK_CANCEL, 30);
         return new TransactionUnSuccessfulPopup();
     }
 }

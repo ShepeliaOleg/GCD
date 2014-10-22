@@ -53,7 +53,7 @@ public class CashierPayPalTest extends AbstractTest{
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
+        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.PayPal, AMOUNT);
         assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
     }
 
