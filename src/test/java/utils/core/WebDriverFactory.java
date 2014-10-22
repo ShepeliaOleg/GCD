@@ -3,6 +3,7 @@ package utils.core;
 import io.selendroid.SelendroidCapabilities;
 import io.selendroid.SelendroidDriver;
 import io.selendroid.SelendroidLauncher;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -18,12 +19,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * User: sergiich
- * Date: 4/9/14
- */
 public class WebDriverFactory extends WebDriverObject{
 
 	private static WebDriver storedWebDriver;
@@ -73,7 +71,10 @@ public class WebDriverFactory extends WebDriverObject{
                     break;
                 case "windows":
                 case "linux":
-                    driver = getDesktopDriver(driver);
+                    driver = getDesktopDriver();
+                    break;
+                case "remote":
+                    driver = getRemoteDriver();
                     break;
                 default:
                     throw new RuntimeException("OS was not set correctly");
@@ -99,14 +100,23 @@ public class WebDriverFactory extends WebDriverObject{
 //        }
 	}
 
-    private WebDriver getDesktopDriver(WebDriver driver){
-        if(browser.equals("chrome")){
-            driver=createChromeDriver(os);
-        }else if(browser.equals("firefox")){
-            driver=createFireFoxDriver();
-        }else if(browser.equals("explorer")){
-            driver=createIEDriver();
+    private WebDriver getDesktopDriver(){
+        WebDriver driver;
+        switch (browser){
+            case "chrome":driver=createChromeDriver(os);
+                break;
+            case "firefox":driver=createFireFoxDriver();
+                break;
+            case "explorer":driver=createIEDriver();
+                break;
+            default: throw new RuntimeException("Please set correct browser, current '"+browser+"'");
         }
+        driver.manage().window().setSize(new Dimension(1920, 1080));
+        return driver;
+    }
+
+    private WebDriver getRemoteDriver(){
+        WebDriver driver = createRemoteDriver();
         driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
@@ -124,6 +134,26 @@ public class WebDriverFactory extends WebDriverObject{
 		webDriver.quit();
 		webDriver = storedWebDriver;
 	}
+
+    private WebDriver createRemoteDriver(){
+        Capabilities capabilities;
+        URL url;
+        switch (browser){
+            case "chrome":capabilities  = DesiredCapabilities.chrome();
+                break;
+            case "firefox":capabilities  = DesiredCapabilities.firefox();
+                break;
+            case "explorer":capabilities  = DesiredCapabilities.internetExplorer();
+                break;
+            default:throw new RuntimeException("Please set browser, now '"+browser+"'");
+        }
+        try{
+            url = new URL("http://172.29.49.73:4444/wd/hub");
+        }catch (MalformedURLException e){
+            throw new RuntimeException("Please set correct URL");
+        }
+        return new RemoteWebDriver(url, capabilities);
+    }
 
     private WebDriver createChromeDriver(String osType){
         ChromeOptions chromeOptions=new ChromeOptions();

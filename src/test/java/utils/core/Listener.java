@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
@@ -321,13 +322,17 @@ public class Listener extends TestListenerAdapter{
 
     private static void writeScreenshot(String imageName){
         File file = new File(outFolder +imageName);
-        File scrFile = ((TakesScreenshot)WebDriverFactory.getWebDriver()).getScreenshotAs(OutputType.FILE);
-        try  {
-            FileUtils.copyFile(scrFile, file);
+        WebDriver webDriver = WebDriverFactory.getWebDriver();
+        if(webDriver!=null){
+            File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
+            try  {
+                FileUtils.copyFile(scrFile, file);
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
         }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+
     }
 
     private String createSpoiler(Throwable exception, String name){

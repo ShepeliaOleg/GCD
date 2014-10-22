@@ -12,7 +12,7 @@ import utils.core.AbstractTest;
 
 public class ChangeMyDetailsPage extends AbstractPage{
 
-	public static final String ROOT_XP =		                "//*[contains(@id,'updatemydetails')]";
+	public static final String ROOT_XP =		                "//*[contains(@class,'portlet-update-my-details')]";
 	private static final String LABEL_CONFIRMATION_MESSAGE_XP=	"//*[contains(@class,'portlet-msg portlet-msg-info')]";
     private static final String LABEL_ERROR_MESSAGE_XP=			"//*[contains(@class,'portlet-msg portlet-msg-error')]";
 	private final static String LABEL_TITLE=					"//*[@id='updateMyDetailsModel']//h3";
