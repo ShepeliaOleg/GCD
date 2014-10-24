@@ -242,7 +242,12 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.click(BUTTON_SUBMIT_XP);
     }
 
-    protected ReadTermsAndConditionsPopup navigateToTermsAndConditions(){
+    public ReadTermsAndConditionsPopup navigateToTermsAndConditions(){
+        if(platform.equals(PLATFORM_DESKTOP)){
+            // do nothing
+        }else {
+            registrationPageStepThree(getUserData().getRegisteredUserData());
+        }
         WebDriverUtils.click(LINK_TERMS_AND_CONDITION_XP);
         return new ReadTermsAndConditionsPopup();
     }
