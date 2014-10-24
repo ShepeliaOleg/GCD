@@ -5,7 +5,7 @@ import utils.WebDriverUtils;
 
 public class AbstractPopup extends AbstractPageObject{
 
-	public final static String ROOT_XP=			    "//*[contains(@class, 'popup-modal__inner')]";
+	public final static String ROOT_XP=			    "//*[@class='popup popup-modal']";
 	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')] | "+ ROOT_XP + "//*[contains(@class, 'fn-decline')]";
 	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
     private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overlay')]";
@@ -61,8 +61,12 @@ public class AbstractPopup extends AbstractPageObject{
         return WebDriverUtils.getElementText(CONTENT_XP);
     }
 
-    protected String getCTitleText() {
+    protected String getTitleText() {
         return WebDriverUtils.getElementText(TITLE_XP);
+    }
+
+    public String getStyle() {
+        return WebDriverUtils.getAttribute(ROOT_XP, "style");
     }
 }
 

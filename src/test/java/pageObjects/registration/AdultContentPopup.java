@@ -1,13 +1,8 @@
 package pageObjects.registration;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPopup;
 
-/**
- * User: sergiich
- * Date: 8/14/13
- */
-
-public class AdultContentPopup extends AbstractPage{
+public class AdultContentPopup extends AbstractPopup{
 
 	private static final String ADULT_CONTENT_XP="//*[contains(@class, 'plus')]";
 
