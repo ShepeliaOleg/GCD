@@ -16,7 +16,7 @@ import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class PushMessagesLoginTest extends AbstractTest{
+public class LoginMessagesTest extends AbstractTest{
 
     @Autowired
     @Qualifier("userData")
