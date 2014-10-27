@@ -19,6 +19,7 @@ import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverObject;
 import utils.validation.ValidationUtils;
 
 import java.util.List;
@@ -57,19 +58,13 @@ public class RegistrationTest extends AbstractTest{
         assertTrue(WebDriverUtils.getCurrentUrl().contains(ConfiguredPages.home.toString()), "Player redirected to root");
     }
 
-    /*#2. Registration with receive bonuses check box checked*/
+    /*#2. Receive bonuses check box default state and text*/
     @Test(groups = {"registration","regression"})
     public void receivePromotionOffersDefaultState(){
         UserData userData=defaultUserData.getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        validateTrue(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
-    }
-
-    @Test(groups = {"registration","regression"})
-    public void receivePromotionOffersText(){
-        UserData userData=defaultUserData.getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        validateEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(userData), "Promotional offers checkbox text");
+        assertTrue(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
+        assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(userData), "Promotional offers checkbox text");
     }
 
 	/*#2. Registration with receive bonuses check box checked*/
@@ -164,13 +159,13 @@ public class RegistrationTest extends AbstractTest{
         assertEqualsCollections(defaults.getCurrencyList(), registrationPage.getCurrencyList(defaultUserData.getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
-//    /*#13. T&C web content is shown when clicking on T&C link*/
-//	@Test(groups = {"regression"})
-//	public void openTermsAndConditionsPopup(){
-//		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-//		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
-//	}
-//
+    /*#13. T&C web content is shown when clicking on T&C link*/
+	@Test(groups = {"regression"})
+	public void openTermsAndConditionsPopup(){
+		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
+	}
+
     /*#14. 18+ web content is shown when clicking on 18+ link*/
 	@Test(groups = {"registration","regression", "mobile"})
 	public void adultContentIsShown() {
@@ -261,7 +256,7 @@ public class RegistrationTest extends AbstractTest{
 
     }
 
-    /*#20. By default T&C check box is unchecked by default*/
+    /*#20. T&C check box is unchecked by default*/
 	@Test(groups = {"registration","regression", "mobile"})
 	public void defaultTnCCheckboxState(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -280,20 +275,12 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*#??. Country - countryCode code and name mapping*/
-    @Test(groups = {"registration","regression", "desktop"})
+    @Test(groups = {"registration","regression"})
     public void countryCodeNamePrefix(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        for (String countryCode : defaults.getCountryCodesList()) {
-            registrationPage.fillCountry(countryCode);
-            assertEquals(defaults.getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"'");
+        if (WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)) {
+            registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
         }
-    }
-
-    /*#??. Country - countryCode code and name mapping*/
-    @Test(groups = {"registration","regression", "mobile"})
-    public void countryCodeNamePrefixMobile(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
         for (String countryCode : defaults.getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
             assertEquals(defaults.getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"'");
@@ -301,18 +288,12 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*#23. Default selected countryCode*/
-	@Test(groups = {"registration","regression", "desktop"})
-	public void defaultCountry(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEquals(defaults.getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
-		// assertTrue(registrationPage.isFindMyAddressButtonVisible());
-	}
-
-    /*#23. Default selected countryCode*/
-    @Test(groups = {"registration","regression", "mobile"})
+    @Test(groups = {"registration","regression"})
     public void defaultCountryMobile(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
+        if (WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)) {
+            registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
+        }
         assertEquals(defaults.getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
         // assertTrue(registrationPage.isFindMyAddressButtonVisible());
     }

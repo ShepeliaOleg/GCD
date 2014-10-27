@@ -52,6 +52,11 @@ public class AbstractTest extends AbstractTestRunner{
         return addErrorIf(!actual, "TRUE", "FALSE", message);
     }
 
+    public static boolean assertUrl(String expected, String message){
+        //return assertEquals(expected, WebDriverUtils.getCurrentUrl().replace(WebDriverUtils.getBaseUrl(), ""), message);
+        return assertTrue(WebDriverUtils.getCurrentUrl().endsWith(expected), message);
+    }
+
     public static void validateTrue(boolean actual, String message){
         if(assertTrue(actual, message)){
             validate();

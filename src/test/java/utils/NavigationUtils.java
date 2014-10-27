@@ -25,12 +25,15 @@ import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
+import pageObjects.pageInPopup.PageInPopupPage;
+import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.login.WelcomePopup;
 import pageObjects.referAFriend.ReferAFriendPage;
+import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
@@ -46,11 +49,11 @@ public class NavigationUtils extends WebDriverObject {
 
     private static final int POPUP_CHECK_RETRIES = 30;
 
-    public static AbstractPage navigateToPage(ConfiguredPages configuredPages) {
+    public static AbstractPageObject navigateToPage(ConfiguredPages configuredPages) {
         return navigateToPage(PlayerCondition.any, configuredPages, null);
     }
 
-    public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages) {
+    public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages) {
         switch (condition) {
             case player:
                 return navigateToPage(condition, configuredPages, getUserData().getRegisteredUserData());
@@ -59,8 +62,12 @@ public class NavigationUtils extends WebDriverObject {
         }
     }
 
-    public static AbstractPage navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData) {
-        navigateToPortal(condition, configuredPages, userData);
+    public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPage, UserData userData) {
+        navigateToPortal(condition, configuredPage, userData);
+        return getConfiguredPageObject(configuredPage);
+    }
+
+    public static AbstractPageObject getConfiguredPageObject(ConfiguredPages configuredPages) {
         switch (configuredPages){
             case admin:                                         return new AdminPage();
             case balance:                                       return new BalancePage();
@@ -112,6 +119,13 @@ public class NavigationUtils extends WebDriverObject {
             case inbox:                                         return new InboxPage();
             case internalTags:                                  return new InternalTagsPage();
             case liveTableFinder:                               return new LiveCasinoPage();
+            case page_in_popup_scroll:
+            case page_in_popup_child:
+            case page_in_popup_a:                               return new PageInPopupPopup();
+            case page_in_popup_b:                               return new AdultContentPopup();
+            case page_in_popup_disabled:
+            case page_in_popup_link_to_child:
+            case page_in_popup_parent:                          return new PageInPopupPage();
             case permissions_page_admin:
             case permissions_page_all:
             case permissions_page_guest:
