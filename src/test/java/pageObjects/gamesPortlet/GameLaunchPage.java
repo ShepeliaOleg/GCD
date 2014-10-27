@@ -27,7 +27,7 @@ public class GameLaunchPage extends AbstractPage {
 
 	public boolean iFrameGameUrlIsValid(){
 		String url;
-		for (int i=0; i<=5; i++){
+		for (int i=0; i<=30; i++){
 			url = WebDriverUtils.getCurrentUrl();
 			if (realMode == null) {
                 if(url.contains(IFRAME_LAUNCH_GAME_URL + gameId)){
