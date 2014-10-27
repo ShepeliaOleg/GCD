@@ -160,11 +160,17 @@ public class NavigationUtils extends WebDriverObject {
                 break;
             case player:
                 logoutAdminIfLoggedIn(abstractPage);
-                logoutIfLoggedIn();
                 if(WebDriverUtils.isVisible(LoginPopup.BUTTON_LOGIN_XP, 0)){
                     new LoginPopup().close();
                 }
-                abstractPage.login(userData);
+                if (PortalUtils.isLoggedIn()) {
+                    if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
+                        PortalUtils.logout();
+                        abstractPage.login(userData);
+                    }
+                }else {
+                    abstractPage.login(userData);
+                }
                 WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case admin:
@@ -397,14 +403,11 @@ public class NavigationUtils extends WebDriverObject {
 
     public static AbstractPageObject launchGameByUrl(PlayerCondition playerCondition, String gameId, Integer realMode) {
         navigateToPage(playerCondition, ConfiguredPages.home);
-
         String gameUrl = GameLaunchPage.IFRAME_LAUNCH_GAME_URL + gameId;
         if (realMode != null) {
             gameUrl = gameUrl.concat(GameLaunchPage.GAME_MODE_URL + realMode);
         }
-
         WebDriverUtils.navigateToInternalURL(gameUrl);
-
         if (GameCategories.groupAll.getGames().contains(gameId)) {
             switch (playerCondition) {
                 case guest:
@@ -420,6 +423,13 @@ public class NavigationUtils extends WebDriverObject {
         } else {
             return new GameIncorrectId();
         }
+    }
 
+    public static GameLaunchPage launchGameByUrl(UserData userData) {
+        String gameID = GameLaunchPage.IFRAME_GAME_1;
+        navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        String gameUrl = GameLaunchPage.IFRAME_LAUNCH_GAME_URL + gameID;
+        WebDriverUtils.navigateToInternalURL(gameUrl);
+        return new GameLaunchPage(gameID, null);
     }
 }

@@ -16,6 +16,8 @@ public class GameLaunchPage extends AbstractPage {
     public  static final String REDIRECT_GAME_1 =           "hlk2";
     public  static final String NO_DEMO_GAME =              "hlk2";
 
+    public  static final int TIMEOUT =              30;
+
     private static String  gameId;
     private static Integer realMode;
 
@@ -27,7 +29,7 @@ public class GameLaunchPage extends AbstractPage {
 
 	public boolean iFrameGameUrlIsValid(){
 		String url;
-		for (int i=0; i<=30; i++){
+		for (int i=0; i<TIMEOUT; i++){
 			url = WebDriverUtils.getCurrentUrl();
 			if (realMode == null) {
                 if(url.contains(IFRAME_LAUNCH_GAME_URL + gameId)){

@@ -397,6 +397,12 @@ public class UserData extends WebDriverObject{
         return userData;
     }
 
+    public UserData getFrozenUserData() {
+        UserData userData = getRandomUserData();
+        userData.setFirstName("freezeMe");
+        return userData;
+    }
+
     public UserData getRandomUserData() {
         UserData userData = getRegisteredUserData();
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));

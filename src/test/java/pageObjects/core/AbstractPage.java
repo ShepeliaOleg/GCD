@@ -207,7 +207,6 @@ public class AbstractPage extends AbstractPageObject{
     public String getTranslationText() {
         return footer().getFooterText();
     }
-
 }
 
 

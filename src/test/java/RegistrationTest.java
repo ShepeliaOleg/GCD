@@ -50,8 +50,7 @@ public class RegistrationTest extends AbstractTest{
     /* Frozen user registration*/
     @Test(groups = {"registration"})
     public void frozenUserRegistration() {
-        UserData userData = defaultUserData.getRandomUserData();
-        userData.setFirstName("freezeMe");
+        UserData userData = defaultUserData.getFrozenUserData();
         PortalUtils.registerUser(userData, Page.registrationPage);
         new FrozenNotificationPopup().closePopup();
         new AbstractPage();

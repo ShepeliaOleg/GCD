@@ -51,7 +51,7 @@ public class AbstractPopup extends AbstractPageObject{
         WebDriverUtils.waitFor();
     }
 
-    protected void clickOffPopup(){
+    public void clickOffPopup(){
         WebDriverUtils.click(ROOT_XP, OFFSET);
         WebDriverUtils.waitFor();
     }
@@ -68,14 +68,16 @@ public class AbstractPopup extends AbstractPageObject{
         return WebDriverUtils.getElementText(TITLE_XP);
     }
 
-    public void clickNext() {
+    public AbstractPopup clickNext() {
         WebDriverUtils.click(BUTTON_NEXT_XP);
         WebDriverUtils.waitFor();
+        return new AbstractPopup();
     }
 
-    public void clickPrevious() {
+    public AbstractPopup clickPrevious() {
         WebDriverUtils.click(BUTTON_PREVIOUS_XP);
         WebDriverUtils.waitFor();
+        return new AbstractPopup();
     }
 
     public String getStyle() {

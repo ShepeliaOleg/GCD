@@ -147,53 +147,34 @@ public class IMS extends WebDriverObject{
 		return false;
 	}
 
-    public void sendPushMessage(Page pushMessages){
-        this.sendPushMessage(defaultUserData.getRegisteredUserData(), pushMessages, null);
-    }
-
-    public void sendPushMessage(Page pushMessages, String amount){
-        this.sendPushMessage(defaultUserData.getRegisteredUserData(), pushMessages, amount);
-    }
-
     public void sendPushMessage(UserData userData, Page pushMessages){
-        this.sendPushMessage(userData, pushMessages, null);
+        this.sendPushMessage(userData, null, pushMessages);
     }
 
-	public void sendPushMessage(UserData userData, Page pushMessages, String amount){
-		try{
-			switch (pushMessages){
-				case logout:
-					try{
-						WebDriverUtils.openAdditionalSession();
-						navigateToPlayedDetails(userData.getUsername()).sendPushLogout();
-					}finally{
-						WebDriverUtils.closeAdditionalSession();
-					}
-					break;
-				case changePasswordPopup:
-					navigateToPlayedDetails(userData.getUsername()).changePassword(userData.getPassword());
-					break;
-				case okBonus:
-					try{
-						WebDriverUtils.openAdditionalSession();
-						navigateToPlayedDetails(userData.getUsername()).addBonus(Page.okBonus, amount);
-					}finally{
-						WebDriverUtils.closeAdditionalSession();
-					}
-					break;
-				case acceptDeclineBonus:
-					try{
-						WebDriverUtils.openAdditionalSession();
-						navigateToPlayedDetails(userData.getUsername()).addBonus(Page.acceptDeclineBonus, amount);
-					}finally{
-						WebDriverUtils.closeAdditionalSession();
-					}
-					break;
-			}
-		}catch(RuntimeException e){
-            AbstractTest.skipTest("IMS issue "+e.getMessage());
+    public void sendPushMessage(UserData userData, String amount, Page...pushMessages){
+        WebDriverUtils.openAdditionalSession();
+        try{
+            IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
+            for(Page message:pushMessages) {
+                switch (message) {
+                    case logout:
+                        imsPlayerDetailsPage.sendPushLogout();
+                        break;
+                    case changePasswordPopup:
+                        imsPlayerDetailsPage.changePassword(userData.getPassword());
+                        break;
+                    case okBonus:
+                    case acceptDeclineBonus:
+                        imsPlayerDetailsPage.addBonus(message, amount);
+                        break;
+                }
+            }
+        }catch(RuntimeException e) {
+            AbstractTest.skipTest("IMS issue " + e.getMessage());
+        }finally {
+            WebDriverUtils.closeAdditionalSession();
         }
-	}
+    }
 
     public void setLoginMessagesCount(int count){
         IMSLoginDatabasePage imsLoginDatabasePage = navigateToTemplateTools().clickLoginDatabase();

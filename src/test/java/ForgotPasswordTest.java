@@ -71,6 +71,18 @@ public class ForgotPasswordTest extends AbstractTest{
         return userData;
 	}
 
+    /* Frozen user*/
+    @Test(groups = {"regression"})
+    public void frozenPasswordRecovery(){
+        UserData userData = defaultUserData.getFrozenUserData();
+        userData.setEmail(mailService.generateEmail());
+        PortalUtils.registerUser(userData, Page.registrationPage);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+        forgotPasswordPopup = forgotPasswordPopup.recoverPasswordInvalid(userData);
+        assertEquals("Player is frozen", forgotPasswordPopup.getPortletErrorMessage(), "Error message");
+    }
+
     /*6. change temporary password (popup shown after login)*/
 	@Test(groups = {"regression"})
 	public UserData setNewPasswordAfterRecoveryAndLogin() {
