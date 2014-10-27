@@ -73,12 +73,12 @@ public class AbstractPage extends AbstractPageObject{
         return loggedInHeader().isUsernameDisplayed(userData);
     }
 
-    public String getBalance(){
-        return loggedInHeader().getBalance();
+    public String getBalanceCurrency(){
+        return loggedInHeader().getBalanceCurrency();
     }
 
-    public int getBalanceChange(String balance){
-        return loggedInHeader().getBalanceChange(balance);
+    public String getBalanceAmount(){
+        return loggedInHeader().getBalanceAmount();
     }
 
     public AbstractPage logout(){

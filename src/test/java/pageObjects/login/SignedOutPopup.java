@@ -4,13 +4,12 @@ import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 8/28/2014.
- */
 public class SignedOutPopup extends AbstractPopup {
 
+    public static final String TITLE_XP = AbstractPopup.TITLE_XP + "[contains(text(), 'Signed out')]";
+
     public SignedOutPopup() {
-        super(new String[]{BUTTON_ACCEPT_XP, BUTTON_CLOSE_XP});
+        super(new String[]{TITLE_XP, BUTTON_ACCEPT_XP, BUTTON_CLOSE_XP});
     }
 
     private void clickLoginAgain() {

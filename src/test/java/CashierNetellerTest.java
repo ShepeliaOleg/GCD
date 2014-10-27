@@ -4,6 +4,7 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.account.AddCardPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
@@ -11,6 +12,7 @@ import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class CashierNetellerTest extends AbstractTest {
@@ -53,18 +55,18 @@ public class CashierNetellerTest extends AbstractTest {
     public void netellerWithdrawClose(){
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
-        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
-        assertEquals(balance, withdrawPage.getBalance(), "Balance");
+        String balance = withdrawPage.getBalanceAmount();
+        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositWithdrawForExistingUser() {
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
+        String balance = withdrawPage.getBalanceAmount();
         withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after withdraw");
+        assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -73,16 +75,16 @@ public class CashierNetellerTest extends AbstractTest {
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
-        assertEquals(userData.getCurrencySign() + " 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawForExistingUserAddAccount() {
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
+        String balance = withdrawPage.getBalanceAmount();
         withdrawPage.withdrawAddingAccount(PaymentMethod.Neteller, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after deposit");
+        assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -98,25 +100,25 @@ public class CashierNetellerTest extends AbstractTest {
         UserData userData = netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.Neteller, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositIncorrectAccount() {
         UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositNetellerInvalidAccount(AMOUNT);
-        assertEquals(userData.getCurrencySign() + " 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositIncorrectPassword() {
         UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositNetellerInvalidPassword(AMOUNT);
-        assertEquals(userData.getCurrencySign() + " 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -125,7 +127,7 @@ public class CashierNetellerTest extends AbstractTest {
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidAccount(AMOUNT);
-        assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -134,17 +136,17 @@ public class CashierNetellerTest extends AbstractTest {
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidEmail(AMOUNT);
-        assertEquals(userData.getCurrencySign() + " " + AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     private UserData netellerDeposit(){
         UserData userData = getNetellerUser();
-        PortalUtils.registerUser(userData);
+        PortalUtils.loginUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        String balance = depositPage.getBalance();
+        String balance = depositPage.getBalanceAmount();
         TransactionSuccessfulPopup transactionSuccessfulPopup = depositPage.depositNeteller(AMOUNT);
         transactionSuccessfulPopup.closePopup();
-        assertEquals(AMOUNT.replace(".", ""), depositPage.getBalanceChange(balance), "Balance change after deposit");
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT), depositPage.getBalanceAmount(), "Balance change after withdraw");
         return userData;
     }
 

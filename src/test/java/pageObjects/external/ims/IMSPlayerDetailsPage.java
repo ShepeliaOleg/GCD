@@ -318,6 +318,10 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		return WebDriverUtils.isVisible(PLAYER_ONLINE_IMAGE);
 	}
 
+    public String getClientType() {
+        return WebDriverUtils.getElementText(FIELD_CLIENT_TYPE);
+    }
+
 	public boolean getAllChannelsCheckboxState(){
 		boolean result=true;
 		if(!WebDriverUtils.isVisible(CHECKBOX_ALL_CHANNELS)){
@@ -362,21 +366,16 @@ public class IMSPlayerDetailsPage extends AbstractPage{
         WebDriverUtils.isVisible(LABEL_LOCK_REMOVED);
     }
 
-	private IMSChangePassPopup openChangePassPopup(){
-		WebDriverUtils.click(BUTTON_CHANGE_PASSWORD);
-		return new IMSChangePassPopup(getMainWindowHandle());
-	}
-
-	private IMSAddBonusPage clickAddBonus(){
-		WebDriverUtils.click(BUTTON_ADD_BONUS);
-		return new IMSAddBonusPage();
-	}
+    public void addBonus(Page pushMessages, String amount, int quantity){
+        for(int i=0;i<quantity;i++){
+            addBonus(pushMessages, amount);
+        }
+    }
 
 	public IMSPlayerDetailsPage addBonus(Page pushMessages, String amount){
 		IMSAddBonusPage imsAddBonusPage = clickAddBonus();
-		imsAddBonusPage.addBonus(pushMessages, amount);
-		return new IMSPlayerDetailsPage();
-	}
+		return imsAddBonusPage.addBonus(pushMessages, amount);
+    }
 
 	private String getDigitsAndAddCurrency(String label){
 		String digitsWithPrice=getCurrencySign() + label.replaceAll("[^0-9.]", "");
@@ -416,7 +415,13 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 		return WebDriverUtils.getDropdownSelectedOptionText(xpath);
 	}
 
-    public String getClientType() {
-        return WebDriverUtils.getElementText(FIELD_CLIENT_TYPE);
+    private IMSChangePassPopup openChangePassPopup(){
+        WebDriverUtils.click(BUTTON_CHANGE_PASSWORD);
+        return new IMSChangePassPopup(getMainWindowHandle());
+    }
+
+    private IMSAddBonusPage clickAddBonus(){
+        WebDriverUtils.click(BUTTON_ADD_BONUS);
+        return new IMSAddBonusPage();
     }
 }

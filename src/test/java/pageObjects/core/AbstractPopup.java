@@ -8,9 +8,11 @@ public class AbstractPopup extends AbstractPageObject{
 	public final static String ROOT_XP=			    "//*[contains(@class, 'popup-modal__inner')]";
 	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')] | "+ ROOT_XP + "//*[contains(@class, 'fn-decline')]";
 	public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
+    public final static String BUTTON_NEXT_XP =     ROOT_XP + "//*[contains(@class, 'fn-next')]";
+    public final static String BUTTON_PREVIOUS_XP = ROOT_XP + "//*[contains(@class, 'fn-prev')]";
     private final static String OFF_POPUP_XP =      "//*[contains(@class, 'fn-overlay')]";
-    protected final static String TITLE_XP = "//*[@class='popup-modal__title']";
-    private final static String CONTENT_XP = "//*[@class='popup-modal__content']";
+    protected final static String TITLE_XP =        "//*[@class='popup-modal__title']";
+    private final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
 
 	public AbstractPopup(){
 		this(null);
@@ -63,6 +65,16 @@ public class AbstractPopup extends AbstractPageObject{
 
     protected String getCTitleText() {
         return WebDriverUtils.getElementText(TITLE_XP);
+    }
+
+    public void clickNext() {
+        WebDriverUtils.click(BUTTON_NEXT_XP);
+        WebDriverUtils.waitFor(1000);
+    }
+
+    public void clickPrevious() {
+        WebDriverUtils.click(BUTTON_PREVIOUS_XP);
+        WebDriverUtils.waitFor(1000);
     }
 }
 

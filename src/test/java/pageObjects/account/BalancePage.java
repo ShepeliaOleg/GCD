@@ -31,13 +31,4 @@ public class BalancePage extends AbstractPage{
 		return WebDriverUtils.getElementText(LABEL_TOTAL_BALANCE_VALUE_XP);
 	}
 
-	public boolean BalancesAreEqualTo(UserData userData){
-        String main1 = getMainBalance();
-        String main2 = userData.getBalanceMain();
-        String total1 = getTotalBalance();
-        String total2 = userData.getBalanceTotal();
-		boolean main=getMainBalance().equals(userData.getBalanceMain());
-		boolean total=getTotalBalance().equals(userData.getBalanceTotal());
-		return (main && total);
-	}
 }

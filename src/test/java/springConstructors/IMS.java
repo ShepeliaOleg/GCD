@@ -4,10 +4,7 @@ import enums.ConfiguredPages;
 import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import pageObjects.external.ims.IMSHomePage;
-import pageObjects.external.ims.IMSLoginPage;
-import pageObjects.external.ims.IMSPlayerDetailsPage;
-import pageObjects.external.ims.IMSTemplateToolsPage;
+import pageObjects.external.ims.*;
 import pageObjects.inbox.InboxPage;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
@@ -198,13 +195,16 @@ public class IMS extends WebDriverObject{
         }
 	}
 
-    public void freezeWelcomeMessages(){
-        navigateToTemplateTools().clickLoginDatabase().navigateToWelcomeMessage().setFreezeStateAndUpdate(true);
-    }
-
-    public void unFreezeWelcomeMessages(){
-        navigateToTemplateTools().clickLoginDatabase().navigateToWelcomeMessage().setFreezeStateAndUpdate(false);
-
+    public void setLoginMessagesCount(int count){
+        IMSLoginDatabasePage imsLoginDatabasePage = navigateToTemplateTools().clickLoginDatabase();
+        if(count==3){
+            imsLoginDatabasePage.unfreeze(count);
+        }else {
+            imsLoginDatabasePage.freezeAll();
+            if(count>0){
+                imsLoginDatabasePage.unfreeze(count);
+            }
+        }
     }
 
     public String getClientType(UserData userData){

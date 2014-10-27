@@ -13,6 +13,7 @@ import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class CashierMoneyBookersTest extends AbstractTest{
@@ -42,20 +43,20 @@ public class CashierMoneyBookersTest extends AbstractTest{
     public void moneyBookersCancelDeposit(){
         UserData userData = getMoneyBookersUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
-        String balance = depositPage.getBalance();
+        String balance = depositPage.getBalanceAmount();
         MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
         TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = moneyBookersDepositPage.cancelDeposit();;
         transactionUnSuccessfulPopup.closePopup();
-        assertEquals(balance, depositPage.getBalance(), "Balance");
+        assertEquals(balance, depositPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawAssertPopupAndClose(){
         moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
-        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
-        assertEquals(balance, withdrawPage.getBalance(), "Balance");
+        String balance = withdrawPage.getBalanceAmount();
+        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
 
@@ -63,9 +64,9 @@ public class CashierMoneyBookersTest extends AbstractTest{
     public void moneyBookersDepositWithdrawForExistingUser() {
         moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
+        String balance = withdrawPage.getBalanceAmount();
         withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after withdraw");
+        assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -74,15 +75,15 @@ public class CashierMoneyBookersTest extends AbstractTest{
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(userData.getCurrencySign() + " 9.95", new AbstractPage().getBalance(), "Balance");
+        assertEquals("9.95", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawForExistingUserAddAccount() {
-        UserData userData = moneyBookersDeposit();
+        moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" 9.95", new AbstractPage().getBalance(), "Balance");
+        assertEquals("9.95", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -98,19 +99,19 @@ public class CashierMoneyBookersTest extends AbstractTest{
         UserData userData = moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     private UserData moneyBookersDeposit(){
         UserData userData = getMoneyBookersUser();
-        PortalUtils.registerUser(userData);
+        PortalUtils.loginUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        String balance = depositPage.getBalance();
+        String balance = depositPage.getBalanceAmount();
         MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
         moneyBookersDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
-        assertEquals(AMOUNT.replace(".", ""), depositPage.getBalanceChange(balance), "Balance change after deposit");
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT), depositPage.getBalanceAmount(), "Balance change after deposit");
         return userData;
     }
 

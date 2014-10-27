@@ -20,8 +20,26 @@ public class LoggedInHeader extends Header{
 		super(new String[]{Header.BALANCE_AREA, LABEL_BALANCE_XP, LABEL_USERNAME_XP});
 	}
 
-    public String getBalance(){
+    public String getBalanceFull(){
         return WebDriverUtils.getElementText(LABEL_BALANCE_XP);
+    }
+
+    public String getBalanceCurrency(){
+        String[] balance = getBalance();
+        if(currencyGoesFirst(balance)){
+            return balance[0];
+        }else {
+            return balance[1];
+        }
+    }
+
+    public String getBalanceAmount(){
+        String[] balance = getBalance();
+        if(currencyGoesFirst(balance)){
+            return balance[1];
+        }else {
+            return balance[0];
+        }
     }
 
     public String getUsername(){
@@ -32,16 +50,20 @@ public class LoggedInHeader extends Header{
         return (getUsername().contains(userData.getUsername()));
     }
 
-    public int getBalanceChange(String oldBalance){
-        return TypeUtils.convertBalance(getBalance()) - TypeUtils.convertBalance(oldBalance);
-    }
-
     public LogoutPopup clickLogout(){
         if(platform.equals(PLATFORM_DESKTOP)){
             return clickLogoutButton();
         }else {
             return openMenu().loggedInMenu().clickLogout();
         }
+    }
+
+    private String[] getBalance(){
+        return getBalanceFull().split(" ");
+    }
+
+    private boolean currencyGoesFirst(String[] balance){
+        return balance[0].length()<=3;
     }
 
     //Desktop only

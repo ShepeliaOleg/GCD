@@ -18,6 +18,10 @@ public class PaySafeCardDepositPage extends AbstractPage{
     private static final String FIELD_PIN_3_XP = "//*[@id='pinForm:rn03']";
     private static final String FIELD_PIN_4_XP = "//*[@id='pinForm:rn04']";
 
+    public PaySafeCardDepositPage(){
+        super(new String[]{FIELD_PIN_1_XP});
+    }
+
     private void clickPay(){
         WebDriverUtils.click(BUTTON_PAY_XP);
     }

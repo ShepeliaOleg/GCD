@@ -87,17 +87,6 @@ public class UserData extends WebDriverObject{
 	private String verificationQuestion;
 	private String verificationAnswer;
 	private String currency;
-	private String coupon;
-	private String balanceMain;
-	private String balanceTotal;
-
-    public String getCoupon(){
-		return coupon;
-	}
-
-	public void setCoupon(String coupon){
-		this.coupon=coupon;
-	}
 
     public String getCurrency(){
         return currency;
@@ -328,22 +317,6 @@ public class UserData extends WebDriverObject{
         this.gender=gender;
     }
 
-	public void setBalanceMain(String balanceMain){
-		this.balanceMain=balanceMain;
-	}
-
-	public String getBalanceMain(){
-		return balanceMain;
-	}
-
-	public void setBalanceTotal(String balanceTotal){
-		this.balanceTotal=balanceTotal;
-	}
-
-	public String getBalanceTotal(){
-		return balanceTotal;
-	}
-
 	private UserData cloneUserData(){
 		UserData clonedUserData=new UserData();
 		clonedUserData.title=           getTitle();
@@ -368,9 +341,6 @@ public class UserData extends WebDriverObject{
 		clonedUserData.verificationQuestion=getVerificationQuestion();
 		clonedUserData.verificationAnswer=getVerificationAnswer();
 		clonedUserData.currency=        getCurrency();
-		clonedUserData.coupon=          getCoupon();
-		clonedUserData.balanceMain=     getBalanceMain();
-		clonedUserData.balanceTotal=    getBalanceTotal();
         clonedUserData.gender=          getGender();
 		return clonedUserData;
 	}

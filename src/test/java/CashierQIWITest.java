@@ -42,8 +42,8 @@ public class CashierQIWITest extends AbstractTest{
      public void qIWIWithdrawAssertPopupAndClose() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Visa, AMOUNT);
-        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -51,7 +51,7 @@ public class CashierQIWITest extends AbstractTest{
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.QIWI, AMOUNT);
-        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -59,7 +59,7 @@ public class CashierQIWITest extends AbstractTest{
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.QIWI, AMOUNT);
-        assertEquals(CURRENCY+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -92,7 +92,7 @@ public class CashierQIWITest extends AbstractTest{
         qiwiDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
-        assertEquals(CURRENCY+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, depositPage.getBalanceAmount(), "Balance");
     }
 
 }

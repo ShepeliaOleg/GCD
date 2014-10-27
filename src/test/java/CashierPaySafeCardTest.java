@@ -18,7 +18,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
     @Qualifier("userData")
     private UserData defaultUserData;
 
-    private static final String CURRENCY = "EUR";
+    private static final String CURRENCY = "EUR@€";
     private static final String COUNTRY = "NL";
     private static final String AMOUNT = "1.00";
 
@@ -39,7 +39,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
         paySafeCardDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, depositPage.getBalanceAmount(), "Balance");
     }
 
 
@@ -51,12 +51,12 @@ public class CashierPaySafeCardTest extends AbstractTest{
         PaySafeCardDepositPage paySafeCardDepositPage = depositPage.depositPaySafeCard(AMOUNT);
         TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = paySafeCardDepositPage.cancelDeposit();
         transactionUnSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" 0.00", new AbstractPage().getBalance(), "Balance");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
     }
 
     private UserData getEURUser(){
         UserData userData = defaultUserData.getRandomUserData();
-        userData.setCurrency(CURRENCY+"@€");
+        userData.setCurrency(CURRENCY);
         userData.setCountry(COUNTRY);
         return userData;
     }

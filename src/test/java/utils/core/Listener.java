@@ -34,7 +34,7 @@ public class Listener extends TestListenerAdapter{
             "CashierPaySafeCardTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest","LoginValidationTest",
-            "PermissionsTest", "PushMessagesTest","ReferAFriendTest","RegistrationAffiliateTest",
+            "PermissionsTest", "PushMessagesBonusTest","PushMessagesLoginTest", "ReferAFriendTest","RegistrationAffiliateTest",
             "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest",
             "ResponsibleGamingTest", "SelfExclusionTest", "WebContentTest"};
 

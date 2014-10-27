@@ -70,7 +70,15 @@ public class TypeUtils{
         return string.replace("}", "").replace("{", "").split(",");
     }
 
-    public static int convertBalance(String balance){
-        return Integer.parseInt(balance.replace(",", "").replace(".", "").replace("£", "").replace("$", "").replace("€",""));
+    public static String calculateSum(String... number) {
+        String result = null;
+        for(String s:number){
+            result = String.valueOf(Double.valueOf(result)+Double.valueOf(s));
+        }
+        return result;
+    }
+
+    public static String calculateDiff(String base, String number) {
+        return String.valueOf(Double.valueOf(base)-Double.valueOf(number));
     }
 }

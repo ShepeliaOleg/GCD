@@ -65,7 +65,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
                 TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = envoyDepositPage.cancelDeposit();
                 transactionUnSuccessfulPopup.closePopup();
-                assertEquals(userData.getCurrencySign() + " 0.00", new AbstractPage().getBalance(), "Balance");
+                assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -79,7 +79,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
                 TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = withdrawPage.withdrawEnvoy(AMOUNT);
                 transactionUnSuccessfulPopup.closePopup();
-                assertEquals(userData.getCurrencySign() + " 10.00", new AbstractPage().getBalance(), "Balance");
+                assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -91,8 +91,8 @@ public class CashierEnvoyTest extends AbstractTest{
             try{
                 PortalUtils.registerUser(userData, "valid");
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-                withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.Envoy, AMOUNT);
-                assertEquals(userData.getCurrencySign() + " 10.00", new AbstractPage().getBalance(), "Balance");
+                withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Envoy, AMOUNT);
+                assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -105,7 +105,7 @@ public class CashierEnvoyTest extends AbstractTest{
         envoyDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT);
         transactionSuccessfulPopup.closePopup();
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalance(), "Balance");
+        assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     private UserData[] getUsers(){

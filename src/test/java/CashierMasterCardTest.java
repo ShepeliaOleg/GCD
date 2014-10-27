@@ -8,6 +8,7 @@ import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 
 public class CashierMasterCardTest extends AbstractTest{
@@ -50,22 +51,21 @@ public class CashierMasterCardTest extends AbstractTest{
     public void masterCardValidDepositAndWithdraw(){
         PortalUtils.loginUser(defaultUserData.getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        String balance = depositPage.getBalance();
+        String balance = depositPage.getBalanceAmount();
         depositPage.depositCard(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), depositPage.getBalanceChange(balance), "Balance change after deposit");
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT), depositPage.getBalanceAmount(), "Balance change after deposit");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        balance = withdrawPage.getBalance();
         withdrawPage.withdrawSuccessful(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(AMOUNT.replace(".", ""), withdrawPage.getBalanceChange(balance), "Balance change after withdraw");
+        assertEquals(TypeUtils.calculateSum(balance), depositPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardWithdrawAssertPopupAndCancel() {
         PortalUtils.loginUser(defaultUserData.getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        String balance = withdrawPage.getBalance();
-        withdrawPage.assertWithdrawConfirmationPopupAndClose(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(balance, withdrawPage.getBalance(), "Balance");
+        String balance = withdrawPage.getBalanceAmount();
+        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.MasterCard, AMOUNT);
+        assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
