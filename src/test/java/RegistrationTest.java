@@ -90,7 +90,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithBonusCoupon(){
         UserData userData=defaultUserData.getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
-        validateEquals(userData.getCurrencySign()+" 10.00", homePage.getBalance(), "User balance");
+        validateEquals("10.00", homePage.getBalanceAmount(), "User balance");
 	}
 
     /*#5. Registration without bonus code provided*/
@@ -98,7 +98,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithOutBonusCoupon(){
         UserData userData = defaultUserData.getRandomUserData();
         HomePage homePage = PortalUtils.registerUser(userData);
-        validateEquals(userData.getCurrencySign()+" 0.00", homePage.getBalance(), "User balance");
+        validateEquals("0.00", homePage.getBalanceAmount(), "User balance");
     }
 
     /*3. Try to use invalid bonus code*/
