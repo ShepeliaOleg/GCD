@@ -95,6 +95,15 @@ public class WebDriverUtils extends WebDriverObject{
         }
     }
 
+    public static void click(String xpath, int offset){
+        Actions builder = new Actions(webDriver);
+        try {
+            builder.moveToElement(getElement(xpath), -offset, 0).click().build().perform();
+        }catch (WebDriverException e){
+            AbstractTest.failTest("Could not click element by xpath: " + xpath);
+        }
+    }
+
     public static String getAttribute(String xpath, String attribute){
         try{
             return getElement(xpath).getAttribute(attribute);
