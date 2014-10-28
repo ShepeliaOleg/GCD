@@ -188,15 +188,15 @@ public class AddCardPage extends AbstractPage{
 
 
     public void assertInvalidMessage() {
-        assertMessage("Bad input. Please enter a valid Credit Card Number.");
+        assertMessage("Invalid credit card number or expiration date");
     }
 
     public void assertUnsupportedMessage() {
-        assertMessage("Bad input. Please enter a valid Credit Card Number.");
+        assertMessage("Invalid credit card number or expiration date");
     }
 
     public void assertCardUsedMessage() {
-        assertMessage("Bad input. Please enter a valid Credit Card Number.");
+        assertMessage("Invalid credit card number or expiration date");
     }
 
     private void assertMessage(String message){

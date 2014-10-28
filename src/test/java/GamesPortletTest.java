@@ -26,7 +26,7 @@ public class GamesPortletTest extends AbstractTest {
 	private ValidationRule searchValidationRule;
 
 	/*1. Portlet is displayed, game can be launched */
-	@Test(groups = {"regression", "smoke"})
+	@Test(groups = {"regression"})
 	public void startFirstAvailableGameInGamePortlet(){
 		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
 		gamesPortletPage.playDemoAndAssertUrl();

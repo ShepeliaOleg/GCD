@@ -17,6 +17,8 @@ public class IMSAddBonusPage extends AbstractPage{
 	public IMSPlayerDetailsPage addBonus(Page pushMessages, String amount){
         new IMSAddBonusIframe(ADD_BONUS_IFRAME_ID).sendBonus(pushMessages, amount);
 		WebDriverUtils.acceptJavaScriptAlert();
+        WebDriverUtils.waitFor();
+        WebDriverUtils.acceptJavaScriptAlert();
         return new IMSPlayerDetailsPage();
 	}
 

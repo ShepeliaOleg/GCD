@@ -13,10 +13,10 @@ public class AcceptDeclineBonusPopup extends AbstractPopup{
 
 	private static final String BUTTON_ACCEPT= 	ROOT_XP + "//*[@class='accept']";
 	private static final String BUTTON_DECLINE= ROOT_XP + "//*[@class='decline']";
-	public static final String BONUS_TEXT= 		ROOT_XP + "//div[contains(text(), 'Congratulations, you have just received')]";
+	public static final String BONUS_TITLE_XP=  TITLE_XP + "[contains(text(), 'Congratulations')]";
 
 	public AcceptDeclineBonusPopup(){
-		super(new String[]{BONUS_TEXT});
+		super(new String[]{BONUS_TITLE_XP, BUTTON_ACCEPT});
 	}
 
 	public HomePage accept(){

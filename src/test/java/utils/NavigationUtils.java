@@ -274,9 +274,9 @@ public class NavigationUtils extends WebDriverObject {
             return processTermsAndConditionsPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
             return processChangePasswordPopup(exceptPage);
-        } else if (WebDriverUtils.isVisible(OkBonusPopup.LABEL_BONUS_TEXT, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)) {
+        } else if (WebDriverUtils.isVisible(OkBonusPopup.BONUS_TITLE_XP, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)) {
             return processOkBonus(exceptPage);
-        } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TEXT, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)) {
+        } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TITLE_XP, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)) {
             return processAcceptDecline(exceptPage);
         } else if (WebDriverUtils.isVisible(WelcomePopup.TITLE_XP, 0)) {
             return processWelcomePopup(exceptPage);
