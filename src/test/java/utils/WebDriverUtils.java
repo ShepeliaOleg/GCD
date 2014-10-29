@@ -88,6 +88,7 @@ public class WebDriverUtils extends WebDriverObject{
     //Element actions
 
     public static void click(String xpath){
+        waitFor();
         try {
             getElement(xpath).click();
         }catch (WebDriverException e){

@@ -28,9 +28,9 @@ public class RegistrationPageStepOne extends RegistrationPage {
         fillBirthDay(userData.getBirthDay());
         fillBirthMonth(userData.getBirthMonth());
         fillBirthYear(userData.getBirthYear());
-        fillGender(userData.getGender());
         fillEmail(userData.getEmail());
         fillEmailVerification(userData.getEmail());
+        fillGender(userData.getGender());
         WebDriverUtils.waitFor(1000);
         clickNext();
         return new RegistrationPageStepTwo();

@@ -14,9 +14,12 @@ import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
+import utils.DateUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+
+import java.util.List;
 
 public class ForgotPasswordTest extends AbstractTest{
 
@@ -61,14 +64,8 @@ public class ForgotPasswordTest extends AbstractTest{
 	
 	/*2. Submit correct data 3. Check confirmation popup*/
 	@Test(groups = {"regression"})
-	public UserData validPasswordRecovery(){
-        UserData userData=defaultUserData.getRandomUserData();
-        userData.setEmail(mailService.generateEmail());
-        PortalUtils.registerUser(userData);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPasswordValid(userData);
-        return userData;
+	public void validRecovery(){
+        validPasswordRecovery();
 	}
 
     /* Frozen user*/
@@ -85,16 +82,8 @@ public class ForgotPasswordTest extends AbstractTest{
 
     /*6. change temporary password (popup shown after login)*/
 	@Test(groups = {"regression"})
-	public UserData setNewPasswordAfterRecoveryAndLogin() {
-        UserData userData = validPasswordRecovery();
-        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
-        mailServicePage.waitForEmail();
-        userData.setPassword(mailServicePage.getPasswordFromLetter());
-        String newPassword = passwordValidationRule.generateValidString();
-        loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
-        userData.setPassword(newPassword);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
-        return userData;
+	public void setNewPasswordAfterRecoveryLogin() {
+        setNewPasswordAfterRecoveryAndLogin();
 	}
 
 //    /*8. Cancel resetting password and login with old pass*/
@@ -189,12 +178,15 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyDateOfBirthLessThan18(){
-        UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setBirthYear("2000");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-        forgotPasswordPopup.recoverPasswordInvalid(userData);
-        assertTrue(forgotPasswordPopup.isPortletErrorVisible(),"validationErrorVisible");
+        List<String> availableBirthYears = forgotPasswordPopup.getBirthYearList();
+        int currentYear = DateUtils.getCurrentYear();
+        String firstYear = String.valueOf(currentYear - 18);
+        String lastYear = String.valueOf(currentYear - 100);
+        assertEquals(84, availableBirthYears.size(), "Number of available options in birth year dropdown.");
+        assertEquals(firstYear, availableBirthYears.get(1), "First available option in birth year dropdown.");
+        assertEquals(lastYear, availableBirthYears.get(83), "Last available option in birth year dropdown.");
 	}
 
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
@@ -250,7 +242,10 @@ public class ForgotPasswordTest extends AbstractTest{
     /*7. When you are logged in with temporary password and on forced Change Password form enters incorrect old password you are shown an error.*/
 	@Test(groups = {"regression"})
 	public void incorrectOldPassword(){
-		UserData userData = defaultUserData.getRandomUserData();
+		UserData userData = validPasswordRecovery();
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        String tempPassword = mailServicePage.getPasswordFromLetter();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
@@ -308,6 +303,16 @@ public class ForgotPasswordTest extends AbstractTest{
 //		changePasswordPopup.validateNewPassword(passwordValidationRule);
 //	}
 
+    private UserData validPasswordRecovery(){
+        UserData userData=defaultUserData.getRandomUserData();
+        userData.setEmail(mailService.generateEmail());
+        PortalUtils.registerUser(userData);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+        forgotPasswordPopup.recoverPasswordValid(userData);
+        return userData;
+    }
+
     private ChangePasswordPopup loginWithTempPassword(UserData userData) {
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
@@ -315,5 +320,17 @@ public class ForgotPasswordTest extends AbstractTest{
         userData.setPassword(password);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         return (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
+    }
+
+    private UserData setNewPasswordAfterRecoveryAndLogin() {
+        UserData userData = validPasswordRecovery();
+        MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
+        mailServicePage.waitForEmail();
+        userData.setPassword(mailServicePage.getPasswordFromLetter());
+        String newPassword = passwordValidationRule.generateValidString();
+        loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
+        userData.setPassword(newPassword);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        return userData;
     }
 }

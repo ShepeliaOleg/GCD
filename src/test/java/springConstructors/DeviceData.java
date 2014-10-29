@@ -8,17 +8,17 @@ import java.net.URL;
 
 public class DeviceData {
 
-    public Device[] devices;
+    public static Device[] devices;
 
-    public Device[] getDevices() {
+    public static Device[] getDevices() {
         return devices;
     }
 
-    public void setDevices(Device[] devices) {
-        this.devices = devices;
+    public static void setDevices(Device[] devices) {
+        DeviceData.devices = devices;
     }
 
-    private Device getDeviceByName(String name){
+    private static Device getDeviceByName(String name){
         for(Device device:devices) {
             if (device.getName().equals(name)) {
                 return device;
@@ -28,11 +28,11 @@ public class DeviceData {
         return null;
     }
 
-    public String getSerialByName(String name) {
+    public static String getSerialByName(String name) {
         return getDeviceByName(name).getSerial();
     }
 
-    public URL getRemoteByName(String name) {
+    public static URL getRemoteByName(String name) {
         URL remote = null;
         String url = getDeviceByName(name).getRemote();
         if(WebDriverFactory.browser.equals("native")){

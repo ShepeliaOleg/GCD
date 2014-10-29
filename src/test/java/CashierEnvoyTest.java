@@ -47,7 +47,7 @@ public class CashierEnvoyTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void depositWithdrawIdeal(){
+    public void depositWithdraw(){
         for(UserData userData:getUsers()) {
             try{
                 successfulDeposit(userData);
@@ -102,8 +102,7 @@ public class CashierEnvoyTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
-        envoyDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
         transactionSuccessfulPopup.closePopup();
         assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }

@@ -28,6 +28,7 @@ public class IMSAddBonusPage extends AbstractPage{
         private static final String BUTTON_ADD_BONUS_XP = "//*[@id='submit']";
         private static final String OK_TEXT = "AUTO_NO_ACCEPT_DECLINE";
         private static final String ACCEPT_DECLINE_TEXT = "AUTO_ACCEPT_DECLINE";
+        private static final String RINGFENCING_TEXT = "AUTO_RINGFENCING";
 
         public IMSAddBonusIframe(String iframeId) {
             super(iframeId);
@@ -45,6 +46,8 @@ public class IMSAddBonusPage extends AbstractPage{
                 case okBonus : bonus=OK_TEXT;
                     break;
                 case acceptDeclineBonus : bonus=ACCEPT_DECLINE_TEXT;
+                    break;
+                case ringfencing : bonus=RINGFENCING_TEXT;
                     break;
                 default : AbstractTest.failTest("Unknown bonus type requested");
             }

@@ -5,6 +5,8 @@ import pageObjects.core.AbstractPopup;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 
+import java.util.List;
+
 public class ForgotPasswordPopup extends AbstractPopup{
 
     public final static String ROOT_XP =            				"//*[contains(@class, 'fn-forgotpassword-form')]";
@@ -81,4 +83,7 @@ public class ForgotPasswordPopup extends AbstractPopup{
         return new AbstractPage();
     }
 
+    public List<String> getBirthYearList() {
+        return WebDriverUtils.getDropdownOptionsText(DROPDOWN_BIRTH_YEAR);
+    }
 }

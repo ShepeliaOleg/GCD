@@ -328,7 +328,6 @@ public class RegistrationTest extends AbstractTest{
         registrationPage.assertPasswordStrength("00aaaaaa@@AA", PasswordStrength.five);
     }
 
-
 //    /*#24. Change countryCode from UK to any and selecting UK again Fill all fields element is displayed*/
 //	@Test(groups = {"regression"})
 //	public void fillFieldsAppearDisappear(){

@@ -165,6 +165,7 @@ public class IMS extends WebDriverObject{
                         break;
                     case okBonus:
                     case acceptDeclineBonus:
+                    case ringfencing:
                         imsPlayerDetailsPage.addBonus(message, amount);
                         break;
                 }

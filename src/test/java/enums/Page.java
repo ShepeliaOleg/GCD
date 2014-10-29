@@ -13,5 +13,5 @@ public enum Page{
 	okBonus,
 	readTermsAndConditionsPopup,
 	registrationPage,
-	welcomePopup
+    ringfencing, welcomePopup
 }

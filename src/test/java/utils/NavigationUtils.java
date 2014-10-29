@@ -274,22 +274,22 @@ public class NavigationUtils extends WebDriverObject {
             return processTermsAndConditionsPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
             return processChangePasswordPopup(exceptPage);
-        } else if (WebDriverUtils.isVisible(OkBonusPopup.BONUS_TITLE_XP, 0) && WebDriverUtils.isVisible(OkBonusPopup.BUTTON_OK, 0)) {
-            return processOkBonus(exceptPage);
-        } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TITLE_XP, 0) && WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)) {
-            return processAcceptDecline(exceptPage);
+        } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TITLE_XP, 0)){
+            if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
+                return processAcceptDecline(exceptPage);
+            }else {
+                return processOkBonus(exceptPage);
+            }
         } else if (WebDriverUtils.isVisible(WelcomePopup.TITLE_XP, 0)) {
             return processWelcomePopup(exceptPage);
-        } else if (WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)) {
-            processGenericPopup();
-            return null;
-        } else {
-            return null;
+        }else {
+            return processGenericPopup();
         }
     }
 
-    private static void processGenericPopup() {
+    private static AbstractPageObject processGenericPopup() {
         new AbstractPopup().closePopup();
+        return null;
     }
 
     private static WelcomePopup processWelcomePopup(Page exceptPage) {
@@ -363,7 +363,7 @@ public class NavigationUtils extends WebDriverObject {
         if (exceptPage == Page.okBonus) {
             return okBonusPopup;
         } else {
-            okBonusPopup.close();
+            okBonusPopup.closePopup();
             return null;
         }
     }
@@ -373,7 +373,7 @@ public class NavigationUtils extends WebDriverObject {
         if (exceptPage == Page.acceptDeclineBonus) {
             return acceptDeclineBonusPopup;
         } else {
-            acceptDeclineBonusPopup.decline();
+            acceptDeclineBonusPopup.closePopup();
             return null;
         }
     }

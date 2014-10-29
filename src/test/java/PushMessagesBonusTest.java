@@ -49,7 +49,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
-        okBonusPopup.close();
+        okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
@@ -71,8 +71,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        HomePage homePage = acceptDeclineBonusPopup.accept();
-        assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.clickAccept();
+        assertEquals(BONUS_AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Online Declinable decline*/
@@ -82,8 +82,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        HomePage homePage = acceptDeclineBonusPopup.decline();
-        assertEquals("0.00", homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.closePopup();
+        assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Online Declinable clickOffPopup*/
@@ -96,12 +96,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         acceptDeclineBonusPopup.clickOffPopup();
         new AcceptDeclineBonusPopup();
         assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
-        HomePage homePage = acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
     }
-
-    /*Online Declinable ringfencing accept*/
-    /*Online Declinable ringfencing decline*/
-    /*Online Declinable ringfencing clickOffPopup*/
 
     /*Offline Non-declinable Ok*/
     @Test(groups = {"regression", "push"})
@@ -112,7 +108,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         PortalUtils.loginUser(userData);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
-        okBonusPopup.close();
+        okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
@@ -136,8 +132,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         PortalUtils.loginUser(userData);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        HomePage homePage = acceptDeclineBonusPopup.accept();
-        assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.clickAccept();
+        assertEquals(BONUS_AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Offline Declinable decline*/
@@ -149,8 +145,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         PortalUtils.loginUser(userData);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        HomePage homePage = acceptDeclineBonusPopup.decline();
-        assertEquals("0.00", homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.closePopup();
+        assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Offline Declinable clickOffPopup*/
@@ -165,12 +161,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         acceptDeclineBonusPopup.clickOffPopup();
         new AcceptDeclineBonusPopup();
         assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
-        HomePage homePage = acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
     }
-
-    /*Offline Declinable ringfencing clickOffPopup*/
-    /*Offline Declinable ringfencing accept*/
-    /*Offline Declinable ringfencing decline*/
 
     /*Game Non-declinable*/
     @Test(groups = {"regression", "push"})
@@ -180,7 +172,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
-        okBonusPopup.close();
+        okBonusPopup.closePopup();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(), "Balance");
     }
@@ -193,7 +185,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        acceptDeclineBonusPopup.accept();
+        acceptDeclineBonusPopup.clickAccept();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(), "Balance");
     }
@@ -206,7 +198,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals("0.00", homePage.getBalanceAmount(), "Balance");
     }
@@ -232,8 +224,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
         WebDriverUtils.refreshPage();
         acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        HomePage homePage = acceptDeclineBonusPopup.accept();
-        assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.clickAccept();
+        assertEquals(BONUS_AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Online Non-declinable and Declinable refresh*/
@@ -246,8 +238,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         WebDriverUtils.refreshPage();
         assertFalse(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 5), "Bonus visible");
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        HomePage homePage = acceptDeclineBonusPopup.accept();
-        assertEquals(TypeUtils.calculateSum(BONUS_AMOUNT, BONUS_AMOUNT), homePage.getBalanceAmount(), "Balance");
+        acceptDeclineBonusPopup.clickAccept();
+        assertEquals(TypeUtils.calculateSum(BONUS_AMOUNT, BONUS_AMOUNT), new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Online Non-declinable and Declinable x2 navigation*/
@@ -273,7 +265,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
         okBonusPopup.closePopup();
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
         acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
         NavigationUtils.closeAllPopups(Page.homePage);
     }
@@ -287,9 +279,9 @@ public class PushMessagesBonusTest extends AbstractTest{
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) okBonusPopup.clickNext();
         acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) acceptDeclineBonusPopup.clickNext();
-        acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
         acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        acceptDeclineBonusPopup.decline();
+        acceptDeclineBonusPopup.closePopup();
         okBonusPopup = new OkBonusPopup();
         NavigationUtils.closeAllPopups(Page.homePage);
     }

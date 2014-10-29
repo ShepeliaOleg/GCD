@@ -33,7 +33,7 @@ public class BonusBuyInPopup extends AbstractPopup{
 
     public void confirmBuyIn(){
         checkTNC();
-        clickBuyIn().close();
+        clickBuyIn().closePopup();
         new PageRefreshPopup().clickClose();
     }
 }
