@@ -27,7 +27,7 @@ public class LoginMessagesTest extends AbstractTest{
     private IMS iMS;
 
     /*One login message */
-	@Test(groups = {"regression", "push"})
+	@Test(groups = {"regression", "mobile"})
 	public void loginMessage(){
         iMS.setLoginMessagesCount(1);
 		UserData userData = defaultUserData.getRegisteredUserData();
@@ -36,7 +36,7 @@ public class LoginMessagesTest extends AbstractTest{
 	}
 
     /*No login message */
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void noLoginMessage(){
         iMS.setLoginMessagesCount(0);
         try{
@@ -50,7 +50,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages navigation */
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesNavigation(){
         iMS.setLoginMessagesCount(3);
         UserData userData = defaultUserData.getRegisteredUserData();
@@ -67,7 +67,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from first*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingStart(){
         iMS.setLoginMessagesCount(3);
         UserData userData = defaultUserData.getRegisteredUserData();
@@ -80,7 +80,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from last*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingEnd(){
         iMS.setLoginMessagesCount(3);
         UserData userData = defaultUserData.getRegisteredUserData();
@@ -93,7 +93,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
 	/*Push logout */
-	@Test(groups = {"regression", "push"})
+	@Test(groups = {"regression", "mobile"})
 	public void pushLogout(){
         UserData userData = defaultUserData.getRegisteredUserData();
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);

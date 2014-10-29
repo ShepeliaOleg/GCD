@@ -145,10 +145,12 @@ public class WebDriverFactory extends WebDriverObject{
                 break;
             case "explorer":capabilities  = DesiredCapabilities.internetExplorer();
                 break;
+            case "safari":capabilities  = DesiredCapabilities.safari();
+                break;
             default:throw new RuntimeException("Please set browser, now '"+browser+"'");
         }
         try{
-            url = new URL("http://172.29.49.73:4444/wd/hub");
+            url = new URL("http://172.29.46.41:4444/wd/hub");
         }catch (MalformedURLException e){
             throw new RuntimeException("Please set correct URL");
         }

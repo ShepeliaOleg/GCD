@@ -70,10 +70,6 @@ public class WithdrawPage extends CashierPage {
 
     /*QIWI*/
 
-    public boolean isQIWINewUserNotificationPresent() {
-        return WebDriverUtils.isVisible(QIWI_NEW_USER_XP);
-    }
-
     public void assertQIWIInterface(){
         assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
     }

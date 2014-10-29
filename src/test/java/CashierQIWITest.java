@@ -70,13 +70,6 @@ public class CashierQIWITest extends AbstractTest{
         withdrawPage.closeAddAccountField(PaymentMethod.QIWI);
     }
 
-    @Test(groups = {"regression", "mobile"})
-    public void qIWIWithdrawForNewUser() {
-        PortalUtils.registerUser(getRussianUser());
-        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        assertTrue(withdrawPage.isQIWINewUserNotificationPresent(), "User informed that he should deposit first");
-    }
-
     private UserData getRussianUser(){
         UserData userData = defaultUserData.getRandomUserData();
         userData.setCurrency(CURRENCY+"@");

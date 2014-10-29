@@ -1072,7 +1072,7 @@ public class GamesPortletTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void launchIFrameGameByUrlGuestCancel(){
         LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
-        loginPopup.close();
+        loginPopup.closePopup();
         assertFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.home), "Game is not launched after cancel login.");
     }
 

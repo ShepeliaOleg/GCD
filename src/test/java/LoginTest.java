@@ -195,7 +195,8 @@ public class LoginTest extends AbstractTest{
 	public void closeLoginPopup(){
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
-        assertFalse(loginPopup.close().isLoggedIn(), "User is logged in");
+        loginPopup.closePopup();
+        assertFalse(homePage.isLoggedIn(), "User is logged in");
 	}
 
 //	/*#13.2 Close popup*/

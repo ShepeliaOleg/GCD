@@ -20,7 +20,7 @@ public class CashierPayPalTest extends AbstractTest{
     @Qualifier("userData")
     private UserData defaultUserData;
 
-    private static final String AMOUNT = "0.05";
+    private static final String AMOUNT = "0.10";
 
 
     @Test(groups = {"regression", "mobile"})
@@ -43,7 +43,7 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
-        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = payPalDepositPage.cancelDeposit();;
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = payPalDepositPage.cancelDeposit();
         transactionUnSuccessfulPopup.closePopup();
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
     }
@@ -72,7 +72,7 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(" 9.95", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals(" 9.90", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -80,7 +80,7 @@ public class CashierPayPalTest extends AbstractTest{
         payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
-        assertEquals("9.95", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

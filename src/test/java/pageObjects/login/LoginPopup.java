@@ -96,11 +96,6 @@ public class LoginPopup extends AbstractPopup{
 		return WebDriverUtils.isVisible(LABEL_VALIDATION_ERROR_XP, 1);
 	}
 
-    public AbstractPage close(){
-        closePopup();
-        return new AbstractPage();
-    }
-
     /* VALIDATION*/
 
 //    public void validateUsername(ValidationRule rule) {

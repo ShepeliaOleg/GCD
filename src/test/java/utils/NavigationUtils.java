@@ -151,6 +151,9 @@ public class NavigationUtils extends WebDriverObject {
         String suffix = configuredPages.toString();
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
+        if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
+            checkPopups(Page.homePage);
+        }
         AbstractPage abstractPage = new AbstractPage();
         switch (condition) {
             case guest:
@@ -160,9 +163,6 @@ public class NavigationUtils extends WebDriverObject {
                 break;
             case player:
                 logoutAdminIfLoggedIn(abstractPage);
-                if(WebDriverUtils.isVisible(LoginPopup.BUTTON_LOGIN_XP, 0)){
-                    new LoginPopup().close();
-                }
                 if (PortalUtils.isLoggedIn()) {
                     if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
                         PortalUtils.logout();
@@ -206,7 +206,7 @@ public class NavigationUtils extends WebDriverObject {
                 if (counter == POPUP_CHECK_RETRIES) {
                     registrationError();
                 }
-                switch (getStatus()) {
+                switch (getStatus()){
                     case wait:
                         counter++;
                         break;
@@ -307,11 +307,7 @@ public class NavigationUtils extends WebDriverObject {
         if (exceptPage == Page.loginPopup) {
             return loginPopup;
         } else {
-            if (WebDriverUtils.isVisible(LoginPopup.LABEL_TIMEOUT_ERROR_XP, 2)) {
-                AbstractTest.skipTest("IMS timeout");
-            } else {
-                AbstractTest.failTest("Registration/Login failed : " + WebDriverUtils.getElementText(LoginPopup.LABEL_VALIDATION_ERROR_XP));
-            }
+            loginPopup.closePopup();
         }
         return null;
     }
@@ -373,7 +369,7 @@ public class NavigationUtils extends WebDriverObject {
         if (exceptPage == Page.acceptDeclineBonus) {
             return acceptDeclineBonusPopup;
         } else {
-            acceptDeclineBonusPopup.closePopup();
+            acceptDeclineBonusPopup.clickDecline();
             return null;
         }
     }

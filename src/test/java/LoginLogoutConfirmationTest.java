@@ -47,7 +47,8 @@ public class LoginLogoutConfirmationTest extends AbstractTest {
         LogoutPopup logoutPopup = homePage.navigateToLogoutPopup();
         SignedOutPopup signedOutPopup = logoutPopup.clickLogoutButton();
         LoginPopup loginPopup = signedOutPopup.loginAgain();
-        assertFalse(loginPopup.close().isLoggedIn(), "User is logged in");
+        loginPopup.closePopup();
+        assertFalse(homePage.isLoggedIn(), "User is logged in");
     }
 
     /*20. Log in again under the same player from login popup >> you are successfully logged in*/

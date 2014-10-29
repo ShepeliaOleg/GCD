@@ -30,7 +30,7 @@ public class WebContentTest extends AbstractTest{
     public void displayButtonLaunchGameGuestCancel() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 1);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
     }
 
@@ -68,7 +68,7 @@ public class WebContentTest extends AbstractTest{
     public void displayImageLaunchGameGuestCancel() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 1);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.webContentGame), "Game is not launched");
     }
 
@@ -106,7 +106,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerButtonLaunchGameGuestCancel() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 1);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 
@@ -116,7 +116,7 @@ public class WebContentTest extends AbstractTest{
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 2);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 
@@ -180,7 +180,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerImageLaunchGameGuestCancel() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 1);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 
@@ -190,7 +190,7 @@ public class WebContentTest extends AbstractTest{
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 2);
-        loginPopup.close();
+        loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerWebContentGame), "Game is not launched");
     }
 

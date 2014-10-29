@@ -43,7 +43,7 @@ public class PushMessagesBonusTest extends AbstractTest{
 	private static final String BONUS_AMOUNT = "10.00";
 
     /*Online Non-declinable Ok*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineNonDeclinableOk(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -54,7 +54,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Non-declinable offPopup*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineNonDeclinableOffPOpup(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -65,7 +65,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Declinable accept*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineAccept(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -76,18 +76,18 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Declinable decline*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineDecline(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        acceptDeclineBonusPopup.closePopup();
+        acceptDeclineBonusPopup.clickDecline();
         assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Online Declinable clickOffPopup*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineOffPopup(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -100,7 +100,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Offline Non-declinable Ok*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void offlineNonDeclinableOk(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -113,7 +113,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Offline Non-declinable offPopup*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void offlineNonDeclinableOffPOpup(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -124,7 +124,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Offline Declinable accept*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void offlineAccept(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -137,7 +137,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Offline Declinable decline*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void offlineDecline(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -145,12 +145,12 @@ public class PushMessagesBonusTest extends AbstractTest{
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         PortalUtils.loginUser(userData);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        acceptDeclineBonusPopup.closePopup();
+        acceptDeclineBonusPopup.clickDecline();
         assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
     }
 
     /*Offline Declinable clickOffPopup*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void offlineOffPopup(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -165,7 +165,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Game Non-declinable*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void gameNonDeclinableOk(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -178,7 +178,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Game Declinable accept*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void gameAccept(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -191,20 +191,20 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Game Declinable decline*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void gameDecline(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
-        acceptDeclineBonusPopup.closePopup();
+        acceptDeclineBonusPopup.clickDecline();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals("0.00", homePage.getBalanceAmount(), "Balance");
     }
 
     /*Online Non-declinable refresh*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineNonDeclinableRefresh(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -216,7 +216,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Declinable refresh*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineDeclinableRefresh(){
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -229,7 +229,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Non-declinable and Declinable refresh*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineMultipleRefresh() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -243,52 +243,48 @@ public class PushMessagesBonusTest extends AbstractTest{
     }
 
     /*Online Non-declinable and Declinable x2 navigation*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigation() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) okBonusPopup.clickNext();
-        acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) acceptDeclineBonusPopup.clickNext();
-        acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) acceptDeclineBonusPopup.clickPrevious();
-        okBonusPopup = (OkBonusPopup) acceptDeclineBonusPopup.clickPrevious();
-        NavigationUtils.closeAllPopups(Page.homePage);
+        okBonusPopup.clickNext();
+        new AcceptDeclineBonusPopup().clickNext();
+        new AcceptDeclineBonusPopup().clickPrevious();
+        new AcceptDeclineBonusPopup().clickPrevious();
+        new OkBonusPopup();
     }
 
     /*Online Non-declinable and Declinable x2 close start*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseStart() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
         okBonusPopup.closePopup();
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        acceptDeclineBonusPopup.closePopup();
-        acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        NavigationUtils.closeAllPopups(Page.homePage);
+        new AcceptDeclineBonusPopup().clickDecline();
+        new AcceptDeclineBonusPopup();
     }
 
     /*Online Non-declinable and Declinable x2 close end*/
-    @Test(groups = {"regression", "push"})
+    @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseEnd() {
         UserData userData = defaultUserData.getRandomUserData();
         PortalUtils.registerUser(userData);
         iMS.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) okBonusPopup.clickNext();
-        acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) acceptDeclineBonusPopup.clickNext();
-        acceptDeclineBonusPopup.closePopup();
-        acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
-        acceptDeclineBonusPopup.closePopup();
-        okBonusPopup = new OkBonusPopup();
-        NavigationUtils.closeAllPopups(Page.homePage);
+        okBonusPopup.clickNext();
+        new AcceptDeclineBonusPopup().clickNext();
+        new AcceptDeclineBonusPopup().closePopup();
+        new AcceptDeclineBonusPopup().closePopup();
+        new OkBonusPopup();
     }
 
 
 //	/*7. Push messages for bonus opt in/out */
-//	@Test(groups = {"regression", "push"})
+//	@Test(groups = {"regression", "mobile"})
 //	public void pushMessageOptIn(){
 //        UserData userData = defaultUserData.getRandomUserData();
 //		PortalUtils.registerUser(userData);
@@ -300,7 +296,7 @@ public class PushMessagesBonusTest extends AbstractTest{
 //	}
 
 //	/*8. Push message for bonus buy in */
-//	@Test(groups = {"regression", "push"})
+//	@Test(groups = {"regression", "mobile"})
 //	public void pushMessageBuyIn(){
 //		UserData userData = defaultUserData.getRegisteredUserData();
 //        HomePage homePage=(HomePage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);

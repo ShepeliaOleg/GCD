@@ -52,9 +52,9 @@ public class RegistrationTest extends AbstractTest{
     public void frozenUserRegistration() {
         UserData userData = defaultUserData.getFrozenUserData();
         PortalUtils.registerUser(userData, Page.registrationPage);
-        new FrozenNotificationPopup().closePopup();
+        new FrozenNotificationPopup().clickAccept();
         new AbstractPage();
-        assertTrue(WebDriverUtils.getCurrentUrl().contains(ConfiguredPages.home.toString()), "Player redirected to root");
+        assertEquals(WebDriverUtils.getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Player redirected to root");
     }
 
     /*#2. Receive bonuses check box default state and text*/
