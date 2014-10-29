@@ -136,6 +136,7 @@ public class WebDriverFactory extends WebDriverObject{
 	}
 
     private WebDriver createRemoteDriver(){
+        String address = "172.29.49.73";
         Capabilities capabilities;
         URL url;
         switch (browser){
@@ -146,11 +147,12 @@ public class WebDriverFactory extends WebDriverObject{
             case "explorer":capabilities  = DesiredCapabilities.internetExplorer();
                 break;
             case "safari":capabilities  = DesiredCapabilities.safari();
+                address = "172.29.46.41";
                 break;
             default:throw new RuntimeException("Please set browser, now '"+browser+"'");
         }
         try{
-            url = new URL("http://172.29.46.41:4444/wd/hub");
+            url = new URL("http://"+address+":4444/wd/hub");
         }catch (MalformedURLException e){
             throw new RuntimeException("Please set correct URL");
         }
