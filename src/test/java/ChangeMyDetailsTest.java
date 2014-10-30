@@ -4,22 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.account.ChangeMyDetailsPage;
-import springConstructors.Defaults;
-import springConstructors.IMS;
-import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.core.AbstractTest;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
+
 public class ChangeMyDetailsTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
 
 	@Autowired
 	@Qualifier("emailValidationRule")
@@ -37,18 +28,9 @@ public class ChangeMyDetailsTest extends AbstractTest{
 	@Qualifier("postcodeValidationRule")
 	private ValidationRule postcodeValidationRule;
 
-
 	@Autowired
 	@Qualifier("cityValidationRule")
 	private ValidationRule cityValidationRule;
-
-	@Autowired
-	@Qualifier("defaults")
-	private Defaults countryList;
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 	/*POSITIVE*/
 //
@@ -61,7 +43,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
     /* 1. Portlet is displayed */
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails);
     }
 
 //

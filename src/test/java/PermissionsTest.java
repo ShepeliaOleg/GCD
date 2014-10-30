@@ -1,18 +1,17 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.login.LoginPopup;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class PermissionsTest extends AbstractTest{
+
     private static final String ADMIN_TEXT =        "PERMISSIONS_ADMIN_ONLY";
     private static final String GUEST_TEXT =        "PERMISSIONS_GUEST_ONLY";
     private static final String PLAYER_TEXT =       "PERMISSIONS_PLAYER_ONLY";
@@ -20,10 +19,6 @@ public class PermissionsTest extends AbstractTest{
     private static final String ALL_TEXT =          "PERMISSIONS_ALL";
 
     private static final List<String> portletText = Arrays.asList(ADMIN_TEXT, GUEST_TEXT, PLAYER_TEXT, PLAYER_GUEST_TEXT, ALL_TEXT);
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
 	/* 1. Portlet permissions for guest and player users */
 	@Test(groups = {"regression"})
@@ -67,13 +62,7 @@ public class PermissionsTest extends AbstractTest{
     private void assertPortletPermissions(PlayerCondition condition, ConfiguredPages page, String ... texts) {
         List<String> fullList = portletText;
         List<String> visibleList = Arrays.asList(texts);
-
-        switch (condition) {
-            case player:    NavigationUtils.navigateToPage(condition, page, defaultUserData.getRegisteredUserData()); break;
-            case guest:
-            case admin:     NavigationUtils.navigateToPage(condition, page); break;
-        }
-
+        NavigationUtils.navigateToPage(condition, page);
         for (String text : fullList) {
             String role = text.toLowerCase().replace("permissions_", "").replace("_only", "").replace("_", " ");
             String message = "Portlet visible for " + role + " is displayed for " + condition.toString() + ".";
@@ -92,23 +81,17 @@ public class PermissionsTest extends AbstractTest{
     }
 
     private void assertPagePermissions(PlayerCondition condition, ConfiguredPages page, String text, boolean visibility, boolean redirect) {
-
-        switch (condition) {
-            case player:    NavigationUtils.navigateToPage(condition, page, defaultUserData.getRegisteredUserData()); break;
-            case guest:
-            case admin:     NavigationUtils.navigateToPage(condition, page); break;
-        }
-
+        NavigationUtils.navigateToPage(condition, page);
         WebDriverUtils.waitFor();
         String role = page.toString().replace("permissions_page_", "").replace("_", " and ");
         if (visibility) {
-            assertEquals(WebDriverUtils.getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
+            assertEquals(DataContainer.getDriverData().getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
             assertTextVisible(text, "Portlet on page visible for " + role + " is displayed for " + condition.toString() + ".");
         } else if (redirect) {
-                assertEquals(WebDriverUtils.getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is not displayed for " + condition.toString() + ".");
+                assertEquals(DataContainer.getDriverData().getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is not displayed for " + condition.toString() + ".");
                 assertTextInvisible(text, "Portlet on page visible for " + role + " is not displayed for " + condition.toString() + ".");
             } else {
-                assertEquals(WebDriverUtils.getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
+                assertEquals(DataContainer.getDriverData().getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
                 new LoginPopup();
             }
 

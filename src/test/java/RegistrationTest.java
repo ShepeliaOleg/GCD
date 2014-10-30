@@ -1,9 +1,4 @@
-import enums.ConfiguredPages;
-import enums.Page;
-import enums.PasswordStrength;
-import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
@@ -11,56 +6,39 @@ import pageObjects.registration.*;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.registration.threeStep.RegistrationPageStepTwo;
-import springConstructors.Defaults;
-import springConstructors.IMS;
 import springConstructors.UserData;
-import utils.DateUtils;
-import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.WebDriverUtils;
+import utils.*;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
 import utils.validation.ValidationUtils;
 
 import java.util.List;
 
 public class RegistrationTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
-
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
-
-	@Autowired
-	@Qualifier("defaults")
-	private Defaults defaults;
-
 	/*POSITIVE*/
 	
 	/*1. Valid user registration*/
 	@Test(groups = {"registration","smoke"})
 	public void validUserRegistration() {
-        HomePage homePage = PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        HomePage homePage = PortalUtils.registerUser();
         validateTrue(homePage.isLoggedIn(), "User is logged in");
 	}
 
     /* Frozen user registration*/
     @Test(groups = {"registration"})
     public void frozenUserRegistration() {
-        UserData userData = defaultUserData.getFrozenUserData();
+        UserData userData = DataContainer.getUserData().getFrozenUserData();
         PortalUtils.registerUser(userData, Page.registrationPage);
         new FrozenNotificationPopup().clickAccept();
         new AbstractPage();
-        assertEquals(WebDriverUtils.getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Player redirected to root");
+        assertEquals(DataContainer.getDriverData().getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Player redirected to root");
     }
 
     /*#2. Receive bonuses check box default state and text*/
     @Test(groups = {"registration","regression"})
     public void receivePromotionOffersDefaultState(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         assertTrue(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
         assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(userData), "Promotional offers checkbox text");
@@ -69,25 +47,25 @@ public class RegistrationTest extends AbstractTest{
 	/*#2. Registration with receive bonuses check box checked*/
 	@Test(groups = {"registration","regression"})
 	public void receivePromotionOffersIsCheckedInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
+		UserData userData=DataContainer.getUserData().getRandomUserData();
 		PortalUtils.registerUser(userData,true);
-		boolean receiveBonusesCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
+		boolean receiveBonusesCheckedInIMS=IMSUtils.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
 		validateTrue(receiveBonusesCheckedInIMS, "Promotion checkboxes are checked in IMS");
 	}
 
     /*#3. Registration with receive bonuses check box unchecked*/
 	@Test(groups = {"registration","regression"})
 	public void receivePromotionOffersIsNotCheckedInIMS(){
-		UserData userData=defaultUserData.getRandomUserData();
+		UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData,false);
-		boolean receiveBonusesNotCheckedInIMS=iMS.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
+		boolean receiveBonusesNotCheckedInIMS= IMSUtils.navigateToPlayedDetails(userData.getUsername()).getAllChannelsCheckboxState();
         validateFalse(receiveBonusesNotCheckedInIMS, "Promotion checkboxes are checked in IMS");
 	}
 
     /*#4. Registration with bonus code provided*/
 	@Test(groups = {"registration","regression"})
 	public void registrationWithBonusCoupon(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
         validateEquals("10.00", homePage.getBalanceAmount(), "User balance");
 	}
@@ -95,7 +73,7 @@ public class RegistrationTest extends AbstractTest{
     /*#5. Registration without bonus code provided*/
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         HomePage homePage = PortalUtils.registerUser(userData);
         validateEquals("0.00", homePage.getBalanceAmount(), "User balance");
     }
@@ -103,7 +81,7 @@ public class RegistrationTest extends AbstractTest{
     /*3. Try to use invalid bonus code*/
     @Test(groups = {"registration","regression"})
     public void registrationWithInvalidBonusCoupon() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage = (RegistrationPage) registrationPage.registerUser(userData, "invalid", Page.registrationPage);
         assertEquals("Coupon code is not found or not available", registrationPage.getPortletErrorMessage(), "Invalid bonus error message");
@@ -114,7 +92,7 @@ public class RegistrationTest extends AbstractTest{
 //	public void validHeaderUnitBalance(){
 //        String currency = "GBP";
 //        String currencySign = "£";
-//        UserData userData=defaultUserData.getRandomUserData();
+//        UserData userData=DataContainer.getUserData().getRandomUserData();
 //        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 //        String defaultCurrencyInRegistrationForm = registrationPage.getSelectedCurrency();
 //        HomePage homePage=(HomePage)registrationPage.registerUser(userData, true, false, null, Page.homePage);
@@ -126,14 +104,14 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationWebContent(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData userData=defaultUserData.getRandomUserData();
+		UserData userData=DataContainer.getUserData().getRandomUserData();
 		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
 	}
 
     /*#10. After-registration redirect*/
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationRedirect(){
-		PortalUtils.registerUser(defaultUserData.getRandomUserData());
+		PortalUtils.registerUser(DataContainer.getUserData().getRandomUserData());
         AfterRegistrationPage afterRegistrationPage = new AfterRegistrationPage();
 	}
 
@@ -141,21 +119,21 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEqualsCollections(defaults.getCountryCodesList(), registrationPage.getCountriesCodesList(defaultUserData.getRandomUserData()), "Country codes correspond with configuration");
+        assertEqualsCollections(DataContainer.getDefaults().getCountryCodesList(), registrationPage.getCountriesCodesList(DataContainer.getUserData().getRandomUserData()), "Country codes correspond with configuration");
 	}
 
     /*#??. The list of supported nationalities is correct*/
     @Test(groups = {"registration","spanish", "desktop"})
     public void nationalityList(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEqualsCollections(defaults.getCountryCodesList(), registrationPage.registrationPageAllSteps().getNationalitiesCodesList(),"Nationality codes correspond with configuration");
+        assertEqualsCollections(DataContainer.getDefaults().getCountryCodesList(), registrationPage.registrationPageAllSteps().getNationalitiesCodesList(),"Nationality codes correspond with configuration");
     }
 
     /*#12. The list of supported currencies is correct*/
 	@Test(groups = {"registration","regression"})
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEqualsCollections(defaults.getCurrencyList(), registrationPage.getCurrencyList(defaultUserData.getRandomUserData()), "Currency codes correspond with configuration");
+        assertEqualsCollections(DataContainer.getDefaults().getCurrencyList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
     /*#13. T&C web content is shown when clicking on T&C link*/
@@ -177,7 +155,7 @@ public class RegistrationTest extends AbstractTest{
 //	public void checkLogParametersRegistration(){
 //        try{
 //            LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
-//            UserData userData=defaultUserData.getRandomUserData();
+//            UserData userData=DataContainer.getUserData().getRandomUserData();
 //            String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
 //                    "KV(1, playtech81001)",
 //                    "KV(2, "+userData.getUsername()+")",
@@ -207,7 +185,7 @@ public class RegistrationTest extends AbstractTest{
 //	public void checkLogParametersUsername(){
 //        try{
 //            LogCategory[] logCategories = new LogCategory[]{LogCategory.CheckUsernameRequest, LogCategory.CheckUsernameResponse};
-//            UserData userData=defaultUserData.getRandomUserData();
+//            UserData userData=DataContainer.getUserData().getRandomUserData();
 //            String[] parameters = {"objectIdentity=playtech81001",
 //                    "username="+userData.getUsername(),
 //                    "firstName="+userData.getFirstName(),
@@ -231,27 +209,27 @@ public class RegistrationTest extends AbstractTest{
     /*#17. IMS Player Details Page*/
 	@Test(groups = {"registration","regression"})
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
-		iMS.validateRegisterData(userData);
+		IMSUtils.validateRegisterData(userData);
 	}
 
     /*Client type poker*/
     @Test(groups = {"registration","regression"})
     public void registrationWithClientType(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
         registrationPage.registerUser(userData);
-        validateEquals("poker", iMS.getClientType(userData), "Client type");
+        validateEquals("poker", IMSUtils.getClientType(userData), "Client type");
     }
 
     /*Client type empty*/
     @Test(groups = {"registration","regression"})
     public void registrationWithoutClientType(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerNoClientType);
         registrationPage.registerUser(userData);
-        validateEquals("casino", iMS.getClientType(userData), "Client type");
+        validateEquals("casino", IMSUtils.getClientType(userData), "Client type");
 
     }
 
@@ -259,7 +237,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression", "mobile"})
 	public void defaultTnCCheckboxState(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        validateFalse(registrationPage.registrationPageStepThree(defaultUserData.getRandomUserData()).getTermsCheckbox(), "T&C checkbox checked by default");
+        validateFalse(registrationPage.registrationPageStepThree(DataContainer.getUserData().getRandomUserData()).getTermsCheckbox(), "T&C checkbox checked by default");
 	}
 
     /*#22. Country - countryCode code and phone prefix mapping*/
@@ -267,9 +245,9 @@ public class RegistrationTest extends AbstractTest{
 	public void countryCodePhoneCodeMappingDesktop(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageAllSteps registrationPageAllSteps = registrationPage.registrationPageAllSteps();
-		for (String countryCode : defaults.getCountryCodesList()) {
+		for (String countryCode : DataContainer.getDefaults().getCountryCodesList()) {
             registrationPageAllSteps.fillCountry(countryCode);
-            assertEquals("+" + defaults.getPhoneCodeByCountryCode(countryCode), registrationPageAllSteps.getPhoneAreaCode(), "Phone area code for '"+countryCode+"'");
+            assertEquals("+" + DataContainer.getDefaults().getPhoneCodeByCountryCode(countryCode), registrationPageAllSteps.getPhoneAreaCode(), "Phone area code for '"+countryCode+"'");
 		}
 	}
 
@@ -277,12 +255,12 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void countryCodeNamePrefix(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        if (WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)) {
-            registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
+            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
         }
-        for (String countryCode : defaults.getCountryCodesList()) {
+        for (String countryCode : DataContainer.getDefaults().getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
-            assertEquals(defaults.getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"'");
+            assertEquals(DataContainer.getDefaults().getCountryNameByCountryCode(countryCode), registrationPage.getSelectedCountryName().trim(), "Country name for '"+countryCode+"'");
         }
     }
 
@@ -290,10 +268,10 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void defaultCountryMobile(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        if (WebDriverObject.getPlatform().equals(WebDriverObject.PLATFORM_MOBILE)) {
-            registrationPage.registrationPageStepTwo(defaultUserData.getRandomUserData());
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
+            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
         }
-        assertEquals(defaults.getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
+        assertEquals(DataContainer.getDefaults().getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
         // assertTrue(registrationPage.isFindMyAddressButtonVisible());
     }
 
@@ -335,9 +313,9 @@ public class RegistrationTest extends AbstractTest{
 //		// stage 1
 //		boolean fillFieldsVisibleStage1 = registrationPage.isFindMyAddressButtonVisible();
 //		String randomCountryCode;
-//		String defaultCountryCode = defaults.getDefaultCountry();
+//		String defaultCountryCode = DataContainer.getDefaults().getDefaultCountry();
 //		do {
-//			randomCountryCode = defaults.getRandomCountryCode();
+//			randomCountryCode = DataContainer.getDefaults().getRandomCountryCode();
 //		}
 //		while (randomCountryCode.equals(defaultCountryCode));
 //		// stage 2
@@ -376,9 +354,9 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration", "regression", "desktop"})
     public void countryCurrencySinglePageRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        for (String countryCode : defaults.getCountryCodesList()) {
+        for (String countryCode : DataContainer.getDefaults().getCountryCodesList()) {
             registrationPage.fillCountry(countryCode);
-            assertEquals(defaults.getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+            assertEquals(DataContainer.getDefaults().getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+DataContainer.getDefaults().getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }
     }
 
@@ -386,13 +364,13 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups = {"registration", "regression", "mobile"})
     public void countryCurrencyThreeStepRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree(defaultUserData.getRandomUserData());
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRandomUserData());
         RegistrationPageStepTwo registrationPageStepTwo;
-        for (String countryCode : defaults.getCountryCodesList()) {
+        for (String countryCode : DataContainer.getDefaults().getCountryCodesList()) {
             registrationPageStepTwo = registrationPageStepThree.clickPrevious();
             registrationPage.fillCountry(countryCode);
             registrationPageStepTwo.clickNext();
-            assertEquals(defaults.getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+defaults.getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
+            assertEquals(DataContainer.getDefaults().getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+DataContainer.getDefaults().getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }
     }
 
@@ -408,7 +386,6 @@ public class RegistrationTest extends AbstractTest{
         assertEquals(84, availableBirthYears.size(), "Number of available options in birth year dropdown.");
         assertEquals(firstYear, availableBirthYears.get(1), "First available option in birth year dropdown.");
         assertEquals(lastYear, availableBirthYears.get(83), "Last available option in birth year dropdown.");
-
     }
 
     /*NEGATIVE*/
@@ -417,8 +394,8 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void alreadyUsedUsername(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData generatedUserData=defaultUserData.getRandomUserData();
-		UserData registeredUserData=defaultUserData.getRegisteredUserData();
+		UserData generatedUserData=DataContainer.getUserData().getRandomUserData();
+		UserData registeredUserData=DataContainer.getUserData().getRegisteredUserData();
 		generatedUserData.setUsername(registeredUserData.getUsername());
 		registrationPage = (RegistrationPage) registrationPage.registerUser(generatedUserData, Page.registrationPage);
         ValidationUtils.assertValidationStatus(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
@@ -427,7 +404,7 @@ public class RegistrationTest extends AbstractTest{
     /*#6. Try to register without accepting T&C (without checking check box)*/
 	@Test(groups = {"regression"})
 	public void submitWithUncheckedTermsAndConditions(){
-        RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(defaultUserData.getRandomUserData(), false, true);
+        RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(DataContainer.getUserData().getRandomUserData(), false, true);
         assertTrue(registrationPage.isPortletErrorVisible(), "T&C are not accepted error visible");
 	}
 }

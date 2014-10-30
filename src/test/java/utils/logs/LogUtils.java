@@ -1,21 +1,26 @@
 package utils.logs;
 
 import enums.LogCategory;
+import org.openqa.selenium.WebDriver;
 import utils.WebDriverUtils;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
+import utils.core.WebDriverFactory;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LogUtils extends WebDriverObject{
+public class LogUtils {
 	public static final String TIMESTAMP_REGEXP = "(([0-5][0-9]|[0-9])(:[0-5][0-9]){2},[0-9]{3} (INFO|WARN|PM|ums|WARN|ERROR))";
+
+    private static String timestamp;
 
 	public static void setTimestamp(){
 		String result = "noLogs";
         timestamp = result;
 		try{
-			WebDriverUtils.navigateToInternalURL(logDriver, baseUrl, "html/logs.txt");
+            WebDriver logDriver = WebDriverFactory.getLogDriver();
+			WebDriverUtils.navigateToInternalURL(logDriver, DataContainer.getDriverData().getBaseUrl(), "html/logs.txt");
 			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
 			Pattern pattern = Pattern.compile(TIMESTAMP_REGEXP);
 			Matcher matcher = pattern.matcher(fullLog);
@@ -55,6 +60,7 @@ public class LogUtils extends WebDriverObject{
 			return log;
 		}
 		try{
+            WebDriver logDriver = WebDriverFactory.getLogDriver();
 			logDriver.navigate().refresh();
 			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
 

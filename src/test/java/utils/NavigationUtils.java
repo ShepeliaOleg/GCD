@@ -6,8 +6,6 @@ import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
-import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
@@ -15,6 +13,8 @@ import pageObjects.bingoSchedule.BingoSchedulePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPage;
@@ -25,13 +25,13 @@ import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
-import pageObjects.pageInPopup.PageInPopupPage;
-import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.login.WelcomePopup;
+import pageObjects.pageInPopup.PageInPopupPage;
+import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
@@ -43,9 +43,9 @@ import springConstructors.AffiliateData;
 import springConstructors.UserData;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
 
-public class NavigationUtils extends WebDriverObject {
+public class NavigationUtils{
 
     private static final int POPUP_CHECK_RETRIES = 30;
 
@@ -56,7 +56,7 @@ public class NavigationUtils extends WebDriverObject {
     public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages) {
         switch (condition) {
             case player:
-                return navigateToPage(condition, configuredPages, getUserData().getRegisteredUserData());
+                return navigateToPage(condition, configuredPages, DataContainer.getUserData().getRegisteredUserData());
             default:
                 return navigateToPage(condition, configuredPages, null);
         }
@@ -385,7 +385,7 @@ public class NavigationUtils extends WebDriverObject {
     }
 
     public static void assertGameLaunch(String gameId, Integer realMode) {
-        if (platform.equals(PLATFORM_DESKTOP)) {
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             new GameLaunchPopup(new AbstractPage().getMainWindowHandle(), gameId).assertGameLaunchAndClose();
         } else {
             GameLaunchPage gameLaunchPage = new GameLaunchPage(gameId, realMode);

@@ -1,7 +1,6 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.MailQ;
-import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
 import utils.core.AbstractTest;
@@ -13,9 +12,6 @@ import utils.core.AbstractTest;
 
 public class InboxTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 	@Autowired
 	@Qualifier("mailQ")

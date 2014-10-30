@@ -1,25 +1,18 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.account.AddCardPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierNetellerTest extends AbstractTest {
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String AMOUNT = "10.00";
 
@@ -33,7 +26,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositInterfaceIsFunctionalNewUser(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertNetellerInterfaceNew();
     }
@@ -46,7 +39,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawInterfaceIsFunctionalNewUser(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.assertNetellerInterfaceNew();
     }
@@ -71,7 +64,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawForNewUser() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
@@ -105,8 +98,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositIncorrectAccount() {
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositNetellerInvalidAccount(AMOUNT);
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
@@ -114,8 +106,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositIncorrectPassword() {
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositNetellerInvalidPassword(AMOUNT);
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");
@@ -123,7 +114,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectAccount() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidAccount(AMOUNT);
@@ -132,7 +123,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectEmail() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidEmail(AMOUNT);
@@ -151,7 +142,7 @@ public class CashierNetellerTest extends AbstractTest {
     }
 
     private UserData getNetellerUser(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername("greesnm2");
         userData.setPassword("123asdQ!");
         return userData;

@@ -1,51 +1,53 @@
 package springConstructors;
 
+import enums.Licensee;
+
 public class DriverData{
 
-    public static String baseUrl;
-    public static String browser;
-    public static String os;
-    public static String platform;
-    public static String device;
+    public String baseUrl;
+    public String browser;
+    public String os;
+    public Licensee licensee;
+    public String device;
 
-    public static String getBaseUrl(){
+    public String getBaseUrl(){
         return baseUrl;
     }
 
-    public static void setBaseUrl(String baseUrl){
-        DriverData.baseUrl=baseUrl;
+    public void setBaseUrl(String baseUrl){
+        this.baseUrl=baseUrl;
     }
 
-	public static String getBrowser(){
+	public String getBrowser(){
         return browser;
 	}
 
-    public static void setBrowser(String browser){
-        DriverData.browser=browser;
+    public void setBrowser(String browser){
+        this.browser=browser;
     }
 
-    public static String getOs() {
+    public String getOs() {
         return os;
     }
 
-    public static void setOs(String os) {
-        DriverData.os = os;
+    public void setOs(String os) {
+        this.os = os;
     }
 
-    public static String getPlatform() {
-        return platform;
+    public Licensee getLicensee() {
+        return licensee;
     }
 
-    public static void setPlatform(String platform) {
-        DriverData.platform = platform;
+    public void setLicensee(Licensee licensee) {
+        this.licensee = licensee;
     }
 
-    public static String getDevice() {
+    public String getDevice() {
         return device;
     }
 
-    public static void setDevice(String device) {
-        DriverData.device = device;
+    public void setDevice(String device) {
+        this.device = device;
     }
 
 }

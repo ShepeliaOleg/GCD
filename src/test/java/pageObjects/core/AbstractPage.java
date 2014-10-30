@@ -1,5 +1,6 @@
 package pageObjects.core;
 
+import enums.Licensee;
 import enums.Page;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPage;
@@ -20,6 +21,7 @@ import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 import java.util.Collection;
 
@@ -134,7 +136,7 @@ public class AbstractPage extends AbstractPageObject{
     }
 
     public Collection<String> getLanguageCodesList() {
-        if (platform.equals(PLATFORM_DESKTOP)) {
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             return header().getLanguageCodes();
         } else {
             return openMenu().getLanguageCodes();
@@ -142,7 +144,7 @@ public class AbstractPage extends AbstractPageObject{
     }
 
     public void setLanguage(String languageCode) {
-        if (platform.equals(PLATFORM_DESKTOP)) {
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             header().setLanguage(languageCode);
         } else {
             openMenu().setLanguage(languageCode);

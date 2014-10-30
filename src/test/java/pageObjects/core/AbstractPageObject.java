@@ -2,9 +2,8 @@ package pageObjects.core;
 
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
 
-public abstract class AbstractPageObject extends WebDriverObject {
+public abstract class AbstractPageObject{
 
 	public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
     private static final String MAIN_SITE_LOADER = "//*[@class='main-site-loader']";

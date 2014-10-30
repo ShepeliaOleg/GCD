@@ -9,12 +9,12 @@ import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
 
-public class PortalUtils extends WebDriverObject{
+public class PortalUtils {
 
     public static void loginUser(){
-        navigateToHome().login(getUserData().getRegisteredUserData());
+        navigateToHome().login(DataContainer.getUserData().getRegisteredUserData());
     }
 
     public static void loginUser(UserData userData){
@@ -30,7 +30,7 @@ public class PortalUtils extends WebDriverObject{
     }
 
     public static HomePage registerUser(){
-        return (HomePage)registerUser(getUserData().getRandomUserData(), false);
+        return (HomePage)registerUser(DataContainer.getUserData().getRandomUserData(), false);
     }
 
     public static HomePage registerUser(UserData userData){

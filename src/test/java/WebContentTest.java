@@ -1,8 +1,6 @@
 import enums.ConfiguredPages;
 import enums.GameLaunch;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.login.LoginPopup;
@@ -11,18 +9,15 @@ import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class WebContentTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     /*Web content display - Guest login popup login button*/
     @Test(groups = {"webcontent","regression"})
     public void displayButtonLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
-        webContentPage.playAndAssertUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Web content display - Guest login popup cancel button*/
@@ -37,7 +32,7 @@ public class WebContentTest extends AbstractTest{
     /*Web content display - Player play button*/
     @Test(groups = {"webcontent","regression"})
     public void displayButtonLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, DataContainer.getUserData().getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
 
@@ -52,7 +47,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression"})
     public void displayImageLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
-        webContentPage.playAndAssertUrl(GameLaunch.image, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Web content display - Guest login popup register*/
@@ -60,7 +55,7 @@ public class WebContentTest extends AbstractTest{
     public void displayImageLaunchGameGuestRegister() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.webContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 1);
-        loginPopup.clickRegistration().registerUser(defaultUserData.getRandomUserData());
+        loginPopup.clickRegistration().registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
     /*Web content display - Guest login popup cancel image*/
@@ -75,7 +70,7 @@ public class WebContentTest extends AbstractTest{
     /*Web content display - Player play image*/
     @Test(groups = {"webcontent","regression"})
     public void displayImageLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.webContentGame, DataContainer.getUserData().getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
@@ -90,7 +85,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
-        webContentPage.playAndAssertUrl(GameLaunch.button, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 1, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login button slide 2*/
@@ -98,7 +93,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerButtonLaunchGameGuestLoginSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
-        webContentPage.playAndAssertUrl(GameLaunch.button, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.button, 2, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel button slide 1*/
@@ -125,13 +120,13 @@ public class WebContentTest extends AbstractTest{
     public void bannerImageLaunchGameGuestRegister() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 1);
-        loginPopup.clickRegistration().registerUser(defaultUserData.getRandomUserData());
+        loginPopup.clickRegistration().registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
     /*Banner - Player play button slide 1*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGamePlayer() {
-        UserData userData = defaultUserData.getRegisteredUserData();
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.playAndAssertUrl(GameLaunch.button, 1);
     }
@@ -139,7 +134,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Player play button slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGamePlayerSlide2() {
-        UserData userData = defaultUserData.getRegisteredUserData();
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.button, 2);
@@ -164,7 +159,7 @@ public class WebContentTest extends AbstractTest{
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
-        webContentPage.playAndAssertUrl(GameLaunch.image, 1, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 1, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -172,7 +167,7 @@ public class WebContentTest extends AbstractTest{
     public void bannerImageLaunchGameGuestLoginSlide2() {
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
-        webContentPage.playAndAssertUrl(GameLaunch.image, 2, defaultUserData.getRegisteredUserData());
+        webContentPage.playAndAssertUrl(GameLaunch.image, 2, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel image slide 1*/
@@ -197,14 +192,14 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Player play image slide 1*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayer() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, DataContainer.getUserData().getRegisteredUserData());
         webContentPage.playAndAssertUrl(GameLaunch.image, 1);
     }
 
     /*Banner - Player play image slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayerSlide2() {
-        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, defaultUserData.getRegisteredUserData());
+        WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, DataContainer.getUserData().getRegisteredUserData());
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.image, 2);
     }

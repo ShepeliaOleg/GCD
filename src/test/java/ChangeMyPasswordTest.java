@@ -5,8 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import springConstructors.IMS;
-import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.core.AbstractTest;
@@ -16,14 +14,6 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Autowired
 	@Qualifier("passwordValidationRule")
 	private ValidationRule passwordValidationRule;
-
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 	/*POSITIVE*/
 //
@@ -36,7 +26,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
     /*1. Portlet is displayed in popup*/
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnPopup(){
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = homePage.navigateToChangePassword();
 
     }

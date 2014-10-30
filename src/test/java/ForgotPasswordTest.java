@@ -10,22 +10,19 @@ import pageObjects.external.ims.IMSPlayerDetailsPage;
 import pageObjects.external.mail.MailServicePage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
-import springConstructors.IMS;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
 import utils.DateUtils;
+import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 import java.util.List;
 
 public class ForgotPasswordTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     @Autowired
 	@Qualifier("mailinator")
@@ -42,10 +39,6 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Autowired
 	@Qualifier("passwordValidationRule")
 	private ValidationRule passwordValidationRule;
-
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
 
 	/*POSITIVE*/
 
@@ -71,7 +64,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /* Frozen user*/
     @Test(groups = {"regression"})
     public void frozenPasswordRecovery(){
-        UserData userData = defaultUserData.getFrozenUserData();
+        UserData userData = DataContainer.getUserData().getFrozenUserData();
         userData.setEmail(mailService.generateEmail());
         PortalUtils.registerUser(userData, Page.registrationPage);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
@@ -89,7 +82,7 @@ public class ForgotPasswordTest extends AbstractTest{
 //    /*8. Cancel resetting password and login with old pass*/
 //	@Test(groups = {"regression"})
 //	public void cancelPasswordChange(){
-//		UserData userData=defaultUserData.getRandomUserData();
+//		UserData userData=DataContainer.getUserData().getRandomUserData();
 //        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
 //		forgotPasswordPopup.fillDataAndClosePopup(userData).login(userData);
@@ -122,7 +115,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*10. Close popup without resetting and login*/
 	@Test(groups = {"regression"})
 	public void closePasswordChangePopup(){
-		UserData userData=defaultUserData.getRandomUserData();
+		UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -133,7 +126,7 @@ public class ForgotPasswordTest extends AbstractTest{
 //	@Test(groups = {"regression", "logs"})
 //	public void checkLogs(){
 //        try{
-//            UserData userData=defaultUserData.getRandomUserData();
+//            UserData userData=DataContainer.getUserData().getRandomUserData();
 //            LogCategory[]  logCategories = {LogCategory.ForgotPasswordRequest, LogCategory.ForgotPasswordResponse};
 //            String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001", "username="+userData.getUsername(), "email="+userData.getEmail()};
 //            PortalUtils.registerUser(userData);
@@ -158,8 +151,8 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void checkPasswordIsChangedInIMS() {
 		UserData userData = setNewPasswordAfterRecoveryAndLogin();
-		IMSPlayerDetailsPage imsPlayerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
-        assertTrue(imsPlayerDetailsPage.getPassword().equals(userData.getPassword()),"Password is set on ims");
+		IMSPlayerDetailsPage imsPlayerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+        assertEquals(userData.getPassword(), imsPlayerDetailsPage.getPassword(), "Password is set on ims");
 	}
 
     /*NEGATIVE*/
@@ -167,7 +160,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*1. Try to clickLogin FP form with incorrect email (valida but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void invalidPasswordRecovery(){
-        UserData userData=defaultUserData.getRegisteredUserData();
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
         userData.setEmail("incorrectemail@mailService.com");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -192,7 +185,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectDateOfBirth(){
-        UserData userData=defaultUserData.getRegisteredUserData();
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setBirthDay("23"); // set incorrect date of birth
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -203,7 +196,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*4. Try to clickLogin FP form with not existing username*/
 	@Test(groups = {"regression"})
 	public void tryToSpecifyIncorrectUsername(){
-        UserData userData=defaultUserData.getRegisteredUserData();
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setUsername("incorrectUsername"); // set incorrect username
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -214,7 +207,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*5. Restore password and try to login with old password*/
 	@Test(groups = {"regression"})
 	public void unableToLoginWithOldPassword(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -288,7 +281,7 @@ public class ForgotPasswordTest extends AbstractTest{
 //    /*3. Old password field validation on Change password popup*/
 //	@Test(groups = {"validation"})
 //	public void oldPasswordFieldValidation() {
-//        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
+//        UserData userData = DataContainer.getUserData().getForgotPasswordUserData().cloneUserData();
 //        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 //		changePasswordPopup.validateOldPassword(passwordValidationRule);
@@ -297,14 +290,14 @@ public class ForgotPasswordTest extends AbstractTest{
 //    /*4. New password field validation on Change password popup*/
 //	@Test(groups = {"validation"})
 //	public void newPasswordFieldValidation() {
-//        UserData userData = defaultUserData.getForgotPasswordUserData().cloneUserData();
+//        UserData userData = DataContainer.getUserData().getForgotPasswordUserData().cloneUserData();
 //        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //        ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
 //		changePasswordPopup.validateNewPassword(passwordValidationRule);
 //	}
 
     private UserData validPasswordRecovery(){
-        UserData userData=defaultUserData.getRandomUserData();
+        UserData userData=DataContainer.getUserData().getRandomUserData();
         userData.setEmail(mailService.generateEmail());
         PortalUtils.registerUser(userData);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);

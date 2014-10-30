@@ -1,9 +1,11 @@
 package pageObjects.forgotPassword;
 
+import enums.Licensee;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPopup;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class ForgotPasswordPopup extends AbstractPopup{
     public void submitValidData(){
         clickSubmit();
         ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = new ForgotPasswordConfirmationPopup();
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             forgotPasswordConfirmationPopup.closePopup();
         }
     }

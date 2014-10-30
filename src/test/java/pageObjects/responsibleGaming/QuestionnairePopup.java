@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class QuestionnairePopup extends AbstractPopup{
 	}
 
 	private void answerQuestioneer(){
-		List<WebElement> buttonsAnswer=webDriver.findElements(By.className(ANSWER_CLASSNAME));
+		List<WebElement> buttonsAnswer= WebDriverFactory.getWebDriver().findElements(By.className(ANSWER_CLASSNAME));
 		for(int i=0; i < buttonsAnswer.size(); i++){
 			if((i % 2) == 0)
 				buttonsAnswer.get(i).click();

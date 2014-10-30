@@ -5,7 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-public final class CustomExpectedConditions extends WebDriverObject{
+public final class CustomExpectedConditions{
 
 	public static ExpectedCondition<Boolean> pageLoadComplete(){
 		return new ExpectedCondition<Boolean>() {

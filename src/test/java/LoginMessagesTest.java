@@ -1,36 +1,25 @@
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
 import pageObjects.external.ims.IMSLoginDatabasePage;
-import pageObjects.login.ForceLogoutPopup;
 import pageObjects.login.SignedOutPopup;
 import pageObjects.login.WelcomePopup;
-import springConstructors.IMS;
 import springConstructors.UserData;
+import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class LoginMessagesTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
-
-    @Autowired
-    @Qualifier("iMS")
-    private IMS iMS;
 
     /*One login message */
 	@Test(groups = {"regression", "mobile"})
 	public void loginMessage(){
-        iMS.setLoginMessagesCount(1);
-		UserData userData = defaultUserData.getRegisteredUserData();
+        IMSUtils.setLoginMessagesCount(1);
+		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0]), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
 	}
@@ -38,22 +27,22 @@ public class LoginMessagesTest extends AbstractTest{
     /*No login message */
     @Test(groups = {"regression", "mobile"})
     public void noLoginMessage(){
-        iMS.setLoginMessagesCount(0);
+        IMSUtils.setLoginMessagesCount(0);
         try{
-            UserData userData = defaultUserData.getRegisteredUserData();
+            UserData userData = DataContainer.getUserData().getRegisteredUserData();
             PortalUtils.loginUser(userData);
         }catch (Exception e){
             addError(e.getMessage());
         }finally {
-            iMS.setLoginMessagesCount(1);
+            IMSUtils.setLoginMessagesCount(1);
         }
     }
 
     /*Login messages navigation */
     @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesNavigation(){
-        iMS.setLoginMessagesCount(3);
-        UserData userData = defaultUserData.getRegisteredUserData();
+        IMSUtils.setLoginMessagesCount(3);
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.clickNext();
@@ -69,8 +58,8 @@ public class LoginMessagesTest extends AbstractTest{
     /*Login messages closing from first*/
     @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingStart(){
-        iMS.setLoginMessagesCount(3);
-        UserData userData = defaultUserData.getRegisteredUserData();
+        IMSUtils.setLoginMessagesCount(3);
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.closePopup();
@@ -82,8 +71,8 @@ public class LoginMessagesTest extends AbstractTest{
     /*Login messages closing from last*/
     @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingEnd(){
-        iMS.setLoginMessagesCount(3);
-        UserData userData = defaultUserData.getRegisteredUserData();
+        IMSUtils.setLoginMessagesCount(3);
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.clickNext();
@@ -95,9 +84,9 @@ public class LoginMessagesTest extends AbstractTest{
 	/*Push logout */
 	@Test(groups = {"regression", "mobile"})
 	public void pushLogout(){
-        UserData userData = defaultUserData.getRegisteredUserData();
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
-		iMS.sendPushMessage(userData, Page.logout);
+		IMSUtils.sendPushMessage(userData, Page.logout);
         validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 300), "User was not logged out after 180 seconds");
 		new SignedOutPopup().close().waitForLogout();
 	}

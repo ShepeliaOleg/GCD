@@ -1,34 +1,28 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierMasterCardTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String AMOUNT = "1.00";
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardDepositInterfaceIsFunctional(){
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertCardInterface(PaymentMethod.MasterCard);
     }
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardWithdrawInterfaceIsFunctional(){
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.assertCardInterface(PaymentMethod.MasterCard);
     }
@@ -49,7 +43,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardValidDepositAndWithdraw(){
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage.depositCard(PaymentMethod.MasterCard, AMOUNT);
@@ -61,7 +55,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardWithdrawAssertPopupAndCancel() {
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
         withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.MasterCard, AMOUNT);
@@ -70,14 +64,14 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardExpiredDeposit(){
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositCardExpired(PaymentMethod.MasterCard, AMOUNT);
     }
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardExpiredWithdraw(){
-        PortalUtils.loginUser(defaultUserData.getCardUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawExpired(PaymentMethod.MasterCard, AMOUNT);
     }

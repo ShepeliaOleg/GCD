@@ -1,46 +1,39 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.PayPalDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierPayPalTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String AMOUNT = "0.10";
 
 
     @Test(groups = {"regression", "mobile"})
     public void payPalDepositInterfaceIsFunctional(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertPayPalInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawInterfaceIsFunctional(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.assertPayPalInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalCancelDeposit(){
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);
         TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = payPalDepositPage.cancelDeposit();
@@ -50,8 +43,7 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawAssertPopupAndClose(){
-        UserData userData = defaultUserData.getRandomUserData();
-        PortalUtils.registerUser(userData);
+        PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.PayPal, AMOUNT);
         assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
@@ -68,7 +60,7 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForNewUser() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
@@ -100,7 +92,7 @@ public class CashierPayPalTest extends AbstractTest{
     }
 
     private UserData payPalDeposit(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         PayPalDepositPage payPalDepositPage = depositPage.depositPayPal(AMOUNT);

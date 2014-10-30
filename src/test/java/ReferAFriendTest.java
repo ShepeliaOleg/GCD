@@ -5,17 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.referAFriend.ReferAFriendPopup;
-import springConstructors.UserData;
 import springConstructors.ValidationRule;
-import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.core.AbstractTest;
 
 public class ReferAFriendTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("mailinator")
-	private MailService mailService;
+
 
 	@Autowired
 	@Qualifier("nameOnRAFValidationRule")
@@ -24,10 +20,6 @@ public class ReferAFriendTest extends AbstractTest{
 	@Autowired
 	@Qualifier("emailValidationRule")
 	private ValidationRule emailValidationRule;
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 	/* Positive */
 
@@ -41,7 +33,7 @@ public class ReferAFriendTest extends AbstractTest{
     /* 1. Portlet is displayed */
     @Test(groups = {"smoke", "mobile"})
     public void portletIsDisplayedOnMyAccountReferAFriendPopup() {
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, defaultUserData.getRegisteredUserData());
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
         ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
     }
 

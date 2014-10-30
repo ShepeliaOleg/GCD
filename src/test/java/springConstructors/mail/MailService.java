@@ -9,11 +9,10 @@ import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
 
 import java.net.URL;
 
-public abstract class MailService extends WebDriverObject{
+public abstract class MailService{
 
     @Autowired
     @Qualifier("emailValidationRule")

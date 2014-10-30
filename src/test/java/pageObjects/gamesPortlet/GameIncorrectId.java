@@ -1,7 +1,6 @@
 package pageObjects.gamesPortlet;
 
 import pageObjects.core.AbstractPage;
-import utils.WebDriverUtils;
 
 public class GameIncorrectId extends AbstractPage {
 

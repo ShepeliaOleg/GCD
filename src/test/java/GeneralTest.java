@@ -1,23 +1,16 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPopup;
 import pageObjects.pageInPopup.PageInPopupPage;
 import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.registration.AdultContentPopup;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class GeneralTest extends AbstractTest {
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String POPUP_SCROLL_WIDTH = "40%";
     private static final String POPUP_A_WIDTH =      "50%";
@@ -28,8 +21,7 @@ public class GeneralTest extends AbstractTest {
     /*Session is saved after visiting external resource*/
     @Test(groups = {"regression"})
     public void sessionIsSavedAfterVisitingExternalResource(){
-        UserData userData = defaultUserData.getRegisteredUserData();
-        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
         WebDriverUtils.navigateToURL("http://www.google.com/");
         WebDriverUtils.waitForPageToLoad();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(ConfiguredPages.home);

@@ -1,7 +1,5 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -13,14 +11,11 @@ import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierEnvoyTest extends AbstractTest{
 
     private static final String AMOUNT = "10.00";
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     @Test(groups = {"regression", "mobile"})
     public void envoyDepositInterfaceIsFunctional(){
@@ -108,31 +103,31 @@ public class CashierEnvoyTest extends AbstractTest{
     }
 
     private UserData[] getUsers(){
-        UserData ideal = defaultUserData.getRandomUserData();
+        UserData ideal = DataContainer.getUserData().getRandomUserData();
         ideal.setCountry("NL");
         ideal.setCurrency("EUR@€");
-        UserData prezelwy = defaultUserData.getRandomUserData();
+        UserData prezelwy = DataContainer.getUserData().getRandomUserData();
         prezelwy.setCountry("PL");
         prezelwy.setCurrency("PLN");
-        UserData eKonto = defaultUserData.getRandomUserData();
+        UserData eKonto = DataContainer.getUserData().getRandomUserData();
         eKonto.setCountry("CZ");
         eKonto.setCurrency("CZK");
-        UserData euteller = defaultUserData.getRandomUserData();
+        UserData euteller = DataContainer.getUserData().getRandomUserData();
         euteller.setCountry("FI");
         euteller.setCurrency("EUR");
-        UserData ewire = defaultUserData.getRandomUserData();
+        UserData ewire = DataContainer.getUserData().getRandomUserData();
         ewire.setCountry("DK");
         ewire.setCurrency("DKK");
-        UserData giropay = defaultUserData.getRandomUserData();
+        UserData giropay = DataContainer.getUserData().getRandomUserData();
         giropay.setCountry("DE");
         giropay.setCurrency("EUR");
-        UserData ibanq = defaultUserData.getRandomUserData();
+        UserData ibanq = DataContainer.getUserData().getRandomUserData();
         ibanq.setCountry("JP");
         ibanq.setCurrency("USD");
-        UserData moneta = defaultUserData.getRandomUserData();
+        UserData moneta = DataContainer.getUserData().getRandomUserData();
         moneta.setCountry("RU");
         moneta.setCurrency("USD");
-        UserData poli = defaultUserData.getRandomUserData();
+        UserData poli = DataContainer.getUserData().getRandomUserData();
         poli.setCountry("AU");
         poli.setCurrency("AUD");
         return new UserData[]{

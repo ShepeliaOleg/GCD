@@ -1,46 +1,46 @@
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.registration.RegistrationPage;
-import springConstructors.IMS;
 import springConstructors.UserData;
+import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
 
 public class LoginTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
-	 
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
-	
 	/* POSITIVE */
 	
 	/*1. Valid user login*/
 	@Test(groups = {"smoke","desktop"})
 	public void validUserLoginHeader() {
-		UserData userData = WebDriverObject.getUserData().getRegisteredUserData();
+		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         PortalUtils.loginUser(userData);
 		validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
 	}
 
+    /*username with spaces*/
+    @Test(groups = {"regression"})
+    public void spacedUsernameLoginFromLoginPopup(){
+        UserData userData= DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername(" "+userData.getUsername()+" ");
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        homePage.navigateToLoginForm().login(userData);
+        validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+    }
+
     /*2. Login popup is available*/
     @Test(groups = {"smoke"})
     public void validUserLoginPopup() {
-        UserData userData = defaultUserData.getRegisteredUserData();
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         homePage.navigateToLoginForm().login(userData);
         validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
@@ -66,7 +66,7 @@ public class LoginTest extends AbstractTest{
 	/*5. Login without Remember Me from header*/
 	@Test(groups = {"regression","desktop"})
 	public void usernameNotSavedAfterLoginWithoutRememberMe(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, false);
         validateEquals("", homePage.logout().getEnteredUsernameFromLoginForm(), "Username empty after logout");
@@ -75,7 +75,7 @@ public class LoginTest extends AbstractTest{
 	/*6. Login without Remember Me from popup*/
 	@Test(groups = {"regression"})
 	public void usernameNotSavedAfterLoginWithoutRememberMeOnLoginPopup(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage= (HomePage) loginPopup.login(userData);
@@ -86,7 +86,7 @@ public class LoginTest extends AbstractTest{
 	/*7. Login with Remember Me from header*/
 	@Test(groups = {"regression","desktop"})
 	public void usernameSavedAfterLoginWithRememberMe(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
 		validateEquals(userData.getUsername(), homePage.logout().getEnteredUsernameFromLoginForm(), "Correct username displayed");
@@ -95,7 +95,7 @@ public class LoginTest extends AbstractTest{
 	/*8. Login with Remember Me from popup*/
 	@Test(groups = {"regression"})
 	public void usernameSavedAfterLoginWithRememberMeOnLoginPopup(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		LoginPopup loginPopup=homePage.navigateToLoginForm();
 		homePage=(HomePage) loginPopup.login(userData, true);
@@ -106,7 +106,7 @@ public class LoginTest extends AbstractTest{
 	/*9. Login + Remember Me + override old username from header*/
 	@Test(groups = {"regression","desktop"})
 	public void usernameIsOverwrittenAfterLoginWithRememberMe(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage=(HomePage) homePage.login(userData, true);
 		homePage.logout();
@@ -119,7 +119,7 @@ public class LoginTest extends AbstractTest{
 	/*10. Login + Remember Me + override old username from popoup*/
 	@Test(groups = {"regression"})
 	public void usernameIsOverwrittenAfterLoginWithRememberMeOnLoginPopup(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         LoginPopup loginPopup=homePage.navigateToLoginForm();
         homePage=(HomePage) loginPopup.login(userData, true);
@@ -128,42 +128,6 @@ public class LoginTest extends AbstractTest{
 		homePage=(HomePage) loginPopup.login(userData, true);
 		loginPopup=homePage.navigateToLogoutPopup().clickLogoutButton().loginAgain();
         validateEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username displayed");
-	}
-
-	/*11.1 Case-sensitive login*/
-	@Test(groups = {"regression"})
-	public void loginWithLowerCaseUsername(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername(userData.getUsernameLowercase());
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
-        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
-	}
-
-	/*11.2 Case-sensitive login*/
-	@Test(groups = {"regression"})
-	public void loginWithUpperCaseUsername(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername(userData.getUsernameUppercase());
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
-        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
-	}
-
-	/*11.3 Case-sensitive login*/
-	@Test(groups = {"regression"})
-	public void loginWithMixedCaseUsername(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername(userData.getUsernameMixedcase());
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
-        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
 	}
 
     /*#12.1 Links work on popup*/
@@ -216,7 +180,7 @@ public class LoginTest extends AbstractTest{
 //                    LogCategory.LoginResponse,
 //                    LogCategory.StartWindowSessionRequest,
 //                    LogCategory.StartWindowSessionResponse};
-//            UserData userData=defaultUserData.getRegisteredUserData();
+//            UserData userData=DataContainer.getUserData().getRegisteredUserData();
 //            String[] loginParameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
 //                    "clientPlatform=web",
 //                    "clientType=portal"};
@@ -243,7 +207,7 @@ public class LoginTest extends AbstractTest{
 //	public void logoutLogs(){
 //        try{
 //            LogCategory[] logCategories = new LogCategory[]{LogCategory.LogoutRequest};
-//            UserData userData=defaultUserData.getRegisteredUserData();
+//            UserData userData=DataContainer.getUserData().getRegisteredUserData();
 //            String[] logoutParameters = {"objectIdentity="+userData.getUsername()+"-playtech81001"};
 //            HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //            homePage.login(userData);
@@ -263,59 +227,127 @@ public class LoginTest extends AbstractTest{
     /*16. IMS Player Details Page*/
 	@Test(groups = {"regression"})
 	public void loginAndCheckStatusInIMS(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		PortalUtils.loginUser(userData);
-        assertTrue(iMS.isPlayerLoggedIn(userData.getUsername()),"User is logged in on IMS");
+        assertTrue(IMSUtils.isPlayerLoggedIn(userData.getUsername()),"User is logged in on IMS");
 	}
 
     /* NEGATIVE */
 
+    /*Case-sensitive login*/
+    @Test(groups = {"regression"})
+    public void loginWithLowerCaseUsername(){
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername(userData.getUsernameLowercase());
+        assertFailedLoginPopup(userData);
+    }
+
+    @Test(groups = {"regression"})
+    public void loginWithUpperCaseUsername(){
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername(userData.getUsernameUppercase());
+        assertFailedLoginPopup(userData);
+    }
+
+    @Test(groups = {"regression"})
+    public void loginWithMixedCaseUsername(){
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername(userData.getUsernameMixedcase());
+        assertFailedLoginPopup(userData);
+    }
+
     /*#1. Login with invalid username from header*/
 	@Test(groups = {"regression", "desktop"})
 	public void invalidUsernameLoginFromHeader(){
-		UserData userData=defaultUserData.getRegisteredUserData();
+		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setUsername("incorrect");
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		LoginPopup loginPopup=(LoginPopup) homePage.login(userData, Page.loginPopup);
-		assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername(), loginPopup.getUsernameText(), "Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
-	}
+        assertFailedLoginPopup(userData);
+    }
 
     /*#2. Login with invalid username from popup*/
 	@Test(groups = {"regression"})
 	public void invalidUsernameLoginFromLoginPopup(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setUsername("incorrect");
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		LoginPopup loginPopup=homePage.navigateToLoginForm();
-		loginPopup=(LoginPopup) loginPopup.login(userData, false, Page.loginPopup);
-        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
-	}
-	/*#3. Login wih invalid password from header*/
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername("incorrect");
+        assertFailedLoginPopup(userData);
+    }
+
+    /*empty username*/
+    @Test(groups = {"regression"})
+    public void emptyUsernameLoginFromLoginPopup(){
+        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+        userData.setUsername("");
+        assertFailedLoginPopup(userData);
+    }
+
+    /*#3. Login wih invalid password from header*/
 	@Test(groups = {"regression", "desktop"})
 	public void invalidPasswordLoginFromHeader(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setPassword("incorrect");
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		LoginPopup loginPopup=(LoginPopup) homePage.login(userData, false, Page.loginPopup);
-        assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
-        assertEquals(userData.getUsername() ,loginPopup.getUsernameText(),"Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        userData.setPassword("incorrect");
+		assertFailedLoginPopup(userData);
 	}
 
     /*#4. Login wih invalid password from popup*/
 	@Test(groups = {"regression"})
 	public void invalidPasswordLoginFromLoginPopup(){
-		UserData userData=defaultUserData.getRegisteredUserData();
-		userData.setPassword("incorrect");
-		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		LoginPopup loginPopup=homePage.navigateToLoginForm();
-		loginPopup=(LoginPopup) loginPopup.login(userData, false, Page.loginPopup);
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        userData.setPassword("incorrect");
+        assertFailedLoginPopup(userData);
+	}
+
+    /*empty password*/
+    @Test(groups = {"regression"})
+    public void emptyPasswordLoginFromLoginPopup(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        userData.setPassword("");
+        assertFailedLoginPopup(userData);
+    }
+
+    /*password with spaces*/
+    @Test(groups = {"regression"})
+    public void spacedPasswordLoginFromLoginPopup(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        userData.setPassword(" " + userData.getPassword() + " ");
+        assertFailedLoginPopup(userData);
+    }
+
+    /*password different case*/
+    @Test(groups = {"regression"})
+    public void differentCasePasswordLoginFromLoginPopup(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        userData.setPassword(userData.getPasswordMixedcase());
+        assertFailedLoginPopup(userData);
+    }
+
+    /*login with invalid credentials 3 times - try to log in with correct password - try to log in after unlock*/
+    @Test(groups = {"regression"})
+    public void freezeUserAfterInvalidLogins(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        String correctPass = userData.getPassword();
+        userData.setPassword("incorrect");
+        for(int i=0;i<3;i++){
+            assertFailedLoginPopup(userData);
+        }
+        userData.setPassword(correctPass);
+        assertFailedLoginPopup(userData);
+        IMSUtils.navigateToPlayedDetails(userData.getUsername()).resetFailedLogins();
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        homePage.navigateToLoginForm().login(userData);
+        validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+    }
+
+    private void assertFailedLoginPopup(UserData userData) {
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
         assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
         assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
         assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
-	}
+    }
 }

@@ -1,35 +1,29 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
 import pageObjects.login.LoginPopup;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class BannerGameLaunchTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     /*Banner - Guest login popup register*/
     @Test(groups = {"regression", "banner"})
     public void bannerImageLaunchGameGuestRegister() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         LoginPopup loginPopup = bannerPage.clickGameLoggedOut( 1);
-        loginPopup.clickRegistration().registerUser(defaultUserData.getRandomUserData());
+        loginPopup.clickRegistration().registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
     /*Banner - Guest login popup login image slide 1*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndAssertUrl(1, defaultUserData.getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(1, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -37,7 +31,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGameGuestLoginSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        bannerPage.clickGameAndAssertUrl(2, defaultUserData.getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(2, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel image slide 1*/
@@ -62,14 +56,14 @@ public class BannerGameLaunchTest extends AbstractTest{
     /*Banner - Player play image slide 1*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayer() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.clickGameAndAssertUrl(1);
     }
 
     /*Banner - Player play image slide 2*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayerSlide2() {
-        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides, defaultUserData.getRegisteredUserData());
+        BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
         bannerPage.clickGameAndAssertUrl(2);
     }

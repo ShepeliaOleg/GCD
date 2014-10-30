@@ -1,5 +1,6 @@
 package pageObjects.registration;
 
+import enums.Licensee;
 import enums.Page;
 import enums.PasswordStrength;
 import pageObjects.core.AbstractPage;
@@ -13,6 +14,7 @@ import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 import utils.validation.ValidationUtils;
 
 import java.util.Collection;
@@ -107,7 +109,7 @@ public class RegistrationPage extends AbstractPage{
                 + userData.getUsername()+"\n"
                 + userData.getCountry()+"\n"
                 + userData.getCurrencyName()+"\n");
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             registrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
         }else{
             registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, bonusCode);
@@ -132,7 +134,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             RegistrationPageAllSteps.fillRegistrationForm(userData, promotions, bonusCode);
         }else{
             registrationPageStepThree(userData).fillData(userData, termsAndConditions, promotions, bonusCode);
@@ -178,7 +180,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_EMAIL_NAME), email);
     }
     public static void fillEmailVerification(String confirmEmail){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             RegistrationPageAllSteps.fillEmailVerification(confirmEmail);
         }else {
             RegistrationPageStepOne.fillEmailVerification(confirmEmail);
@@ -187,7 +189,7 @@ public class RegistrationPage extends AbstractPage{
 
     public void fillEmailVerificationAndRefocus(String confirmEmail) {
         String xpath = RegistrationPageStepOne.getEmailVerificationXpath();
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             xpath = RegistrationPageAllSteps.getEmailVerificationXpath();
         }
         ValidationUtils.inputFieldAndRefocus(xpath, confirmEmail);
@@ -243,10 +245,10 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public ReadTermsAndConditionsPopup navigateToTermsAndConditions(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             // do nothing
         }else {
-            registrationPageStepThree(getUserData().getRegisteredUserData());
+            registrationPageStepThree(DataContainer.getUserData().getRegisteredUserData());
         }
         WebDriverUtils.click(LINK_TERMS_AND_CONDITION_XP);
         return new ReadTermsAndConditionsPopup();
@@ -271,35 +273,35 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public boolean getReceivePromotionsCheckboxState(UserData userData){
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         return WebDriverUtils.getCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP);
     }
 
     public String getReceivePromotionsCheckboxText(UserData userData){
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         return WebDriverUtils.getElementText(LABEL_RECEIVE_PROMOTIONS_XP);
     }
 
     public Collection<String> getCountriesCodesList(UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         return WebDriverUtils.getDropdownOptionsValue(getXpathByName(DROPDOWN_COUNTRY_NAME));
     }
 
     public Collection<String> getCurrencyList(UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         return WebDriverUtils.getDropdownOptionsText(getXpathByName(DROPDOWN_CURRENCY_NAME));
     }
 
     public String getUsernameSuggestion(String username, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         inputAndRefocusUsername(username);
@@ -379,35 +381,35 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateCountry(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_COUNTRY_NAME), rule, DROPDOWN_COUNTRY_VALIDATION_NAME);
     }
 
     public void validateCity(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_CITY_NAME), rule, FIELD_CITY_NAME);
     }
 
     public void validateAddress(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_ADDRESS_NAME), rule, FIELD_ADDRESS_NAME);
     }
 
     public void validatePostcode(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_POSTCODE_NAME), rule, FIELD_POSTCODE_NAME);
     }
 
     public void validatePhone(ValidationRule rule, UserData userData){
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData).validatePhoneField(rule);
         }else {
             registrationPageAllSteps().validatePhoneField(rule);
@@ -415,7 +417,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validatePhoneAreaCode(ValidationRule rule, UserData userData){
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData).validatePhoneAreaCodeField(rule);
         }else {
             registrationPageAllSteps().validatePhoneAreaCodeField(rule);
@@ -423,61 +425,61 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public void validateUsername(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_USERNAME_NAME), rule, FIELD_USERNAME_NAME);
     }
 
     public void validatePassword(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_PASSWORD_NAME), rule, FIELD_PASSWORD_NAME);
     }
 
     public void validateState(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_STATE_NAME), rule, FIELD_STATE_NAME);
     }
 
     public void validateAddress2(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_ADDRESS2_NAME), rule, FIELD_ADDRESS2_NAME);
     }
 
     public void validateHouse(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepTwo(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_HOUSE_NAME), rule, FIELD_HOUSE_NAME);
     }
 
     public void validateQuestion(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData).validateQuestionField(rule);
         }
     }
 
     public void validateAnswer(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData).validateAnswerField(rule);
         }
     }
 
     public void validateCurrency(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         ValidationUtils.validateDropdown(getXpathByName(DROPDOWN_CURRENCY_NAME), rule, DROPDOWN_CURRENCY_NAME);
     }
 
     public void validateBonusCode(ValidationRule rule, UserData userData) {
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             registrationPageStepThree(userData);
         }
         ValidationUtils.validateField(getXpathByName(FIELD_BONUSCODE_NAME), rule, FIELD_BONUSCODE_NAME);
@@ -488,7 +490,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public static String getEmailVerificationXpath(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             return getXpathByName(RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME);
         }else {
             return getXpathByName(RegistrationPageStepOne.FIELD_EMAIL_VERIFICATION_NAME);
@@ -496,7 +498,7 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public static String getEmailVerificationName(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             return RegistrationPageAllSteps.FIELD_EMAIL_VERIFICATION_NAME;
         }else {
             return RegistrationPageStepOne.FIELD_EMAIL_VERIFICATION_NAME;

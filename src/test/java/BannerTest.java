@@ -1,12 +1,9 @@
 import enums.BannerNavigationType;
 import enums.BannerSlideType;
 import enums.ConfiguredPages;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.banner.BannerPage;
 import pageObjects.external.ExternalPage;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -14,10 +11,6 @@ import utils.core.AbstractTest;
 import java.util.List;
 
 public class BannerTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
 	/*POSITIVE*/
 

@@ -1,24 +1,15 @@
 package springConstructors;
 
 import utils.core.AbstractTest;
-import utils.core.WebDriverFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DeviceData {
 
-    public static Device[] devices;
+    public Device[] devices;
 
-    public static Device[] getDevices() {
-        return devices;
-    }
-
-    public static void setDevices(Device[] devices) {
-        DeviceData.devices = devices;
-    }
-
-    private static Device getDeviceByName(String name){
+    private Device getDeviceByName(String name){
         for(Device device:devices) {
             if (device.getName().equals(name)) {
                 return device;
@@ -28,14 +19,14 @@ public class DeviceData {
         return null;
     }
 
-    public static String getSerialByName(String name) {
+    public String getSerialByName(String name) {
         return getDeviceByName(name).getSerial();
     }
 
-    public static URL getRemoteByName(String name) {
+    public URL getRemoteByName(String name, String browser) {
         URL remote = null;
         String url = getDeviceByName(name).getRemote();
-        if(WebDriverFactory.browser.equals("native")){
+        if(browser.equals("native")){
             url = url.replace("9515", "4444/wd/hub/");
         }
         try {
@@ -44,5 +35,13 @@ public class DeviceData {
             AbstractTest.failTest("Remote URL for '" + name + "' is empty or incorrect.");
         }
         return remote;
+    }
+
+    public Device[] getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Device[] devices) {
+        this.devices = devices;
     }
 }

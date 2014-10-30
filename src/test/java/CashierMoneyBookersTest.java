@@ -1,8 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -15,26 +13,23 @@ import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierMoneyBookersTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String AMOUNT = "0.05";
 
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersDepositInterfaceIsFunctional(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertMoneyBookersInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawInterfaceIsFunctional(){
-        PortalUtils.registerUser(defaultUserData.getRandomUserData());
+        PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.assertMoneyBookersInterface();
     }
@@ -71,7 +66,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawForNewUser() {
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, "valid");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
@@ -116,7 +111,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
     }
 
     private UserData getMoneyBookersUser(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername("test-mb");
         userData.setPassword("123asdQ");
         return userData;

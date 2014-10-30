@@ -1,22 +1,16 @@
 import enums.ConfiguredPages;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.PaySafeCardDepositPage;
-import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierPaySafeCardTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String CURRENCY = "EUR@€";
     private static final String COUNTRY = "NL";
@@ -55,7 +49,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
     }
 
     private UserData getEURUser(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency(CURRENCY);
         userData.setCountry(COUNTRY);
         return userData;

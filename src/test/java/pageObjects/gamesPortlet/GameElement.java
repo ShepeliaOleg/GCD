@@ -1,7 +1,9 @@
 package pageObjects.gamesPortlet;
 
+import enums.Licensee;
 import pageObjects.core.AbstractPage;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 /**
  * User: sergiich
@@ -59,7 +61,7 @@ public class GameElement extends AbstractPage{
 	}
 
 	public void clickPlayReal(){
-        if(platform.equals(PLATFORM_DESKTOP)) {
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             WebDriverUtils.mouseOver(ROOT_GAME);
             WebDriverUtils.click(buttonPlayReal);
         }else {
@@ -74,7 +76,7 @@ public class GameElement extends AbstractPage{
     }
 
 	public void clickPlayDemo(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.mouseOver(ROOT_GAME);
             WebDriverUtils.click(buttonPlayDemo);
         }else {
@@ -112,7 +114,7 @@ public class GameElement extends AbstractPage{
 	}
 
 	public boolean isDemoPresent(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.mouseOver(ROOT_GAME);
             return WebDriverUtils.isVisible(buttonPlayDemo, 0);
         }else {
@@ -122,7 +124,7 @@ public class GameElement extends AbstractPage{
 	}
 
 	public boolean isRealPresent(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.mouseOver(ROOT_GAME);
             return WebDriverUtils.isVisible(buttonPlayReal, 0);
         }else {

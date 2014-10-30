@@ -1,6 +1,7 @@
 package utils;
 
 import enums.ConfiguredPages;
+import enums.Licensee;
 import io.selendroid.SelendroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -9,22 +10,23 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
+import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
-import utils.core.WebDriverObject;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-public class WebDriverUtils extends WebDriverObject{
+public class WebDriverUtils{
 
 	private static final int TIMEOUT = 10;
+    private static final int WAIT = 1000;
 
     // Waits
 
     public static void waitFor(){
-        waitFor(1000);
+        waitFor(WAIT);
     }
 
     public static void waitFor(long millisec){
@@ -34,6 +36,8 @@ public class WebDriverUtils extends WebDriverObject{
             }catch(InterruptedException e){
                 AbstractTest.failTest("Sleep failed");
             }
+        }else {
+            AbstractTest.failTest("Please set correct wait time");
         }
     }
 
@@ -42,7 +46,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
 	public static void waitForElement(String xpath, long timeout){
-		WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+		WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), timeout);
 		try{
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
@@ -55,7 +59,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void waitForElementToDisappear(String xpath, long timeout){
-		WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+		WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), timeout);
 		try{
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
@@ -64,7 +68,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void waitForPageToLoad(){
-		WebDriverWait wait=new WebDriverWait(webDriver, 30);
+		WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), 30);
 		try{
 			wait.until(CustomExpectedConditions.pageLoadComplete());
 		} catch(TimeoutException e) {
@@ -77,7 +81,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static void waitForNumberOfElements(String xpath, int number, long timeout){
-        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), timeout);
         try{
             wait.until(CustomExpectedConditions.numberOfElementsEquals(number, xpath));
         } catch(TimeoutException e) {
@@ -97,7 +101,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static void click(String xpath, int offset){
-        Actions builder = new Actions(webDriver);
+        Actions builder = new Actions(WebDriverFactory.getWebDriver());
         try {
             builder.moveToElement(getElement(xpath), -offset, 0).click().build().perform();
         }catch (WebDriverException e){
@@ -141,17 +145,17 @@ public class WebDriverUtils extends WebDriverObject{
         return null;
     }
 
-    private static String getElementValue(WebElement webElement){
-        return webElement.getAttribute("value");
-    }
-
-    public static String getElementText(WebDriver webDriver, String xpath){
+    public static String getElementText(WebDriver webDriver, String xpath) {
         try{
-            return getElement(xpath).getText();
+            return webDriver.findElement(By.xpath(xpath)).getText();
         }catch(NoSuchElementException e){
-            AbstractTest.failTest("Could not find element by Xpath: " + xpath);
+            AbstractTest.failTest("Could not find element: " + xpath);
         }
         return null;
+    }
+
+    private static String getElementValue(WebElement webElement){
+        return webElement.getAttribute("value");
     }
 
     public static boolean isVisible(String xpath){
@@ -159,7 +163,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static boolean isVisible(String xpath, long timeout){
-        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), timeout);
         try{
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
         }catch(TimeoutException e){
@@ -181,7 +185,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static boolean isClickable(String xpath, long timeout){
-        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        WebDriverWait wait=new WebDriverWait(WebDriverFactory.getWebDriver(), timeout);
         try{
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
         }catch(TimeoutException e){
@@ -206,7 +210,7 @@ public class WebDriverUtils extends WebDriverObject{
 
 	public static void mouseOver(String xpath){
 		try{
-			Actions actions=new Actions(webDriver);
+			Actions actions=new Actions(WebDriverFactory.getWebDriver());
 			actions.moveToElement(getElement(xpath)).perform();
 		}catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
@@ -284,7 +288,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
 	public static void pressKey(Keys key){
-		Actions action = new Actions(webDriver);
+		Actions action = new Actions(WebDriverFactory.getWebDriver());
 		action.sendKeys(key).perform();
 	}
 
@@ -475,7 +479,7 @@ public class WebDriverUtils extends WebDriverObject{
     public static String getCustomDropdownSelectedOptionValue(String xpath){
         try{
             WebElement option = getCustomDropdownSelectedOption(xpath);
-            if(platform.equals(PLATFORM_MOBILE)){
+            if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
                 return option.getAttribute("data-lang");
             }else {
                 return option.getAttribute("class").split(" ")[1];
@@ -488,7 +492,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     private static WebElement getCustomDropdownSelectedOption(String xpath){
         try{
-            if(platform.equals(PLATFORM_MOBILE)){
+            if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
                 String list = getFollowingElement(xpath);
                 return getElement(list+"//li[contains(@class, 'selected')]");
             }else {
@@ -509,7 +513,7 @@ public class WebDriverUtils extends WebDriverObject{
 
     private static List<WebElement> getCustomDropdownOptions(String xpath){
         String list = getFollowingElement(xpath);
-        return webDriver.findElements(By.xpath(list+"//li"));
+        return WebDriverFactory.getWebDriver().findElements(By.xpath(list+"//li"));
     }
 
     //List
@@ -526,21 +530,21 @@ public class WebDriverUtils extends WebDriverObject{
     //Cookie
 
     public static String getCookieValue(String name) {
-        return webDriver.manage().getCookieNamed(name).getValue();
+        return WebDriverFactory.getWebDriver().manage().getCookieNamed(name).getValue();
     }
 
     public static void clearCookies(){
-        webDriver.manage().deleteAllCookies();
+        WebDriverFactory.getWebDriver().manage().deleteAllCookies();
     }
 
     public static void addCookie(String name, String value, String domain, String path, Date expiry){
         Cookie cookie = new Cookie(name, value, domain, path, expiry);
-        webDriver.manage().addCookie(cookie);
+        WebDriverFactory.getWebDriver().manage().addCookie(cookie);
     }
 
 
     public static Cookie getCookie(String cookieName) {
-        return webDriver.manage().getCookieNamed(cookieName);
+        return WebDriverFactory.getWebDriver().manage().getCookieNamed(cookieName);
     }
 
     public static boolean isCookieExists(String cookieName) {
@@ -548,17 +552,17 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static void deleteCookie(String cookieName) {
-        webDriver.manage().deleteCookieNamed(cookieName);
+        WebDriverFactory.getWebDriver().manage().deleteCookieNamed(cookieName);
     }
 
 	//Navigation
 
 	public static String getCurrentUrl(){
-		return webDriver.getCurrentUrl();
+		return WebDriverFactory.getWebDriver().getCurrentUrl();
 	}
 
     public static String getCurrentLanguageCode(){
-        String leftover = getCurrentUrl().replace(getBaseUrl(), "");
+        String leftover = getCurrentUrl().replace(DataContainer.getDriverData().getBaseUrl(), "");
         int index = leftover.indexOf("/");
         if(index!=-1){
             return leftover.substring(0, index);
@@ -572,7 +576,7 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
 	public static void navigateToInternalURL(String relativeURL){
-		String url=baseUrl + relativeURL;
+		String url=DataContainer.getDriverData().getBaseUrl() + relativeURL;
         navigateToURL(url);
 	}
 
@@ -582,18 +586,12 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void navigateToURL(String url){
-		webDriver.get(url);
+		WebDriverFactory.getWebDriver().get(url);
 	}
 
     public static void refreshPage(){
-        webDriver.navigate().refresh();
+        WebDriverFactory.getWebDriver().navigate().refresh();
     }
-
-	//Xpath actions
-
-	public static int getXpathCount(String xPath){
-		return webDriver.findElements(By.xpath(xPath)).size();
-	}
 
 	//WindowHandling
 
@@ -602,20 +600,15 @@ public class WebDriverUtils extends WebDriverObject{
     }
 
     public static void closeCurrentWindow(){
-        webDriver.close();
+        WebDriverFactory.getWebDriver().close();
     }
 
 	public static String getWindowHandle(){
-		return webDriver.getWindowHandle();
+		return WebDriverFactory.getWebDriver().getWindowHandle();
 	}
 
     public static Set<String> getWindowHandles(){
-        return webDriver.getWindowHandles();
-    }
-
-    public static void openAdditionalSession(){
-        WebDriverFactory webDriverFactory = new WebDriverFactory();
-        webDriverFactory.switchToAdditionalWebDriver();
+        return WebDriverFactory.getWebDriver().getWindowHandles();
     }
 
 	public static void switchToOtherWindow(String mainWindowHandle){
@@ -627,7 +620,7 @@ public class WebDriverUtils extends WebDriverObject{
 	}
 
 	public static void switchToWindow(String handle){
-		webDriver.switchTo().window(handle);
+		WebDriverFactory.getWebDriver().switchTo().window(handle);
 	}
 
     public static boolean isGameLaunched(ConfiguredPages page){
@@ -641,48 +634,55 @@ public class WebDriverUtils extends WebDriverObject{
 	//iFrame
 
     public static void switchFromIframe(){
-        webDriver.switchTo().defaultContent();
+        WebDriverFactory.getWebDriver().switchTo().defaultContent();
     }
 
 	public static void switchToIframeById(String iframeId){
-		webDriver.switchTo().frame(iframeId);
+		WebDriverFactory.getWebDriver().switchTo().frame(iframeId);
 	}
 
     public static void switchToIframeByXpath(String iframeXpath){
-        webDriver.switchTo().frame(getElement(iframeXpath));
+        WebDriverFactory.getWebDriver().switchTo().frame(getElement(iframeXpath));
     }
 
 	//Script
 
     public static void acceptJavaScriptAlert(){
-        Alert alert = webDriver.switchTo().alert();
+        Alert alert = WebDriverFactory.getWebDriver().switchTo().alert();
         alert.accept();
     }
 
 	public static void executeScript(String javascript){
-		((JavascriptExecutor) webDriver).executeScript(javascript);
+		((JavascriptExecutor) WebDriverFactory.getWebDriver()).executeScript(javascript);
 	}
 
     //Mobile
 
     public static void setOrientation(ScreenOrientation screenOrientation){
-        SelendroidDriver selendroidDriver = (SelendroidDriver)webDriver;
+        SelendroidDriver selendroidDriver = (SelendroidDriver)WebDriverFactory.getWebDriver();
         selendroidDriver.rotate(screenOrientation);
         waitFor(1000);
     }
 
     public static ScreenOrientation getOrientation(){
-        SelendroidDriver selendroidDriver = (SelendroidDriver)webDriver;
+        SelendroidDriver selendroidDriver = (SelendroidDriver)WebDriverFactory.getWebDriver();
         return selendroidDriver.getOrientation();
     }
 
     public static String getDomain() {
+        String baseUrl = DataContainer.getDriverData().getBaseUrl();
         int firstDotIndex = baseUrl.indexOf(".");
         return baseUrl.substring(firstDotIndex).replace("/", "").replace(":8080", "");
     }
 
     private static WebElement getElement(String xpath) {
-        return webDriver.findElement(By.xpath(xpath));
+        return WebDriverFactory.getWebDriver().findElement(By.xpath(xpath));
+    }
+
+    //Xpath actions
+
+    public static int getXpathCount(String xPath){
+        return WebDriverFactory.getWebDriver().findElements(By.xpath(xPath)).size();
     }
 
     public static String getFollowingElement(String xpath, int index) {
@@ -700,4 +700,5 @@ public class WebDriverUtils extends WebDriverObject{
     public static String getPrecedingElement(String xpath) {
         return "//*[following-sibling::"+xpath.substring(2)+"]";
     }
+
 }

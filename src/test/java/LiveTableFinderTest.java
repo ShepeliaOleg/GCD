@@ -1,6 +1,3 @@
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import springConstructors.UserData;
 import utils.core.AbstractTest;
 
 /**
@@ -9,10 +6,6 @@ import utils.core.AbstractTest;
  */
 
 public class LiveTableFinderTest extends AbstractTest{
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 //	/*2. Choose game section – scope selection (check and uncheck categories) - should be made for all the categories*/
 //	@Test(groups = {"regression"})

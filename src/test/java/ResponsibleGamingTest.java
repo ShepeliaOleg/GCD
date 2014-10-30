@@ -1,14 +1,7 @@
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import springConstructors.UserData;
 import utils.core.AbstractTest;
 
 public class ResponsibleGamingTest extends AbstractTest{
 
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
-	
 	/* Positive */
 	
 //	/*1. Portlet is displayed */

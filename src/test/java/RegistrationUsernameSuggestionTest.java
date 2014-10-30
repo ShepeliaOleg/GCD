@@ -1,34 +1,28 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.registration.RegistrationPage;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class RegistrationUsernameSuggestionTest extends AbstractTest{
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
     /*#??. Suggestion does not appear on entering new username*/
     @Test(groups = {"registration","regression"})
     public void usernameSuggestionNoSuggestion(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRandomUserData().getUsername();
-        assertEquals("No username suggestion", registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData()), "Suggestion for unique username");
+        String username=DataContainer.getUserData().getRandomUserData().getUsername();
+        assertEquals("No username suggestion", registrationPage.getUsernameSuggestion(username, DataContainer.getUserData().getRandomUserData()), "Suggestion for unique username");
     }
 
     /*#??. Suggestion appeared on entering already registered username*/
     @Test(groups = {"registration","regression"})
     public void usernameSuggestion(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRegisteredUserData().getUsername();
-        String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, defaultUserData.getRandomUserData());
+        String username= DataContainer.getUserData().getRegisteredUserData().getUsername();
+        String usernameSuggestionMessage = registrationPage.getUsernameSuggestion(username, DataContainer.getUserData().getRandomUserData());
         assertTrue(usernameSuggestionMessage.startsWith("This username is already in use. Suggested username is:"), "(Actual: '"+usernameSuggestionMessage+"')Username suggestion message contains preamble");
         assertTrue(usernameSuggestionMessage.contains(username.toUpperCase()), "(Actual: '"+usernameSuggestionMessage+"')Username suggestion message contains '" + username + "'");
     }
@@ -37,16 +31,16 @@ public class RegistrationUsernameSuggestionTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void usernameSuggestionClick(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRegisteredUserData().getUsername();
-        assertTrue(registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData()), "Suggestion entered after click");
+        String username=DataContainer.getUserData().getRegisteredUserData().getUsername();
+        assertTrue(registrationPage.clickUsernameSuggestionAndValidateInput(username, DataContainer.getUserData().getRandomUserData()), "Suggestion entered after click");
     }
 
     /*#??. Suggestion disappers after refocus*/
     @Test(groups = {"registration","regression"})
     public void usernameSuggestionClickAfterFill(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRegisteredUserData().getUsername();
-        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
+        String username=DataContainer.getUserData().getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, DataContainer.getUserData().getRandomUserData());
         registrationPage.clickUsernameField();
         WebDriverUtils.waitFor(1000);
         assertFalse(registrationPage.isSuggestionVisible(), "Suggestion tooltip still visible after click");
@@ -56,9 +50,9 @@ public class RegistrationUsernameSuggestionTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void usernameSuggestionEditableAfterFill(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRegisteredUserData().getUsername();
-        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
-        String newUsername = defaultUserData.getRandomUserData().getUsername();
+        String username=DataContainer.getUserData().getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, DataContainer.getUserData().getRandomUserData());
+        String newUsername = DataContainer.getUserData().getRandomUserData().getUsername();
         RegistrationPage.fillUsername(newUsername);
         assertEquals(newUsername, registrationPage.getFilledUsername(), "Username can be reentered");
     }
@@ -67,9 +61,9 @@ public class RegistrationUsernameSuggestionTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void usernameSuggestionAppearsEveryTime(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        String username=defaultUserData.getRegisteredUserData().getUsername();
-        registrationPage.clickUsernameSuggestionAndValidateInput(username, defaultUserData.getRandomUserData());
-        String newUsername = defaultUserData.getRandomUserData().getUsername();
+        String username=DataContainer.getUserData().getRegisteredUserData().getUsername();
+        registrationPage.clickUsernameSuggestionAndValidateInput(username, DataContainer.getUserData().getRandomUserData());
+        String newUsername = DataContainer.getUserData().getRandomUserData().getUsername();
         RegistrationPage.inputAndRefocusUsername(username);
         assertTrue(registrationPage.isSuggestionVisible(), "Suggestion visible second time");
         RegistrationPage.inputAndRefocusUsername(username);

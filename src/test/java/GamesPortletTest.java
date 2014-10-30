@@ -1,29 +1,17 @@
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.login.LoginPopup;
-import springConstructors.UserData;
-import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class GamesPortletTest extends AbstractTest {
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
-
-	@Autowired
-	@Qualifier("searchValidationRule")
-	private ValidationRule searchValidationRule;
 
 	/*1. Portlet is displayed, game can be launched */
 	@Test(groups = {"regression", "smoke"})
@@ -979,7 +967,7 @@ public class GamesPortletTest extends AbstractTest {
 	/*30. Player launches game from list view*/
 	@Test(groups = {"regression", "desktop"})
 	public void gameCanBeStartedFromListView(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesList, defaultUserData.getRegisteredUserData());
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesList);
 		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true);
         gameLaunchPopup.assertGameLaunchAndClose();
 	}

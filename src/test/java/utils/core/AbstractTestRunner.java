@@ -8,8 +8,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
-import springConstructors.AdminUserData;
-import springConstructors.UserData;
+import springConstructors.*;
+import springConstructors.mail.MailService;
 import utils.RandomUtils;
 
 import java.util.ArrayList;
@@ -19,8 +19,32 @@ import java.util.ArrayList;
 public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
 
     @Autowired
+    @Qualifier("affiliate")
+    private AffiliateData affiliateData;
+
+    @Autowired
     @Qualifier("adminUserData")
     private AdminUserData adminUserData;
+
+    @Autowired
+    @Qualifier("defaults")
+    private Defaults defaults;
+
+    @Autowired
+    @Qualifier("deviceData")
+    private DeviceData deviceData;
+
+    @Autowired
+    @Qualifier("driverData")
+    private DriverData driverData;
+
+    @Autowired
+    @Qualifier("iMS")
+    private IMS iMS;
+
+    @Autowired
+    @Qualifier("mailinator")
+    private MailService mailService;
 
     @Autowired
     @Qualifier("userData")
@@ -32,9 +56,14 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
 
     @BeforeClass(alwaysRun = true)
     protected void setUp() throws Exception{
-        new WebDriverFactory().initializeWebDrivers();
-        WebDriverObject.setAdminUserData(adminUserData);
-        WebDriverObject.setUserData(userData);
+        WebDriverFactory.initializeWebDrivers(driverData, deviceData);
+        DataContainer.setAffiliateData(affiliateData);
+        DataContainer.setAdminUserData(adminUserData);
+        DataContainer.setDefaults(defaults);
+        DataContainer.setDriverData(driverData);
+        DataContainer.setIms(iMS);
+        DataContainer.setMailService(mailService);
+        DataContainer.setUserData(userData);
     }
 
     @BeforeMethod(alwaysRun = true)

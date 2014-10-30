@@ -1,5 +1,6 @@
 package pageObjects.header;
 
+import enums.Licensee;
 import enums.Page;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
@@ -8,6 +9,7 @@ import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class LoggedOutHeader extends Header{
 
@@ -33,7 +35,7 @@ public class LoggedOutHeader extends Header{
     }
 
     public ForgotPasswordPopup navigateToForgotPasswordPopup(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.click(LINK_FORGOT_PASSWORD_XP);
         }else {
             navigateToLoginPopup().clickForgotPassword();
@@ -42,7 +44,7 @@ public class LoggedOutHeader extends Header{
     }
 
     public RegistrationPageAllSteps openRegistrationForm(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.click(LINK_REGISTER_XP);
         }else {
             openMenu().loggedOutMenu().clickRegister();
@@ -51,7 +53,7 @@ public class LoggedOutHeader extends Header{
     }
 
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page expectedPage){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             return fillLoginFormAndSubmit(userData, rememberMeEnable, expectedPage);
         }else {
             return navigateToLoginPopup().login(userData, rememberMeEnable, expectedPage);

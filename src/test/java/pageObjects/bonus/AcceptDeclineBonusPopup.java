@@ -1,8 +1,6 @@
 package pageObjects.bonus;
 
-import pageObjects.HomePage;
 import pageObjects.core.AbstractPopup;
-import utils.WebDriverUtils;
 
 /**
  * User: sergiich

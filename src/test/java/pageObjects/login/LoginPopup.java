@@ -9,6 +9,7 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class LoginPopup extends AbstractPopup{
 
@@ -54,7 +55,7 @@ public class LoginPopup extends AbstractPopup{
     }
 
     public AbstractPage login(Page expectedPage){
-        return (AbstractPage) this.login(getUserData().getRegisteredUserData(), false, expectedPage);
+        return (AbstractPage) this.login(DataContainer.getUserData().getRegisteredUserData(), false, expectedPage);
     }
 
     public AbstractPage login(UserData userData){

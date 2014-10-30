@@ -1,24 +1,18 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.banner.BannerPageProfileID;
-import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class BannerProfileIDTest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     /*profile ID - Player with profileID*/
     @Test(groups = {"regression", "banner"})
     public void profileIDPlayerWith() {
-        PortalUtils.loginUser(defaultUserData.getRegisteredUserDataWithProfileID());
+        PortalUtils.loginUser(DataContainer.getUserData().getRegisteredUserDataWithProfileID());
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
         checkProfileID(ConfiguredPages.bannerProfileSingleProfileOneSlide, BannerPageProfileID.VALID_PROFILE_ID, null, null, null);
@@ -33,7 +27,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Player without profileID*/
     @Test(groups = {"regression", "banner"})
     public void profileIDPlayerWithout() {
-        PortalUtils.loginUser(defaultUserData.getRegisteredUserData());
+        PortalUtils.loginUser(DataContainer.getUserData().getRegisteredUserData());
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
         checkProfileID(ConfiguredPages.bannerProfileSingleProfileOneSlide, null, BannerPageProfileID.VALID_PROFILE_ID, null, null);

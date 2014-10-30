@@ -1,11 +1,12 @@
 package pageObjects.header;
 
+import enums.Licensee;
 import pageObjects.account.MyAccountPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LogoutPopup;
 import springConstructors.UserData;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class LoggedInHeader extends Header{
 
@@ -51,7 +52,7 @@ public class LoggedInHeader extends Header{
     }
 
     public LogoutPopup clickLogout(){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             return clickLogoutButton();
         }else {
             return openMenu().loggedInMenu().clickLogout();

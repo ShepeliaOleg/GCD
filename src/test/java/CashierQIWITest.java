@@ -1,23 +1,17 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.QIWIDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class CashierQIWITest extends AbstractTest{
-
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     private static final String CURRENCY = "RUB";
     private static final String COUNTRY = "RU";
@@ -71,7 +65,7 @@ public class CashierQIWITest extends AbstractTest{
     }
 
     private UserData getRussianUser(){
-        UserData userData = defaultUserData.getRandomUserData();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency(CURRENCY+"@");
         userData.setCountry(COUNTRY);
         return userData;

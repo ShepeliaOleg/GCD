@@ -2,7 +2,6 @@ package utils.core;
 
 import io.selendroid.SelendroidCapabilities;
 import io.selendroid.SelendroidDriver;
-import io.selendroid.SelendroidLauncher;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
@@ -14,39 +13,32 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class WebDriverFactory extends WebDriverObject{
+public class WebDriverFactory{
 
 	private static WebDriver storedWebDriver;
-	public static String browser;
+    private static WebDriver webDriver;
+    private static WebDriver logDriver;
+    private static String browser;
     private static String os;
     private static String device;
-    public static SelendroidLauncher selendroidServer;
+    private static URL remote;
+    private static String serial;
 
-	@Autowired
-	@Qualifier("driverData")
-	private DriverData driverData;
+    private static final String REMOTE = "172.29.49.73";
+    private static final String REMOTE_MAC = "172.29.46.41";
 
-    @Autowired
-    @Qualifier("deviceData")
-    private DeviceData deviceData;
-
-	public WebDriverFactory(){
-        baseUrl =   driverData.getBaseUrl();
-        platform =  driverData.getPlatform();
+    public static void initializeWebDrivers(DriverData driverData, DeviceData deviceData){
         browser =   driverData.getBrowser();
         os =        driverData.getOs();
         device =    driverData.getDevice();
-	}
-
-	public void initializeWebDrivers(){
+        remote = deviceData.getRemoteByName(device, browser);
+        serial = deviceData.getSerialByName(device);
 //		try{
 //			logDriver = initializeWebDriver(browser, os);
 //		}catch(Exception e){
@@ -55,7 +47,7 @@ public class WebDriverFactory extends WebDriverObject{
 		webDriver = initializeWebDriver();
 	}
 
-	public WebDriver initializeWebDriver(){
+	private static WebDriver initializeWebDriver(){
 		WebDriver driver = null;
 		try{
             switch (os) {
@@ -100,7 +92,7 @@ public class WebDriverFactory extends WebDriverObject{
 //        }
 	}
 
-    private WebDriver getDesktopDriver(){
+    public static WebDriver getDesktopDriver(){
         WebDriver driver;
         switch (browser){
             case "chrome":driver=createChromeDriver(os);
@@ -115,13 +107,13 @@ public class WebDriverFactory extends WebDriverObject{
         return driver;
     }
 
-    private WebDriver getRemoteDriver(){
+    private static WebDriver getRemoteDriver(){
         WebDriver driver = createRemoteDriver();
         driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
 
-	public void switchToAdditionalWebDriver(){
+	public static void switchToAdditionalWebDriver(){
 		storedWebDriver = webDriver;
 		try{
 			webDriver=initializeWebDriver();
@@ -135,10 +127,10 @@ public class WebDriverFactory extends WebDriverObject{
 		webDriver = storedWebDriver;
 	}
 
-    private WebDriver createRemoteDriver(){
-        String address = "172.29.49.73";
+    private static WebDriver createRemoteDriver(){
         Capabilities capabilities;
         URL url;
+        String address = REMOTE;
         switch (browser){
             case "chrome":capabilities  = DesiredCapabilities.chrome();
                 break;
@@ -147,9 +139,10 @@ public class WebDriverFactory extends WebDriverObject{
             case "explorer":capabilities  = DesiredCapabilities.internetExplorer();
                 break;
             case "safari":capabilities  = DesiredCapabilities.safari();
-                address = "172.29.46.41";
+                address = REMOTE_MAC;
                 break;
-            default:throw new RuntimeException("Please set browser, now '"+browser+"'");
+            default:
+                throw new RuntimeException("Please set browser, now '"+browser+"'");
         }
         try{
             url = new URL("http://"+address+":4444/wd/hub");
@@ -159,27 +152,27 @@ public class WebDriverFactory extends WebDriverObject{
         return new RemoteWebDriver(url, capabilities);
     }
 
-    private WebDriver createChromeDriver(String osType){
+    private static WebDriver createChromeDriver(String osType){
         ChromeOptions chromeOptions=new ChromeOptions();
         chromeOptions.addArguments("--ignore-certificate-errors");
         if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
         return new ChromeDriver(chromeOptions);
     }
 
-    private WebDriver createFireFoxDriver(){
+    private static WebDriver createFireFoxDriver(){
         FirefoxProfile profile=new FirefoxProfile();
         profile.setPreference("focusmanager.testmode", true);
         return new FirefoxDriver(profile);
     }
 
-    private WebDriver createIEDriver(){
+    private static WebDriver createIEDriver(){
         System.setProperty("webdriver.ie.driver","C:/Playtech/webdriver/iedriver/IEDriverServer.exe");
         return new InternetExplorerDriver();
     }
 
     /*Mobile*/
 
-    private WebDriver createWinPhoneDriver(){
+    private static WebDriver createWinPhoneDriver(){
         try {
             return new RemoteWebDriver(new URL("http://10.251.192.148:8080"), DesiredCapabilities.internetExplorer());
         }catch (Exception e){
@@ -187,28 +180,35 @@ public class WebDriverFactory extends WebDriverObject{
         }
     }
 
-    private WebDriver createAndroidDriver(){
+    private static WebDriver createAndroidDriver(){
         WebDriver driver;
         SelendroidCapabilities capabilities = new SelendroidCapabilities();
         capabilities.setBrowserName("android");
         capabilities.setPlatform(Platform.ANDROID);
-        capabilities.setSerial(deviceData.getSerialByName(device));
+        capabilities.setSerial(serial);
         try {
-            driver = new SelendroidDriver(deviceData.getRemoteByName(device), capabilities);
+            driver = new SelendroidDriver(remote, capabilities);
         }catch (Exception e){
             throw new RuntimeException("Starting webdriver failed \n" + e);
         }
         return driver;
     }
 
-    public WebDriver getMobileChromeDriver() {
+    private static WebDriver getMobileChromeDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("androidPackage", "com.android.chrome");
-        chromeOptions.setExperimentalOption("androidDeviceSerial", deviceData.getSerialByName(device));
+        chromeOptions.setExperimentalOption("androidDeviceSerial", serial);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-        return new RemoteWebDriver(deviceData.getRemoteByName(device), capabilities);
+        return new RemoteWebDriver(remote, capabilities);
     }
 
+    public static WebDriver getWebDriver() {
+        return webDriver;
+    }
+
+    public static WebDriver getLogDriver() {
+        return logDriver;
+    }
 
 }

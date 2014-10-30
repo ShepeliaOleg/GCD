@@ -3,10 +3,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import springConstructors.BingoScheduleData;
 import utils.core.AbstractTest;
 
-/**
- * User: sergiich
- * Date: 4/14/14
- */
 public class BingoScheduleTest extends AbstractTest{
 
 	@Autowired

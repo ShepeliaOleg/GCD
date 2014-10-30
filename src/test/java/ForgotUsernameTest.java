@@ -1,16 +1,11 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import springConstructors.IMS;
-import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
 import utils.core.AbstractTest;
 
 public class ForgotUsernameTest extends AbstractTest{
 
-    @Autowired
-    @Qualifier("userData")
-    private UserData defaultUserData;
 
     @Autowired
 	@Qualifier("mailinator")
@@ -23,10 +18,6 @@ public class ForgotUsernameTest extends AbstractTest{
 	@Autowired
 	@Qualifier("usernameValidationRule")
 	private ValidationRule usernameValidationRule;
-
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
 
 	/*POSITIVE*/
 

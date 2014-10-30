@@ -5,14 +5,8 @@ import pageObjects.external.mailq.MailQLoginPage;
 import pageObjects.external.mailq.MailQNewTicketPage;
 import pageObjects.external.mailq.MailQReplyPage;
 import utils.WebDriverUtils;
-import utils.core.WebDriverObject;
 
-/**
- * User: sergiich
- * Date: 8/6/13
- */
-
-public class MailQ extends WebDriverObject{
+public class MailQ {
 	protected String mailServiceUrl;
 
 	public MailQ(String mailServiceUrl){
@@ -21,7 +15,7 @@ public class MailQ extends WebDriverObject{
 
 	public MailQHomePage navigateToMailQ(){
 		MailQHomePage mailQHomePage;
-		webDriver.navigate().to(mailServiceUrl);
+		WebDriverUtils.navigateToURL(mailServiceUrl);
 		if(WebDriverUtils.isVisible(MailQLoginPage.BUTTON_SUBMIT_XP)){
 			MailQLoginPage mailQLoginPage=new MailQLoginPage();
 			mailQHomePage=mailQLoginPage.logInToMailQ();

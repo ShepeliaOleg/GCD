@@ -1,7 +1,9 @@
 package pageObjects.changePassword;
 
+import enums.Licensee;
 import pageObjects.core.AbstractPopup;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class ChangePasswordPopup extends AbstractPopup{
 	private  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
@@ -40,7 +42,7 @@ public class ChangePasswordPopup extends AbstractPopup{
         fillNewPasswordValidation(newPassword);
         submit();
         ChangedPasswordPopup changedPasswordPopup = new ChangedPasswordPopup();
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             changedPasswordPopup.closePopup();
         }
     }

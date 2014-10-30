@@ -1,16 +1,17 @@
 package utils.validation;
 
+import enums.Licensee;
 import org.openqa.selenium.Keys;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.WebDriverObject;
+import utils.core.DataContainer;
 
 import java.util.ArrayList;
 
-public class ValidationUtils extends WebDriverObject{
+public class ValidationUtils{
 
     private static final String PLACEHOLDER =               "$PLACEHOLDER$";
     private static final String NO_TOOLTIP =                "N/A";
@@ -29,7 +30,7 @@ public class ValidationUtils extends WebDriverObject{
     private static void validateClick(String xpath, ValidationRule rule, String tooltipID) {
         clickField(xpath);
         assertValidationStatus(tooltipID, STATUS_NONE, "click");
-        if(platform.equals(PLATFORM_DESKTOP)) {
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             assertToolTips(rule.getTooltipPositive(), tooltipID, "", STATUS_PASSED);
         }
     }
@@ -37,7 +38,7 @@ public class ValidationUtils extends WebDriverObject{
     private static void validateEmpty(String xpath, ValidationRule rule, String tooltipID) {
         inputFieldAndRefocus(xpath);
         String status = STATUS_PASSED;
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             status = STATUS_NONE;
         }
         if(rule.getIsMandatory().equals("true")){
@@ -163,7 +164,7 @@ public class ValidationUtils extends WebDriverObject{
     private static String getTooltipStatus(String id) {
         String xpath = getTooltipXpath(id);
         if(WebDriverUtils.isVisible(xpath, 0)){
-            if(platform.equals(PLATFORM_DESKTOP)){
+            if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
                 String classValue = WebDriverUtils.getAttribute(xpath, "class");
                 if(classValue.contains(TOOLTIP_STATUS_ERROR)){
                     return STATUS_FAILED;
@@ -203,7 +204,7 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     public static void inputFieldAndRefocus(String xpath, String input){
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             if(xpath.contains(RegistrationPage.FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP)){
                 WebDriverUtils.clearAndInputTextToField(RegistrationPage.FIELD_PHONE_XP, "111111");
             }else if(xpath.contains(RegistrationPage.FIELD_PHONE_XP)){
@@ -212,7 +213,7 @@ public class ValidationUtils extends WebDriverObject{
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.pressKey(Keys.TAB);
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             clickField(xpath);
         }
         WebDriverUtils.waitFor(500);
@@ -237,7 +238,7 @@ public class ValidationUtils extends WebDriverObject{
     private static void refocusDropdown(String xpath){
         WebDriverUtils.pressKey(Keys.TAB);
         WebDriverUtils.pressKey(Keys.TAB);
-        if(platform.equals(PLATFORM_DESKTOP)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             clickField(xpath);
         }
         WebDriverUtils.waitFor(500);
@@ -282,7 +283,7 @@ public class ValidationUtils extends WebDriverObject{
     }
 
     private static String getTooltipXpath(String id){
-        if(platform.equals(PLATFORM_MOBILE)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
             return TOOLTIP_ERROR_MOBILE_XP.replace(PLACEHOLDER, id);
         }else {
             return TOOLTIP_ERROR_DESKTOP_XP.replace(PLACEHOLDER, id);

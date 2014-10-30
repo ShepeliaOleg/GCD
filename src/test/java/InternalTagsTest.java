@@ -1,7 +1,3 @@
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import springConstructors.IMS;
-import springConstructors.UserData;
 import utils.core.AbstractTest;
 
 /**
@@ -9,14 +5,6 @@ import utils.core.AbstractTest;
  * Date: 4/10/14
  */
 public class InternalTagsTest extends AbstractTest{
-
-	@Autowired
-	@Qualifier("iMS")
-	private IMS iMS;
-
-	@Autowired
-	@Qualifier("userData")
-	private UserData defaultUserData;
 
 //    /*1. Internal tags are replaced with "-" for guest user.*/
 //	@Test(groups = {"regression"})
