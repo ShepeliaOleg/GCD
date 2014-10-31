@@ -2,8 +2,10 @@ package pageObjects.account;
 
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
+import springConstructors.ValidationRule;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.validation.ValidationUtils;
 
 /*
  * User: ivanva
@@ -34,16 +36,44 @@ public class ChangeMyDetailsPage extends AbstractPage{
         super(new String[]{ROOT_XP, BUTTON_UPDATE_XP});
     }
 
-    public void setNotificationCheckboxes(boolean state){
-        setNotificationCheckboxes(state, state, state);
+    public boolean isButtonActive() {
+        //TODO
+        return false;
     }
 
-    public void setNotificationCheckboxes(boolean email, boolean phone, boolean sms){
-        setNotificationCheckboxEmail(email);
-        setNotificationCheckboxTelephone(phone);
-        setNotificationCheckboxSMS(sms);
-        submitChanges();
+    public void editDetails(UserData userData){
+		setCountry(userData.getCountry());
+		setAddress(userData.getFullAddress());
+		setCity(userData.getCity());
+		setPostCode(userData.getPostCode());
+		setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
+		setMobile(userData.getMobileAreaCode().concat(userData.getMobile()));
+		setEmail(userData.getEmail());
+		setEmailVerification(userData.getEmail());
+		submitChanges();
+	}
+
+    public void assertUserData(UserData userData) {
+        AbstractTest.assertTrue(isTitleContains(userData.getTitle()), "Title contains title");
+        AbstractTest.assertTrue(isTitleContains(userData.getFirstName()), "Title contains firstname");
+        AbstractTest.assertTrue(isTitleContains(userData.getLastName()), "Title contains lastname");
+        AbstractTest.assertEquals(userData.getCountry(), WebDriverUtils.getDropdownSelectedOptionText(DROPDOWN_COUNTRY_XP), "Country");
+        AbstractTest.assertEquals(userData.getFullAddress(), WebDriverUtils.getInputFieldText(FIELD_ADDRESS_XP), "Address");
+        AbstractTest.assertEquals(userData.getCity(), WebDriverUtils.getInputFieldText(FIELD_CITY_XP), "City");
+        AbstractTest.assertEquals(userData.getPostCode(), WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP), "Postcode");
+        AbstractTest.assertEquals(userData.getPhoneAreaCode()+userData.getPhone(),WebDriverUtils.getInputFieldText(FIELD_PHONE_XP),"Country");
+        AbstractTest.assertEquals(userData.getMobileAreaCode()+userData.getMobile(),WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP),"Country");
+        AbstractTest.assertEquals(userData.getEmail(),WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP),"Country");
+        AbstractTest.assertEquals(userData.getEmail(),WebDriverUtils.getInputFieldText(FIELD_EMAIL_VERIFICATION_XP),"Country");
     }
+
+    public boolean isVisibleConfirmationMessage(){
+		return WebDriverUtils.isVisible(LABEL_CONFIRMATION_MESSAGE_XP);
+	}
+
+	private boolean isTitleContains(String title){
+		return WebDriverUtils.getElementText(LABEL_TITLE).contains(title);
+	}
 
     private void setNotificationCheckboxEmail(boolean state){
         WebDriverUtils.setCheckBoxState(CHECKBOX_NOTIFICATION_EMAIL_XP, state);
@@ -57,161 +87,73 @@ public class ChangeMyDetailsPage extends AbstractPage{
         WebDriverUtils.setCheckBoxState(CHECKBOX_NOTIFICATION_SMS_XP, state);
     }
 
-	private void editCountry(String country){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
-	}
-
-	private void editAddress(String address){
-		WebDriverUtils.clearAndInputTextToField(FIELD_ADDRESS_XP, address);
-	}
-
-	private void editCity(String city){
-		WebDriverUtils.clearAndInputTextToField(FIELD_CITY_XP, city);
-	}
-
-	private void editPostCode(String postCode){
-		WebDriverUtils.clearAndInputTextToField(FIELD_POSTCODE_XP, postCode);
-	}
-
-	private void editPhone(String phone){
-		WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_XP, phone);
-	}
-
-	private void editMobile(String mobile){
-		WebDriverUtils.clearAndInputTextToField(FIELD_MOBILE_XP, mobile);
-	}
-
-	public void editEmail(String email){
-		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, email);
-	}
-
-	public void editEmailVerification(String email){
-		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_VERIFICATION_XP, email);
-	}
-
-	public void submitChanges(){
-		WebDriverUtils.click(BUTTON_UPDATE_XP);
-	}
-
-	public void editDetails(UserData userData){
-		editCountry(userData.getCountry());
-		editAddress(userData.getFullAddress());
-		editCity(userData.getCity());
-		editPostCode(userData.getPostCode());
-		editPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
-		editMobile(userData.getMobileAreaCode().concat(userData.getMobile()));
-		editEmail(userData.getEmail());
-		editEmailVerification(userData.getEmail());
-		submitChanges();
-	}
-
-    public boolean detailsAreEqualsTo(UserData userData) {
-        boolean title1=isTitleContains(userData.getTitle());
-        boolean title2=isTitleContains(userData.getFirstName());
-        boolean title3=isTitleContains(userData.getLastName());
-        boolean country=isCountryEqualsTo(userData.getCountry());
-        boolean address=isAddressEqualsTo(userData.getFullAddress());
-        boolean city=isCityEqualsTo(userData.getCity());
-        boolean postCode=isPostCodeEqualsTo(userData.getPostCode());
-        boolean phone=isPhoneEqualsTo(userData.getPhoneAreaCode().concat(userData.getPhone()));
-        boolean mobile=isMobileEqualsTo(userData.getMobileAreaCode().concat(userData.getMobile()));
-        boolean email1=isEmailEqualsTo(userData.getEmail());
-        boolean email2=isConfirmEmailEqualsTo(userData.getEmail());
-        return (title1 && title2 && title3 && country && address && city && postCode && phone && mobile && email1 && email2);
+    private void setCountry(String country){
+        WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
     }
 
-    public boolean isVisibleConfirmationMessage(){
-		return WebDriverUtils.isVisible(LABEL_CONFIRMATION_MESSAGE_XP);
-	}
-
-    public boolean isVisibleErrorMessage(){
-        return WebDriverUtils.isVisible(LABEL_ERROR_MESSAGE_XP);
+    private void setAddress(String address){
+        WebDriverUtils.clearAndInputTextToField(FIELD_ADDRESS_XP, address);
     }
 
-	private boolean isTitleContains(String title){
-		return WebDriverUtils.getElementText(LABEL_TITLE).contains(title);
-	}
-
-	private boolean isCountryEqualsTo(String country){
-		return WebDriverUtils.getDropdownSelectedOptionText(DROPDOWN_COUNTRY_XP).equals(country);
-	}
-
-	private boolean isAddressEqualsTo(String address){
-		return WebDriverUtils.getInputFieldText(FIELD_ADDRESS_XP).equals(address);
-	}
-
-	private boolean isCityEqualsTo(String city){
-		return WebDriverUtils.getInputFieldText(FIELD_CITY_XP).equals(city);
-	}
-
-	private boolean isPostCodeEqualsTo(String postCode){
-		return (WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP)).equalsIgnoreCase(postCode);
-	}
-
-	private boolean isPhoneEqualsTo(String phone){
-		return WebDriverUtils.getInputFieldText(FIELD_PHONE_XP).equals(phone);
-	}
-
-	private boolean isMobileEqualsTo(String mobile){
-		return WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP).equals(mobile);
-	}
-
-	private boolean isEmailEqualsTo(String email){
-		return WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP).equals(email);
-	}
-
-	private boolean isConfirmEmailEqualsTo(String email){
-		return WebDriverUtils.getInputFieldText(FIELD_EMAIL_VERIFICATION_XP).equals(email);
-	}
-
-
-    //Tooltips methods
-
-    public String getTooltipMessageText() {
-        return getVisibleMessageText(LABEL_TOOLTIP_XP);
+    private void setCity(String city){
+        WebDriverUtils.clearAndInputTextToField(FIELD_CITY_XP, city);
     }
 
-    private String getVisibleMessageText(String xpath) {
-        if (WebDriverUtils.isVisible(xpath, 1)) {
-            return WebDriverUtils.getElementText(xpath);
-        } else {
-            AbstractTest.failTest("Expected message is not visible: " + xpath);
-        }
-		return null;
+    private void setPostCode(String postCode){
+        WebDriverUtils.clearAndInputTextToField(FIELD_POSTCODE_XP, postCode);
     }
 
-	public void clickEmailField() {
-		WebDriverUtils.click(FIELD_EMAIL_VERIFICATION_XP);
-	}
+    private void setPhone(String phone){
+        WebDriverUtils.clearAndInputTextToField(FIELD_PHONE_XP, phone);
+    }
+
+    private void setMobile(String mobile){
+        WebDriverUtils.clearAndInputTextToField(FIELD_MOBILE_XP, mobile);
+    }
+
+    public void setEmail(String email){
+        WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, email);
+    }
+
+    public void setEmailVerification(String email){
+        WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_VERIFICATION_XP, email);
+    }
+
+    private void submitChanges(){
+        WebDriverUtils.click(BUTTON_UPDATE_XP);
+    }
 
     /* Fields validation */
 
-//    public void validateEmail(ValidationRule rule) {
-//		ValidationUtils.validate(FIELD_EMAIL_XP, rule);
-//    }
-//
-//    public void validateVerificationEmail(ValidationRule rule) {
-//		ValidationUtils.validate(FIELD_EMAIL_VERIFICATION_XP, rule);
-//    }
-//
-//    public void validateCity(ValidationRule rule) {
-//		ValidationUtils.validate(FIELD_CITY_XP, rule);
-//    }
-//
-//    public void validateAddress(ValidationRule rule) {
-//		ValidationUtils.validate(FIELD_ADDRESS_XP, rule);
-//    }
-//
-//    public void validatePostcode(ValidationRule rule) {
-//		 ValidationUtils.validate(FIELD_POSTCODE_XP, rule);
-//    }
-//
-//    public void validatePhone(ValidationRule rule) {
-//        ValidationUtils.validate(FIELD_PHONE_XP, rule);
-//    }
-//
-//    public void validateMobile(ValidationRule rule) {
-//		ValidationUtils.validate(FIELD_MOBILE_XP, rule);
-//    }
+    public void validateEmail(ValidationRule rule) {
+		ValidationUtils.validateField(FIELD_EMAIL_XP, rule, "");
+    }
 
+    public void validateVerificationEmail(ValidationRule rule) {
+		ValidationUtils.validateField(FIELD_EMAIL_VERIFICATION_XP, rule, "");
+    }
+
+    public void validateCity(ValidationRule rule) {
+		ValidationUtils.validateField(FIELD_CITY_XP, rule, "");
+    }
+
+    public void validateAddress(ValidationRule rule) {
+		ValidationUtils.validateField(FIELD_ADDRESS_XP, rule, "");
+    }
+
+    public void validatePostcode(ValidationRule rule) {
+		 ValidationUtils.validateField(FIELD_POSTCODE_XP, rule, "");
+    }
+
+    public void validatePhone(ValidationRule rule) {
+        ValidationUtils.validateField(FIELD_PHONE_XP, rule, "");
+    }
+
+    public void validateMobile(ValidationRule rule) {
+		ValidationUtils.validateField(FIELD_MOBILE_XP, rule, "");
+    }
+
+    public static String getEmailVerificationXpath() {
+        return FIELD_EMAIL_VERIFICATION_XP;
+    }
 }

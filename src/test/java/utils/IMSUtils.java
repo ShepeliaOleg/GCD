@@ -35,10 +35,6 @@ public class IMSUtils {
         return null;
     }
 
-    public HashMap getInternalTagsData(){
-        return getInternalTagsData(DataContainer.getUserData().getRegisteredUserData());
-    }
-
     public HashMap getInternalTagsData(UserData userData){
         HashMap hashMap = new HashMap<String, String>();
         try{
@@ -50,14 +46,7 @@ public class IMSUtils {
         return navigateToPlayedDetails(userData.getUsername()).getInternalTagsData(hashMap);
     }
 
-    public void validateNotificationCheckboxes(UserData userData, boolean state) {
-        IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
-        for(boolean imsState:imsPlayerDetailsPage.getNotificationCheckboxesState()){
-            AbstractTest.validateNotEquals(state, imsState, "Notifications state did not update");
-        }
-    }
-
-    public static void validateRegisterData(UserData userData){
+    public static void assertRegisterData(UserData userData){
         IMSPlayerDetailsPage imsPlayerDetailsPage=navigateToPlayedDetails(userData.getUsername());
         ArrayList<String> imsRegisterData=imsPlayerDetailsPage.getRegisterData();
         ArrayList<String> wplRegisterData=userData.getRegisterData();

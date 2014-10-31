@@ -211,7 +211,7 @@ public class RegistrationTest extends AbstractTest{
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
-		IMSUtils.validateRegisterData(userData);
+		IMSUtils.assertRegisterData(userData);
 	}
 
     /*Client type poker*/

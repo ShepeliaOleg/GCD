@@ -1,125 +1,101 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
 import pageObjects.account.ChangeMyDetailsPage;
-import springConstructors.ValidationRule;
+import springConstructors.UserData;
+import utils.IMSUtils;
 import utils.NavigationUtils;
+import utils.PortalUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
+public class ChangeMyDetailsTest extends AbstractTest {
 
-public class ChangeMyDetailsTest extends AbstractTest{
-
-
-	@Autowired
-	@Qualifier("emailValidationRule")
-	private ValidationRule emailValidationRule;
-
-	@Autowired
-	@Qualifier("fullPhoneValidationRule")
-	private ValidationRule phoneValidationRule;
-
-	@Autowired
-	@Qualifier("fullAddressValidationRule")
-	private ValidationRule addressValidationRule;
-
-	@Autowired
-	@Qualifier("postcodeValidationRule")
-	private ValidationRule postcodeValidationRule;
-
-	@Autowired
-	@Qualifier("cityValidationRule")
-	private ValidationRule cityValidationRule;
 
 	/*POSITIVE*/
-//
-//	/* 1. Portlet is displayed */
-//	@Test(groups = {"smoke"})
-//	public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-//		UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//	}
 
     /* 1. Portlet is displayed */
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnMyAccountChangeMyDetailsPage() {
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails);
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
     }
 
-//
-//	/* 2. Correct User Details are displayed by default */
-//	@Test(groups = {"regression"})
-//	public void userInfoShownCorrectly(){
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//		UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData), "detailsUpdatedSuccessfully"+userData.print());
-//	}
-//
-//	/* 3. Player updates his details with valid values and new values are saved */
-//	@Test(groups = {"regression"})
-//	public void userInfoEditableSavedCorrectly(){
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		//Generate new player details and fill in UMD fields with new data
-//		userData = defaultUserData.getRandomUserData();
-//		userData.setEmail(emailValidationRule.generateValidString());
-//		updateMyDetailsPage.editDetails(userData);
-//		TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
-//	}
-//
-//	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
-//	@Test(groups = {"regression"})
-//	public void editUserInfoAndCheckIfSavedAfterLogout(){
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        String userName = userData.getUsername();
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		userData = defaultUserData.getRandomUserData();
-//        userData.setUsername(userName);
-//		userData.setEmail(emailValidationRule.generateValidString());
-//		updateMyDetailsPage.editDetails(userData);
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
-//        updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, userData);
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsKeptAfterRelogin"+userData.print());
-//	}
-//
-//	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
-//	@Test(groups = {"regression"})
-//	public void userInfoNotChangedIfNoChangesSaved(){
-//        UserData userData=defaultUserData.getRegisteredUserData();
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, userData);
-//		updateMyDetailsPage.submitChanges();
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"message appeared");
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsNotUpdated"+userData.print());
-//	}
-//
-//	/*6. Player performs several consecutive updates of UMD portlet */
-//	@Test(groups = {"regression"})
-//	public void userInfoChangedDuringConsecutiveUpdates() {
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		userData = defaultUserData.getRandomUserData();
-//		userData.setEmail(emailValidationRule.generateValidString());
-//		updateMyDetailsPage.editDetails(userData);
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged1"+userData.print());
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
-//		userData = defaultUserData.getRandomUserData();
-//		userData.setEmail(emailValidationRule.generateValidString());
-//		updateMyDetailsPage.editDetails(userData);
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsChanged2"+userData.print());
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
-//	}
-//
+	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
+	@Test(groups = {"regression"})
+	public void editUserInfoAndCheckIfSavedAfterLogout(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        String userName = userData.getUsername();
+        ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+		userData = DataContainer.getUserData().getRandomUserData();
+        userData.setUsername(userName);
+		updateMyDetailsPage.editDetails(userData);
+        updateMyDetailsPage.assertUserData(userData);
+        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
+        PortalUtils.logout();
+        updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails, userData);
+        updateMyDetailsPage.assertUserData(userData);
+	}
+
+	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
+	@Test(groups = {"regression"})
+	public void userInfoNotChangedIfPageChanged(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        NavigationUtils.navigateToPage(ConfiguredPages.home);
+        ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        updateMyDetailsPage.assertUserData(userData);
+	}
+
+    /* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
+    @Test(groups = {"regression"})
+    public void userInfoNotChangedIfAfterRefresh(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser();
+        ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        WebDriverUtils.refreshPage();
+        updateMyDetailsPage.assertUserData(userData);
+    }
+
+    /* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
+    @Test(groups = {"regression"})
+    public void userInfoNotChangedIfNoChangesSaved(){
+        UserData oldUserData=DataContainer.getUserData().getRandomUserData();
+        UserData newUserData = DataContainer.getUserData().getRandomUserData();
+        newUserData.setUsername(oldUserData.getUsername());
+        PortalUtils.registerUser();
+        ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        assertFalse(updateMyDetailsPage.isButtonActive(), "button clickable");
+        updateMyDetailsPage.editDetails(newUserData);
+        assertTrue(updateMyDetailsPage.isButtonActive(), "button clickable");
+        updateMyDetailsPage.editDetails(oldUserData);
+        assertFalse(updateMyDetailsPage.isButtonActive(), "button clickable");
+    }
+
+	/*6. Player performs several consecutive updates of UMD portlet */
+	@Test(groups = {"regression"})
+	public void userInfoChangedDuringConsecutiveUpdates() {
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+		userData = DataContainer.getUserData().getRandomUserData();
+		updateMyDetailsPage.editDetails(userData);
+        updateMyDetailsPage.assertUserData(userData);
+        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
+		userData = DataContainer.getUserData().getRandomUserData();
+		updateMyDetailsPage.editDetails(userData);
+        updateMyDetailsPage.assertUserData(userData);
+        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
+	}
+
 //	/*7. Logs*/
 //	@Test(groups = {"regression", "logs"})
 //	public void logsChangeDetails(){
 //        try{
-//            UserData userData=defaultUserData.getRandomUserData();
+//            UserData userData=DataContainer.getUserData().getRandomUserData();
 //            LogCategory[] logCategories = new LogCategory[]{LogCategory.SetPlayerInfoRequest, LogCategory.SetPlayerInfoResponse};
 //            String[] parameters = {"objectIdentity="+userData.getUsername()+"-playtech81001",
 //                    "KV(1, playtech81001)",
@@ -131,7 +107,7 @@ public class ChangeMyDetailsTest extends AbstractTest{
 //                    "KV(27, "+userData.getPhoneAreaCode()+userData.getPhone()+")",
 //                    "KV(34, "+userData.getPostCode()+")"};
 //            PortalUtils.registerUser(userData);
-//            UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
+//            ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
 //            updateMyDetailsPage.editDetails(userData);
 //            Log log = LogUtils.getCurrentLogs(logCategories);
 //            log.doResponsesContainErrors();
@@ -145,128 +121,19 @@ public class ChangeMyDetailsTest extends AbstractTest{
 //            }
 //        }
 //	}
-//
-//	/*8. IMS player details are updated*/
-//	@Test(groups = {"regression"})
-//	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
-//        UserData userData = defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//        String username = userData.getUsername();
-//        userData = defaultUserData.getRandomUserData();
-//        userData.setUsername(username);
-//        userData.setEmail(emailValidationRule.generateValidString());
-//        updateMyDetailsPage.editDetails(userData);
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.detailsAreEqualsTo(userData),"detailsUpdatedSuccessfully"+userData.print());
-//        TypeUtils.assertTrueWithLogs(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
-//        TypeUtils.assertTrueWithLogs(iMS.validateRegisterData(userData),"iMSDetailsCoincide"+userData.print());
-//	}
-//
-//    /*8. IMS notifications updated*/
-//    @Test(groups = {"regression"})
-//    public void iMSNotificationsUpdatedAfterPlayerDetailsChanged() {
-//        UserData userData = defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//        updateMyDetailsPage.setNotificationCheckboxes(false);
-//        WebDriverUtils.waitFor(5000);
-//        iMS.validateNotificationCheckboxes(userData, false);
-//        updateMyDetailsPage = (UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//        updateMyDetailsPage.setNotificationCheckboxes(true);
-//        WebDriverUtils.waitFor(5000);
-//        iMS.validateNotificationCheckboxes(userData, true);
-//    }
-//
-//
-//
-//	/*NEGATIVE CASES*/
-//
-//    /*1. Email and confirmation do not match */
-//	@Test(groups = {"regression"})
-//	public void errorTooltipWhenEmailAndConfirmationDoNotMatch () {
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		String email = emailValidationRule.generateValidString();
-//		String emailConfirmation = email.concat("a");
-//		updateMyDetailsPage.editEmail(email);
-//		updateMyDetailsPage.editEmailVerification(emailConfirmation);
-//		updateMyDetailsPage.submitChanges();
-//		updateMyDetailsPage.clickEmailField();
-//		String errorMessageText= updateMyDetailsPage.getTooltipMessageText();
-//        TypeUtils.assertTrueWithLogs(errorMessageText.equals("This address is different from the one above, please correct"),"correctErrorTooltipIsDisplayed");
-//	}
-//
-//	/*VALIDATION CASES*/
-//
-//	/*1. Required fields are empty >> error tooltip is displayed for each required field*/
-//	@Test(groups = {"validation"})
-//	public void validationRequiredFieldsEmpty(){
-//		//New user registration
-//        UserData userData=defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        UpdateMyDetailsPage updateMyDetailsPage =(UpdateMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyDetails);
-//		userData.setHouse("");
-//		userData.setAddress("");
-//		userData.setAddress2("");
-//		userData.setCity("");
-//		userData.setPostCode("");
-//		userData.setPhoneAreaCode("");
-//		userData.setPhone("");
-//		userData.setMobileAreaCode("");
-//		userData.setMobile("");
-//		userData.setEmail("");
-//		updateMyDetailsPage.editDetails(userData);
-//		int validationErrorsCount= WebDriverUtils.getXpathCount(updateMyDetailsPage.VALIDATION_ERROR_XP);
-//		TypeUtils.assertTrueWithLogs(validationErrorsCount >= 6, "validationErrorsCount>=6");
-//	}
 
-	/*2. Address field validation*/
-//	@Test(groups = {"validation"})
-//	public void addressFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validateAddress(addressValidationRule);
-//	}
-
-	/*3. City field validation*/
-//	@Test(groups = {"validation"})
-//	public void cityFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validateCity(cityValidationRule);
-//	}
-//
-//	/*4. Post Code field validation*/
-//	@Test(groups = {"validation"})
-//	public void postCodeFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validatePostcode(postcodeValidationRule);
-//	}
-//
-//	/*5. Phone field validation*/
-//	@Test(groups = {"validation"})
-//	public void phoneFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validatePhone(phoneValidationRule);
-//	}
-//
-//	/*6. Mobile Field validation*/
-//	@Test(groups = {"validation"})
-//	public void mobileFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validateMobile(phoneValidationRule);
-//	}
-//
-//	/*7. Email field validation*/
-//	@Test(groups = {"validation"})
-//	public void emailFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validateEmail(emailValidationRule);
-//	}
-//
-//	/*8. Email Verification field validation*/
-//	@Test(groups = {"validation"})
-//	public void verificationEmailFieldValidation() {
-//                ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyDetails, defaultUserData.getRegisteredUserData());
-//		changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
-//	}
+	/*8. IMS player details are updated*/
+	@Test(groups = {"regression"})
+	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        ChangeMyDetailsPage updateMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        String username = userData.getUsername();
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setUsername(username);
+        updateMyDetailsPage.editDetails(userData);
+        updateMyDetailsPage.assertUserData(userData);
+        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
+        IMSUtils.assertRegisterData(userData);
+	}
 }

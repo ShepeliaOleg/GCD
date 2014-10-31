@@ -96,7 +96,7 @@ public class NavigationUtils{
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
-            case changeMyDetails:                               return new ChangeMyDetailsPage();
+            case updateMyDetails:                               return new ChangeMyDetailsPage();
             case changeMyPassword:                              return new ChangePasswordPage();
             case deposit:                                       return new DepositPage();
             case forgotPassword:                                return new ForgotPasswordPage();
