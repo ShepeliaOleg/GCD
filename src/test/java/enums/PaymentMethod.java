@@ -2,13 +2,13 @@ package enums;
 
 public enum PaymentMethod {
     QIWI("QIWI via Safecharge", "9260366832", "9852887726", "ABCD1234", "wallettest11"),
-    PayPal("playtech.mobile.mobile-cashier.method.paypal.title", "revita_1222083012_per@800pay.com","test@800pay.com","222249464", "222249464"),
+    PayPal("PayPal", "revita_1222083012_per@800pay.com","test@800pay.com","222249464", "222249464"),
     Visa("VISA", "4440","4448"),
     MasterCard("MasterCard", "5557",""),
     Discover("Discover", "", ""),
-    PaySafeCard("playtech.mobile.mobile-cashier.deposit.paysafecard.title", "6364 0700 8000 4190", "", "", ""),
+    PaySafeCard("PaySafeCard", "6364 0700 8000 4190", "", "", ""),
     MoneyBookers("playtech.mobile.mobile-cashier.method.moneybookers.title", "testmbcustomerger@yahoo.co.uk", "euroeuro1", "someshit@yahoo.co.uk", ""),
-    Envoy("playtech.mobile.mobile-cashier.deposit.envoy.title", "", "", "", ""),
+    Envoy("Envoy", "", "", "", ""),
     Neteller("NETeller", "458591047553", "411392", "450424149137", "");
 
     PaymentMethod(String name, String account, String secondaryAccount, String password, String secondaryPassword){

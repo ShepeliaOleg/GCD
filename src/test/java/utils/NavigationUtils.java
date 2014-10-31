@@ -4,7 +4,7 @@ import enums.*;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
-import pageObjects.account.ChangeMyDetailsPage;
+import changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;

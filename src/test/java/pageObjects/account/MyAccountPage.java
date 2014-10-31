@@ -1,5 +1,6 @@
 package pageObjects.account;
 
+import changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.core.AbstractPage;
 import pageObjects.inbox.InboxPage;

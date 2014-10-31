@@ -29,7 +29,7 @@ public class Listener extends TestListenerAdapter{
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
-            "ChangeMyDetailsTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
+            "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
             "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest",
             "CashierPaySafeCardTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",

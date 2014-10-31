@@ -1,22 +1,19 @@
 import enums.ConfiguredPages;
-import enums.Licensee;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.account.ChangeMyDetailsPage;
-import pageObjects.registration.RegistrationPage;
-import springConstructors.UserData;
+import changeMyDetails.ChangeMyDetailsPage;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
-import utils.PortalUtils;
 import utils.core.AbstractTest;
-import utils.core.DataContainer;
-import utils.validation.ValidationUtils;
 
 
 public class ChangeMyDetailsValidationTest extends AbstractTest {
 
+    @Autowired
+    @Qualifier("countryValidationRule")
+    private ValidationRule countryValidationRule;
 
     @Autowired
     @Qualifier("emailValidationRule")
@@ -27,12 +24,8 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     private ValidationRule fullPhoneValidationRule;
 
     @Autowired
-    @Qualifier("fullMobileValidationRule")
-    private ValidationRule fullMobileValidationRule;
-
-    @Autowired
     @Qualifier("fullAddressValidationRule")
-    private ValidationRule addressValidationRule;
+    private ValidationRule fullAddressValidationRule;
 
     @Autowired
     @Qualifier("postcodeValidationRule")
@@ -44,9 +37,16 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
 
     /*2. Address field validation*/
     @Test(groups = {"validation"})
+    public void countryFieldValidation() {
+        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
+        changeMyDetailsPage.validateCountry(countryValidationRule);
+    }
+
+    /*2. Address field validation*/
+    @Test(groups = {"validation"})
     public void addressFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
-        changeMyDetailsPage.validateAddress(addressValidationRule);
+        changeMyDetailsPage.validateAddress(fullAddressValidationRule);
     }
 
     /*3. City field validation*/
@@ -74,7 +74,7 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     @Test(groups = {"validation"})
     public void mobileFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
-        changeMyDetailsPage.validateMobile(fullMobileValidationRule);
+        changeMyDetailsPage.validateMobile(fullPhoneValidationRule);
     }
 
     /*7. Email field validation*/
@@ -83,32 +83,4 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateEmail(emailValidationRule);
     }
-
-    /*8. Email Verification field validation*/
-    @Test(groups = {"validation"})
-    public void verificationEmailFieldValidation() {
-        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
-        changeMyDetailsPage.validateVerificationEmail(emailValidationRule);
-    }
-
-    	/*NEGATIVE CASES*/
-
-    /*#4. Email and email confirmation do not match*/
-//    @Test(groups = {"registration", "regression", "validation"})
-//    public void emailConfirmationValidation() {
-//        String id = ChangeMyDetailsPage.getEmailVerificationName();
-//        String email = DataContainer.getUserData().getRandomUserData().getEmail();
-//        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
-//        changeMyDetailsPage.setEmail(email);
-//        ValidationUtils.inputFieldAndRefocus(ChangeMyDetailsPage.getEmailVerificationXpath(), email);
-//        ValidationUtils.validateStatusAndToolTips(ValidationUtils.STATUS_NONE, id, email, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
-//    }
-//
-//    @Test(groups = {"registration", "regression"})
-//    public void emailDoNotMatch() {
-//        ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
-//        changeMyDetailsPage.setEmail(DataContainer.getUserData().getRandomUserData().getEmail());
-//        changeMyDetailsPage.setEmailVerification(emailValidationRule.generateValidString());
-//        assertEquals("Emails dont match", ValidationUtils.getTooltipText(ChangeMyDetailsPage.getEmailVerificationName()), "Tooltip text");
-//    }
 }

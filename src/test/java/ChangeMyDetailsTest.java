@@ -1,8 +1,8 @@
+import changeMyDetails.DetailsChangedPopup;
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
-import pageObjects.account.ChangeMyDetailsPage;
+import changeMyDetails.ChangeMyDetailsPage;
 import springConstructors.UserData;
 import utils.IMSUtils;
 import utils.NavigationUtils;
@@ -31,9 +31,9 @@ public class ChangeMyDetailsTest extends AbstractTest {
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
 		userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername(userName);
-		updateMyDetailsPage.editDetails(userData);
+		DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        detailsChangedPopup.closePopup();
         updateMyDetailsPage.assertUserData(userData);
-        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(), "messageAppeared");
         PortalUtils.logout();
         updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails, userData);
         updateMyDetailsPage.assertUserData(userData);
@@ -68,11 +68,11 @@ public class ChangeMyDetailsTest extends AbstractTest {
         newUserData.setUsername(oldUserData.getUsername());
         PortalUtils.registerUser();
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        assertFalse(updateMyDetailsPage.isButtonActive(), "button clickable");
-        updateMyDetailsPage.editDetails(newUserData);
-        assertTrue(updateMyDetailsPage.isButtonActive(), "button clickable");
-        updateMyDetailsPage.editDetails(oldUserData);
-        assertFalse(updateMyDetailsPage.isButtonActive(), "button clickable");
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled");
+        updateMyDetailsPage.changeDetails(newUserData);
+        assertFalse(updateMyDetailsPage.isButtonDisabled(), "button disabled");
+        updateMyDetailsPage.changeDetails(oldUserData);
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled");
     }
 
 	/*6. Player performs several consecutive updates of UMD portlet */
@@ -82,13 +82,13 @@ public class ChangeMyDetailsTest extends AbstractTest {
         PortalUtils.registerUser(userData);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
 		userData = DataContainer.getUserData().getRandomUserData();
-		updateMyDetailsPage.editDetails(userData);
+        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        detailsChangedPopup.closePopup();
         updateMyDetailsPage.assertUserData(userData);
-        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared1");
 		userData = DataContainer.getUserData().getRandomUserData();
-		updateMyDetailsPage.editDetails(userData);
+         detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        detailsChangedPopup.closePopup();
         updateMyDetailsPage.assertUserData(userData);
-        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared2");
 	}
 
 //	/*7. Logs*/
@@ -108,7 +108,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
 //                    "KV(34, "+userData.getPostCode()+")"};
 //            PortalUtils.registerUser(userData);
 //            ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-//            updateMyDetailsPage.editDetails(userData);
+//            updateMyDetailsPage.changeDetailsAndSubmit(userData);
 //            Log log = LogUtils.getCurrentLogs(logCategories);
 //            log.doResponsesContainErrors();
 //            LogEntry request = log.getEntry(LogCategory.SetPlayerInfoRequest);
@@ -131,9 +131,9 @@ public class ChangeMyDetailsTest extends AbstractTest {
         String username = userData.getUsername();
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername(username);
-        updateMyDetailsPage.editDetails(userData);
+        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        detailsChangedPopup.closePopup();
         updateMyDetailsPage.assertUserData(userData);
-        assertTrue(updateMyDetailsPage.isVisibleConfirmationMessage(),"messageAppeared");
         IMSUtils.assertRegisterData(userData);
 	}
 }

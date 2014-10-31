@@ -47,6 +47,14 @@ public abstract class AbstractPageObject{
         }
     }
 
+    protected void validate(String[] clickableBys, String[] invisibleBys, String name){
+        try{
+            validate(clickableBys, invisibleBys);
+        }catch (Exception e){
+            AbstractTest.failTest(name + " did not load");
+        }
+    }
+
     public boolean isPortletErrorVisible(){
         return WebDriverUtils.isVisible(PORTLET_ERROR_XP,2);
     }
