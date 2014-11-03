@@ -51,7 +51,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         ValidationUtils.validateField(getXpathByName(FIELD_ANSWER_NAME), rule, FIELD_ANSWER_NAME);
     }
 
-    public static RegistrationPageStepTwo clickPrevious(){
+    public RegistrationPageStepTwo clickPrevious(){
         WebDriverUtils.click(BUTTON_PREVIOUS_XP);
         return new RegistrationPageStepTwo();
     }

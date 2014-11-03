@@ -54,12 +54,12 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         clickSubmit();
     }
 
-    public static void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, String bonusCode){
+    public void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, String bonusCode){
         fillUserData(userData);
         fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
     }
 
-    private static void fillUserData(UserData userData){
+    private void fillUserData(UserData userData){
         fillGender(userData.getGender());
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
@@ -164,5 +164,16 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         boolean requiredMarked=gender && first && last && birthDate && email1 && email2 && country && city && address1 && postCode && phone && username && password1 && password2 && currency;
         boolean optionalUnmarked=bonus;
         return (requiredMarked == true && optionalUnmarked == false);
+    }
+
+    @Override
+    public void copyAndPasteEmail() {
+        WebDriverUtils.copy(getXpathByName(FIELD_EMAIL_NAME));
+        WebDriverUtils.paste(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME));
+    }
+
+    @Override
+    public String getEmailVerification() {
+        return WebDriverUtils.getElementText(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME));
     }
 }

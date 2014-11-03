@@ -27,8 +27,8 @@ public class RegistrationPageStepTwo extends RegistrationPage {
         fillPostCode(userData.getPostCode());
         fillCountry(userData.getCountry());
         fillPhoneAreaCode(userData.getPhoneAreaCode());
-        fillMobile(userData.getPhone());
-        fillPhone(userData.getMobile());
+        fillMobile(userData.getMobile());
+//        fillPhone(userData.getPhone());
         WebDriverUtils.waitFor(1000);
         clickNext();
         return new RegistrationPageStepThree();
@@ -38,11 +38,11 @@ public class RegistrationPageStepTwo extends RegistrationPage {
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PHONE_MOBILE_VALIDATION_NAME), mobile);
     }
 
-    public static void clickNext(){
+    public void clickNext(){
         WebDriverUtils.click(BUTTON_NEXT_XP);
     }
 
-    private static RegistrationPageStepOne clickPrevious(){
+    public RegistrationPageStepOne clickPrevious(){
         WebDriverUtils.click(BUTTON_PREVIOUS_XP);
         return new RegistrationPageStepOne();
     }

@@ -701,4 +701,14 @@ public class WebDriverUtils{
         return "//*[following-sibling::"+xpath.substring(2)+"]";
     }
 
+    public static void paste(String xpath) {
+        getElement(xpath).sendKeys(Keys.chord(Keys.CONTROL, "v"));
+    }
+
+    public static void copy(String xpath) {
+        WebElement element = getElement(xpath);
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+        element.sendKeys(Keys.chord(Keys.CONTROL, "c"));
+    }
+
 }

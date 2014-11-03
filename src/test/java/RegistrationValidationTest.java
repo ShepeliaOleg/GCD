@@ -125,6 +125,17 @@ public class RegistrationValidationTest extends AbstractTest{
         registrationPage.validateDateOfBirth(dateOfBirthValidationRule);
     }
 
+    @Test(groups = {"registration","regression","validation"})
+    public void dateOfBirthValues() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.fillBirthYear("1992");
+        registrationPage.fillBirthMonth("02");
+        assertTrue(registrationPage.getDays().contains("29"), "Leap year contains Feb 29");
+        registrationPage.fillBirthYear("1991");
+        registrationPage.fillBirthMonth("02");
+        assertFalse(registrationPage.getDays().contains("29"), "Non-Leap year contains Feb 29");
+    }
+
 	@Test(groups = {"registration","regression","validation"})
 	public void emailFieldValidation() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);

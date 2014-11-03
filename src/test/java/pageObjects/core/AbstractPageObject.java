@@ -71,6 +71,10 @@ public abstract class AbstractPageObject{
     public String getTranslationText() {
         return null;
     }
+
+    public void copyAndPasteEmail(){
+
+    }
 }
 
 

@@ -2,6 +2,7 @@ package pageObjects.core;
 
 import org.apache.commons.lang3.ArrayUtils;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class AbstractPopup extends AbstractPageObject{
 
@@ -15,7 +16,7 @@ public class AbstractPopup extends AbstractPageObject{
     protected final static String TITLE_XP =        "//*[@class='popup-modal__title']";
     private final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
 
-    private final static int OFFSET =               200;
+    private final static int OFFSET =               50;
 
 	public AbstractPopup(){
 		this(null);
@@ -59,8 +60,11 @@ public class AbstractPopup extends AbstractPageObject{
     }
 
     public void clickOffPopup(){
-//        WebDriverUtils.click(ROOT_XP, OFFSET);
-        WebDriverUtils.click(OFF_POPUP_XP);
+        if(DataContainer.getDriverData().getBrowser().equals("safari")){
+            WebDriverUtils.click(OFF_POPUP_XP);
+        }else {
+            WebDriverUtils.click(ROOT_XP, OFFSET);
+        }
         WebDriverUtils.waitFor();
     }
 

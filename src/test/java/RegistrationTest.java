@@ -4,6 +4,7 @@ import pageObjects.HomePage;
 import pageObjects.core.AbstractPage;
 import pageObjects.registration.*;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
+import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.registration.threeStep.RegistrationPageStepTwo;
 import springConstructors.UserData;
@@ -24,6 +25,64 @@ public class RegistrationTest extends AbstractTest{
         HomePage homePage = PortalUtils.registerUser();
         validateTrue(homePage.isLoggedIn(), "User is logged in");
 	}
+
+    /*1. Valid user registration*/
+    @Test(groups = {"registration"})
+    public void validInternalUserRegistration() {
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        userData.setEmail("test@playtech.com");
+        HomePage homePage = PortalUtils.registerUser(userData);
+        validateTrue(homePage.isLoggedIn(), "User is logged in");
+    }
+
+    /*Copy paste email*/
+    @Test(groups = {"registration"})
+    public void copyPasteEmail(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
+            registrationPage = registrationPage.registrationPageStepOne();
+        }else {
+            registrationPage = registrationPage.registrationPageAllSteps();
+        }
+        registrationPage.fillEmail(DataContainer.getUserData().getRandomUserData().getEmail());
+        registrationPage.copyAndPasteEmail();
+        assertEquals("", registrationPage.getEmailVerification(), "Email verification");
+    }
+
+    /*Copy paste password*/
+    @Test(groups = {"registration"})
+    public void copyPastePassword(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
+            registrationPage = registrationPage.registrationPageStepThree();
+        }
+        registrationPage.fillPassword("123asdASD");
+        registrationPage.copyAndPastePassword();
+        assertEquals("", registrationPage.getPasswordVerification(), "Password verification");
+    }
+
+    /*Copy paste password*/
+    @Test(groups = {"registration", "mobile"})
+    public void navigationBetweenSteps(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
+        RegistrationPageStepTwo registrationPageStepTwo = registrationPageStepThree.clickPrevious();
+        RegistrationPageStepOne registrationPageStepOne = registrationPageStepTwo.clickPrevious();
+    }
+
+    /*Click next on every step without filled data, click submit without filled data*/
+    @Test(groups = {"registration", "mobile"})
+    public void emptyRegisterAttempts(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        RegistrationPageStepOne registrationPageStepOne = registrationPage.registrationPageStepOne();
+        registrationPageStepOne.clickNext();
+        RegistrationPageStepTwo registrationPageStepTwo = new RegistrationPageStepOne().fillDataAndSubmit(userData);
+        registrationPageStepTwo.clickNext();
+        RegistrationPageStepThree registrationPageStepThree = new RegistrationPageStepTwo().fillDataAndSubmit(userData);
+        registrationPageStepThree.clickSubmit();
+        new RegistrationPageStepThree();
+    }
 
     /* Frozen user registration*/
     @Test(groups = {"registration"})

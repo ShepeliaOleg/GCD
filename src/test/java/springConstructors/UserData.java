@@ -166,6 +166,7 @@ public class UserData{
         UserData userData = getRegisteredUserData();
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));
         userData.setTitle(RandomUtils.getRandomElementsFromList(getTitleList(), 1).get(0));
+        userData.setCurrency(RandomUtils.getRandomElementsFromList(getCurrencyList(), 1).get(0));
         userData.setUsername(usernameValidationRule.generateValidString());
         userData.setEmail(emailValidationRule.generateValidString());
         userData.setCountry(DataContainer.getDefaults().getRandomCountryCode());
@@ -182,6 +183,10 @@ public class UserData{
 
     private List<String> getGenderList(){
         return Arrays.asList(genderValidationRule.getRegexp().split("@"));
+    }
+
+    private List<String> getCurrencyList(){
+        return DataContainer.getDefaults().getCurrencyList();
     }
 
     private List<String> getTitleList(){

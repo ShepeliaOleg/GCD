@@ -49,8 +49,18 @@ public class RegistrationPageStepOne extends RegistrationPage {
         return new AdultContentPopup();
     }
 
-    private static void clickNext(){
+    public void clickNext(){
         WebDriverUtils.click(BUTTON_NEXT_XP);
     }
 
+    @Override
+    public void copyAndPasteEmail() {
+        WebDriverUtils.copy(getXpathByName(FIELD_EMAIL_NAME));
+        WebDriverUtils.paste(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME));
+    }
+
+    @Override
+    public String getEmailVerification() {
+        return WebDriverUtils.getElementText(getXpathByName(FIELD_EMAIL_VERIFICATION_NAME));
+    }
 }

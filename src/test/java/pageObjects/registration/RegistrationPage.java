@@ -82,8 +82,17 @@ public class RegistrationPage extends AbstractPage{
         return new RegistrationPageStepOne();
     }
 
+    public RegistrationPageStepTwo registrationPageStepTwo(){
+        return registrationPageStepOne().fillDataAndSubmit(DataContainer.getUserData().getRandomUserData());
+    }
+
     public RegistrationPageStepTwo registrationPageStepTwo(UserData userData){
         return registrationPageStepOne().fillDataAndSubmit(userData);
+    }
+
+    public RegistrationPageStepThree registrationPageStepThree(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        return registrationPageStepTwo(userData).fillDataAndSubmit(userData);
     }
 
     public RegistrationPageStepThree registrationPageStepThree(UserData userData){
@@ -135,7 +144,7 @@ public class RegistrationPage extends AbstractPage{
 
     public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
-            RegistrationPageAllSteps.fillRegistrationForm(userData, promotions, bonusCode);
+            new RegistrationPageAllSteps().fillRegistrationForm(userData, promotions, bonusCode);
         }else{
             registrationPageStepThree(userData).fillData(userData, termsAndConditions, promotions, bonusCode);
         }
@@ -164,11 +173,11 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHDAY_XP, birthDay);
     }
 
-    protected static void fillBirthMonth(String birthMonth){
+    public void fillBirthMonth(String birthMonth){
         WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHMONTH_XP, birthMonth);
     }
 
-    protected static void fillBirthYear(String birthYear){
+    public void fillBirthYear(String birthYear){
         WebDriverUtils.setDropdownOptionByValue(DROPDOWN_BIRTHYEAR_XP, birthYear);
     }
 
@@ -216,7 +225,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_USERNAME_NAME), username);
     }
 
-    public static void fillPassword(String password){
+    public void fillPassword(String password){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_PASSWORD_NAME), password);
     }
 
@@ -240,7 +249,7 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.setCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP, desiredState);
     }
 
-    protected void clickSubmit(){
+    public void clickSubmit(){
         WebDriverUtils.click(BUTTON_SUBMIT_XP);
     }
 
@@ -343,7 +352,7 @@ public class RegistrationPage extends AbstractPage{
         return WebDriverUtils.getElementText(PASSWORD_STRENGTH_TOOLTIP);
     }
 
-    public static void assertPasswordStrengthStatus(String value, PasswordStrength expectedStrength){
+    public void assertPasswordStrengthStatus(String value, PasswordStrength expectedStrength){
         fillPassword(value);
         AbstractTest.assertEquals(expectedStrength.toString(), getPasswordStrength(), "Password strength status for '"+value+"'");
     }
@@ -509,5 +518,20 @@ public class RegistrationPage extends AbstractPage{
         WebDriverUtils.click(getXpathByName(FIELD_USERNAME_NAME));
     }
 
+    public void copyAndPastePassword() {
+        WebDriverUtils.copy(getXpathByName(FIELD_PASSWORD_NAME));
+        WebDriverUtils.paste(FIELD_PASSWORD_VERIFICATION_XP);
+    }
 
+    public String getPasswordVerification() {
+        return WebDriverUtils.getElementText(FIELD_PASSWORD_VERIFICATION_XP);
+    }
+
+    public String getEmailVerification() {
+        return null;
+    }
+
+    public List getDays() {
+        return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_BIRTHDAY_XP);
+    }
 }
