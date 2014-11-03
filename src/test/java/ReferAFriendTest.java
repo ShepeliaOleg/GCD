@@ -11,12 +11,6 @@ import utils.core.AbstractTest;
 
 public class ReferAFriendTest extends AbstractTest{
 
-
-
-	@Autowired
-	@Qualifier("nameOnRAFValidationRule")
-	private ValidationRule nameValidationRule;
-
 	@Autowired
 	@Qualifier("emailValidationRule")
 	private ValidationRule emailValidationRule;
