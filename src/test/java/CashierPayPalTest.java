@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -9,6 +10,7 @@ import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -59,9 +61,31 @@ public class CashierPayPalTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
+    public void payPalDepositValidPromoCode() {
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        PayPalDepositPage payPalDepositPage = depositPage.depositPayPalValidPromoCode(AMOUNT);
+        payPalDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void payPalDepositInvalidPromoCode() {
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.PayPal, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
+    }
+
+    @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForNewUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
+        PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
         assertEquals(" 9.90", withdrawPage.getBalanceAmount(), "Balance");

@@ -1,5 +1,6 @@
 package pageObjects.registration.threeStep;
 
+import enums.PromoCode;
 import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
@@ -17,8 +18,8 @@ public class RegistrationPageStepOne extends RegistrationPage {
         super(new String[]{ROOT_XP, BUTTON_NEXT_XP, LINK_ADULT_CONTENT_XP});
     }
 
-    public void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
-        fillDataAndSubmit(userData).fillDataAndSubmit(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, bonusCode);
+    public void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){
+        fillDataAndSubmit(userData).fillDataAndSubmit(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, promoCode);
     }
 
     public RegistrationPageStepTwo fillDataAndSubmit(UserData userData){

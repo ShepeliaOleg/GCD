@@ -1,9 +1,11 @@
 package pageObjects.cashier.deposit;
 
 import enums.PaymentMethod;
+import enums.PromoCode;
 import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
+import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.core.AbstractTest;
 
@@ -23,10 +25,21 @@ public class DepositPage extends CashierPage{
         transactionSuccessfulPopup.closePopup();
     }
 
+    public void depositCardValidPromoCode(PaymentMethod card, String amount){
+        processPaymentByType(card, amount, PromoCode.valid);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup();
+        transactionSuccessfulPopup.closePopup();
+    }
+
     public void depositCardExpired(PaymentMethod card, String amount) {
         processPaymentByType(card, amount, true);
         AbstractTest.validateTrue(isPortletErrorVisible(), "Error visible");
         AbstractTest.assertTrue(getPortletErrorMessage().contains("Expired"), "Error text contains 'Expired'");
+    }
+
+    public DepositPage depositInvalidPromoCode(PaymentMethod paymentMethod, String amount) {
+        processPaymentByType(paymentMethod, amount, PromoCode.invalid);
+        return new DepositPage();
     }
 
     /*Paypal*/
@@ -37,6 +50,11 @@ public class DepositPage extends CashierPage{
 
     public PayPalDepositPage depositPayPal(String amount){
         processPaymentByType(PaymentMethod.PayPal, amount);
+        return new PayPalDepositPage();
+    }
+
+    public PayPalDepositPage depositPayPalValidPromoCode(String amount){
+        processPaymentByType(PaymentMethod.PayPal, amount, PromoCode.valid);
         return new PayPalDepositPage();
     }
 
@@ -51,6 +69,11 @@ public class DepositPage extends CashierPage{
         return new QIWIDepositPage();
     }
 
+    public QIWIDepositPage depositQIWIValidPromoCode(String amount){
+        processPaymentByType(PaymentMethod.QIWI, amount, PromoCode.valid);
+        return new QIWIDepositPage();
+    }
+
     /*PAYSAFECARD*/
 
     public void assertPaySafeCardInterface() {
@@ -62,10 +85,20 @@ public class DepositPage extends CashierPage{
         return new PaySafeCardDepositPage();
     }
 
+    public PaySafeCardDepositPage depositPaySafeCardValidPromoCode(String amount) {
+        processPaymentByType(PaymentMethod.PaySafeCard, amount, PromoCode.valid);
+        return new PaySafeCardDepositPage();
+    }
+
     /*ENVOY*/
 
     public EnvoyDepositPage depositEnvoy(String amount) {
         processPaymentByType(PaymentMethod.Envoy, amount);
+        return new EnvoyDepositPage();
+    }
+
+    public EnvoyDepositPage depositEnvoyValidPromoCode(String amount) {
+        processPaymentByType(PaymentMethod.Envoy, amount, PromoCode.valid);
         return new EnvoyDepositPage();
     }
 
@@ -84,6 +117,11 @@ public class DepositPage extends CashierPage{
         return new MoneyBookersDepositPage();
     }
 
+    public MoneyBookersDepositPage depositMoneyBookersValidPromoCode(String amount) {
+        processPaymentByType(PaymentMethod.MoneyBookers, amount, PromoCode.valid);
+        return new MoneyBookersDepositPage();
+    }
+
     /*NETELLER*/
 
 
@@ -93,6 +131,11 @@ public class DepositPage extends CashierPage{
 
     public void assertNetellerInterfaceNew() {
         assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_CODE_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public TransactionSuccessfulPopup depositNetellerValidPromoCode(String amount) {
+        processPaymentByType(PaymentMethod.Neteller, amount, PromoCode.valid);
+        return new TransactionSuccessfulPopup();
     }
 
     public TransactionSuccessfulPopup depositNeteller(String amount) {

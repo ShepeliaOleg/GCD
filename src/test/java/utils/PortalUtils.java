@@ -3,6 +3,7 @@ package utils;
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
+import enums.PromoCode;
 import pageObjects.HomePage;
 import pageObjects.admin.AdminPage;
 import pageObjects.core.AbstractPage;
@@ -41,8 +42,8 @@ public class PortalUtils {
         return registerUser(userData, true, false, null, expectedPage);
     }
 
-    public static AbstractPageObject registerUser(UserData userData, String bonusCode){
-        return registerUser(userData, true, false, bonusCode, Page.homePage);
+    public static AbstractPageObject registerUser(UserData userData, PromoCode promoCode){
+        return registerUser(userData, true, false, promoCode, Page.homePage);
     }
 
     public static AbstractPageObject registerUser(UserData userData, boolean isReceiveBonusesChecked){
@@ -59,8 +60,8 @@ public class PortalUtils {
         return registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, null, page);
     }
 
-    public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, String bonusCode, Page expectedPage){
-        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, bonusCode, expectedPage);
+    public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, PromoCode promoCode, Page expectedPage){
+        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, promoCode, expectedPage);
     }
 
     public static AbstractPage loginAdmin() {

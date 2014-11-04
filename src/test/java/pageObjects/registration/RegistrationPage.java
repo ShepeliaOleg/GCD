@@ -3,6 +3,7 @@ package pageObjects.registration;
 import enums.Licensee;
 import enums.Page;
 import enums.PasswordStrength;
+import enums.PromoCode;
 import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
@@ -24,8 +25,6 @@ public class RegistrationPage extends AbstractPage{
 
     protected final static String ROOT_XP =                                             "//*[contains(@class, 'fn-register-content')]";
     protected final static String FIELD_BASE_XP =                                       ROOT_XP + "//*[@name='"+PLACEHOLDER+"']";
-    protected final static String BONUS_CODE_VALID = 			                        "AUTOFREE";
-    protected final static String BONUS_CODE_INVALID = 		                            "HELL";
     protected final static String DROPDOWN_GENDER_VALIDATION_NAME =		                "gender";
     protected final static String DROPDOWN_GENDER_NAME =		                        "sex";
     protected final static String FIELD_FIRSTNAME_NAME =				 				"firstname";
@@ -109,19 +108,19 @@ public class RegistrationPage extends AbstractPage{
         return registerUser(userData, true, false, null, expectedPage);
     }
 
-    public AbstractPageObject registerUser(UserData userData, String bonusCode, Page expectedPage){
-        return registerUser(userData, true, false, bonusCode, expectedPage);
+    public AbstractPageObject registerUser(UserData userData, PromoCode promoCode, Page expectedPage){
+        return registerUser(userData, true, false, promoCode, expectedPage);
     }
 
-    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode, Page expectedPage){
+    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode, Page expectedPage){
         System.out.println("Registering user: \n"
                 + userData.getUsername()+"\n"
                 + userData.getCountry()+"\n"
                 + userData.getCurrencyName()+"\n");
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
-            registrationPageAllSteps().registerNewUser(userData, promotions, bonusCode);
+            registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);
         }else{
-            registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, bonusCode);
+            registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, promoCode);
         }
         if(expectedPage.equals(Page.registrationPage)){
             return new RegistrationPage();
@@ -130,29 +129,25 @@ public class RegistrationPage extends AbstractPage{
         }
     }
 
-    protected static void fillBonusAndPromotional(boolean isReceivePromotionalOffers, String bonusCode){
+    protected static void fillBonusAndPromotional(boolean isReceivePromotionalOffers, PromoCode promoCode){
         setCheckboxReceivePromotional(isReceivePromotionalOffers);
-        if(bonusCode!=null){
-            if(bonusCode.equals("valid")){
-                fillBonusCode(BONUS_CODE_VALID);
-            }else if(bonusCode.equals("invalid")){
-                fillBonusCode(BONUS_CODE_INVALID);
-            }
+        if(promoCode!=null){
+            fillBonusCode(promoCode.getCode());
         }
 
     }
 
-    public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
+    public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
-            new RegistrationPageAllSteps().fillRegistrationForm(userData, promotions, bonusCode);
+            new RegistrationPageAllSteps().fillRegistrationForm(userData, promotions, promoCode);
         }else{
-            registrationPageStepThree(userData).fillData(userData, termsAndConditions, promotions, bonusCode);
+            registrationPageStepThree(userData).fillData(userData, termsAndConditions, promotions, promoCode);
         }
         return new RegistrationPage();
     }
 
-    public void fillAllFieldsAndSubmit(UserData userData, boolean termsAndConditions, boolean promotions, String bonusCode){
-        fillAllFields(userData, termsAndConditions, promotions, bonusCode).clickSubmit();
+    public void fillAllFieldsAndSubmit(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){
+        fillAllFields(userData, termsAndConditions, promotions, promoCode).clickSubmit();
     }
 
     /*Inputs*/

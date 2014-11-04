@@ -1,6 +1,7 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PlayerCondition;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -40,7 +41,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         String balance = depositPage.getBalanceAmount();
         MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
-        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = moneyBookersDepositPage.cancelDeposit();;
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = moneyBookersDepositPage.cancelDeposit();
         transactionUnSuccessfulPopup.closePopup();
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance");
     }
@@ -67,7 +68,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawForNewUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
+        PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.MoneyBookers, AMOUNT);
         assertEquals("9.95", withdrawPage.getBalanceAmount(), "Balance");
@@ -97,6 +98,30 @@ public class CashierMoneyBookersTest extends AbstractTest{
         assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
     }
 
+    @Test(groups = {"regression", "mobile"})
+    public void validPromoCodeTest(){
+        UserData userData = getMoneyBookersUser();
+        PortalUtils.loginUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookersValidPromoCode(AMOUNT);
+        moneyBookersDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void invalidPromoCodeTest(){
+        UserData userData = getMoneyBookersUser();
+        PortalUtils.loginUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.MoneyBookers, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
+    }
+
     private UserData moneyBookersDeposit(){
         UserData userData = getMoneyBookersUser();
         PortalUtils.loginUser(userData);
@@ -112,8 +137,8 @@ public class CashierMoneyBookersTest extends AbstractTest{
 
     private UserData getMoneyBookersUser(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        userData.setUsername("test-mb");
-        userData.setPassword("123asdQ");
+        userData.setUsername("test-88");
+        userData.setPassword("Password1");
         return userData;
     }
 }

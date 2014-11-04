@@ -1,6 +1,7 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PlayerCondition;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -63,9 +64,30 @@ public class CashierNetellerTest extends AbstractTest {
     }
 
     @Test(groups = {"regression", "mobile"})
+    public void netellerDepositValidPromoCode() {
+        UserData userData = getNetellerUser();
+        PortalUtils.loginUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        TransactionSuccessfulPopup transactionSuccessfulPopup = depositPage.depositNetellerValidPromoCode(AMOUNT);
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after withdraw");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void netellerDepositInvalidPromoCode() {
+        UserData userData = getNetellerUser();
+        PortalUtils.loginUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.Neteller, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");    }
+
+    @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawForNewUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
+        PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
         assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
@@ -115,7 +137,7 @@ public class CashierNetellerTest extends AbstractTest {
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectAccount() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
+        PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidAccount(AMOUNT);
         assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
@@ -124,7 +146,7 @@ public class CashierNetellerTest extends AbstractTest {
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectEmail() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, "valid");
+        PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawNetellerInvalidEmail(AMOUNT);
         assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");

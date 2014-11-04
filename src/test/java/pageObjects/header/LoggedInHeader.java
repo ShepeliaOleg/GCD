@@ -47,8 +47,8 @@ public class LoggedInHeader extends Header{
         return WebDriverUtils.getElementText(LABEL_USERNAME_XP);
     }
 
-    public boolean isUsernameDisplayed(UserData userData){
-        return (getUsername().contains(userData.getUsername()));
+    public boolean isUsernameDisplayed(String username){
+        return (getUsername().contains(username));
     }
 
     public LogoutPopup clickLogout(){

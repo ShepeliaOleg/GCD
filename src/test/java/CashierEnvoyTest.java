@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -10,6 +11,7 @@ import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -42,10 +44,39 @@ public class CashierEnvoyTest extends AbstractTest{
     }
 
     @Test(groups = {"regression", "mobile"})
-    public void depositWithdraw(){
+    public void deposit(){
         for(UserData userData:getUsers()) {
             try{
                 successfulDeposit(userData);
+            }catch (Exception e){
+            }
+        }
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void depositValidPromoCode(){
+        for(UserData userData:getUsers()) {
+            try{
+                PortalUtils.registerUser(userData);
+                DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+                EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoyValidPromoCode(AMOUNT);
+                TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
+                transactionSuccessfulPopup.closePopup();
+                assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPage().getBalanceAmount(), "Balance");
+            }catch (Exception e){
+            }
+        }
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void depositInvalidPromoCode(){
+        for(UserData userData:getUsers()) {
+            try{
+                PortalUtils.registerUser(userData);
+                DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+                depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.Envoy, AMOUNT);
+                assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+                assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
             }catch (Exception e){
             }
         }
@@ -70,7 +101,7 @@ public class CashierEnvoyTest extends AbstractTest{
     public void withdrawUnsuccessful(){
         for(UserData userData:getUsers()) {
             try{
-                PortalUtils.registerUser(userData, "valid");
+                PortalUtils.registerUser(userData, PromoCode.valid);
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
                 TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = withdrawPage.withdrawEnvoy(AMOUNT);
                 transactionUnSuccessfulPopup.closePopup();
@@ -84,7 +115,7 @@ public class CashierEnvoyTest extends AbstractTest{
     public void cancelWithdraw(){
         for(UserData userData:getUsers()) {
             try{
-                PortalUtils.registerUser(userData, "valid");
+                PortalUtils.registerUser(userData, PromoCode.valid);
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
                 withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Envoy, AMOUNT);
                 assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");

@@ -1,6 +1,7 @@
 package pageObjects.cashier;
 
 import enums.PaymentMethod;
+import enums.PromoCode;
 import pageObjects.account.AddCardPage;
 import pageObjects.core.AbstractPage;
 import springConstructors.UserData;
@@ -101,10 +102,10 @@ public class CashierPage extends AbstractPage{
         WebDriverUtils.click(fillFields(method, amount, account, password)+BUTTON_XP);
     }
 
-    protected void processPaymentByType(PaymentMethod method, String amount, String promocode){
+    protected void processPaymentByType(PaymentMethod method, String amount, PromoCode promoCode){
         String body = fillFields(method, amount);
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
-        WebDriverUtils.inputTextToField(fieldPromoCode, promocode);
+        WebDriverUtils.inputTextToField(fieldPromoCode, promoCode.getCode());
         WebDriverUtils.click(body+BUTTON_XP);
     }
 

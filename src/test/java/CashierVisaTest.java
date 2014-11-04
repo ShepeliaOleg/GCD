@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
@@ -51,6 +52,25 @@ public class CashierVisaTest extends AbstractTest{
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.Visa, AMOUNT);
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after withdraw");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void visaDepositValidBonusCode(){
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        depositPage.depositCardValidPromoCode(PaymentMethod.Visa, AMOUNT);
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void visaDepositInvalidBonusCode(){
+        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        String balance = depositPage.getBalanceAmount();
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.Visa, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
     @Test(groups = {"regression", "mobile"})

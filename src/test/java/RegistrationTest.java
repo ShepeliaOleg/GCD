@@ -125,7 +125,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void registrationWithBonusCoupon(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
-        HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, "valid", Page.homePage);
+        HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, PromoCode.valid, Page.homePage);
         validateEquals("10.00", homePage.getBalanceAmount(), "User balance");
 	}
 
@@ -142,7 +142,7 @@ public class RegistrationTest extends AbstractTest{
     public void registrationWithInvalidBonusCoupon() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage = (RegistrationPage) registrationPage.registerUser(userData, "invalid", Page.registrationPage);
+        registrationPage = (RegistrationPage) registrationPage.registerUser(userData, PromoCode.invalid, Page.registrationPage);
         assertEquals("Coupon code is not found or not available", registrationPage.getPortletErrorMessage(), "Invalid bonus error message");
     }
 

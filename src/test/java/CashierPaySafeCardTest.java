@@ -1,4 +1,6 @@
 import enums.ConfiguredPages;
+import enums.PaymentMethod;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -7,6 +9,7 @@ import pageObjects.cashier.deposit.PaySafeCardDepositPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -34,6 +37,28 @@ public class CashierPaySafeCardTest extends AbstractTest{
         TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
         assertEquals(AMOUNT, depositPage.getBalanceAmount(), "Balance");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void paySafeCardDepositValidPromoCode(){
+        UserData userData = getEURUser();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        PaySafeCardDepositPage paySafeCardDepositPage = depositPage.depositPaySafeCardValidPromoCode(AMOUNT);
+        paySafeCardDepositPage.assertAmount(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void paySafeCardDepositInvalidPromoCode(){
+        UserData userData = getEURUser();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.PaySafeCard, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
 

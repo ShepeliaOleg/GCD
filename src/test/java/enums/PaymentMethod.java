@@ -11,7 +11,7 @@ public enum PaymentMethod {
     Envoy("Envoy", "", "", "", ""),
     Neteller("NETeller", "458591047553", "411392", "450424149137", "");
 
-    PaymentMethod(String name, String account, String secondaryAccount, String password, String secondaryPassword){
+    PaymentMethod(String name, String account, String secondaryAccount, String password, String emailAccount){
         this.name = name;
         this.account = account;
         this.secondaryAccount = secondaryAccount;

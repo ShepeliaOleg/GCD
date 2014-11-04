@@ -1,5 +1,6 @@
 package pageObjects.registration.classic;
 
+import enums.PromoCode;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
@@ -49,14 +50,14 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     /*General*/
 
-    public void registerNewUser(UserData userData, boolean isReceiveBonusesChecked, String bonusCode){
-        fillRegistrationForm(userData, isReceiveBonusesChecked, bonusCode);
+    public void registerNewUser(UserData userData, boolean isReceiveBonusesChecked, PromoCode promoCode){
+        fillRegistrationForm(userData, isReceiveBonusesChecked, promoCode);
         clickSubmit();
     }
 
-    public void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, String bonusCode){
+    public void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, PromoCode promoCode){
         fillUserData(userData);
-        fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
+        fillBonusAndPromotional(isReceiveBonusesChecked, promoCode);
     }
 
     private void fillUserData(UserData userData){

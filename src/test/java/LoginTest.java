@@ -24,7 +24,7 @@ public class LoginTest extends AbstractTest{
 	public void validUserLoginHeader() {
 		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         PortalUtils.loginUser(userData);
-		validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+		validateTrue(new AbstractPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
 	}
 
     /*username with spaces*/
@@ -34,7 +34,7 @@ public class LoginTest extends AbstractTest{
         userData.setUsername(" "+userData.getUsername()+" ");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         homePage.navigateToLoginForm().login(userData);
-        validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+        validateTrue(new AbstractPage().isUsernameDisplayed(userData.getUsername().trim()), "Correct username is displayed after login");
     }
 
     /*2. Login popup is available*/
@@ -43,7 +43,7 @@ public class LoginTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         homePage.navigateToLoginForm().login(userData);
-        validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+        validateTrue(new AbstractPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
     }
 
 	/*3. Remember Me disabled by default in header*/
@@ -340,7 +340,7 @@ public class LoginTest extends AbstractTest{
         IMSUtils.navigateToPlayedDetails(userData.getUsername()).resetFailedLogins();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         homePage.navigateToLoginForm().login(userData);
-        validateTrue(new AbstractPage().isUsernameDisplayed(userData), "Correct username is displayed after login");
+        validateTrue(new AbstractPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
     }
 
     private void assertFailedLoginPopup(UserData userData) {

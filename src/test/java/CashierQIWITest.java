@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -8,6 +9,7 @@ import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -46,6 +48,25 @@ public class CashierQIWITest extends AbstractTest{
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.QIWI, AMOUNT);
         assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void qIWIDepositValidPromoCode() {
+        PortalUtils.registerUser(getRussianUser());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        QIWIDepositPage qiwiDepositPage = depositPage.depositQIWIValidPromoCode(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
+        transactionSuccessfulPopup.closePopup();
+        assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
+    }
+
+    @Test(groups = {"regression", "mobile"})
+    public void qIWIDepositInvalidPromoCode() {
+        PortalUtils.registerUser(getRussianUser());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.QIWI, AMOUNT);
+        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
     @Test(groups = {"regression", "mobile"})

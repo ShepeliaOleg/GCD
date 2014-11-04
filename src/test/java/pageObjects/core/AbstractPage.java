@@ -71,8 +71,8 @@ public class AbstractPage extends AbstractPageObject{
         return WebDriverUtils.isVisible(AdminPage.DOCKBAR_XP, 0);
     }
 
-    public boolean isUsernameDisplayed(UserData userData){
-        return loggedInHeader().isUsernameDisplayed(userData);
+    public boolean isUsernameDisplayed(String username){
+        return loggedInHeader().isUsernameDisplayed(username);
     }
 
     public String getBalanceCurrency(){

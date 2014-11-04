@@ -1,5 +1,6 @@
 package pageObjects.registration.threeStep;
 
+import enums.PromoCode;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
@@ -18,12 +19,12 @@ public class RegistrationPageStepThree extends RegistrationPage {
 		super(new String[]{ROOT_XP, BUTTON_PREVIOUS_XP,BUTTON_SUBMIT_XP});
 	}
 
-    public void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
-        fillData(userData,termsAndConditions, isReceiveBonusesChecked, bonusCode);
+    public void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, PromoCode promoCode){
+        fillData(userData,termsAndConditions, isReceiveBonusesChecked, promoCode);
         clickSubmit();
     }
 
-    public void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, String bonusCode){
+    public void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, PromoCode promoCode){
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
@@ -31,7 +32,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         fillAnswer(userData.getVerificationAnswer());
         setCurrency(userData.getCurrencyName());
         setTermsCheckbox(termsAndConditions);
-        fillBonusAndPromotional(isReceiveBonusesChecked, bonusCode);
+        fillBonusAndPromotional(isReceiveBonusesChecked, promoCode);
         WebDriverUtils.waitFor(1000);
     }
 
