@@ -29,7 +29,7 @@ public enum ConfiguredPages{
     bingoLobbyFeed("bingo_schedule_lobby"),
     bingoScheduleFeed("bingo_schedule_schedule"),
     bonusPage("bonus"),
-    updateMyDetails("update_my_details"),
+    updateMyDetails("update-my-details"),
     changeMyPassword("change_my_password"),
     deposit("deposit"),
     forgotPassword("forgot_password"),
