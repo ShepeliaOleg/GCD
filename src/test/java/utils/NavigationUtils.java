@@ -149,6 +149,7 @@ public class NavigationUtils{
 
     private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData) {
         String suffix = configuredPages.toString();
+        boolean reload = false;
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
         if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
@@ -157,44 +158,49 @@ public class NavigationUtils{
         AbstractPage abstractPage = new AbstractPage();
         switch (condition) {
             case guest:
-                logoutAdminIfLoggedIn(abstractPage);
-                logoutIfLoggedIn();
-                WebDriverUtils.navigateToInternalURL(suffix);
+                if (abstractPage.isAdminLoggedIn()) {
+                    abstractPage.logoutAdmin();
+                    reload = true;
+                }
+                if (PortalUtils.isLoggedIn()) {
+                    PortalUtils.logout();
+                    reload = true;
+                }
                 break;
             case player:
-                logoutAdminIfLoggedIn(abstractPage);
+                if (abstractPage.isAdminLoggedIn()) {
+                    abstractPage.logoutAdmin();
+                    reload = true;
+                }
                 if (PortalUtils.isLoggedIn()) {
                     if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
                         PortalUtils.logout();
                         abstractPage.login(userData);
+                        reload = true;
                     }
                 }else {
                     abstractPage.login(userData);
+                    reload = true;
                 }
-                WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case admin:
                 if (!abstractPage.isAdminLoggedIn()) {
-                    logoutIfLoggedIn();
+                    if (PortalUtils.isLoggedIn()) {
+                        PortalUtils.logout();
+                    }
                     PortalUtils.loginAdmin();
+                    reload = true;
                 }
-                WebDriverUtils.navigateToInternalURL(suffix);
                 break;
             case any:
-                logoutAdminIfLoggedIn(abstractPage);
+                if (abstractPage.isAdminLoggedIn()) {
+                    abstractPage.logoutAdmin();
+                    reload = true;
+                }
                 break;
         }
-    }
-
-    private static void logoutIfLoggedIn() {
-        if (PortalUtils.isLoggedIn()) {
-            PortalUtils.logout();
-        }
-    }
-
-    private static void logoutAdminIfLoggedIn(AbstractPage abstractPage) {
-        if (abstractPage.isAdminLoggedIn()) {
-            abstractPage.logoutAdmin();
+        if(reload){
+            WebDriverUtils.navigateToInternalURL(suffix);
         }
     }
 
@@ -264,7 +270,9 @@ public class NavigationUtils{
     }
 
     private static AbstractPageObject checkPopups(Page exceptPage) {
-        if (WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)) {
+        if (WebDriverUtils.isVisible(WelcomePopup.TITLE_XP, 0)) {
+            return processWelcomePopup(exceptPage);
+        }else if (WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)) {
             return processAfterRegistrationPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)) {
             return processLoginPopup(exceptPage);
@@ -280,8 +288,6 @@ public class NavigationUtils{
             }else {
                 return processOkBonus(exceptPage);
             }
-        } else if (WebDriverUtils.isVisible(WelcomePopup.TITLE_XP, 0)) {
-            return processWelcomePopup(exceptPage);
         }else {
             return processGenericPopup();
         }

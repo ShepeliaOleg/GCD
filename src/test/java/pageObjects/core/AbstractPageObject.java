@@ -34,7 +34,6 @@ public abstract class AbstractPageObject{
 	}
 
     private void validate(String[] clickableBys, String[] invisibleBys){
-        WebDriverUtils.waitForElementToDisappear(MAIN_SITE_LOADER, TIMEOUT);
         if(clickableBys!=null){
             for(String xpath:clickableBys){
                 WebDriverUtils.waitForElement(xpath, TIMEOUT);

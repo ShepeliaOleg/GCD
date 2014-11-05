@@ -32,7 +32,6 @@ public class AbstractPage extends AbstractPageObject{
 	public AbstractPage(String[] clickableBys, String[] invisibleBys){
 		super(clickableBys, invisibleBys);
 		this.mainWindowHandle=WebDriverUtils.getWindowHandle();
-		WebDriverUtils.waitForPageToLoad();
 	}
 
 	public String getMainWindowHandle(){
