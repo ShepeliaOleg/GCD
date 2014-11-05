@@ -103,7 +103,7 @@ public class Listener extends TestListenerAdapter{
                 break;
             }
         }else if(!testContext.getSkippedTests().getAllResults().isEmpty()){
-            for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
+            for(ITestResult iTestResult:testContext.getSkippedTests().getAllResults()){
                 classname = iTestResult.getTestClass().getName();
                 break;
             }
@@ -122,7 +122,6 @@ public class Listener extends TestListenerAdapter{
             output.flush();
             output.close();
         }
-
     }
 
     private void writeToIndex(String classname, int total, int passed, int failed, int ims){

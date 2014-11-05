@@ -31,7 +31,7 @@ public class ReferAFriendTest extends AbstractTest{
             HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
             ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
         }catch (Exception e){
-            skipTest(e.getMessage());
+            skipTest();
         }
     }
 

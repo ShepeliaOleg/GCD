@@ -20,7 +20,7 @@ public class BannerTest extends AbstractTest{
         try{
             BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.bannerImage);
         }catch (Exception e){
-           skipTest(e.getMessage());
+            skipTest();
         }
 	}
 

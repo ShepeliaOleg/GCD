@@ -49,7 +49,7 @@ public class ForgotPasswordTest extends AbstractTest{
             HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
             ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         }catch (Exception e){
-            skipTest(e.getMessage());
+            skipTest();
         }
 
 	}

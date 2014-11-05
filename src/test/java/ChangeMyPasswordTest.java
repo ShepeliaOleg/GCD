@@ -30,7 +30,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
             HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
             ChangePasswordPopup changePasswordPopup = homePage.navigateToChangePassword();
         }catch (Exception e){
-            skipTest(e.getMessage());
+            skipTest();
         }
     }
 //

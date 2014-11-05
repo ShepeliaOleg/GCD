@@ -22,7 +22,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
         try{
             ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         }catch (Exception e){
-            skipTest(e.getMessage());
+            skipTest();
         }
     }
 

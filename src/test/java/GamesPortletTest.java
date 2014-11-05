@@ -20,7 +20,7 @@ public class GamesPortletTest extends AbstractTest {
             GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
             gamesPortletPage.playDemoAndAssertUrl();
         }catch (Exception e){
-            skipTest(e.getMessage());
+            skipTest();
         }
     }
 

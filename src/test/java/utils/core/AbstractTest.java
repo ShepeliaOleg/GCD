@@ -48,6 +48,16 @@ public class AbstractTest extends AbstractTestRunner{
 
     }
 
+    public static void skipTest(){
+        String results = collectResults();
+        if(!results.isEmpty()){
+            throw new SkipException("Errors found: "+results);
+        }else {
+            throw new SkipException("");
+        }
+
+    }
+
     public static boolean assertTrue(boolean actual, String message){
         return addErrorIf(!actual, "TRUE", "FALSE", message);
     }
