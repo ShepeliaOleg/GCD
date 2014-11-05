@@ -4,6 +4,7 @@ import enums.ConfiguredPages;
 import enums.Licensee;
 import io.selendroid.SelendroidDriver;
 import org.openqa.selenium.*;
+import org.openqa.selenium.html5.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -12,7 +13,6 @@ import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
 import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -711,4 +711,29 @@ public class WebDriverUtils{
         element.sendKeys(Keys.chord(Keys.CONTROL, "c"));
     }
 
+    /*Local storage*/
+
+    private static LocalStorage getLocalStorage() {
+        return ((WebStorage) WebDriverFactory.getWebDriver()).getLocalStorage();
+    }
+
+    public static int getLocalStorageSize() {
+        return getLocalStorage().size();
+    }
+
+    public static String getLocalStorageItem(String key) {
+        return getLocalStorage().getItem(key);
+    }
+
+    public static void setLocalStorageItem(String key, String value) {
+        getLocalStorage().setItem(key, value);
+    }
+
+    public static void removeLocalStorageItem(String key) {
+        getLocalStorage().removeItem(key);
+    }
+
+    public static void clearLocalStorage() {
+        getLocalStorage().clear();
+    }
 }
