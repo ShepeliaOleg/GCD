@@ -5,14 +5,14 @@ import springConstructors.mail.MailService;
 
 public class DataContainer {
 
-    private static AdminUserData adminUserData;
-    private static AffiliateData affiliateData;
-    private static Defaults defaults;
-    private static DeviceData deviceData;
-    private static DriverData driverData;
-    private static IMS ims;
-    private static MailService mailService;
-    private static UserData userData;
+    private static AdminUserData    adminUserData;
+    private static AffiliateData    affiliateData;
+    private static Defaults         defaults;
+    private static DeviceData       deviceData;
+    private static DriverData       driverData;
+    private static IMS              ims;
+    private static MailService      mailService;
+    private static UserData         userData;
 
     public static AffiliateData getAffiliateData() {
         return affiliateData;
