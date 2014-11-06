@@ -152,35 +152,41 @@ public class NavigationUtils{
         boolean reload = false;
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
-        if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
-            checkPopups(Page.homePage);
-        }
         AbstractPage abstractPage = new AbstractPage();
         switch (condition) {
             case guest:
-                if (abstractPage.isAdminLoggedIn()) {
-                    abstractPage.logoutAdmin();
-                    reload = true;
+                if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
+                    checkPopups(Page.homePage);
                 }
-                if (PortalUtils.isLoggedIn()) {
+                if(PortalUtils.isLoggedIn()) {
                     PortalUtils.logout();
+                    reload = true;
+                }else if(abstractPage.isAdminLoggedIn()) {
+                    abstractPage.logoutAdmin();
                     reload = true;
                 }
                 break;
             case player:
-                if (abstractPage.isAdminLoggedIn()) {
-                    abstractPage.logoutAdmin();
-                    reload = true;
-                }
-                if (PortalUtils.isLoggedIn()) {
-                    if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
-                        PortalUtils.logout();
+                if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 3)) {
+                    new LoginPopup().login(userData);
+                }else{
+                    if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)) {
+                        checkPopups(Page.homePage);
+                    }
+                    if(abstractPage.isAdminLoggedIn()) {
+                        abstractPage.logoutAdmin();
+                        abstractPage.login(userData);
+                        reload = true;
+                    }else if(PortalUtils.isLoggedIn()) {
+                        if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
+                            PortalUtils.logout();
+                            abstractPage.login(userData);
+                            reload = true;
+                        }
+                    }else {
                         abstractPage.login(userData);
                         reload = true;
                     }
-                }else {
-                    abstractPage.login(userData);
-                    reload = true;
                 }
                 break;
             case admin:
@@ -195,7 +201,6 @@ public class NavigationUtils{
             case any:
                 if (abstractPage.isAdminLoggedIn()) {
                     abstractPage.logoutAdmin();
-                    reload = true;
                 }
                 break;
         }

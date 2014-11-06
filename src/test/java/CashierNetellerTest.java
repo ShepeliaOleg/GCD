@@ -20,7 +20,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositInterfaceIsFunctional(){
-        PortalUtils.registerUser(getNetellerUser());
+        PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.assertNetellerInterfaceExisting();
     }
@@ -50,7 +50,7 @@ public class CashierNetellerTest extends AbstractTest {
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Neteller, AMOUNT);
         assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 

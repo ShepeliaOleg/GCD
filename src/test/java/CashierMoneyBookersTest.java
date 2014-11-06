@@ -23,15 +23,15 @@ public class CashierMoneyBookersTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersDepositInterfaceIsFunctional(){
-        PortalUtils.registerUser();
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        UserData userData = getMoneyBookersUser();
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         depositPage.assertMoneyBookersInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void moneyBookersWithdrawInterfaceIsFunctional(){
-        PortalUtils.registerUser();
-        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        UserData userData = getMoneyBookersUser();
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.withdraw, userData);
         withdrawPage.assertMoneyBookersInterface();
     }
 

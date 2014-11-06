@@ -71,9 +71,12 @@ public class TypeUtils{
     }
 
     public static String calculateSum(String... number) {
-        String result = null;
-        for(String s:number){
-            result = String.valueOf(Double.valueOf(result)+Double.valueOf(s));
+        String result = number[0];
+        for(int i=1; i<number.length;i++){
+            result = String.valueOf(Double.valueOf(result)+Double.valueOf(number[i]));
+        }
+        if(result.substring(result.indexOf(".")).length()<3){
+            result = result+"0";
         }
         return result;
     }
