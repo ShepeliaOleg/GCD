@@ -105,18 +105,25 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public AbstractPageObject registerUser(UserData userData, Page expectedPage){
-        return registerUser(userData, true, false, null, expectedPage);
+        return registerUser(userData, true, false, null, expectedPage, true);
+    }
+
+    public AbstractPageObject registerUser(UserData userData, boolean clearDeviceId){
+        return registerUser(userData, true, false, null, Page.homePage, clearDeviceId);
     }
 
     public AbstractPageObject registerUser(UserData userData, PromoCode promoCode, Page expectedPage){
-        return registerUser(userData, true, false, promoCode, expectedPage);
+        return registerUser(userData, true, false, promoCode, expectedPage, true);
     }
 
-    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode, Page expectedPage){
+    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode, Page expectedPage, boolean clearDeviceId){
         System.out.println("Registering user: \n"
-                + userData.getUsername()+"\n"
-                + userData.getCountry()+"\n"
-                + userData.getCurrencyName()+"\n");
+                + "Username: " + userData.getUsername()+"\n"
+                + "Country:  " + userData.getCountry()+"\n"
+                + "Currency: " + userData.getCurrencyName()+"\n");
+        if (clearDeviceId) {
+//            WebDriverUtils.removeLocalStorageItem("serial");
+        }
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);
         }else{

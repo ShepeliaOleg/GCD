@@ -61,7 +61,7 @@ public class PortalUtils {
     }
 
     public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, PromoCode promoCode, Page expectedPage){
-        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, promoCode, expectedPage);
+        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, promoCode, expectedPage, true);
     }
 
     public static AbstractPage loginAdmin() {

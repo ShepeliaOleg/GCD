@@ -84,4 +84,27 @@ public class TypeUtils{
     public static String calculateDiff(String base, String number) {
         return String.valueOf(Double.valueOf(base)-Double.valueOf(number));
     }
+
+    public static String generateDeviceId(String username) {
+        return "PT" + "P" + "36" + "#" + fakeSerial(username) + "+" + "B" + "+";
+    }
+
+/*  https://confluence.playtech.corp/display/PROP/Serial+for+mobile */
+
+    public static final int MAX_SERIAL_LENGTH = 11;
+
+    private static String fakeSerial(String input) {
+        int strHash = input.hashCode();
+        String hash = Long.toString(strHash, 36);
+
+        if (hash.length() > MAX_SERIAL_LENGTH) {
+            hash = hash.substring(0, MAX_SERIAL_LENGTH);
+        } else {
+            while (hash.length() < MAX_SERIAL_LENGTH - 1) {
+                hash = "0" + hash;
+            }
+        }
+
+        return hash;
+    }
 }

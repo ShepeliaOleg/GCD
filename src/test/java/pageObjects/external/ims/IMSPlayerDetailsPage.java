@@ -11,11 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * User: sergiich
- * Date: 7/24/13
- */
-
 public class IMSPlayerDetailsPage extends AbstractPage{
 
 	private static final String ROOT_XP=									"//*[@id='playerHeaderZone']";
@@ -68,6 +63,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
     private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
     private static final String REFERRER_XP=                                "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
+    private static final String DEVICE_ID_XP =                              "//td[contains(text(),'Sign up serial:')]";
 
 	public IMSPlayerDetailsPage(){
 		super(new String[]{ROOT_XP, BUTTON_FAILED_LOGINS});
@@ -423,5 +419,14 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     private IMSAddBonusPage clickAddBonus(){
         WebDriverUtils.click(BUTTON_ADD_BONUS);
         return new IMSAddBonusPage();
+    }
+
+    public String getDeviceIdRegistration() {
+        String value = WebDriverUtils.getElementText(WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 1));
+        return value.substring(0, value.indexOf(" "));
+    }
+
+    public String getDeviceIdLogin() {
+        return WebDriverUtils.getElementText(WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 3));
     }
 }
