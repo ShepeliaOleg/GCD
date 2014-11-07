@@ -15,25 +15,21 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class ResponsibleGamingPage extends AbstractPage{
-	private static final String RESPONSIBLE_GAMING_ROOT_XP =                        	"//*[contains(@id,'portlet_responsiblegaming')]";
-	private static final String BUTTON_DEPOSIT_XP =                                 	"//button[@id='limitDepositMonthly']";
-	private static final String BUTTON_TIME_PER_SESSION_XP =                        	"//button[@id='limitSessionPerSession']";
+	private static final String RESPONSIBLE_GAMING_ROOT_XP =                        	"//*[contains(@class,'portlet-ngresponsiblegaming')]";
+	private static final String BUTTON_LIMITS_XP =                                 	    "//*[contains(@class, 'fn-deposit-limits')]//button";
+	private static final String BUTTON_TIME_PER_SESSION_XP =                        	"//*[contains(@class, 'fn-session-timer')]//button";
 	private static final String LABEL_SUCCESS_NOTIFICATION_MESSAGE_DEPOSIT_XP =         "//*[@id='saveDepositLimitsForm']//tr[last()]//*[contains(@class,'success')]";
 	private static final String LABEL_SUCCESS_NOTIFICATION_MESSAGE_TIMEPERSESSION_XP =  "//*[@id='limitSessionPerSessionStatus']/div[contains(@class, 'success')]";
 	private static final String LABEL_ERROR_DAILY_XP =                                  "//*[contains(@class,'day')]//*[contains(@class,'validateFail')]";
 	private static final String LABEL_ERROR_WEEKLY_XP =                                 "//*[contains(@class,'week')]//*[contains(@class,'validateFail')]";
 	private static final String LABEL_ERROR_MONTHLY_XP =                                "//*[contains(@class,'month')]//*[contains(@class,'validateFail')]";
-    private static final String FUTURE_CHANGE_NOTIFICATION_DAILY_XP =               	"//*[@class='depositLimitChange']/div[contains(text(),'daily')]";
-    private static final String FUTURE_CHANGE_NOTIFICATION_WEEKLY_XP =              	"//*[@class='depositLimitChange']/div[contains(text(),'weekly')]";
-    private static final String FUTURE_CHANGE_NOTIFICATION_MONTHLY_XP =             	"//*[@class='depositLimitChange']/div[contains(text(),'monthly')]";
-	public static final String DROPDOWN_DAILY_XP =                                 		"//select[@id='limitDepositDaily']";
-	public static final String DROPDOWN_WEEKLY_XP =                                		"//select[@id='limitDepositWeekly']";
-	public static final String DROPDOWN_MONTHLY_XP =                              	 	"//select[@id='limitDepositMonthly']";
-    private static final String DROPDOWN_TIME_PER_SESSION_XP =                     	 	"//select[@id='limitSessionPerSession']";
-	private static final String LINK_SELF_EXCLUDE = 									"//p[@class='self-exclude']/a";
+	public static final String DROPDOWN_DAILY_XP =                                 		"//select[@id='daydepositlimit']";
+	public static final String DROPDOWN_WEEKLY_XP =                                		"//select[@id='weekdepositlimit']";
+	public static final String DROPDOWN_MONTHLY_XP =                              	 	"//select[@id='monthdepositlimit']";
+    private static final String DROPDOWN_TIME_PER_SESSION_XP =                     	 	"//select[@id='sessionduration']";
 
 	public ResponsibleGamingPage(){
-		super(new String[]{RESPONSIBLE_GAMING_ROOT_XP, BUTTON_DEPOSIT_XP, DROPDOWN_DAILY_XP, DROPDOWN_WEEKLY_XP, DROPDOWN_MONTHLY_XP});
+		super(new String[]{RESPONSIBLE_GAMING_ROOT_XP});
 	}
 
     // currency
@@ -75,7 +71,7 @@ public class ResponsibleGamingPage extends AbstractPage{
      */
 
 	private void submitDepositLimitConfirmButton(){
-		WebDriverUtils.click(BUTTON_DEPOSIT_XP);
+		WebDriverUtils.click(BUTTON_LIMITS_XP);
 	}
 
 	public void submitTimePerSessionConfirmButton(){
@@ -102,20 +98,6 @@ public class ResponsibleGamingPage extends AbstractPage{
 		return WebDriverUtils.isVisible(LABEL_ERROR_MONTHLY_XP);
 	}
 
-	public SelfExcludePopup navigateToSelfExclude(){
-		WebDriverUtils.click(LINK_SELF_EXCLUDE);
-		return new SelfExcludePopup();
-	}
-
-	public void submitDepositLimit(){
-		submitDepositLimitConfirmButton();
-		closeQuestionnaire();
-	}
-
-	public void submitTimePerSession(){
-		submitTimePerSessionConfirmButton();
-	}
-
 	private void closeQuestionnaire(){
 		if(WebDriverUtils.isVisible(QuestionnairePopup.BUTTON_SUBMIT_XP)){
 			QuestionnairePopup questionnairePopup=new QuestionnairePopup();
@@ -128,6 +110,8 @@ public class ResponsibleGamingPage extends AbstractPage{
 		String randomOptionText=RandomUtils.getRandomElementsFromList(allOptions, 1).get(0);
 
 		setTimePerSession(randomOptionText);
+        submitTimePerSessionConfirmButton();
+        new TimePerSessionNotification(randomOptionText);
 	}
 
 	private List<String> sortLimits(List<WebElement> options) {
@@ -192,7 +176,7 @@ public class ResponsibleGamingPage extends AbstractPage{
 			setDepositLimit(entry.getKey(), Integer.toString(entry.getValue()));
 		}
 		System.out.println(daily +" "+weekly+" "+monthly+" | "+ finalLimits.toString());
-		submitDepositLimit();
+		submitDepositLimitConfirmButton();
 	}
 
 	private int parseLimit(DepositLimits type){

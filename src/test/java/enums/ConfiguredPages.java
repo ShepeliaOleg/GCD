@@ -71,7 +71,7 @@ public enum ConfiguredPages{
     registerClientTypeCreferrer("register_client_type_creferrer"),
     registerNoClientType("register_no_client_type"),
     referAFriend("refer_a_friend"),
-    responsibleGaming("responsible_gaming"),
+    responsibleGaming("deposit-limits"),
     selfExclusion("responsible_gaming"),
     webContentGame("web_content_game_launch"),
     withdraw("withdraw");

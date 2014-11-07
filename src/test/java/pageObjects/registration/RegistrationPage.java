@@ -134,7 +134,6 @@ public class RegistrationPage extends AbstractPage{
         if(promoCode!=null){
             fillBonusCode(promoCode.getCode());
         }
-
     }
 
     public RegistrationPage fillAllFields(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){

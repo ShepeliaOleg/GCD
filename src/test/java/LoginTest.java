@@ -348,6 +348,5 @@ public class LoginTest extends AbstractTest{
         LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
         assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
         assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
-        assertTrue((loginPopup.getPasswordText()).isEmpty(),"Password is empty");
     }
 }

@@ -66,14 +66,12 @@ public class PermissionsTest extends AbstractTest{
         for (String text : fullList) {
             String role = text.toLowerCase().replace("permissions_", "").replace("_only", "").replace("_", " ");
             String message = "Portlet visible for " + role + " is displayed for " + condition.toString() + ".";
-
             if (visibleList.contains(text)) {
                 assertTextVisible(text, message);
             } else {
                 assertTextInvisible(text, message);
             }
         }
-
     }
 
     private void assertPagePermissions(PlayerCondition condition, ConfiguredPages page, String text, boolean visibility) {
@@ -94,7 +92,6 @@ public class PermissionsTest extends AbstractTest{
                 assertEquals(DataContainer.getDriverData().getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
                 new LoginPopup();
             }
-
     }
 
 
