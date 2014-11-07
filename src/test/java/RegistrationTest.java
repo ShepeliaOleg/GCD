@@ -125,7 +125,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void registrationWithBonusCoupon(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
-        HomePage homePage = (HomePage) PortalUtils.registerUser(userData,true,true, PromoCode.valid, Page.homePage);
+        HomePage homePage = (HomePage) PortalUtils.registerUser(userData, true, true, PromoCode.valid, Page.homePage);
         validateEquals("10.00", homePage.getBalanceAmount(), "User balance");
 	}
 
@@ -445,6 +445,29 @@ public class RegistrationTest extends AbstractTest{
         assertEquals(84, availableBirthYears.size(), "Number of available options in birth year dropdown.");
         assertEquals(firstYear, availableBirthYears.get(1), "First available option in birth year dropdown.");
         assertEquals(lastYear, availableBirthYears.get(83), "Last available option in birth year dropdown.");
+    }
+
+    /*B-11951*/
+    /*1*/
+    @Test(groups = {"registration", "regression", "desktop"})
+    public void sendDeviceIdToIMSOnRegistration(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.registerUser(userData, false);
+        String deviceIdExpected = TypeUtils.generateDeviceId(userData.getUsername()) + "WEB";
+        assertEquals(deviceIdExpected, WebDriverUtils.getLocalStorageItem("serial"), "Device Id value in Local Storage.");
+        String deviceIdOnIMS = IMSUtils.navigateToPlayedDetails(userData.getUsername()).getDeviceIdRegistration();
+        assertEquals(deviceIdExpected, deviceIdOnIMS, "Device Id value in IMS.");
+    }
+    /*2*/
+    @Test(groups = {"registration", "regression", "desktop"})
+    public void unableToRegisterFromSameDevice(){
+        String existingInIMSDeviceIdValue = "CTP36#0000whr3dx+B+WEB";
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        WebDriverUtils.setLocalStorageItem("serial", existingInIMSDeviceIdValue);
+        registrationPage.registerUser(userData, false);
+        assertEquals("Real money casino account already exists with this serial and signup remote ip combination.", registrationPage.getPortletErrorMessage(), "Error message text on try to register new player from same device." );
     }
 
     /*NEGATIVE*/
