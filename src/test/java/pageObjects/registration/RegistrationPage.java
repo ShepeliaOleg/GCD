@@ -122,7 +122,7 @@ public class RegistrationPage extends AbstractPage{
                 + "Country:  " + userData.getCountry()+"\n"
                 + "Currency: " + userData.getCurrencyName()+"\n");
         if (clearDeviceId) {
-//            WebDriverUtils.removeLocalStorageItem("serial");
+            WebDriverUtils.removeLocalStorageItem("serial");
         }
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);

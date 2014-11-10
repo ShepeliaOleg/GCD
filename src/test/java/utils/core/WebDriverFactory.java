@@ -107,16 +107,20 @@ public class WebDriverFactory{
         return driver;
     }
 
-    private static WebDriver getRemoteDriver(){
-        WebDriver driver = createRemoteDriver();
+    private static WebDriver getRemoteDriver(String browser){
+        WebDriver driver = createRemoteDriver(browser);
         driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
+    }
+
+    private static WebDriver getRemoteDriver(){
+        return getRemoteDriver(browser);
     }
 
 	public static void switchToAdditionalWebDriver(){
 		storedWebDriver = webDriver;
 		try{
-			webDriver=initializeWebDriver();
+			webDriver = getRemoteDriver("firefox");
 		}catch(Exception e){
 			throw new RuntimeException("Starting webdriver failed \n" + e);
 		}
@@ -127,7 +131,7 @@ public class WebDriverFactory{
 		webDriver = storedWebDriver;
 	}
 
-    private static WebDriver createRemoteDriver(){
+    private static WebDriver createRemoteDriver(String browser){
         Capabilities capabilities;
         URL url;
         String address = REMOTE;
@@ -200,7 +204,8 @@ public class WebDriverFactory{
         chromeOptions.setExperimentalOption("androidDeviceSerial", serial);
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-        return new RemoteWebDriver(remote, capabilities);
+        // return new RemoteWebDriver(remote, capabilities);
+        return new ChromeDriver(capabilities);
     }
 
     public static WebDriver getWebDriver() {
@@ -210,5 +215,6 @@ public class WebDriverFactory{
     public static WebDriver getLogDriver() {
         return logDriver;
     }
+
 
 }
