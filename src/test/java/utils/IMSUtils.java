@@ -124,9 +124,9 @@ public class IMSUtils {
                 }
             }
         }catch(RuntimeException e) {
-            AbstractTest.skipTest("IMS issue " + e.getMessage());
+            AbstractTest.skipTest();
         }finally {
-            WebDriverUtils.closeAdditionalSession();
+            WebDriverFactory.switchToMainWebDriver();
         }
     }
 

@@ -595,10 +595,6 @@ public class WebDriverUtils{
 
 	//WindowHandling
 
-    public static void closeAdditionalSession(){
-        WebDriverFactory.switchToMainWebDriver();
-    }
-
     public static void closeCurrentWindow(){
         WebDriverFactory.getWebDriver().close();
     }
