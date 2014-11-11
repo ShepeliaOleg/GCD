@@ -13,6 +13,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
@@ -63,6 +64,7 @@ public class WebDriverFactory{
                     break;
                 case "windows":
                 case "linux":
+                case "mac":
                     driver = getDesktopDriver();
                     break;
                 case "remote":
@@ -100,6 +102,8 @@ public class WebDriverFactory{
             case "firefox":driver=createFireFoxDriver();
                 break;
             case "explorer":driver=createIEDriver();
+                break;
+            case "safari":driver=createSafariDriver();
                 break;
             default: throw new RuntimeException("Please set correct browser, current '"+browser+"'");
         }
@@ -161,6 +165,10 @@ public class WebDriverFactory{
         chromeOptions.addArguments("--ignore-certificate-errors");
         if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
         return new ChromeDriver(chromeOptions);
+    }
+
+    private static WebDriver createSafariDriver(){
+        return new SafariDriver();
     }
 
     private static WebDriver createFireFoxDriver(){
