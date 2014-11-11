@@ -11,7 +11,7 @@ public class PaySafeCardDepositPage extends AbstractPage{
 
     private static final String LINK_CANCEL_XP = "//*[@id='pinForm:cancel']";
     private static final String BUTTON_PAY_XP = "//*[@id='pinForm:pay']";
-    private static final String CHECKBOX_TERMS_XP = "//*[@id='pinForm:agb']";
+    private static final String CHECKBOX_TERMS_XP = "//*[contains(@class, 'ui-checkbox')]";
     private static final String LABEL_AMOUNT_XP = "//*[@id='dispositionAmount']//span[2]";
     private static final String FIELD_PIN_1_XP = "//*[@id='pinForm:rn01']";
     private static final String FIELD_PIN_2_XP = "//*[@id='pinForm:rn02']";
@@ -60,7 +60,7 @@ public class PaySafeCardDepositPage extends AbstractPage{
     }
 
     public void assertAmount(String amount){
-        AbstractTest.assertEquals(amount, getAmount(), "Amount");
+        AbstractTest.assertTrue(getAmount().contains(amount), "Amount is '"+amount+"'");
     }
 
 }
