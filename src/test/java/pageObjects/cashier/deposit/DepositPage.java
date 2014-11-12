@@ -5,7 +5,6 @@ import enums.PromoCode;
 import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.core.AbstractTest;
 
@@ -16,7 +15,7 @@ public class DepositPage extends CashierPage{
     }
 
     public void assertCardInterface(PaymentMethod paymentMethod){
-        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP, FIELD_CVV_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_CVV_XP, FIELD_PROMO_CODE_XP});
     }
 
     public void depositCard(PaymentMethod card, String amount){
@@ -125,12 +124,8 @@ public class DepositPage extends CashierPage{
     /*NETELLER*/
 
 
-    public void assertNetellerInterfaceExisting() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP, FIELD_PASSWORD_CODE_XP, FIELD_PROMO_CODE_XP});
-    }
-
-    public void assertNetellerInterfaceNew() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_CODE_XP, FIELD_PROMO_CODE_XP});
+    public void assertNetellerInterface() {
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP});
     }
 
     public TransactionSuccessfulPopup depositNetellerValidPromoCode(String amount) {

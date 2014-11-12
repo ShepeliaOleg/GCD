@@ -22,27 +22,27 @@ public class CashierNetellerTest extends AbstractTest {
     public void netellerDepositInterfaceIsFunctional(){
         PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        depositPage.assertNetellerInterfaceExisting();
+        depositPage.assertNetellerInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositInterfaceIsFunctionalNewUser(){
         PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-        depositPage.assertNetellerInterfaceNew();
+        depositPage.assertNetellerInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawInterfaceIsFunctional(){
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.withdraw, getNetellerUser());
-        withdrawPage.assertNetellerInterfaceExisting();
+        withdrawPage.assertNetellerInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawInterfaceIsFunctionalNewUser(){
         PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.assertNetellerInterfaceNew();
+        withdrawPage.assertNetellerInterface();
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -65,8 +65,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositValidPromoCode() {
-        UserData userData = getNetellerUser();
-        PortalUtils.loginUser(userData);
+        PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         TransactionSuccessfulPopup transactionSuccessfulPopup = depositPage.depositNetellerValidPromoCode(AMOUNT);
@@ -76,22 +75,12 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositInvalidPromoCode() {
-        UserData userData = getNetellerUser();
-        PortalUtils.loginUser(userData);
+        PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.Neteller, AMOUNT);
         assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");    }
-
-    @Test(groups = {"regression", "mobile"})
-    public void netellerWithdrawForNewUser() {
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData, PromoCode.valid);
-        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
-        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
-    }
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawForExistingUserAddAccount() {
@@ -114,8 +103,9 @@ public class CashierNetellerTest extends AbstractTest {
     public void netellerCancelWithdrawForExistingUser() {
         UserData userData = netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        String balance = withdrawPage.getBalanceAmount();
         withdrawPage.cancelWithdraw(PaymentMethod.Neteller, AMOUNT);
-        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

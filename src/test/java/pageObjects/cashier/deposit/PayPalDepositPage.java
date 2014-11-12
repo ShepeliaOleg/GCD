@@ -26,7 +26,7 @@ public class PayPalDepositPage extends AbstractPage{
     }
 
     public void assertAmount(String amount){
-        AbstractTest.assertEquals(amount, getAmount().substring(1), "Amount");
+        AbstractTest.assertTrue(getAmount().contains(amount), "Amount");
     }
 
     public TransactionSuccessfulPopup pay(String amount){
@@ -44,7 +44,6 @@ public class PayPalDepositPage extends AbstractPage{
 
     private void clickCancel(){
         WebDriverUtils.click(LINK_CANCEL);
-
     }
 
     public TransactionUnSuccessfulPopup cancelDeposit(){

@@ -82,7 +82,11 @@ public class TypeUtils{
     }
 
     public static String calculateDiff(String base, String number) {
-        return String.valueOf(Double.valueOf(base)-Double.valueOf(number));
+        String result = String.valueOf(Double.valueOf(base)-Double.valueOf(number));
+        if(result.substring(result.indexOf(".")).length()<3){
+            result = result+"0";
+        }
+        return result;
     }
 
     public static String generateDeviceId(String username) {

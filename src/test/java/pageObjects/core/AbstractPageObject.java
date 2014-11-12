@@ -8,7 +8,7 @@ public abstract class AbstractPageObject{
 	public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
     private static final String MAIN_SITE_LOADER = "//*[@class='main-site-loader']";
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
-    private static final int TIMEOUT =              30;
+    private static final int TIMEOUT =              60;
 
 	public AbstractPageObject(String mainWindowHandle){
 		WebDriverUtils.switchToOtherWindow(mainWindowHandle);

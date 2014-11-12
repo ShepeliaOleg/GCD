@@ -47,7 +47,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
         setAddress(userData.getFullAddress());
         setCity(userData.getCity());
         setPostCode(userData.getPostCode());
-        setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
+//        setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
         setMobile(userData.getMobileAreaCode().concat(userData.getMobile()));
         setEmail(userData.getEmail());
     }
@@ -70,7 +70,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
 	}
 
     private void setCountry(String country){
-        WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_COUNTRY_XP, country);
     }
 
     private void setAddress(String address){
