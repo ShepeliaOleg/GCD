@@ -20,13 +20,12 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String BUTTON_ADD_CARD_XP = BUTTON_XP+"[@data-url='/add-card']";
     protected static final String FIELD_AMOUNT_XP = "//*[@name='amount']";
     protected static final String FIELD_PROMO_CODE_XP = "//*[@name='promoCode']";
-    protected static final String FIELD_ACCOUNT_XP = "//input[@name='accountId']";
-    protected static final String DROPDOWN_ACCOUNT_XP = "//select[@name='accountId']";
+    protected static final String FIELD_ACCOUNT_XP = "//*[@name='accountId']";
     protected static final String FIELD_CVV_XP = "//*[@name='cvv2']";
     private static final String ADD = "add";
     protected static final String FIELD_ACCOUNT_ADD_XP = "//*[@name='"+ADD+"']";
-    protected static final String FIELD_PASSWORD_CODE_XP = "//*[@name='accountPwd']";
-    private static final String[] FIELDS = {FIELD_ACCOUNT_XP, DROPDOWN_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_CODE_XP};
+    protected static final String FIELD_PASSWORD_XP = "//*[@name='accountPwd']";
+    private static final String[] FIELDS = {FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_XP};
 
     public CashierPage(){
         super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
@@ -75,7 +74,7 @@ public class CashierPage extends AbstractPortalPage {
     public void addAccountByType(PaymentMethod method) {
         String name = method.getName();
         String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
-        if(!WebDriverUtils.isVisible(body)){
+        if(!WebDriverUtils.isVisible(body, 1)){
             WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }
@@ -127,8 +126,7 @@ public class CashierPage extends AbstractPortalPage {
         String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
         String fieldAccount = body+FIELD_ACCOUNT_XP;
-        String dropdownAccount = body+DROPDOWN_ACCOUNT_XP;
-        String fieldPassword = body+FIELD_PASSWORD_CODE_XP;
+        String fieldPassword = body+ FIELD_PASSWORD_XP;
         String fieldCVV = body+FIELD_CVV_XP;
         if(!WebDriverUtils.isVisible(body, 0)){
             WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
@@ -137,9 +135,6 @@ public class CashierPage extends AbstractPortalPage {
         WebDriverUtils.inputTextToField(body+FIELD_AMOUNT_XP, amount);
         if(WebDriverUtils.isVisible(fieldAccount, 0)){
             WebDriverUtils.inputTextToField(fieldAccount, account);
-        }
-        if(WebDriverUtils.isVisible(dropdownAccount, 0)){
-            WebDriverUtils.setDropdownOptionByValue(dropdownAccount, account);
         }
         if(WebDriverUtils.isVisible(fieldCVV, 0)){
             WebDriverUtils.inputTextToField(fieldCVV, "777");

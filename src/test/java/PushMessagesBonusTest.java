@@ -81,8 +81,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         PortalUtils.logout();
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
-        PortalUtils.loginUser(userData);
-        OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        OkBonusPopup okBonusPopup = (OkBonusPopup)PortalUtils.loginUser(userData, Page.okBonus);
         okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
@@ -93,7 +92,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
-        OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        OkBonusPopup okBonusPopup = (OkBonusPopup)PortalUtils.loginUser(userData, Page.okBonus);
         okBonusPopup.clickOffPopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
@@ -105,8 +104,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         PortalUtils.logout();
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
-        PortalUtils.loginUser(userData);
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)PortalUtils.loginUser(userData, Page.acceptDeclineBonus);
         acceptDeclineBonusPopup.clickAccept();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
@@ -118,8 +116,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         PortalUtils.logout();
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
-        PortalUtils.loginUser(userData);
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)PortalUtils.loginUser(userData,Page.acceptDeclineBonus);
         acceptDeclineBonusPopup.clickDecline();
         assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
@@ -131,8 +128,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         PortalUtils.logout();
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
-        PortalUtils.loginUser(userData);
-        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)PortalUtils.loginUser(userData, Page.acceptDeclineBonus);
         acceptDeclineBonusPopup.clickOffPopup();
         new AcceptDeclineBonusPopup();
         assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");

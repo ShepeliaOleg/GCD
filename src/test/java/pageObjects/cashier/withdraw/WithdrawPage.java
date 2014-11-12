@@ -49,7 +49,7 @@ public class WithdrawPage extends CashierPage {
     }
 
     public void assertCardInterface(PaymentMethod paymentMethod){
-        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP});
+        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
     }
 
     public void withdrawExpired(PaymentMethod card, String amount) {
@@ -90,17 +90,13 @@ public class WithdrawPage extends CashierPage {
     /*MONEYBOOKERS*/
 
     public void assertMoneyBookersInterface() {
-        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{DROPDOWN_ACCOUNT_XP, FIELD_AMOUNT_XP});
+        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP});
     }
 
     /*NETELLER*/
 
-    public void assertNetellerInterfaceNew() {
+    public void assertNetellerInterface() {
         assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
-    }
-
-    public void assertNetellerInterfaceExisting() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, DROPDOWN_ACCOUNT_XP});
     }
 
     public void withdrawNetellerInvalidAccount(String amount) {
