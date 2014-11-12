@@ -152,7 +152,6 @@ public class UserData{
     public UserData getCardUserData() {
         UserData userData = getRegisteredUserData();
         userData.setUsername("greesnm");
-        userData.setPassword("123asdQ");
         return userData;
     }
 

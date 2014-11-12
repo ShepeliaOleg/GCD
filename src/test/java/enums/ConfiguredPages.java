@@ -72,7 +72,7 @@ public enum ConfiguredPages{
     registerNoClientType("register_no_client_type"),
     referAFriend("refer_a_friend"),
     responsibleGaming("deposit-limits"),
-    selfExclusion("responsible_gaming"),
+    selfExclusion("self_exclude"),
     webContentGame("web_content_game_launch"),
     withdraw("withdraw");
 

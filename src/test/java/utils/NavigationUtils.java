@@ -36,6 +36,7 @@ import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
+import pageObjects.responsibleGaming.SelfExcludePage;
 import pageObjects.webcontent.WebContentPage;
 import springConstructors.AffiliateData;
 import springConstructors.UserData;
@@ -134,8 +135,8 @@ public class NavigationUtils{
             case registerClientTypeCreferrer:
             case register:                                      return new RegistrationPage();
             case referAFriend:                                  return new ReferAFriendPage();
-            case responsibleGaming:
-            case selfExclusion:                                 return new ResponsibleGamingPage();
+            case responsibleGaming:                             return new ResponsibleGamingPage();
+            case selfExclusion:                                 return new SelfExcludePage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
             case withdraw:                                      return new WithdrawPage();
