@@ -1,9 +1,9 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class GameLaunchPage extends AbstractPage {
+public class GameLaunchPage extends AbstractPortalPage {
 
     private static final String ROOT_XP =                   "//*[contains(@class,'gameFrame') or contains(@class,'game-iframe')]";
     private static final String GAME_MODE_XP=               "//*[@class='gameMode']";

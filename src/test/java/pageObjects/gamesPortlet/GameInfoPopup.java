@@ -1,13 +1,9 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 7/22/13
- */
-public class GameInfoPopup extends AbstractPopup{
+public class GameInfoPopup extends AbstractPortalPopup{
 	private static final String LABEL_TITLE_XP="//*[@class = 'title']";
 	private String gameID;
 

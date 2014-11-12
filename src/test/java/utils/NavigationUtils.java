@@ -4,7 +4,7 @@ import enums.*;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
-import changeMyDetails.ChangeMyDetailsPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPage;
 import pageObjects.banner.BannerPage;
@@ -17,9 +17,7 @@ import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.core.AbstractPage;
-import pageObjects.core.AbstractPageObject;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.*;
 import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
@@ -131,7 +129,7 @@ public class NavigationUtils{
             case permissions_page_guest:
             case permissions_page_player:
             case permissions_page_player_guest:
-            case permissions_portlet:                           return new AbstractPage();
+            case permissions_portlet:                           return new AbstractPortalPage();
             case registerNoClientType:
             case registerClientTypeCreferrer:
             case register:                                      return new RegistrationPage();
@@ -152,17 +150,17 @@ public class NavigationUtils{
         boolean reload = false;
 //        LogUtils.setTimestamp();
         WebDriverUtils.navigateToInternalURL(suffix);
-        AbstractPage abstractPage = new AbstractPage();
+        AbstractPortalPage abstractPortalPage = new AbstractPortalPage();
         switch (condition) {
             case guest:
-                if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)){
+                if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)){
                     checkPopups(Page.homePage);
                 }
                 if(PortalUtils.isLoggedIn()) {
                     PortalUtils.logout();
                     reload = true;
-                }else if(abstractPage.isAdminLoggedIn()) {
-                    abstractPage.logoutAdmin();
+                }else if(abstractPortalPage.isAdminLoggedIn()) {
+                    abstractPortalPage.logoutAdmin();
                     reload = true;
                 }
                 break;
@@ -170,27 +168,27 @@ public class NavigationUtils{
                 if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 3)) {
                     new LoginPopup().login(userData);
                 }else{
-                    if(WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)) {
+                    if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
                         checkPopups(Page.homePage);
                     }
-                    if(abstractPage.isAdminLoggedIn()) {
-                        abstractPage.logoutAdmin();
-                        abstractPage.login(userData);
+                    if(abstractPortalPage.isAdminLoggedIn()) {
+                        abstractPortalPage.logoutAdmin();
+                        abstractPortalPage.login(userData);
                         reload = true;
                     }else if(PortalUtils.isLoggedIn()) {
-                        if(!abstractPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
+                        if(!abstractPortalPage.loggedInHeader().getUsername().equalsIgnoreCase(userData.getUsername())){
                             PortalUtils.logout();
-                            abstractPage.login(userData);
+                            abstractPortalPage.login(userData);
                             reload = true;
                         }
                     }else {
-                        abstractPage.login(userData);
+                        abstractPortalPage.login(userData);
                         reload = true;
                     }
                 }
                 break;
             case admin:
-                if (!abstractPage.isAdminLoggedIn()) {
+                if (!abstractPortalPage.isAdminLoggedIn()) {
                     if (PortalUtils.isLoggedIn()) {
                         PortalUtils.logout();
                     }
@@ -199,8 +197,8 @@ public class NavigationUtils{
                 }
                 break;
             case any:
-                if (abstractPage.isAdminLoggedIn()) {
-                    abstractPage.logoutAdmin();
+                if (abstractPortalPage.isAdminLoggedIn()) {
+                    abstractPortalPage.logoutAdmin();
                 }
                 break;
         }
@@ -247,13 +245,13 @@ public class NavigationUtils{
     }
 
     private static LoginStatus getStatus() {
-        if (WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 1)) {
+        if (WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 1)) {
             if (WebDriverUtils.isVisible(LoginPopup.BUTTON_LOGIN_XP, 0)) {
                 return LoginStatus.loginPopup;
             } else {
                 return LoginStatus.popup;
             }
-        } else if (PortalUtils.isLoggedIn() && !WebDriverUtils.isVisible(AbstractPopup.ROOT_XP, 0)) {
+        } else if (PortalUtils.isLoggedIn() && !WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
             return LoginStatus.loggedIn;
         } else {
             return LoginStatus.wait;
@@ -261,7 +259,7 @@ public class NavigationUtils{
     }
 
     public static void registrationError() {
-        String portletError = AbstractPage.PORTLET_ERROR_XP;
+        String portletError = AbstractPortalPage.PORTLET_ERROR_XP;
         if (WebDriverUtils.isVisible(portletError, 0)) {
             String portletErrorText = WebDriverUtils.getElementText(portletError);
             if (portletErrorText.equals("Server system error")) {
@@ -299,7 +297,7 @@ public class NavigationUtils{
     }
 
     private static AbstractPageObject processGenericPopup() {
-        new AbstractPopup().closePopup();
+        new AbstractPortalPopup().closePopup();
         return null;
     }
 
@@ -397,7 +395,7 @@ public class NavigationUtils{
 
     public static void assertGameLaunch(String gameId, Integer realMode) {
         if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
-            new GameLaunchPopup(new AbstractPage().getMainWindowHandle(), gameId).assertGameLaunchAndClose();
+            new GameLaunchPopup(new AbstractPortalPage().getMainWindowHandle(), gameId).assertGameLaunchAndClose();
         } else {
             GameLaunchPage gameLaunchPage = new GameLaunchPage(gameId, realMode);
             AbstractTest.assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game '" + gameId + "' launched.");

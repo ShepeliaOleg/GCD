@@ -1,8 +1,8 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 
-public class GameIncorrectId extends AbstractPage {
+public class GameIncorrectId extends AbstractPortalPage {
 
     private static final String ROOT_XP =           "//*[@id='pnlError']";
     private static final String LABEL_XP=           "//*[@class='cp-lblError']";

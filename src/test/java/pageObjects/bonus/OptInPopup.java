@@ -1,14 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/7/14
- */
-
-public class OptInPopup extends AbstractPopup{
+public class OptInPopup extends AbstractPortalPopup{
 
 	private static final String BUTTON_OPT_IN = "//a[@data-action='OPTIN']";
 

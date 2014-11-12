@@ -2,14 +2,12 @@ import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
-import pageObjects.gamesPortlet.GameIncorrectId;
-import pageObjects.gamesPortlet.GameLaunchPage;
-import pageObjects.gamesPortlet.GameLaunchPopup;
-import pageObjects.gamesPortlet.GamesPortletPage;
+import pageObjects.gamesPortlet.*;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class GamesPortletTest extends AbstractTest {
 
@@ -923,23 +921,23 @@ public class GamesPortletTest extends AbstractTest {
 //        TypeUtils.assertTrueWithLogs(correctGamePopupUrl, "Game url is valid");
 //	}
 //
-//    /*16. Use Favorites*/
-//    /*16.1. Player adds games to favorites*/
-//    /*16.2. Player removes games from favorites*/
-//	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
-//	@Test(groups = {"regression"})
-//	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
-//		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleOne,defaultUserData.getRegisteredUserData());
-//		final String gameID = gamesPortletPage.getRandomGameName();
-//		GameElement gameElement = new GameElement(gameID);
-//		gameElement.clickFavourite();
-//        TypeUtils.assertTrueWithLogs(gameElement.isFavouriteActive(),"Is favorite");
-//        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
-//		gameElement = new GameElement(gameID);
-//		gameElement.clickFavouriteActive();
-//		gamesPortletPage = new GamesPortletPage();
-//        TypeUtils.assertFalseWithLogs(gamesPortletPage.isGamePresent(gameID),"is still favorite");
-//	}
+    /*16. Use Favorites*/
+    /*16.1. Player adds games to favorites*/
+    /*16.2. Player removes games from favorites*/
+	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
+	@Test(groups = {"regression"})
+	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
+		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleOne, DataContainer.getUserData().getRegisteredUserData());
+		final String gameID = gamesPortletPage.getRandomGameName();
+		GameElement gameElement = new GameElement(gameID);
+		gameElement.clickFavourite();
+        assertTrue(gameElement.isFavouriteActive(), "Is favorite");
+        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
+		gameElement = new GameElement(gameID);
+		gameElement.clickFavouriteActive();
+		gamesPortletPage = new GamesPortletPage();
+        assertFalse(gamesPortletPage.isGamePresent(gameID), "is still favorite");
+	}
 //
 //	/*22. Switching between Item and gamesList view*/
 //	@Test(groups = {"regression"})

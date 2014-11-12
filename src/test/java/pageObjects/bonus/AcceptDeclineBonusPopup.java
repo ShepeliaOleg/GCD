@@ -1,13 +1,8 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-/**
- * User: sergiich
- * Date: 2/6/14
- */
-
-public class AcceptDeclineBonusPopup extends AbstractPopup{
+public class AcceptDeclineBonusPopup extends AbstractPortalPopup {
 
 	public static final String BONUS_TITLE_XP=  TITLE_XP + "[contains(text(), 'Congratulations')]";
 

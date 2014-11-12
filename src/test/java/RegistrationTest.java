@@ -1,7 +1,7 @@
 import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.registration.*;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
@@ -90,7 +90,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getFrozenUserData();
         PortalUtils.registerUser(userData, Page.registrationPage);
         new FrozenNotificationPopup().clickAccept();
-        new AbstractPage();
+        new AbstractPortalPage();
         assertEquals(DataContainer.getDriverData().getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Player redirected to root");
     }
 
@@ -449,24 +449,24 @@ public class RegistrationTest extends AbstractTest{
 
     /*B-11951*/
     /*1*/
-    @Test(groups = {"registration", "regression", "desktop"})
+    @Test(groups = {"registration", "regression", "admin"})
     public void sendDeviceIdToIMSOnRegistration(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.registerUser(userData, false);
+        registrationPage.registerUser(userData);
         String deviceIdExpected = TypeUtils.generateDeviceId(userData.getUsername()) + "WEB";
-        assertEquals(deviceIdExpected, WebDriverUtils.getLocalStorageItem("serial"), "Device Id value in Local Storage.");
         String deviceIdOnIMS = IMSUtils.navigateToPlayedDetails(userData.getUsername()).getDeviceIdRegistration();
         assertEquals(deviceIdExpected, deviceIdOnIMS, "Device Id value in IMS.");
     }
+
     /*2*/
-    @Test(groups = {"registration", "regression", "desktop"})
+    @Test(groups = {"registration", "regression", "admin"})
     public void unableToRegisterFromSameDevice(){
-        String existingInIMSDeviceIdValue = "CTP36#0000whr3dx+B+WEB";
+        PortalUtils.registerUser();
+        PortalUtils.logout();
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        WebDriverUtils.setLocalStorageItem("serial", existingInIMSDeviceIdValue);
-        registrationPage.registerUser(userData, false);
+        registrationPage.registerUser(userData, Page.registrationPage);
         assertEquals("Real money casino account already exists with this serial and signup remote ip combination.", registrationPage.getPortletErrorMessage(), "Error message text on try to register new player from same device." );
     }
 

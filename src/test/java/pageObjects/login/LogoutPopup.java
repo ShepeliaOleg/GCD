@@ -1,10 +1,10 @@
 package pageObjects.login;
 
-import pageObjects.core.AbstractPage;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-public class LogoutPopup extends AbstractPopup {
+public class LogoutPopup extends AbstractPortalPopup {
 
     public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'fn-decline')]";
 
@@ -17,8 +17,8 @@ public class LogoutPopup extends AbstractPopup {
         return new SignedOutPopup();
     }
 
-    public AbstractPage close(){
+    public AbstractPortalPage close(){
         closePopup();
-        return new AbstractPage();
+        return new AbstractPortalPage();
     }
 }

@@ -21,8 +21,8 @@ import java.net.URL;
 
 public class WebDriverFactory{
 
-	private static WebDriver storedWebDriver;
-    private static WebDriver webDriver;
+	private static WebDriver portalDriver;
+    private static WebDriver serverDriver;
     private static WebDriver logDriver;
     private static String browser;
     private static String os;
@@ -44,7 +44,7 @@ public class WebDriverFactory{
 //		}catch(Exception e){
 //			e.printStackTrace();
 //		}
-		webDriver = initializeWebDriver();
+		portalDriver = initializeWebDriver();
 	}
 
 	private static WebDriver initializeWebDriver(){
@@ -79,18 +79,19 @@ public class WebDriverFactory{
 
 	public static void shutDown(){
 		try{
-            if(webDriver!=null){
-                webDriver.quit();
-            }
+            quitWebDriver(portalDriver);
+            quitWebDriver(serverDriver);
+            quitWebDriver(logDriver);
         }catch (Exception e){
             e.printStackTrace();
         }
-//        try{
-//            logDriver.quit();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
 	}
+
+    private static void quitWebDriver(WebDriver webdriver) {
+        if(webdriver!=null){
+            webdriver.quit();
+        }
+    }
 
     public static WebDriver getDesktopDriver(){
         WebDriver driver;
@@ -117,19 +118,37 @@ public class WebDriverFactory{
         return getRemoteDriver(browser);
     }
 
-	public static void switchToAdditionalWebDriver(){
-		storedWebDriver = webDriver;
-		try{
-			webDriver = getRemoteDriver("firefox");
-		}catch(Exception e){
-			throw new RuntimeException("Starting webdriver failed \n" + e);
-		}
-	}
+    public static WebDriver getServerDriver() {
+        return serverDriver;
+    }
 
-	public static void switchToMainWebDriver(){
-		webDriver.quit();
-		webDriver = storedWebDriver;
-	}
+    public static void setServerDriver(WebDriver serverDriver) {
+        WebDriverFactory.serverDriver = serverDriver;
+    }
+
+    public static void initImsDriver() {
+        if (getServerDriver() == null) {
+            try{
+                setServerDriver(getRemoteDriver("firefox"));
+            }catch(Exception e){
+                throw new RuntimeException("Starting webdriver failed \n" + e);
+            }
+        }
+    }
+
+//    public static void switchToAdditionalWebDriver(){
+//		storedWebDriver = webDriver;
+//		try{
+//			webDriver = getRemoteDriver("firefox");
+//		}catch(Exception e){
+//			throw new RuntimeException("Starting webdriver failed \n" + e);
+//		}
+//	}
+//
+//	public static void switchToMainWebDriver(){
+//		webDriver.quit();
+//		webDriver = storedWebDriver;
+//	}
 
     private static WebDriver createRemoteDriver(String browser){
         Capabilities capabilities;
@@ -208,8 +227,8 @@ public class WebDriverFactory{
         return new ChromeDriver(capabilities);
     }
 
-    public static WebDriver getWebDriver() {
-        return webDriver;
+    public static WebDriver getPortalDriver() {
+        return portalDriver;
     }
 
     public static WebDriver getLogDriver() {

@@ -1,14 +1,10 @@
 package pageObjects.account;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 5/30/13
- */
 
-public class BalancePage extends AbstractPage{
+public class BalancePage extends AbstractPortalPage {
 	public static final String BALANCE_ROOT_XP="//*[contains(@id, 'portlet_56_INSTANCE')]";
 	private static final String BUTTON_DEPOSIT_XP="//p[contains(@class,'balance-btn')]/a";
 	private static final String LABEL_MAIN_BALANCE_VALUE_XP = "//tr[1]/td[@class]/p";

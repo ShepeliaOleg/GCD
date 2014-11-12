@@ -1,8 +1,8 @@
 package pageObjects.forgotPassword;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 
-public class ForgotPasswordPage extends AbstractPage {
+public class ForgotPasswordPage extends AbstractPortalPage {
     public ForgotPasswordPopup forgotPasswordPopup;
 
     public ForgotPasswordPage() {

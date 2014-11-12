@@ -1,9 +1,9 @@
 package pageObjects.bingoSchedule;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class BingoSchedulePage extends AbstractPage{
+public class BingoSchedulePage extends AbstractPortalPage{
 	private static final String ROOT_XP =                "//div[contains(@id, 'bingoscheduleportlet')]";
     private static final String BUTTON_SEE_ALL_GAMES_XP =ROOT_XP + "//div/a[contains(@class,'btn')]/span";
     private static final String HEADER_XP =              ROOT_XP + "//div[@class='bingo-header']";

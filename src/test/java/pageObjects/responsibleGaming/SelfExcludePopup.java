@@ -1,14 +1,9 @@
 package pageObjects.responsibleGaming;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 6/13/13
- */
-
-public class SelfExcludePopup extends AbstractPopup{
+public class SelfExcludePopup extends AbstractPortalPopup{
 
 	private static final String BUTTON_OK_XP="//*[@id='selfExclusionViewModel']//button[@type='submit']";
 	private static final String INPUT_NAME_XP="//*[@id='selfExclusionViewModel']//*[contains(@id,'name')]";

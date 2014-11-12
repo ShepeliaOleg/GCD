@@ -8,7 +8,7 @@ import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.MoneyBookersDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
@@ -95,7 +95,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         UserData userData = moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.cancelWithdraw(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
+        assertEquals(userData.getCurrencySign()+" "+AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

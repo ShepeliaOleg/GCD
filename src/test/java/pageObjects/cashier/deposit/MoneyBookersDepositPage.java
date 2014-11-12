@@ -3,11 +3,11 @@ package pageObjects.cashier.deposit;
 import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class MoneyBookersDepositPage extends AbstractPage{
+public class MoneyBookersDepositPage extends AbstractPortalPage {
 
     private static final String ROOT_XP = "//*[contains(text(), 'Welcome back to Skrill')]";
     private static final String LINK_CANCEL_XP = "//*[@class='button_secondary']";

@@ -1,16 +1,11 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPageObject;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
-public class SendMessagePopup extends AbstractPopup{
+public class SendMessagePopup extends AbstractPortalPopup{
 
 	private static final String FIELD_MESSAGE_XP=		"//textarea[@id='mailMessage']";
 	private static final String LABEL_ERROR_MESSAGE_XP=	"//div[@id='sendMessageError']";
@@ -31,7 +26,7 @@ public class SendMessagePopup extends AbstractPopup{
 		}
 	}
 
-	public AbstractPage clickCloseButton(boolean isSendMessagePopupOpenedFromInbox){
+	public AbstractPortalPage clickCloseButton(boolean isSendMessagePopupOpenedFromInbox){
 		WebDriverUtils.click(BUTTON_CLOSE_XP);
 		if(isSendMessagePopupOpenedFromInbox){
 			return new InboxPage();

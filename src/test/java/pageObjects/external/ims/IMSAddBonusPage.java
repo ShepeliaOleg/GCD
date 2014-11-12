@@ -1,12 +1,13 @@
 package pageObjects.external.ims;
 
 import enums.Page;
-import pageObjects.core.AbstractIframe;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerIframe;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
-public class IMSAddBonusPage extends AbstractPage{
+public class IMSAddBonusPage extends AbstractServerPage {
 	private static final String ADD_BONUS_IFRAME_XP="//*[@id='main-content']";
     private static final String ADD_BONUS_IFRAME_ID="main-content";
 
@@ -16,13 +17,13 @@ public class IMSAddBonusPage extends AbstractPage{
 
 	public IMSPlayerDetailsPage addBonus(Page pushMessages, String amount){
         new IMSAddBonusIframe(ADD_BONUS_IFRAME_ID).sendBonus(pushMessages, amount);
-		WebDriverUtils.acceptJavaScriptAlert();
+		WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
         WebDriverUtils.waitFor();
-        WebDriverUtils.acceptJavaScriptAlert();
+        WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
         return new IMSPlayerDetailsPage();
 	}
 
-    public class IMSAddBonusIframe extends AbstractIframe {
+    public class IMSAddBonusIframe extends AbstractServerIframe {
         private static final String DROPDOWN_BONUS_TEMPLATE_XP = "//*[@id='bonus_template_select_1']";
         private static final String FIELD_BONUS_AMOUNT_XP = "//*[@id='amount']";
         private static final String BUTTON_ADD_BONUS_XP = "//*[@id='submit']";
@@ -36,8 +37,8 @@ public class IMSAddBonusPage extends AbstractPage{
 
         public void sendBonus(Page pushMessages, String amount) {
             selectBonusType(pushMessages);
-            WebDriverUtils.clearAndInputTextToField(FIELD_BONUS_AMOUNT_XP, amount);
-            WebDriverUtils.click(BUTTON_ADD_BONUS_XP);
+            WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_BONUS_AMOUNT_XP, amount);
+            WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_ADD_BONUS_XP);
         }
 
         private void selectBonusType(Page pushMessages) {
@@ -51,7 +52,7 @@ public class IMSAddBonusPage extends AbstractPage{
                     break;
                 default : AbstractTest.failTest("Unknown bonus type requested");
             }
-            WebDriverUtils.setDropdownOptionByText(DROPDOWN_BONUS_TEMPLATE_XP, bonus);
+            WebDriverUtils.setDropdownOptionByText(WebDriverFactory.getServerDriver(), DROPDOWN_BONUS_TEMPLATE_XP, bonus);
         }
     }
 }

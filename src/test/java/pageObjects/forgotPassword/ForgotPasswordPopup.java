@@ -1,15 +1,17 @@
 package pageObjects.forgotPassword;
 
 import enums.Licensee;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractNotification;
 import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractPortalPopup;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
 import java.util.List;
 
-public class ForgotPasswordPopup extends AbstractPopup{
+public class ForgotPasswordPopup extends AbstractPortalPopup{
 
     public final static String ROOT_XP =            				"//*[contains(@class, 'fn-forgotpassword-form')]";
     private final static String FIELD_USERNAME_XP =             	ROOT_XP + "//*[@name='username']";
@@ -62,8 +64,10 @@ public class ForgotPasswordPopup extends AbstractPopup{
 
     public void submitValidData(){
         clickSubmit();
-        ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = new ForgotPasswordConfirmationPopup();
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
+            new ForgotPasswordConfirmationNotification();
+        } else {
+            ForgotPasswordConfirmationPopup forgotPasswordConfirmationPopup = new ForgotPasswordConfirmationPopup();
             forgotPasswordConfirmationPopup.closePopup();
         }
     }
@@ -79,10 +83,10 @@ public class ForgotPasswordPopup extends AbstractPopup{
         return new ForgotPasswordPopup();
     }
 
-    public AbstractPage fillDataAndClosePopup(UserData userData){
+    public AbstractPortalPage fillDataAndClosePopup(UserData userData){
         fillUserData(userData);
         closePopup();
-        return new AbstractPage();
+        return new AbstractPortalPage();
     }
 
     public List<String> getBirthYearList() {

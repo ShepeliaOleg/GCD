@@ -1,14 +1,9 @@
 package pageObjects.liveCasino;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 6/26/13
- */
-
-public class DealerImagePopup extends AbstractPopup{
+public class DealerImagePopup extends AbstractPortalPopup {
 
 	private static final String IMAGE_XP=			ROOT_XP + "//img";
 	private static final String FIELD_DEALER_NAME=	ROOT_XP + "//h2[@class='title']";

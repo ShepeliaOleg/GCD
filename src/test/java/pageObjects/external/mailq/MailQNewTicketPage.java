@@ -1,15 +1,11 @@
 package pageObjects.external.mailq;
 
 import org.openqa.selenium.Keys;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 8/2/13
- */
-
-public class MailQNewTicketPage extends AbstractPage{
+public class MailQNewTicketPage extends AbstractServerPage{
 
 	private static final String ROOT_XP=				"//*[@id='newTicket']";
 	private static final String BUTTON_CREATE_TICKET_XP="//*[@id='create']";
@@ -27,41 +23,41 @@ public class MailQNewTicketPage extends AbstractPage{
 	}
 
 	private void setFieldMessage(String text){
-		WebDriverUtils.clearAndInputTextToField(FIELD_MESSAGE_XP, text);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_MESSAGE_XP, text);
 	}
 
 	private void setFieldSubject(String subject){
-		WebDriverUtils.clearAndInputTextToField(FIELD_SUBJECT_XP, subject);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_SUBJECT_XP, subject);
 	}
 
 	private MailQNewTicketPage setFieldEmail(String email){
-		WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, email);
-		WebDriverUtils.pressKey(Keys.ENTER);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_EMAIL_XP, email);
+		WebDriverUtils.pressKey(WebDriverFactory.getServerDriver(), Keys.ENTER);
 		return new MailQNewTicketPage();
 	}
 
 	public void setEmailCheckbox(boolean state){
-		WebDriverUtils.setCheckBoxState(CHECKBOX_EMAIL_XP, state);
+		WebDriverUtils.setCheckBoxState(WebDriverFactory.getServerDriver(), CHECKBOX_EMAIL_XP, state);
 	}
 
 	public void setMessageCheckbox(boolean state){
-		WebDriverUtils.setCheckBoxState(CHECKBOX_MESSAGE_XP, state);
+		WebDriverUtils.setCheckBoxState(WebDriverFactory.getServerDriver(), CHECKBOX_MESSAGE_XP, state);
 	}
 
 	public void setCategoryDropdown(){
-		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_CATEGORY_XP, "1");
+		WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_CATEGORY_XP, "1");
 	}
 
 	public void setGatewayDropdown(){
-		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_GATEWAY_XP, "1");
+		WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_GATEWAY_XP, "1");
 	}
 
 	public void setSubjectDropdown(){
-		WebDriverUtils.setDropdownOptionByValue(DROPDOWN_SUBJECT_XP, "2");
+		WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_SUBJECT_XP, "2");
 	}
 
 	public MailQSentTicketPage clickCreateButton(){
-		WebDriverUtils.click(BUTTON_CREATE_TICKET_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_CREATE_TICKET_XP);
 		return new MailQSentTicketPage();
 	}
 

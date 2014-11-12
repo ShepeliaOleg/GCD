@@ -1,12 +1,9 @@
 package pageObjects.generalPopups;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 5/20/14.
- */
-public class PageRefreshPopup extends AbstractPopup{
+public class PageRefreshPopup extends AbstractPortalPopup {
 
     private final static String BUTTON_CLOSE=ROOT_XP+"//*[@data-action='close']";
     private final static String LABEL_TEXT = ROOT_XP+"//*[@class='message-area']";
@@ -17,6 +14,6 @@ public class PageRefreshPopup extends AbstractPopup{
 
     public void clickClose(){
         WebDriverUtils.click(BUTTON_CLOSE);
-        WebDriverUtils.waitForElementToDisappear(AbstractPopup.ROOT_XP);
+        WebDriverUtils.waitForElementToDisappear(AbstractPortalPopup.ROOT_XP);
     }
 }

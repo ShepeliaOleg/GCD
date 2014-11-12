@@ -2,7 +2,7 @@ import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.pageInPopup.PageInPopupPage;
 import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.registration.AdultContentPopup;
@@ -77,7 +77,7 @@ public class GeneralTest extends AbstractTest {
 //
 //    }
 
-    private void assertPageInPopup(ConfiguredPages popupPage, AbstractPopup popup, String popupWidth, ConfiguredPages backgroundPage) {
+    private void assertPageInPopup(ConfiguredPages popupPage, AbstractPortalPopup popup, String popupWidth, ConfiguredPages backgroundPage) {
         assertTrue(popup.getStyle().contains("min-width: " + popupWidth + ";"), "Popup displayed with width " + popupWidth);
         NavigationUtils.getConfiguredPageObject(backgroundPage);
         assertUrl(popupPage.toString(), "Page in popup url.");

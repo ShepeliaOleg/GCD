@@ -31,7 +31,7 @@ public class MailQ {
 	}
 
 	public void sendMessageAndLogout(String email, String subject, String text, boolean sendEmail, boolean sendMessage){
-		sendMessage(email, subject, text, sendEmail, sendMessage).logout();
+		sendMessage(email, subject, text, sendEmail, sendMessage).logoutFromMailQ();
 	}
 
 	public MailQHomePage sendReply(String subject, String text, boolean sendEmail, boolean sendMessage){
@@ -40,7 +40,7 @@ public class MailQ {
 	}
 
 	public void sendReplyAndLogout(String subject, String text, boolean sendEmail, boolean sendMessage){
-		sendReply(subject, text, sendEmail, sendMessage).logout();
+		sendReply(subject, text, sendEmail, sendMessage).logoutFromMailQ();
 	}
 
 	public boolean checkIsMessageAppearedAndLogout(String emailText){

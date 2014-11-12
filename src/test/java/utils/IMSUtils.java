@@ -19,11 +19,12 @@ public class IMSUtils {
     private static final int RETRIES = 10;
 
     private static IMSHomePage navigateToIMS(){
+        WebDriverFactory.initImsDriver();
         IMSHomePage imsHomePage;
         IMS ims = DataContainer.getIms();
         try{
-            WebDriverUtils.navigateToURL(ims.getImsURL());
-            if(WebDriverUtils.isVisible(IMSLoginPage.ROOT_XP, 5)){
+            WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), ims.getImsURL());
+            if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), IMSLoginPage.ROOT_XP, 5)){
                 imsHomePage=new IMSLoginPage().logInToIMS(ims.getImsLogin(), ims.getImsPass());
             }else{
                 imsHomePage=new IMSHomePage();
@@ -105,7 +106,6 @@ public class IMSUtils {
     }
 
     public static void sendPushMessage(UserData userData, String amount, Page...pushMessages){
-        WebDriverFactory.switchToAdditionalWebDriver();
         try{
             IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(userData.getUsername());
             for(Page message:pushMessages) {
@@ -125,8 +125,6 @@ public class IMSUtils {
             }
         }catch(RuntimeException e) {
             AbstractTest.skipTest("IMS issue " + e.getMessage());
-        }finally {
-            WebDriverUtils.closeAdditionalSession();
         }
     }
 

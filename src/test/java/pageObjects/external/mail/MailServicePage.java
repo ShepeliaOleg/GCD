@@ -1,8 +1,8 @@
 package pageObjects.external.mail;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 
-public abstract class MailServicePage extends AbstractPage{
+public abstract class MailServicePage extends AbstractServerPage{
 
     //constructor
     public MailServicePage(){

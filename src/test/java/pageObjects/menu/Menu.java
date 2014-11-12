@@ -2,9 +2,10 @@ package pageObjects.menu;
 
 import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.HomePage;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 import java.util.Collection;
 
@@ -20,14 +21,14 @@ public class Menu extends AbstractPageObject {
     private static final String CONTACT_US_XP =	            ROOT_XP + "//*[contains(@class,'micon-contact-us')]";
 
 	public Menu(){
-		super(new String[]{ROOT_XP});
+		super(WebDriverFactory.getPortalDriver(), new String[]{ROOT_XP});
 	}
 
 	public Menu(String[] clickableBys){
-		super(ArrayUtils.addAll(clickableBys, new String[]{ROOT_XP}));
+		super(WebDriverFactory.getPortalDriver(), ArrayUtils.addAll(clickableBys, new String[]{ROOT_XP}));
 	}
 
-    public AbstractPage closeMenu() {
+    public AbstractPortalPage closeMenu() {
         WebDriverUtils.click(BUTTON_CLOSE_XP);
         return new HomePage();
     }

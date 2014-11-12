@@ -3,11 +3,11 @@ package pageObjects.cashier.deposit;
 import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class QIWIDepositPage extends AbstractPage{
+public class QIWIDepositPage extends AbstractPortalPage {
 
     private static final String ROOT_XP = "//*[@class='paymentContent']";
     private static final String PHONE_XP = "//*[@id='phone']";

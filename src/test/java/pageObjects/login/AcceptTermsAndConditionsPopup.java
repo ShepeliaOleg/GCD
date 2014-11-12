@@ -1,12 +1,8 @@
 package pageObjects.login;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-/**
- * User: sergiich
- * Date: 8/16/13
- */
-public class AcceptTermsAndConditionsPopup extends AbstractPopup{
+public class AcceptTermsAndConditionsPopup extends AbstractPortalPopup{
 	public static final String TERMS_ROOT_XP=		"//*[contains(@class,'terms-popup')]";
 
 	private static final String CASINO=			"playtech81001";

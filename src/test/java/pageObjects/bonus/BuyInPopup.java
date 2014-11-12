@@ -1,13 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 5/20/14.
- */
-
-public class BuyInPopup extends AbstractPopup{
+public class BuyInPopup extends AbstractPortalPopup{
 
     private static final String BUTTON_BUY_IN = ROOT_XP+"//a[@data-action='BUYIN']";
     private static final String BUTTON_TNC = ROOT_XP+"//a[contains(@class, 'termsAndConditionsLink')]";

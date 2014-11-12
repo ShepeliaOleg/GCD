@@ -1,11 +1,8 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 
-/**
- * Created by sergiich on 5/21/14.
- */
-public class IMSAffiliatePage extends AbstractPage{
+public class IMSAffiliatePage extends AbstractServerPage {
 
     public static final String SEARCH_IFRAME_ID="main-content";
     public static final String SEARCH_IFRAME_XP="//*[@id='main-content']";

@@ -1,9 +1,10 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-public class IMSPlayerSearchPage extends AbstractPage{
+public class IMSPlayerSearchPage extends AbstractServerPage {
 
 	private static final String ROOT_XP=					"//*[@id='search']";
 	private static final String BUTTON_SEARCH_XP=			"//*[@id='search-submit']";
@@ -15,17 +16,17 @@ public class IMSPlayerSearchPage extends AbstractPage{
 	}
 
 	private IMSPlayerDetailsPage clickSearch(){
-		WebDriverUtils.click(BUTTON_SEARCH_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SEARCH_XP);
 		return new IMSPlayerDetailsPage();
 	}
 
 	private IMSAdvancedPlayerSearchPage clickAdvancedSearch(){
-		WebDriverUtils.click(LINK_ADVANCED_SEARCH_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_ADVANCED_SEARCH_XP);
 		return new IMSAdvancedPlayerSearchPage();
 	}
 
 	private void setFieldSearch(String xpath, String playerLogin){
-		WebDriverUtils.clearAndInputTextToField(xpath, playerLogin);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), xpath, playerLogin);
 	}
 
 	public IMSPlayerDetailsPage search(String playerLogin){

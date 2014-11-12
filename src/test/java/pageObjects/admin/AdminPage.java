@@ -1,9 +1,9 @@
 package pageObjects.admin;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class AdminPage extends AbstractPage {
+public class AdminPage extends AbstractPortalPage {
 
     private final static String ROOT_XP = "//*[@class='login-admin-portlet']";
     public final static String DOCKBAR_XP = "//*[@id='dockbar']";
@@ -30,7 +30,7 @@ public class AdminPage extends AbstractPage {
 //        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, getAdminUserData().getAdminUsername(), 100);
     }
 
-    public AbstractPage loginAdmin() {
+    public AbstractPortalPage loginAdmin() {
         while(WebDriverUtils.isVisible(FIELD_USERNAME_XP, 0)) {
             fillUsername();
             fillPassword();
@@ -40,9 +40,9 @@ public class AdminPage extends AbstractPage {
         return waitForAdminLogin();
     }
 
-    public AbstractPage waitForAdminLogin(){
+    public AbstractPortalPage waitForAdminLogin(){
         WebDriverUtils.waitForElement(DOCKBAR_XP);
-        return new AbstractPage();
+        return new AbstractPortalPage();
     }
 
     public static void clickLogout(){

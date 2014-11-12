@@ -1,11 +1,11 @@
 package pageObjects.changePassword;
 
 import enums.Licensee;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
-public class ChangePasswordPopup extends AbstractPopup{
+public class ChangePasswordPopup extends AbstractPortalPopup{
 	private  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
     public static final String ROOT_XP = BUTTON_SUBMIT_XP;
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";

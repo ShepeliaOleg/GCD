@@ -2,8 +2,8 @@ package pageObjects.gamesPortlet;
 
 import enums.GameCategories;
 import enums.SortBy;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
 import utils.RandomUtils;
@@ -13,7 +13,7 @@ import utils.core.AbstractTest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GamesPortletPage extends AbstractPage{
+public class GamesPortletPage extends AbstractPortalPage {
 	//General
 	private static final String TAG_GAME_ID=							"data-key";
 	private static final String TAG_GAME_NAME=							"data-name";

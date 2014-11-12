@@ -1,11 +1,11 @@
 package pageObjects.pageInPopup;
 
 import enums.ConfiguredPages;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.registration.AdultContentPopup;
 import utils.WebDriverUtils;
 
-public class PageInPopupPopup extends AbstractPopup {
+public class PageInPopupPopup extends AbstractPortalPopup {
 
     private static final String LABEL_XP =  ROOT_XP + "//p[contains(text(), 'Popup')]";
     private static final String BUTTON_XP=  ROOT_XP + "//a[contains(@class, 'btn')]";
@@ -14,7 +14,7 @@ public class PageInPopupPopup extends AbstractPopup {
 		super(new String[]{LABEL_XP, BUTTON_XP});
 	}
 
-    public AbstractPopup clickButton() {
+    public AbstractPortalPopup clickButton() {
         WebDriverUtils.click(BUTTON_XP);
         if (WebDriverUtils.getCurrentUrl().endsWith(ConfiguredPages.page_in_popup_b.toString())) {
             return new AdultContentPopup();

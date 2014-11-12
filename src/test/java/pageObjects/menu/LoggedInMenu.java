@@ -1,6 +1,6 @@
 package pageObjects.menu;
 
-import changeMyDetails.ChangeMyDetailsPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.login.LogoutPopup;

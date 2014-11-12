@@ -1,14 +1,9 @@
 package pageObjects.forgotPassword;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 4/19/13
- */
-
-public class ContactUsPopup extends AbstractPopup{
+public class ContactUsPopup extends AbstractPortalPopup{
 	private static final String LABEL_PHONE_XP=	ROOT_XP + "//*[@class='phone']";
 	private static final String LABEL_EMAIL_XP=	ROOT_XP + "//*[@class='email']";
 	private static final String LABEL_CHAT_XP=	ROOT_XP + "//*[@class='chat']";

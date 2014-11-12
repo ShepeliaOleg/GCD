@@ -1,13 +1,13 @@
-package changeMyDetails;
+package pageObjects.changeMyDetails;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.validation.ValidationUtils;
 
-public class ChangeMyDetailsPage extends AbstractPage{
+public class ChangeMyDetailsPage extends AbstractPortalPage {
 
 	public static final String ROOT_XP =		                "//*[contains(@class,'portlet-update-my-details')]";
     private final static String ADDRESS_NAME=			        "address";
@@ -23,7 +23,7 @@ public class ChangeMyDetailsPage extends AbstractPage{
     private final static String FIELD_ADDRESS_XP=  				"//*[@id='"+ADDRESS_NAME+"']";
     private final static String FIELD_POSTCODE_XP = 			"//*[@id='"+ZIP_NAME+"']";
     private final static String FIELD_PHONE_XP = 				"//*[@id='telephone']";
-    private final static String FIELD_MOBILE_XP= 				"//*[@id='cellPhone']";
+    private final static String FIELD_MOBILE_XP= 				"//*[@id='cellphone']";
 	private final static String DROPDOWN_COUNTRY_XP=			"//*[@id='countryCode']";
 	private static final String BUTTON_UPDATE_XP=				ROOT_XP + "//button[@type='submit']";
     private static final String DISABLED_XP =                   "[@disabled='']";
@@ -47,30 +47,30 @@ public class ChangeMyDetailsPage extends AbstractPage{
         setAddress(userData.getFullAddress());
         setCity(userData.getCity());
         setPostCode(userData.getPostCode());
-        setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
+//        setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
         setMobile(userData.getMobileAreaCode().concat(userData.getMobile()));
         setEmail(userData.getEmail());
     }
 
     public void assertUserData(UserData userData) {
-        AbstractTest.assertTrue(nameContains(userData.getTitle()), "Title contains title");
-        AbstractTest.assertTrue(nameContains(userData.getFirstName()), "Title contains firstname");
-        AbstractTest.assertTrue(nameContains(userData.getLastName()), "Title contains lastname");
-        AbstractTest.assertEquals(userData.getCountry(), WebDriverUtils.getDropdownSelectedOptionText(DROPDOWN_COUNTRY_XP), "Country");
+        AbstractTest.assertTrue(nameContains(userData.getTitle()), "Name field contains title");
+        AbstractTest.assertTrue(nameContains(userData.getFirstName()), "Name field contains firstname");
+        AbstractTest.assertTrue(nameContains(userData.getLastName()), "Name field contains lastname");
+        AbstractTest.assertEquals(userData.getCountry(), WebDriverUtils.getDropdownSelectedOptionValue(DROPDOWN_COUNTRY_XP), "Country");
         AbstractTest.assertEquals(userData.getFullAddress(), WebDriverUtils.getInputFieldText(FIELD_ADDRESS_XP), "Address");
         AbstractTest.assertEquals(userData.getCity(), WebDriverUtils.getInputFieldText(FIELD_CITY_XP), "City");
-        AbstractTest.assertEquals(userData.getPostCode(), WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP), "Postcode");
-        AbstractTest.assertEquals(userData.getPhoneAreaCode()+userData.getPhone(),WebDriverUtils.getInputFieldText(FIELD_PHONE_XP),"Country");
-        AbstractTest.assertEquals(userData.getMobileAreaCode()+userData.getMobile(),WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP),"Country");
-        AbstractTest.assertEquals(userData.getEmail(),WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP),"Country");
+        AbstractTest.assertEquals(userData.getPostCode().toUpperCase(), (WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP)), "Postcode");
+//        AbstractTest.assertEquals(userData.getPhoneAreaCode()+userData.getPhone(), WebDriverUtils.getInputFieldText(FIELD_PHONE_XP), "Phone");
+        AbstractTest.assertEquals(userData.getMobileAreaCode()+userData.getMobile(), WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP), "Mobile");
+        AbstractTest.assertEquals(userData.getEmail(), WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP), "Email");
     }
 
 	private boolean nameContains(String title){
-		return WebDriverUtils.getElementText(LABEL_NAME).contains(title);
+        return WebDriverUtils.getInputFieldText(LABEL_NAME).contains(title);
 	}
 
     private void setCountry(String country){
-        WebDriverUtils.setDropdownOptionByText(DROPDOWN_COUNTRY_XP, country);
+        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_COUNTRY_XP, country);
     }
 
     private void setAddress(String address){

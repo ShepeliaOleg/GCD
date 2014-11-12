@@ -1,14 +1,9 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 8/7/13
- */
-
-public class ReceivedInboxMessagePopup extends AbstractPopup{
+public class ReceivedInboxMessagePopup extends AbstractPortalPopup{
 
 	private static final String BUTTON_DELETE_XP=	ROOT_XP + "//a[@data-action = 'deleteMail']";
 	private static final String BUTTON_REPLY_XP=	ROOT_XP + "//a[@data-title = 'Reply']";

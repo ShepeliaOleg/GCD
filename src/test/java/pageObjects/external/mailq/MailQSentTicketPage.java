@@ -1,14 +1,10 @@
 package pageObjects.external.mailq;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 8/7/13
- */
-
-public class MailQSentTicketPage extends AbstractPage{
+public class MailQSentTicketPage extends AbstractServerPage{
 
 	private static final String ROOT_XP=			"//*[@id='ticketLogTitle']";
 	private static final String CHANGE_SUBJECT_XP=	"//input[@value='Reopen']";
@@ -19,7 +15,7 @@ public class MailQSentTicketPage extends AbstractPage{
 	}
 
 	public MailQHomePage clickButtonTickets(){
-		WebDriverUtils.click(BUTTON_TICKETS_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_TICKETS_XP);
 		return new MailQHomePage();
 	}
 

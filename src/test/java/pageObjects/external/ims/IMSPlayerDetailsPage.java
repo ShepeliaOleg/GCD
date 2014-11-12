@@ -1,17 +1,17 @@
 package pageObjects.external.ims;
 
 import enums.Page;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import springConstructors.AffiliateData;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-
+import utils.core.WebDriverFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class IMSPlayerDetailsPage extends AbstractPage{
+public class IMSPlayerDetailsPage extends AbstractServerPage {
 
 	private static final String ROOT_XP=									"//*[@id='playerHeaderZone']";
 	private static final String BLOCK_XP=									"//*[@id='ssec_balsheet']//td[contains(text(), 'Balance sheet')]";
@@ -137,7 +137,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     }
 
     private void checkBanner(String advertiser, String banner, String profile){
-        WebDriverUtils.click("//a[contains(text(), '"+advertiser+"')]");
+        WebDriverUtils.click(WebDriverFactory.getServerDriver(), "//a[contains(text(), '"+advertiser+"')]");
         IMSAffiliateIframe imsAffiliateIframe = new IMSAffiliatePage().navigateToAffiliateIframe();
         AbstractTest.assertEquals(banner, imsAffiliateIframe.getLabelBanner(), "Banner");
         AbstractTest.assertEquals(profile, imsAffiliateIframe.getLabelProfile(), "Profile");
@@ -152,8 +152,8 @@ public class IMSPlayerDetailsPage extends AbstractPage{
     }
 
     private void checkUrl(String url) {
-        if (WebDriverUtils.isElementVisible(REFERRER_XP, 1)) {
-            String imsUrl = WebDriverUtils.getAttribute(REFERRER_XP, "href");
+        if (WebDriverUtils.isElementVisible(WebDriverFactory.getServerDriver(), REFERRER_XP, 1)) {
+            String imsUrl = WebDriverUtils.getAttribute(WebDriverFactory.getServerDriver(), REFERRER_XP, "href");
             AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url");
         } else {
             AbstractTest.addError("Referrer URL is not by xpath: "+REFERRER_XP);
@@ -162,19 +162,19 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 
     private void checkCreferrerCustomField(String name, String value){
         String nameXpath = "*[contains(text(), '"+name+"')]";
-        if (!WebDriverUtils.isVisible("//"+ nameXpath, 0)) {
-            WebDriverUtils.click(LINK_CUSTOM_FIELDS);
-            AbstractTest.assertTrue(WebDriverUtils.isVisible("//" + nameXpath, 1), "Custom field '//" + nameXpath + "' is visible -");
+        if (!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//"+ nameXpath, 0)) {
+            WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_CUSTOM_FIELDS);
+            AbstractTest.assertTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//" + nameXpath, 1), "Custom field '//" + nameXpath + "' is visible -");
         }
-        AbstractTest.assertTrue(WebDriverUtils.isVisible("//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]"), "Parameters in custom fields are present");
+        AbstractTest.assertTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//*[preceding-sibling::"+ nameXpath +" and contains(text(), '"+value+"')]"), "Parameters in custom fields are present");
     }
 
     private void checkNoCreferrerCustomField(String name){
         String nameXpath = "//*[contains(text(), '"+name+"')]";
-        if (!WebDriverUtils.isVisible(nameXpath, 0)){
-            WebDriverUtils.click(LINK_CUSTOM_FIELDS);
+        if (!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), nameXpath, 0)){
+            WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_CUSTOM_FIELDS);
         }
-        AbstractTest.assertFalse(WebDriverUtils.isVisible(nameXpath, 1), "Non-existing custom field was created");
+        AbstractTest.assertFalse(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), nameXpath, 1), "Non-existing custom field was created");
     }
 
     private List<String> parseCreferrer(String creferrerFull) {
@@ -277,7 +277,7 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	}
 
     private String getCountryCode(){
-        return WebDriverUtils.getDropdownSelectedOptionValue(FIELD_COUNTRY);
+        return WebDriverUtils.getDropdownSelectedOptionValue(WebDriverFactory.getServerDriver(), FIELD_COUNTRY);
     }
 
 
@@ -311,16 +311,16 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	}
 
 	public boolean isPlayerOnline(){
-		return WebDriverUtils.isVisible(PLAYER_ONLINE_IMAGE);
+		return WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), PLAYER_ONLINE_IMAGE);
 	}
 
     public String getClientType() {
-        return WebDriverUtils.getElementText(FIELD_CLIENT_TYPE);
+        return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), FIELD_CLIENT_TYPE);
     }
 
 	public boolean getAllChannelsCheckboxState(){
 		boolean result=true;
-		if(!WebDriverUtils.isVisible(CHECKBOX_ALL_CHANNELS)){
+		if(!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), CHECKBOX_ALL_CHANNELS)){
 			clickContactPreferences();
 		}
 		boolean email=getCheckboxState(CHECKBOX_EMAIL);
@@ -335,31 +335,31 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 
     public boolean[] getNotificationCheckboxesState(){
         boolean result[]=new boolean[3];
-        if(!WebDriverUtils.isVisible(CHECKBOX_ALL_CHANNELS)){
+        if(!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), CHECKBOX_ALL_CHANNELS)){
             clickContactPreferences();
         }
         result[0] =getCheckboxState(CHECKBOX_DO_NOT_EMAIL);
-        result[1]=getCheckboxState(CHECKBOX_DO_NOT_SMS);
-        result[2]=getCheckboxState(CHECKBOX_DO_NOT_PHONE);
+        result[1]= getCheckboxState(CHECKBOX_DO_NOT_SMS);
+        result[2]= getCheckboxState(CHECKBOX_DO_NOT_PHONE);
         return result;
     }
 
 	public void sendPushLogout(){
-		WebDriverUtils.click(BUTTON_KILL_PLAYER);
-		WebDriverUtils.acceptJavaScriptAlert();
-		WebDriverUtils.isVisible(LABEL_PLAYER_KILLED);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_KILL_PLAYER);
+		WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
+		WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), LABEL_PLAYER_KILLED);
 	}
 
 	public void changePassword(String password){
 		IMSChangePassPopup imsChangePassPopup = openChangePassPopup();
 		imsChangePassPopup.changePassword(password);
-		imsChangePassPopup.close();
+		imsChangePassPopup.close(WebDriverFactory.getServerDriver());
 	}
 
     public void resetFailedLogins(){
-        WebDriverUtils.click(BUTTON_FAILED_LOGINS);
-        WebDriverUtils.acceptJavaScriptAlert();
-        WebDriverUtils.isVisible(LABEL_LOCK_REMOVED);
+        WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_FAILED_LOGINS);
+        WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
+        WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), LABEL_LOCK_REMOVED);
     }
 
     public void addBonus(Page pushMessages, String amount, int quantity){
@@ -392,41 +392,41 @@ public class IMSPlayerDetailsPage extends AbstractPage{
 	}
 
 	private boolean getCheckboxState(String xpath){
-		return WebDriverUtils.getCheckBoxState(xpath);
+		return WebDriverUtils.getCheckBoxState(WebDriverFactory.getServerDriver(), xpath);
 	}
 
 	private void clickContactPreferences(){
-		WebDriverUtils.click(LINK_CONTACT_PREFERENCES);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_CONTACT_PREFERENCES);
 	}
 
 	private String getTextAndTrim(String xpath){
-		return WebDriverUtils.getElementText(xpath).trim();
+		return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), xpath).trim();
 	}
 
 	private String getInputContent(String xpath){
-		return WebDriverUtils.getInputFieldText(xpath).replaceAll("\\[|\\]|,\\s", "");
+		return WebDriverUtils.getInputFieldText(WebDriverFactory.getServerDriver(), xpath).replaceAll("\\[|\\]|,\\s", "");
 	}
 
 	private String getDropdownValue(String xpath){
-		return WebDriverUtils.getDropdownSelectedOptionText(xpath);
+		return WebDriverUtils.getDropdownSelectedOptionText(WebDriverFactory.getServerDriver(), xpath);
 	}
 
     private IMSChangePassPopup openChangePassPopup(){
-        WebDriverUtils.click(BUTTON_CHANGE_PASSWORD);
+        WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_CHANGE_PASSWORD);
         return new IMSChangePassPopup(getMainWindowHandle());
     }
 
     private IMSAddBonusPage clickAddBonus(){
-        WebDriverUtils.click(BUTTON_ADD_BONUS);
+        WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_ADD_BONUS);
         return new IMSAddBonusPage();
     }
 
     public String getDeviceIdRegistration() {
-        String value = WebDriverUtils.getElementText(WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 1));
+        String value = WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 1));
         return value.substring(0, value.indexOf(" "));
     }
 
     public String getDeviceIdLogin() {
-        return WebDriverUtils.getElementText(WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 3));
+        return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 3));
     }
 }

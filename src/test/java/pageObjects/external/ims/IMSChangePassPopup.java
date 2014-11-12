@@ -1,9 +1,10 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractBrowserWindow;
+import pageObjects.core.AbstractServerBrowserWindow;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-public class IMSChangePassPopup extends AbstractBrowserWindow {
+public class IMSChangePassPopup extends AbstractServerBrowserWindow {
 
 	private static final String BUTTON_CHANGE_PASSWORD=	"//input[@id='changepwd']";
 	private static final String FIELD_CHANGE_PASSWORD=	"//input[@id='password1']";
@@ -14,8 +15,8 @@ public class IMSChangePassPopup extends AbstractBrowserWindow {
 	}
 
 	public void changePassword(String password){
-		WebDriverUtils.inputTextToField(FIELD_CHANGE_PASSWORD, password);
-		WebDriverUtils.click(BUTTON_CHANGE_PASSWORD);
-		WebDriverUtils.waitForElement(LABEL_PASSWORD_CHANGED);
+		WebDriverUtils.inputTextToField(WebDriverFactory.getServerDriver(), FIELD_CHANGE_PASSWORD, password);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_CHANGE_PASSWORD);
+		WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), LABEL_PASSWORD_CHANGED);
 	}
 }

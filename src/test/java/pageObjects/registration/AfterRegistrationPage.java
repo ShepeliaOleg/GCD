@@ -1,8 +1,8 @@
 package pageObjects.registration;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 
-public class AfterRegistrationPage extends AbstractPage {
+public class AfterRegistrationPage extends AbstractPortalPage {
 
     private static final String ROOT_XP = "//*[@class='afterReg']";
 

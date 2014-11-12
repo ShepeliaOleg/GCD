@@ -1,9 +1,10 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-public class IMSLoginDatabasePage extends AbstractPage{
+public class IMSLoginDatabasePage extends AbstractServerPage {
 
     private static final String LABEL_LOGIN_LOGOUT_DATABASE_XP=	"//*[contains(text(), 'Login/Logout Messages List')]";
     public static final String[] MESSAGES = {
@@ -26,23 +27,23 @@ public class IMSLoginDatabasePage extends AbstractPage{
     }
 
 	private IMSWelcomeMessagePage clickMessage(String xpath){
-		WebDriverUtils.click(xpath);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), xpath);
 		return new IMSWelcomeMessagePage();
 	}
 
     private void setup(boolean state){
-        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_CASINO_XP, CASINO);
-        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_CLIENT_TYPE_XP, CLIENT_TYPE);
-        WebDriverUtils.setDropdownOptionByValue(DROPDOWN_CLIENT_PLATFORM_XP, CLIENT_PLATFORM);
-        WebDriverUtils.setCheckBoxState(CHECKBOX_FROZEN_XP, state);
-        WebDriverUtils.click(BUTTON_SEARCH_XP);
-        WebDriverUtils.waitForElementToDisappear(LOADER_POPUP_XP);
+        WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_CASINO_XP, CASINO);
+        WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_CLIENT_TYPE_XP, CLIENT_TYPE);
+        WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_CLIENT_PLATFORM_XP, CLIENT_PLATFORM);
+        WebDriverUtils.setCheckBoxState(WebDriverFactory.getServerDriver(), CHECKBOX_FROZEN_XP, state);
+        WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SEARCH_XP);
+        WebDriverUtils.waitForElementToDisappear(WebDriverFactory.getServerDriver(), LOADER_POPUP_XP);
     }
 
     public void unfreeze(int count) {
         setup(true);
         for(int i=0;i<count;i++){
-            if(WebDriverUtils.isVisible(MESSAGES[i])){
+            if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MESSAGES[i])){
                 clickMessage(MESSAGES[i]).setFreezeStateAndUpdate(false);
             }
         }
@@ -51,7 +52,7 @@ public class IMSLoginDatabasePage extends AbstractPage{
     public void freezeAll(){
         setup(false);
         for(String xpath:MESSAGES){
-            if(WebDriverUtils.isVisible(xpath)){
+            if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), xpath)){
                 clickMessage(xpath).setFreezeStateAndUpdate(true);
             }
         }

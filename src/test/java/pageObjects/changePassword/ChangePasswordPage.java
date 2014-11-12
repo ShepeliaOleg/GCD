@@ -1,9 +1,9 @@
 package pageObjects.changePassword;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class ChangePasswordPage extends AbstractPage{
+public class ChangePasswordPage extends AbstractPortalPage {
 	private static final String ROOT_XP=						"//*[contains(@id, 'portlet_changepassword')]";
 	private static final String FIELD_PASSWORD_OLD_XP=			"//*[@id='oldPassword']";
 	private static final String FIELD_PASSWORD_NEW_XP=			"//*[@id='newPassword']";

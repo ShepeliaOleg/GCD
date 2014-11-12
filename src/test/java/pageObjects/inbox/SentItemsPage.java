@@ -1,14 +1,9 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
-public class SentItemsPage extends AbstractPage{
+public class SentItemsPage extends AbstractPortalPage {
 
 	private static final String ROOT_XP=						"//*[@class='outbox']";
 	private static final String BUTTON_PREVIOUS_PAGE_XP=		"//li[@class='first']/a";

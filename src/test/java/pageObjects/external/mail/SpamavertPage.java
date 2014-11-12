@@ -3,6 +3,7 @@ package pageObjects.external.mail;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,14 +19,14 @@ public class SpamavertPage extends MailServicePage {
 
     @Override
 	public boolean inboxIsEmpty(){
-		return WebDriverUtils.isVisible(WAITING_DIALOG_XP);
+		return WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), WAITING_DIALOG_XP);
 	}
 
 	public int getInboxCount(){
 		if(inboxIsEmpty()){
 			return 0;
 		}else
-			return WebDriverUtils.getXpathCount(MAILLIST_ITEM_XP);
+			return WebDriverUtils.getXpathCount(WebDriverFactory.getServerDriver(), MAILLIST_ITEM_XP);
 	}
 
 	private String getLetterText(){
@@ -33,11 +34,11 @@ public class SpamavertPage extends MailServicePage {
 	}
 
 	private String getLetterText(Integer mailIndex){
-		if(WebDriverUtils.isVisible(MAILLIST_XP)){
-			WebDriverUtils.click(MAILLIST_ITEM_XP.concat("[").concat(mailIndex.toString()).concat("]"));
+		if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MAILLIST_XP)){
+			WebDriverUtils.click(WebDriverFactory.getServerDriver(), MAILLIST_ITEM_XP.concat("[").concat(mailIndex.toString()).concat("]"));
 		}
 
-		return WebDriverUtils.getElementText(LETTER_CONTENT_XP);
+		return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), LETTER_CONTENT_XP);
 	}
 
     @Override
@@ -56,6 +57,6 @@ public class SpamavertPage extends MailServicePage {
 
     @Override
 	public void waitForPasswordEmail(long timeout){
-        AbstractTest.validateTrue(WebDriverUtils.isVisible(WAITING_DIALOG_XP, timeout), "Email was received after '" + timeout + "' seconds");
+        AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), WAITING_DIALOG_XP, timeout), "Email was received after '" + timeout + "' seconds");
 	}
 }

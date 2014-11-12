@@ -1,9 +1,9 @@
 package pageObjects.cashier.withdraw;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class WithdrawEnvoyPage extends AbstractPage{
+public class WithdrawEnvoyPage extends AbstractPortalPage{
 
     private static final String ROOT_XP = "//*[contains(@id, '_wizBankDetailsCapture_')]";
     private static final String BUTTON_CANCEL_XP = "//*[contains(@id, 'CancelButton')]";

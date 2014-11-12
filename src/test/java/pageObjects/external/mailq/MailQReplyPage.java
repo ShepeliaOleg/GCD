@@ -1,14 +1,10 @@
 package pageObjects.external.mailq;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 8/2/13
- */
-
-public class MailQReplyPage extends AbstractPage{
+public class MailQReplyPage extends AbstractServerPage{
 
 	private static final String ROOT_XP=			"//*[@id='sendMesagePanel']";
 	private static final String CHANGE_SUBJECT_XP=	"//*[@id='edit_subject']";
@@ -24,23 +20,23 @@ public class MailQReplyPage extends AbstractPage{
 
 
 	private void setFieldMessage(String text){
-		WebDriverUtils.clearAndInputTextToField(FIELD_MESSAGE_XP, text);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_MESSAGE_XP, text);
 	}
 
 	public void setEmailCheckbox(boolean state){
-		WebDriverUtils.setCheckBoxState(CHECKBOX_EMAIL_XP, state);
+		WebDriverUtils.setCheckBoxState(WebDriverFactory.getServerDriver(), CHECKBOX_EMAIL_XP, state);
 	}
 
 	public void setMessageCheckbox(boolean state){
-		WebDriverUtils.setCheckBoxState(CHECKBOX_MESSAGE_XP, state);
+		WebDriverUtils.setCheckBoxState(WebDriverFactory.getServerDriver(), CHECKBOX_MESSAGE_XP, state);
 	}
 
 	public void setSubjectDropdown(){
-		WebDriverUtils.setDropdownOptionByText(DROPDOWN_SUBJECT_XP, "Test subject");
+		WebDriverUtils.setDropdownOptionByText(WebDriverFactory.getServerDriver(), DROPDOWN_SUBJECT_XP, "Test subject");
 	}
 
 	public MailQHomePage clickSendButton(){
-		WebDriverUtils.click(BUTTON_SEND_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SEND_XP);
 		return new MailQHomePage();
 	}
 

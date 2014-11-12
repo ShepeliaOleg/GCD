@@ -2,13 +2,13 @@ package pageObjects.cashier.deposit;
 
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.core.AbstractIframe;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalIframe;
+import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class EnvoyDepositPage extends AbstractPage{
+public class EnvoyDepositPage extends AbstractPortalPage {
 
     private static final String BUTTON_CANCEL_XP = "//input[contains(text(), 'Cancel')]";
     private static final String BUTTON_PROCEED_XP = "//input[@value='Proceed']";
@@ -58,7 +58,7 @@ public class EnvoyDepositPage extends AbstractPage{
         AbstractTest.assertTextVisible(amount, "Amount");
     }
 
-    private class TrustlyIframe extends AbstractIframe{
+    private class TrustlyIframe extends AbstractPortalIframe {
 
         private static final String LABEL_NORDEA_XP = "//*[contains(text(), 'Nordea')]";
 
@@ -72,7 +72,7 @@ public class EnvoyDepositPage extends AbstractPage{
         }
     }
 
-    private class PolyIframe extends AbstractIframe{
+    private class PolyIframe extends AbstractPortalIframe{
 
         private static final String LABEL_NORDEA_XP = "//div[contains(text(), 'Nordea')]";
         public static final String BUTTON_PROCEED_XP = "//*[@id='btnProceed']";

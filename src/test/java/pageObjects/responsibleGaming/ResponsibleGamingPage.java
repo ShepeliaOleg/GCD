@@ -3,7 +3,7 @@ package pageObjects.responsibleGaming;
 
 import enums.DepositLimits;
 import org.openqa.selenium.WebElement;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class ResponsibleGamingPage extends AbstractPage{
+public class ResponsibleGamingPage extends AbstractPortalPage {
 	private static final String RESPONSIBLE_GAMING_ROOT_XP =                        	"//*[contains(@class,'portlet-ngresponsiblegaming')]";
 	private static final String BUTTON_LIMITS_XP =                                 	    "//*[contains(@class, 'fn-deposit-limits')]//button";
 	private static final String BUTTON_TIME_PER_SESSION_XP =                        	"//*[contains(@class, 'fn-session-timer')]//button";

@@ -3,7 +3,7 @@ package pageObjects.cashier;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import pageObjects.account.AddCardPage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -11,7 +11,7 @@ import utils.core.AbstractTest;
 import java.util.Arrays;
 import java.util.List;
 
-public class CashierPage extends AbstractPage{
+public class CashierPage extends AbstractPortalPage {
     protected static final String ROOT_XP = "//*[contains(@class, 'portlet-mobile-cashier')]";
     protected static final String BUTTON_XP = "//*[contains(@class, 'btn')]";
     protected static final String METHOD_HEADER_BASE_XP = "//*[contains(@class, 'info-list__field')]";

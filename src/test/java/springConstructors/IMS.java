@@ -1,7 +1,5 @@
 package springConstructors;
 
-import java.net.URL;
-
 public class IMS{
 
     protected String imsURL;

@@ -1,8 +1,8 @@
 package pageObjects;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 
-public class HomePage extends AbstractPage{
+public class HomePage extends AbstractPortalPage{
 	private static final String NAVIGATION_PANEL= 	"//*[@id = 'nav']";
 	private static final String LOGO= 				"//img[contains(@class, 'logo')]";
 

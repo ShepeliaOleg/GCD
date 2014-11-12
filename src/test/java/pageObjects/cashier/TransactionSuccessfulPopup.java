@@ -1,8 +1,8 @@
 package pageObjects.cashier;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-public class TransactionSuccessfulPopup extends AbstractPopup {
+public class TransactionSuccessfulPopup extends AbstractPortalPopup {
 
     private static final String ROOT_XP = "//*[contains(@class, 'bonus-popup') or contains(text(), 'Transaction was successful')]";
 

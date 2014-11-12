@@ -1,14 +1,10 @@
 package pageObjects.external.mailq;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 8/2/13
- */
-
-public class MailQLoginPage extends AbstractPage{
+public class MailQLoginPage extends AbstractServerPage{
 	private static final String ROOT_XP=			"//*[@id='login_form']";
 	public static final String BUTTON_SUBMIT_XP=	"//*[@id='login']";
 	public static final String FIELD_USERNAME_XP=	"//*[@id='username']";
@@ -22,15 +18,15 @@ public class MailQLoginPage extends AbstractPage{
 	}
 
 	private void setUsername(String xpath, String username){
-		WebDriverUtils.clearAndInputTextToField(xpath, username);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), xpath, username);
 	}
 
 	private void setPassword(String xpath, String password){
-		WebDriverUtils.clearAndInputTextToField(xpath, password);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), xpath, password);
 	}
 
 	private MailQHomePage clickSubmit(){
-		WebDriverUtils.click(BUTTON_SUBMIT_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SUBMIT_XP);
 		return new MailQHomePage();
 	}
 

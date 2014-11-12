@@ -4,7 +4,7 @@ import enums.BannerNavigationType;
 import enums.BannerSlideType;
 import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
@@ -15,7 +15,7 @@ import utils.core.AbstractTest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BannerPage extends AbstractPage {
+public class BannerPage extends AbstractPortalPage {
     private static final int    TIMEOUT_NOW =                       0;
     private static final int    TIMEOUT_SHORT =                     1;
     private static final int    TIMEOUT_LONG =                      10;

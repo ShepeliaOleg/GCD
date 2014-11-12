@@ -1,14 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/7/14
- */
-
-public class BonusPage extends AbstractPage{
+public class BonusPage extends AbstractPortalPage{
 
 	private static final String PROMOTION_CODE_PORTLET = 	"//section[contains(@id, 'promotioncode')]";
 	private static final String FIELD_PROMO= 				"//*[contains(@class, 'js-promo-value')]";

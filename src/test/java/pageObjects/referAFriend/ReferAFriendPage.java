@@ -1,15 +1,10 @@
 package pageObjects.referAFriend;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-/*
- * User: ivanva
- * Date: 4/19/13
- */
-
-public class ReferAFriendPage extends AbstractPage{
+public class ReferAFriendPage extends AbstractPortalPage{
 	private static final String REFER_A_FRIEND_ROOT_XP=	"//*[contains(@id,'portlet_referafriend')]";
 	private static final String FIELD_NAME1_XP=			"//*[@id='recommendedFriends0.name']";
     private static final String FIELD_NAME2_XP=			"//*[@id='recommendedFriends1.name']";

@@ -4,8 +4,8 @@ import enums.Licensee;
 import enums.Page;
 import enums.PasswordStrength;
 import enums.PromoCode;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
@@ -21,7 +21,7 @@ import utils.validation.ValidationUtils;
 import java.util.Collection;
 import java.util.List;
 
-public class RegistrationPage extends AbstractPage{
+public class RegistrationPage extends AbstractPortalPage {
 
     protected final static String ROOT_XP =                                             "//*[contains(@class, 'fn-register-content')]";
     protected final static String FIELD_BASE_XP =                                       ROOT_XP + "//*[@name='"+PLACEHOLDER+"']";
@@ -105,25 +105,25 @@ public class RegistrationPage extends AbstractPage{
     }
 
     public AbstractPageObject registerUser(UserData userData, Page expectedPage){
-        return registerUser(userData, true, false, null, expectedPage, true);
+        return registerUser(userData, true, false, null, expectedPage);
     }
 
-    public AbstractPageObject registerUser(UserData userData, boolean clearDeviceId){
-        return registerUser(userData, true, false, null, Page.homePage, clearDeviceId);
-    }
+//    public AbstractPageObject registerUser(UserData userData, boolean clearDeviceId){
+//        return registerUser(userData, true, false, null, Page.homePage, clearDeviceId);
+//    }
 
     public AbstractPageObject registerUser(UserData userData, PromoCode promoCode, Page expectedPage){
-        return registerUser(userData, true, false, promoCode, expectedPage, true);
+        return registerUser(userData, true, false, promoCode, expectedPage);
     }
 
-    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode, Page expectedPage, boolean clearDeviceId){
+    public AbstractPageObject registerUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode, Page expectedPage){
         System.out.println("Registering user: \n"
                 + "Username: " + userData.getUsername()+"\n"
                 + "Country:  " + userData.getCountry()+"\n"
                 + "Currency: " + userData.getCurrencyName()+"\n");
-        if (clearDeviceId) {
-            WebDriverUtils.removeLocalStorageItem("serial");
-        }
+//        if (clearDeviceId) {
+//            WebDriverUtils.removeLocalStorageItem("serial");
+//        }
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);
         }else{

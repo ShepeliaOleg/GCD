@@ -1,18 +1,13 @@
 package pageObjects.account;
 
-import changeMyDetails.ChangeMyDetailsPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 4/18/13
- */
-
-public class MyAccountPage extends AbstractPage{
+public class MyAccountPage extends AbstractPortalPage {
 	private static final String ROOT_XP=					"//*[@id='content']";
 	private static final String LINK_CONTACTUS_XP=			"//li/a[text()='Contact Us']";
 	private static final String LINK_BALANCE_XP=			"//li/a[text()='Balance']";

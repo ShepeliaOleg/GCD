@@ -3,7 +3,7 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import changeMyDetails.ChangeMyDetailsPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.core.AbstractTest;

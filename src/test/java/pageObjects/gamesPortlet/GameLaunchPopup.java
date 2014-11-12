@@ -1,10 +1,10 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.core.AbstractBrowserWindow;
+import pageObjects.core.AbstractPortalBrowserWindow;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class GameLaunchPopup extends AbstractBrowserWindow {
+public class GameLaunchPopup extends AbstractPortalBrowserWindow {
 
     private static final String CORRECT_GAME_URL="game="+PLACEHOLDER;
     private static final String NO_FLASH_URL="/flashless.html";

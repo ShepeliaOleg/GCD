@@ -1,14 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/7/14
- */
-
-public class OptedInPopup extends AbstractPopup{
+public class OptedInPopup extends AbstractPortalPopup{
 
 	private static final String TEXT_BONUS_APPLIED=	ROOT_XP+"//*[contains(text(), 'Bonus applied successfully')]";
 	public final static String CLOSE_XP=			"//div[preceding-sibling::h2[contains(text(), 'redemption')]]//a";

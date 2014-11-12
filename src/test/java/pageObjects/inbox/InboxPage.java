@@ -1,14 +1,9 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
-public class InboxPage extends AbstractPage{
+public class InboxPage extends AbstractPortalPage {
 
 	private static final String ROOT_XP=						"//*[@class='inbox']";
 	private static final String BUTTON_SEND_MESSAGE_XP=			"//a[@data-render='sendMessage']";

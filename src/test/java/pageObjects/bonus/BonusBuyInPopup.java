@@ -1,13 +1,10 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.generalPopups.PageRefreshPopup;
 import utils.WebDriverUtils;
 
-/**
- * Created by sergiich on 5/20/14.
- */
-public class BonusBuyInPopup extends AbstractPopup{
+public class BonusBuyInPopup extends AbstractPortalPopup{
 
     private static final String BUTTON_BUY_IN = ROOT_XP+"//button[@name='buyInSubmit']";
     private static final String BUTTON_CANCEL = ROOT_XP+"//a[contains(@class, 'jsCancelButton')]";

@@ -6,8 +6,8 @@ import enums.PlayerCondition;
 import enums.PromoCode;
 import pageObjects.HomePage;
 import pageObjects.admin.AdminPage;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.core.DataContainer;
@@ -27,7 +27,7 @@ public class PortalUtils {
     }
 
     public static boolean isLoggedIn(){
-        return new AbstractPage().isLoggedIn();
+        return new AbstractPortalPage().isLoggedIn();
     }
 
     public static HomePage registerUser(){
@@ -61,15 +61,15 @@ public class PortalUtils {
     }
 
     public static AbstractPageObject registerUser(UserData userData, boolean isTermsAndConditionsChecked, boolean isReceiveBonusesChecked, PromoCode promoCode, Page expectedPage){
-        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, promoCode, expectedPage, true);
+        return navigateToRegistration().registerUser(userData, isTermsAndConditionsChecked, isReceiveBonusesChecked, promoCode, expectedPage);
     }
 
-    public static AbstractPage loginAdmin() {
+    public static AbstractPortalPage loginAdmin() {
         return navigateToAdmin().loginAdmin();
     }
 
-    public static AbstractPage logout() {
-        return new AbstractPage().logout();
+    public static AbstractPortalPage logout() {
+        return new AbstractPortalPage().logout();
     }
 
     private static HomePage navigateToHome(){

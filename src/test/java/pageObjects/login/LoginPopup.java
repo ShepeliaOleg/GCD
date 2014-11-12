@@ -1,9 +1,9 @@
 package pageObjects.login;
 
 import enums.Page;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
@@ -11,7 +11,7 @@ import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
-public class LoginPopup extends AbstractPopup{
+public class LoginPopup extends AbstractPortalPopup {
 
     public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
     private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
@@ -54,12 +54,12 @@ public class LoginPopup extends AbstractPopup{
         WebDriverUtils.click(BUTTON_LOGIN_XP);
     }
 
-    public AbstractPage login(Page expectedPage){
-        return (AbstractPage) this.login(DataContainer.getUserData().getRegisteredUserData(), false, expectedPage);
+    public AbstractPortalPage login(Page expectedPage){
+        return (AbstractPortalPage) this.login(DataContainer.getUserData().getRegisteredUserData(), false, expectedPage);
     }
 
-    public AbstractPage login(UserData userData){
-        return (AbstractPage)this.login(userData,false, Page.homePage);
+    public AbstractPortalPage login(UserData userData){
+        return (AbstractPortalPage)this.login(userData,false, Page.homePage);
     }
 
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable){

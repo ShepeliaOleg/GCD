@@ -26,7 +26,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
         fillCity(userData.getCity());
         fillPostCode(userData.getPostCode());
         fillCountry(userData.getCountry());
-        fillPhoneAreaCode(userData.getPhoneAreaCode());
+        fillPhoneAreaCode(userData.getMobileAreaCode());
         fillMobile(userData.getMobile());
 //        fillPhone(userData.getPhone());
         WebDriverUtils.waitFor(1000);

@@ -1,14 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/7/14
- */
-
-public class FreeBonusPopup extends AbstractPopup{
+public class FreeBonusPopup extends AbstractPortalPopup{
 
 	private static final String BUTTON_GET_FREE_BONUS = "//a[@data-action='FREE']";
 

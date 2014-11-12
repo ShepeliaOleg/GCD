@@ -1,29 +1,30 @@
 package pageObjects.core;
 
+import org.openqa.selenium.WebDriver;
 import utils.WebDriverUtils;
 
 public class AbstractBrowserWindow extends AbstractPageObject{
     private String mainWindowHandle;
 
-    public AbstractBrowserWindow(String mainWindowHandle){
-		super(mainWindowHandle);
+    public AbstractBrowserWindow(WebDriver webDriver, String mainWindowHandle){
+		super(webDriver, mainWindowHandle);
         this.mainWindowHandle=mainWindowHandle;
 	}
 
-	public AbstractBrowserWindow(String mainWindowHandle, String[] clickableBys){
-		super(mainWindowHandle, clickableBys);
+	public AbstractBrowserWindow(WebDriver webDriver, String mainWindowHandle, String[] clickableBys){
+		super(webDriver, mainWindowHandle, clickableBys);
 	}
 
-    public String getWindowUrl(){
-        return WebDriverUtils.getCurrentUrl();
+    public String getWindowUrl(WebDriver webDriver){
+        return WebDriverUtils.getCurrentUrl(webDriver);
     }
 
     public String getMainWindowHandle(){
         return mainWindowHandle;
     }
 
-    public void close(){
-        WebDriverUtils.closeCurrentWindow();
-        WebDriverUtils.switchToWindow(getMainWindowHandle());
+    public void close(WebDriver webDriver){
+        WebDriverUtils.closeCurrentWindow(webDriver);
+        WebDriverUtils.switchToWindow(webDriver, getMainWindowHandle());
     }
 }

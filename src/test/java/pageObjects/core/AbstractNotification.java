@@ -2,6 +2,7 @@ package pageObjects.core;
 
 import org.apache.commons.lang3.ArrayUtils;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 public class AbstractNotification extends AbstractPageObject{
 
@@ -16,7 +17,7 @@ public class AbstractNotification extends AbstractPageObject{
     }
 
     public AbstractNotification(String[] clickableBys, String[] invisibleBys, String rootXp) {
-        super(ArrayUtils.addAll(clickableBys, new String[]{rootXp}), invisibleBys);
+        super(WebDriverFactory.getPortalDriver(), ArrayUtils.addAll(clickableBys, new String[]{rootXp}), invisibleBys);
         if(clickableBys[0]!=null){
             WebDriverUtils.waitForElementToDisappear(clickableBys[0], 30);
         }

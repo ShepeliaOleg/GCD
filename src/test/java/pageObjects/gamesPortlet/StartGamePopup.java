@@ -1,9 +1,9 @@
 package pageObjects.gamesPortlet;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-public class StartGamePopup extends AbstractPopup{
+public class StartGamePopup extends AbstractPortalPopup{
 
     private static final String BUTTON_PLAY_REAL_XP=			ROOT_XP + "//*[contains(@class, 'popup-modal__button__play')]";
     private static final String BUTTON_PLAY_DEMO_XP=			ROOT_XP + "//*[contains(@class, 'popup-modal__button__demo')]";

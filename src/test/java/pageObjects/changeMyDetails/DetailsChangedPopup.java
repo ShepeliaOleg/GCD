@@ -1,8 +1,8 @@
-package changeMyDetails;
+package pageObjects.changeMyDetails;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-public class DetailsChangedPopup extends AbstractPopup{
+public class DetailsChangedPopup extends AbstractPortalPopup{
     private static final String ROOT_XP = TITLE_XP + "[contains(text(), 'Details are successfully updated')]";
 
     public DetailsChangedPopup(){

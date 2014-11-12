@@ -1,15 +1,11 @@
 package pageObjects.external.mailq;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 8/2/13
- */
-
-public class MailQHomePage extends AbstractPage{
+public class MailQHomePage extends AbstractServerPage{
 
 	private static final String DESCENDING_SORT=				"/sort/age%7Cdesc";
 	private static final String ASCENDING_SORT=					"/sort/importance%7Cdesc_age%7Casc";
@@ -43,17 +39,17 @@ public class MailQHomePage extends AbstractPage{
 
 	private MailQHomePage changePageIfSortIsNotDescending(){
 		if(!isDescendingSortingApplied() && !isAscendingSortingApplied()){
-			WebDriverUtils.navigateToURL(uRL.concat(DESCENDING_SORT));
+			WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), uRL.concat(DESCENDING_SORT));
 		}else if(!isDescendingSortingApplied() && isAscendingSortingApplied()){
-			WebDriverUtils.navigateToURL(uRL.replace(ASCENDING_SORT, DESCENDING_SORT));
+			WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), uRL.replace(ASCENDING_SORT, DESCENDING_SORT));
 		}
-		WebDriverUtils.waitForElement(SORTED_DESCENDING);
+		WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), SORTED_DESCENDING);
 		return new MailQHomePage(true);
 	}
 
 	public void extendLatestSubject(){
-		WebDriverUtils.click(EXTEND_LATEST_MESSAGE_SUBJECT);
-		WebDriverUtils.waitForElement(EXTENDED_MESSAGE);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), EXTEND_LATEST_MESSAGE_SUBJECT);
+		WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), EXTENDED_MESSAGE);
 	}
 
 	public MailQReplyPage clickLatestSubjectIfMessageIsReceived(String subject){
@@ -67,30 +63,30 @@ public class MailQHomePage extends AbstractPage{
 	}
 
 	public String getLatestSubject(){
-		if(WebDriverUtils.isVisible(LATEST_MESSAGE_SUBJECT, 1)){
-			return WebDriverUtils.getElementText(LATEST_MESSAGE_SUBJECT);
+		if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_SUBJECT, 1)){
+			return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_SUBJECT);
 		}else{
-			return WebDriverUtils.getElementText(LATEST_MESSAGE_LONG_SUBJECT);
+			return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_LONG_SUBJECT);
 		}
 
 	}
 
 	private MailQReplyPage clickLatestSubject(){
-		if(WebDriverUtils.isVisible(LATEST_MESSAGE_SUBJECT, 1)){
-			WebDriverUtils.click(LATEST_MESSAGE_SUBJECT);
+		if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_SUBJECT, 1)){
+			WebDriverUtils.click(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_SUBJECT);
 		}else{
-			WebDriverUtils.click(LATEST_MESSAGE_LONG_SUBJECT);
+			WebDriverUtils.click(WebDriverFactory.getServerDriver(), LATEST_MESSAGE_LONG_SUBJECT);
 		}
 		return new MailQReplyPage();
 	}
 
 	public MailQNewTicketPage clickCreateTicket(){
-		WebDriverUtils.click(CREATE_TICKET_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), CREATE_TICKET_XP);
 		return new MailQNewTicketPage();
 	}
 
 	private MailQHomePage refresh(){
-		WebDriverUtils.refreshPage();
+		WebDriverUtils.refreshPage(WebDriverFactory.getServerDriver());
 		return new MailQHomePage();
 	}
 
@@ -110,7 +106,7 @@ public class MailQHomePage extends AbstractPage{
 	}
 
 	public MailQLoginPage logoutFromMailQ(){
-		WebDriverUtils.click(LINK_LOGOUT_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_LOGOUT_XP);
 		return new MailQLoginPage();
 	}
 }

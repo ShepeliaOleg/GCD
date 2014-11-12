@@ -321,7 +321,7 @@ public class Listener extends TestListenerAdapter{
 
     private static void writeScreenshot(String imageName){
         File file = new File(outFolder +imageName);
-        WebDriver webDriver = WebDriverFactory.getWebDriver();
+        WebDriver webDriver = WebDriverFactory.getPortalDriver();
         if(webDriver!=null){
             File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
             try  {

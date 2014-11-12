@@ -1,15 +1,10 @@
 package pageObjects.responsibleGaming;
 
 import pageObjects.HomePage;
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 6/13/13
- */
-
-public class SelfExcludeConfirmPopup extends AbstractPopup{
+public class SelfExcludeConfirmPopup extends AbstractPortalPopup{
 
 	public static final String BUTTON_OK_XP=				"//*[@id='selfexclusion-ok']";
 	private static final String LABEL_CONFIRM_MESSAGE_XP=	"//*[@class='selfexclusion-result']//*[@class='portlet-msg-success']";

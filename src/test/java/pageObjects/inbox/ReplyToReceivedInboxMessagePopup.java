@@ -1,14 +1,9 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 8/7/13
- */
-
-public class ReplyToReceivedInboxMessagePopup extends AbstractPopup{
+public class ReplyToReceivedInboxMessagePopup extends AbstractPortalPopup{
 
 	private static final String FIELD_MESSAGE_XP=	ROOT_XP + "//*[@id = 'mailMessageArea']";
 	private static final String FIELD_SUBJECT_XP=	ROOT_XP + "//*[@id = 'mailSubject']";

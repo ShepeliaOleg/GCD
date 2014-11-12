@@ -4,13 +4,13 @@ import enums.GameLaunch;
 import enums.Page;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.banner.BannerPage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 
-public class WebContentPage extends AbstractPage{
+public class WebContentPage extends AbstractPortalPage{
 
     private static final String GAMELAUNCH_XP = "//*[contains(@class,'fn-launch-game')]";
     private static final String IMAGE_XP =      GAMELAUNCH_XP + "/img";

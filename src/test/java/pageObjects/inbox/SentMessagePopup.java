@@ -1,14 +1,9 @@
 package pageObjects.inbox;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 4/10/14
- */
-
-public class SentMessagePopup extends AbstractPopup{
+public class SentMessagePopup extends AbstractPortalPopup{
 	private static final String BUTTON_DELETE_XP=	ROOT_XP+"//a[@data-action='deleteSentMail']";
 	private static final String FIELD_TO_XP=		"//th[contains(text(),'To')]/following-sibling::td";
 	private static final String FIELD_SUBJECT_XP=	"//th[contains(text(),'Subject')]/following-sibling::td";

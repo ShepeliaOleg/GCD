@@ -1,13 +1,8 @@
 package pageObjects.responsibleGaming;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-/*
- * User: ivanva
- * Date: 5/15/13
- */
-
-public class QuestionnaireConfirmPopup extends AbstractPopup{
+public class QuestionnaireConfirmPopup extends AbstractPortalPopup{
 
 
 }

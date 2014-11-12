@@ -1,14 +1,9 @@
 package pageObjects.bonus;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 2/7/14
- */
-
-public class OptOutPopup extends AbstractPopup{
+public class OptOutPopup extends AbstractPortalPopup{
 
 	private static final String BUTTON_OPT_OUT = "//a[@data-action='OPTOUT']";
 

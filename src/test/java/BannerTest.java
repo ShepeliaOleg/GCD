@@ -188,10 +188,10 @@ public class BannerTest extends AbstractTest{
     public void banner5seconds() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(ConfiguredPages.banner5seconds);
         int slidesNumber = bannerPage.getSlidesCount();
-        validateEquals(2, slidesNumber, "Number of slides");
+        validateEquals(3, slidesNumber, "Number of slides");
         long appearingOfSecondSlide = bannerPage.whenSlideDisplayed(2);
-        long appearingOfFirstSlide =  bannerPage.whenSlideDisplayed(1);
-        long timeToDisplay = appearingOfFirstSlide - appearingOfSecondSlide;
-        assertTrue(4900 < timeToDisplay && timeToDisplay < 5100, "(Actual: '"+timeToDisplay+"ms')Slides switched after 5 sec");
+        long appearingOfThirdSlide =  bannerPage.whenSlideDisplayed(3);
+        long timeToDisplay = appearingOfThirdSlide - appearingOfSecondSlide;
+        assertTrue(4800 < timeToDisplay && timeToDisplay < 5200, "(Actual: '"+timeToDisplay+"ms') Slides switched after 5 seconds.");
     }
 }

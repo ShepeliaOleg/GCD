@@ -1,8 +1,8 @@
 package pageObjects.cashier;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 
-public class TransactionUnSuccessfulPopup extends AbstractPopup{
+public class TransactionUnSuccessfulPopup extends AbstractPortalPopup{
 
     private static final String ROOT_XP = "//*[contains(text(), 'Transaction was canceled') or contains(text(), 'transaction has been declined')]";
 

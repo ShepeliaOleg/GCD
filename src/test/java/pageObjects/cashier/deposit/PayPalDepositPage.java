@@ -3,11 +3,11 @@ package pageObjects.cashier.deposit;
 import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class PayPalDepositPage extends AbstractPage{
+public class PayPalDepositPage extends AbstractPortalPage {
 
     private static final String AMOUNT_XP = "//*[@class='amount']";
     private static final String BUTTON_LOGIN_XP = "//*[@id='submitLogin']";

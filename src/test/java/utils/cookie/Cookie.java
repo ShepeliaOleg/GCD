@@ -1,5 +1,6 @@
 package utils.cookie;
 
+import org.openqa.selenium.WebDriver;
 import utils.WebDriverUtils;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ public abstract class Cookie {
     private String path;
     private Date   expiry;
 
-    public Cookie(String name, String value) {
+    protected Cookie(String name, String value) {
         this.name =     name;
         this.value =    value;
         this.domain =   WebDriverUtils.getDomain();
@@ -19,22 +20,22 @@ public abstract class Cookie {
         this.expiry =   new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24); // tomorrow
     }
 
-    public void add() {
-        delete();
-        WebDriverUtils.addCookie(name, value, domain, path, expiry);
+    protected void add(WebDriver webDriver) {
+        delete(webDriver);
+        WebDriverUtils.addCookie(webDriver, name, value, domain, path, expiry);
     }
 
-    public void delete() {
-        if (isPresent()) {
-            WebDriverUtils.deleteCookie(name);
+    protected void delete(WebDriver webDriver) {
+        if (isPresent(webDriver)) {
+            WebDriverUtils.deleteCookie(webDriver, name);
         }
     }
 
-    public boolean isPresent() {
-        return WebDriverUtils.isCookieExists(name);
+    protected boolean isPresent(WebDriver webDriver) {
+        return WebDriverUtils.isCookieExists(webDriver, name);
     }
 
-    public String getValue() {
-        return WebDriverUtils.getCookieValue(name);
+    protected String getValue(WebDriver webDriver) {
+        return WebDriverUtils.getCookieValue(webDriver, name);
     }
 }

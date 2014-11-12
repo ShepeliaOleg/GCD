@@ -1,10 +1,11 @@
 package pageObjects.header;
 
 import org.apache.commons.lang3.ArrayUtils;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.menu.Menu;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,20 +19,20 @@ public class Header extends AbstractPageObject{
     public static final String MENU_XP =       ROOT_XP + "//*[contains(@class,'fn-open-menu')]";
 
     public Header(){
-		super(new String[]{ROOT_XP});
+		super(WebDriverFactory.getPortalDriver(), new String[]{ROOT_XP});
 	}
 
 	public Header(String[] clickableBys){
-		super(ArrayUtils.addAll(clickableBys, new String[]{ROOT_XP}));
+		super(WebDriverFactory.getPortalDriver(), ArrayUtils.addAll(clickableBys, new String[]{ROOT_XP}));
 	}
 
 	public boolean isLoggedIn(){
 		return WebDriverUtils.isVisible(BALANCE_AREA, 1);
 	}
 
-    public AbstractPage waitForLogout(){
+    public AbstractPortalPage waitForLogout(){
         WebDriverUtils.waitForElementToDisappear(BALANCE_AREA, 30);
-        return new AbstractPage();
+        return new AbstractPortalPage();
     }
 
     public Menu openMenu() {

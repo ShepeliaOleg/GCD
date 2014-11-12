@@ -1,15 +1,11 @@
 package pageObjects.gamesPortlet;
 
 import enums.Licensee;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
-/**
- * User: sergiich
- * Date: 7/15/13
- */
-public class GameElement extends AbstractPage{
+public class GameElement extends AbstractPortalPage{
 
 	private static final String TAG_JACKPOT=			"data-game-jackpot";
 

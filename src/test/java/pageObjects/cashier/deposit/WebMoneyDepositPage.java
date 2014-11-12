@@ -1,6 +1,6 @@
 package pageObjects.cashier.deposit;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 
-public class WebMoneyDepositPage extends AbstractPage{
+public class WebMoneyDepositPage extends AbstractPortalPage{
 }

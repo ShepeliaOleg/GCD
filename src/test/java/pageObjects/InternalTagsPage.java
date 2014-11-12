@@ -1,17 +1,12 @@
 package pageObjects;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 import java.util.HashMap;
 
-/**
- * User: sergiich
- * Date: 7/25/13
- */
-
-public class InternalTagsPage extends AbstractPage{
+public class InternalTagsPage extends AbstractPortalPage {
 
 	private static final String ROOT_XP=				"//*[@class='portlet-title-text']";
 	private static final String ARTICLE_XP=				"//div[contains(@id, 'article')]";

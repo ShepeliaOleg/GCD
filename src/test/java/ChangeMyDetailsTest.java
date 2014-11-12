@@ -1,8 +1,8 @@
-import changeMyDetails.DetailsChangedPopup;
+import pageObjects.changeMyDetails.DetailsChangedPopup;
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
-import changeMyDetails.ChangeMyDetailsPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import springConstructors.UserData;
 import utils.IMSUtils;
 import utils.NavigationUtils;
@@ -47,7 +47,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
 	@Test(groups = {"regression"})
 	public void userInfoNotChangedIfPageChanged(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser();
+        PortalUtils.registerUser(userData);
         NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
         NavigationUtils.navigateToPage(ConfiguredPages.home);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);

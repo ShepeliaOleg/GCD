@@ -1,17 +1,12 @@
 package pageObjects.liveCasino;
 
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.login.LoginPopup;
 import utils.WebDriverUtils;
 
-/**
- * User: sergiich
- * Date: 6/26/13
- */
-
-public class LiveCasinoPage extends AbstractPage{
+public class LiveCasinoPage extends AbstractPortalPage {
 
 	private static final String ROOT_XP=					"//*[contains(@id, 'portlet_livetablefinder')]";
 	private static final String FILTER_XP=					"//div[@class='live-table-finder-filter']";

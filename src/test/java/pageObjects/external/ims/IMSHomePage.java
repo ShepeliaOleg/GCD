@@ -1,14 +1,10 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 7/24/13
- */
-
-public class IMSHomePage extends AbstractPage{
+public class IMSHomePage extends AbstractServerPage {
 
 	public static final String LINK_TAB_PLAYER_MANAGEMENT_XP=	"//*[@id='player_management_link']";
 	private static final String LINK_TAB_TEMPLATE_TOOLS_XP=		"//*[@id='template_tools_link']";
@@ -20,16 +16,16 @@ public class IMSHomePage extends AbstractPage{
 	}
 
 	public IMSPlayerManagementPage clickPlayerManagement(){
-		WebDriverUtils.click(LINK_TAB_PLAYER_MANAGEMENT_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_TAB_PLAYER_MANAGEMENT_XP);
 		return new IMSPlayerManagementPage();
 	}
 
 	public IMSTemplateToolsPage clickTemplateTools(){
-		WebDriverUtils.click(LINK_TAB_TEMPLATE_TOOLS_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_TAB_TEMPLATE_TOOLS_XP);
 		return new IMSTemplateToolsPage();
 	}
 
 	public void logOut(){
-		WebDriverUtils.click(LINK_LOGOUT);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_LOGOUT);
 	}
 }

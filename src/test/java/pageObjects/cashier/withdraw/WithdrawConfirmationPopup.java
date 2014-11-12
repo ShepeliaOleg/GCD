@@ -1,10 +1,10 @@
 package pageObjects.cashier.withdraw;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class WithdrawConfirmationPopup extends AbstractPopup{
+public class WithdrawConfirmationPopup extends AbstractPortalPopup{
 
     private static final String ROOT_XP = "//*[contains(text(), 'Are you sure you want to withdraw')]";
 

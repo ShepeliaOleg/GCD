@@ -1,14 +1,9 @@
 package pageObjects.referAFriend;
 
-import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/*
- * User: ivanva
- * Date: 4/19/13
- */
-
-public class ReferAFriendPopup extends AbstractPopup {
+public class ReferAFriendPopup extends AbstractPortalPopup {
 	private static final String REFER_A_FRIEND_ROOT_XP=	ROOT_XP + "//*[contains(@class,'refer-a-friend')]";
     private static final String FIELD_EMAIL_XP=		    ROOT_XP + "//*[@name='email']";
     public  static final String BUTTON_CONFIRM_XP=		ROOT_XP + "//*[contains(@class, 'fn-invite')]";

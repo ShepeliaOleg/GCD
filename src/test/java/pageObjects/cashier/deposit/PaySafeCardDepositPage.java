@@ -3,11 +3,11 @@ package pageObjects.cashier.deposit;
 import enums.PaymentMethod;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
-public class PaySafeCardDepositPage extends AbstractPage{
+public class PaySafeCardDepositPage extends AbstractPortalPage {
 
     private static final String LINK_CANCEL_XP = "//*[@id='pinForm:cancel']";
     private static final String BUTTON_PAY_XP = "//*[@id='pinForm:pay']";

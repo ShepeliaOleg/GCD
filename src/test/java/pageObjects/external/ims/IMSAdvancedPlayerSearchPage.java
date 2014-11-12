@@ -1,15 +1,11 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
-/**
- * User: sergiich
- * Date: 11/19/13
- */
-
-public class IMSAdvancedPlayerSearchPage extends AbstractPage{
+public class IMSAdvancedPlayerSearchPage extends AbstractServerPage {
 
 	private static final String ROOT_XP=				"//*[@id='search-border_body']";
 	private static final String FIELD_USERNAME_XP=		"//*[@id='search_username']";
@@ -26,37 +22,37 @@ public class IMSAdvancedPlayerSearchPage extends AbstractPage{
 	}
 
 	private void inputUsername(String username){
-		WebDriverUtils.clearAndInputTextToField(FIELD_USERNAME_XP, username);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), FIELD_USERNAME_XP, username);
 	}
 
 	private void clickSearch(){
-		WebDriverUtils.click(BUTTON_SEARCH_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SEARCH_XP);
 	}
 
 	private void clickInternal(){
-		WebDriverUtils.click(RADIOBUTTON_INTERNAL_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), RADIOBUTTON_INTERNAL_XP);
 	}
 
 	private void clickBoth(){
-		WebDriverUtils.click(RADIOBUTTON_BOTH_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), RADIOBUTTON_BOTH_XP);
 	}
 
 	private void resetDate(){
-		WebDriverUtils.click(FIELD_SIGNUP_DATE_XP);
-		WebDriverUtils.waitForElement(DROPDOWN_DATE_XP);
-		WebDriverUtils.click(LABEL_CLEAR_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), FIELD_SIGNUP_DATE_XP);
+		WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), DROPDOWN_DATE_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), LABEL_CLEAR_XP);
 	}
 
 	public IMSPlayerDetailsPage search(String username){
 		String userLink = "//a[contains(text(), '"+username+"')] | //a[contains(text(), '"+username.toUpperCase()+"')]";
-		if(!WebDriverUtils.isVisible(userLink, 0)){
+		if(!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), userLink, 0)){
 			resetDate();
 			clickBoth();
 			inputUsername(username);
 			clickSearch();
 		}
-        if(WebDriverUtils.isVisible(userLink, 30)) {
-            WebDriverUtils.click(userLink);
+        if(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), userLink, 30)) {
+            WebDriverUtils.click(WebDriverFactory.getServerDriver(), userLink);
         }else{
             AbstractTest.skipTest("User was not found on IMS");
         }

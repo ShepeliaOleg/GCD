@@ -7,7 +7,7 @@ import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.EnvoyDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
@@ -62,7 +62,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoyValidPromoCode(AMOUNT);
                 TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
                 transactionSuccessfulPopup.closePopup();
-                assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPage().getBalanceAmount(), "Balance");
+                assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -91,7 +91,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
                 TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = envoyDepositPage.cancelDeposit();
                 transactionUnSuccessfulPopup.closePopup();
-                assertEquals("0.00", new AbstractPage().getBalanceAmount(), "Balance");
+                assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -105,7 +105,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
                 TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = withdrawPage.withdrawEnvoy(AMOUNT);
                 transactionUnSuccessfulPopup.closePopup();
-                assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
+                assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -118,7 +118,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 PortalUtils.registerUser(userData, PromoCode.valid);
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
                 withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Envoy, AMOUNT);
-                assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
+                assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }
         }
@@ -130,7 +130,7 @@ public class CashierEnvoyTest extends AbstractTest{
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
         transactionSuccessfulPopup.closePopup();
-        assertEquals(AMOUNT, new AbstractPage().getBalanceAmount(), "Balance");
+        assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
     private UserData[] getUsers(){

@@ -1,11 +1,12 @@
 package pageObjects.external.ims;
 
-import pageObjects.core.AbstractPage;
+import pageObjects.core.AbstractServerPage;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
-public class IMSLoginPage extends AbstractPage{
+public class IMSLoginPage extends AbstractServerPage {
 
-	public  static final String ROOT_XP=				"//*[@id='login']";
+	public  static final String ROOT_XP=			"//*[@id='login']";
 	private static final String FIELD_USERNAME_XP=	"//*[@id='username']";
 	private static final String FIELD_PASSWORD_XP=	"//*[@id='pass']";
 	private static final String BUTTON_SUBMIT_XP=	"//*[@id='Submit']";
@@ -15,15 +16,15 @@ public class IMSLoginPage extends AbstractPage{
 	}
 
 	private void setUsername(String xpath, String username){
-		WebDriverUtils.clearAndInputTextToField(xpath, username);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), xpath, username);
 	}
 
 	private void setPassword(String xpath, String password){
-		WebDriverUtils.clearAndInputTextToField(xpath, password);
+		WebDriverUtils.clearAndInputTextToField(WebDriverFactory.getServerDriver(), xpath, password);
 	}
 
 	private IMSHomePage clickSubmit(){
-		WebDriverUtils.click(BUTTON_SUBMIT_XP);
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SUBMIT_XP);
 		return new IMSHomePage();
 	}
 
