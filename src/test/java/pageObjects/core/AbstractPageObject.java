@@ -8,7 +8,7 @@ import utils.core.WebDriverFactory;
 public abstract class AbstractPageObject{
 
     protected static final String PLACEHOLDER =     "$PLACEHOLDER$";
-    private static final int TIMEOUT =              60;
+    private static final int TIMEOUT =              30;
 
 	public AbstractPageObject(WebDriver webDriver, String mainWindowHandle){
 		WebDriverUtils.switchToOtherWindow(webDriver, mainWindowHandle);
