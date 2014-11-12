@@ -126,7 +126,7 @@ public class RegistrationTest extends AbstractTest{
 	public void registrationWithBonusCoupon(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
         HomePage homePage = (HomePage) PortalUtils.registerUser(userData, true, true, PromoCode.valid, Page.homePage);
-        validateEquals("10.00", homePage.getBalanceAmount(), "User balance");
+        validateEquals(PromoCode.valid.getAmount(), homePage.getBalanceAmount(), "User balance");
 	}
 
     /*#5. Registration without bonus code provided*/

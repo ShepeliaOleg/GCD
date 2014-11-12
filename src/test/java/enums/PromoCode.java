@@ -1,7 +1,7 @@
 package enums;
 
 public enum PromoCode {
-    valid("AUTOFREE"),
+    valid("FREE"),
     invalid("HELL");
 
     private String code;

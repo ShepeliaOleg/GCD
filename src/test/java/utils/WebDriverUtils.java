@@ -30,6 +30,7 @@ public class WebDriverUtils{
     }
 
     public static void waitFor(long millisec){
+        System.out.println("Waiting for "+millisec+" ms");
         if(millisec > 0){
             try{
                 Thread.sleep(millisec);
@@ -53,7 +54,8 @@ public class WebDriverUtils{
     }
 
 	public static void waitForElement(WebDriver webDriver, String xpath, long timeout){
-		WebDriverWait wait=new WebDriverWait(webDriver, timeout);
+        System.out.println("Waiting for "+xpath+" element");
+        WebDriverWait wait=new WebDriverWait(webDriver, timeout);
 		try{
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 		}catch(TimeoutException e){
@@ -73,6 +75,7 @@ public class WebDriverUtils{
     }
 
 	public static void waitForElementToDisappear(WebDriver webDriver, String xpath, long timeout){
+        System.out.println("Waiting for "+xpath+" element to disappear");
 		WebDriverWait wait=new WebDriverWait(webDriver, timeout);
 		try{
 			wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
@@ -118,7 +121,7 @@ public class WebDriverUtils{
     }
 
     public static void click(WebDriver webDriver, String xpath){
-        waitFor();
+        System.out.println("Clicking "+xpath+" element");
         try {
             getElement(webDriver, xpath).click();
         }catch (WebDriverException e){
@@ -131,6 +134,7 @@ public class WebDriverUtils{
     }
 
     public static void click(WebDriver webDriver, String xpath, int offset){
+        System.out.println("Clicking "+xpath+" element with offset "+offset+"");
         Actions builder = new Actions(webDriver);
         try {
             builder.moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
@@ -140,10 +144,12 @@ public class WebDriverUtils{
     }
 
     public static String getAttribute( String xpath, String attribute){
+        System.out.println("Getting attribute "+attribute+" of "+xpath+" element");
         return getAttribute(WebDriverFactory.getPortalDriver(), xpath, attribute);
     }
 
     public static String getAttribute(WebDriver webDriver, String xpath, String attribute){
+        System.out.println("Getting attribute "+attribute+" of "+xpath+" element");
         try{
             return getElement(webDriver, xpath).getAttribute(attribute);
         }catch(NoSuchElementException e){
@@ -181,7 +187,9 @@ public class WebDriverUtils{
     public static String getElementText(String xpath) {
         return getElementText(WebDriverFactory.getPortalDriver(), xpath);
     }
+
     public static String getElementText(WebDriver webDriver, String xpath) {
+        System.out.println("Getting text of "+xpath+" element");
         return getElement(webDriver, xpath).getText();
     }
 
@@ -202,6 +210,7 @@ public class WebDriverUtils{
     }
 
     public static boolean isVisible(WebDriver webDriver, String xpath, long timeout){
+        System.out.println("Checking if "+xpath+" visible");
         WebDriverWait wait=new WebDriverWait(webDriver, timeout);
         try{
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
@@ -210,6 +219,7 @@ public class WebDriverUtils{
         }
         return true;
     }
+
     public static boolean isTextVisible(String text) {
         return isTextVisible(WebDriverFactory.getPortalDriver(), text);
     }
@@ -316,7 +326,8 @@ public class WebDriverUtils{
     }
 
 	public static void inputTextToField(WebDriver webDriver, String xpath, String text){
-		try{
+        System.out.println("Inputting "+text+" ro field "+xpath);
+        try{
 			getElement(webDriver, xpath).sendKeys(text);
 		}catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
@@ -356,7 +367,8 @@ public class WebDriverUtils{
     }
 
 	public static void pressKey(WebDriver webDriver, Keys key){
-		Actions action = new Actions(webDriver);
+        System.out.println("Pressing key"+key);
+        Actions action = new Actions(webDriver);
 		action.sendKeys(key).perform();
 	}
 
@@ -724,10 +736,13 @@ public class WebDriverUtils{
     }
 
 	public static void navigateToURL(WebDriver webDriver, String url){
-		webDriver.get(url);
+        System.out.println("Navigating to url "+url );
+
+        webDriver.get(url);
 	}
 
     public static void refreshPage(){
+        System.out.println("Refreshing page");
         refreshPage(WebDriverFactory.getPortalDriver());
     }
 
@@ -758,6 +773,7 @@ public class WebDriverUtils{
 	}
 
 	public static void switchToWindow(WebDriver webDriver, String handle){
+        System.out.println("Switching to window " + handle);
 		webDriver.switchTo().window(handle);
 	}
 
@@ -772,14 +788,17 @@ public class WebDriverUtils{
 	//iFrame
 
     public static void switchFromIframe(WebDriver webDriver){
+        System.out.println("Switching from iframe");
         webDriver.switchTo().defaultContent();
     }
 
 	public static void switchToIframeById(WebDriver webDriver, String iframeId){
-		webDriver.switchTo().frame(iframeId);
+        System.out.println("Switching to iframe "+iframeId);
+        webDriver.switchTo().frame(iframeId);
 	}
 
     public static void switchToIframeByXpath(WebDriver webDriver, String iframeXpath){
+        System.out.println("Switching to iframe "+iframeXpath);
         webDriver.switchTo().frame(getElement(webDriver, iframeXpath));
     }
 
@@ -795,7 +814,8 @@ public class WebDriverUtils{
     }
 
 	public static void executeScript(WebDriver webDriver, String javascript){
-		((JavascriptExecutor) webDriver).executeScript(javascript);
+        System.out.println("Executing JS "+javascript);
+        ((JavascriptExecutor) webDriver).executeScript(javascript);
 	}
 
     //Mobile
@@ -818,6 +838,7 @@ public class WebDriverUtils{
     }
 
     private static WebElement getElement(WebDriver webDriver, String xpath) {
+        System.out.println("Getting element by xpath "+xpath);
         try{
             return webDriver.findElement(By.xpath(xpath));
         }catch(NoSuchElementException e){
