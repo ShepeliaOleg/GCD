@@ -14,6 +14,8 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.uiautomation.ios.IOSCapabilities;
+import org.uiautomation.ios.client.uiamodels.impl.RemoteIOSDriver;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
@@ -52,6 +54,9 @@ public class WebDriverFactory{
 		WebDriver driver = null;
 		try{
             switch (os) {
+                case "ios":
+                    driver = createIOSDriver();
+                    break;
                 case "android":
                     if (browser.equals("native")) {
                         driver = createAndroidDriver();
@@ -219,6 +224,20 @@ public class WebDriverFactory{
         capabilities.setSerial(serial);
         try {
             driver = new SelendroidDriver(remote, capabilities);
+        }catch (Exception e){
+            throw new RuntimeException("Starting webdriver failed \n" + e);
+        }
+        return driver;
+    }
+
+    private static WebDriver createIOSDriver(){
+        WebDriver driver;
+        IOSCapabilities capabilities = IOSCapabilities.iphone("Safari");
+        capabilities.setCapability(IOSCapabilities.SIMULATOR, false);
+        capabilities.setCapability("rotatable", true);
+        try {
+            driver = new RemoteIOSDriver(new URL("http://localhost:5555/wd/hub"), capabilities);
+
         }catch (Exception e){
             throw new RuntimeException("Starting webdriver failed \n" + e);
         }

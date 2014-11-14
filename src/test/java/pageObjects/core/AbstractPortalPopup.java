@@ -62,7 +62,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     }
 
     public void clickOffPopup(){
-        if(DataContainer.getDriverData().getBrowser().equals("safari")){
+        if(DataContainer.getDriverData().getBrowser().equals("safari")&&DataContainer.getDriverData().getOs().equals("mac")){
             WebDriverUtils.click(OFF_POPUP_XP);
         }else {
             WebDriverUtils.click(ROOT_XP, OFFSET);
