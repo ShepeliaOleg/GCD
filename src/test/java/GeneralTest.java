@@ -1,4 +1,5 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
@@ -33,7 +34,7 @@ public class GeneralTest extends AbstractTest {
     /*3*/
     @Test(groups = {"regression"})
     public void openDirectlyByUrl(){
-        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a);
+        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_a, pageInPopupPopup, POPUP_A_WIDTH, ConfiguredPages.home);
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_disabled);
         pageInPopupPopup = (PageInPopupPopup) pageInPopupPage.clickButton();
@@ -53,7 +54,7 @@ public class GeneralTest extends AbstractTest {
     /*5 root*/
     @Test(groups = {"regression"})
     public void rootPageOnBackground(){
-        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a);
+        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_a, pageInPopupPopup, POPUP_A_WIDTH, ConfiguredPages.home);
         AdultContentPopup adultContentPopup = (AdultContentPopup) pageInPopupPopup.clickButton();
         assertPageInPopup(ConfiguredPages.page_in_popup_b, adultContentPopup, POPUP_B_WIDTH, ConfiguredPages.home);
@@ -62,7 +63,7 @@ public class GeneralTest extends AbstractTest {
     /*6 parent*/
     @Test(groups = {"regression"})
     public void parentPageOnBackground(){
-        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_child);
+        PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_child, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_child, pageInPopupPopup, POPUP_CHILD_WIDTH, ConfiguredPages.page_in_popup_parent);
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_link_to_child);
         pageInPopupPopup = (PageInPopupPopup) pageInPopupPage.clickButton();
@@ -78,7 +79,7 @@ public class GeneralTest extends AbstractTest {
 //    }
 
     private void assertPageInPopup(ConfiguredPages popupPage, AbstractPortalPopup popup, String popupWidth, ConfiguredPages backgroundPage) {
-        assertTrue(popup.getStyle().contains("min-width: " + popupWidth + ";"), "Popup displayed with width " + popupWidth);
+        assertEquals(popup.getStyle(), ("min-width: " + popupWidth + ";"), "Popup displayed with width " + popupWidth);
         NavigationUtils.getConfiguredPageObject(backgroundPage);
         assertUrl(popupPage.toString(), "Page in popup url.");
     }

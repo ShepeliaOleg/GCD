@@ -49,7 +49,11 @@ public class NavigationUtils{
     private static final int POPUP_CHECK_RETRIES = 30;
 
     public static AbstractPageObject navigateToPage(ConfiguredPages configuredPages) {
-        return navigateToPage(PlayerCondition.any, configuredPages, null);
+        return navigateToPage(PlayerCondition.any, configuredPages, Page.homePage, null);
+    }
+
+    public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages, Page expectedPage) {
+        return navigateToPage(condition, configuredPages, expectedPage, null);
     }
 
     public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPages) {
@@ -57,12 +61,16 @@ public class NavigationUtils{
             case player:
                 return navigateToPage(condition, configuredPages, DataContainer.getUserData().getRegisteredUserData());
             default:
-                return navigateToPage(condition, configuredPages, null);
+                return navigateToPage(condition, configuredPages, Page.homePage, null);
         }
     }
 
     public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPage, UserData userData) {
-        navigateToPortal(condition, configuredPage, userData);
+        return navigateToPage(condition, configuredPage, Page.homePage, userData);
+    }
+
+    public static AbstractPageObject navigateToPage(PlayerCondition condition, ConfiguredPages configuredPage, Page expectedPage, UserData userData) {
+        navigateToPortal(condition, configuredPage, expectedPage, userData);
         return getConfiguredPageObject(configuredPage);
     }
 
@@ -146,7 +154,7 @@ public class NavigationUtils{
         }
     }
 
-    private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, UserData userData) {
+    private static void navigateToPortal(PlayerCondition condition, ConfiguredPages configuredPages, Page expectedPage, UserData userData) {
         String suffix = configuredPages.toString();
         boolean reload = false;
 //        LogUtils.setTimestamp();
@@ -155,7 +163,7 @@ public class NavigationUtils{
         switch (condition) {
             case guest:
                 if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)){
-                    checkPopups(Page.homePage);
+                    checkPopups(expectedPage);
                 }
                 if(PortalUtils.isLoggedIn()) {
                     PortalUtils.logout();
@@ -170,7 +178,7 @@ public class NavigationUtils{
                     new LoginPopup().login(userData);
                 }else{
                     if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
-                        checkPopups(Page.homePage);
+                        checkPopups(expectedPage);
                     }
                     if(abstractPortalPage.isAdminLoggedIn()) {
                         abstractPortalPage.logoutAdmin();
@@ -278,6 +286,8 @@ public class NavigationUtils{
             return processWelcomePopup(exceptPage);
         }else if (WebDriverUtils.isVisible(AfterRegistrationPopup.ROOT_XP, 0)) {
             return processAfterRegistrationPopup(exceptPage);
+        }else if (WebDriverUtils.isVisible(PageInPopupPopup.LABEL_XP, 0)) {
+            return processPageInPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)) {
             return processLoginPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(ReadTermsAndConditionsPopup.ROOT_XP, 0)) {
@@ -329,6 +339,17 @@ public class NavigationUtils{
         } else {
             afterRegistrationPopup.closePopup();
             WebDriverUtils.waitForElementToDisappear(AfterRegistrationPopup.ROOT_XP);
+            return null;
+        }
+    }
+
+    private static PageInPopupPopup processPageInPopup(Page exceptPage) {
+        PageInPopupPopup pageInPopupPopup = new PageInPopupPopup();
+        if (exceptPage == Page.pageInPopup) {
+            return pageInPopupPopup;
+        } else {
+            pageInPopupPopup.closePopup();
+            WebDriverUtils.waitForElementToDisappear(PageInPopupPopup.LABEL_XP);
             return null;
         }
     }

@@ -62,7 +62,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     }
 
     public void clickOffPopup(){
-        if(DataContainer.getDriverData().getBrowser().equals("safari")){
+        if(DataContainer.getDriverData().getBrowser().equals("safari")&&DataContainer.getDriverData().getOs().equals("mac")){
             WebDriverUtils.click(OFF_POPUP_XP);
         }else {
             WebDriverUtils.click(ROOT_XP, OFFSET);
@@ -93,7 +93,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     }
 
     public String getStyle() {
-        return WebDriverUtils.getAttribute(ROOT_XP, "style");
+        return WebDriverUtils.getAttribute(TOP_ROOT_XP, "style");
     }
 
     public boolean isPortletErrorVisible(){

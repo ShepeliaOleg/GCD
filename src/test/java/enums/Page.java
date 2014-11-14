@@ -11,6 +11,7 @@ public enum Page{
 	loginPopup,
 	logout,
 	okBonus,
+    pageInPopup,
 	readTermsAndConditionsPopup,
 	registrationPage,
     ringfencing,
