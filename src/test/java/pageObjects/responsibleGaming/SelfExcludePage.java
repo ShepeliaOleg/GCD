@@ -11,7 +11,7 @@ public class SelfExcludePage extends AbstractPortalPage {
 
 
 	public SelfExcludePage(){
-		super(new String[]{ROOT_XP});
+		super(new String[]{ROOT_XP, BUTTON_SUBMIT_XP});
 	}
 
 	public SelfExcludeSuccessfulNotification submitSelfExclude(){
