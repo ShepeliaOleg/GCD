@@ -737,7 +737,6 @@ public class WebDriverUtils{
 
 	public static void navigateToURL(WebDriver webDriver, String url){
         System.out.println("Navigating to url "+url );
-
         webDriver.get(url);
 	}
 

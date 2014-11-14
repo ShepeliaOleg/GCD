@@ -106,6 +106,21 @@ public class UserData{
         return data;
     }
 
+    public ArrayList<String> getUMDData () {
+        ArrayList<String> data=new ArrayList<>();
+        data.add(getTitle().toLowerCase());
+        data.add(getFirstName());
+        data.add(getLastName());
+        data.add(getEmail());
+        data.add(getCountry());
+        data.add(getCity());
+        data.add(getFullAddress());
+        data.add(getPostCode().toLowerCase());
+//        data.add(getPhoneAreaCode() + getPhone());
+        data.add(getMobileAreaCode() + getMobile());
+        return data;
+    }
+
     private String getFormattedGender(){
         String gender = getGender();
         if(gender.equals("M")){
@@ -185,7 +200,7 @@ public class UserData{
     }
 
     private List<String> getCurrencyList(){
-        return DataContainer.getDefaults().getCurrencyList();
+        return DataContainer.getDefaults().getCurrencyNameList();
     }
 
     private List<String> getTitleList(){

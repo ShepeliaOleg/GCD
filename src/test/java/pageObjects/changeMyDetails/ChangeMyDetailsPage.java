@@ -29,7 +29,8 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
     private static final String DISABLED_XP =                   "[@disabled='']";
 
     public ChangeMyDetailsPage(){
-        super(new String[]{ROOT_XP, BUTTON_UPDATE_XP});
+        super(new String[]{ROOT_XP, BUTTON_UPDATE_XP, LABEL_NAME});
+        WebDriverUtils.waitFor();
     }
 
     public boolean isButtonDisabled() {
@@ -53,9 +54,9 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
     }
 
     public void assertUserData(UserData userData) {
-        AbstractTest.assertTrue(nameContains(userData.getTitle()), "Name field contains title");
-        AbstractTest.assertTrue(nameContains(userData.getFirstName()), "Name field contains firstname");
-        AbstractTest.assertTrue(nameContains(userData.getLastName()), "Name field contains lastname");
+        AbstractTest.assertEquals(userData.getTitle(), getName()[0], "Title");
+        AbstractTest.assertEquals(userData.getFirstName(), getName()[1], "Firstname");
+        AbstractTest.assertEquals(userData.getLastName(), getName()[2], "Lastname");
         AbstractTest.assertEquals(userData.getCountry(), WebDriverUtils.getDropdownSelectedOptionValue(DROPDOWN_COUNTRY_XP), "Country");
         AbstractTest.assertEquals(userData.getFullAddress(), WebDriverUtils.getInputFieldText(FIELD_ADDRESS_XP), "Address");
         AbstractTest.assertEquals(userData.getCity(), WebDriverUtils.getInputFieldText(FIELD_CITY_XP), "City");
@@ -65,8 +66,9 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
         AbstractTest.assertEquals(userData.getEmail(), WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP), "Email");
     }
 
-	private boolean nameContains(String title){
-        return WebDriverUtils.getInputFieldText(LABEL_NAME).contains(title);
+	private String[] getName(){
+        WebDriverUtils.waitForElement(LABEL_NAME);
+        return WebDriverUtils.getInputFieldText(LABEL_NAME).split(" ");
 	}
 
     private void setCountry(String country){

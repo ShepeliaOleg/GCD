@@ -147,4 +147,15 @@ public class DepositPage extends CashierPage{
         processPaymentByType(PaymentMethod.Neteller, amount, PaymentMethod.Neteller.getAccount(), "111222");
         new TransactionUnSuccessfulPopup().closePopup();
     }
+
+    /*Webmoney*/
+
+    public void assertWebMoneyInterface() {
+        assertInterfaceByType(PaymentMethod.WebMoney, new String[]{FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public WebMoneyDepositPage depositWebMoney(String amount) {
+        processPaymentByType(PaymentMethod.WebMoney, amount);
+        return new WebMoneyDepositPage();
+    }
 }

@@ -9,6 +9,7 @@ import springConstructors.ValidationRule;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
 import java.net.URL;
 
@@ -31,9 +32,9 @@ public abstract class MailService{
     }
 
     public MailServicePage navigateToInbox(String email){
+        WebDriverFactory.initServerDriver();
         String username = getUsername(email);
-
-        WebDriverUtils.navigateToURL(mailServiceUrl.toString().concat(username));
+        WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), mailServiceUrl.toString().concat(username));
         if (mailServiceUrl.toString().contains("spamavert")) {
             return new SpamavertPage();
         } else

@@ -2,6 +2,7 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -62,6 +63,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoyValidPromoCode(AMOUNT);
                 TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
                 transactionSuccessfulPopup.closePopup();
+                new OkBonusPopup().closePopup();
                 assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(), "Balance");
             }catch (Exception e){
             }

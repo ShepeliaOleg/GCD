@@ -34,7 +34,7 @@ public class Defaults{
         return currencyList;
     }
 
-    public void setCountryList(List countryList){
+   public void setCountryList(List countryList){
         this.countryList = countryList;
     }
 
@@ -79,6 +79,10 @@ public class Defaults{
     }
     public List<String> getLanguageCodesList() {
         return getList(getLanguageList(), 0);
+    }
+
+    public List getCurrencyNameList(){
+        return getList(getCurrencyList(), 0);
     }
 
     private String getFullByPrefix(List<String> list, String prefix) {
@@ -174,7 +178,7 @@ public class Defaults{
 
     private String getCountryCurrencyLogical(String country) {
         String currency = getCountryCurrency(country);
-        List<String> allowedCurrencies = getCurrencyList();
+        List<String> allowedCurrencies = getCurrencyNameList();
         if (allowedCurrencies.contains(currency)) {
             return currency;
         } else

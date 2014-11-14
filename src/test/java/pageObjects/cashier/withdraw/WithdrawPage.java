@@ -110,4 +110,10 @@ public class WithdrawPage extends CashierPage {
         new WithdrawConfirmationPopup().clickAccept();
         new TransactionUnSuccessfulPopup().closePopup();
     }
+
+    /*WEBMONEY*/
+
+    public void assertWebMoneyInterface() {
+        assertInterfaceByType(PaymentMethod.WebMoney, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+    }
 }

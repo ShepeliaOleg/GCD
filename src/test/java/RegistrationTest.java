@@ -192,7 +192,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEqualsCollections(DataContainer.getDefaults().getCurrencyList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
+        assertEqualsCollections(DataContainer.getDefaults().getCurrencyNameList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
     /*#13. T&C web content is shown when clicking on T&C link*/
@@ -323,16 +323,16 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-    /*#23. Default selected countryCode*/
-    @Test(groups = {"registration","regression"})
-    public void defaultCountryMobile(){
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
-            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
-        }
-        assertEquals(DataContainer.getDefaults().getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
-        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
-    }
+//    /*#23. Default selected countryCode*/
+//    @Test(groups = {"registration","regression"})
+//    public void defaultCountryMobile(){
+//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+//        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
+//            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
+//        }
+//        assertEquals(DataContainer.getDefaults().getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
+//        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
+//    }
 
     /* Password strength*/
     @Test(groups = {"registration", "regression", "desktop"})

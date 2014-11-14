@@ -3,6 +3,7 @@ import enums.PaymentMethod;
 import enums.PlayerCondition;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
@@ -70,6 +71,7 @@ public class CashierNetellerTest extends AbstractTest {
         String balance = depositPage.getBalanceAmount();
         TransactionSuccessfulPopup transactionSuccessfulPopup = depositPage.depositNetellerValidPromoCode(AMOUNT);
         transactionSuccessfulPopup.closePopup();
+        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after withdraw");
     }
 

@@ -3,6 +3,7 @@ import enums.PaymentMethod;
 import enums.PlayerCondition;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -108,6 +109,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         moneyBookersDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
+        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

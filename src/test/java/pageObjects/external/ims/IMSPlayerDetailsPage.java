@@ -108,6 +108,21 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 		return data;
 	}
 
+    public ArrayList<String> getUMDData(){
+        ArrayList<String> data=new ArrayList<>();
+        data.add(getTitle());
+        data.add(getFirstName());
+        data.add(getLastName());
+        data.add(getEmail());
+        data.add(getCountryCode());
+        data.add(getCity());
+        data.add(getBillingAddress());
+        data.add(getPostcode());
+        data.add(getPhone());
+//		data.add(getMobile());
+        return data;
+    }
+
     public void checkAffiliateData(String advertiser, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
         checkAdvertiser(advertiser+" ("+profile+")");
         checkUrl(url);

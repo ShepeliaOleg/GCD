@@ -19,7 +19,7 @@ public class IMSUtils {
     private static final int RETRIES = 10;
 
     private static IMSHomePage navigateToIMS(){
-        WebDriverFactory.initImsDriver();
+        WebDriverFactory.initServerDriver();
         IMSHomePage imsHomePage;
         IMS ims = DataContainer.getIms();
         try{
@@ -53,6 +53,14 @@ public class IMSUtils {
         ArrayList<String> wplRegisterData=userData.getRegisterData();
         for(int i=0; i < wplRegisterData.size(); i++){
             AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data");
+        }
+    }
+
+    public static void assertUMDData(UserData userData){
+        ArrayList<String> imsRegisterData=navigateToPlayedDetails(userData.getUsername()).getUMDData();
+        ArrayList<String> wplRegisterData=userData.getUMDData();
+        for(int i=0; i < wplRegisterData.size(); i++){
+            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "UMD data");
         }
     }
 

@@ -29,70 +29,65 @@ public class ChangeMyDetailsTest extends AbstractTest {
 	/* 4. Player updates his details, logs out, logs in again and new values are displayed */
 	@Test(groups = {"regression"})
 	public void editUserInfoAndCheckIfSavedAfterLogout(){
-        UserData userData=DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
-        String userName = userData.getUsername();
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-		userData = DataContainer.getUserData().getRandomUserData();
-        userData.setUsername(userName);
-		DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+		DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         detailsChangedPopup.closePopup();
-        updateMyDetailsPage.assertUserData(userData);
+        updateMyDetailsPage.assertUserData(userDatas[1]);
         PortalUtils.logout();
-        updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails, userData);
-        updateMyDetailsPage.assertUserData(userData);
+        updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails, userDatas[1]);
+        updateMyDetailsPage.assertUserData(userDatas[1]);
 	}
 
 	/* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
 	@Test(groups = {"regression"})
 	public void userInfoNotChangedIfPageChanged(){
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
-        NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        NavigationUtils.navigateToPage(ConfiguredPages.home);
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        updateMyDetailsPage.assertUserData(userData);
+        updateMyDetailsPage.changeDetails(userDatas[1]);
+        NavigationUtils.navigateToPage(ConfiguredPages.home);
+        updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        updateMyDetailsPage.assertUserData(userDatas[0]);
 	}
 
     /* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
     @Test(groups = {"regression"})
     public void userInfoNotChangedIfAfterRefresh(){
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser();
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
+        updateMyDetailsPage.changeDetails(userDatas[1]);
         WebDriverUtils.refreshPage();
-        updateMyDetailsPage.assertUserData(userData);
+        updateMyDetailsPage.assertUserData(userDatas[0]);
     }
 
     /* 5. If player clicks “Update Details” without having changed any data then success message is displayed but changes are not saved */
     @Test(groups = {"regression"})
-    public void userInfoNotChangedIfNoChangesSaved(){
-        UserData oldUserData=DataContainer.getUserData().getRandomUserData();
-        UserData newUserData = DataContainer.getUserData().getRandomUserData();
-        newUserData.setUsername(oldUserData.getUsername());
-        PortalUtils.registerUser();
+    public void buttonIsDisabledWhenNothingChanged(){
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled");
-        updateMyDetailsPage.changeDetails(newUserData);
-        assertFalse(updateMyDetailsPage.isButtonDisabled(), "button disabled");
-        updateMyDetailsPage.changeDetails(oldUserData);
-        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled");
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled with no changes");
+        updateMyDetailsPage.changeDetails(userDatas[1]);
+        assertFalse(updateMyDetailsPage.isButtonDisabled(), "button disabled with changes");
+        updateMyDetailsPage.changeDetails(userDatas[0]);
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled after revert");
     }
 
 	/*6. Player performs several consecutive updates of UMD portlet */
 	@Test(groups = {"regression"})
 	public void userInfoChangedDuringConsecutiveUpdates() {
-        UserData userData=DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-		userData = DataContainer.getUserData().getRandomUserData();
-        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         detailsChangedPopup.closePopup();
-        updateMyDetailsPage.assertUserData(userData);
-		userData = DataContainer.getUserData().getRandomUserData();
-         detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        updateMyDetailsPage.assertUserData(userDatas[1]);
+        detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[0]);
         detailsChangedPopup.closePopup();
-        updateMyDetailsPage.assertUserData(userData);
+        updateMyDetailsPage.assertUserData(userDatas[0]);
 	}
 
 //	/*7. Logs*/
@@ -129,15 +124,21 @@ public class ChangeMyDetailsTest extends AbstractTest {
 	/*8. IMS player details are updated*/
 	@Test(groups = {"regression"})
 	public void iMSPlayerInfoIsUpdatedAfterPlayerDetailsChanged() {
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
+        UserData[] userDatas = getUserDatas();
+        PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        String username = userData.getUsername();
-        userData = DataContainer.getUserData().getRandomUserData();
-        userData.setUsername(username);
-        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userData);
+        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         detailsChangedPopup.closePopup();
-        updateMyDetailsPage.assertUserData(userData);
-        IMSUtils.assertRegisterData(userData);
+        IMSUtils.assertUMDData(userDatas[1]);
 	}
+
+    private UserData[] getUserDatas(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userDataNew = DataContainer.getUserData().getRandomUserData();
+        userDataNew.setUsername(userData.getUsername());
+        userDataNew.setTitle(userData.getTitle());
+        userDataNew.setFirstName(userData.getFirstName());
+        userDataNew.setLastName(userData.getLastName());
+        return new UserData[]{userData, userDataNew};
+    }
 }

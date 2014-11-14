@@ -130,7 +130,7 @@ public class WebDriverFactory{
         WebDriverFactory.serverDriver = serverDriver;
     }
 
-    public static void initImsDriver() {
+    public static void initServerDriver() {
         if (getServerDriver() == null) {
             try{
                 setServerDriver(getRemoteDriver("firefox"));

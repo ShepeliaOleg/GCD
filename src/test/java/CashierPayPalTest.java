@@ -2,6 +2,7 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -69,6 +70,7 @@ public class CashierPayPalTest extends AbstractTest{
         payPalDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
         transactionSuccessfulPopup.closePopup();
+        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
     }
 
@@ -88,7 +90,7 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(" 9.90", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

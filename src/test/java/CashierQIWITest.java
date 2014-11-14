@@ -2,6 +2,7 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.QIWIDepositPage;
@@ -57,6 +58,7 @@ public class CashierQIWITest extends AbstractTest{
         QIWIDepositPage qiwiDepositPage = depositPage.depositQIWIValidPromoCode(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = qiwiDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
+        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
     }
 
