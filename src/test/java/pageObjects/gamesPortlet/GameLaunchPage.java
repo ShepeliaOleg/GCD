@@ -7,7 +7,7 @@ public class GameLaunchPage extends AbstractPortalPage {
 
     private static final String ROOT_XP =                   "//*[contains(@class,'gameFrame') or contains(@class,'game-iframe')]";
     private static final String GAME_MODE_XP=               "//*[@class='gameMode']";
-    public  static final String IFRAME_LAUNCH_GAME_URL =    "igaming?gameId=";
+    public  static final String IFRAME_LAUNCH_GAME_URL =    "igaming/";
     public  static final String REDIRECT_LAUNCH_GAME_URL =  "?game=";
     public  static final String GAME_MODE_URL =             "&real=";
     //game codes
