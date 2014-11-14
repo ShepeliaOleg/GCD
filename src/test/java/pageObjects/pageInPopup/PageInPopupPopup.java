@@ -7,7 +7,7 @@ import utils.WebDriverUtils;
 
 public class PageInPopupPopup extends AbstractPortalPopup {
 
-    private static final String LABEL_XP =  ROOT_XP + "//p[contains(text(), 'Popup')]";
+    public static final String LABEL_XP =  ROOT_XP + "//p[contains(text(), 'Popup')]";
     private static final String BUTTON_XP=  ROOT_XP + "//a[contains(@class, 'btn')]";
 
 	public PageInPopupPopup(){
