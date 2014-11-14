@@ -93,7 +93,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     }
 
     public String getStyle() {
-        return WebDriverUtils.getAttribute(ROOT_XP, "style");
+        return WebDriverUtils.getAttribute(TOP_ROOT_XP, "style");
     }
 
     public boolean isPortletErrorVisible(){
