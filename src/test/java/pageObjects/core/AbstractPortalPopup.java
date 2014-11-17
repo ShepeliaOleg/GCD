@@ -9,7 +9,7 @@ import utils.core.WebDriverFactory;
 public class AbstractPortalPopup extends AbstractPopup{
 
     public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
-	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'fn-close')]";
+	public final static String BUTTON_CLOSE_XP =	ROOT_XP + "//*[contains(@class, 'button_type_cancel')]";
     public final static String BUTTON_DECLINE_XP =	ROOT_XP + "//*[contains(@class, 'fn-decline')]";
     public final static String BUTTON_ACCEPT_XP =   ROOT_XP + "//*[contains(@class, 'fn-accept')]";
     public final static String BUTTON_NEXT_XP =     TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]";
