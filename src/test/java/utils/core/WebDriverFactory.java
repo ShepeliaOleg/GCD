@@ -128,6 +128,13 @@ public class WebDriverFactory{
     }
 
     public static WebDriver getServerDriver() {
+        if(serverDriver==null){
+            try{
+                setServerDriver(getRemoteDriver("firefox"));
+            }catch(Exception e){
+                throw new RuntimeException("Starting webdriver failed \n" + e);
+            }
+        }
         return serverDriver;
     }
 
