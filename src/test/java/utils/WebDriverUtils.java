@@ -9,10 +9,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.core.AbstractPortalPopup;
 import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
 import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -329,12 +332,30 @@ public class WebDriverUtils{
         System.out.println("Inputting "+text+" ro field "+xpath);
         try{
 			getElement(webDriver, xpath).sendKeys(text);
-		}catch(NoSuchElementException e){
+            closeKeyboardOverlay();
+        }catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
 		}
-	}
+    }
 
-	public static void inputTextToField(WebDriver webDriver, String xpath, String text, int sleepTimeMillisec){
+    private static void closeKeyboardOverlay() {
+
+//            try{
+//                Runtime.getRuntime().exec("adb -s "+DataContainer.getDeviceData().getSerialByName(DataContainer.getDriverData().getDevice())+" shell input keyevent 4");
+//                waitFor();
+//            }catch (IOException e){
+//                e.printStackTrace();
+//            }
+        if(DataContainer.getDriverData().getOs().equals("android")) {
+            if (isVisible(AbstractPortalPopup.ROOT_XP, 0)){
+                click(AbstractPortalPopup.TITLE_XP);
+            } else {
+                click("//*[@class='page fn-page']");
+            }
+        }
+    }
+
+    public static void inputTextToField(WebDriver webDriver, String xpath, String text, int sleepTimeMillisec){
 		for(int i=0; i < text.length(); i++){
 			try{
 				getElement(webDriver, xpath).sendKeys(text.charAt(i) + "");

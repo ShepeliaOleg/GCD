@@ -139,8 +139,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
 
     private UserData getMoneyBookersUser(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
-        userData.setUsername("test-88");
-        userData.setPassword("Password1");
+        userData.setUsername("taiwan");
         return userData;
     }
 }

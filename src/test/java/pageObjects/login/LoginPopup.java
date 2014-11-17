@@ -67,9 +67,9 @@ public class LoginPopup extends AbstractPortalPopup {
     }
 
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page expectedPage) throws RuntimeException{
-        setRememberMeCheckBoxState(rememberMeEnable);
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
+        setRememberMeCheckBoxState(rememberMeEnable);
         clickLogin();
         if(expectedPage.equals(Page.loginPopup)){
             return new LoginPopup();

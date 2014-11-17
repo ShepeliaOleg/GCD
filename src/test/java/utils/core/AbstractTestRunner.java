@@ -61,6 +61,7 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
         DataContainer.setAdminUserData(adminUserData);
         DataContainer.setDefaults(defaults);
         DataContainer.setDriverData(driverData);
+        DataContainer.setDeviceData(deviceData);
         DataContainer.setIms(iMS);
         DataContainer.setMailService(mailService);
         DataContainer.setUserData(userData);
