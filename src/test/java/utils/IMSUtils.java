@@ -19,7 +19,6 @@ public class IMSUtils {
     private static final int RETRIES = 10;
 
     private static IMSHomePage navigateToIMS(){
-        WebDriverFactory.initServerDriver();
         IMSHomePage imsHomePage;
         IMS ims = DataContainer.getIms();
         try{

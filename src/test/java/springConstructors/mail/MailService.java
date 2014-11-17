@@ -32,7 +32,6 @@ public abstract class MailService{
     }
 
     public MailServicePage navigateToInbox(String email){
-        WebDriverFactory.initServerDriver();
         String username = getUsername(email);
         WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), mailServiceUrl.toString().concat(username));
         if (mailServiceUrl.toString().contains("spamavert")) {

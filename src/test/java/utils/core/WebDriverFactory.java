@@ -49,6 +49,7 @@ public class WebDriverFactory{
 //			e.printStackTrace();
 //		}
 		portalDriver = initializeWebDriver();
+        setServerDriver(getRemoteDriver("firefox"));
 	}
 
 	private static WebDriver initializeWebDriver(){
@@ -137,15 +138,15 @@ public class WebDriverFactory{
         WebDriverFactory.serverDriver = serverDriver;
     }
 
-    public static void initServerDriver() {
-        if (getServerDriver() == null) {
-            try{
-                setServerDriver(getRemoteDriver("firefox"));
-            }catch(Exception e){
-                throw new RuntimeException("Starting webdriver failed \n" + e);
-            }
-        }
-    }
+//    public static void initServerDriver() {
+//        if (getServerDriver() == null) {
+//            try{
+//                setServerDriver(getRemoteDriver("firefox"));
+//            }catch(Exception e){
+//                throw new RuntimeException("Starting webdriver failed \n" + e);
+//            }
+//        }
+//    }
 
 //    public static void switchToAdditionalWebDriver(){
 //		storedWebDriver = webDriver;
