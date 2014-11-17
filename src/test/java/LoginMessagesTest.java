@@ -16,7 +16,7 @@ import utils.core.DataContainer;
 public class LoginMessagesTest extends AbstractTest{
 
     /*One login message */
-	@Test(groups = {"regression", "mobile"})
+	@Test(groups = {"regression", "mobile", "test"})
 	public void loginMessage(){
         IMSUtils.setLoginMessagesCount(1);
 		UserData userData = DataContainer.getUserData().getRegisteredUserData();
@@ -25,7 +25,7 @@ public class LoginMessagesTest extends AbstractTest{
 	}
 
     /*No login message */
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "test"})
     public void noLoginMessage(){
         IMSUtils.setLoginMessagesCount(0);
         try{
@@ -39,7 +39,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages navigation */
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "test"})
     public void multipleLoginMessagesNavigation(){
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
@@ -56,7 +56,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from first*/
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "test"})
     public void multipleLoginMessagesClosingStart(){
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
@@ -69,7 +69,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from last*/
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "test"})
     public void multipleLoginMessagesClosingEnd(){
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
@@ -82,7 +82,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
 	/*Push logout */
-	@Test(groups = {"regression", "mobile"})
+	@Test(groups = {"regression", "mobile", "test"})
 	public void pushLogout(){
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
