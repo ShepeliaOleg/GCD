@@ -126,7 +126,7 @@ public class WebDriverUtils{
     public static void click(WebDriver webDriver, String xpath){
         System.out.println("Clicking "+xpath+" element");
         WebElement webElement = getElement(webDriver, xpath);
-        focusOnElement(webDriver, webElement);
+        mouseOver(webDriver, webElement);
         try {
             webElement.click();
         }catch (WebDriverException e){
@@ -134,8 +134,8 @@ public class WebDriverUtils{
         }
     }
 
-    private static void focusOnElement(WebDriver webDriver, WebElement webElement) {
-        new Actions(webDriver).moveToElement(webElement).perform();
+    private static Actions getAction(WebDriver webDriver) {
+        return new Actions(webDriver);
     }
 
     public static void click(String xpath, int offset){
@@ -144,9 +144,8 @@ public class WebDriverUtils{
 
     public static void click(WebDriver webDriver, String xpath, int offset){
         System.out.println("Clicking "+xpath+" element with offset "+offset+"");
-        Actions builder = new Actions(webDriver);
         try {
-            builder.moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
+            getAction(webDriver).moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
         }catch (WebDriverException e){
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }
@@ -278,14 +277,12 @@ public class WebDriverUtils{
     }
 
 	public static void mouseOver(WebDriver webDriver, String xpath){
-		try{
-			Actions actions=new Actions(webDriver);
-			actions.moveToElement(getElement(webDriver, xpath)).perform();
-		}catch(NoSuchElementException e){
-			AbstractTest.failTest("Could not find element: " + xpath);
-		}
+        mouseOver(webDriver, getElement(webDriver, xpath));
+    }
 
-	}
+    private static void mouseOver(WebDriver webDriver, WebElement webElement){
+        getAction(webDriver).moveToElement(webElement).perform();
+    }
 
 	//Input field
 
@@ -378,8 +375,7 @@ public class WebDriverUtils{
 
 	public static void pressKey(WebDriver webDriver, Keys key){
         System.out.println("Pressing key"+key);
-        Actions action = new Actions(webDriver);
-		action.sendKeys(key).perform();
+        getAction(webDriver).sendKeys(key).perform();
 	}
 
 	//Checkbox element
