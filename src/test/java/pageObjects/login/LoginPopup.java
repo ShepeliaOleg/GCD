@@ -23,7 +23,7 @@ public class LoginPopup extends AbstractPortalPopup {
     public static final String LABEL_TIMEOUT_ERROR_XP=      LABEL_VALIDATION_ERROR_XP + "[contains(text(), 'Timeout occurred')]";
 
 	public LoginPopup(){
-		super(new String[]{BUTTON_LOGIN_XP, LINK_REGISTER_XP, LINK_FORGOTTEN_XP});
+		super(new String[]{INPUT_USERNAME_XP});
 	}
 
     private void fillUsername(String username){

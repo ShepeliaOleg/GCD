@@ -125,11 +125,17 @@ public class WebDriverUtils{
 
     public static void click(WebDriver webDriver, String xpath){
         System.out.println("Clicking "+xpath+" element");
+        WebElement webElement = getElement(webDriver, xpath);
+        focusOnElement(webDriver, webElement);
         try {
-            getElement(webDriver, xpath).click();
+            webElement.click();
         }catch (WebDriverException e){
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }
+    }
+
+    private static void focusOnElement(WebDriver webDriver, WebElement webElement) {
+        new Actions(webDriver).moveToElement(webElement).perform();
     }
 
     public static void click(String xpath, int offset){
@@ -398,7 +404,7 @@ public class WebDriverUtils{
 	public static void setCheckBoxState(WebDriver webDriver, String xpath, boolean desiredState){
 		try{
 			if(getCheckBoxState(webDriver, xpath)!= desiredState){
-				getElement(webDriver, xpath).click();
+                click(webDriver, xpath);
 			}
 		}catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
