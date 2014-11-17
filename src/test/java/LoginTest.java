@@ -225,7 +225,7 @@ public class LoginTest extends AbstractTest{
 //	}
 
     /*16. IMS Player Details Page*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "test"})
 	public void loginAndCheckStatusInIMS(){
 		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		PortalUtils.loginUser(userData);

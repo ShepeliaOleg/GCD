@@ -285,6 +285,7 @@ public class WebDriverUtils{
 
     public static void clearAndInputTextToField(String xpath, String text){
         clearAndInputTextToField(WebDriverFactory.getPortalDriver(), xpath, text);
+        closeKeyboardOverlay();
     }
     public static void clearAndInputTextToField(WebDriver webDriver, String xpath, String text){
         clearAndInputTextToField(webDriver, xpath, text, 0);
@@ -332,7 +333,6 @@ public class WebDriverUtils{
         System.out.println("Inputting "+text+" ro field "+xpath);
         try{
 			getElement(webDriver, xpath).sendKeys(text);
-            closeKeyboardOverlay();
         }catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
 		}
