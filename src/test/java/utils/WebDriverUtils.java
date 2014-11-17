@@ -285,8 +285,8 @@ public class WebDriverUtils{
 
     public static void clearAndInputTextToField(String xpath, String text){
         clearAndInputTextToField(WebDriverFactory.getPortalDriver(), xpath, text);
-        closeKeyboardOverlay();
     }
+
     public static void clearAndInputTextToField(WebDriver webDriver, String xpath, String text){
         clearAndInputTextToField(webDriver, xpath, text, 0);
     }
@@ -336,23 +336,6 @@ public class WebDriverUtils{
         }catch(NoSuchElementException e){
 			AbstractTest.failTest("Could not find element: " + xpath);
 		}
-    }
-
-    private static void closeKeyboardOverlay() {
-
-//            try{
-//                Runtime.getRuntime().exec("adb -s "+DataContainer.getDeviceData().getSerialByName(DataContainer.getDriverData().getDevice())+" shell input keyevent 4");
-//                waitFor();
-//            }catch (IOException e){
-//                e.printStackTrace();
-//            }
-        if(DataContainer.getDriverData().getOs().equals("android")) {
-            if (isVisible(AbstractPortalPopup.ROOT_XP, 0)){
-                click(AbstractPortalPopup.TITLE_XP);
-            } else {
-                click("//*[@class='page fn-page']");
-            }
-        }
     }
 
     public static void inputTextToField(WebDriver webDriver, String xpath, String text, int sleepTimeMillisec){

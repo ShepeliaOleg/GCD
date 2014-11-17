@@ -91,7 +91,6 @@ public class WebDriverFactory{
             quitWebDriver(portalDriver);
             quitWebDriver(serverDriver);
             quitWebDriver(logDriver);
-            WebDriverUtils.waitFor(5000);
         }catch (Exception e){
             e.printStackTrace();
         }
