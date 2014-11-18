@@ -1,7 +1,9 @@
 package pageObjects.gamesPortlet;
 
 import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractServerIframe;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 
 public class GameLaunchPage extends AbstractPortalPage {
 
@@ -62,6 +64,26 @@ public class GameLaunchPage extends AbstractPortalPage {
     }
 
     public boolean isRealMode() {
+        WebDriverUtils.switchToIframeByXpath(WebDriverFactory.getPortalDriver(), ROOT_XP);
+        WebDriverUtils.waitForElement(GAME_MODE_XP, 30);
         return WebDriverUtils.getElementText(GAME_MODE_XP).equals("PLAYING FOR REAL");
+//        return new GameLaunchIframe().isRealMode();
+    }
+
+    public class GameLaunchIframe extends AbstractServerIframe {
+        private static final String GAME_MODE_XP=               "//*[@class='gameMode']";
+
+        public GameLaunchIframe(String iframeId) {
+            super(iframeId);
+        }
+
+        public boolean isRealMode() {
+            waitForGameToLoad();
+            return WebDriverUtils.getElementText(GAME_MODE_XP).equals("PLAYING FOR REAL");
+        }
+
+        private void waitForGameToLoad() {
+            WebDriverUtils.waitForElement(GAME_MODE_XP, 30);
+        }
     }
 }
