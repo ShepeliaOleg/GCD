@@ -304,7 +304,9 @@ public class LoginTest extends AbstractTest{
         UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser();
         userData.setPassword("");
-        assertFailedLoginPopup(userData);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
+        assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
     }
 
     /*password with spaces*/
@@ -329,7 +331,7 @@ public class LoginTest extends AbstractTest{
     @Test(groups = {"regression"})
     public void freezeUserAfterInvalidLogins(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser();
+        PortalUtils.registerUser(userData);
         String correctPass = userData.getPassword();
         userData.setPassword("incorrect");
         for(int i=0;i<3;i++){
