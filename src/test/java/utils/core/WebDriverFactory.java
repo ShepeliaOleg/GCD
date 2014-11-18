@@ -115,13 +115,13 @@ public class WebDriverFactory{
                 break;
             default: throw new RuntimeException("Please set correct browser, current '"+browser+"'");
         }
-        driver.manage().window().setSize(new Dimension(1920, 1080));
+        driver.manage().window().maximize();
         return driver;
     }
 
     private static WebDriver getRemoteDriver(String browser){
         WebDriver driver = createRemoteDriver(browser);
-        driver.manage().window().setSize(new Dimension(1920, 1080));
+        driver.manage().window().maximize();
         return driver;
     }
 

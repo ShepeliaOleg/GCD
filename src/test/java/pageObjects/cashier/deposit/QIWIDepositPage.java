@@ -25,18 +25,22 @@ public class QIWIDepositPage extends AbstractPortalPage {
     }
 
     public TransactionSuccessfulPopup pay(){
-        clickButtonPay();
-        WebDriverUtils.waitForElement(PASSWORD_XP);
-        fillPassword(PaymentMethod.QIWI.getPassword());
-        clickButtonPay();
-        WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
+        if(!WebDriverUtils.isVisible(DROPDOWN_CURRENCY_XP,1)){
+            clickButtonPay();
+            WebDriverUtils.waitForElement(PASSWORD_XP);
+            fillPassword(PaymentMethod.QIWI.getPassword());
+            clickButtonPay();
+            WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
+        }
         clickDropdown();
+        WebDriverUtils.waitFor();
         if(getRUBIntegerAmount()>getRUBIntegerBalance()){
             AbstractTest.skipTest("Not enough money on card balance");
         }
         clickRUB();
         WebDriverUtils.waitForElement(PAY_BUTTON);
         clickButtonPay();
+        WebDriverUtils.waitForElementToDisappear("");
         return new TransactionSuccessfulPopup();
     }
 
@@ -73,7 +77,7 @@ public class QIWIDepositPage extends AbstractPortalPage {
     }
 
     private int getRUBIntegerAmount(){
-        return Integer.parseInt(getAmount().replace(",", ""));
+        return Integer.parseInt(getAmount().replace(",",""));
     }
 
     private void fillPassword(String password){

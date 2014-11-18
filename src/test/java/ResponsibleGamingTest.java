@@ -97,13 +97,13 @@ public class ResponsibleGamingTest extends AbstractTest{
         assertTrue(responsibleGamingPage.getMonthlyLimitCurrency().startsWith(currency), "currencySignMonthly.startsWith('"+currency+"')");
 	}
 
-    /* 10. Set time per session */
-	@Test(groups = {"regression"})
-	public void setTimePerSessionLimit(){
-        PortalUtils.registerUser();
-        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		responsibleGamingPage.setRandomTimePerSession();
-    }
+//    /* 10. Set time per session */
+//	@Test(groups = {"regression"})
+//	public void setTimePerSessionLimit(){
+//        PortalUtils.registerUser();
+//        ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
+//		responsibleGamingPage.setRandomTimePerSession();
+//    }
 
     /* 14. Several consecutive updates of deposit limits */
 	@Test(groups = {"regression"})
