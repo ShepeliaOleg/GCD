@@ -199,7 +199,7 @@ public class WebDriverFactory{
 
     private static WebDriver createFireFoxDriver(){
         FirefoxProfile profile=new FirefoxProfile();
-//        profile.setPreference("focusmanager.testmode", true);
+        profile.setPreference("focusmanager.testmode", true);
         return new FirefoxDriver(profile);
     }
 

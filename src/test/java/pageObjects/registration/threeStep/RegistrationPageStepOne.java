@@ -23,9 +23,10 @@ public class RegistrationPageStepOne extends RegistrationPage {
     }
 
     public RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
-        fillTitle(userData.getTitle());
+        WebDriverUtils.waitFor();
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
+        fillTitle(userData.getTitle());
         fillBirthDay(userData.getBirthDay());
         fillBirthMonth(userData.getBirthMonth());
         fillBirthYear(userData.getBirthYear());
