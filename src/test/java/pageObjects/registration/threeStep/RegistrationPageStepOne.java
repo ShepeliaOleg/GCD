@@ -23,7 +23,6 @@ public class RegistrationPageStepOne extends RegistrationPage {
     }
 
     public RegistrationPageStepTwo fillDataAndSubmit(UserData userData){
-        WebDriverUtils.waitFor();
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
         fillTitle(userData.getTitle());

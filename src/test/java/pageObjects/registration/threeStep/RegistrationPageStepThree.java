@@ -25,14 +25,14 @@ public class RegistrationPageStepThree extends RegistrationPage {
     }
 
     public void fillData(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, PromoCode promoCode){
+        setTermsCheckbox(termsAndConditions);
+        fillBonusAndPromotional(isReceiveBonusesChecked, promoCode);
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
         fillQuestion(userData.getVerificationQuestion());
         fillAnswer(userData.getVerificationAnswer());
         setCurrency(userData.getCurrencyName());
-        setTermsCheckbox(termsAndConditions);
-        fillBonusAndPromotional(isReceiveBonusesChecked, promoCode);
         WebDriverUtils.waitFor(1000);
     }
 
