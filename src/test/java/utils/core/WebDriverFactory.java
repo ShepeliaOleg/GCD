@@ -115,13 +115,13 @@ public class WebDriverFactory{
                 break;
             default: throw new RuntimeException("Please set correct browser, current '"+browser+"'");
         }
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
 
     private static WebDriver getRemoteDriver(String browser){
         WebDriver driver = createRemoteDriver(browser);
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1920, 1080));
         return driver;
     }
 
@@ -199,7 +199,7 @@ public class WebDriverFactory{
 
     private static WebDriver createFireFoxDriver(){
         FirefoxProfile profile=new FirefoxProfile();
-        profile.setPreference("focusmanager.testmode", true);
+//        profile.setPreference("focusmanager.testmode", true);
         return new FirefoxDriver(profile);
     }
 
