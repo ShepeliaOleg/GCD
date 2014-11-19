@@ -58,7 +58,12 @@ public class AddCardPage extends AbstractPortalPage {
         fillCardNumber(card);
         setDropdownMonth("01");
         setDropdownYear("2017");
-        setCheckboxFillUserData(true);
+        fillFirstName("FirstName");
+        fillLastName("LastName");
+        setDropdownCountry("GB");
+        fillPostcode("POSTCODE");
+        fillAddress("ADDRESS");
+        fillCity("CITY");
         clickAdd();
     }
 

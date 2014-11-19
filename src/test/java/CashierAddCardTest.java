@@ -34,7 +34,7 @@ public class CashierAddCardTest extends AbstractTest{
     /*check FillUserdataCheckbox - data is correct, uncheck - data is deleted, overwrite - overwritten*/
     @Test(groups = {"regression", "mobile"})
     public void checkboxFillData(){
-        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
@@ -76,7 +76,7 @@ public class CashierAddCardTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void addAlreadyUsedCard(){
         String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
-        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
@@ -91,13 +91,13 @@ public class CashierAddCardTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void addAlreadyUsedByOtherPlayerCard(){
         String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
-        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();
         addCardPage.addValidCard(card);
         PortalUtils.logout();
-        userData = DataContainer.getUserData().getRandomUserData();
+        userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         addCardPage = depositPage.clickAddCard();
@@ -111,7 +111,7 @@ public class CashierAddCardTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void addValidCardFromWithdrawMasterCard(){
         String card = RandomUtils.getValidCardNumber(PaymentMethod.MasterCard);
-        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         AddCardPage addCardPage = withdrawPage.clickAddCard();
@@ -124,7 +124,7 @@ public class CashierAddCardTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void addValidCardFromDepositVisa(){
         String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
-        UserData userData = DataContainer.getUserData().getRandomUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         AddCardPage addCardPage = depositPage.clickAddCard();

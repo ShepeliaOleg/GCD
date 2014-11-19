@@ -37,10 +37,10 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
         return WebDriverUtils.isVisible(BUTTON_UPDATE_XP+DISABLED_XP, 1);
     }
 
-    public DetailsChangedPopup changeDetailsAndSubmit(UserData userData){
+    public void changeDetailsAndSubmit(UserData userData){
 		changeDetails(userData);
 		submitChanges();
-        return new DetailsChangedPopup();
+        new DetailsChangedNotification();
 	}
 
     public void changeDetails(UserData userData){

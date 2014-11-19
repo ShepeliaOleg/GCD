@@ -273,7 +273,9 @@ public class NavigationUtils{
             String portletErrorText = WebDriverUtils.getElementText(portletError);
             if (portletErrorText.equals("Server system error")) {
                 AbstractTest.skipTest("Registration failed with 'Server system error'");
-            } else {
+            }else if(portletErrorText.equals("System error. Try again later")){
+                AbstractTest.skipTest("Registration failed with 'System error. Try again later'");
+            }else {
                 AbstractTest.failTest("Registration/Login failed : " + portletErrorText);
             }
         } else {

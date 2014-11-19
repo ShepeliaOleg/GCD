@@ -195,6 +195,12 @@ public class UserData{
         return userData;
     }
 
+    public UserData getInternalRandomUserData() {
+        UserData userData = getRandomUserData();
+        userData.setEmail("test@playtech.com");
+        return userData;
+    }
+
     private List<String> getGenderList(){
         return Arrays.asList(genderValidationRule.getRegexp().split("@"));
     }

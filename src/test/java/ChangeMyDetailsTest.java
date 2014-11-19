@@ -1,4 +1,4 @@
-import pageObjects.changeMyDetails.DetailsChangedPopup;
+import pageObjects.changeMyDetails.DetailsChangedNotification;
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
@@ -32,8 +32,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
         UserData[] userDatas = getUserDatas();
         PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-		DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
-        detailsChangedPopup.closePopup();
+		updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         updateMyDetailsPage.assertUserData(userDatas[1]);
         PortalUtils.logout();
         updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails, userDatas[1]);
@@ -82,11 +81,9 @@ public class ChangeMyDetailsTest extends AbstractTest {
         UserData[] userDatas = getUserDatas();
         PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
-        detailsChangedPopup.closePopup();
+        updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         updateMyDetailsPage.assertUserData(userDatas[1]);
-        detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[0]);
-        detailsChangedPopup.closePopup();
+        updateMyDetailsPage.changeDetailsAndSubmit(userDatas[0]);
         updateMyDetailsPage.assertUserData(userDatas[0]);
 	}
 
@@ -127,8 +124,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
         UserData[] userDatas = getUserDatas();
         PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        DetailsChangedPopup detailsChangedPopup = updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
-        detailsChangedPopup.closePopup();
+        updateMyDetailsPage.changeDetailsAndSubmit(userDatas[1]);
         IMSUtils.assertUMDData(userDatas[1]);
 	}
 

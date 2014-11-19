@@ -29,8 +29,7 @@ public class RegistrationTest extends AbstractTest{
     /*1. Valid user registration*/
     @Test(groups = {"registration"})
     public void validInternalUserRegistration() {
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        userData.setEmail("test@playtech.com");
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         HomePage homePage = PortalUtils.registerUser(userData);
         validateTrue(homePage.isLoggedIn(), "User is logged in");
     }
