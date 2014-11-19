@@ -125,6 +125,7 @@ public class IMSUtils {
                         break;
                     case okBonus:
                     case acceptDeclineBonus:
+                    case loseOnWithdraw:
                     case ringfencing:
                         imsPlayerDetailsPage.addBonus(message, amount);
                         break;

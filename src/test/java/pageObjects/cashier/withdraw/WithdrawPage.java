@@ -21,11 +21,19 @@ public class WithdrawPage extends CashierPage {
     }
 
     public void withdrawSuccessful(PaymentMethod type, String amount, String account){
+        withdraw(type, amount, account);
+        new WithdrawSuccessfulNotification();
+    }
+
+    public void withdraw(PaymentMethod type, String amount){
+        withdraw(type, amount, type.getAccount());
+    }
+
+    private void withdraw(PaymentMethod type, String amount, String account) {
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount);
         withdrawConfirmationPopup.assertAccount(account);
         withdrawConfirmationPopup.assertAmount(amount);
         withdrawConfirmationPopup.clickAccept();
-        new WithdrawSuccessfulNotification();
     }
 
     public void withdrawAddingAccount(PaymentMethod type, String amount){
