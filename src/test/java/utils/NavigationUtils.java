@@ -4,6 +4,7 @@ import enums.*;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
+import pageObjects.account.PendingWithdrawPage;
 import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPage;
@@ -133,6 +134,7 @@ public class NavigationUtils{
             case page_in_popup_disabled:
             case page_in_popup_link_to_child:
             case page_in_popup_parent:                          return new PageInPopupPage();
+            case pending_withdraw:                              return new PendingWithdrawPage();
             case permissions_page_admin:
             case permissions_page_all:
             case permissions_page_guest:

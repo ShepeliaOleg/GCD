@@ -111,4 +111,32 @@ public class TypeUtils{
 
         return hash;
     }
+
+    /*Balance - Currency and Amount*/
+
+    public static String getBalanceCurrency(String balance){
+        String[] currencyAndAmount = splitBalance(balance);
+        if(currencyGoesFirst(currencyAndAmount)){
+            return currencyAndAmount[0];
+        }else {
+            return currencyAndAmount[1];
+        }
+    }
+
+    public static String getBalanceAmount(String balance){
+        String[] currencyAndAmount = splitBalance(balance);
+        if(currencyGoesFirst(currencyAndAmount)){
+            return currencyAndAmount[1];
+        }else {
+            return currencyAndAmount[0];
+        }
+    }
+
+    private static String[] splitBalance(String balance){
+        return balance.split(" ");
+    }
+
+    private static boolean currencyGoesFirst(String[] currencyAndAmount){
+        return currencyAndAmount[0].length()<=3;
+    }
 }
