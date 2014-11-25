@@ -5,6 +5,7 @@ import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.PendingWithdrawPage;
+import pageObjects.account.TransactionHistoryPage;
 import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPage;
@@ -147,6 +148,7 @@ public class NavigationUtils{
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:                             return new ResponsibleGamingPage();
             case selfExclusion:                                 return new SelfExcludePage();
+            case transactionHistory:                           return new TransactionHistoryPage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
             case withdraw:                                      return new WithdrawPage();

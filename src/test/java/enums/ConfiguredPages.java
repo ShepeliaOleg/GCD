@@ -74,6 +74,7 @@ public enum ConfiguredPages{
     referAFriend("refer_a_friend"),
     responsibleGaming("deposit-limits"),
     selfExclusion("self_exclude"),
+    transactionHistory("transaction-history"),
     webContentGame("web_content_game_launch"),
     withdraw("withdraw");
 
