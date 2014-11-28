@@ -1,10 +1,9 @@
-import enums.ConfiguredPages;
-import enums.Page;
-import enums.PlayerCondition;
+import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import pageObjects.gamesPortlet.GameLaunchPage;
@@ -278,4 +277,27 @@ public class PushMessagesBonusTest extends AbstractTest{
 //		bonusBuyInPopup.confirmBuyIn();
 //		assertTrue(homePage.getBalanceChange(balance)==20);
 //	}
+
+    /*B-11130 Lose bonus confirmation on withdraw, fund transfer*/
+    /*#1. Click Decline button*/
+    @Test(groups = {"registration","regression"})
+    public void loseOnWithdrawAccept(){
+        UserData userData=DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData, true, true, PromoCode.valid, Page.homePage); // real money 10
+        addLooseOnWithdrawBonus(userData, BONUS_AMOUNT); // bonus money 10
+//        UserData userData=DataContainer.getUserData().getRegisteredUserData();
+//        userData.setUsername("HSekq");
+//        PortalUtils.loginUser(userData);
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        assertEquals("20.00", withdrawPage.getBalanceAmount(), "Balance is 20 (10 real + 10 bonus).");
+        withdrawPage.withdraw(PaymentMethod.PayPal, PromoCode.valid.getAmount());
+
+        assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
+    }
+
+    private static void addLooseOnWithdrawBonus(UserData userData, String amount) {
+        IMSUtils.sendPushMessage(userData, amount, Page.loseOnWithdraw);
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
+        acceptDeclineBonusPopup.clickAccept();
+    }
 }

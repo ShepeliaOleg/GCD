@@ -63,6 +63,7 @@ public enum ConfiguredPages{
     page_in_popup_child("page_in_popup_child"),
     page_in_popup_parent("page_in_popup_parent"),
     page_in_popup_scroll("page_in_popup_scroll"),
+    pending_withdraw("pending-withdraw"),
     permissions_page_admin("permissions_page_admin"),
     permissions_page_all("permissions_page_all"),
     permissions_page_guest("permissions_page_guest"),
@@ -75,6 +76,7 @@ public enum ConfiguredPages{
     referAFriend("refer_a_friend"),
     responsibleGaming("deposit-limits"),
     selfExclusion("self_exclude"),
+    transactionHistory("transaction-history"),
     webContentGame("web_content_game_launch"),
     withdraw("withdraw");
 

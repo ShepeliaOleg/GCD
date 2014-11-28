@@ -5,6 +5,7 @@ import pageObjects.account.MyAccountPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LogoutPopup;
 import springConstructors.UserData;
+import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
@@ -21,26 +22,16 @@ public class LoggedInHeader extends Header{
 		super(new String[]{Header.BALANCE_AREA, LABEL_BALANCE_XP, LABEL_USERNAME_XP});
 	}
 
-    public String getBalanceFull(){
+    public String getBalance(){
         return WebDriverUtils.getElementText(LABEL_BALANCE_XP);
     }
 
     public String getBalanceCurrency(){
-        String[] balance = getBalance();
-        if(currencyGoesFirst(balance)){
-            return balance[0];
-        }else {
-            return balance[1];
-        }
+        return TypeUtils.getBalanceCurrency(getBalance());
     }
 
     public String getBalanceAmount(){
-        String[] balance = getBalance();
-        if(currencyGoesFirst(balance)){
-            return balance[1];
-        }else {
-            return balance[0];
-        }
+        return TypeUtils.getBalanceAmount(getBalance());
     }
 
     public String getUsername(){
@@ -57,14 +48,6 @@ public class LoggedInHeader extends Header{
         }else {
             return openMenu().loggedInMenu().clickLogout();
         }
-    }
-
-    private String[] getBalance(){
-        return getBalanceFull().split(" ");
-    }
-
-    private boolean currencyGoesFirst(String[] balance){
-        return balance[0].length()<=3;
     }
 
     //Desktop only

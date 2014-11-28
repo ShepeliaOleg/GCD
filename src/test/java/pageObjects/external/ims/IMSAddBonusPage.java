@@ -27,9 +27,10 @@ public class IMSAddBonusPage extends AbstractServerPage {
         private static final String DROPDOWN_BONUS_TEMPLATE_XP = "//*[@id='bonus_template_select_1']";
         private static final String FIELD_BONUS_AMOUNT_XP = "//*[@id='amount']";
         private static final String BUTTON_ADD_BONUS_XP = "//*[@id='submit']";
-        private static final String OK_TEXT = "AUTO_NO_ACCEPT_DECLINE";
-        private static final String ACCEPT_DECLINE_TEXT = "AUTO_ACCEPT_DECLINE";
-        private static final String RINGFENCING_TEXT = "AUTO_RINGFENCING";
+        private static final String OK_TEXT =               "AUTO_NO_ACCEPT_DECLINE";
+        private static final String ACCEPT_DECLINE_TEXT =   "AUTO_ACCEPT_DECLINE";
+        private static final String LOSE_ON_WITHDRAW =      "AUTO_LOSE_ON_WITHDRAW";
+        private static final String RINGFENCING_TEXT =      "AUTO_RINGFENCING";
 
         public IMSAddBonusIframe(String iframeId) {
             super(iframeId);
@@ -47,6 +48,8 @@ public class IMSAddBonusPage extends AbstractServerPage {
                 case okBonus : bonus=OK_TEXT;
                     break;
                 case acceptDeclineBonus : bonus=ACCEPT_DECLINE_TEXT;
+                    break;
+                case loseOnWithdraw : bonus=LOSE_ON_WITHDRAW;
                     break;
                 case ringfencing : bonus=RINGFENCING_TEXT;
                     break;
