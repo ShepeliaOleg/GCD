@@ -154,14 +154,14 @@ public class Listener extends TestListenerAdapter{
             fileReader.close();
             FileWriter fileWriter = new FileWriter(index);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for ( String writeLine:report){
+            for (String writeLine:report){
                 bufferedWriter.write(writeLine+"\n");
             }
             bufferedWriter.flush();
             bufferedWriter.close();
             fileWriter.close();
         }catch (IOException e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 

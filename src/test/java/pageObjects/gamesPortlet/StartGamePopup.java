@@ -7,6 +7,8 @@ public class StartGamePopup extends AbstractPortalPopup{
 
     private static final String BUTTON_PLAY_REAL_XP=			ROOT_XP + "//*[contains(@class, 'popup-modal__button__play')]";
     private static final String BUTTON_PLAY_DEMO_XP=			ROOT_XP + "//*[contains(@class, 'popup-modal__button__demo')]";
+    private static final String BUTTON_FAVOURITE_XP =           ROOT_XP + "//*[contains(@class, 'fn-favorites')]";
+    private static final String BUTTON_FAVOURITE_ACTIVE_XP =           BUTTON_FAVOURITE_XP + "[contains(@class, 'active')]";
 
     public StartGamePopup(){
         super();
@@ -30,5 +32,23 @@ public class StartGamePopup extends AbstractPortalPopup{
         boolean result = WebDriverUtils.isVisible(BUTTON_PLAY_REAL_XP, 0);
         clickOffPopup();
         return result;
+    }
+
+    private void clickFavourite() {
+        WebDriverUtils.click(BUTTON_FAVOURITE_XP);
+    }
+
+    public void favourite(){
+        clickFavourite();
+        new AddedToFavouritesNotification();
+    }
+
+    public void unFavourite(){
+        clickFavourite();
+        new RemovedFromFavouritesNotification();
+    }
+
+    public boolean isFavourite() {
+        return WebDriverUtils.isVisible(BUTTON_FAVOURITE_ACTIVE_XP, 1);
     }
 }

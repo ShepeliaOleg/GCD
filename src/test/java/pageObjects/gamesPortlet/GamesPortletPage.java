@@ -40,7 +40,8 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String DROPDOWN_REFINE_BY_OPTION_PARTIAL_XP = 	"/a[contains(@class,'datalink')]";
 	private static final String DROPDOWN_REFINE_BY_ACTIVE_CATEGORY_XP = DROPD0WN_REFINE_BY_XP + "//*[@class='active main-toggle']";
 	//Category Tabs
-	private static final String TAB_CATEGORY_XP= 						"//ul[contains(@class,'nav')]//a[@data-category = ";
+    private static final String CATEGORY_XP= 						    "//*[contains(@class,'fn-category')]";
+    private static final String TAB_CATEGORY_XP= 						CATEGORY_XP + "[contains(text(), '"+PLACEHOLDER+"')]";
 	private static final String TAB_ACTIVE_CATEGORY_XP= 				"//*[contains(@class,'nav')]//li[@class='active']/a[@data-category]";
 	private static final String TAB_ACTIVE_SUBCATEGORY_XP= 				"//*[contains(@class,'subnav')]//li[@class='active']/a[@data-category]";
 	private static final String MENU_TOP_XP = 							"//*[contains(@class,'tabs')]";
@@ -70,8 +71,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	// General
 	public ArrayList<String> getAllGameNames(){
 		ArrayList<String> gameIDs=new ArrayList();
-		int xPathCount=WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP + GAMES_XP);
-		for(int i=1; i <= xPathCount; i++){
+		for(int i=1; i <= WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP + GAMES_XP); i++){
 			gameIDs.add(getGameName(i));
 		}
 		return gameIDs;
@@ -298,27 +298,27 @@ public class GamesPortletPage extends AbstractPortalPage {
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
 
-	public GameInfoPopup clickInfo(){
-		ArrayList<String> checkedGames=null;
-		String gameId=null;
-		int gameCount = WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP+GAMES_XP);
-		for(int i=1; i <= gameCount; i++){
-			gameId = getGameName(i);
-			if(checkedGames == null || (checkedGames != null && !checkedGames.contains(gameId))){
-				GameElement gameElement=new GameElement(gameId);
-				if(gameElement.isInfoPresent()){
-					gameElement.clickInfo();
-					break;
-				}else{
-					checkedGames.add(gameId);
-				}
-			}
-			if(i == RETRIES){
-                AbstractTest.failTest("No Info buttons found");
-			}
-		}
-		return new GameInfoPopup(gameId);
-	}
+//	public GameInfoPopup clickInfo(){
+//		ArrayList<String> checkedGames=null;
+//		String gameId=null;
+//		int gameCount = WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP+GAMES_XP);
+//		for(int i=1; i <= gameCount; i++){
+//			gameId = getGameName(i);
+//			if(checkedGames == null || (checkedGames != null && !checkedGames.contains(gameId))){
+//				GameElement gameElement=new GameElement(gameId);
+//				if(gameElement.isInfoPresent()){
+//					gameElement.clickInfo();
+//					break;
+//				}else{
+//					checkedGames.add(gameId);
+//				}
+//			}
+//			if(i == RETRIES){
+//                AbstractTest.failTest("No Info buttons found");
+//			}
+//		}
+//		return new GameInfoPopup(gameId);
+//	}
 
 	public boolean isDemoPresent(){
 		boolean isDemoPresent=false;
@@ -342,12 +342,16 @@ public class GamesPortletPage extends AbstractPortalPage {
 	}
 
 	private String getCategoryXpath (String categoryURL) {
-		return TAB_CATEGORY_XP +"'" + categoryURL + "']";
+		return TAB_CATEGORY_XP.replace(PLACEHOLDER, categoryURL);
 	}
 
-	public boolean isCategoryTabPresent(String categoryURL){
-		return WebDriverUtils.isVisible(getCategoryXpath(categoryURL));
+	public boolean isCategoryTabPresent(String name){
+		return WebDriverUtils.isVisible(getCategoryXpath(name), 1);
 	}
+
+    public boolean isCategoryTabPresent(GameCategories category){
+        return WebDriverUtils.isVisible(getCategoryXpath(category.getUrl()), 1);
+    }
 
 	public boolean topCategoryMenuIsPresent(){
 		return WebDriverUtils.isVisible(MENU_CATEGORY_TABS_TOP_XP, 0);
@@ -528,7 +532,8 @@ public class GamesPortletPage extends AbstractPortalPage {
     }
 
     private void waitForGamesLoad(){
-        WebDriverUtils.waitForNumberOfElements("//div[contains(@class, 'pt-items')]/ul", 1);
+        WebDriverUtils.waitFor(3000);
+//        WebDriverUtils.waitForNumberOfElements("//div[contains(@class, 'pt-items')]/ul", 1);
     }
 
     //sort by
@@ -547,5 +552,18 @@ public class GamesPortletPage extends AbstractPortalPage {
 
     private boolean isSortByOpened(){
         return WebDriverUtils.isVisible(DROPDOWN_SORT_BY_OPENED_XP, 0);
+    }
+
+    public void assertCategoryFirst(GameCategories category) {
+        AbstractTest.assertEquals(category.getUrl(), WebDriverUtils.getElementText(CATEGORY_XP + "[1]"), "Category first");
+    }
+
+    public void assertCategoryLast(GameCategories category) {
+        AbstractTest.assertEquals(category.getUrl(), WebDriverUtils.getElementText(CATEGORY_XP + "["+getNumberOfCategories()+"]"), "Category last");
+
+    }
+
+    private int getNumberOfCategories() {
+        return WebDriverUtils.getXpathCount(CATEGORY_XP);
     }
 }

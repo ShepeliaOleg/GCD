@@ -1,13 +1,14 @@
 import enums.ConfiguredPages;
+import enums.GameCategories;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.gamesPortlet.*;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.DataContainer;
 
 public class GamesPortletTest extends AbstractTest {
 
@@ -926,18 +927,50 @@ public class GamesPortletTest extends AbstractTest {
     /*16.2. Player removes games from favorites*/
 	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
 	@Test(groups = {"regression"})
-	public void gamesCanBeAddedToFavouritesOnlyPortletAndRemoved(){
-		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesStyleOne, DataContainer.getUserData().getRegisteredUserData());
-		final String gameID = gamesPortletPage.getRandomGameName();
+	public void gamesCanBeAddedToFavouritesCategoryAndRemoved(){
+		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
+		final String gameID = gamesPortletPage.getRandomGameID();
 		GameElement gameElement = new GameElement(gameID);
-		gameElement.clickFavourite();
+		gameElement.favourite();
         assertTrue(gameElement.isFavouriteActive(), "Is favorite");
-        NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
+        gamesPortletPage.clickCategoryTab(GameCategories.favourites);
 		gameElement = new GameElement(gameID);
-		gameElement.clickFavouriteActive();
-		gamesPortletPage = new GamesPortletPage();
+		gameElement.unFavourite();
         assertFalse(gamesPortletPage.isGamePresent(gameID), "is still favorite");
 	}
+
+    @Test(groups = {"regression"})
+    public void favouritesCategoryPlayerFirst(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
+        assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+        gamesPortletPage.assertCategoryFirst(GameCategories.favourites);
+    }
+
+    @Test(groups = {"regression"})
+    public void favouritesCategoryPlayerLast(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
+        assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+        gamesPortletPage.assertCategoryLast(GameCategories.favourites);
+    }
+
+    @Test(groups = {"regression"})
+    public void favouritesNoCategoryPlayer(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesNoCategory);
+        assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+    }
+
+    @Test(groups = {"regression"})
+    public void favouritesCategoryGuest(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesFavourites);
+        assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+    }
+
+    @Test(groups = {"admin"})
+    public void favouritesCategoryAdmin(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.gamesFavourites);
+        assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+
+    }
 //
 //	/*22. Switching between Item and gamesList view*/
 //	@Test(groups = {"regression"})

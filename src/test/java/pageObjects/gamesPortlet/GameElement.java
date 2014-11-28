@@ -12,7 +12,6 @@ public class GameElement extends AbstractPortalPage{
 	private String ROOT_GAME;
 	private String buttonPlayReal;
 	private String buttonPlayDemo;
-	private String buttonFavourites;
 	private String buttonFavouritesActive;
 	private String buttonInfo;
 	private String labelGameTitle;
@@ -26,8 +25,6 @@ public class GameElement extends AbstractPortalPage{
 		ROOT_GAME=				"//*[@data-key='" + gameID + "']";
 		buttonPlayReal=			ROOT_GAME + "//*[contains(@class, 'btn_type_play')]";
 		buttonPlayDemo=			ROOT_GAME + "//*[contains(@class, 'btn_type_play-demo')]";
-		buttonFavourites=		ROOT_GAME + "//a[contains(@class, 'games-favorite')]";
-		buttonFavouritesActive=	ROOT_GAME + "//a[contains(@class, 'games-favorite active')]";
 		buttonInfo=				ROOT_GAME + "//a[@class='btn info']";
 		labelGameTitle=			ROOT_GAME + "//a[@class='launcher ']";
 		image=					ROOT_GAME + "//img";
@@ -86,26 +83,31 @@ public class GameElement extends AbstractPortalPage{
 		WebDriverUtils.click(labelGameTitle);
 	}
 
-	public void clickFavourite(){
-		WebDriverUtils.click(buttonFavourites);
-		WebDriverUtils.waitFor();
-	}
+	public void favourite(){
+        StartGamePopup startGamePopup = gameStartPopup();
+        startGamePopup.favourite();
+        startGamePopup.closePopup();
+    }
 
-	public void clickFavouriteActive(){
-		WebDriverUtils.click(buttonFavouritesActive);
-		WebDriverUtils.waitFor();
-	}
+    public void unFavourite(){
+        StartGamePopup startGamePopup = gameStartPopup();
+        startGamePopup.unFavourite();
+        startGamePopup.closePopup();
+    }
+
+    private StartGamePopup gameStartPopup(){
+        WebDriverUtils.click(ROOT_GAME);
+        return new StartGamePopup();
+    }
 
 	public boolean isFavouriteActive(){
-		return WebDriverUtils.isVisible(buttonFavouritesActive);
+        StartGamePopup startGamePopup = gameStartPopup();
+        boolean result = startGamePopup.isFavourite();
+        startGamePopup.closePopup();
+        return result;
 	}
 
-	public GameInfoPopup clickInfo(){
-		WebDriverUtils.click(buttonInfo);
-		return new GameInfoPopup(getGameId());
-	}
-
-	public boolean isNew(){
+    public boolean isNew(){
 		return WebDriverUtils.isVisible(divNew);
 	}
 

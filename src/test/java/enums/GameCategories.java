@@ -20,7 +20,9 @@ public enum GameCategories {
     groupTop(new GameCategories[]{cat1No, cat2No, cat1, cat2}),
     groupSub1(new GameCategories[]{cat1SubA, cat1SubB, cat1SubC}),
     groupSub2(new GameCategories[]{cat2SubA, cat2SubB, cat2SubC, cat2SubD}),
-    groupAll(new GameCategories[]{cat1No, cat2No, cat1, cat2});
+    groupAll(new GameCategories[]{cat1No, cat2No, cat1, cat2}),
+    all("/all", ""),
+    favourites("Favorites", "");
 
     private final ArrayList<String> urls;
     private final ArrayList<String> games;

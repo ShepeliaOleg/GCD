@@ -31,12 +31,10 @@ public class AdminPage extends AbstractPortalPage {
     }
 
     public AbstractPortalPage loginAdmin() {
-        while(WebDriverUtils.isVisible(FIELD_USERNAME_XP, 0)) {
-            fillUsername();
-            fillPassword();
-            clickLogin();
-            WebDriverUtils.waitFor();
-        }
+        fillUsername();
+        fillPassword();
+        clickLogin();
+        WebDriverUtils.waitFor();
         return waitForAdminLogin();
     }
 

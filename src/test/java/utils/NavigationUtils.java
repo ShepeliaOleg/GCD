@@ -109,6 +109,8 @@ public class NavigationUtils{
             case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
             case gamesFavourites:
+            case gamesFavouritesNoCategory:
+            case gamesFavouritesCategoryFirst:
             case gamesList:
             case gamesMinimum:
             case gamesNavigationStyleNone:

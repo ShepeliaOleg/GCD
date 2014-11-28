@@ -27,7 +27,7 @@ public class RegistrationTest extends AbstractTest{
 	}
 
     /*1. Valid user registration*/
-    @Test(groups = {"registration"})
+    @Test(groups = {"registration","regression"})
     public void validInternalUserRegistration() {
         UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         HomePage homePage = PortalUtils.registerUser(userData);
@@ -35,7 +35,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*Copy paste email*/
-    @Test(groups = {"registration"})
+    @Test(groups = {"registration","regression"})
     public void copyPasteEmail(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
@@ -49,7 +49,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*Copy paste password*/
-    @Test(groups = {"registration"})
+    @Test(groups = {"registration","regression"})
     public void copyPastePassword(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
@@ -61,7 +61,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*Copy paste password*/
-    @Test(groups = {"registration", "mobile"})
+    @Test(groups = {"registration", "mobile","regression"})
     public void navigationBetweenSteps(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
@@ -70,7 +70,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*Click next on every step without filled data, click submit without filled data*/
-    @Test(groups = {"registration", "mobile"})
+    @Test(groups = {"registration", "mobile","regression"})
     public void emptyRegisterAttempts(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -84,7 +84,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /* Frozen user registration*/
-    @Test(groups = {"registration"})
+    @Test(groups = {"registration","regression"})
     public void frozenUserRegistration() {
         UserData userData = DataContainer.getUserData().getFrozenUserData();
         PortalUtils.registerUser(userData, Page.registrationPage);
