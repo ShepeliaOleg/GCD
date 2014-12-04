@@ -3,16 +3,15 @@ package pageObjects.admin;
 import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
 
-public class AdminPage extends AbstractPortalPage {
+public class AdminPageGuest extends AbstractPortalPage {
 
     private final static String ROOT_XP = "//*[@class='login-admin-portlet']";
-    public final static String DOCKBAR_XP = "//*[@id='dockbar']";
     private final static String FIELD_USERNAME_XP = "//*[@id='_58_login']";
     private final static String FIELD_PASSWORD_XP = "//*[@id='_58_password']";
     private final static String BUTTON_LOGIN_XP = ROOT_XP+"//input[@class='btn']";
-    private final static String BUTTON_LOGOUT_XP = "//*[@class='sign-out']";
 
-    public AdminPage(){
+
+    public AdminPageGuest(){
         super(new String[]{ROOT_XP});
     }
 
@@ -30,21 +29,19 @@ public class AdminPage extends AbstractPortalPage {
 //        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, getAdminUserData().getAdminUsername(), 100);
     }
 
-    public AbstractPortalPage loginAdmin() {
-        fillUsername();
-        fillPassword();
-        clickLogin();
-        WebDriverUtils.waitFor();
+    public AdminPageAdmin loginAdmin() {
+        while(WebDriverUtils.isVisible(FIELD_USERNAME_XP, 0)) {
+            fillUsername();
+            fillPassword();
+            clickLogin();
+            WebDriverUtils.waitFor();
+        }
         return waitForAdminLogin();
     }
 
-    public AbstractPortalPage waitForAdminLogin(){
-        WebDriverUtils.waitForElement(DOCKBAR_XP);
-        return new AbstractPortalPage();
-    }
-
-    public static void clickLogout(){
-        WebDriverUtils.click(BUTTON_LOGOUT_XP);
+    public AdminPageAdmin waitForAdminLogin(){
+        WebDriverUtils.waitForElement(AdminPageAdmin.DOCKBAR_XP);
+        return new AdminPageAdmin();
     }
 
 }

@@ -6,9 +6,10 @@ import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.PendingWithdrawPage;
 import pageObjects.account.TransactionHistoryPage;
+import pageObjects.admin.AdminPageGuest;
 import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
-import pageObjects.admin.AdminPage;
+import pageObjects.admin.AdminPageAdmin;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
 import pageObjects.bingoSchedule.BingoSchedulePage;
@@ -78,7 +79,12 @@ public class NavigationUtils{
 
     public static AbstractPageObject getConfiguredPageObject(ConfiguredPages configuredPages) {
         switch (configuredPages){
-            case admin:                                         return new AdminPage();
+            case admin:
+                if (new AbstractPortalPage().isAdminLoggedIn()) {
+                    return new AdminPageAdmin();
+                } else {
+                    return new AdminPageGuest();
+                }
             case balance:                                       return new BalancePage();
             case banner5seconds:
             case bannerGame:
@@ -111,8 +117,6 @@ public class NavigationUtils{
             case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
             case gamesFavourites:
-            case gamesFavouritesNoCategory:
-            case gamesFavouritesCategoryFirst:
             case gamesList:
             case gamesMinimum:
             case gamesNavigationStyleNone:
@@ -150,7 +154,7 @@ public class NavigationUtils{
             case referAFriend:                                  return new ReferAFriendPage();
             case responsibleGaming:                             return new ResponsibleGamingPage();
             case selfExclusion:                                 return new SelfExcludePage();
-            case transactionHistory:                           return new TransactionHistoryPage();
+            case transactionHistory:                            return new TransactionHistoryPage();
             case bannerWebContentGame:
             case webContentGame:                                return new WebContentPage();
             case withdraw:                                      return new WithdrawPage();
@@ -204,9 +208,6 @@ public class NavigationUtils{
                 break;
             case admin:
                 if (!abstractPortalPage.isAdminLoggedIn()) {
-                    if (PortalUtils.isLoggedIn()) {
-                        PortalUtils.logout();
-                    }
                     PortalUtils.loginAdmin();
                     reload = true;
                 }

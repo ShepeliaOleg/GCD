@@ -1,15 +1,20 @@
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
+import enums.SettingsTab;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.admin.settings.SiteConfigurationPopup;
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import pageObjects.pageInPopup.PageInPopupPage;
 import pageObjects.pageInPopup.PageInPopupPopup;
 import pageObjects.registration.AdultContentPopup;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class GeneralTest extends AbstractTest {
 
@@ -83,4 +88,64 @@ public class GeneralTest extends AbstractTest {
         NavigationUtils.getConfiguredPageObject(backgroundPage);
         assertUrl(popupPage.toString(), "Page in popup url.");
     }
+
+    /*B-12847 404 custom page*/
+    /*1*/
+    @Test(groups = {"regression, admin"})
+    public void redirect404toRoot() {
+        SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
+        siteConfigurationPopup.setUseCdnState(false);
+        siteConfigurationPopup.setDirectToRoot();
+        NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        WebDriverUtils.navigateToInternalURL("not_existing_page");
+        new HomePage();
+    }
+
+    /*2, 7*/
+    @Test(groups = {"regression, admin"})
+    public void redirect404toPageLanguages(){
+        SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
+        siteConfigurationPopup.setUseCdnState(false);
+        siteConfigurationPopup.setDirectToPage("/support");
+        NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        WebDriverUtils.navigateToInternalURL("not_existing_page");
+        AbstractPortalPage abstractPortalPage = new AbstractPortalPage();
+        String defaultLanguageCode = DataContainer.getDefaults().getDefaultLanguage();
+        assertEquals(DataContainer.getDriverData().getCurrentUrl() + "support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for default language.");
+        for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
+            String shortLanguageCode = DataContainer.getDefaults().getLanguageUrlByLanguageCode(languageCode);
+            abstractPortalPage.setLanguage(languageCode);
+            WebDriverUtils.navigateToInternalURL("not_existing_page");
+            WebDriverUtils.waitFor();
+            if (!languageCode.equals(defaultLanguageCode)) {
+                assertEquals(DataContainer.getDriverData().getCurrentUrl() + shortLanguageCode + "/support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for " + languageCode + " language.");
+            }
+
+        }
+    }
+
+    /*3*/
+    @Test(groups = {"regression, admin"})
+    public void redirect404toUrl() {
+        final String externalUrl = "http://www.wikipedia.org/";
+        SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
+        siteConfigurationPopup.setDirectToUrl(externalUrl);
+        NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        WebDriverUtils.navigateToInternalURL("not_existing_page");
+        WebDriverUtils.waitForPageToLoad();
+        assertEquals(externalUrl, WebDriverUtils.getCurrentUrl(), "Redirect to external URL.");
+    }
+
+    /*4*/
+    @Test(groups = {"public"})
+    public void redirect404toPageWithUseCdn() {
+        SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
+        siteConfigurationPopup.setUseCdnState(true);
+        siteConfigurationPopup.setDirectToPage("/support");
+        NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        WebDriverUtils.navigateToInternalURL("not_existing_page");
+        WebDriverUtils.waitForPageToLoad();
+        assertEquals(DataContainer.getDriverData().getCdnNode() + "support", WebDriverUtils.getCurrentUrl(), "Redirect to external URL.");
+    }
+
 }

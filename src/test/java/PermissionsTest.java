@@ -83,13 +83,13 @@ public class PermissionsTest extends AbstractTest{
         WebDriverUtils.waitFor();
         String role = page.toString().replace("permissions_page_", "").replace("_", " and ");
         if (visibility) {
-            assertEquals(DataContainer.getDriverData().getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
+            assertEquals(DataContainer.getDriverData().getCurrentUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
             assertTextVisible(text, "Portlet on page visible for " + role + " is displayed for " + condition.toString() + ".");
         } else if (redirect) {
-                assertEquals(DataContainer.getDriverData().getBaseUrl(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is not displayed for " + condition.toString() + ".");
+                assertEquals(DataContainer.getDriverData().getCurrentUrl(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is not displayed for " + condition.toString() + ".");
                 assertTextInvisible(text, "Portlet on page visible for " + role + " is not displayed for " + condition.toString() + ".");
             } else {
-                assertEquals(DataContainer.getDriverData().getBaseUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
+                assertEquals(DataContainer.getDriverData().getCurrentUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
                 new LoginPopup();
             }
     }

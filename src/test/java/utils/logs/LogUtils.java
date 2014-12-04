@@ -20,7 +20,7 @@ public class LogUtils {
         timestamp = result;
 		try{
             WebDriver logDriver = WebDriverFactory.getLogDriver();
-			WebDriverUtils.navigateToInternalURL(logDriver, DataContainer.getDriverData().getBaseUrl(), "html/logs.txt");
+			WebDriverUtils.navigateToInternalURL(logDriver, DataContainer.getDriverData().getCurrentUrl(), "html/logs.txt");
 			String fullLog = WebDriverUtils.getElementText(logDriver, "//pre");
 			Pattern pattern = Pattern.compile(TIMESTAMP_REGEXP);
 			Matcher matcher = pattern.matcher(fullLog);

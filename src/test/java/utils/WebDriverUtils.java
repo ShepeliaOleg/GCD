@@ -9,13 +9,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pageObjects.core.AbstractPortalPopup;
 import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
 import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -710,7 +708,7 @@ public class WebDriverUtils{
 	}
 
     public static String getCurrentLanguageCode(){
-        String leftover = getCurrentUrl(WebDriverFactory.getPortalDriver()).replace(DataContainer.getDriverData().getBaseUrl(), "");
+        String leftover = getCurrentUrl(WebDriverFactory.getPortalDriver()).replace(DataContainer.getDriverData().getCurrentUrl(), "");
         int index = leftover.indexOf("/");
         if(index!=-1){
             return leftover.substring(0, index);
@@ -728,7 +726,7 @@ public class WebDriverUtils{
     }
 
 	public static void navigateToInternalURL(WebDriver webDriver, String relativeURL){
-		String url=DataContainer.getDriverData().getBaseUrl() + relativeURL;
+		String url=DataContainer.getDriverData().getCurrentUrl() + relativeURL;
         navigateToURL(webDriver, url);
 	}
 
@@ -837,7 +835,7 @@ public class WebDriverUtils{
     }
 
     public static String getDomain() {
-        String baseUrl = DataContainer.getDriverData().getBaseUrl();
+        String baseUrl = DataContainer.getDriverData().getCurrentUrl();
         int firstDotIndex = baseUrl.indexOf(".");
         return baseUrl.substring(firstDotIndex).replace("/", "").replace(":8080", "");
     }

@@ -3,7 +3,7 @@ package pageObjects.core;
 import enums.Licensee;
 import enums.Page;
 import pageObjects.account.MyAccountPage;
-import pageObjects.admin.AdminPage;
+import pageObjects.admin.AdminPageAdmin;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.footer.Footer;
@@ -65,7 +65,7 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public boolean isAdminLoggedIn(){
-        return WebDriverUtils.isVisible(AdminPage.DOCKBAR_XP, 0);
+        return WebDriverUtils.isVisible(AdminPageAdmin.DOCKBAR_XP, 0);
     }
 
     public boolean isUsernameDisplayed(String username){
@@ -86,7 +86,7 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public AbstractPortalPage logoutAdmin(){
-        AdminPage.clickLogout();
+        AdminPageAdmin.clickLogout();
         return waitForAdminLogout();
     }
 
@@ -95,7 +95,7 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public AbstractPortalPage waitForAdminLogout(){
-        WebDriverUtils.waitForElementToDisappear(AdminPage.DOCKBAR_XP, 30);
+        WebDriverUtils.waitForElementToDisappear(AdminPageAdmin.DOCKBAR_XP, 30);
         return new AbstractPortalPage();
     }
 
