@@ -2,6 +2,7 @@ package pageObjects.admin;
 
 import pageObjects.core.AbstractPortalPage;
 import utils.WebDriverUtils;
+import utils.core.DataContainer;
 
 public class AdminPageGuest extends AbstractPortalPage {
 
@@ -20,12 +21,12 @@ public class AdminPageGuest extends AbstractPortalPage {
     }
 
     private void fillUsername(){
-        WebDriverUtils.executeScript("document.getElementById('_58_login').value = 'sergii.chernyavskiy'");
+        WebDriverUtils.executeScript("document.getElementById('_58_login').value = '" + DataContainer.getAdminUserData().getAdminUsername() + "'");
 //        WebDriverUtils.inputTextToField(FIELD_USERNAME_XP, getAdminUserData().getAdminUsername(), 100);
     }
 
     private void fillPassword(){
-        WebDriverUtils.executeScript("document.getElementById('_58_password').value = '9875321Res'");
+        WebDriverUtils.executeScript("document.getElementById('_58_password').value = '" + DataContainer.getAdminUserData().getAdminPassword() + "'");
 //        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, getAdminUserData().getAdminUsername(), 100);
     }
 

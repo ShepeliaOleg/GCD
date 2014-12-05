@@ -91,7 +91,7 @@ public class GeneralTest extends AbstractTest {
 
     /*B-12847 404 custom page*/
     /*1*/
-    @Test(groups = {"regression, admin"})
+    @Test(groups = {"admin"})
     public void redirect404toRoot() {
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
         siteConfigurationPopup.setUseCdnState(false);
@@ -102,7 +102,7 @@ public class GeneralTest extends AbstractTest {
     }
 
     /*2, 7*/
-    @Test(groups = {"regression, admin"})
+    @Test(groups = {"admin"})
     public void redirect404toPageLanguages(){
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
         siteConfigurationPopup.setUseCdnState(false);
@@ -125,7 +125,7 @@ public class GeneralTest extends AbstractTest {
     }
 
     /*3*/
-    @Test(groups = {"regression, admin"})
+    @Test(groups = {"admin"})
     public void redirect404toUrl() {
         final String externalUrl = "http://www.wikipedia.org/";
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);

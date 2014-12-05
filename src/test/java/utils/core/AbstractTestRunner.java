@@ -56,7 +56,6 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
 
     @BeforeClass(alwaysRun = true)
     protected void setUp() throws Exception{
-        WebDriverFactory.initializeWebDrivers(driverData, deviceData);
         DataContainer.setAffiliateData(affiliateData);
         DataContainer.setAdminUserData(adminUserData);
         DataContainer.setDefaults(defaults);
@@ -65,6 +64,7 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
         DataContainer.setIms(iMS);
         DataContainer.setMailService(mailService);
         DataContainer.setUserData(userData);
+        WebDriverFactory.initializeWebDrivers(driverData, deviceData);
     }
 
     @BeforeMethod(alwaysRun = true)

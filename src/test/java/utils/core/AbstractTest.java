@@ -3,7 +3,6 @@ package utils.core;
 import org.testng.SkipException;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
-
 import java.util.Collection;
 
 public class AbstractTest extends AbstractTestRunner{
