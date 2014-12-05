@@ -1,15 +1,16 @@
 package utils;
 
-import enums.ConfiguredPages;
-import enums.Page;
-import enums.PlayerCondition;
-import enums.PromoCode;
+import enums.*;
 import pageObjects.HomePage;
-import pageObjects.admin.AdminPage;
+import pageObjects.admin.AdminPageAdmin;
+import pageObjects.admin.AdminPageGuest;
+import pageObjects.admin.settings.SettingsPopup;
+import pageObjects.core.AbstractLiferayPopup;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
+import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
 public class PortalUtils {
@@ -76,11 +77,49 @@ public class PortalUtils {
         return (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
     }
 
-    private static AdminPage navigateToAdmin(){
-        return (AdminPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.admin);
+    public static AdminPageGuest navigateToAdmin(){
+        return (AdminPageGuest) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.admin);
     }
 
     private static RegistrationPage navigateToRegistration() {
         return (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+    }
+
+    public static void openSettings() {
+        openSettings(SettingsTab.none);
+    }
+
+    public static AbstractLiferayPopup openSettings(SettingsTab tab) {
+        AdminPageAdmin adminPageAdmin = (AdminPageAdmin) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.admin);
+        SettingsPopup settingsPopup = adminPageAdmin.openSettings();
+        switch (tab) {
+            case siteConfiguration:
+                return settingsPopup.openSiteConfiguration();
+            case headerConfiguration:
+            case footerConfiguration:
+            case popupsConfiguration:
+            case gamesConfiguration:
+            case supportChatConfiguration:
+            case countryCurrencyConfiguration:
+            case galaxyConfiguration:
+            case mobileConfiguration:
+            case cashierConfiguration:
+            case otherConfiguration:
+            case servicesConfiguration:
+            case sessionConfiguration:
+            case dynamicTagsConfiguration:
+            case quickMenuConfiguration:
+            case portalConfiguration:
+            case cdnPurge:
+            case serverAdministration:
+            case cacheConfiguration:
+            case regulations:
+            case ssoPasOpenAPI:
+            case responsibleGaming:
+            case biIntegrationConfiguration:
+            default:
+                AbstractTest.failTest("Unexpected input in openSettings method");
+                return null;
+        }
     }
 }

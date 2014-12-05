@@ -169,7 +169,7 @@ public class Listener extends TestListenerAdapter{
 
     private String addEnv(String line){
         if(line.contains(ENV_REPLACER)){
-            line = line.replace(ENV_REPLACER, DataContainer.getDriverData().getBaseUrl());
+            line = line.replace(ENV_REPLACER, DataContainer.getDriverData().getCurrentUrl());
         }
         return line;
     }
@@ -218,7 +218,7 @@ public class Listener extends TestListenerAdapter{
 
     private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
         output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
-        output.println("<h2>Env: "+DataContainer.getDriverData().getBaseUrl()+"</h2>");
+        output.println("<h2>Env: "+DataContainer.getDriverData().getCurrentUrl()+"</h2>");
         output.println("<table border='1' style='background-color:yellow;border:1px black;width:100%;border-collapse:collapse;'>");
         output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='20%'>Area</td><td width='5%'>Status</td><td>Result</td></tr>");
         addRows(iTestContext);

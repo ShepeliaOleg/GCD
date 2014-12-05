@@ -24,7 +24,7 @@ public class LoggedInMenu extends Menu {
     private static final String HIDE_BALANCE_XP =           ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-balance')]]";
 
 	public LoggedInMenu(){
-		super(new String[]{MY_BALANCE_XP});
+		super(new String[]{BUTTON_LOGOUT_XP});
 	}
 
     public LogoutPopup clickLogout(){

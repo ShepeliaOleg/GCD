@@ -50,7 +50,7 @@ public class WebDriverFactory{
 //			e.printStackTrace();
 //		}
 		portalDriver = initializeWebDriver();
-        setServerDriver(initializeWebDriver());
+        setServerDriver(getRemoteDriver("firefox"));
 	}
 
 	private static WebDriver initializeWebDriver(){

@@ -63,7 +63,7 @@ public class AbstractTest extends AbstractTestRunner{
     }
 
     public static boolean assertUrl(String expected, String message){
-        //return assertEquals(expected, WebDriverUtils.getCurrentUrl().replace(WebDriverUtils.getBaseUrl(), ""), message);
+//        return assertEquals(expected, WebDriverUtils.getCurrentUrl().replace(WebDriverUtils.getCurrentUrl(), ""), message);
         return assertTrue(WebDriverUtils.getCurrentUrl().endsWith(expected), message);
     }
 
