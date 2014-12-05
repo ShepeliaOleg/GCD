@@ -22,6 +22,7 @@ import utils.WebDriverUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverFactory{
 
@@ -49,7 +50,7 @@ public class WebDriverFactory{
 //			e.printStackTrace();
 //		}
 		portalDriver = initializeWebDriver();
-        setServerDriver(getRemoteDriver("firefox"));
+        setServerDriver(initializeWebDriver());
 	}
 
 	private static WebDriver initializeWebDriver(){

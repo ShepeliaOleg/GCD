@@ -13,6 +13,7 @@ import utils.WebDriverUtils;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 
 public class Listener extends TestListenerAdapter{
 
@@ -87,37 +88,38 @@ public class Listener extends TestListenerAdapter{
 
     @Override
     public void onFinish(ITestContext testContext){
-        int passed = testContext.getPassedTests().getAllResults().size();
-        int failed = testContext.getFailedTests().getAllResults().size();
-        int ims = testContext.getSkippedTests().getAllResults().size();
-        int total = passed+failed+ims;
-        String classname=null;
-        if(!testContext.getPassedTests().getAllResults().isEmpty()){
-            for(ITestResult iTestResult:testContext.getPassedTests().getAllResults()){
-                classname = iTestResult.getTestClass().getName();
-                break;
-            }
-        }else if(!testContext.getFailedTests().getAllResults().isEmpty()){
-            for(ITestResult iTestResult:testContext.getFailedTests().getAllResults()){
-                classname = iTestResult.getTestClass().getName();
-                break;
-            }
-        }else if(!testContext.getSkippedTests().getAllResults().isEmpty()){
-            for(ITestResult iTestResult:testContext.getSkippedTests().getAllResults()){
-                classname = iTestResult.getTestClass().getName();
+        Set<ITestResult> passed = testContext.getPassedTests().getAllResults();
+        Set<ITestResult> failed = testContext.getFailedTests().getAllResults();
+        Set<ITestResult> skipped = testContext.getSkippedTests().getAllResults();
+        int passedCount = passed.size();
+        int failedCount = failed.size();
+        int skippedCount = skipped.size();
+        int totalCount = passedCount+failedCount+skippedCount;
+        Set<ITestResult> temp = null;
+        if(!passed.isEmpty()){
+            temp = passed;
+        }else if(!failed.isEmpty()){
+            temp = failed;
+        }else if(!skipped.isEmpty()){
+            temp = skipped;
+        }
+        String className = null;
+        if(temp != null){
+                for(ITestResult iTestResult:temp){
+                className = iTestResult.getTestClass().getName();
                 break;
             }
         }
-        if(classname!=null){
-            writeToIndex(classname, total, passed, failed, ims);
+        if(className!=null){
+            writeToIndex(className, totalCount, passedCount, failedCount, skippedCount);
             try{
-                output = new PrintWriter(outFolder+classname+".html");
+                output = new PrintWriter(outFolder+className+".html");
             }catch(Exception e){
                 e.printStackTrace();
             }
-            startHtmlPage(classname + " report");
-            output.println("<h1>Test area: "+classname+"</h1>");
-            createTable(testContext, total, passed, failed, ims);
+            startHtmlPage(className + " report");
+            output.println("<h1>Test area: "+className+"</h1>");
+            createTable(testContext, totalCount, passedCount, failedCount, skippedCount);
             endHtmlPage();
             output.flush();
             output.close();

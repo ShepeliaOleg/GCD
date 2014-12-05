@@ -21,7 +21,7 @@ public enum GameCategories {
     groupSub1(new GameCategories[]{cat1SubA, cat1SubB, cat1SubC}),
     groupSub2(new GameCategories[]{cat2SubA, cat2SubB, cat2SubC, cat2SubD}),
     groupAll(new GameCategories[]{cat1No, cat2No, cat1, cat2}),
-    all("/all", ""),
+    all("All Games", ""),
     favourites("Favorites", "");
 
     private final ArrayList<String> urls;
@@ -43,7 +43,7 @@ public enum GameCategories {
         for(GameCategories group:categories){
             games.addAll(group.getGames());
             urls.add(group.getUrl());
-        };
+        }
     }
 
     public String getUrl(){

@@ -947,6 +947,39 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     @Test(groups = {"regression"})
+    public void removeAllGamesFromCategory(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
+        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
+        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
+        gamesPortletPage.clickCategoryTab(GameCategories.all);
+        final String gameID = gamesPortletPage.getRandomGameID();
+        GameElement gameElement = new GameElement(gameID);
+        gameElement.favourite();
+        gamesPortletPage.clickCategoryTab(GameCategories.favourites);
+        gameElement.unFavourite();
+        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
+        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
+        WebDriverUtils.refreshPage();
+        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
+        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
+    }
+
+    @Test(groups = {"regression"})
+    public void removeAllGamesNotFromCategory(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
+        final String gameID = gamesPortletPage.getRandomGameID();
+        GameElement gameElement = new GameElement(gameID);
+        gameElement.favourite();
+        gameElement.unFavourite();
+        gamesPortletPage.clickCategoryTab(GameCategories.favourites);
+        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
+        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
+        WebDriverUtils.refreshPage();
+        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
+        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
+    }
+
+    @Test(groups = {"regression"})
     public void favouritesCategoryPlayerLast(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
         assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
@@ -956,6 +989,12 @@ public class GamesPortletTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void favouritesNoCategoryPlayer(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesNoCategory);
+        assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
+    }
+
+    @Test(groups = {"regression"})
+    public void favouritesNavigationsStyleNone(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesNavigationStyleNone);
         assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
     }
 

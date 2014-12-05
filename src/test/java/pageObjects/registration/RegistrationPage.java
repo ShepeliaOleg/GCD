@@ -55,7 +55,7 @@ public class RegistrationPage extends AbstractPortalPage {
     protected final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
     protected final static String LABEL_USERNAME_SUGGESTION_LINK_XP = 					"//a[@class='fn-suggestion']";
     protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
-    protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-title='Terms & Conditions']";
+    protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-article-id='TERMS-AND-CONDITIONS']";
     protected final static String LABEL_RECEIVE_PROMOTIONS_XP=							"//label[@for='subscription-checkbox']";
     public    final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
     public    final static String FIELD_PHONE_COUNTRY_CODE_MOBILE_XP=					"//*[@name='area']";
@@ -255,11 +255,6 @@ public class RegistrationPage extends AbstractPortalPage {
     }
 
     public ReadTermsAndConditionsPopup navigateToTermsAndConditions(){
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
-            // do nothing
-        }else {
-            registrationPageStepThree(DataContainer.getUserData().getRegisteredUserData());
-        }
         WebDriverUtils.click(LINK_TERMS_AND_CONDITION_XP);
         return new ReadTermsAndConditionsPopup();
     }
@@ -282,17 +277,11 @@ public class RegistrationPage extends AbstractPortalPage {
         return WebDriverUtils.getDropdownSelectedOptionText(getXpathByName(DROPDOWN_CURRENCY_NAME));
     }
 
-    public boolean getReceivePromotionsCheckboxState(UserData userData){
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
-            registrationPageStepThree(userData);
-        }
+    public boolean getReceivePromotionsCheckboxState(){
         return WebDriverUtils.getCheckBoxState(CHECKBOX_RECEIVE_BONUSES_XP);
     }
 
-    public String getReceivePromotionsCheckboxText(UserData userData){
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
-            registrationPageStepThree(userData);
-        }
+    public String getReceivePromotionsCheckboxText(){
         return WebDriverUtils.getElementText(LABEL_RECEIVE_PROMOTIONS_XP);
     }
 

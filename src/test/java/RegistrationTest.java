@@ -98,8 +98,11 @@ public class RegistrationTest extends AbstractTest{
     public void receivePromotionOffersDefaultState(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertTrue(registrationPage.getReceivePromotionsCheckboxState(userData), "Promotional checkbox is checked by default");
-        assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(userData), "Promotional offers checkbox text");
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
+            registrationPage.registrationPageStepThree(userData);
+        }
+        assertTrue(registrationPage.getReceivePromotionsCheckboxState(), "Promotional checkbox is checked by default");
+        assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(), "Promotional offers checkbox text");
     }
 
 	/*#2. Registration with receive bonuses check box checked*/
@@ -198,6 +201,9 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void openTermsAndConditionsPopup(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
+            registrationPage = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRegisteredUserData());
+        }
 		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
 	}
 

@@ -48,6 +48,7 @@ public enum ConfiguredPages{
     gamesNavigationStyleNone ("navigation_styles_none"),
     gamesNavigationStyleRefineBy ("navigation_styles_refine-by"),
     gamesNavigationStyleCategoryTabsTop ("navigation_styles_category_tabs_top"),
+    gamesNavigationStyleCategoryTabsBot ("navigation_styles_category_tabs_bot"),
     gamesNavigationStyleCategoryTabsLeft ("navigation_styles_category_tabs_left"),
     gamesNavigationStyleCategoryTabsRefineByTop ("navigation_styles_category_tabs_refine_by_top"),
     gamesNavigationStyleCategoryTabsRefineByLeft ("navigation_styles_category_tabs_refine_by_left"),

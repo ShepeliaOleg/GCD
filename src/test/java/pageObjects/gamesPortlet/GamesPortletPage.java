@@ -20,7 +20,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String TAG_JACKPOT=							"data-game-jackpot";
 	private static final String TICKER_JACKPOT_XP= 						"//span[@class='game-jackpot']";
 	private static final String ROOT_XP=								"//*[contains(@class, 'portlet-games-info')]";
-	private static final String GAMES_XP=								"//*[contains(@class, 'fn-game-item')]";
+	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
     private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
     private static final String FIRST_PAGE_GAMES_XP=                    BEGINNING_GAMES_XP + GAMES_XP;
 	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
@@ -65,10 +65,19 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final int RETRIES=50;
 
 	public GamesPortletPage(){
-		super(new String[]{ROOT_XP, GAMES_XP});
+		super(new String[]{ROOT_XP});
 	}
 
 	// General
+
+    public int getNumberOfGames(){
+        return WebDriverUtils.getXpathCount(GAMES_XP);
+    }
+
+    public boolean isNoGamesMessageVisible(){
+        return WebDriverUtils.isVisible("//*[contains(text(), 'You have no games in favourites')]", 2);
+    }
+
 	public ArrayList<String> getAllGameNames(){
 		ArrayList<String> gameIDs=new ArrayList();
 		for(int i=1; i <= WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP + GAMES_XP); i++){

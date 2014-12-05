@@ -18,7 +18,7 @@ public class IMSLoginDatabasePage extends AbstractServerPage {
     private static final String BUTTON_SEARCH_XP =		        "//*[@id='search-submit']";
 	private static final String LOADER_POPUP_XP = 				"//*[@id='progressBarFrame_c' and contains(@style, 'visible')]";
 
-	private static final String CASINO = 						"800075";
+	private static final String CASINO = 						"810013";
 	private static final String CLIENT_PLATFORM = 				"mobile";
 	private static final String CLIENT_TYPE = 					"casino";
 
