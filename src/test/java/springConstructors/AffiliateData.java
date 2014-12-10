@@ -104,12 +104,12 @@ public class AffiliateData {
         this.creferrer2 = creferrer2;
     }
 
-    public String getCrefererSingle() {
+    public String getCreferrerSingle() {
         return creferrer1;
     }
 
-    private String getCrefererMultiple() {
-        return creferrer1 + SEMICOLON + creferrer2;
+    private String getCreferrerMultiple() {
+        return creferrer1 + ASCII_CODE_SEMICOLON + creferrer2;
     }
 
     public String getCreferrerRegistrationPortletProperty() {
@@ -133,12 +133,12 @@ public class AffiliateData {
     }
 
     public AffiliateData getAffiliateDataSingle() {
-        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCrefererSingle());
+        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCreferrerSingle());
     }
 
 
     public AffiliateData getAffiliateDataMultiple() {
-        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCrefererMultiple());
+        return new AffiliateData(getAdvertiser(), getBanner(), getProfile(), getUrl(), getCreferrerMultiple());
     }
 
     public void addCreferrer(String creferrer) {

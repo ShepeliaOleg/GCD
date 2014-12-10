@@ -146,7 +146,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getProfile() + "," + affiliateDataSingle.getCrefererSingle());
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getProfile() + "," + affiliateDataSingle.getCreferrerSingle());
         affiliateCookie.add();
         registrationPage.registerUser(userData);
         IMSUtils.validateNoAffiliate(userData.getUsername());
