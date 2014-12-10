@@ -36,9 +36,13 @@ public class WithdrawPage extends CashierPage {
         withdrawConfirmationPopup.clickAccept();
     }
 
-    public void withdrawAddingAccount(PaymentMethod type, String amount){
+    public void withdrawAddingAccount(PaymentMethod type, String amount, String account){
         addAccountByType(type);
-        withdrawSuccessful(type, amount, type.getSecondaryAccount());
+        withdrawSuccessful(type, amount, account);
+    }
+
+    public void withdrawAddingAccount(PaymentMethod type, String amount){
+        withdraw(type, amount, type.getSecondaryAccount());
     }
 
     public void cancelWithdraw(PaymentMethod type, String amount){

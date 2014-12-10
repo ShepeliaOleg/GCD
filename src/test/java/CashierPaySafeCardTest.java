@@ -49,7 +49,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
         paySafeCardDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
-        new OkBonusPopup().closePopup();
+        new OkBonusPopup().clickAccept();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
     }
 

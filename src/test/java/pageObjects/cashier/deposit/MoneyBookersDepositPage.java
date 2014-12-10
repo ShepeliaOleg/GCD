@@ -38,7 +38,7 @@ public class MoneyBookersDepositPage extends AbstractPortalPage {
 
     private String getAmount(){
         String text = WebDriverUtils.getElementText(LABEL_AMOUNT_XP);
-        return text.replace("Payment of ", "").substring(0, text.indexOf("EUR"));
+        return text.replace("Payment of ", "").substring(0, text.indexOf(" "));
     }
 
     public void assertAmount(String amount) {
