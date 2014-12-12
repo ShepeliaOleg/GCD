@@ -22,10 +22,10 @@ public class RegistrationPageStepTwo extends RegistrationPage {
 	}
 
     public RegistrationPageStepThree fillDataAndSubmit(UserData userData){
+        fillCountry(userData.getCountry());
         fillAddress(userData.getAddress());
         fillCity(userData.getCity());
         fillPostCode(userData.getPostCode());
-        fillCountry(userData.getCountry());
         fillPhoneAreaCode(userData.getMobileAreaCode());
         fillMobile(userData.getMobile());
 //        fillPhone(userData.getPhone());
