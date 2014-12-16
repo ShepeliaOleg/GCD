@@ -1,8 +1,8 @@
-package pageObjects.account;
-
 import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.account.PendingWithdrawPage;
+import pageObjects.account.WithdrawLoadMoreNotificationPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
