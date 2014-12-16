@@ -20,19 +20,11 @@ public class RegistrationTest extends AbstractTest{
 	/*POSITIVE*/
 	
 	/*1. Valid user registration*/
-	@Test(groups = {"registration","smoke"})
+	@Test(groups = {"registration","smoke","regression"})
 	public void validUserRegistration() {
         HomePage homePage = PortalUtils.registerUser();
         validateTrue(homePage.isLoggedIn(), "User is logged in");
 	}
-
-    /*1. Valid user registration*/
-    @Test(groups = {"registration","regression"})
-    public void validInternalUserRegistration() {
-        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
-        HomePage homePage = PortalUtils.registerUser(userData);
-        validateTrue(homePage.isLoggedIn(), "User is logged in");
-    }
 
     /*Copy paste email*/
     @Test(groups = {"registration","regression"})
@@ -172,7 +164,7 @@ public class RegistrationTest extends AbstractTest{
     /*#10. After-registration redirect*/
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationRedirect(){
-		PortalUtils.registerUser(DataContainer.getUserData().getRandomUserData());
+		PortalUtils.registerUser();
         AfterRegistrationPage afterRegistrationPage = new AfterRegistrationPage();
 	}
 

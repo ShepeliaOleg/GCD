@@ -16,7 +16,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     public final static String BUTTON_PREVIOUS_XP = TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]";
     public final static String OFF_POPUP_XP =          "//*[contains(@class, 'fn-footer-wrapper')]";
     public final static String TITLE_XP =        "//*[@class='popup-modal__title']";
-    private final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
+    public final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
 
     private final static int OFFSET =               20;
 

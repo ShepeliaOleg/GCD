@@ -98,7 +98,7 @@ public class RegistrationValidationTest extends AbstractTest{
     @Test(groups = {"registration","regression", "desktop"})
     public void requiredFieldsLabelsMarkedWithStar(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        validateTrue(registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect(), "T&C validation error visible");
+        validateTrue(registrationPage.registrationPageAllSteps().labelsRequiredMarkingCorrect(), "Required fields marked with asterisks");
     }
 
     @Test(groups = {"registration","regression","validation"})

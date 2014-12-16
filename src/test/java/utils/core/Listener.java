@@ -32,7 +32,7 @@ public class Listener extends TestListenerAdapter{
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
             "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
             "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest",
-            "CashierPaySafeCardTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
+            "CashierPaySafeCardTest", "CashierPendingWithdrawTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
             "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest","LoginValidationTest",
             "PermissionsTest", "PushMessagesBonusTest","LoginMessagesTest", "ReferAFriendTest","RegistrationAffiliateTest",

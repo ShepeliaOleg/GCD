@@ -66,7 +66,6 @@ public class WithdrawPage extends CashierPage {
 
     public void withdrawExpired(PaymentMethod card, String amount) {
         processPaymentByType(card, amount, true);
-
     }
 
     /*PAYPAL*/
