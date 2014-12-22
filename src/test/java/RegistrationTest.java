@@ -186,7 +186,7 @@ public class RegistrationTest extends AbstractTest{
 	@Test(groups = {"registration","regression"})
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        assertEqualsCollections(DataContainer.getDefaults().getCurrencyNameList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
+        assertEqualsCollections(DataContainer.getDefaults().getCurrencyCodesList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
     /*#13. T&C web content is shown when clicking on T&C link*/

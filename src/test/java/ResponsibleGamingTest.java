@@ -92,9 +92,9 @@ public class ResponsibleGamingTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         String currency = userData.getCurrencySign();
         ResponsibleGamingPage responsibleGamingPage= (ResponsibleGamingPage) NavigationUtils.navigateToPage(ConfiguredPages.responsibleGaming);
-		assertTrue(responsibleGamingPage.getDailyLimitCurrency().startsWith(currency),"currencySignDaily.startsWith('"+currency+"')");
-        assertTrue(responsibleGamingPage.getWeeklyLimitCurrency().startsWith(currency),"currencySignWeekly.startsWith('"+currency+"')");
-        assertTrue(responsibleGamingPage.getMonthlyLimitCurrency().startsWith(currency), "currencySignMonthly.startsWith('"+currency+"')");
+        assertEquals(currency, responsibleGamingPage.getDailyLimitCurrency(),   "Daily currency sign.");
+        assertEquals(currency, responsibleGamingPage.getWeeklyLimitCurrency(),  "Weekly currency sign.");
+        assertEquals(currency, responsibleGamingPage.getMonthlyLimitCurrency(), "Monthly currency sign.");
 	}
 
 //    /* 10. Set time per session */

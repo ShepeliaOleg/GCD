@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Defaults{
-    List<String> countryList;
-    List<String> currencyList;
-    List<String> languageList;
-    String defaultCountry;
-    String defaultCurrency;
-    String defaultLanguage;
+    static List<String> countryList;
+    static List<String> currencyList;
+    static List<String> languageList;
+    static String defaultCountry;
+    static String defaultCurrency;
+    static String defaultLanguage;
 
     public String getDefaultCountry() {
         return defaultCountry;
@@ -30,7 +30,7 @@ public class Defaults{
         return languageList;
     }
 
-    public List getCurrencyList(){
+    public static List getCurrencyList(){
         return currencyList;
     }
 
@@ -81,7 +81,7 @@ public class Defaults{
         return getList(getLanguageList(), 0);
     }
 
-    public List getCurrencyNameList(){
+    public List getCurrencyCodesList(){
         return getList(getCurrencyList(), 0);
     }
 
@@ -119,13 +119,17 @@ public class Defaults{
         return getCountryCode((String)RandomUtils.getRandomElementsFromList(getCountryList(),1).get(0));
     }
 
-    private String getPartByIndex(String input, int partIndex) {
+    private static String getPartByIndex(String input, int partIndex) {
         String[] splitted = input.split("\\@");
         return splitted[partIndex];
     }
 
     private String getCountryCode(String country) {
         return getPartByIndex(country, 0);
+    }
+
+    private static String getCurrencyCode(String currency) {
+        return getPartByIndex(currency, 0);
     }
 
     private String getCountryName(String country) {
@@ -178,12 +182,22 @@ public class Defaults{
 
     private String getCountryCurrencyLogical(String country) {
         String currency = getCountryCurrency(country);
-        List<String> allowedCurrencies = getCurrencyNameList();
+        List<String> allowedCurrencies = getCurrencyCodesList();
         if (allowedCurrencies.contains(currency)) {
             return currency;
         } else
             return getDefaultCurrency();
     }
+
+   public static String getCurrencyByCode(String currencyCode) {
+       List<String> allowedCurrencies = getCurrencyList();
+       for (String currency:allowedCurrencies) {
+           if (getCurrencyCode(currency).equals(currencyCode)) {
+               return currency;
+           }
+       }
+       return null;
+   }
 
     private String getLanguageUrlCodeLogical(String language) {
         String urlLanguageCode = getLanguageUrlCode(language);

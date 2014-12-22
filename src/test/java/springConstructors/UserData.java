@@ -206,7 +206,7 @@ public class UserData{
     }
 
     private List<String> getCurrencyList(){
-        return DataContainer.getDefaults().getCurrencyNameList();
+        return DataContainer.getDefaults().getCurrencyCodesList();
     }
 
     private List<String> getTitleList(){
@@ -222,11 +222,12 @@ public class UserData{
     }
 
     public String getCurrencySign(){
-        String[] fullCurrency = getCurrency().split("@");
-        if(fullCurrency.length>1){
-            return fullCurrency[1];
+        String fullCurrency = DataContainer.getDefaults().getCurrencyByCode(getCurrency());
+        String[] splittedCurrency = fullCurrency.split("@");
+        if(splittedCurrency.length>1){
+            return splittedCurrency[1];
         }else {
-            return fullCurrency[0];
+            return splittedCurrency[0];
         }
     }
 
