@@ -19,28 +19,30 @@ public class CashierPendingWithdrawTest extends AbstractTest{
     @Test(groups = {"regression"})
     public void cancelPendingWithdraw(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
+        userData.setCountry("DE");
+        userData.setCurrency("EUR");
         PortalUtils.registerUser(userData, true, true, PromoCode.valid, Page.homePage); // real money 10
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.withdraw, userData);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal,       "1.00");
         withdrawPage.withdrawSuccessful(PaymentMethod.WebMoney,     "2.00");
-        withdrawPage.withdrawSuccessful(PaymentMethod.MasterCard,   "3.00");
-        withdrawPage.withdrawSuccessful(PaymentMethod.Visa,         "4.00");
+        withdrawPage.withdrawSuccessful(PaymentMethod.Neteller,     "3.00");
+        withdrawPage.withdrawSuccessful(PaymentMethod.Envoy,        "4.00");
 
         PendingWithdrawPage pendingWithdrawPage = (PendingWithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.pending_withdraw, userData);
 
         assertEquals(4, pendingWithdrawPage.getWithdrawRecordsCount(),  "All pending withdraw count.");
         assertWithdraw(pendingWithdrawPage, PaymentMethod.PayPal,       "1.00", 1, userData);
         assertWithdraw(pendingWithdrawPage, PaymentMethod.WebMoney,     "2.00", 2, userData);
-        assertWithdraw(pendingWithdrawPage, PaymentMethod.MasterCard,   "3.00", 3, userData);
-        assertWithdraw(pendingWithdrawPage, PaymentMethod.Visa,         "4.00", 4, userData);
+        assertWithdraw(pendingWithdrawPage, PaymentMethod.Neteller,     "3.00", 3, userData);
+        assertWithdraw(pendingWithdrawPage, PaymentMethod.Envoy,        "4.00", 4, userData);
         assertEquals("10.00", pendingWithdrawPage.getTotalAmount(),     "Sum of all pending withdrawals.");
 
         pendingWithdrawPage.cancelWithdraw(1);
 
         assertEquals(3, pendingWithdrawPage.getWithdrawRecordsCount(),  "Available pending withdraw records after withdraw cancel.");
         assertWithdraw(pendingWithdrawPage, PaymentMethod.WebMoney,     "2.00", 1, userData);
-        assertWithdraw(pendingWithdrawPage, PaymentMethod.MasterCard,   "3.00", 2, userData);
-        assertWithdraw(pendingWithdrawPage, PaymentMethod.Visa,         "4.00", 3, userData);
+        assertWithdraw(pendingWithdrawPage, PaymentMethod.Neteller,     "3.00", 2, userData);
+        assertWithdraw(pendingWithdrawPage, PaymentMethod.Envoy,        "4.00", 3, userData);
 
         assertEquals("1.00", new AbstractPortalPage().getBalanceAmount(), "Balance after withdraw cancel.");
         pendingWithdrawPage.loadMore();

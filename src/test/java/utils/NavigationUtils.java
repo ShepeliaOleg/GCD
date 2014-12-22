@@ -7,6 +7,7 @@ import pageObjects.account.BalancePage;
 import pageObjects.account.PendingWithdrawPage;
 import pageObjects.account.TransactionHistoryPage;
 import pageObjects.admin.AdminPageGuest;
+import pageObjects.changeLanguage.ChangeLanguagePage;
 import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPageAdmin;
@@ -112,6 +113,7 @@ public class NavigationUtils{
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
             case updateMyDetails:                               return new ChangeMyDetailsPage();
+            case changeLanguage:                                return new ChangeLanguagePage();
             case changeMyPassword:                              return new ChangePasswordPage();
             case deposit:                                       return new DepositPage();
             case forgotPassword:                                return new ForgotPasswordPage();

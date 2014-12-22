@@ -152,6 +152,9 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     }
 
     private void checkBanner(String advertiser, String banner, String profile){
+        if (banner.isEmpty()) {
+            banner = "-";
+        }
         WebDriverUtils.click(WebDriverFactory.getServerDriver(), "//a[contains(text(), '"+advertiser+"')]");
         IMSAffiliateIframe imsAffiliateIframe = new IMSAffiliatePage().navigateToAffiliateIframe();
         AbstractTest.assertEquals(banner, imsAffiliateIframe.getLabelBanner(), "Banner");
@@ -167,11 +170,15 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     }
 
     private void checkUrl(String url) {
-        if (WebDriverUtils.isElementVisible(WebDriverFactory.getServerDriver(), REFERRER_XP, 1)) {
-            String imsUrl = WebDriverUtils.getAttribute(WebDriverFactory.getServerDriver(), REFERRER_XP, "href");
-            AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url");
+        if (!url.isEmpty()) {
+            if (WebDriverUtils.isElementVisible(WebDriverFactory.getServerDriver(), REFERRER_XP, 1)) {
+                String imsUrl = WebDriverUtils.getAttribute(WebDriverFactory.getServerDriver(), REFERRER_XP, "href");
+                AbstractTest.assertEquals("javascript:displ('" + url + "');", imsUrl, "Url");
+            } else {
+                AbstractTest.addError("Referrer URL is not by xpath: "+REFERRER_XP);
+            }
         } else {
-            AbstractTest.addError("Referrer URL is not by xpath: "+REFERRER_XP);
+            AbstractTest.assertFalse(WebDriverUtils.isElementVisible(WebDriverFactory.getServerDriver(), REFERRER_XP, 1), "Url value is not present on player details page, because it was not sent.");
         }
     }
 

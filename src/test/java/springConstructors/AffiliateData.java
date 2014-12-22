@@ -129,7 +129,7 @@ public class AffiliateData {
     }
 
     public String getRelativeURL() {
-        return "?advertiser=" + getAdvertiser() +  "&bannerid=" + getBanner() + "&profileid=" + getProfile() +"&refererurl=" + getUrl() + "&creferrer=" + getCreferrer();
+        return "?advertiser=" + getAdvertiser() +  "&bannerid=" + getBanner() + "&profileid=" + getProfile() +"&refererurl=" + getUrl() + "&creferer=" + getCreferrer();
     }
 
     public AffiliateData getAffiliateDataSingle() {

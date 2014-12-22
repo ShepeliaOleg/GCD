@@ -106,19 +106,19 @@ public class GeneralTest extends AbstractTest {
     public void redirect404toPageLanguages(){
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
         siteConfigurationPopup.setUseCdnState(false);
-        siteConfigurationPopup.setDirectToPage("/support");
+        siteConfigurationPopup.setDirectToPage("/24/7-support");
         NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         WebDriverUtils.navigateToInternalURL("not_existing_page");
         AbstractPortalPage abstractPortalPage = new AbstractPortalPage();
         String defaultLanguageCode = DataContainer.getDefaults().getDefaultLanguage();
-        assertEquals(DataContainer.getDriverData().getCurrentUrl() + "support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for default language.");
+        assertEquals(DataContainer.getDriverData().getCurrentUrl() + "24/7-support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for default language.");
         for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
             String shortLanguageCode = DataContainer.getDefaults().getLanguageUrlByLanguageCode(languageCode);
             abstractPortalPage.setLanguage(languageCode);
             WebDriverUtils.navigateToInternalURL("not_existing_page");
             WebDriverUtils.waitFor();
             if (!languageCode.equals(defaultLanguageCode)) {
-                assertEquals(DataContainer.getDriverData().getCurrentUrl() + shortLanguageCode + "/support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for " + languageCode + " language.");
+                assertEquals(DataContainer.getDriverData().getCurrentUrl() + shortLanguageCode + "/24/7-support", WebDriverUtils.getCurrentUrl(), "Redirect to internal URL for " + languageCode + " language.");
             }
 
         }
@@ -141,11 +141,11 @@ public class GeneralTest extends AbstractTest {
     public void redirect404toPageWithUseCdn() {
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
         siteConfigurationPopup.setUseCdnState(true);
-        siteConfigurationPopup.setDirectToPage("/support");
+        siteConfigurationPopup.setDirectToPage("/24/7-support");
         NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         WebDriverUtils.navigateToInternalURL("not_existing_page");
         WebDriverUtils.waitForPageToLoad();
-        assertEquals(DataContainer.getDriverData().getCdnNode() + "support", WebDriverUtils.getCurrentUrl(), "Redirect to external URL.");
+        assertEquals(DataContainer.getDriverData().getCdnNode() + "24/7-support", WebDriverUtils.getCurrentUrl(), "Redirect to external URL.");
     }
 
 }

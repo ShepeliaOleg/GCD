@@ -14,7 +14,7 @@ public class QIWIDepositPage extends AbstractPortalPage {
     private static final String AMOUNT_XP = "//*[@class='payment-description_cnt_fields_i'][2]/strong";
     private static final String PAY_BUTTON = "//*[@class='orangeBtn']";
     private static final String DROPDOWN_CURRENCY_XP = "//*[@id='ui-id-1-button']";
-    private static final String CURRENCY_RUB_XP = "//*[@id='ui-id-5']";
+    private static final String CURRENCY_RUB_XP = "//*[@id='ui-id-6']";
     private static final String PASSWORD_XP = "//*[@name='password']";
 
     private static final String PROVIDER_COMMISION_XP = "//*[contains(@class, 'providerComm')]";

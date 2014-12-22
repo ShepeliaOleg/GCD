@@ -1,10 +1,13 @@
 package pageObjects.core;
 
+import enums.ConfiguredPages;
 import enums.Licensee;
 import enums.Page;
+import enums.PlayerCondition;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPageAdmin;
 import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.changeLanguage.ChangeLanguagePage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.footer.Footer;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
@@ -20,6 +23,7 @@ import pageObjects.menu.Menu;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
+import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
@@ -136,7 +140,8 @@ public class AbstractPortalPage extends AbstractPage {
         if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             return header().getLanguageCodes();
         } else {
-            return openMenu().getLanguageCodes();
+            ChangeLanguagePage changeLanguagePage = (ChangeLanguagePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.changeLanguage);
+            return changeLanguagePage.getLanguageCodes();
         }
     }
 
@@ -144,7 +149,8 @@ public class AbstractPortalPage extends AbstractPage {
         if (DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)) {
             header().setLanguage(languageCode);
         } else {
-            openMenu().setLanguage(languageCode);
+            ChangeLanguagePage changeLanguagePage = (ChangeLanguagePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.changeLanguage);
+            changeLanguagePage.changeLanguage(languageCode);
         }
         WebDriverUtils.waitFor();
     }

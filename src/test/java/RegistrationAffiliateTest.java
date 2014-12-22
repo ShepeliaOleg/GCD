@@ -47,7 +47,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
 
     /*3*/
     @Test(groups = {"registration", "regression", "affiliate", "cookie"})
-    public void affiliateCookieCreffererNotExists() {
+    public void affiliateCookieCreferrerNotExists() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setCreferrer("notExists:123");
@@ -134,7 +134,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataSingle.setUrl("");
         affiliateDataSingle.setCreferrer("");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getBanner() + "," + affiliateDataSingle.getProfile());
+        AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataSingle.getAdvertiser() + "," + affiliateDataSingle.getBanner() + "," + affiliateDataSingle.getProfile() + ",,");
         affiliateCookie.add();
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -209,7 +209,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
 
     /*15*/
     @Test(groups = {"registration", "regression", "affiliate", "url"})
-    public void affiliateUrlCreffererNotExists() {
+    public void affiliateUrlCreferrerNotExists() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setCreferrer("notExists:123");
@@ -355,7 +355,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.addCreferrer(affiliateData.getCreferrerRegistrationPortletProperty());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -375,7 +375,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataUrl);
         registrationPage.registerUser(userData);
         affiliateDataUrl.addCreferrer(affiliateData.getCreferrerRegistrationPortletProperty());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataUrl);
@@ -393,7 +393,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataUrl.setCreferrer("creferrer");
         AffiliateData affiliateDataCookie = affiliateData.getAffiliateDataSingle();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
+        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataUrl);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
         registrationPage.registerUser(userData);

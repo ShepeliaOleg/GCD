@@ -96,14 +96,14 @@ public class ValidationRule {
     }
 
     public String generateValidString() {
-        return RandomUtils.generateStringByRegexp(regexp);
+        return RandomUtils.generateStringByRegexp(getRegexp());
     }
 
     public String generateValidString(char a) {
         int counter=0;
         String symbols;
         String character = String.valueOf(a);
-        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(regexp);
+        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(getRegexp());
         for(RegexNode node:nodes){
             if(node.getSymbols().contains(String.valueOf(getValidChar()))&&counter==0){
                 node.setMin(node.getMin()+2);
@@ -131,7 +131,7 @@ public class ValidationRule {
     }
 
     public char getValidChar(){
-        return regexp.charAt(4);
+        return getRegexp().charAt(4);
     }
 
     public String generateValidStringOverMaxSymbols(){
@@ -139,7 +139,7 @@ public class ValidationRule {
     }
 
     private String generateValidStringWithMaxSymbols() {
-        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(regexp);
+        ArrayList<RegexNode> nodes = ValidationUtils.splitToNodes(getRegexp());
         for(RegexNode node:nodes){
             node.setMin(node.getMax());
         }
@@ -147,7 +147,7 @@ public class ValidationRule {
     }
 
     public String generateValidStringWithMinSymbols() {
-        String tempRegexp = regexp;
+        String tempRegexp = getRegexp();
         if(tempRegexp.contains("[@]")){
             tempRegexp = tempRegexp.replace("{1,6}", "{0,6}");
         }
@@ -160,7 +160,7 @@ public class ValidationRule {
 
     public String getAllAllowedSymbols() {
         // remove all quantifiers in {} with brackets itself
-        String string = regexp.replaceAll("\\{[0-9]*[,][0-9]*\\}", "");
+        String string = getRegexp().replaceAll("\\{[0-9]*[,][0-9]*\\}", "");
         // remove all [] brackets
         string = string.replaceAll("\\[|\\]", "");
         ArrayList<Character> characters = new ArrayList<>();

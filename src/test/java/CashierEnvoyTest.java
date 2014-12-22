@@ -136,33 +136,15 @@ public class CashierEnvoyTest extends AbstractTest{
     }
 
     private UserData[] getUsers(){
-        UserData ideal = DataContainer.getUserData().getRandomUserData();
-        ideal.setCountry("NL");
-        ideal.setCurrency("EUR@€");
-        UserData prezelwy = DataContainer.getUserData().getRandomUserData();
-        prezelwy.setCountry("PL");
-        prezelwy.setCurrency("PLN");
-        UserData eKonto = DataContainer.getUserData().getRandomUserData();
-        eKonto.setCountry("CZ");
-        eKonto.setCurrency("CZK");
-        UserData euteller = DataContainer.getUserData().getRandomUserData();
-        euteller.setCountry("FI");
-        euteller.setCurrency("EUR");
-        UserData ewire = DataContainer.getUserData().getRandomUserData();
-        ewire.setCountry("DK");
-        ewire.setCurrency("DKK");
-        UserData giropay = DataContainer.getUserData().getRandomUserData();
-        giropay.setCountry("DE");
-        giropay.setCurrency("EUR");
-        UserData ibanq = DataContainer.getUserData().getRandomUserData();
-        ibanq.setCountry("JP");
-        ibanq.setCurrency("USD");
-        UserData moneta = DataContainer.getUserData().getRandomUserData();
-        moneta.setCountry("RU");
-        moneta.setCurrency("USD");
-        UserData poli = DataContainer.getUserData().getRandomUserData();
-        poli.setCountry("AU");
-        poli.setCurrency("AUD");
+        UserData ideal =    setUserData("NL", "EUR");
+        UserData prezelwy = setUserData("PL", "PLN");
+        UserData eKonto =   setUserData("CZ", "CZK");
+        UserData euteller = setUserData("FI", "EUR");
+        UserData ewire =    setUserData("DK", "DKK");
+        UserData giropay =  setUserData("DE", "EUR");
+        UserData ibanq =    setUserData("JP", "USD");
+        UserData moneta =   setUserData("RU", "USD");
+        UserData poli =     setUserData("AU", "AUD");
         return new UserData[]{
                 ideal,      //0
                 prezelwy,   //1
@@ -174,5 +156,12 @@ public class CashierEnvoyTest extends AbstractTest{
                 moneta,     //7
                 poli        //8
         };
+    }
+
+    private static UserData setUserData(String country, String currency) {
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCountry(country);
+        userData.setCurrency(currency);
+        return userData;
     }
 }

@@ -630,7 +630,11 @@ public class WebDriverUtils{
         return null;
     }
 
-    private static String openCustomDropdown(WebDriver webDriver, String xpath){
+    public static String openCustomDropdown(String xpath){
+        return openCustomDropdown(WebDriverFactory.getPortalDriver(), xpath);
+    }
+
+    public static String openCustomDropdown(WebDriver webDriver, String xpath){
         String list = getFollowingElement(xpath);
         click(webDriver, xpath);
         waitForElement(webDriver, list);

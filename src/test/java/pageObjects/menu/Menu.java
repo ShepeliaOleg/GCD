@@ -1,9 +1,13 @@
 package pageObjects.menu;
 
+import enums.ConfiguredPages;
+import enums.PlayerCondition;
 import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.HomePage;
+import pageObjects.changeLanguage.ChangeLanguagePage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
+import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.WebDriverFactory;
 
@@ -14,7 +18,6 @@ public class Menu extends AbstractPageObject {
     private static final String BUTTON_CLOSE_XP =           ROOT_XP + "//*[contains(@class,'fn-close-menu')]";
     private static final String HOME_XP =	                ROOT_XP + "//*[contains(@class,'micon-home')]";
     private static final String LANGUAGE_ICON_XP =          ROOT_XP + "//*[contains(@class,'micon-language')]";
-    private static final String LANGUAGE_XP =	            "//*[contains(@class, 'fn-language-trigger')]";
     private static final String GETTING_STARTED_XP =	    ROOT_XP + "//*[contains(@class,'micon-getting-started')]";
     private static final String SUPPORT_XP =	            ROOT_XP + "//*[contains(@class,'micon-support')]";
     private static final String RESPONSIBLE_GAMING_XP =     ROOT_XP + "//*[contains(@class,'micon-responsible-gaming')]";
@@ -41,16 +44,8 @@ public class Menu extends AbstractPageObject {
         return new LoggedOutMenu();
     }
 
-    public void showLanguageItems() {
+    public ChangeLanguagePage openLanguagePage() {
         WebDriverUtils.click(LANGUAGE_ICON_XP);
-    }
-
-    public Collection<String> getLanguageCodes() {
-        return WebDriverUtils.getCustomDropdownOptionsValue(LANGUAGE_XP);
-    }
-
-    public void setLanguage(String languageCode) {
-        WebDriverUtils.setCustomDropdownOptionByValue(LANGUAGE_XP, languageCode);
-        WebDriverUtils.waitForElementToDisappear(ROOT_XP);
+        return new ChangeLanguagePage();
     }
 }
