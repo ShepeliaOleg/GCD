@@ -10,11 +10,18 @@ import utils.core.AbstractTest;
 
 public class EnvoyDepositPage extends AbstractPortalPage {
 
-    private static final String BUTTON_CANCEL_XP = "//input[contains(text(), 'Cancel')]";
-    private static final String BUTTON_PROCEED_XP = "//input[@value='Proceed']";
-    private static final String TRUSTLY_XP = "//*[contains(@src, 'trustly')]";
-    public static final String GIROPAY_XP = "//*[@alt='GIROPAY']";
-    public static final String BANKDROPDOWN_XP = "//*[@id='bankdropdown']";
+    private static final String BUTTON_CANCEL_XP =          "//input[contains(text(), 'Cancel')]";
+    private static final String BUTTON_PROCEED_XP =         "//input[@value='Proceed']";
+    private static final String BUTTON_CONFIRM_XP =         "//input[@value='Confirm']";
+    private static final String INPUT_SOFORT_SORT_CODE_XP = "//*[@id='TransactionsSessionSenderBankCode']";
+    private static final String BUTTON_SOFORT_NEXT_XP =     "//*[@id='WizardForm']//button";
+    private static final String INPUT_SOFORT_ACCOUNT_XP =   "//*[@id='BackendFormLOGINNAMEUSERID']";
+    private static final String INPUT_SOFORT_PIN_XP =       "//*[@id='BackendFormUSERPIN']";
+    private static final String RADIO_SOFORT_ACCOUNT_XP =   "//*[@id='TransactionsSessionSenderAccountNumber12345678']";
+    private static final String INPUT_SOFORT_TAN_XP =       "//*[@id='BackendFormTan']";
+    private static final String TRUSTLY_XP =                "//*[contains(@src, 'trustly')]";
+    private static final String SOFORT_XP =                 "//*[@alt='SOFORT']";
+    private static final String BANKDROPDOWN_XP =           "//*[@id='bankdropdown']";
 
     public EnvoyDepositPage(){
         WebDriverUtils.waitFor();
@@ -27,7 +34,6 @@ public class EnvoyDepositPage extends AbstractPortalPage {
     }
 
     public TransactionSuccessfulPopup pay(String amount, UserData userData){
-        assertAmount(amount);
         if(WebDriverUtils.isVisible(TRUSTLY_XP, 1)){
             new TrustlyIframe().pay();
         }else if(WebDriverUtils.isVisible(BUTTON_PROCEED_XP, 1)) {
@@ -42,12 +48,24 @@ public class EnvoyDepositPage extends AbstractPortalPage {
             WebDriverUtils.click("//*[@id='proceed-button']");
             WebDriverUtils.waitForElement("//*[@id='BankFrame']", 60);
             new PolyIframe().pay();
-        }else if(WebDriverUtils.isVisible(GIROPAY_XP)){
-            WebDriverUtils.click(GIROPAY_XP);
-            WebDriverUtils.waitForElement(BUTTON_PROCEED_XP);
-            WebDriverUtils.clearAndInputTextToField("//*[contains(@id, 'txtCustomerName')]", "AAAAAA");
-            WebDriverUtils.clearAndInputTextToField("//*[contains(@id, 'txtGiroSWIFTCode')]", "AAAAAA");
-            WebDriverUtils.click(BUTTON_PROCEED_XP);
+        }else if(WebDriverUtils.isVisible(SOFORT_XP)){
+            WebDriverUtils.click(SOFORT_XP);
+            WebDriverUtils.waitForElement(BUTTON_CONFIRM_XP);
+            WebDriverUtils.click(BUTTON_CONFIRM_XP);
+            WebDriverUtils.waitForElement(INPUT_SOFORT_SORT_CODE_XP);
+            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_SORT_CODE_XP, "88888888");
+            WebDriverUtils.waitForElement(BUTTON_SOFORT_NEXT_XP);
+            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+            WebDriverUtils.waitForElement(INPUT_SOFORT_ACCOUNT_XP);
+            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_ACCOUNT_XP, "123456");
+            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_PIN_XP, "1234");
+            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+            WebDriverUtils.waitForElement(RADIO_SOFORT_ACCOUNT_XP);
+            WebDriverUtils.click(RADIO_SOFORT_ACCOUNT_XP);
+            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+            WebDriverUtils.waitForElement(INPUT_SOFORT_TAN_XP);
+            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_TAN_XP, "12345");
+            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
         }else {
             AbstractTest.failTest("Payment page did not load for '"+userData.getCountry()+"' '"+userData.getCurrencyName()+"'");
         }
@@ -55,7 +73,7 @@ public class EnvoyDepositPage extends AbstractPortalPage {
     }
 
     private void assertAmount(String amount){
-        AbstractTest.assertTextVisible(amount, "Amount");
+        AbstractTest.assertTextVisible(amount, "Amount value is displayed '" + amount + "'.");
     }
 
     private class TrustlyIframe extends AbstractPortalIframe {

@@ -12,6 +12,7 @@ import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.RandomUtils;
 import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
@@ -22,41 +23,29 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void envoyDepositInterfaceIsFunctional(){
-        for(UserData userData:getUsers()){
-            try{
-                PortalUtils.registerUser(userData);
-                DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
-                depositPage.assertEnvoyInterface(userData);
-            }catch (Exception e){
-            }
-        }
+        UserData userData = getEnvoyUser();
+        PortalUtils.registerUser(userData);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage.assertEnvoyInterface(userData);
     }
 
     @Test(groups = {"regression", "mobile"})
     public void envoyWithdrawInterfaceIsFunctional(){
-        for(UserData userData:getUsers()) {
-            try{
-                PortalUtils.registerUser(userData);
-                WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-                withdrawPage.assertEnvoyInterface(userData);
-            }catch (Exception e){
-            }
-        }
+        UserData userData = getEnvoyUser();
+        PortalUtils.registerUser(userData);
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        withdrawPage.assertEnvoyInterface(userData);
     }
 
     @Test(groups = {"regression", "mobile"})
     public void deposit(){
-        for(UserData userData:getUsers()) {
-            try{
-                successfulDeposit(userData);
-            }catch (Exception e){
-            }
-        }
+        UserData userData = getEnvoyUser();
+        successfulDeposit(userData);
     }
 
     @Test(groups = {"regression", "mobile"})
     public void depositValidPromoCode(){
-        for(UserData userData:getUsers()) {
+        for(UserData userData: getEnvoyUsers()) {
             try{
                 PortalUtils.registerUser(userData);
                 DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -72,7 +61,7 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void depositInvalidPromoCode(){
-        for(UserData userData:getUsers()) {
+        for(UserData userData: getEnvoyUsers()) {
             try{
                 PortalUtils.registerUser(userData);
                 DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -86,7 +75,7 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void cancelDeposit(){
-        for(UserData userData:getUsers()) {
+        for(UserData userData: getEnvoyUsers()) {
             try{
                 PortalUtils.registerUser(userData);
                 DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -101,7 +90,7 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void withdrawUnsuccessful(){
-        for(UserData userData:getUsers()) {
+        for(UserData userData: getEnvoyUsers()) {
             try{
                 PortalUtils.registerUser(userData, PromoCode.valid);
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
@@ -115,7 +104,7 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void cancelWithdraw(){
-        for(UserData userData:getUsers()) {
+        for(UserData userData: getEnvoyUsers()) {
             try{
                 PortalUtils.registerUser(userData, PromoCode.valid);
                 WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
@@ -135,13 +124,19 @@ public class CashierEnvoyTest extends AbstractTest{
         assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
-    private UserData[] getUsers(){
+    private UserData getEnvoyUser(){
+        UserData[] userDatas = getEnvoyUsers();
+        int randomIndex = 5; //RandomUtils.generateRandomIntBetween(0, userDatas.length);
+        return userDatas[randomIndex];
+    }
+
+    private UserData[] getEnvoyUsers(){
         UserData ideal =    setUserData("NL", "EUR");
         UserData prezelwy = setUserData("PL", "PLN");
         UserData eKonto =   setUserData("CZ", "CZK");
         UserData euteller = setUserData("FI", "EUR");
         UserData ewire =    setUserData("DK", "DKK");
-        UserData giropay =  setUserData("DE", "EUR");
+        UserData sofort =   setUserData("DE", "EUR");
         UserData ibanq =    setUserData("JP", "USD");
         UserData moneta =   setUserData("RU", "USD");
         UserData poli =     setUserData("AU", "AUD");
@@ -151,7 +146,7 @@ public class CashierEnvoyTest extends AbstractTest{
                 eKonto,     //2
                 euteller,   //3
                 ewire,      //4
-                giropay,    //5
+                sofort,     //5
                 ibanq,      //6
                 moneta,     //7
                 poli        //8

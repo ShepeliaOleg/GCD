@@ -196,6 +196,7 @@ public class Defaults{
                return currency;
            }
        }
+       AbstractTest.failTest("No currency found by code '" + currencyCode + "'.");
        return null;
    }
 
