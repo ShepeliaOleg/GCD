@@ -85,7 +85,7 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public AbstractPortalPage logout(){
-        loggedInHeader().clickLogout().clickLogoutButton().closePopup();
+        loggedInHeader().clickLogout().clickLogoutButton().close();
         return waitForLogout();
     }
 

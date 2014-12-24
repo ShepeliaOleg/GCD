@@ -9,7 +9,7 @@ public class SignedOutPopup extends AbstractPortalPopup {
     public static final String TITLE_XP = AbstractPortalPopup.TITLE_XP + "[contains(text(), 'Signed out')]";
 
     public SignedOutPopup() {
-        super(new String[]{TITLE_XP, BUTTON_ACCEPT_XP, BUTTON_DECLINE_XP});
+        super(new String[]{TITLE_XP, BUTTON_DECLINE_XP});
     }
 
     private void clickLoginAgain() {
@@ -24,5 +24,10 @@ public class SignedOutPopup extends AbstractPortalPopup {
     public AbstractPortalPage close() {
         closePopup();
         return new AbstractPortalPage();
+    }
+
+    public void closePopup() {
+        WebDriverUtils.click(BUTTON_DECLINE_XP);
+        WebDriverUtils.waitFor();
     }
 }

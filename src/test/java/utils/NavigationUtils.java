@@ -175,7 +175,7 @@ public class NavigationUtils{
         switch (condition) {
             case guest:
                 if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)){
-                    checkPopups(expectedPage);
+                    closeAllPopups(expectedPage);
                 }
                 if(PortalUtils.isLoggedIn()) {
                     PortalUtils.logout();
@@ -190,7 +190,7 @@ public class NavigationUtils{
                     new LoginPopup().login(userData);
                 }else{
                     if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
-                        checkPopups(expectedPage);
+                        closeAllPopups(expectedPage);
                     }
                     if(abstractPortalPage.isAdminLoggedIn()) {
                         abstractPortalPage.logoutAdmin();
