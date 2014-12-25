@@ -50,9 +50,9 @@ public class CashierEnvoyTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoyValidPromoCode(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(userData, true);
         transactionSuccessfulPopup.closePopup();
-        new OkBonusPopup().closePopup();
+//        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
@@ -99,7 +99,7 @@ public class CashierEnvoyTest extends AbstractTest{
     private void successfulDeposit(UserData userData){
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(AMOUNT, userData);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(userData);
         transactionSuccessfulPopup.closePopup();
         assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }

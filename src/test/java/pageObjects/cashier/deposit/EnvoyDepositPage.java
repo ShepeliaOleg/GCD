@@ -1,5 +1,6 @@
 package pageObjects.cashier.deposit;
 
+import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.core.AbstractPortalIframe;
@@ -33,7 +34,11 @@ public class EnvoyDepositPage extends AbstractPortalPage {
         return new TransactionUnSuccessfulPopup();
     }
 
-    public TransactionSuccessfulPopup pay(String amount, UserData userData){
+    public TransactionSuccessfulPopup pay(UserData userData){
+        return pay(userData, false);
+    }
+
+    public TransactionSuccessfulPopup pay(UserData userData, boolean withPromoCode){
         if(WebDriverUtils.isVisible(TRUSTLY_XP, 1)){
             new TrustlyIframe().pay();
         }else if(WebDriverUtils.isVisible(BUTTON_PROCEED_XP, 1)) {
@@ -68,6 +73,10 @@ public class EnvoyDepositPage extends AbstractPortalPage {
             WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
         }else {
             AbstractTest.failTest("Payment page did not load for '"+userData.getCountry()+"' '"+userData.getCurrencyName()+"'");
+        }
+        if (withPromoCode) {
+            AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
+            acceptDeclineBonusPopup.clickAccept();
         }
         return new TransactionSuccessfulPopup();
     }
