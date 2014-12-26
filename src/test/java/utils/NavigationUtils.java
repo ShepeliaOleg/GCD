@@ -418,6 +418,7 @@ public class NavigationUtils{
 
     public static void navigateToAffiliateURL(ConfiguredPages page, AffiliateData affiliateData) {
         WebDriverUtils.navigateToInternalURL(page.toString() + affiliateData.getRelativeURL());
+        WebDriverUtils.waitFor();
         AffiliateCookie affiliateCookie = new AffiliateCookie("");
         if (affiliateCookie.isPresent()) {
             affiliateCookie.validateValue(affiliateData);
@@ -469,5 +470,9 @@ public class NavigationUtils{
         String gameUrl = GameLaunchPage.IFRAME_LAUNCH_GAME_URL + gameID;
         WebDriverUtils.navigateToInternalURL(gameUrl);
         return new GameLaunchPage(gameID, null);
+    }
+
+    public static void refreshPage() {
+        WebDriverUtils.refreshPage();
     }
 }

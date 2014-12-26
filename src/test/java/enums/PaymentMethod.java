@@ -3,8 +3,8 @@ package enums;
 public enum PaymentMethod {
     QIWI("QIWI via SC", "9260366832", "9379133149", "ABCD1234", "wallettest11"),
     PayPal("PayPal", "greesnm@aa.aa","test@800pay.com","rfhfylfi!", "222249464"), // revita_1222083012_per@800pay.com 222249464
-    Visa("VISA", "4440","4448"),
-    MasterCard("MasterCard", "5557",""),
+    Visa("Visa", "6980", "6376"),
+    MasterCard("MasterCard", "3295","1729"),
     Discover("Discover", "", ""),
     PaySafeCard("PaySafeCard", "6364 0700 8000 4190", "", "", ""),
     MoneyBookers("playtech.mobile.mobile-cashier.method.Moneybookers.title", "testmbcustomerger@yahoo.co.uk", "someshit@yahoo.co.uk", "euroeuro1", ""),
