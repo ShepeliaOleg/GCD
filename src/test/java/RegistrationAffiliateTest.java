@@ -180,7 +180,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         AffiliateCookie affiliateCookie2 = new AffiliateCookie(affiliateDataCookie2);
         affiliateCookie2.add();
         registrationPage.registerUser(userData);
-        IMSUtils.validateNoAffiliate(userData.getUsername());
+        IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataCookie2);
     }
 
     /*13*/
@@ -216,7 +216,6 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
-        affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle, false);
     }
 
@@ -319,6 +318,7 @@ public class RegistrationAffiliateTest extends AbstractTest {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
+        NavigationUtils.refreshPage();
         NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataUrl);
