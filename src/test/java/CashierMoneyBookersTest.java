@@ -52,7 +52,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         moneyBookersDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
         assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
@@ -120,7 +120,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

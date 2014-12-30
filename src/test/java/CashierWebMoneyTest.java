@@ -2,15 +2,12 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
-import pageObjects.cashier.TransactionSuccessfulPopup;
-import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.deposit.WebMoneyDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
-import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -45,7 +42,7 @@ public class CashierWebMoneyTest extends AbstractTest{
     public void webMoneyWithdrawAssertPopupAndClose(){
         UserData userData = getWebMoneyUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.WebMoney, AMOUNT);
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.WebMoney, AMOUNT);
         assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
@@ -54,7 +51,7 @@ public class CashierWebMoneyTest extends AbstractTest{
         PortalUtils.registerUser(getWebMoneyUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.WebMoney, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

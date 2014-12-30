@@ -15,7 +15,7 @@ public class DepositPage extends CashierPage{
     }
 
     public void assertCardInterface(PaymentMethod paymentMethod){
-        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_CVV_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_CVV_XP, FIELD_PROMO_CODE_XP});
     }
 
     public void depositCard(PaymentMethod card, String amount){
@@ -60,7 +60,7 @@ public class DepositPage extends CashierPage{
     /*QIWI*/
 
     public void assertQIWIInterface(){
-        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_PROMO_CODE_XP});
     }
 
     public QIWIDepositPage depositQIWI(String amount){
@@ -125,7 +125,7 @@ public class DepositPage extends CashierPage{
 
 
     public void assertNetellerInterface() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP});
     }
 
     public TransactionSuccessfulPopup depositNetellerValidPromoCode(String amount) {

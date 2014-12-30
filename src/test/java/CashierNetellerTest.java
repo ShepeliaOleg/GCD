@@ -51,7 +51,7 @@ public class CashierNetellerTest extends AbstractTest {
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Neteller, AMOUNT);
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.Neteller, AMOUNT);
         assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
@@ -81,7 +81,7 @@ public class CashierNetellerTest extends AbstractTest {
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.Neteller, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");    }
 
     @Test(groups = {"regression", "mobile"})
@@ -93,7 +93,16 @@ public class CashierNetellerTest extends AbstractTest {
         assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
-    @Test(groups = {"regression", "mobile"})
+//    @Test(groups = {"regression", "mobile"})
+//    public void netellerWithdrawForExistingUserAddAccountEmail() {
+//        netellerDeposit();
+//        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+//        String balance = withdrawPage.getBalanceAmount();
+//        withdrawPage.withdrawAddingAccount(PaymentMethod.Neteller, AMOUNT, PaymentMethod.Neteller.getEmail());
+//        assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
+//    }
+
+    @Test(groups = {"regression", "mobile", "gala"})
     public void netellerWithdrawForExistingUserAddAccountClose() {
         netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);

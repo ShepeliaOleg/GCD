@@ -12,19 +12,20 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CashierPage extends AbstractPortalPage {
-    protected static final String ROOT_XP = "//*[contains(@class, 'portlet-mobile-cashier')]";
-    protected static final String BUTTON_XP = "//*[contains(@class, 'btn')]";
-    protected static final String METHOD_HEADER_BASE_XP = "//*[contains(@class, 'info-list__field')]";
-    protected static final String METHOD_HEADER_XP = METHOD_HEADER_BASE_XP+"[contains(text(), '"+PLACEHOLDER+"')]";
-    protected static final String METHOD_BODY_XP = WebDriverUtils.getFollowingElement(METHOD_HEADER_XP);
-    protected static final String BUTTON_ADD_CARD_XP = BUTTON_XP+"[@data-url='/add-card']";
-    protected static final String FIELD_AMOUNT_XP = "//*[@name='amount']";
-    protected static final String FIELD_PROMO_CODE_XP = "//*[@name='promoCode']";
-    protected static final String FIELD_ACCOUNT_XP = "//*[@name='accountId']";
-    protected static final String FIELD_CVV_XP = "//*[@name='cvv2']";
-    private static final String ADD = "add";
-    protected static final String FIELD_ACCOUNT_ADD_XP = "//*[@name='"+ADD+"']";
-    protected static final String FIELD_PASSWORD_XP = "//*[@name='accountPwd']";
+    protected static final String ROOT_XP =                 "//*[contains(@class, 'portlet-mobile-cashier')]";
+    protected static final String BUTTON_XP =               "//*[contains(@class, 'btn')]";
+    protected static final String METHOD_HEADER_BASE_XP =   "//*[contains(@class, 'info-list__field')]";
+    protected static final String METHOD_HEADER_XP =        METHOD_HEADER_BASE_XP+"[contains(text(), '"+PLACEHOLDER+"')]";
+    protected static final String METHOD_BODY_XP =          WebDriverUtils.getFollowingElement(METHOD_HEADER_XP);
+    protected static final String BUTTON_ADD_CARD_XP =      BUTTON_XP+"[@data-url='/add-card']";
+    protected static final String FIELD_AMOUNT_XP =         "//*[@name='amount']";
+    protected static final String FIELD_PROMO_CODE_XP =     "//*[@name='promoCode']";
+    protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//*[@class='fn-change-account']";
+    protected static final String FIELD_ACCOUNT_XP =        "//*[@name='accountId']";
+    protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
+    private   static final String ADD =                     "add";
+    protected static final String FIELD_PASSWORD_XP =       "//*[@name='accountPwd']";
+
     private static final String[] FIELDS = {FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_XP};
 
     public CashierPage(){
@@ -78,15 +79,15 @@ public class CashierPage extends AbstractPortalPage {
             WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }
-        WebDriverUtils.setDropdownOptionByValue(body+FIELD_ACCOUNT_XP, ADD);
-        WebDriverUtils.waitForElement(body+FIELD_ACCOUNT_ADD_XP);
-        WebDriverUtils.clearAndInputTextToField(body+FIELD_ACCOUNT_ADD_XP, method.getSecondaryAccount());
+        WebDriverUtils.setDropdownOptionByValue(body + FIELD_ACCOUNT_KNOWN_XP, ADD);
+        WebDriverUtils.waitForElement(body+ FIELD_ACCOUNT_XP);
+        WebDriverUtils.clearAndInputTextToField(body+ FIELD_ACCOUNT_XP, method.getSecondaryAccount());
     }
 
     public void closeAddAccountField(PaymentMethod method) {
         String body = METHOD_BODY_XP.replace(PLACEHOLDER, method.getName());
-        WebDriverUtils.setDropdownOptionByValue(body+FIELD_ACCOUNT_XP, method.getAccount());
-        WebDriverUtils.waitForElementToDisappear(body+FIELD_ACCOUNT_ADD_XP);
+        WebDriverUtils.setDropdownOptionByValue(body+ FIELD_ACCOUNT_KNOWN_XP, method.getAccount());
+        WebDriverUtils.waitForElementToDisappear(body+ FIELD_ACCOUNT_XP);
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount){
@@ -97,6 +98,9 @@ public class CashierPage extends AbstractPortalPage {
         WebDriverUtils.click(fillFields(method, amount, expired)+BUTTON_XP);
     }
 
+    protected void processPaymentByType(PaymentMethod method, String amount, String account){
+        WebDriverUtils.click(fillFields(method, amount, account)+BUTTON_XP);
+    }
     protected void processPaymentByType(PaymentMethod method, String amount, String account, String password){
         WebDriverUtils.click(fillFields(method, amount, account, password)+BUTTON_XP);
     }
@@ -117,30 +121,41 @@ public class CashierPage extends AbstractPortalPage {
     }
 
     private String fillFields(PaymentMethod method, String amount){
-        return fillFields(method, amount,method.getAccount(), method.getPassword());
+        return fillFields(method, amount, method.getAccount(), method.getPassword());
+    }
+
+    private String fillFields(PaymentMethod method, String amount, String account){
+        return fillFields(method, amount, account, method.getPassword());
     }
 
     private String fillFields(PaymentMethod method, String amount, String account, String password){
-        String name = method.getName();
-        String promoCode = method.getPromoCode();
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
-        String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
-        String fieldAccount = body+FIELD_ACCOUNT_XP;
-        String fieldPassword = body+ FIELD_PASSWORD_XP;
-        String fieldCVV = body+FIELD_CVV_XP;
+        String name =               method.getName();
+        String promoCode =          method.getPromoCode();
+        String body =               METHOD_BODY_XP.replace(PLACEHOLDER, name);
+        String fieldPromoCode =     body + FIELD_PROMO_CODE_XP;
+        String fieldAccount =       body + FIELD_ACCOUNT_XP;
+        String fieldAccountKnown =  body + FIELD_ACCOUNT_KNOWN_XP;
+        String fieldPassword =      body + FIELD_PASSWORD_XP;
+        String fieldCVV =           body + FIELD_CVV_XP;
         if(!WebDriverUtils.isVisible(body, 0)){
             WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
             WebDriverUtils.waitForElement(body);
         }
         WebDriverUtils.inputTextToField(body+FIELD_AMOUNT_XP, amount);
         if(WebDriverUtils.isVisible(fieldAccount, 0)){
-            WebDriverUtils.inputTextToField(fieldAccount, account);
+            WebDriverUtils.clearAndInputTextToField(fieldAccount, account);
+        }
+        if(WebDriverUtils.isVisible(WebDriverUtils.getPrecedingElement(fieldAccountKnown), 0)){
+            String selectedAccount = WebDriverUtils.getDropdownSelectedOptionValue(fieldAccountKnown);
+            if (!selectedAccount.equals(account)) {
+                addAccountByType(method);
+            }
         }
         if(WebDriverUtils.isVisible(fieldCVV, 0)){
-            WebDriverUtils.inputTextToField(fieldCVV, "777");
+            WebDriverUtils.clearAndInputTextToField(fieldCVV, "777");
         }
         if(WebDriverUtils.isVisible(fieldPassword, 0)){
-            WebDriverUtils.inputTextToField(fieldPassword, password);
+            WebDriverUtils.clearAndInputTextToField(fieldPassword, password);
         }
         return body;
     }
@@ -154,7 +169,7 @@ public class CashierPage extends AbstractPortalPage {
         }else {
             WebDriverUtils.click(header);
             AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
-            for(String value:WebDriverUtils.getDropdownOptionsValue(FIELD_ACCOUNT_XP)){
+            for(String value:WebDriverUtils.getDropdownOptionsValue(FIELD_ACCOUNT_KNOWN_XP)){
                 if(card.endsWith(value)){
                     return true;
                 }

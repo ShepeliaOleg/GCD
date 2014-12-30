@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
-import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.cashier.deposit.DepositPage;
@@ -48,8 +47,8 @@ public class CashierPayPalTest extends AbstractTest{
     public void payPalWithdrawAssertPopupAndClose(){
         PortalUtils.registerUser();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.PayPal, AMOUNT);
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
 
@@ -58,7 +57,7 @@ public class CashierPayPalTest extends AbstractTest{
         payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
-        assertEquals("9.95", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -68,9 +67,8 @@ public class CashierPayPalTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         PayPalDepositPage payPalDepositPage = depositPage.depositPayPalValidPromoCode(AMOUNT);
         payPalDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = payPalDepositPage.pay(AMOUNT, true);
         transactionSuccessfulPopup.closePopup();
-        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
     }
 
@@ -80,11 +78,11 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.PayPal, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "D-17349"})
     public void payPalWithdrawForNewUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, PromoCode.valid);
@@ -93,12 +91,12 @@ public class CashierPayPalTest extends AbstractTest{
         assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
     }
 
-    @Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile", "D-17386"})
     public void payPalWithdrawForExistingUserAddAccount() {
         payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);
-        assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals("0.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})

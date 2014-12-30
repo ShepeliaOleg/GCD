@@ -137,7 +137,7 @@ public class RegistrationTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage = (RegistrationPage) registrationPage.registerUser(userData, PromoCode.invalid, Page.registrationPage);
-        assertEquals("Coupon code is not found or not available", registrationPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, registrationPage.getPortletErrorMessage(), "Invalid bonus error message");
     }
 
 //    /*#6. Player is registered with currency selected*/

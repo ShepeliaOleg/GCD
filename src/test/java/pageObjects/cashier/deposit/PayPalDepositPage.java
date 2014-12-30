@@ -1,6 +1,7 @@
 package pageObjects.cashier.deposit;
 
 import enums.PaymentMethod;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import pageObjects.core.AbstractPortalPage;
@@ -30,15 +31,21 @@ public class PayPalDepositPage extends AbstractPortalPage {
     }
 
     public TransactionSuccessfulPopup pay(String amount){
+        return pay(amount, false);
+    }
+    public TransactionSuccessfulPopup pay(String amount, boolean withBonus){
         if(!WebDriverUtils.isVisible(FIELD_LOGIN_EMAIL_XP, 0)){
             WebDriverUtils.click(LINK_LOGIN_XP);
             WebDriverUtils.waitForElement(FIELD_LOGIN_EMAIL_XP, 30);
         }
-        WebDriverUtils.inputTextToField(FIELD_LOGIN_EMAIL_XP, PaymentMethod.PayPal.getAccount());
-        WebDriverUtils.inputTextToField(FIELD_LOGIN_PASSWORD_XP, PaymentMethod.PayPal.getPassword());
+        WebDriverUtils.clearAndInputTextToField(FIELD_LOGIN_EMAIL_XP, PaymentMethod.PayPal.getAccount());
+        WebDriverUtils.clearAndInputTextToField(FIELD_LOGIN_PASSWORD_XP, PaymentMethod.PayPal.getPassword());
         WebDriverUtils.click(BUTTON_LOGIN_XP);
         WebDriverUtils.waitForElement(BUTTON_CONTINUE_XP, 30);
         WebDriverUtils.click(BUTTON_CONTINUE_XP);
+        if (withBonus) {
+            new OkBonusPopup().clickAccept();
+        }
         return new TransactionSuccessfulPopup();
     }
 

@@ -30,7 +30,7 @@ public class WithdrawPage extends CashierPage {
     }
 
     private void withdraw(PaymentMethod type, String amount, String account) {
-        WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount);
+        WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(type, amount, account);
         withdrawConfirmationPopup.assertAccount(account);
         withdrawConfirmationPopup.assertAmount(amount);
         withdrawConfirmationPopup.clickAccept();
@@ -51,17 +51,21 @@ public class WithdrawPage extends CashierPage {
     }
 
     private WithdrawConfirmationPopup navigateToWithdrawConfirmationPopup(PaymentMethod method, String amount){
-        processPaymentByType(method, amount);
+        return navigateToWithdrawConfirmationPopup(method, amount, method.getAccount());
+    }
+
+    private WithdrawConfirmationPopup navigateToWithdrawConfirmationPopup(PaymentMethod method, String amount, String account){
+        processPaymentByType(method, amount, account);
         return new WithdrawConfirmationPopup();
     }
 
-    public void withdrawawConfirmationPopupClose(PaymentMethod method, String amount){
+    public void withdrawConfirmationPopupClose(PaymentMethod method, String amount){
         WithdrawConfirmationPopup withdrawConfirmationPopup = navigateToWithdrawConfirmationPopup(method, amount);
         withdrawConfirmationPopup.closePopup();
     }
 
     public void assertCardInterface(PaymentMethod paymentMethod){
-        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+        assertInterfaceByType(paymentMethod, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP});
     }
 
     public void withdrawExpired(PaymentMethod card, String amount) {
@@ -82,7 +86,7 @@ public class WithdrawPage extends CashierPage {
     /*QIWI*/
 
     public void assertQIWIInterface(){
-        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP});
     }
 
     /*ENVOY*/
@@ -101,13 +105,13 @@ public class WithdrawPage extends CashierPage {
     /*MONEYBOOKERS*/
 
     public void assertMoneyBookersInterface() {
-        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP});
+        assertInterfaceByType(PaymentMethod.MoneyBookers, new String[]{FIELD_ACCOUNT_KNOWN_XP, FIELD_AMOUNT_XP});
     }
 
     /*NETELLER*/
 
     public void assertNetellerInterface() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP});
     }
 
     public void withdrawNetellerInvalidAccount(String amount) {
@@ -125,6 +129,6 @@ public class WithdrawPage extends CashierPage {
     /*WEBMONEY*/
 
     public void assertWebMoneyInterface() {
-        assertInterfaceByType(PaymentMethod.WebMoney, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP});
+        assertInterfaceByType(PaymentMethod.WebMoney, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP});
     }
 }

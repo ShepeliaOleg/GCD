@@ -39,7 +39,7 @@ public class CashierQIWITest extends AbstractTest{
      public void qIWIWithdrawAssertPopupAndClose() {
         qIWISuccessfulDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.Visa, AMOUNT);
         assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
@@ -67,7 +67,7 @@ public class CashierQIWITest extends AbstractTest{
         PortalUtils.registerUser(getRussianUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.QIWI, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

@@ -71,7 +71,7 @@ public class CashierMasterCardTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals("Coupon code is not found or not available", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
@@ -80,7 +80,7 @@ public class CashierMasterCardTest extends AbstractTest{
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
-        withdrawPage.withdrawawConfirmationPopupClose(PaymentMethod.MasterCard, AMOUNT);
+        withdrawPage.withdrawConfirmationPopupClose(PaymentMethod.MasterCard, AMOUNT);
         assertEquals(balance, withdrawPage.getBalanceAmount(), "Balance");
     }
 
