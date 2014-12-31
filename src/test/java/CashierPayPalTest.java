@@ -82,8 +82,9 @@ public class CashierPayPalTest extends AbstractTest{
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
-    @Test(groups = {"regression", "mobile", "D-17349"})
+    @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForNewUser() {
+        skipTestWithIssues("D-17349");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
@@ -91,8 +92,9 @@ public class CashierPayPalTest extends AbstractTest{
         assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
     }
 
-    @Test(groups = {"regression", "mobile", "D-17386"})
+    @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUserAddAccount() {
+        skipTestWithIssues("D-17386");
         payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);

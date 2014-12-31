@@ -39,24 +39,30 @@ public class AbstractTest extends AbstractTestRunner{
         validate();
     }
 
-    public static void skipTest(String message){
+    public static void skipTest(String message, boolean getScreenshot){
         String results = collectResults();
-        if(!results.isEmpty()){
-            throw new SkipException(message + getScreenshot()+"Errors found: "+results);
-        }else {
-            throw new SkipException(message + getScreenshot());
+        String details = "";
+        if (getScreenshot) {
+            details = getScreenshot();
         }
+        if(!results.isEmpty()){
 
+            throw new SkipException(message + details + "Errors found: " + results);
+        }else {
+            throw new SkipException(message + details);
+        }
+    }
+
+    public static void skipTest(String message){
+        skipTest(message, true);
+    }
+
+    public static void skipTestWithIssues(String issues){
+        skipTest(issues, false);
     }
 
     public static void skipTest(){
-        String results = collectResults();
-        if(!results.isEmpty()){
-            throw new SkipException("Errors found: "+results);
-        }else {
-            throw new SkipException("");
-        }
-
+        skipTest("");
     }
 
     public static boolean assertTrue(boolean actual, String message){

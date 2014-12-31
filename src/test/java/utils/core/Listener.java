@@ -26,8 +26,8 @@ public class Listener extends TestListenerAdapter{
     private static final String COLOR_GREEN = "#B2F5A6";
     private static final String COLOR_RED = "#FF9763";
     private static final String ENV_REPLACER = "ENVIRONMENT";
-    private static final String SKIP_EXCEPTION = "org.testng.SkipException";
-    private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException";
+    private static final String SKIP_EXCEPTION = "org.testng.SkipException: ";
+    private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException: ";
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
             "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
@@ -216,8 +216,8 @@ public class Listener extends TestListenerAdapter{
     }
 
 
-    private void createTable(ITestContext iTestContext, int total, int passed, int failed, int ims){
-        output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; IMS Registration/login issues(skipped):" + ims + "</h2>");
+    private void createTable(ITestContext iTestContext, int total, int passed, int failed, int skipped){
+        output.println("<h2>Total:" + total + "; Passed:" + passed + "; Failed:" + failed + "; Skipped:" + skipped + "</h2>");
         output.println("<h2>Env: "+DataContainer.getDriverData().getCurrentUrl()+"</h2>");
         output.println("<table border='1' style='background-color:yellow;border:1px black;width:100%;border-collapse:collapse;'>");
         output.println("<tr align='center' valign='middle' style='background-color:orange;color:white;'><td width='20%'>Area</td><td width='5%'>Status</td><td>Result</td></tr>");
@@ -229,7 +229,7 @@ public class Listener extends TestListenerAdapter{
     private void createIndex(){
         output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
         output.println("<table border='1' style='background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;'>");
-        output.println("<tr style='background-color:orange;color:white;'><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>IMS Registration/Login Issues(Skipped)</td></tr>");
+        output.println("<tr style='background-color:orange;color:white;'><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Skipped</td></tr>");
         for(String area:list){
             output.println("<tr style='display:none;'><td><a href ='"+folder+ area + ".html'>" + area + "</a></td><td>" + area + "Total</td><td>" + area + "Passed</td><td>" + area + "Failed</td><td>" + area + "Ims</td></tr>");
         }
@@ -263,7 +263,7 @@ public class Listener extends TestListenerAdapter{
             for(ITestResult test:iTestContext.getSkippedTests().getAllResults()){
                 String name = test.getName();
                 output.println("<tr><td>" + name + "</td> ");
-                output.println("<td align='center' valign='middle'>Skipped</td> ");
+                output.println("<td align='center' valign='middle'>skipped</td> ");
                 output.println("<td>"+createSpoiler(test.getThrowable(), name)+"</td></tr>");
             }
         }
@@ -339,9 +339,9 @@ public class Listener extends TestListenerAdapter{
     private String createSpoiler(Throwable exception, String name){
         String exc = exception.toString();
         if(exc.startsWith(SKIP_EXCEPTION)){
-            exc=exc.replace(SKIP_EXCEPTION, "Skipped");
+            exc=exc.replace(SKIP_EXCEPTION, "");
         }else if(exc.startsWith(RUNTIME_EXCEPTION)){
-            exc=exc.replace(RUNTIME_EXCEPTION, "Error");
+            exc=exc.replace(RUNTIME_EXCEPTION, "");
         }
         if(exc.contains("%$%")){
             String[] fullException = exc.split("%\\$%");
