@@ -25,9 +25,4 @@ public class SignedOutPopup extends AbstractPortalPopup {
         closePopup();
         return new AbstractPortalPage();
     }
-
-    public void closePopup() {
-        WebDriverUtils.click(BUTTON_DECLINE_XP);
-        WebDriverUtils.waitFor();
-    }
 }

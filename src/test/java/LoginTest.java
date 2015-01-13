@@ -20,7 +20,7 @@ public class LoginTest extends AbstractTest{
 	/* POSITIVE */
 	
 	/*1. Valid user login*/
-	@Test(groups = {"smoke","desktop"})
+	@Test(groups = {"smoke"})
 	public void validUserLoginHeader() {
 		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         PortalUtils.loginUser(userData);
@@ -257,14 +257,14 @@ public class LoginTest extends AbstractTest{
     }
 
     /*#1. Login with invalid username from header*/
-	@Test(groups = {"regression", "desktop"})
+	/*@Test(groups = {"regression", "desktop"})
 	public void invalidUsernameLoginFromHeader(){
 		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setUsername("incorrect");
         assertFailedLoginPopup(userData);
-    }
+    }*/
 
-    /*#2. Login with invalid username from popup*/
+    /*#2. Login with invalid username*/
 	@Test(groups = {"regression"})
 	public void invalidUsernameLoginFromLoginPopup(){
         UserData userData=DataContainer.getUserData().getRegisteredUserData();
@@ -281,13 +281,13 @@ public class LoginTest extends AbstractTest{
     }
 
     /*#3. Login wih invalid password from header*/
-	@Test(groups = {"regression", "desktop"})
+	/*@Test(groups = {"regression", "desktop"})
 	public void invalidPasswordLoginFromHeader(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser();
         userData.setPassword("incorrect");
 		assertFailedLoginPopup(userData);
-	}
+	}*/
 
     /*#4. Login wih invalid password from popup*/
 	@Test(groups = {"regression"})
@@ -330,6 +330,7 @@ public class LoginTest extends AbstractTest{
     /*login with invalid credentials 3 times - try to log in with correct password - try to log in after unlock*/
     @Test(groups = {"regression"})
     public void freezeUserAfterInvalidLogins(){
+        skipTestWithIssues("Configuration issue: IMS automation rule.");
         UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         String correctPass = userData.getPassword();
