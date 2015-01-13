@@ -924,4 +924,9 @@ public class WebDriverUtils{
         getLocalStorage(webDriver).clear();
     }
 
+    public static void clearLocalStorage() {
+        executeScript("window.localStorage.clear();");
+//        getLocalStorage(WebDriverFactory.getPortalDriver()).clear();
+    }
+
 }

@@ -42,6 +42,7 @@ public class LanguageTest extends AbstractTest {
     /*#4. */
     @Test(groups = {"regression"})
     public void languageChangedOnAddingLanguageCode5ToUrl(){
+        skipTestWithIssues("D-14495");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
             WebDriverUtils.navigateToInternalURL(languageCode);
@@ -53,7 +54,7 @@ public class LanguageTest extends AbstractTest {
     /*#7. */
     @Test(groups = {"regression"})
     public void pageOpenedInDefaultLanguage(){
-        WebDriverUtils.clearCookies();
+        WebDriverUtils.clearLocalStorage();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         assertLanguageChange(homePage, DataContainer.getDefaults().getDefaultLanguage());
     }
@@ -61,6 +62,7 @@ public class LanguageTest extends AbstractTest {
     /*#9. */
     @Test(groups = {"regression"})
     public void urlUpdatedOnLanguageChange(){
+        skipTestWithIssues("D-14495");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
             homePage.setLanguage(languageCode);
@@ -69,8 +71,9 @@ public class LanguageTest extends AbstractTest {
     }
 
     /*#10. */
-    @Test(groups = {"regression, login, mobile"})
+    @Test(groups = {"regression", "login", "mobile"})
     public void loginAfterLanguageChangeWelcomeMessage(){
+        skipTestWithIssues("D-14844");
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
