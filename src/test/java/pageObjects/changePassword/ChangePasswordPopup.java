@@ -1,9 +1,7 @@
 package pageObjects.changePassword;
 
-import enums.Licensee;
 import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
-import utils.core.DataContainer;
 
 public class ChangePasswordPopup extends AbstractPortalPopup{
 	private  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
@@ -34,6 +32,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 
 	public void fillFormAndSubmit(String oldPassword, String newPassword){
         fillFormAndClickSubmit(oldPassword, newPassword);
+		ChangedPasswordNotification changedPasswordPopup = new ChangedPasswordNotification();
 	}
 
     private void fillFormAndClickSubmit(String oldPassword, String newPassword){
@@ -41,11 +40,11 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
         fillNewPassword(newPassword);
         fillNewPasswordValidation(newPassword);
         submit();
-        ChangedPasswordPopup changedPasswordPopup = new ChangedPasswordPopup();
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
-            changedPasswordPopup.closePopup();
-        }
-    }
+        //*if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
+        //*    changedPasswordPopup.closePopup();
+        //*}
+	}
+
 
     public ChangePasswordPopup fillIncorrectFormAndSubmit(String oldPassword, String newPassword){
         fillFormAndClickSubmit(oldPassword, newPassword);

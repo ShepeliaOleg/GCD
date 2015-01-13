@@ -5,9 +5,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.changePassword.ChangePasswordPopup;
+import pageObjects.core.AbstractPortalPage;
+import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.core.AbstractTest;
+import utils.core.DataContainer;
 
 public class ChangeMyPasswordTest extends AbstractTest{
 
@@ -15,48 +19,67 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Qualifier("passwordValidationRule")
 	private ValidationRule passwordValidationRule;
 
+	private String newPassword = "New1Pass";
+	private HomePage homePage;
+	private UserData userData;
+	private ChangePasswordPopup changePasswordPopup;
+
 	/*POSITIVE*/
-//
-//	/* 1. Portlet is displayed */
+
+	/* 1. Portlet is displayed */
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountChangeMyPasswordPage() {
-//		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+//		//*ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
+//        UserData userData = DataContainer.getUserData().getRegisteredUserData();
+//        //BAD!!! ConfiguredPages.changeMyPassword;
+//		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyPassword, userData);
+//
+//        //DataContainer.getUserData().
 //	}
 
-    /*1. Portlet is displayed in popup*/
+    //*1. Portlet is displayed in CHANGE PASSWORD POPUP
     @Test(groups = {"smoke"})
     public void portletIsDisplayedOnPopup(){
         try{
-            HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
-            ChangePasswordPopup changePasswordPopup = homePage.navigateToChangePassword();
+            homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+            changePasswordPopup = homePage.navigateToChangePassword();
         }catch (Exception e){
             skipTest();
         }
     }
-//
-//	/*2. Submit correct data */
-//	@Test(groups = {"regression"})
-//	public void submitCorrectData(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//		ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
-//		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isSuccessMessagePresent(),"success message present");
-//	}
-//
-//	/*3. login with new password*/
-//	@Test(groups = {"regression"})
-//	public void loginWithNewPassword(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
-//		userData.setPassword(newPass);
-//		TypeUtils.assertTrueWithLogs(NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData).isLoggedIn(), "Logged in");
-//	}
-//
+
+	//*2. Submit correct data
+	@Test(groups = {"regression"})
+	public void changePasswordAndLogin(){
+		userData = DataContainer.getUserData().getRandomUserData();
+        homePage = PortalUtils.registerUser(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
+		//*LOGIN with new password
+		userData.setPassword(newPassword);
+		PortalUtils.loginUser(userData);
+		validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
+	}
+
+	//*2. Submit correct data
+	//*@Test(groups = {"regression"})
+	public void putIncorectOldPassword(){
+		//userData = DataContainer.getUserData().getRandomUserData();
+		//homePage = PortalUtils.registerUser(userData);
+		userData=DataContainer.getUserData().getRegisteredUserData();
+		homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		//***changePasswordPopup.fillValues("", newPassword, newPassword, "This field is required");
+		//***changePasswordPopup.fillValues(userData.getPassword(), "", newPassword, "This field is required");
+		//***changePasswordPopup.fillValues(userData.getPassword(), newPassword, "", "This field is required");
+
+		//*LOGIN with new password
+		//userData.setPassword(newPassword);
+		//PortalUtils.loginUser(userData);
+		//validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
+	}
+
+
 //	/*5. IMS Player Details Page*/
 //	@Test(groups = {"regression"})
 //	public void passwordChangedInIMS(){
