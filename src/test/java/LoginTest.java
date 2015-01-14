@@ -119,6 +119,7 @@ public class LoginTest extends AbstractTest{
 	/*10. Login + Remember Me + override old username from popoup*/
 	@Test(groups = {"regression"})
 	public void usernameIsOverwrittenAfterLoginWithRememberMeOnLoginPopup(){
+        skipTestWithIssues("D-17728");
 		UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         LoginPopup loginPopup=homePage.navigateToLoginForm();

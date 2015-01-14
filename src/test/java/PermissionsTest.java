@@ -36,6 +36,7 @@ public class PermissionsTest extends AbstractTest{
     /* 2. Page permissions for guest and player users */
     @Test(groups = {"regression"})
     public void permissionsPage() {
+        skipTestWithIssues("D-16282, D-17742, D-14716");
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_all,          ALL_TEXT,           true);
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_guest,        GUEST_TEXT,         true);
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false);
