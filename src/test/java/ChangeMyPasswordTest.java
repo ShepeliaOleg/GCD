@@ -1,13 +1,18 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPortalPage;
+import pageObjects.external.ims.IMSPlayerDetailsPage;
+import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
+import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
@@ -55,24 +60,33 @@ public class ChangeMyPasswordTest extends AbstractTest{
         homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
-		//*LOGIN with new password
+		//*LOGIN with OLD password
+		PortalUtils.logout();
+		LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
+		assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
+		assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
+		//*LOGIN with NEW password
 		userData.setPassword(newPassword);
 		PortalUtils.loginUser(userData);
 		validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
 	}
 
 	//*2. Submit correct data
-	//*@Test(groups = {"regression"})
+	//@Test(groups = {"regression"})
 	public void putIncorectOldPassword(){
 		//userData = DataContainer.getUserData().getRandomUserData();
 		//homePage = PortalUtils.registerUser(userData);
 		userData=DataContainer.getUserData().getRegisteredUserData();
 		homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
 		changePasswordPopup = homePage.navigateToChangePassword();
-		//***changePasswordPopup.fillValues("", newPassword, newPassword, "This field is required");
-		//***changePasswordPopup.fillValues(userData.getPassword(), "", newPassword, "This field is required");
-		//***changePasswordPopup.fillValues(userData.getPassword(), newPassword, "", "This field is required");
 
+		changePasswordPopup.fillValues("", newPassword, newPassword, "This field is required");
+		changePasswordPopup.validatePassword(passwordValidationRule, userData);
+
+		changePasswordPopup.fillValues(userData.getPassword(), "", newPassword, "This field is required");
+		changePasswordPopup.fillValues(userData.getPassword(), newPassword, "", "This field is required");
+
+		changePasswordPopup.validatePassword(passwordValidationRule, DataContainer.getUserData().getRandomUserData());
 		//*LOGIN with new password
 		//userData.setPassword(newPassword);
 		//PortalUtils.loginUser(userData);
@@ -80,20 +94,22 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 
-//	/*5. IMS Player Details Page*/
-//	@Test(groups = {"regression"})
-//	public void passwordChangedInIMS(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
-//		IMSPlayerDetailsPage playerDetailsPage = iMS.navigateToPlayedDetails(userData.getUsername());
-//		String imsPass = playerDetailsPage.getPassword();
+	/*5. IMS Player Details Page*/
+	@Test(groups = {"regression"})
+	public void passwordChangedInIMS(){
+		//UserData userData = defaultUserData.getRandomUserData();
+		userData=DataContainer.getUserData().getRegisteredUserData();
+		String newPass = passwordValidationRule.generateValidString();
+        PortalUtils.registerUser(userData);
+        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
+		changeMyPasswordPage = changeMyPasswordPage.changePassword(userData.getPassword(), newPass);
+		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+		//???
+		String imsPass = playerDetailsPage.getPassword();
 //		TypeUtils.assertTrueWithLogs(imsPass.equals(newPass), "Password is changed on ims");
-//
-//	}
-//
+
+	}
+
 //	/*NEGATIVE*/
 //
 //	/*1. Incorrect old password*/
