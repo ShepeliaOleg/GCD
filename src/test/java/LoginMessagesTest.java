@@ -21,6 +21,7 @@ public class LoginMessagesTest extends AbstractTest{
         IMSUtils.setLoginMessagesCount(1);
 		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
+        closeDefaultWelcomePopup(welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0]), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
 	}
 
@@ -44,6 +45,7 @@ public class LoginMessagesTest extends AbstractTest{
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
+        closeDefaultWelcomePopup(welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.clickNext();
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[1], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[1]+"'");
@@ -61,6 +63,7 @@ public class LoginMessagesTest extends AbstractTest{
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
+        closeDefaultWelcomePopup(welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.closePopup();
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[1], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[1]+"'");
@@ -74,6 +77,7 @@ public class LoginMessagesTest extends AbstractTest{
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
+        closeDefaultWelcomePopup(welcomePopup);
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
         welcomePopup.clickNext();
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[1], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[1]+"'");
@@ -90,4 +94,11 @@ public class LoginMessagesTest extends AbstractTest{
         validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 300), "User was not logged out after 180 seconds");
 		new SignedOutPopup().close().waitForLogout();
 	}
+
+    private void closeDefaultWelcomePopup(WelcomePopup welcomePopup) {
+        String message = welcomePopup.getTranslationText();
+        if (!message.contains("AUTO")) {
+            welcomePopup.closePopup();
+        }
+    }
 }
