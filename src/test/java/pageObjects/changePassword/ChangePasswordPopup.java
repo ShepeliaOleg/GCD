@@ -1,7 +1,10 @@
 package pageObjects.changePassword;
 
 import pageObjects.core.AbstractPortalPopup;
+import springConstructors.UserData;
+import springConstructors.ValidationRule;
 import utils.WebDriverUtils;
+import utils.validation.ValidationUtils;
 
 public class ChangePasswordPopup extends AbstractPortalPopup{
 	private  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
@@ -9,6 +12,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";
     private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
     private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='newPasswordConfirm']";
+	private final static String ERROR = ".//input[@name='oldPassword']";
 
 	public ChangePasswordPopup(){
 		super(new String[]{ROOT_XP});
@@ -45,6 +49,13 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
         //*}
 	}
 
+	public void fillValues(String oldPassword, String newPassword1, String newPassword2, String errorMessage){
+		fillOldPassword(oldPassword);
+		fillNewPassword(newPassword1);
+		fillNewPasswordValidation(newPassword2);
+		submit();
+		System.out.println(errorMessage);
+	}
 
     public ChangePasswordPopup fillIncorrectFormAndSubmit(String oldPassword, String newPassword){
         fillFormAndClickSubmit(oldPassword, newPassword);
@@ -58,4 +69,8 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 //    public void validateNewPassword(ValidationRule rule) {
 //		ValidationUtils.validate(INPUT_NEW_PASSWORD_XP, rule);
 //    }
+
+	public void validatePassword(ValidationRule rule, UserData userData) {
+		ValidationUtils.validateField(ERROR, rule, "oldPassword");
+	}
 }
