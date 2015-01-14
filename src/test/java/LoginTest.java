@@ -331,7 +331,6 @@ public class LoginTest extends AbstractTest{
     /*login with invalid credentials 3 times - try to log in with correct password - try to log in after unlock*/
     @Test(groups = {"regression"})
     public void freezeUserAfterInvalidLogins(){
-        skipTestWithIssues("Configuration issue: IMS automation rule.");
         UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         String correctPass = userData.getPassword();

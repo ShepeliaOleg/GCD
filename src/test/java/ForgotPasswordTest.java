@@ -68,6 +68,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /* Frozen user*/
     @Test(groups = {"regression"})
     public void frozenPasswordRecovery(){
+        skipTestWithIssues("Configuration issue: IMS automation rule.");
         UserData userData = DataContainer.getUserData().getFrozenUserData();
         userData.setEmail(mailService.generateEmail());
         PortalUtils.registerUser(userData, Page.registrationPage);
@@ -271,7 +272,15 @@ public class ForgotPasswordTest extends AbstractTest{
 //	public void usernameFieldValidation() {
 //        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 //        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
-//		forgotPasswordPopup.validateUsername(usernameValidationRule);
+//		forgotPasswordPopup.validateUsername(emptyRule);
+//	}
+//
+//    /*2. Email address field validation*/
+//	@Test(groups = {"validation"})
+//	public void emailFieldValidation() {
+//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+//        ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
+//		forgotPasswordPopup.validateEmail(emailValidationRule);
 //	}
 //
 //    /*2. Email address field validation*/
