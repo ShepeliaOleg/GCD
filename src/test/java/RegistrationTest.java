@@ -18,15 +18,15 @@ import java.util.List;
 public class RegistrationTest extends AbstractTest{
 
 	/*POSITIVE*/
-	
-	/*1. Valid user registration*/
+
+	//*1. Valid user registration
 	@Test(groups = {"registration","smoke","regression"})
 	public void validUserRegistration() {
         HomePage homePage = PortalUtils.registerUser();
         validateTrue(homePage.isLoggedIn(), "User is logged in");
 	}
 
-    /*Copy paste email*/
+    //*Copy paste email
     @Test(groups = {"registration","regression"})
     public void copyPasteEmail(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -40,7 +40,7 @@ public class RegistrationTest extends AbstractTest{
         assertEquals("", registrationPage.getEmailVerification(), "Email verification");
     }
 
-    /*Copy paste password*/
+    //*Copy paste password
     @Test(groups = {"registration","regression"})
     public void copyPastePassword(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -52,7 +52,7 @@ public class RegistrationTest extends AbstractTest{
         assertEquals("", registrationPage.getPasswordVerification(), "Password verification");
     }
 
-    /*Copy paste password*/
+    //*Copy paste password
     @Test(groups = {"registration", "mobile","regression"})
     public void navigationBetweenSteps(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -61,7 +61,7 @@ public class RegistrationTest extends AbstractTest{
         RegistrationPageStepOne registrationPageStepOne = registrationPageStepTwo.clickPrevious();
     }
 
-    /*Click next on every step without filled data, click submit without filled data*/
+    //*Click next on every step without filled data, click submit without filled data
     @Test(groups = {"registration", "mobile","regression"})
     public void emptyRegisterAttempts(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -75,7 +75,7 @@ public class RegistrationTest extends AbstractTest{
         new RegistrationPageStepThree();
     }
 
-    /* Frozen user registration*/
+    //* Frozen user registration
     @Test(groups = {"registration","regression"})
     public void frozenUserRegistration() {
         UserData userData = DataContainer.getUserData().getFrozenUserData();
@@ -85,7 +85,8 @@ public class RegistrationTest extends AbstractTest{
         assertEquals(DataContainer.getDriverData().getCurrentUrl(), WebDriverUtils.getCurrentUrl(), "Player redirected to root");
     }
 
-    /*#2. Receive bonuses check box default state and text*/
+
+    //*#2. Receive bonuses check box default state and text
     @Test(groups = {"registration","regression"})
     public void receivePromotionOffersDefaultState(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -97,7 +98,7 @@ public class RegistrationTest extends AbstractTest{
         assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(), "Promotional offers checkbox text");
     }
 
-	/*#2. Registration with receive bonuses check box checked*/
+	//*#2. Registration with receive bonuses check box checked
 	@Test(groups = {"registration","regression"})
 	public void receivePromotionOffersIsCheckedInIMS(){
 		UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -106,7 +107,7 @@ public class RegistrationTest extends AbstractTest{
 		validateTrue(receiveBonusesCheckedInIMS, "Promotion checkboxes are checked in IMS");
 	}
 
-    /*#3. Registration with receive bonuses check box unchecked*/
+    //*#3. Registration with receive bonuses check box unchecked
 	@Test(groups = {"registration","regression"})
 	public void receivePromotionOffersIsNotCheckedInIMS(){
 		UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -115,7 +116,7 @@ public class RegistrationTest extends AbstractTest{
         validateFalse(receiveBonusesNotCheckedInIMS, "Promotion checkboxes are checked in IMS");
 	}
 
-    /*#4. Registration with bonus code provided*/
+    //*#4. Registration with bonus code provided
 	@Test(groups = {"registration","regression"})
 	public void registrationWithBonusCoupon(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -123,7 +124,7 @@ public class RegistrationTest extends AbstractTest{
         validateEquals(PromoCode.valid.getAmount(), homePage.getBalanceAmount(), "User balance");
 	}
 
-    /*#5. Registration without bonus code provided*/
+    //*#5. Registration without bonus code provided
     @Test(groups = {"registration","regression"})
 	public void registrationWithOutBonusCoupon(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -131,7 +132,7 @@ public class RegistrationTest extends AbstractTest{
         validateEquals("0.00", homePage.getBalanceAmount(), "User balance");
     }
 
-    /*3. Try to use invalid bonus code*/
+    //*3. Try to use invalid bonus code
     @Test(groups = {"registration","regression"})
     public void registrationWithInvalidBonusCoupon() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -153,7 +154,7 @@ public class RegistrationTest extends AbstractTest{
 //        assertTrue(homePage.getBalance().contains(currencySign), "Currency sign in header is '"+currency+"'");
 //	}
 
-    /*#7. After registration web content*/
+    //*#7. After registration web content
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationWebContent(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -161,35 +162,35 @@ public class RegistrationTest extends AbstractTest{
 		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
 	}
 
-    /*#10. After-registration redirect*/
+    //*#10. After-registration redirect
 	@Test(groups = {"registration","regression"})
 	public void afterRegistrationRedirect(){
 		PortalUtils.registerUser();
         AfterRegistrationPage afterRegistrationPage = new AfterRegistrationPage();
 	}
 
-    /*#11. The list of supported countries is correct*/
+    //*#11. The list of supported countries is correct
 	@Test(groups = {"registration","regression"})
 	public void countryList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         assertEqualsCollections(DataContainer.getDefaults().getCountryCodesList(), registrationPage.getCountriesCodesList(DataContainer.getUserData().getRandomUserData()), "Country codes correspond with configuration");
 	}
 
-    /*#??. The list of supported nationalities is correct*/
+    //*#??.DESKTOP The list of supported nationalities is correct
     @Test(groups = {"registration","spanish", "desktop"})
     public void nationalityList(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         assertEqualsCollections(DataContainer.getDefaults().getCountryCodesList(), registrationPage.registrationPageAllSteps().getNationalitiesCodesList(),"Nationality codes correspond with configuration");
     }
 
-    /*#12. The list of supported currencies is correct*/
+    //*#12. The list of supported currencies is correct
 	@Test(groups = {"registration","regression"})
 	public void currencyList(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         assertEqualsCollections(DataContainer.getDefaults().getCurrencyCodesList(), registrationPage.getCurrencyList(DataContainer.getUserData().getRandomUserData()), "Currency codes correspond with configuration");
 	}
 
-    /*#13. T&C web content is shown when clicking on T&C link*/
+    //*#13. T&C web content is shown when clicking on T&C link
 	@Test(groups = {"regression"})
 	public void openTermsAndConditionsPopup(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -199,7 +200,7 @@ public class RegistrationTest extends AbstractTest{
 		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
 	}
 
-    /*#14. 18+ web content is shown when clicking on 18+ link*/
+    //*#14. 18+ web content is shown when clicking on 18+ link
 	@Test(groups = {"registration","regression", "mobile"})
 	public void adultContentIsShown() {
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -262,7 +263,7 @@ public class RegistrationTest extends AbstractTest{
 //        }
 //	}
 //
-    /*#17. IMS Player Details Page*/
+    //*#17. IMS Player Details Page
 	@Test(groups = {"registration","regression"})
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -270,7 +271,7 @@ public class RegistrationTest extends AbstractTest{
 		IMSUtils.assertRegisterData(userData);
 	}
 
-    /*Client type poker*/
+    //*Client type poker
     @Test(groups = {"registration","regression"})
     public void registrationWithClientType(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -279,7 +280,7 @@ public class RegistrationTest extends AbstractTest{
         validateEquals("poker", IMSUtils.getClientType(userData), "Client type");
     }
 
-    /*Client type empty*/
+    //*Client type empty
     @Test(groups = {"registration","regression"})
     public void registrationWithoutClientType(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
@@ -289,14 +290,14 @@ public class RegistrationTest extends AbstractTest{
 
     }
 
-    /*#20. T&C check box is unchecked by default*/
+    //*#20. T&C check box is unchecked by default
 	@Test(groups = {"registration","regression", "mobile"})
 	public void defaultTnCCheckboxState(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         validateFalse(registrationPage.registrationPageStepThree(DataContainer.getUserData().getRandomUserData()).getTermsCheckbox(), "T&C checkbox checked by default");
 	}
 
-    /*#22. Country - countryCode code and phone prefix mapping*/
+    //*#22. DESKTOP Country - countryCode code and phone prefix mapping
 	@Test(groups = {"registration","regression", "desktop"})
 	public void countryCodePhoneCodeMappingDesktop(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -307,7 +308,7 @@ public class RegistrationTest extends AbstractTest{
 		}
 	}
 
-    /*#??. Country - countryCode code and name mapping*/
+    //*#??. Country - countryCode code and name mapping
     @Test(groups = {"registration","regression"})
     public void countryCodeNamePrefix(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -331,7 +332,7 @@ public class RegistrationTest extends AbstractTest{
 //        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
 //    }
 
-    /* Password strength*/
+    //* DESKTOP Password strength
     @Test(groups = {"registration", "regression", "desktop"})
     public void passwordStrength(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -405,8 +406,8 @@ public class RegistrationTest extends AbstractTest{
 //        }
 //	}
 //
-    /*B-11233*/
-    /*1*/
+    //*B-11233 this BUG CLOSED
+    //*1 DESKTOP
     @Test(groups = {"registration", "regression", "desktop"})
     public void countryCurrencySinglePageRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -416,7 +417,7 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-    /*2*/
+    //*2
     @Test(groups = {"registration", "regression", "mobile"})
     public void countryCurrencyThreeStepRegistration(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -430,8 +431,8 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-    /*B-13316*/
-    /*1*/
+    //*B-13316 this BUG CLOSED
+    //*1
     @Test(groups = {"registration", "regression", "desktop"})
     public void birthDayYearChangingMechanism(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -444,8 +445,8 @@ public class RegistrationTest extends AbstractTest{
         assertEquals(lastYear, availableBirthYears.get(83), "Last available option in birth year dropdown.");
     }
 
-    /*B-11951*/
-    /*1*/
+    //*B-11951 this BUG CLOSED
+    //*1
     @Test(groups = {"registration", "regression", "admin"})
     public void sendDeviceIdToIMSOnRegistration(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -456,7 +457,7 @@ public class RegistrationTest extends AbstractTest{
         assertEquals(deviceIdExpected, deviceIdOnIMS, "Device Id value in IMS.");
     }
 
-    /*2*/
+    //*2
     @Test(groups = {"registration", "regression", "admin"})
     public void unableToRegisterFromSameDevice(){
         PortalUtils.registerUser();
@@ -469,7 +470,7 @@ public class RegistrationTest extends AbstractTest{
 
     /*NEGATIVE*/
 
-    /*#1. Try to use already existing username*/
+    //*#1. Try to use already existing username
 	@Test(groups = {"registration","regression"})
 	public void alreadyUsedUsername(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
@@ -480,7 +481,7 @@ public class RegistrationTest extends AbstractTest{
         ValidationUtils.assertValidationStatus(RegistrationPage.FIELD_USERNAME_NAME, ValidationUtils.STATUS_FAILED, registeredUserData.getUsername());
 	}
 
-    /*#6. Try to register without accepting T&C (without checking check box)*/
+    //*#6. Try to register without accepting T&C (without checking check box)
 	@Test(groups = {"regression"})
 	public void submitWithUncheckedTermsAndConditions(){
         RegistrationPage registrationPage = (RegistrationPage) PortalUtils.registerUser(DataContainer.getUserData().getRandomUserData(), false, true);
