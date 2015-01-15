@@ -68,7 +68,6 @@ public class ForgotPasswordTest extends AbstractTest{
     /* Frozen user*/
     @Test(groups = {"regression"})
     public void frozenPasswordRecovery(){
-        skipTestWithIssues("Configuration issue: IMS automation rule.");
         UserData userData = DataContainer.getUserData().getFrozenUserData();
         userData.setEmail(mailService.generateEmail());
         PortalUtils.registerUser(userData, Page.registrationPage);
