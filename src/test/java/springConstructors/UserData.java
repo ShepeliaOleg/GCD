@@ -96,8 +96,8 @@ public class UserData{
         data.add(getCity());
         data.add(getFullAddress());
         data.add(getPostCode().toLowerCase());
-        data.add(getPhoneAreaCode() + getPhone());
-//        data.add(getMobileAreaCode() + getMobile());
+//*        data.add(getPhoneAreaCode() + getPhone());
+        data.add(getMobileAreaCode() + getMobile());
         data.add(getUsername());
 //        data.add(getPassword());
         data.add(getVerificationQuestion());

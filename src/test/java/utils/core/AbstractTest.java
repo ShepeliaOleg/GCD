@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public class AbstractTest extends AbstractTestRunner{
 
-    protected static String INVALID_BONUS_CODE_MESSAGE = "Inserted Promotional Code does not exist";
+    protected static String INVALID_BONUS_CODE_MESSAGE = "Coupon code is not found or not available";
 
     protected static void validate() {
         String message = collectResults();
