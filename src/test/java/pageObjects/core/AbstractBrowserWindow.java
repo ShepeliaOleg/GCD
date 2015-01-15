@@ -27,4 +27,9 @@ public class AbstractBrowserWindow extends AbstractPageObject{
         WebDriverUtils.closeCurrentWindow(webDriver);
         WebDriverUtils.switchToWindow(webDriver, getMainWindowHandle());
     }
+
+    public void close(WebDriver webDriver, String window){
+        WebDriverUtils.closeCurrentWindow(webDriver);
+        WebDriverUtils.switchToWindow(webDriver, window);
+    }
 }

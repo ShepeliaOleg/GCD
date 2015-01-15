@@ -6,6 +6,7 @@ import springConstructors.AffiliateData;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.WebDriverFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,7 +44,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     private static final String CHECKBOX_DO_NOT_EMAIL=						"//input[@id='communicationoptouts[1][1]']";
     private static final String CHECKBOX_DO_NOT_SMS=						"//input[@id='communicationoptouts[2][1]']";
     private static final String CHECKBOX_DO_NOT_PHONE=						"//input[@id='communicationoptouts[4][1]']";
-    private static final String FIELD_FIRST_NAME=							"//*[@id='firstname']";
+	private static final String FIELD_FIRST_NAME=							"//*[@id='firstname']";
 	private static final String FIELD_LAST_NAME=							"//*[@id='lastname']";
 	private static final String FIELD_BIRTH_DATE=							"//*[@id='birthdate']";
 	private static final String FIELD_EMAIL=								"//*[@id='email']";
@@ -61,7 +62,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
-    private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
+	private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
     private static final String REFERRER_XP=                                "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
     private static final String DEVICE_ID_XP =                              "//td[contains(text(),'Sign up serial:')]";
 
@@ -373,9 +374,14 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	}
 
 	public void changePassword(String password){
+		changePassword(password, false);
+	}
+
+	public void changePassword(String password, boolean checkboxDontRequirePasswordChangeUponNextLogon){
+		String mainWindow = WebDriverUtils.getWindowHandle(WebDriverFactory.getServerDriver());
 		IMSChangePassPopup imsChangePassPopup = openChangePassPopup();
-		imsChangePassPopup.changePassword(password);
-		imsChangePassPopup.close(WebDriverFactory.getServerDriver());
+		imsChangePassPopup.changePassword(password, checkboxDontRequirePasswordChangeUponNextLogon);
+		imsChangePassPopup.close(WebDriverFactory.getServerDriver(), mainWindow);
 	}
 
     public void resetFailedLogins(){
@@ -434,7 +440,8 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	}
 
     private IMSChangePassPopup openChangePassPopup(){
-        WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_CHANGE_PASSWORD);
+
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_CHANGE_PASSWORD);
         return new IMSChangePassPopup(getMainWindowHandle());
     }
 
