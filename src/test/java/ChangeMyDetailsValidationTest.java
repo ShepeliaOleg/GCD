@@ -35,7 +35,7 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     @Qualifier("cityValidationRule")
     private ValidationRule cityValidationRule;
 
-    /*2. Address field validation*/
+    /*1. Country field validation*/
     @Test(groups = {"validation"})
     public void countryFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
