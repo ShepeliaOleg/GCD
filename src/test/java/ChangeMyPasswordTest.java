@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
@@ -30,7 +31,8 @@ public class ChangeMyPasswordTest extends AbstractTest{
 
 	/*POSITIVE*/
 
-	/* 1. Portlet is displayed */
+	//* 1. Portlet is displayed
+	//
 //	@Test(groups = {"smoke"})
 //	public void portletIsDisplayedOnMyAccountChangeMyPasswordPage() {
 //		//*ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.changeMyPassword, defaultUserData.getRegisteredUserData());
@@ -59,7 +61,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
         homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
-		//*LOGIN with OLD password
+		//*TRY TO LOGIN with OLD password
 		PortalUtils.logout();
 		LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
 		assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
@@ -84,7 +86,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		changePasswordPopup = (ChangePasswordPopup) homePage.navigateToLoginForm().login(userData, false, Page.changePasswordPopup);
 	}
 
-	/*NEGATIVE*/
+	//*NEGATIVE
 
 	//*1. Incorrect old password
 	@Test(groups = {"regression"})
@@ -97,7 +99,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
-	/*2. New password is the same as old*/
+	//*2. New password is the same as old
 	@Test(groups = {"regression"})
 	public void changeToSamePassword(){
 		userData = DataContainer.getUserData().getRandomUserData();
@@ -124,27 +126,13 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
-//	/*4. New Password and Retype do not match*/
-//	@Test(groups = {"regression"})
-//	public void retypeIsNotEqualToPassword(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//		String incorrectPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePasswordFromIMS(userData.getPassword(), newPass, incorrectPass);
-//		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isFieldValidatorPresent(),"Field validator present");
-//	}
-//
-//	/*5. Change password and try to log in with your old password*/
-//	@Test(groups = {"regression"})
-//	public void logInWIthOldPassword(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage.changePasswordFromIMS(userData.getPassword(), newPass);
-//        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-//		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
-//	}
+	//*4. New Password and Retype do not match
+	@Test(groups = {"regression"})
+	public void retypeIsNotEqualToPassword(){
+		userData = DataContainer.getUserData().getRandomUserData();
+		newPassword = passwordValidationRule.generateValidString();
+		homePage = PortalUtils.registerUser(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillValues(userData.getPassword(), newPassword, newPassword + "2", "Password should be equal");
+	}
 }
