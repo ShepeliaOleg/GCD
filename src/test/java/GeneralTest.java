@@ -68,6 +68,7 @@ public class GeneralTest extends AbstractTest {
     /*6 parent*/
     @Test(groups = {"regression"})
     public void parentPageOnBackground(){
+        skipTestWithIssues("D-15797");
         PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_child, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_child, pageInPopupPopup, POPUP_CHILD_WIDTH, ConfiguredPages.page_in_popup_parent);
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_link_to_child);
