@@ -59,6 +59,7 @@ public class ChangeMyDetailsTest extends AbstractTest {
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
         updateMyDetailsPage.changeDetails(userDatas[1]);
         WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
         updateMyDetailsPage.assertUserData(userDatas[0]);
     }
 
