@@ -70,86 +70,60 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
 	}
 
-	//*2. Submit correct data
-	//@Test(groups = {"regression"})
-	public void putIncorectOldPassword(){
-		//userData = DataContainer.getUserData().getRandomUserData();
-		//homePage = PortalUtils.registerUser(userData);
-		userData=DataContainer.getUserData().getRegisteredUserData();
-		homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
-		changePasswordPopup = homePage.navigateToChangePassword();
-
-		changePasswordPopup.fillValues("", newPassword, newPassword, "This field is required");
-		changePasswordPopup.validatePassword(passwordValidationRule, userData);
-
-		changePasswordPopup.fillValues(userData.getPassword(), "", newPassword, "This field is required");
-		changePasswordPopup.fillValues(userData.getPassword(), newPassword, "", "This field is required");
-
-		changePasswordPopup.validatePassword(passwordValidationRule, DataContainer.getUserData().getRandomUserData());
-		//*LOGIN with new password
-		//userData.setPassword(newPassword);
-		//PortalUtils.loginUser(userData);
-		//validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername()), "Correct username is displayed after login");
-	}
-
-
-	/*5. IMS Player Details Page*/
+	//*3. IMS Player Details Page
 	@Test(groups = {"regression"})
 	public void passwordChangedInIMS(){
-		String newPwd = DataContainer.getUserData().getPassword();
+		newPassword = DataContainer.getUserData().getPassword();
 		userData = DataContainer.getUserData().getRandomUserData();
 		homePage = PortalUtils.registerUser(userData);
 		String username = userData.getUsername();
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(username);
-		playerDetailsPage.changePassword(newPwd);
-		userData.setPassword(newPwd);
+		playerDetailsPage.changePassword(newPassword);
+		userData.setPassword(newPassword);
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		changePasswordPopup = (ChangePasswordPopup) homePage.navigateToLoginForm().login(userData, false, Page.changePasswordPopup);
 	}
 
-//	/*NEGATIVE*/
-//
-//	/*1. Incorrect old password*/
-//	@Test(groups = {"regression"})
-//	public void incorrectOldPassword(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//		String incorrectPass = passwordValidationRule.generateValidString();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePasswordFromIMS(incorrectPass, newPass);
-//		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
-//	}
-//
-//	/*2. New password is the same as old*/
-//	@Test(groups = {"regression"})
-//	public void changeToSamePassword(){
-//		UserData userData = defaultUserData.getRandomUserData();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePasswordFromIMS(userData.getPassword(), userData.getPassword());
-//		TypeUtils.assertTrueWithLogs(changeMyPasswordPage.isErrorPresent(),"Error is present");
-//	}
-//
-//	/*3. New password which has been used recently*/
-//	@Test(groups = {"regression"})
-//	public void recentlyUsedPassword(){
-//		boolean result = false;
-//		UserData userData = defaultUserData.getRandomUserData();
-//		String newPass = passwordValidationRule.generateValidString();
-//		String oldPass = userData.getPassword();
-//        PortalUtils.registerUser(userData);
-//        ChangePasswordPage changeMyPasswordPage = (ChangePasswordPage) NavigationUtils.navigateToPage(ConfiguredPages.changeMyPassword);
-//		changeMyPasswordPage = changeMyPasswordPage.changePasswordFromIMS(userData.getPassword(), newPass);
-//		if(changeMyPasswordPage.isSuccessMessagePresent()){
-//			changeMyPasswordPage = changeMyPasswordPage.changePasswordFromIMS(newPass, oldPass);
-//			result = changeMyPasswordPage.isErrorPresent();
-//		}else{
-//			result = false;
-//		}
-//        TypeUtils.assertTrueWithLogs(result,"Error is present");
-//	}
-//
+	/*NEGATIVE*/
+
+	//*1. Incorrect old password
+	@Test(groups = {"regression"})
+	public void incorrectOldPassword(){
+		userData = DataContainer.getUserData().getRandomUserData();
+		String incorrectPass = passwordValidationRule.generateValidString();
+        homePage = PortalUtils.registerUser(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillFormAndClickSubmit(incorrectPass, newPassword);
+		assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+	}
+
+	/*2. New password is the same as old*/
+	@Test(groups = {"regression"})
+	public void changeToSamePassword(){
+		userData = DataContainer.getUserData().getRandomUserData();
+		homePage = PortalUtils.registerUser(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillFormAndClickSubmit(userData.getPassword(), userData.getPassword());
+		assertEquals("New password equals old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+	}
+
+	//*3. New password which has been used recently
+	@Test(groups = {"regression"})
+	public void recentlyUsedPassword(){
+		userData = DataContainer.getUserData().getRandomUserData();
+		newPassword = passwordValidationRule.generateValidString();
+		String oldPassword = userData.getPassword();
+		homePage = PortalUtils.registerUser(userData);
+		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+		playerDetailsPage.changePassword(newPassword, true);
+		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+		userData.setPassword(newPassword);
+		homePage.login(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillFormAndClickSubmit(newPassword, oldPassword);
+		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+	}
+
 //	/*4. New Password and Retype do not match*/
 //	@Test(groups = {"regression"})
 //	public void retypeIsNotEqualToPassword(){

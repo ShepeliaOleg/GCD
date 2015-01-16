@@ -4,15 +4,19 @@ import pageObjects.core.AbstractPortalPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.WebDriverUtils;
+import utils.core.WebDriverFactory;
 import utils.validation.ValidationUtils;
 
+import static utils.core.AbstractTest.assertEquals;
+
 public class ChangePasswordPopup extends AbstractPortalPopup{
-	private  final static String BUTTON_SUBMIT_XP    =               "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
+	private  final static String BUTTON_SUBMIT_XP    =              "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
     public static final String ROOT_XP = BUTTON_SUBMIT_XP;
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";
     private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
     private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='newPasswordConfirm']";
-	private final static String ERROR = ".//input[@name='oldPassword']";
+	private final static String ERROR =								".//input[@name='oldPassword']";
+	private final static String GENERAL_ERROR_MSG =					"//*[contains(@class,'error')]";
 
 	public ChangePasswordPopup(){
 		super(new String[]{ROOT_XP});
@@ -39,7 +43,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 		ChangedPasswordNotification changedPasswordPopup = new ChangedPasswordNotification();
 	}
 
-    private void fillFormAndClickSubmit(String oldPassword, String newPassword){
+    public void fillFormAndClickSubmit(String oldPassword, String newPassword){
         fillOldPassword(oldPassword);
         fillNewPassword(newPassword);
         fillNewPasswordValidation(newPassword);
@@ -54,7 +58,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 		fillNewPassword(newPassword1);
 		fillNewPasswordValidation(newPassword2);
 		submit();
-		System.out.println(errorMessage);
+		assertEquals(getErrorMsg(), errorMessage, "Error message was not as expected!");
 	}
 
     public ChangePasswordPopup fillIncorrectFormAndSubmit(String oldPassword, String newPassword){
@@ -72,5 +76,10 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 
 	public void validatePassword(ValidationRule rule, UserData userData) {
 		ValidationUtils.validateField(ERROR, rule, "oldPassword");
+	}
+
+	public String getErrorMsg(){
+		WebDriverUtils.waitForElement(GENERAL_ERROR_MSG);
+		return WebDriverUtils.getElementText(WebDriverFactory.getPortalDriver(), GENERAL_ERROR_MSG);
 	}
 }
