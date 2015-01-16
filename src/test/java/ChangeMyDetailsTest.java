@@ -68,11 +68,13 @@ public class ChangeMyDetailsTest extends AbstractTest {
         UserData[] userDatas = getUserDatas();
         PortalUtils.registerUser(userDatas[0]);
         ChangeMyDetailsPage updateMyDetailsPage =(ChangeMyDetailsPage) NavigationUtils.navigateToPage(ConfiguredPages.updateMyDetails);
-        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled with no changes");
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "Update details button disabled with no changes");
         updateMyDetailsPage.changeDetails(userDatas[1]);
-        assertFalse(updateMyDetailsPage.isButtonDisabled(), "button disabled with changes");
+        assertFalse(updateMyDetailsPage.isButtonDisabled(), "Update details button enabled with changes");
+        // sinse zip code is stored uppercase in ims:
+        userDatas[0].setPostCode(userDatas[0].getPostCode().toUpperCase());
         updateMyDetailsPage.changeDetails(userDatas[0]);
-        assertTrue(updateMyDetailsPage.isButtonDisabled(), "button disabled after revert");
+        assertTrue(updateMyDetailsPage.isButtonDisabled(), "Update details button disabled after revert");
     }
 
 	/*6. Player performs several consecutive updates of UMD portlet */
