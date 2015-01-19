@@ -152,7 +152,8 @@ public class ForgotPasswordTest extends AbstractTest{
 //	}
 
     /*12. IMS Player Details Page shows new password*/
-	@Test(groups = {"regression"})
+// test disabled until non-encrypted password is not shown on player detils page on ims
+//	@Test(groups = {"regression"})
 	public void checkPasswordIsChangedInIMS() {
 		UserData userData = setNewPasswordAfterRecoveryAndLogin();
 		IMSPlayerDetailsPage imsPlayerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
@@ -333,7 +334,8 @@ public class ForgotPasswordTest extends AbstractTest{
         mailServicePage.waitForEmail();
         userData.setPassword(mailServicePage.getPasswordFromLetter());
         String newPassword = passwordValidationRule.generateValidString();
-        loginWithTempPassword(userData).fillFormAndSubmit(userData.getPassword(), newPassword);
+        ChangePasswordPopup changePasswordPopup = loginWithTempPassword(userData);
+        changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
         userData.setPassword(newPassword);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         return userData;
