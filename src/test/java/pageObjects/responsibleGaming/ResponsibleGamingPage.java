@@ -209,7 +209,8 @@ public class ResponsibleGamingPage extends AbstractPortalPage {
 	}
 
 	public void checkErrors(boolean daily, boolean weekly, boolean monthly){
-        AbstractTest.assertEquals(daily, dailyValidationErrorMessageVisible(), "Daily Error Visible");
+        WebDriverUtils.waitFor(1000);
+		AbstractTest.assertEquals(daily, dailyValidationErrorMessageVisible(), "Daily Error Visible");
         AbstractTest.assertEquals(weekly, weeklyValidationErrorMessageVisible(), "Weekly Error Visible");
         AbstractTest.assertEquals(monthly, monthlyValidationErrorMessageVisible(), "Monthly Error Visible");
 	}
