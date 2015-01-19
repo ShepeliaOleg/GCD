@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
-import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
@@ -115,6 +114,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
+		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage = PortalUtils.registerUser(userData);
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
