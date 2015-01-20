@@ -416,7 +416,7 @@ public class NavigationUtils{
         }
     }
 
-    public static void navigateToAffiliateURL(ConfiguredPages page, AffiliateData affiliateData) {
+    public static AbstractPageObject navigateToAffiliateURL(ConfiguredPages page, AffiliateData affiliateData) {
         WebDriverUtils.navigateToInternalURL(page.toString() + affiliateData.getRelativeURL());
         WebDriverUtils.waitFor();
         AffiliateCookie affiliateCookie = new AffiliateCookie("");
@@ -425,6 +425,7 @@ public class NavigationUtils{
         } else {
             AbstractTest.results.add("Affiliate cookie should be created on affiliate URL request, but it is absent.");
         }
+        return getConfiguredPageObject(page);
     }
 
     public static void assertGameLaunch(String gameId, Integer realMode) {

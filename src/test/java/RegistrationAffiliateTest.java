@@ -3,6 +3,7 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.AffiliateData;
 import springConstructors.UserData;
@@ -188,8 +189,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
     public void affiliateUrlSingleCreferrer() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
@@ -200,8 +201,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setAdvertiser("notExists");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -213,8 +214,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setCreferrer("notExists:123");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle, false);
     }
@@ -224,8 +225,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
     public void affiliateUrlMultipleCreferrer() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataMultiple = affiliateData.getAffiliateDataMultiple();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataMultiple);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataMultiple);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataMultiple);
     }
@@ -236,8 +237,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setUrl("");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
@@ -249,8 +250,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
         affiliateDataSingle.setBanner("");
         affiliateDataSingle.setAdvertiser("");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -264,8 +265,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataSingle.setProfile("");
         affiliateDataSingle.setUrl("");
         affiliateDataSingle.setCreferrer("");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
     }
@@ -279,8 +280,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataSingle.setBanner("banner");
         affiliateDataSingle.setProfile("profile");
         affiliateDataSingle.setUrl("url");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.setAdvertiser(affiliateData.getDefaultAdvertiser());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -297,9 +298,9 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataUrl1.setUrl("url");
         affiliateDataUrl1.setCreferrer("creferrer");
         AffiliateData affiliateDataUrl2 = affiliateData.getAffiliateDataSingle();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl1);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl2);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl1);
+                         registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl2);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataUrl2);
     }
@@ -315,11 +316,11 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataCookie.setProfile("profile");
         affiliateDataCookie.setUrl("url");
         affiliateDataCookie.setCreferrer("name:value");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
         NavigationUtils.refreshPage();
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.register, affiliateDataUrl);
         registrationPage.registerUser(userData);
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataUrl);
     }
@@ -354,8 +355,8 @@ public class RegistrationAffiliateTest extends AbstractTest {
     public void affiliateCreferrerRegistrationPreferenceAndUrl() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         AffiliateData affiliateDataSingle = affiliateData.getAffiliateDataSingle();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataSingle);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataSingle);
         registrationPage.registerUser(userData);
         affiliateDataSingle.addCreferrer(affiliateData.getCreferrerRegistrationPortletProperty());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataSingle);
@@ -372,10 +373,10 @@ public class RegistrationAffiliateTest extends AbstractTest {
         affiliateDataCookie.setUrl("url");
         affiliateDataCookie.setCreferrer("creferrer");
         AffiliateData affiliateDataUrl = affiliateData.getAffiliateDataSingle();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerClientTypeCreferrer);
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         AffiliateCookie affiliateCookie = new AffiliateCookie(affiliateDataCookie);
         affiliateCookie.add();
-        NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataUrl);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToAffiliateURL(ConfiguredPages.registerClientTypeCreferrer, affiliateDataUrl);
         registrationPage.registerUser(userData);
         affiliateDataUrl.addCreferrer(affiliateData.getCreferrerRegistrationPortletProperty());
         IMSUtils.validateAffiliate(userData.getUsername(), affiliateDataUrl);
