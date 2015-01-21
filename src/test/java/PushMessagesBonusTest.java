@@ -2,6 +2,7 @@ import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
+import pageObjects.bonus.LoseOnWithdrawPopup;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPortalPage;
@@ -291,7 +292,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         assertEquals("20.00", withdrawPage.getBalanceAmount(), "Balance is 20 (10 real + 10 bonus).");
         withdrawPage.withdraw(PaymentMethod.PayPal, PromoCode.valid.getAmount());
-
+        LoseOnWithdrawPopup loseOnWithdrawPopup = new LoseOnWithdrawPopup();
+        loseOnWithdrawPopup.clickAccept();
         assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 

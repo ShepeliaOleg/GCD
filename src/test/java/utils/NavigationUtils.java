@@ -417,6 +417,7 @@ public class NavigationUtils{
     }
 
     public static AbstractPageObject navigateToAffiliateURL(ConfiguredPages page, AffiliateData affiliateData) {
+        WebDriverUtils.clearLocalStorage(); //
         WebDriverUtils.navigateToInternalURL(page.toString() + affiliateData.getRelativeURL());
         WebDriverUtils.waitFor();
         AffiliateCookie affiliateCookie = new AffiliateCookie("");
