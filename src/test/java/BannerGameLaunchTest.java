@@ -10,8 +10,7 @@ import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
 public class BannerGameLaunchTest extends AbstractTest{
-
-    /*Banner - Guest login popup register*/
+        /*Banner - Guest login popup register*/
     @Test(groups = {"regression", "banner"})
     public void bannerImageLaunchGameGuestRegister() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
@@ -23,7 +22,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndAssertUrl(1, DataContainer.getUserData().getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(3, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -31,14 +30,14 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGameGuestLoginSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        bannerPage.clickGameAndAssertUrl(2, DataContainer.getUserData().getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(4, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup cancel image slide 1*/
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestCancel() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(1);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(3);
         loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerGameTwoSlides), "Game is not launched");
     }
@@ -48,7 +47,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGameGuestCancelSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(2);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(4);
         loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerGameTwoSlides), "Game is not launched");
     }
@@ -57,7 +56,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndAssertUrl(1);
+        bannerPage.clickGameAndAssertUrl(3);
     }
 
     /*Banner - Player play image slide 2*/
@@ -65,14 +64,14 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGamePlayerSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        bannerPage.clickGameAndAssertUrl(2);
+        bannerPage.clickGameAndAssertUrl(4);
     }
 
     /*Banner - Admin play image slide 1*/
     @Test(groups = {"admin"})
     public void bannerImageLaunchGameAdmin() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerGameTwoSlides);
-        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(1);
+        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(3);
     }
 
     /*Banner - Admin play image slide 2*/
@@ -80,6 +79,6 @@ public class BannerGameLaunchTest extends AbstractTest{
     public void bannerImageLaunchGameAdminSlide2() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerGameTwoSlides);
         bannerPage.showNextSlide();
-        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(2);
+        AdminCanNotPlayPopup adminCanNotPlayPopup = bannerPage.clickGameAdmin(4);
     }
 }
