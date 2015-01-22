@@ -16,6 +16,7 @@ public class SpamavertPage extends MailServicePage {
 	private static final String LETTER_CONTENT_XP="//*[@id='mail']";
 	private static final String WAITING_DIALOG_XP="//*[@id='dialogWaiting']";
 	private static final String WAITING_DIALOG_BUTTON_ID="btnCancelWaiting";
+	private static final String MAILLIST_INVITATION_ITEM_XP=	MAILLIST_XP + "//*[contains(text(), 'An invitation from')]";
 
     @Override
 	public boolean inboxIsEmpty(){
@@ -58,5 +59,10 @@ public class SpamavertPage extends MailServicePage {
     @Override
 	public void waitForPasswordEmail(long timeout){
         AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), WAITING_DIALOG_XP, timeout), "Email was received after '" + timeout + "' seconds");
+	}
+
+	@Override
+	public void waitForInvitationEmail(long timeout) {
+		AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MAILLIST_INVITATION_ITEM_XP, timeout), "Email with invitation was received after '"+timeout+"' seconds");
 	}
 }

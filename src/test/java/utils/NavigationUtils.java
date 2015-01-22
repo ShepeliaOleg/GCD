@@ -153,7 +153,8 @@ public class NavigationUtils{
             case registerNoClientType:
             case registerClientTypeCreferrer:
             case register:                                      return new RegistrationPage();
-            case referAFriend:                                  return new ReferAFriendPage();
+            case referAFriend:
+            case referAFriendPage:                              return new ReferAFriendPage();
             case responsibleGaming:                             return new ResponsibleGamingPage();
             case selfExclusion:                                 return new SelfExcludePage();
             case transactionHistory:                            return new TransactionHistoryPage();

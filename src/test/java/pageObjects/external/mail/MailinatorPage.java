@@ -12,6 +12,7 @@ public class MailinatorPage extends MailServicePage {
     private static final String IFRAME_XP=		    "//*[@id='mailshowdivbody']//iframe";
     private static final String MAILLIST_ITEM_XP=	MAILLIST_XP + "//*[contains(text(), 'New Password')]";
     private static final String MATCHER=			"It is now: ";
+    private static final String MAILLIST_INVITATION_ITEM_XP=	MAILLIST_XP + "//*[contains(text(), 'An invitation from')]";
     private static final String LETTER_CONTENT_XP=	"//div[@class='mailview']";
 
     @Override
@@ -46,6 +47,11 @@ public class MailinatorPage extends MailServicePage {
 
     @Override
     public void waitForPasswordEmail(long timeout){
-        AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MAILLIST_ITEM_XP, timeout), "Email was received after '"+timeout+"' seconds");
+        AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MAILLIST_ITEM_XP, timeout), "Email with password was received after '"+timeout+"' seconds");
+    }
+
+    @Override
+    public void waitForInvitationEmail(long timeout) {
+        AbstractTest.validateTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), MAILLIST_INVITATION_ITEM_XP, timeout), "Email with invitation was received after '"+timeout+"' seconds");
     }
 }

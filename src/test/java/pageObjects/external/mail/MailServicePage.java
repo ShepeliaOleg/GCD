@@ -19,4 +19,6 @@ public abstract class MailServicePage extends AbstractServerPage{
 
     public abstract void waitForPasswordEmail(long timeout);
 
+    public abstract void waitForInvitationEmail(long timeout);
+
 }

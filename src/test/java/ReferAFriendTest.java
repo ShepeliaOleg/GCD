@@ -4,18 +4,144 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.external.mail.MailServicePage;
+import pageObjects.referAFriend.ReferAFriendPage;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import springConstructors.ValidationRule;
+import springConstructors.mail.MailService;
 import utils.NavigationUtils;
 import utils.core.AbstractTest;
 
 public class ReferAFriendTest extends AbstractTest{
 
 	@Autowired
-	@Qualifier("emailValidationRule")
-	private ValidationRule emailValidationRule;
+	@Qualifier("emailValidationRuleReferAFriend")
+	private ValidationRule emailValidationRuleReferAFriend;
 
-	/* Positive */
+    @Autowired
+    @Qualifier("mailinator")
+    private MailService mailService;
+
+	/** Positive */
+    /** 1. Portlet is displayed */
+    /*popup*/
+    @Test
+    public void portletIsDisplayedOnMyAccountReferAFriendPopup() {
+        try{
+            HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+            homePage.navigateToReferAFriend();
+        }catch (Exception e){
+            skipTest();
+        }
+    }
+
+    /*page*/
+    @Test
+    public void portletIsDisplayedOnMyAccountReferAFriendPage() {
+        try{
+            NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriendPage);
+        }catch (Exception e){
+            skipTest();
+        }
+    }
+
+    /** 2 Send an invitation*/
+    /*popup*/
+    @Test
+    public void successfullMessageAppearedOnCorrectRequestPopup() {
+        String email = emailValidationRuleReferAFriend.generateValidString();
+        navigateToReferAFriendPopupAndSendInvitation(email);
+    }
+
+    /*page*/
+    @Test
+    public void successfullMessageAppearedOnCorrectRequestPage() {
+        String email = emailValidationRuleReferAFriend.generateValidString();
+        navigateToReferAFriendPageAndSendInvitation(email);
+    }
+
+    /** 3. Invitation comes to email box */
+    /*popup*/
+    @Test
+    public void recommendationEmailReceivedOnCorrectRequestPopup(){
+        String email = mailService.generateEmail();
+        navigateToReferAFriendPageAndSendInvitation(email);
+        MailServicePage mailServicePage = mailService.navigateToInbox(email);
+        mailServicePage.waitForInvitationEmail(1000);
+    }
+
+    /*page*/
+    @Test
+    public void recommendationEmailReceivedOnCorrectRequestPage(){
+        String email = mailService.generateEmail();
+        navigateToReferAFriendPageAndSendInvitation(email);
+        MailServicePage mailServicePage = mailService.navigateToInbox(email);
+        mailServicePage.waitForInvitationEmail(1000);
+    }
+
+    /** Negative*/
+    /** 1. Send an invitation to already used email */
+    /*popup*/
+    @Test
+    public void failMessageAppearedOnSendingAlreadySentEmailPopup(){
+        String email = emailValidationRuleReferAFriend.generateValidString();
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+        ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
+        referAFriendPopup.fillRecipientInfo(email);
+        referAFriendPopup.clickSend();
+        assertTrue(referAFriendPopup.isEmailSent(), "Invitation was sent to email: " + email);
+        ReferAFriendPopup referAFriendPopup1 = homePage.navigateToReferAFriend();
+        referAFriendPopup1.fillRecipientInfo(email);
+        referAFriendPopup1.clickSend();
+        assertTrue(referAFriendPopup1.isErrorMessageVisible(), "Can't send invitation to same email twice");
+    }
+
+    /*page*/
+    @Test
+    public void failMessageAppearedOnSendingAlreadySentEmailPage(){
+        String email = emailValidationRuleReferAFriend.generateValidString();
+        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriendPage);
+        referAFriendPage.fillRecipientInfo(email);
+        referAFriendPage.clickSend();
+        assertTrue(referAFriendPage.isEmailSent(), "Invitation was sent to email: " + email);
+        ReferAFriendPage referAFriendPage1 = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriendPage);
+        referAFriendPage1.fillRecipientInfo(email);
+        referAFriendPage1.clickSend();
+        assertTrue(!referAFriendPage1.isErrorMessageVisible(), "Can't send invitation to same email twice");
+    }
+
+    /** validation */
+    /** 2. Email field validation*/
+    /*popup*/
+    @Test
+    public void emailFieldValidationPopup(){
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+        ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
+        referAFriendPopup.validateEmail(emailValidationRuleReferAFriend);
+    }
+
+    /*page*/
+    @Test
+    public void emailFieldValidationPage(){
+        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriendPage);
+        referAFriendPage.validateEmail(emailValidationRuleReferAFriend);
+    }
+
+
+    public void navigateToReferAFriendPopupAndSendInvitation(String email){
+        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+        ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
+        referAFriendPopup.fillRecipientInfo(email);
+        referAFriendPopup.clickSend();
+        assertTrue(referAFriendPopup.isEmailSent(), "Invitation was sent to email: " + email);
+    }
+
+    public void navigateToReferAFriendPageAndSendInvitation(String email){
+        ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriendPage);
+        referAFriendPage.fillRecipientInfo(email);
+        referAFriendPage.clickSend();
+        assertTrue(referAFriendPage.isEmailSent(), "Invitation was sent to email: " + email);
+    }
 
 //	/* 1. Portlet is displayed */
 //	@Test(groups = {"smoke"})
@@ -23,17 +149,6 @@ public class ReferAFriendTest extends AbstractTest{
 //        UserData userData = defaultUserData.getRegisteredUserData();
 //		ReferAFriendPage referAFriendPage = (ReferAFriendPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.referAFriend, userData);
 //	}
-
-    /* 1. Portlet is displayed */
-    @Test(groups = {"smoke", "mobile"})
-    public void portletIsDisplayedOnMyAccountReferAFriendPopup() {
-        try{
-            HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
-            ReferAFriendPopup referAFriendPopup = homePage.navigateToReferAFriend();
-        }catch (Exception e){
-            skipTest();
-        }
-    }
 
 //    /* 2. Send one invitation from RAF */
 //	@Test(groups = {"regression"})
