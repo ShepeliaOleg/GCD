@@ -15,7 +15,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression", "banner"})
     public void bannerImageLaunchGameGuestRegister() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        LoginPopup loginPopup = bannerPage.clickGameLoggedOut( 1);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut( 3);
         loginPopup.clickRegistration().registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
