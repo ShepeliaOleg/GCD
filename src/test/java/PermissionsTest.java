@@ -64,6 +64,7 @@ public class PermissionsTest extends AbstractTest{
         List<String> fullList = portletText;
         List<String> visibleList = Arrays.asList(texts);
         NavigationUtils.navigateToPage(condition, page);
+        WebDriverUtils.waitFor();
         for (String text : fullList) {
             String role = text.toLowerCase().replace("permissions_", "").replace("_only", "").replace("_", " ");
             String message = "Portlet visible for " + role + " is displayed for " + condition.toString() + ".";
