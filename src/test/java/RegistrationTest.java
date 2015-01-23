@@ -426,6 +426,8 @@ public class RegistrationTest extends AbstractTest{
         for (String countryCode : DataContainer.getDefaults().getCountryCodesList()) {
             registrationPageStepTwo = registrationPageStepThree.clickPrevious();
             registrationPage.fillCountry(countryCode);
+            registrationPage.fillCity(DataContainer.getUserData().getCity());
+            registrationPage.fillAddress(DataContainer.getUserData().getAddress());
             registrationPageStepTwo.clickNext();
             assertEquals(DataContainer.getDefaults().getCurrencyByCountryCode(countryCode), registrationPage.getSelectedCurrency(), "Currency for "+DataContainer.getDefaults().getCountryNameByCountryCode(countryCode) +" (" + countryCode+")");
         }

@@ -206,11 +206,11 @@ public class RegistrationPage extends AbstractPortalPage {
     }
 
 
-    protected static void fillAddress(String address){
+    public static void fillAddress(String address){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ADDRESS_NAME), address);
     }
 
-    protected static void fillCity(String city){
+    public static void fillCity(String city){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_CITY_NAME), city);
     }
 
