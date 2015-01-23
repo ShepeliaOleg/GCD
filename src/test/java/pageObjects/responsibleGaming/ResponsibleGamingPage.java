@@ -201,7 +201,11 @@ public class ResponsibleGamingPage extends AbstractPortalPage {
 	}
 
 	private List<String> getDepositLimits(DepositLimits type){
-		return WebDriverUtils.getDropdownOptionsValue(type.getXpath());
+		List<String> fullList = WebDriverUtils.getDropdownOptionsValue(type.getXpath());
+		//Remove 'not defined' and '0' values
+		fullList.remove(0);
+		fullList.remove(0);
+		return fullList;
 	}
 
 	private String getRandomLimit(DepositLimits type){
