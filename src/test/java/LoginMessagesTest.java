@@ -96,9 +96,14 @@ public class LoginMessagesTest extends AbstractTest{
 	}
 
     private void closeDefaultWelcomePopup(WelcomePopup welcomePopup) {
-        String message = welcomePopup.getTranslationText();
-        if (!message.contains("AUTO")) {
-            welcomePopup.closePopup();
+        String message;
+        while (true) {
+            message = welcomePopup.getTranslationText();
+            if (!message.contains("AUTO")) {
+                welcomePopup.closePopup();
+            } else {
+                break;
+            }
         }
     }
 }
