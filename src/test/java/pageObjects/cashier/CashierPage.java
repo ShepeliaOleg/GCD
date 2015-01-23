@@ -169,7 +169,9 @@ public class CashierPage extends AbstractPortalPage {
         }else {
             WebDriverUtils.click(header);
             AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
-            for(String value:WebDriverUtils.getDropdownOptionsValue(FIELD_ACCOUNT_KNOWN_XP)){
+            List<String> dropdownoptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_XP);
+            for(String value:dropdownoptions){
+                value = value.replace("*", "").trim();
                 if(card.endsWith(value)){
                     return true;
                 }

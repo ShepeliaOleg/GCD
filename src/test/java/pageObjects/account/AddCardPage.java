@@ -201,8 +201,12 @@ public class AddCardPage extends AbstractPortalPage {
         assertMessage("Invalid credit card number or expiration date");
     }
 
-    public void assertCardUsedMessage() {
-        assertMessage("Invalid credit card number or expiration date");
+    public void assertAlreadyUsedByOtherPlayerCardMessage() {
+        assertMessage("This credit card is being used by another player");
+    }
+
+    public void assertAlreadyUsedCardMessage() {
+        assertMessage("This credit card has been already added");
     }
 
     private void assertMessage(String message){

@@ -84,7 +84,7 @@ public class CashierAddCardTest extends AbstractTest{
         depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         addCardPage = depositPage.clickAddCard();
         addCardPage.addCard(card);
-        addCardPage.assertCardUsedMessage();
+        addCardPage.assertAlreadyUsedCardMessage();
     }
 
     /*already used by other user is not added, correct message*/
@@ -102,8 +102,8 @@ public class CashierAddCardTest extends AbstractTest{
         depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         addCardPage = depositPage.clickAddCard();
         addCardPage.addCard(card);
-        addCardPage.assertCardUsedMessage();
-        depositPage = new DepositPage();
+        addCardPage.assertAlreadyUsedByOtherPlayerCardMessage();
+        depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         assertFalse(depositPage.isCardVisible(PaymentMethod.Visa, card), "Card visible");
     }
 

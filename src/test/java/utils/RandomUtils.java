@@ -141,11 +141,10 @@ public class RandomUtils{
         if(paymentMethod.equals(PaymentMethod.Visa)){
             card="visa";
         }
-//        WebDriverFactory.switchToAdditionalWebDriver();
-        WebDriverUtils.navigateToURL("http://www.getcreditcardnumbers.com/");
-        WebDriverUtils.waitForElement("//*[@action='/generated-credit-card-numbers']");
-        String result = WebDriverUtils.getElementText("//*[contains(@class, 'visa')]/li");
-//        WebDriverFactory.switchToMainWebDriver();
+        WebDriverUtils.navigateToURL(WebDriverFactory.getServerDriver(), "http://www.getcreditcardnumbers.com/");
+        WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), "//*[@action='/generated-credit-card-numbers']");
+        String result = WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), "//*[contains(@class, '" + card + "')]/li");
+
         return result;
     }
 }
