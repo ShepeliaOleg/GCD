@@ -11,7 +11,7 @@ import utils.core.AbstractTest;
 
 public class EnvoyDepositPage extends AbstractPortalPage {
 
-    private static final String BUTTON_CANCEL_XP =          "//input[contains(text(), 'Cancel')]";
+    private static final String BUTTON_CANCEL_XP =          "//input[@value='Cancel']";
     private static final String BUTTON_PROCEED_XP =         "//input[@value='Proceed']";
     private static final String BUTTON_CONFIRM_XP =         "//input[@value='Confirm']";
     private static final String INPUT_SOFORT_SORT_CODE_XP = "//*[@id='TransactionsSessionSenderBankCode']";
