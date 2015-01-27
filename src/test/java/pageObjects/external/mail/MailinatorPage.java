@@ -11,7 +11,7 @@ public class MailinatorPage extends MailServicePage {
     private static final String MAILLIST_XP=		"//ul[@id='mailcontainer']";
     private static final String IFRAME_XP=		    "//*[@id='mailshowdivbody']//iframe";
     private static final String MAILLIST_ITEM_XP=	MAILLIST_XP + "//*[contains(text(), 'New Password')]";
-    private static final String MATCHER=			"It is now: ";
+    private static final String MATCHER=			"Password: ";//"It is now: ";
     private static final String MAILLIST_INVITATION_ITEM_XP=	MAILLIST_XP + "//*[contains(text(), 'An invitation from')]";
     private static final String LETTER_CONTENT_XP=	"//div[@class='mailview']";
 
