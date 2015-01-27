@@ -12,7 +12,6 @@ public class InboxPage extends AbstractPortalPage {
 	private static final String LINK_FIRST_MESSAGE_XP=			"//tr[1]//a[@data-action='viewInboxMessage']";
 	private static final String LINK_FIRST_MESSAGE_DELETE_XP=	"//tr[1]//a[@data-action='deleteMail']";
 	private static final String POPUP_OVERLAY_XP=				"//*[@class='reveal-modal-bg']";
-	private static final String LOADER_OVERLAY_XP=				"//*[@class='loading-mask-wrapper']";
 	private static final String LABEL_UNREAD_XP=				"//td/span[contains(text(), 'No')]";
 	private static final int RETRIES=							20;
 

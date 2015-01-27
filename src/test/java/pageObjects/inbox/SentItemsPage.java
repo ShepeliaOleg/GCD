@@ -15,7 +15,6 @@ public class SentItemsPage extends AbstractPortalPage {
 	private static final String LINK_FIRST_MESSAGE_XP=			"//tr[1]//a[@data-action='viewSentMessage']";
 	private static final String LINK_FIRST_MESSAGE_DELETE_XP=	"//tr[1]//a[@data-action='deleteSentMail']";
 	
-	private static final String LOADER_OVERLAY_XP=				"//*[@class='loading-mask-wrapper']";
 	private static final String POPUP_OVERLAY_XP=				"//*[@class='reveal-modal-bg']";
 
 	public SentItemsPage(){
