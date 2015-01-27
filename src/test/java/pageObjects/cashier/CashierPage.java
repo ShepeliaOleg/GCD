@@ -92,17 +92,21 @@ public class CashierPage extends AbstractPortalPage {
 
     protected void processPaymentByType(PaymentMethod method, String amount){
         WebDriverUtils.click(fillFields(method, amount)+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, boolean expired){
         WebDriverUtils.click(fillFields(method, amount, expired)+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, String account){
         WebDriverUtils.click(fillFields(method, amount, account)+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
     }
     protected void processPaymentByType(PaymentMethod method, String amount, String account, String password){
         WebDriverUtils.click(fillFields(method, amount, account, password)+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, PromoCode promoCode){
@@ -110,6 +114,7 @@ public class CashierPage extends AbstractPortalPage {
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
         WebDriverUtils.inputTextToField(fieldPromoCode, promoCode.getCode());
         WebDriverUtils.click(body+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
     }
 
     private String fillFields(PaymentMethod method, String amount, boolean expired){

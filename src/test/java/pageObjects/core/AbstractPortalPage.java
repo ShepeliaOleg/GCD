@@ -34,7 +34,8 @@ import java.util.Collection;
 public class AbstractPortalPage extends AbstractPage {
 
     public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
-    protected static final String LOADER_OVERLAY_XP=				"//*[@class='loading-mask-wrapper']";
+    protected static final String LOADER_OVERLAY_XP=    "//*[@class='loading-mask-wrapper']";
+    protected static final String INPUT_LOADER_XP=	    "//input[contains(@class,'progress')]";
 
     public AbstractPortalPage(String[] clickableBys, String[] invisibleBys) {
         super(WebDriverFactory.getPortalDriver(), clickableBys, invisibleBys);

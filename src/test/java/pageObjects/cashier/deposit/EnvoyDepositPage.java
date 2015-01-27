@@ -14,22 +14,46 @@ public class EnvoyDepositPage extends AbstractPortalPage {
     private static final String BUTTON_CANCEL_XP =          "//input[@value='Cancel']";
     private static final String BUTTON_PROCEED_XP =         "//input[@value='Proceed']";
     private static final String BUTTON_CONFIRM_XP =         "//input[@value='Confirm']";
+    //iDeal
+    private static final String BUTTON_IDEAL_CONFIRM_XP =     "//input[@value='Confirm Transaction']";
+    // Sofort
     private static final String INPUT_SOFORT_SORT_CODE_XP = "//*[@id='TransactionsSessionSenderBankCode']";
     private static final String BUTTON_SOFORT_NEXT_XP =     "//*[@id='WizardForm']//button";
     private static final String INPUT_SOFORT_ACCOUNT_XP =   "//*[@id='BackendFormLOGINNAMEUSERID']";
     private static final String INPUT_SOFORT_PIN_XP =       "//*[@id='BackendFormUSERPIN']";
     private static final String RADIO_SOFORT_ACCOUNT_XP =   "//*[@id='TransactionsSessionSenderAccountNumber12345678']";
     private static final String INPUT_SOFORT_TAN_XP =       "//*[@id='BackendFormTan']";
-    private static final String TRUSTLY_XP =                "//*[contains(@src, 'trustly')]";
     private static final String SOFORT_XP =                 "//*[@alt='SOFORT']";
-    private static final String BANKDROPDOWN_XP =           "//*[@id='bankdropdown']";
+
+//    private static final String TRUSTLY_XP =                "//*[contains(@src, 'trustly')]";
+//    private static final String BANKDROPDOWN_XP =           "//*[@id='bankdropdown']";
 
     public EnvoyDepositPage(){
         WebDriverUtils.waitFor();
         WebDriverUtils.waitForPageToLoad();
     }
 
-    public TransactionUnSuccessfulPopup cancelDeposit(){
+    public TransactionUnSuccessfulPopup cancelDeposit(UserData userData){
+        String userCountry = userData.getCountry();
+        String userCurrency = userData.getCurrency();
+        switch (userCountry) {
+            case "NL":
+                if (WebDriverUtils.isVisible(BUTTON_PROCEED_XP, 1)) {
+                    //TODO
+                } else {
+                    AbstractTest.failTest("iDeal payment method is not available for Envoy for user from country " + userCountry + " and currency " + userCurrency);
+                }
+                break;
+            case "DE":
+                if(WebDriverUtils.isVisible(SOFORT_XP)){
+                    WebDriverUtils.click(SOFORT_XP);
+                } else {
+                    AbstractTest.failTest("Sofort payment method is not available for Envoy for user from country " + userCountry + " and currency " + userCurrency);
+                }
+                break;
+            default:
+                AbstractTest.failTest("User with unsupported country for Envoy payment method: " + userCountry);
+        }
         WebDriverUtils.click(BUTTON_CANCEL_XP);
         return new TransactionUnSuccessfulPopup();
     }
@@ -39,46 +63,53 @@ public class EnvoyDepositPage extends AbstractPortalPage {
     }
 
     public TransactionSuccessfulPopup pay(UserData userData, boolean withPromoCode){
-        if(WebDriverUtils.isVisible(TRUSTLY_XP, 1)){
-            new TrustlyIframe().pay();
-        }else if(WebDriverUtils.isVisible(BUTTON_PROCEED_XP, 1)) {
-            WebDriverUtils.setDropdownOptionByValue("//*[contains(@id, 'ddlBanks')]", "INGBNL2A");
-            WebDriverUtils.click(BUTTON_PROCEED_XP);
-            WebDriverUtils.waitForElement("//*[contains(@id, 'lblSimulatorCase')]");
-            WebDriverUtils.click("//*[contains(@id, 'btnGo')]");
-        }else if(WebDriverUtils.isVisible("//*[contains(@id, 'tblPOLI')]",1)){
-            WebDriverUtils.click(BUTTON_PROCEED_XP);
-            WebDriverUtils.waitForElement(BANKDROPDOWN_XP);
-            WebDriverUtils.setDropdownOptionByValue(BANKDROPDOWN_XP, "iBankAU01");
-            WebDriverUtils.click("//*[@id='proceed-button']");
-            WebDriverUtils.waitForElement("//*[@id='BankFrame']", 60);
-            new PolyIframe().pay();
-        }else if(WebDriverUtils.isVisible(SOFORT_XP)){
-            WebDriverUtils.click(SOFORT_XP);
-            WebDriverUtils.waitForElement(BUTTON_CONFIRM_XP);
-            WebDriverUtils.click(BUTTON_CONFIRM_XP);
-            WebDriverUtils.waitForElement(INPUT_SOFORT_SORT_CODE_XP);
-            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_SORT_CODE_XP, "88888888");
-            WebDriverUtils.waitForElement(BUTTON_SOFORT_NEXT_XP);
-            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
-            WebDriverUtils.waitForElement(INPUT_SOFORT_ACCOUNT_XP);
-            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_ACCOUNT_XP, "123456");
-            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_PIN_XP, "1234");
-            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
-            WebDriverUtils.waitForElement(RADIO_SOFORT_ACCOUNT_XP);
-            WebDriverUtils.click(RADIO_SOFORT_ACCOUNT_XP);
-            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
-            WebDriverUtils.waitForElement(INPUT_SOFORT_TAN_XP);
-            WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_TAN_XP, "12345");
-            WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
-        }else {
-            AbstractTest.failTest("Payment page did not load for '"+userData.getCountry()+"' '"+userData.getCurrencyName()+"'");
+        String userCountry = userData.getCountry();
+        String userCurrency = userData.getCurrency();
+        switch (userCountry) {
+            case "NL":
+                if(WebDriverUtils.isVisible(BUTTON_PROCEED_XP, 1)) {
+                    WebDriverUtils.setDropdownOptionByValue("//*[contains(@id, 'ddlBanks')]", "INGBNL2A");
+                    WebDriverUtils.click(BUTTON_PROCEED_XP);
+                    WebDriverUtils.click(BUTTON_IDEAL_CONFIRM_XP);
+                } else {
+                    AbstractTest.failTest("iDeal payment method is not available for Envoy for user from country " + userCountry + " and currency " + userCurrency);
+                }
+                break;
+            case "DE":
+                if(WebDriverUtils.isVisible(SOFORT_XP)){
+                    processSofort();
+                } else {
+                    AbstractTest.failTest("Sofort payment method is not available for Envoy for user from country " + userCountry + " and currency " + userCurrency);
+                }
+                break;
+            default:
+                AbstractTest.failTest("User with unsupported country for Envoy payment method: " + userCountry);
         }
         if (withPromoCode) {
             AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
             acceptDeclineBonusPopup.clickAccept();
         }
         return new TransactionSuccessfulPopup();
+    }
+
+    private void processSofort() {
+        WebDriverUtils.click(SOFORT_XP);
+        WebDriverUtils.waitForElement(BUTTON_CONFIRM_XP);
+        WebDriverUtils.click(BUTTON_CONFIRM_XP);
+        WebDriverUtils.waitForElement(INPUT_SOFORT_SORT_CODE_XP);
+        WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_SORT_CODE_XP, "88888888");
+        WebDriverUtils.waitForElement(BUTTON_SOFORT_NEXT_XP);
+        WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+        WebDriverUtils.waitForElement(INPUT_SOFORT_ACCOUNT_XP);
+        WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_ACCOUNT_XP, "123456");
+        WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_PIN_XP, "1234");
+        WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+        WebDriverUtils.waitForElement(RADIO_SOFORT_ACCOUNT_XP);
+        WebDriverUtils.click(RADIO_SOFORT_ACCOUNT_XP);
+        WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
+        WebDriverUtils.waitForElement(INPUT_SOFORT_TAN_XP);
+        WebDriverUtils.clearAndInputTextToField(INPUT_SOFORT_TAN_XP, "12345");
+        WebDriverUtils.click(BUTTON_SOFORT_NEXT_XP);
     }
 
     private void assertAmount(String amount){

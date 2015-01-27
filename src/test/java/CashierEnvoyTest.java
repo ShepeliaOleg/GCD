@@ -71,7 +71,7 @@ public class CashierEnvoyTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
-        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = envoyDepositPage.cancelDeposit();
+        TransactionUnSuccessfulPopup transactionUnSuccessfulPopup = envoyDepositPage.cancelDeposit(userData);
         transactionUnSuccessfulPopup.closePopup();
         assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
@@ -110,7 +110,7 @@ public class CashierEnvoyTest extends AbstractTest{
     }
 
     private UserData[] getEnvoyUsers(){
-        UserData ideal =    setUserData("NL", "EUR");
+//        UserData ideal =    setUserData("NL", "EUR");
 //        UserData prezelwy = setUserData("PL", "PLN");
 //        UserData eKonto =   setUserData("CZ", "CZK");
 //        UserData euteller = setUserData("FI", "EUR");
@@ -120,7 +120,7 @@ public class CashierEnvoyTest extends AbstractTest{
 //        UserData moneta =   setUserData("RU", "USD");
 //        UserData poli =     setUserData("AU", "AUD");
         return new UserData[]{
-                ideal,      //0
+//                ideal,      //0
 //                prezelwy,   //1
 //                eKonto,     //2
 //                euteller,   //3
