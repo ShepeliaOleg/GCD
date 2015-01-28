@@ -130,6 +130,7 @@ public class RegistrationPage extends AbstractPortalPage {
             registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, promoCode);
         }
         if(expectedPage.equals(Page.registrationPage)){
+            WebDriverUtils.waitFor(1000);
             return new RegistrationPage();
         }else {
             return NavigationUtils.closeAllPopups(expectedPage);
