@@ -3,6 +3,7 @@ import enums.PaymentMethod;
 import enums.PlayerCondition;
 import enums.PromoCode;
 import org.testng.annotations.Test;
+import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -19,7 +20,7 @@ import utils.core.DataContainer;
 
 public class CashierMoneyBookersTest extends AbstractTest{
 
-    private static final String AMOUNT = "0.05";
+    private static final String AMOUNT = "1.00";
 
 
     @Test(groups = {"regression", "mobile"})
@@ -102,14 +103,14 @@ public class CashierMoneyBookersTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void validPromoCodeTest(){
         UserData userData = getMoneyBookersUser();
-        PortalUtils.loginUser(userData);
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         String balance = depositPage.getBalanceAmount();
         MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookersValidPromoCode(AMOUNT);
         moneyBookersDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) moneyBookersDepositPage.pay(true);
+        acceptDeclineBonusPopup.clickAccept();
+        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup();
         transactionSuccessfulPopup.closePopup();
-        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
@@ -131,7 +132,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         String balance = depositPage.getBalanceAmount();
         MoneyBookersDepositPage moneyBookersDepositPage = depositPage.depositMoneyBookers(AMOUNT);
         moneyBookersDepositPage.assertAmount(AMOUNT);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = moneyBookersDepositPage.pay();
+        TransactionSuccessfulPopup transactionSuccessfulPopup = (TransactionSuccessfulPopup) moneyBookersDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT), depositPage.getBalanceAmount(), "Balance change after deposit");
         return userData;

@@ -7,7 +7,7 @@ public enum PaymentMethod {
     MasterCard("MasterCard", "3295","1729"),
     Discover("Discover", "", ""),
     PaySafeCard("PaySafeCard", "6364 0700 8000 4190", "", "", ""),
-    MoneyBookers("playtech.mobile.mobile-cashier.method.Moneybookers.title", "testmbcustomerger@yahoo.co.uk", "someshit@yahoo.co.uk", "euroeuro1", ""),
+    MoneyBookers("MoneyBookers", "testmbcustomerger@yahoo.co.uk", "someshit@yahoo.co.uk", "euroeuro1", ""),
     Envoy("Envoy", "", "", "", ""),
     Neteller("NETeller", "453501020503", "450424149137", "411392", "netellertest_EUR@neteller.com"),
     WebMoney("WebMoney", "Z253744324569", "Z253744324568", "", "");
