@@ -18,15 +18,15 @@ public class BonusTest extends AbstractTest {
     private static final String bonusID = "44730";
     private static final String bonusAmount = "10.00";
 
-    //@Test(groups = {"regression"})
-    public void checkAddBonusAmount() {
+    @Test(groups = {"regression"})
+    public void addFreeBonusAmount() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
         homePage = PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
         bonusPage.getFreeBonus(bonusID);
 
-        assertEquals(new AbstractPortalPage().getBalanceAmount(), bonusAmount, "The current user amount isn't correspond expected bonus amount!");
+        assertEquals(bonusAmount, new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
     }
 
     //@Test

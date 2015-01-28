@@ -254,15 +254,14 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
         UserData userData = validPasswordRecovery();
-        String oldPassword = userData.getPassword();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
         String tempPassword = mailServicePage.getPasswordFromLetter();
         userData.setPassword(tempPassword);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-        changePasswordPopup.fillFormAndClickSubmit(tempPassword, oldPassword);
-        assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+        changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
+        assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
     /*VALIDATION*/
