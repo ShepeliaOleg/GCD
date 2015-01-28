@@ -121,7 +121,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.MoneyBookers, AMOUNT);
-        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("Inserted Promotional Code does not exist", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
