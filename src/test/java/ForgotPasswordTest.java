@@ -261,8 +261,8 @@ public class ForgotPasswordTest extends AbstractTest{
         userData.setPassword(tempPassword);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
-        changePasswordPopup.fillFormAndSubmit(tempPassword, oldPassword);
-        assertTrue(changePasswordPopup.isPortletErrorVisible(), "errorMessageAppeared");
+        changePasswordPopup.fillFormAndClickSubmit(tempPassword, oldPassword);
+        assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
     /*VALIDATION*/
