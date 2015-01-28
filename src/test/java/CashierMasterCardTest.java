@@ -1,10 +1,12 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PlayerCondition;
 import enums.PromoCode;
 import org.testng.annotations.Test;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
+import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
@@ -45,14 +47,14 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardValidDepositAndWithdraw(){
-        PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
-        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        UserData userData = DataContainer.getUserData().getCardUserData();
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         String balance = depositPage.getBalanceAmount();
         depositPage.depositCard(PaymentMethod.MasterCard, AMOUNT);
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT), depositPage.getBalanceAmount(), "Balance change after deposit");
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(TypeUtils.calculateSum(balance), depositPage.getBalanceAmount(), "Balance change after withdraw");
+        assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -61,7 +63,7 @@ public class CashierMasterCardTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage.depositCardValidPromoCode(PaymentMethod.MasterCard, AMOUNT);
-        new OkBonusPopup().closePopup();
+//        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
@@ -71,7 +73,7 @@ public class CashierMasterCardTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.MasterCard, AMOUNT);
-        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("Inserted Promotional Code does not exist", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals(balance, depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

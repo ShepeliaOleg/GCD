@@ -22,6 +22,11 @@ public class WithdrawPage extends CashierPage {
 
     public void withdrawSuccessful(PaymentMethod type, String amount, String account){
         withdraw(type, amount, account);
+//        AUTOFREE bonus should not be 'lose on withdraw'
+//        if (WebDriverUtils.isVisible(LoseOnWithdrawPopup.BONUS_TITLE_XP, 0)) {
+//            LoseOnWithdrawPopup loseOnWithdrawPopup = new LoseOnWithdrawPopup();
+//            loseOnWithdrawPopup.clickAccept();
+//        }
         new WithdrawSuccessfulNotification();
     }
 

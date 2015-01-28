@@ -2,10 +2,12 @@ package pageObjects.cashier.deposit;
 
 import enums.PaymentMethod;
 import enums.PromoCode;
+import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import springConstructors.UserData;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class DepositPage extends CashierPage{
@@ -26,8 +28,11 @@ public class DepositPage extends CashierPage{
 
     public void depositCardValidPromoCode(PaymentMethod card, String amount){
         processPaymentByType(card, amount, PromoCode.valid);
-        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup();
-        transactionSuccessfulPopup.closePopup();
+        WebDriverUtils.refreshPage(); //  D-18311
+        AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
+        acceptDeclineBonusPopup.clickAccept();
+//        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup(); // D-18311
+//        transactionSuccessfulPopup.closePopup(); // D-18311
     }
 
     public void depositCardExpired(PaymentMethod card, String amount) {
