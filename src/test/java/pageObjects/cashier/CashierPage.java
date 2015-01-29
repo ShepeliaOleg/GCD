@@ -20,7 +20,7 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String BUTTON_ADD_CARD_XP =      BUTTON_XP+"[@data-url='/add-card']";
     protected static final String FIELD_AMOUNT_XP =         "//*[@name='amount']";
     protected static final String FIELD_PROMO_CODE_XP =     "//*[@name='promoCode']";
-    protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//*[@id='credit-card-account-id']";
+    protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//*[@class='fn-change-account']";
     protected static final String FIELD_ACCOUNT_XP =        "//*[@name='accountId']";
     protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
     private   static final String ADD =                     "add";
@@ -157,7 +157,9 @@ public class CashierPage extends AbstractPortalPage {
         if(WebDriverUtils.isVisible(WebDriverUtils.getPrecedingElement(fieldAccountKnown), 0)){
             String selectedAccount = WebDriverUtils.getDropdownSelectedOptionValue(fieldAccountKnown);
             List<String> optionsValue = WebDriverUtils.getDropdownOptionsValue(fieldAccountKnown);
-            account = "*" + account;
+            if (method.equals(PaymentMethod.MasterCard)) {
+                account = "*" + account;
+            }
             if (!selectedAccount.equals(account)) {
                 if (optionsValue.contains(account)) {
                     WebDriverUtils.setDropdownOptionByValue(fieldAccountKnown, account);
@@ -184,8 +186,8 @@ public class CashierPage extends AbstractPortalPage {
         }else {
             WebDriverUtils.click(header);
             AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
-            List<String> dropdownoptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_XP);
-            for(String value:dropdownoptions){
+            List<String> dropdownOptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_XP);
+            for(String value: dropdownOptions){
                 value = value.replace("*", "").trim();
                 if(card.endsWith(value)){
                     return true;
