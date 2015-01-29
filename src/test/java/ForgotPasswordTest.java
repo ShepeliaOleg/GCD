@@ -244,6 +244,7 @@ public class ForgotPasswordTest extends AbstractTest{
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
         String tempPassword = mailServicePage.getPasswordFromLetter();
+        userData.setPassword(tempPassword);
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
