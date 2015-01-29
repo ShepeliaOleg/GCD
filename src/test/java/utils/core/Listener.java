@@ -29,7 +29,7 @@ public class Listener extends TestListenerAdapter{
     private static final String SKIP_EXCEPTION = "org.testng.SkipException: ";
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException: ";
 
-    String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest",
+    String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest", "BonusTest",
             "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
             "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest",
             "CashierPaySafeCardTest", "CashierPendingWithdrawTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
