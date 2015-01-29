@@ -1,10 +1,13 @@
 import enums.ConfiguredPages;
 import enums.PlayerCondition;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
 import pageObjects.core.AbstractPortalPage;
+import springConstructors.BonusData;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
@@ -16,10 +19,10 @@ public class BonusTest extends AbstractTest {
     private UserData userData;
     private HomePage homePage;
     private BonusPage bonusPage;
-    private static final String bonusID = "44730";
-    private static final String bonusAmount = "10.00";
-    private static final String GET_FREE_BONUS_BUTTON_TITLE = "Get free bonus";
-    private static final String LINKS_TO_TC_BUTTON_TITLE = "Links to T&Cs";
+
+    @Autowired
+    @Qualifier("bonus")
+    private BonusData bonusData;
 
     @Test(groups = {"regression"})
     public void addFreeBonusAmount() {
@@ -31,9 +34,9 @@ public class BonusTest extends AbstractTest {
         //- ADD +15 Euro
         //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
 
-        bonusPage.getFreeBonus(bonusID);
+        bonusPage.getFreeBonus(bonusData.getBonusID());
 
-        assertEquals(bonusAmount, new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
+        assertEquals(bonusData.getBonusAmount(), new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
         PortalUtils.logout();
     }
 
@@ -48,8 +51,8 @@ public class BonusTest extends AbstractTest {
         //homePage = PortalUtils.registerUser(userData);
         //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        String bonusTitle = bonusPage.getBonusTitle(bonusID);
-        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusID);
-        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, GET_FREE_BONUS_BUTTON_TITLE, LINKS_TO_TC_BUTTON_TITLE);
+        String bonusTitle = bonusPage.getBonusTitle(bonusData.getBonusID());
+        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());
+        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, bonusData.getGetFreeBonusButtonTitle(), bonusData.getLinksToTCbuttonTitle());
     }
 }
