@@ -35,6 +35,11 @@ public class BonusPage extends AbstractPortalPage{
 		return new FreeBonusPopup();
 	}
 
+	public String getBonusTitle(String bonusID) {
+		WebDriverUtils.waitForElement(BONUS_LINK + bonusID + "]");
+		return WebDriverUtils.getElementText(BONUS_LINK + bonusID + "]");
+	}
+
 	public OkBonusPopup submitCode(){
 		inputPromoCode();
 		clickSubmit();
