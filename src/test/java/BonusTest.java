@@ -42,14 +42,7 @@ public class BonusTest extends AbstractTest {
 
     @Test(groups = {"regression"})
     public void freeBonusPopUp() {
-        //- Another user, another currency, USUAL test FAILS
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-
-        //- New register user test PASS
-        //userData = DataContainer.getUserData().getRandomUserData();
-        //userData.setCurrency("USD");
-        //homePage = PortalUtils.registerUser(userData);
-        //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
         String bonusTitle = bonusPage.getBonusTitle(bonusData.getBonusID());
         FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());

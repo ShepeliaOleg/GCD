@@ -3,6 +3,8 @@ package pageObjects.bonus;
 import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
+import java.util.Objects;
+
 import static utils.core.AbstractTest.*;
 
 public class FreeBonusPopup extends AbstractPortalPopup{
@@ -30,7 +32,8 @@ public class FreeBonusPopup extends AbstractPortalPopup{
 		new AbstractPortalPopup(new String[]{BONUS_POPUP_TITLE, BUTTON_GET_BONUS, BUTTON_SHOW_TC});
 		assertEquals(expBonusTitle, WebDriverUtils.getElementText(BONUS_POPUP_TITLE), "Bonus popup has unexpected title!");
 		try {
-			assertEquals(button1, WebDriverUtils.getElementText(BUTTON_GET_BONUS), "First button has unexpected title!");
+			//assertEquals(button1, WebDriverUtils.getElementText(BUTTON_GET_BONUS), "First button has unexpected title!");
+			validateTrue(button1.equals(WebDriverUtils.getElementText(BUTTON_GET_BONUS)), "First button has unexpected title!");
 		} catch (RuntimeException re) {
 			skipTest("D-17992");
 		}
