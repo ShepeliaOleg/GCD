@@ -249,6 +249,7 @@ public class ForgotPasswordTest extends AbstractTest{
 		ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
         assertTrue(changePasswordPopup.isPortletErrorVisible(),"errorMessageAppeared");
+        NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 	}
 
     /*8. New password which has been used recently*/
