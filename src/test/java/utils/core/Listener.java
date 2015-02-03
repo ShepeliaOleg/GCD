@@ -28,6 +28,8 @@ public class Listener extends TestListenerAdapter{
     private static final String ENV_REPLACER = "ENVIRONMENT";
     private static final String SKIP_EXCEPTION = "org.testng.SkipException: ";
     private static final String RUNTIME_EXCEPTION = "java.lang.RuntimeException: ";
+    private static final String BROWSER = "Default_Browser";
+    private static final String OS = "Default_OS";
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest", "BonusTest",
             "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
@@ -150,6 +152,8 @@ public class Listener extends TestListenerAdapter{
                 line = replaceTotal(line, "id='failed'>", "failed", 12, failed);
                 line = replaceTotal(line, "id='ims'>", "ims", 9, ims);
                 line = addEnv(line);
+                line = addBrowser(line);
+                line = addOS(line);
                 report.add(line);
             }
             bufferedReader.close();
@@ -170,6 +174,20 @@ public class Listener extends TestListenerAdapter{
     private String addEnv(String line){
         if(line.contains(ENV_REPLACER)){
             line = line.replace(ENV_REPLACER, DataContainer.getDriverData().getCurrentUrl());
+        }
+        return line;
+    }
+
+    private String addBrowser(String line){
+        if(line.contains(BROWSER)){
+            line = line.replace(BROWSER, DataContainer.getDriverData().getBrowser());
+        }
+        return line;
+    }
+
+    private String addOS(String line){
+        if(line.contains(OS)){
+            line = line.replace(OS, DataContainer.getDriverData().getOs());
         }
         return line;
     }
@@ -227,7 +245,8 @@ public class Listener extends TestListenerAdapter{
     }
 
     private void createIndex(){
-        output.println("<h2>Env: "+ENV_REPLACER+"</h2>");
+        output.println("<h2>Env: <a target=\"_blank\" href=\"" +ENV_REPLACER+"\"\\>"+ENV_REPLACER+"</a></h2>");
+        output.println("<b>Browser:</b> "+BROWSER+"; <b>OS</b> "+OS);
         output.println("<table border='1' style='background-color:"+COLOR_GREEN+";border:1px black;width:90%;border-collapse:collapse;'>");
         output.println("<tr style='background-color:orange;color:white;'><td>Area</td><td>Total</td><td>Passed</td><td>Failed</td><td>Skipped</td></tr>");
         for(String area:list){
