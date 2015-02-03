@@ -195,7 +195,7 @@ public class RegistrationTest extends AbstractTest{
 	public void openTermsAndConditionsPopup(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
-            registrationPage = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRegisteredUserData());
+            registrationPage = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRandomUserData());
         }
 		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
 	}
