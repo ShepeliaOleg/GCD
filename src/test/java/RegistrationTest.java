@@ -321,16 +321,16 @@ public class RegistrationTest extends AbstractTest{
         }
     }
 
-//    /*#23. Default selected countryCode*/
-//    @Test(groups = {"registration","regression"})
-//    public void defaultCountryMobile(){
-//        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-//        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
-//            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
-//        }
-//        assertEquals(DataContainer.getDefaults().getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
-//        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
-//    }
+    /*#23. Default selected countryCode*/
+    @Test(groups = {"registration","regression"})
+    public void defaultCountryMobile(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        if (DataContainer.getDriverData().getLicensee().equals(Licensee.core)) {
+            registrationPage.registrationPageStepTwo(DataContainer.getUserData().getRandomUserData());
+        }
+        assertEquals(DataContainer.getDefaults().getDefaultCountryName(), registrationPage.getSelectedCountryName(), "Default country name");
+        // assertTrue(registrationPage.isFindMyAddressButtonVisible());
+    }
 
     //* DESKTOP Password strength
     @Test(groups = {"registration", "regression", "desktop"})
