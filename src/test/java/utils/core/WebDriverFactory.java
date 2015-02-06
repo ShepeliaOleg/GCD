@@ -206,7 +206,9 @@ public class WebDriverFactory{
 
     private static WebDriver createIEDriver(){
         System.setProperty("webdriver.ie.driver","C:/Playtech/webdriver/iedriver/IEDriverServer.exe");
-        return new InternetExplorerDriver();
+        DesiredCapabilities caps = DesiredCapabilities.internetExplorer();
+        caps.setCapability("nativeEvents", false);
+        return new InternetExplorerDriver(caps);
     }
 
     /*Mobile*/
