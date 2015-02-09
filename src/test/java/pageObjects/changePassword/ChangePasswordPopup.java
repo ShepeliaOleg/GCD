@@ -1,5 +1,6 @@
 package pageObjects.changePassword;
 
+import pageObjects.core.AbstractPopup;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
@@ -79,7 +80,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 	}
 
 	public String getErrorMsg(){
-		WebDriverUtils.waitForElement(GENERAL_ERROR_MSG);
-		return WebDriverUtils.getElementText(WebDriverFactory.getPortalDriver(), GENERAL_ERROR_MSG);
+		WebDriverUtils.waitForElement(AbstractPopup.ROOT_XP + GENERAL_ERROR_MSG);
+		return WebDriverUtils.getElementText(WebDriverFactory.getPortalDriver(), AbstractPopup.ROOT_XP + GENERAL_ERROR_MSG);
 	}
 }
