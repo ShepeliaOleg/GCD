@@ -157,7 +157,7 @@ public class CashierPage extends AbstractPortalPage {
         if(WebDriverUtils.isVisible(WebDriverUtils.getPrecedingElement(fieldAccountKnown), 0)){
             String selectedAccount = WebDriverUtils.getDropdownSelectedOptionValue(fieldAccountKnown);
             List<String> optionsValue = WebDriverUtils.getDropdownOptionsValue(fieldAccountKnown);
-            if (method.equals(PaymentMethod.MasterCard)) {
+            if (method.equals(PaymentMethod.MasterCard) || method.equals(PaymentMethod.Visa)) {
                 account = "*" + account;
             }
             if (!selectedAccount.equals(account)) {
