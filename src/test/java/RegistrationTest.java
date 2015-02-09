@@ -1,3 +1,4 @@
+import com.sun.jna.platform.unix.X11;
 import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
@@ -407,31 +408,19 @@ public class RegistrationTest extends AbstractTest{
 //	}
 //
 
-    /*26. Deposit limits */
-    @Test
-    public void registrationWithDepositLimits(){
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDepositLimits);
-        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
-        registrationPageStepThree.setDepositLimits();
-        registrationPageStepThree.fillDataAndSubmit(userData, true, true, null);
-        registrationPageStepThree.validateDepositLimitsIMS(userData.getUsername());
-    }
-
-
     /*26. Check if Find button is visible*/
-    @Test
+    @Test(groups = {"registration","regression"})
     public void isButtonFindVisible() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageStepTwo registrationPageStepTwo = registrationPage.registrationPageStepTwo();
         registrationPageStepTwo.selectUKCountry();
-        assertTrue(registrationPageStepTwo.isFindButtonVisible(), "Button 'Find' visibility !!!");
+        assertTrue(registrationPageStepTwo.isFindButtonVisible(), "Button 'Find' visibility when selected country is UK");
         registrationPageStepTwo.fillCountry("RU");
-        assertFalse(registrationPageStepTwo.isFindButtonVisible(), "Button 'Find' visibility !!!");
+        assertFalse(registrationPageStepTwo.isFindButtonVisible(), "Button 'Find' visibility when selected country is not UK");
     }
 
     /*27. Enter a valid postcode which refer to 1-6 addresses. Click "Find"*/
-    @Test
+    @Test(groups = {"registration","regression"})
     public void enterValidPostcodeWhichReferToOneSixAddresses() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageStepTwo registrationPageStepTwo = registrationPage.registrationPageStepTwo();
@@ -443,7 +432,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /*28. Enter a valid postcode which refer to many addresses. Click "Find"*/
-    @Test
+    @Test(groups = {"registration","regression"})
     public void enterValidPostcodeWhichReferToManyAddresses() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         RegistrationPageStepTwo registrationPageStepTwo = registrationPage.registrationPageStepTwo();
@@ -452,6 +441,30 @@ public class RegistrationTest extends AbstractTest{
         registrationPageStepTwo.clickFind();
         registrationPageStepTwo.selectRandomAddressFromDropdown();
         assertTrue(registrationPageStepTwo.isAddressFieldsEditableAndEmpty(), "Address fields are editable and not empty");
+    }
+
+    /*DEPOSIT LIMITS*/
+
+    /*29. Deposit limits dropdowns visibility*/
+    @Test(groups = {"registration","regression"})
+    public void depositLimitsFieldsVisibility() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDepositLimits);
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
+        registrationPageStepThree.isDepositLimitsDropdownsVisible();
+    }
+
+    /*30. Deposit limits. Check data on IMS */
+    @Test(groups = {"registration","regression"})
+    public void isDepositLimitsSavedToIMS(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDepositLimits);
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree(userData);
+        registrationPageStepThree.setDepositLimits(1, 2, 3);
+        String dayLimit = registrationPageStepThree.getSelectedDailyDepositLimit();
+        String weekLimit = registrationPageStepThree.getSelectedWeeklyDepositLimit();
+        String monthLimit = registrationPageStepThree.getSelectedMonthlyDepositLimit();
+        registrationPageStepThree.fillDataAndSubmit(userData, true, true, null);
+        registrationPageStepThree.validateDepositLimitsIMS(userData.getUsername(), dayLimit, weekLimit, monthLimit);
     }
 
     //*B-11233 this BUG CLOSED

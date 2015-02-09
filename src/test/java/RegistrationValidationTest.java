@@ -297,7 +297,7 @@ public class RegistrationValidationTest extends AbstractTest{
 	}
 
     @Test(groups = {"registration","regression"})
-    public void dailyDepositLimitFieldValidation() {
+    public void depositLimitFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDepositLimits);
         RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
         registrationPageStepThree.validateDepositLimitsFields();
