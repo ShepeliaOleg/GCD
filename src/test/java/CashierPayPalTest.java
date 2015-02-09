@@ -16,7 +16,7 @@ import utils.core.DataContainer;
 
 public class CashierPayPalTest extends AbstractTest{
 
-    private static final String AMOUNT = "0.10";
+    private static final String AMOUNT = "1.00";
 
 
     @Test(groups = {"regression", "mobile"})
@@ -62,6 +62,7 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalDepositValidPromoCode() {
+        skipTestWithIssues("D-18785");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -78,23 +79,23 @@ public class CashierPayPalTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.PayPal, AMOUNT);
-        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("Inserted Promotional Code does not exist", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForNewUser() {
-        skipTestWithIssues("D-17349");
+//        skipTestWithIssues("D-17349");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawSuccessful(PaymentMethod.PayPal, AMOUNT);
-        assertEquals("9.90", withdrawPage.getBalanceAmount(), "Balance");
+        assertEquals("9.00", withdrawPage.getBalanceAmount(), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
     public void payPalWithdrawForExistingUserAddAccount() {
-        skipTestWithIssues("D-17386");
+//        skipTestWithIssues("D-17386");
         payPalDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawAddingAccount(PaymentMethod.PayPal, AMOUNT);

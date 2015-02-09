@@ -367,6 +367,10 @@ public class WebDriverUtils{
         }
     }
 
+    public static boolean isEditableNew(String xpath) {
+        return WebDriverFactory.getPortalDriver().findElement(By.xpath(xpath)).isEnabled();
+    }
+
     public static void pressKey(Keys key){
         pressKey(WebDriverFactory.getPortalDriver(), key);
     }
@@ -435,6 +439,19 @@ public class WebDriverUtils{
         try{
             Select dropdown= createDropdown(webDriver, xpath);
             dropdown.selectByVisibleText(value);
+        }catch(NoSuchElementException e){
+            AbstractTest.failTest(e.getMessage() + " on web element " + xpath);
+        }
+    }
+
+    public static void setDropdownOptionByIndex(String xpath, int index){
+        setDropdownOptionByIndex(WebDriverFactory.getPortalDriver(), xpath, index);
+    }
+
+    public static void setDropdownOptionByIndex(WebDriver webDriver, String xpath, int index){
+        try{
+            Select dropdown= createDropdown(webDriver, xpath);
+            dropdown.selectByIndex(index);
         }catch(NoSuchElementException e){
             AbstractTest.failTest(e.getMessage() + " on web element " + xpath);
         }
@@ -534,6 +551,10 @@ public class WebDriverUtils{
             AbstractTest.failTest("Could not find element: " + xpath);
         }
         return null;
+    }
+
+    public static int getDropdownItemsAmount(String xpath){
+        return getDropdownOptionsValue(xpath).size();
     }
 
     //Custom dropdown

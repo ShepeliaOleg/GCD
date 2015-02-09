@@ -58,11 +58,11 @@ public class RegistrationValidationTest extends AbstractTest{
 	@Qualifier("houseValidationRule")
 	private ValidationRule houseValidationRule;
 
-	@Autowired
-	@Qualifier("postcodeValidationRule")
-	private ValidationRule postcodeValidationRule;
+    @Autowired
+    @Qualifier("postcodeValidationRule")
+    private ValidationRule postcodeValidationRule;
 
-	@Autowired
+    @Autowired
 	@Qualifier("mobileCountryPhoneCodeValidationRule")
 	private ValidationRule mobileCountryPhoneCodeValidationRule;
 
@@ -208,6 +208,12 @@ public class RegistrationValidationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule,DataContainer.getUserData().getRandomUserData());
 	}
+
+    @Test(groups = {"registration","regression"})
+    public void postcodeFieldForUKValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
+        registrationPage.registrationPageStepTwo().validatePostcodeUK();
+    }
 
     @Test(groups = {"registration","regression"})
     public void phoneAreaCodeFieldValidation() {
