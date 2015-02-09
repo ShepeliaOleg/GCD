@@ -152,6 +152,7 @@ public class NavigationUtils{
             case permissions_portlet:                           return new AbstractPortalPage();
             case registerNoClientType:
             case registerClientTypeCreferrer:
+            case registerDepositLimits:
             case register:                                      return new RegistrationPage();
             case referAFriend:
             case referAFriendPage:                              return new ReferAFriendPage();

@@ -65,6 +65,9 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	private static final String LINK_CUSTOM_FIELDS=                         "//a[contains(@onclick, 'sec_customs')]";
     private static final String REFERRER_XP=                                "//*[@id='ssec_supinfo']/*[preceding-sibling::*[contains(text(),'Referrer')]]//a";
     private static final String DEVICE_ID_XP =                              "//td[contains(text(),'Sign up serial:')]";
+	private static final String FIELD_DAY_LIMIT_XP = 						"//*[@id='depositlimitday']";
+	private static final String FIELD_WEEK_LIMIT_XP = 						"//*[@id='depositlimitweek']";
+	private static final String FIELD_MONTH_LIMIT_XP = 						"//*[@id='depositlimitmonth']";
 
 	public IMSPlayerDetailsPage(){
 		super(new String[]{ROOT_XP, BUTTON_FAILED_LOGINS});
@@ -458,4 +461,17 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     public String getDeviceIdLogin() {
         return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), WebDriverUtils.getFollowingElement(DEVICE_ID_XP, 3));
     }
+
+	public String getDayLimit () {
+		return getInputContent(FIELD_DAY_LIMIT_XP);
+	}
+
+	public String getWeekLimit () {
+		return getInputContent(FIELD_WEEK_LIMIT_XP);
+	}
+
+	public String getMonthLimit () {
+		return getInputContent(FIELD_MONTH_LIMIT_XP);
+	}
+
 }
