@@ -264,6 +264,7 @@ public class ForgotPasswordTest extends AbstractTest{
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
         assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+        //assertEquals("System Error", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
     /*VALIDATION*/
