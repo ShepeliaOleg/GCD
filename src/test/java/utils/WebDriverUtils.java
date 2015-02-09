@@ -124,9 +124,12 @@ public class WebDriverUtils{
     public static void click(WebDriver webDriver, String xpath){
         System.out.println("Clicking "+xpath+" element");
         WebElement webElement = getElement(webDriver, xpath);
+        mouseOver(webDriver, webElement);
         try {
-            Actions actions = new Actions(WebDriverFactory.getPortalDriver());
-            actions.moveToElement(webElement).click().perform();
+            //FOR Internet Explorer 11
+            //Actions actions = new Actions(WebDriverFactory.getPortalDriver());
+            //actions.moveToElement(webElement).click().perform();
+            webElement.click();
         }catch (WebDriverException e){
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }
@@ -371,7 +374,7 @@ public class WebDriverUtils{
         return WebDriverFactory.getPortalDriver().findElement(By.xpath(xpath)).isEnabled();
     }
 
-    public static void pressKey(Keys key){
+    public static void pressKey(Keys key) {
         pressKey(WebDriverFactory.getPortalDriver(), key);
     }
 
@@ -488,7 +491,7 @@ public class WebDriverUtils{
     public static List<String> getDropdownOptionsText(WebDriver webDriver, String xpath){
         List<String> optionsText=null;
         try{
-            List<WebElement> options=getDropdownOptions(webDriver, xpath);
+            List<WebElement> options = getDropdownOptions(webDriver, xpath);
             optionsText= new ArrayList<String>();
             for(WebElement option : options){
                 optionsText.add(option.getText());
