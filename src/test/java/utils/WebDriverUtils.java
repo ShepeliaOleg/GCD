@@ -124,9 +124,9 @@ public class WebDriverUtils{
     public static void click(WebDriver webDriver, String xpath){
         System.out.println("Clicking "+xpath+" element");
         WebElement webElement = getElement(webDriver, xpath);
-        mouseOver(webDriver, webElement);
         try {
-            webElement.click();
+            Actions actions = new Actions(WebDriverFactory.getPortalDriver());
+            actions.moveToElement(webElement).click().perform();
         }catch (WebDriverException e){
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }

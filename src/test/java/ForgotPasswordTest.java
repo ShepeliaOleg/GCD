@@ -255,6 +255,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*8. New password which has been used recently*/
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
+        skipTest("System Error");
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();

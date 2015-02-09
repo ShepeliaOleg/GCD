@@ -9,11 +9,13 @@ import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import pageObjects.login.LoginPopup;
+import pageObjects.login.SignedOutPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -61,7 +63,9 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
 		//*TRY TO LOGIN with OLD password
-		PortalUtils.logout();
+		//PortalUtils.logout();
+		//Unexpected user logout
+		WebDriverUtils.refreshPage();
 		LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);
 		assertTrue(loginPopup.validationErrorVisible(),"Error message displayed");
 		assertEquals(userData.getUsername(), loginPopup.getUsernameText(),"Correct username is displayed");
@@ -90,6 +94,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*1. Incorrect old password
 	@Test(groups = {"regression"})
 	public void incorrectOldPassword(){
+		//skipTest("System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
 		String incorrectPass = passwordValidationRule.generateValidString();
         homePage = PortalUtils.registerUser(userData);
@@ -101,6 +106,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*2. New password is the same as old
 	@Test(groups = {"regression"})
 	public void changeToSamePassword(){
+		//**skipTest("System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
 		homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
@@ -111,6 +117,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*3. New password which has been used recently
 	@Test(groups = {"regression"})
 	public void recentlyUsedPassword(){
+		//**skipTest("System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
