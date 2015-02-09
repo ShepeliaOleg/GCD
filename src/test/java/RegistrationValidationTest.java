@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.NavigationUtils;
@@ -294,4 +295,12 @@ public class RegistrationValidationTest extends AbstractTest{
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validateBonusCode(bonusCodeValidationRule,DataContainer.getUserData().getRandomUserData());
 	}
+
+    @Test(groups = {"registration","regression"})
+    public void depositLimitFieldValidation() {
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDepositLimits);
+        RegistrationPageStepThree registrationPageStepThree = registrationPage.registrationPageStepThree();
+        registrationPageStepThree.validateDepositLimitsFields();
+    }
+
 }
