@@ -12,13 +12,23 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomUtils{
-   private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöÖÄß";
+    private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöÖÄß";
+    private static String literalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 
     public static String generateString(String characters, int length) {
         char[] text = new char[length];
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
+
+    public static String generateLiteralString(int length) {
+        char[] text = new char[length];
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            text[i] = literalSymbols.charAt(random.nextInt(literalSymbols.length()));
         }
         return new String(text);
     }

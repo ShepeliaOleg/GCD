@@ -215,7 +215,7 @@ public class RegistrationPage extends AbstractPortalPage {
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_CITY_NAME), city);
     }
 
-    protected static void fillPostCode(String postCode){
+    public static void fillPostCode(String postCode){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_POSTCODE_NAME), postCode);
     }
 
