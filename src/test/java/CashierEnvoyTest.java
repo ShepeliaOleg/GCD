@@ -45,6 +45,7 @@ public class CashierEnvoyTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void depositValidPromoCode(){
+        skipTestWithIssues("D-18785");
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
