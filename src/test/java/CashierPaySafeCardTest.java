@@ -42,6 +42,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void paySafeCardDepositValidPromoCode(){
+        skipTestWithIssues("D-18311");
         UserData userData = getEURUser();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
@@ -49,6 +50,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
         paySafeCardDepositPage.assertAmount(AMOUNT);
         TransactionSuccessfulPopup transactionSuccessfulPopup = paySafeCardDepositPage.pay();
         transactionSuccessfulPopup.closePopup();
+        NavigationUtils.navigateToPage(ConfiguredPages.deposit); // D-18311
         new OkBonusPopup().clickAccept();
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance");
     }
