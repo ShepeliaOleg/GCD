@@ -237,6 +237,10 @@ public class WebDriverUtils{
         return isVisible(webDriver, getElementXpathWithText(text), 1);
     }
 
+    public static boolean isTextVisible(WebDriver webDriver, String text, int timeOutInSeconds) {
+        return isVisible(webDriver, getElementXpathWithText(text), timeOutInSeconds);
+    }
+
     private static String getElementXpathWithText(String text) {
         return "//*[text()='" + text + "']";
     }
