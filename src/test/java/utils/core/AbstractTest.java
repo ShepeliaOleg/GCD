@@ -125,6 +125,10 @@ public class AbstractTest extends AbstractTestRunner{
         return assertTrue(WebDriverUtils.isTextVisible(text), message);
     }
 
+    public static boolean assertTextVisible(String text, String message, int timeOutInSeconds){
+        return assertTrue(WebDriverUtils.isTextVisible(WebDriverFactory.getPortalDriver(), text, timeOutInSeconds), message);
+    }
+
     public static boolean assertTextInvisible(String text, String message){
         return assertFalse(WebDriverUtils.isTextVisible(text), message);
     }

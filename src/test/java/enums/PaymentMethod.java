@@ -7,9 +7,9 @@ public enum PaymentMethod {
     MasterCard("MasterCard", "3295","1729"),
     Discover("Discover", "", ""),
     PaySafeCard("PaySafeCard", "6364 0700 8000 4190", "", "", ""),
-    MoneyBookers("MoneyBookers", "testmbcustomerger@yahoo.co.uk", "someshit@yahoo.co.uk", "euroeuro1", ""),
+    MoneyBookers("MoneyBookers", "olga.stepanova@playtech.com", "someshit@yahoo.co.uk", "Olga12345", ""),
     Envoy("Envoy", "", "", "", ""),
-    Neteller("NETeller", "453501020503", "450424149137", "411392", "netellertest_EUR@neteller.com"),
+    Neteller("NETeller", "453501020503", "450424149137", "908379", "netellertest_EUR@neteller.com"),
     WebMoney("WebMoney", "Z253744324569", "Z253744324568", "", "");
 
     PaymentMethod(String name, String account, String secondaryAccount, String password, String emailAccount){
