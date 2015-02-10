@@ -15,7 +15,6 @@ import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.TypeUtils;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -103,6 +102,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void validPromoCodeTest(){
+        skipTestWithIssues("D-18785");
         UserData userData = getMoneyBookersUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         String balance = depositPage.getBalanceAmount();

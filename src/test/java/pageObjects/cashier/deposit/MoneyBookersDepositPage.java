@@ -13,13 +13,15 @@ import utils.core.AbstractTest;
 
 public class MoneyBookersDepositPage extends AbstractPortalPage {
 
-    private static final String ROOT_XP =           "//*[contains(text(), 'Welcome back to Skrill')]";
-    private static final String LINK_CANCEL_XP =    "//*[@class='button_secondary']";
-    private static final String BUTTON_LOGIN_XP =   "//*[@class='button_inner']";
-    private static final String BUTTON_BACK_XP =    "//*[@id='payConfirm']";
-    private static final String FIELD_EMAIL_XP =    "//*[@id='email']";
-    private static final String FIELD_PASSWORD_XP = "//*[@id='password']";
-    private static final String LABEL_AMOUNT_XP =   "//*[@id='header_summary']";
+    private static final String ROOT_XP =                   "//*[contains(text(), 'Welcome back to Skrill')]";
+    private static final String LINK_CANCEL_XP =            "//*[@class='button_secondary']";
+    private static final String BUTTON_LOGIN_XP =           "//*[@class='button_inner']";
+    private static final String BUTTON_PROCEED_XP =         "//*[@id='payConfirm']";
+    private static final String FIELD_EMAIL_XP =            "//*[@id='email']";
+    private static final String FIELD_PASSWORD_XP =         "//*[@id='password']";
+    private static final String DROPDWN_IDEAL_XP =          "//*[@id='instrument_IDEAL_edit']";
+    private static final String BUTTON_PROCEED_IDEAL_XP =   "//*[@id='redirectContinue']";
+    private static final String LABEL_AMOUNT_XP =           "//*[@id='header_summary']";
 
     public MoneyBookersDepositPage(){
         super(new String[]{ROOT_XP});
@@ -27,8 +29,8 @@ public class MoneyBookersDepositPage extends AbstractPortalPage {
 
     public TransactionUnSuccessfulPopup cancelDeposit(){
         WebDriverUtils.click(LINK_CANCEL_XP);
-        WebDriverUtils.waitForElement(BUTTON_BACK_XP);
-        WebDriverUtils.click(BUTTON_BACK_XP);
+        WebDriverUtils.waitForElement(BUTTON_PROCEED_XP);
+        WebDriverUtils.click(BUTTON_PROCEED_XP);
         return new TransactionUnSuccessfulPopup();
     }
 
@@ -36,10 +38,12 @@ public class MoneyBookersDepositPage extends AbstractPortalPage {
         return pay(false);
     }
     public AbstractPortalPopup pay(boolean withBonus){
-        WebDriverUtils.inputTextToField(FIELD_PASSWORD_XP, PaymentMethod.MoneyBookers.getPassword());
+        WebDriverUtils.clearAndInputTextToField(FIELD_EMAIL_XP, PaymentMethod.MoneyBookers.getAccount());
+        WebDriverUtils.clearAndInputTextToField(FIELD_PASSWORD_XP, PaymentMethod.MoneyBookers.getPassword());
         WebDriverUtils.click(BUTTON_LOGIN_XP);
-        WebDriverUtils.waitForElement(BUTTON_BACK_XP);
-        WebDriverUtils.click(BUTTON_BACK_XP);
+        WebDriverUtils.waitForElement(BUTTON_PROCEED_IDEAL_XP);
+        WebDriverUtils.setDropdownOptionByValue(DROPDWN_IDEAL_XP, "RABONL2U");
+        WebDriverUtils.click(BUTTON_PROCEED_IDEAL_XP);
         if (withBonus) {
             NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
             return new AcceptDeclineBonusPopup();
