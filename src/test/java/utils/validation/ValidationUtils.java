@@ -51,7 +51,7 @@ public class ValidationUtils{
     private static void validateEmptyDropdown(String xpath, ValidationRule rule, String tooltipID) {
         refocusDropdown(xpath);
         if(rule.getIsMandatory().equals("true")){
-            validateStatusAndToolTips(rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
+            validateStatusAndToolTips(rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_NONE, STATUS_NONE);
         }else{
             validateStatusAndToolTips(NO_TOOLTIP, tooltipID, "empty", STATUS_PASSED, STATUS_NONE);
         }

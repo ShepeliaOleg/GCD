@@ -1,4 +1,3 @@
-import com.sun.jna.platform.unix.X11;
 import enums.*;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
@@ -136,6 +135,7 @@ public class RegistrationTest extends AbstractTest{
     //*3. Try to use invalid bonus code
     @Test(groups = {"registration","regression"})
     public void registrationWithInvalidBonusCoupon() {
+        skipTest("D-18865");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage = (RegistrationPage) registrationPage.registerUser(userData, PromoCode.invalid, Page.registrationPage);
@@ -196,7 +196,7 @@ public class RegistrationTest extends AbstractTest{
 	public void openTermsAndConditionsPopup(){
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
-            registrationPage = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRegisteredUserData());
+            registrationPage = registrationPage.registrationPageStepThree(DataContainer.getUserData().getRandomUserData());
         }
 		ReadTermsAndConditionsPopup readTermsAndConditionsPopup=registrationPage.navigateToTermsAndConditions();
 	}

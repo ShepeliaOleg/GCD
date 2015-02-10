@@ -377,7 +377,7 @@ public class RegistrationPage extends AbstractPortalPage {
     }
 
     public void validateEmail(ValidationRule rule) {
-        ValidationUtils.validateField(getXpathByName(FIELD_EMAIL_NAME), rule, FIELD_EMAIL_NAME);
+        ValidationUtils.validateField(getXpathByName(FIELD_EMAIL_NAME), rule, "registerEmail");
     }
 
     public void validateCountry(ValidationRule rule, UserData userData) {

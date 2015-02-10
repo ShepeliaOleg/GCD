@@ -26,6 +26,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
     private final static String DAILY_DEPOSIT_LIMIT_XP =                            "//*[@id='daydepositlimit']";
     private final static String WEEKLY_DEPOSIT_LIMIT_XP =                           "//*[@id='weekdepositlimit']";
     private final static String MONTHLY_DEPOSIT_LIMIT_XP =                          "//*[@id='monthdepositlimit']";
+    private final static String DEPOSIT_LIMIT_XP =                                  "//*[contains(@class, 'deposit-limit')]";
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					ROOT_XP + "//*[@id='terms-checkbox']";
     private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
     private static final String TOOLTIP_ERROR_XP =                                  "//*[contains(@class,'error-tooltip')]";
@@ -88,7 +89,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
     }
 
     public void isDepositLimitsDropdownsVisible(){
-        AbstractTest.assertTrue(WebDriverUtils.isVisible(DAILY_DEPOSIT_LIMIT_XP) && WebDriverUtils.isVisible(WEEKLY_DEPOSIT_LIMIT_XP) && WebDriverUtils.isVisible(MONTHLY_DEPOSIT_LIMIT_XP), "Deposit limits are not visible");
+        AbstractTest.assertTrue(WebDriverUtils.isElementVisible(DEPOSIT_LIMIT_XP, 2), "Deposit limits are not visible");
     }
 
     public String getSelectedDailyDepositLimit(){
