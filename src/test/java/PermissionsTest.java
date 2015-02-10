@@ -37,7 +37,8 @@ public class PermissionsTest extends AbstractTest{
     /* 2. Page permissions for guest and player users */
     @Test(groups = {"regression"})
     public void permissionsPage() {
-        skipTestWithIssues("D-16282, D-17742, D-14716");
+        //skipTestWithIssues("D-16282, D-17742, D-14716");
+        skipTestWithIssues("D-16282, D-17742");
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_all,          ALL_TEXT,           true);
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_guest,        GUEST_TEXT,         true);
         assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false);
@@ -69,7 +70,7 @@ public class PermissionsTest extends AbstractTest{
             String role = text.toLowerCase().replace("permissions_", "").replace("_only", "").replace("_", " ");
             String message = "Portlet visible for " + role + " is displayed for " + condition.toString() + ".";
             if (visibleList.contains(text)) {
-                assertTextVisible(text, message, 3);
+                assertTextVisible(text, message, 4);
             } else {
                 assertTextInvisible(text, message);
             }
@@ -85,7 +86,7 @@ public class PermissionsTest extends AbstractTest{
         String role = page.toString().replace("permissions_page_", "").replace("_", " and ");
         if (visibility) {
             assertEquals(DataContainer.getDriverData().getCurrentUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
-            assertTextVisible(text, "Portlet on page visible for " + role + " is displayed for " + condition.toString() + ".", 3);
+            assertTextVisible(text, "Portlet on page visible for " + role + " is displayed for " + condition.toString() + ".", 4);
         } else if (redirect) {
             assertEquals(DataContainer.getDriverData().getCurrentUrl(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is not displayed for " + condition.toString() + ".");
             assertTextInvisible(text, "Portlet on page visible for " + role + " is not displayed for " + condition.toString() + ".");
