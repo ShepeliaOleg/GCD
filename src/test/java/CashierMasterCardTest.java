@@ -3,7 +3,6 @@ import enums.PaymentMethod;
 import enums.PlayerCondition;
 import enums.PromoCode;
 import org.testng.annotations.Test;
-import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
@@ -59,6 +58,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardDepositValidBonusCode(){
+        skipTestWithIssues("D-18311");
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
