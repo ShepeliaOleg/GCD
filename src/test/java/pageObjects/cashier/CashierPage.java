@@ -21,7 +21,7 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String FIELD_AMOUNT_XP =         "//*[@name='amount']";
     protected static final String FIELD_PROMO_CODE_XP =     "//*[@name='promoCode']";
     protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//*[@class='fn-change-account']";
-    protected static final String FIELD_ACCOUNT_XP =        "//*[@name='accountId']";
+    protected static final String FIELD_ACCOUNT_XP =        "//*[@class='fn-account-id']";
     protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
     private   static final String ADD =                     "add";
     protected static final String FIELD_PASSWORD_XP =       "//*[@name='accountPwd']";
@@ -52,6 +52,7 @@ public class CashierPage extends AbstractPortalPage {
         String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
         if(WebDriverUtils.isVisible(header, 0)){
             WebDriverUtils.click(header);
+            WebDriverUtils.waitFor();
             AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
             for(String field:FIELDS){
                 if(visibleFields.contains(field)){
@@ -96,21 +97,21 @@ public class CashierPage extends AbstractPortalPage {
 
     protected void processPaymentByType(PaymentMethod method, String amount){
         WebDriverUtils.click(fillFields(method, amount)+BUTTON_XP);
-        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, boolean expired){
         WebDriverUtils.click(fillFields(method, amount, expired)+BUTTON_XP);
-        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, String account){
         WebDriverUtils.click(fillFields(method, amount, account)+BUTTON_XP);
-        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
     }
     protected void processPaymentByType(PaymentMethod method, String amount, String account, String password){
         WebDriverUtils.click(fillFields(method, amount, account, password)+BUTTON_XP);
-        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
     }
 
     protected void processPaymentByType(PaymentMethod method, String amount, PromoCode promoCode){
@@ -118,7 +119,7 @@ public class CashierPage extends AbstractPortalPage {
         String fieldPromoCode = body+FIELD_PROMO_CODE_XP;
         WebDriverUtils.inputTextToField(fieldPromoCode, promoCode.getCode());
         WebDriverUtils.click(body+BUTTON_XP);
-        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
     }
 
     private String fillFields(PaymentMethod method, String amount, boolean expired){

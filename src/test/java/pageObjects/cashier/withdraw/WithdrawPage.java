@@ -115,8 +115,14 @@ public class WithdrawPage extends CashierPage {
 
     /*NETELLER*/
 
-    public void assertNetellerInterface() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP});
+    public void assertNetellerInterface(boolean newUser) {
+        String[] elements;
+        if (newUser) {
+            elements = new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP};
+        } else {
+            elements = new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP};
+        }
+        assertInterfaceByType(PaymentMethod.Neteller, elements);
     }
 
     public void withdrawNetellerInvalidAccount(String amount) {

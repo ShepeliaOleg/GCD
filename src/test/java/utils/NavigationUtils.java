@@ -6,11 +6,9 @@ import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
 import pageObjects.account.PendingWithdrawPage;
 import pageObjects.account.TransactionHistoryPage;
-import pageObjects.admin.AdminPageGuest;
-import pageObjects.changeLanguage.ChangeLanguagePage;
-import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.admin.AdminCanNotPlayPopup;
 import pageObjects.admin.AdminPageAdmin;
+import pageObjects.admin.AdminPageGuest;
 import pageObjects.banner.BannerPage;
 import pageObjects.banner.BannerPageProfileID;
 import pageObjects.bingoSchedule.BingoSchedulePage;
@@ -19,9 +17,13 @@ import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
+import pageObjects.changeLanguage.ChangeLanguagePage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.core.*;
+import pageObjects.core.AbstractPageObject;
+import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
@@ -188,7 +190,7 @@ public class NavigationUtils{
                 }
                 break;
             case player:
-                if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 3)) {
+                if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 5)) {
                     new LoginPopup().login(userData);
                 }else{
                     if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {

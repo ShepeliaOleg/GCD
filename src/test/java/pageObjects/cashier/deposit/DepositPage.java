@@ -129,8 +129,14 @@ public class DepositPage extends CashierPage{
     /*NETELLER*/
 
 
-    public void assertNetellerInterface() {
-        assertInterfaceByType(PaymentMethod.Neteller, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP});
+    public void assertNetellerInterface(boolean newUser) {
+        String[] elements;
+        if (newUser) {
+            elements = new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP};
+        } else {
+            elements = new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP};
+        }
+        assertInterfaceByType(PaymentMethod.Neteller, elements);
     }
 
     public TransactionSuccessfulPopup depositNetellerValidPromoCode(String amount) {
