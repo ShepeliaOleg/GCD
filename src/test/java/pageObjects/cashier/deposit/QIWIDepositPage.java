@@ -9,13 +9,13 @@ import utils.core.AbstractTest;
 
 public class QIWIDepositPage extends AbstractPortalPage {
 
-    private static final String ROOT_XP = "//*[@class='paymentContent']";
-    private static final String PHONE_XP = "//*[@id='phone']";
-    private static final String AMOUNT_XP = "//*[@class='payment-description_cnt_fields_i'][2]/strong";
-    private static final String PAY_BUTTON = "//*[@class='orangeBtn']";
-    private static final String DROPDOWN_CURRENCY_XP = "//*[@id='ui-id-1-button']";
-    private static final String CURRENCY_RUB_XP = "//*[@id='ui-id-6']";
-    private static final String PASSWORD_XP = "//*[@name='password']";
+    private static final String ROOT_XP =               "//*[@class='paymentContent']";
+    private static final String PHONE_XP =              "//*[@id='phone']";
+    private static final String AMOUNT_XP =             "//*[@class='payment-description_cnt_fields_i'][2]/strong";
+    private static final String PAY_BUTTON =            "//*[@class='orangeBtn']";
+    private static final String DROPDOWN_CURRENCY_XP =  "//*[@id='ui-id-1-button']";
+    private static final String CURRENCY_RUB_XP =       "//a[contains(text(),'RUB')]";
+    private static final String PASSWORD_XP =           "//*[@name='password']";
 
     private static final String PROVIDER_COMMISION_XP = "//*[contains(@class, 'providerComm')]";
     private static final String PASSWORD_INCORRECT = "incorrect";
@@ -26,21 +26,19 @@ public class QIWIDepositPage extends AbstractPortalPage {
 
     public TransactionSuccessfulPopup pay(){
         if(!WebDriverUtils.isVisible(DROPDOWN_CURRENCY_XP,1)){
-            clickButtonPay();
-            WebDriverUtils.waitForElement(PASSWORD_XP);
             fillPassword(PaymentMethod.QIWI.getPassword());
             clickButtonPay();
-            WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
+            WebDriverUtils.waitForElement(DROPDOWN_CURRENCY_XP);
         }
         clickDropdown();
         WebDriverUtils.waitFor();
         if(getRUBIntegerAmount()>getRUBIntegerBalance()){
-            AbstractTest.skipTest("Not enough money on card balance");
+            AbstractTest.skipTest("Not enough money on card balance. ");
         }
         clickRUB();
+//        WebDriverUtils.waitForElement(PROVIDER_COMMISION_XP);
         WebDriverUtils.waitForElement(PAY_BUTTON);
         clickButtonPay();
-        WebDriverUtils.waitForElementToDisappear("");
         return new TransactionSuccessfulPopup();
     }
 

@@ -65,7 +65,7 @@ public class DepositPage extends CashierPage{
     /*QIWI*/
 
     public void assertQIWIInterface(){
-        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_KNOWN_XP, FIELD_PROMO_CODE_XP});
+        assertInterfaceByType(PaymentMethod.QIWI, new String[]{FIELD_AMOUNT_XP, FIELD_ACCOUNT_XP, FIELD_PROMO_CODE_XP});
     }
 
     public QIWIDepositPage depositQIWI(String amount){

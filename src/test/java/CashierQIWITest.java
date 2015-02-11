@@ -18,7 +18,7 @@ public class CashierQIWITest extends AbstractTest{
 
     private static final String CURRENCY = "RUB";
     private static final String COUNTRY = "RU";
-    private static final String AMOUNT = "5.00";
+    private static final String AMOUNT = "3.00";
 
 
     @Test(groups = {"regression", "mobile"})
@@ -67,7 +67,7 @@ public class CashierQIWITest extends AbstractTest{
         PortalUtils.registerUser(getRussianUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage = depositPage.depositInvalidPromoCode(PaymentMethod.QIWI, AMOUNT);
-        assertEquals(INVALID_BONUS_CODE_MESSAGE, depositPage.getPortletErrorMessage(), "Invalid bonus error message");
+        assertEquals("Inserted Promotional Code does not exist", depositPage.getPortletErrorMessage(), "Invalid bonus error message");
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 

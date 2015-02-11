@@ -1,7 +1,7 @@
 package enums;
 
 public enum PaymentMethod {
-    QIWI("QIWI via SC", "9260366832", "9379133149", "ABCD1234", "wallettest11"),
+    QIWI("QIWIviaSC", "9379133149", "9379133149", "1234ABCD", "wallettest11"),
     PayPal("PayPal", "greesnm@aa.aa","test@800pay.com","rfhfylfi!", "222249464"), // revita_1222083012_per@800pay.com 222249464
     Visa("Visa", "6980", "6376"),
     MasterCard("MasterCard", "3295","1729"),
