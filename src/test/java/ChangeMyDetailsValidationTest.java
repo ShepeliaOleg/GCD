@@ -36,35 +36,36 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     private ValidationRule cityValidationRule;
 
     /*1. Country field validation*/
-    @Test(groups = {"validation"})
+    //@Test(groups = {"validation"})
     public void countryFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateCountry(countryValidationRule);
     }
 
     /*2. Address field validation*/
-    @Test(groups = {"validation"})
+    //@Test(groups = {"validation"})
     public void addressFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateAddress(fullAddressValidationRule);
     }
 
     /*3. City field validation*/
-    @Test(groups = {"validation"})
+    //@Test(groups = {"validation"})
     public void cityFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateCity(cityValidationRule);
     }
 
     /*4. Post Code field validation*/
-    @Test(groups = {"validation"})
+    @Test(groups = {"validation", "regression"})
     public void postCodeFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validatePostcode(postcodeValidationRule);
     }
 
     /*5. Phone field validation*/
-    @Test(groups = {"validation"})
+    //@Test(groups = {"validation"})
+    //Field 'mobile phone' is absent now
     public void phoneFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validatePhone(fullPhoneValidationRule);
@@ -73,12 +74,13 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     /*6. Mobile Field validation*/
     @Test(groups = {"validation"})
     public void mobileFieldValidation() {
+        skipTest("D-18909");
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateMobile(fullPhoneValidationRule);
     }
 
     /*7. Email field validation*/
-    @Test(groups = {"validation"})
+    @Test(groups = {"validation", "regression"})
     public void emailFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validateEmail(emailValidationRule);

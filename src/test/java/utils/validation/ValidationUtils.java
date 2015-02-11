@@ -59,7 +59,11 @@ public class ValidationUtils{
 
 	private static void validateNotAllowedSymbols(String xpath, ValidationRule rule, String tooltipID) {
         String tooltip = rule.getTooltipNegativeInvalid();
-        for(char a: rule.getAllNotAllowedSymbols().toCharArray()) {
+        String temp = rule.getAllNotAllowedSymbols();
+        if (rule.getTooltipPositive().contains("zip/postal code")){
+            temp = temp.replaceAll(" ", "");
+        }
+        for(char a: temp.toCharArray()) {
             char validChar = rule.getValidChar();
             String character = String.valueOf(a);
             character = escapeSymbol(character);
