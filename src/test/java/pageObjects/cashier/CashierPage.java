@@ -20,7 +20,7 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String BUTTON_ADD_CARD_XP =      BUTTON_XP+"[@data-url='/add-card']";
     protected static final String FIELD_AMOUNT_XP =         "//*[@name='amount']";
     protected static final String FIELD_PROMO_CODE_XP =     "//*[@name='promoCode']";
-    protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//*[@class='fn-change-account']";
+    protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//select[@class='fn-change-account']";
     protected static final String FIELD_ACCOUNT_XP =        "//*[@class='fn-account-id']";
     protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
     private   static final String ADD =                     "add";
@@ -187,7 +187,7 @@ public class CashierPage extends AbstractPortalPage {
         }else {
             WebDriverUtils.click(header);
             AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
-            List<String> dropdownOptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_XP);
+            List<String> dropdownOptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_KNOWN_XP);
             for(String value: dropdownOptions){
                 value = value.replace("*", "").trim();
                 if(card.endsWith(value)){
