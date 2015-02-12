@@ -255,7 +255,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*8. New password which has been used recently*/
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
-        skipTest("System Error, D-18632");
+        //skipTest("System Error, D-18632");
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
@@ -264,7 +264,8 @@ public class ForgotPasswordTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillIncorrectFormAndSubmit("Inc0rrect", passwordValidationRule.generateValidString());
-        assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+        assertEquals("Invalid password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+        //*assertEquals("Invalid old password", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
         //assertEquals("System Error", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
