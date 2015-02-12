@@ -14,8 +14,11 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 	private  final static String BUTTON_SUBMIT_XP    =              "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
     public static final String ROOT_XP = BUTTON_SUBMIT_XP;
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";
-    private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
-    private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='newPasswordConfirm']";
+    //OLD locators
+    //private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
+    //private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='newPasswordConfirm']";
+	private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='password']";
+	private final static String INPUT_NEW_PASSWORD_VERIFICATION_XP ="//*[@name='passwordVerify']";
 	private final static String ERROR =								".//input[@name='oldPassword']";
 	private final static String GENERAL_ERROR_MSG =					"//*[contains(@class,'error')]";
 
