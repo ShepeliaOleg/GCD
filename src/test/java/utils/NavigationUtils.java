@@ -52,7 +52,7 @@ import utils.core.DataContainer;
 
 public class NavigationUtils{
 
-    private static final int POPUP_CHECK_RETRIES = 30;
+    private static final int POPUP_CHECK_RETRIES = 20;
 
     public static AbstractPageObject navigateToPage(ConfiguredPages configuredPages) {
         return navigateToPage(PlayerCondition.any, configuredPages, Page.homePage, null);
@@ -235,11 +235,15 @@ public class NavigationUtils{
         if (!expectedPage.equals(Page.gameLaunch)) {
             while (true) {
                 if (counter == POPUP_CHECK_RETRIES) {
-                    registrationError();
+                    if (WebDriverUtils.getCurrentUrl().endsWith(ConfiguredPages.register.toString())) {
+                        registrationError();
+                    } else {
+                        AbstractTest.failTest("Maximum check retries reached. ");
+                    }
                 }
                 switch (getStatus()){
                     case wait:
-                        counter++;
+//                        counter++;
                         break;
                     case loginPopup:
                         if (expectedPage.equals(Page.loginPopup)) {
@@ -260,6 +264,7 @@ public class NavigationUtils{
                             return abstractPageObject;
                         }
                 }
+                counter++;
             }
         } else {
             return null;
@@ -293,8 +298,8 @@ public class NavigationUtils{
             }
         } else {
             //DISABLE to fix this bug
-            //AbstractTest.failTest("Registration/Login failed");
-            AbstractTest.skipTestWithIssues("D-17728");
+            AbstractTest.failTest("Registration/Login failed");
+//            AbstractTest.skipTestWithIssues("D-17728");
         }
     }
 
