@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import pageObjects.gamesPortlet.*;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
-import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
@@ -943,12 +942,12 @@ public class GamesPortletTest extends AbstractTest {
     public void favouritesCategoryPlayerFirst(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
         assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
-        gamesPortletPage.assertCategoryFirst(GameCategories.favourites);
     }
 
     @Test(groups = {"regression"})
     public void removeAllGamesFromCategory(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
+        gamesPortletPage.clickCategoryTab(GameCategories.favourites);
         assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
         assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
         gamesPortletPage.clickCategoryTab(GameCategories.all);
@@ -957,9 +956,7 @@ public class GamesPortletTest extends AbstractTest {
         gameElement.favourite();
         gamesPortletPage.clickCategoryTab(GameCategories.favourites);
         gameElement.unFavourite();
-        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
-        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
-        WebDriverUtils.refreshPage();
+        System.out.println(gamesPortletPage.getNumberOfGames());
         assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
         assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
     }
@@ -972,9 +969,6 @@ public class GamesPortletTest extends AbstractTest {
         gameElement.favourite();
         gameElement.unFavourite();
         gamesPortletPage.clickCategoryTab(GameCategories.favourites);
-        assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
-        assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
-        WebDriverUtils.refreshPage();
         assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
         assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
     }

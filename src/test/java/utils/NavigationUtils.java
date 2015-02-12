@@ -121,6 +121,7 @@ public class NavigationUtils{
             case forgotPassword:                                return new ForgotPasswordPage();
             case gamesCasinoPage:
             case gamesFavourites:
+            case gamesFavouritesCategoryFirst:
             case gamesList:
             case gamesMinimum:
             case gamesNavigationStyleNone:
@@ -456,9 +457,6 @@ public class NavigationUtils{
     public static AbstractPageObject launchGameByUrl(PlayerCondition playerCondition, String gameId, Integer realMode) {
         navigateToPage(playerCondition, ConfiguredPages.home);
         String gameUrl = GameLaunchPage.IFRAME_LAUNCH_GAME_URL + gameId;
-        if (realMode != null) {
-            gameUrl = gameUrl.concat(GameLaunchPage.GAME_MODE_URL + realMode);
-        }
         WebDriverUtils.navigateToInternalURL(gameUrl);
         if (GameCategories.groupAll.getGames().contains(gameId)) {
             switch (playerCondition) {

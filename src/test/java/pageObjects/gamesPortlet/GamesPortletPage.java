@@ -75,7 +75,7 @@ public class GamesPortletPage extends AbstractPortalPage {
     }
 
     public boolean isNoGamesMessageVisible(){
-        return WebDriverUtils.isVisible("//*[contains(text(), 'You have no games in favourites')]", 2);
+        return WebDriverUtils.isTextVisible("You have no games in this category");
     }
 
 	public ArrayList<String> getAllGameNames(){
@@ -105,14 +105,9 @@ public class GamesPortletPage extends AbstractPortalPage {
 
 	public String getGameID(int index){
         String id;
-        String itemViewXP = "//ul[1]//li["+index+"]" + GAMES_XP;
-        String listViewXP = "//ul[1]" + GAMES_XP + "["+index+"]";
-        if(WebDriverUtils.isVisible(itemViewXP, 0)){
-            id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
-        }else {
-            id = WebDriverUtils.getAttribute(listViewXP, TAG_GAME_ID);
-        }
-		return id;
+        String itemViewXP = "//ul[3]//li["+index+"]" + GAMES_XP;
+        id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
+        return id;
 	}
 
     public String getGameID(int page, int index){

@@ -18,7 +18,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     public final static String TITLE_XP =        "//*[@class='popup-modal__title']";
     public final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
 
-    private final static int OFFSET =               20;
+    private final static int OFFSET =               100;
 
 	public AbstractPortalPopup(){
 		this(null);
