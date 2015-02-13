@@ -206,6 +206,7 @@ public class RegistrationValidationTest extends AbstractTest{
 
 	@Test(groups = {"registration","regression"})
 	public void postcodeFieldValidation() {
+        skipTest("D-19011");
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule,DataContainer.getUserData().getRandomUserData());
 	}
@@ -281,13 +282,13 @@ public class RegistrationValidationTest extends AbstractTest{
     @Test(groups = {"registration","regression"})
     public void answerFieldValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.validateAnswer(answerValidationRule,DataContainer.getUserData().getRandomUserData());
+        registrationPage.validateAnswer(answerValidationRule, DataContainer.getUserData().getRandomUserData());
     }
 
     @Test(groups = {"registration","regression"})
     public void currencyDropdownValidation() {
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-        registrationPage.validateCurrency(currencyValidationRule,DataContainer.getUserData().getRandomUserData());
+        registrationPage.validateCurrency(currencyValidationRule, DataContainer.getUserData().getRandomUserData());
     }
 
 	@Test(groups = {"registration","regression"})

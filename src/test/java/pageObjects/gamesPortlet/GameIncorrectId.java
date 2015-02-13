@@ -9,7 +9,7 @@ public class GameIncorrectId extends AbstractPortalPage {
     private static final String BUTTON_OK_XP=       "//*[@class='cp-pnlErrorButton']/button";
 
     public GameIncorrectId(){
-        super(new String[]{ROOT_XP, LABEL_XP, BUTTON_OK_XP});
+        super(/*new String[]{ROOT_XP, LABEL_XP, BUTTON_OK_XP}*/);
     }
 
 }
