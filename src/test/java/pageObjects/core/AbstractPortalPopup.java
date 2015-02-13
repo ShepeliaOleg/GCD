@@ -49,7 +49,7 @@ public class AbstractPortalPopup extends AbstractPopup{
 
     public void clickAccept(){
         WebDriverUtils.click(BUTTON_ACCEPT_XP);
-        WebDriverUtils.waitFor();
+        WebDriverUtils.refreshPage();
     }
 
     public void closePopup(){
