@@ -3,7 +3,6 @@ import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.login.LoginPopup;
 import utils.NavigationUtils;
-import utils.PortalUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
@@ -21,38 +20,86 @@ public class PermissionsTest extends AbstractTest{
 
     private static final List<String> portletText = Arrays.asList(ADMIN_TEXT, GUEST_TEXT, PLAYER_TEXT, PLAYER_GUEST_TEXT, ALL_TEXT);
 
-	/* 1. Portlet permissions for guest and player users */
-	@Test(groups = {"regression"})
-	public void permissionsPortlet() {
+//        skipTestWithIssues("D-16282, D-17742, D-14716");
+
+    /* 1. Portlet permissions for guest user */
+    @Test(groups = {"regression"})
+    public void permissionsPortletGuest() {
         assertPortletPermissions(PlayerCondition.guest, ConfiguredPages.permissions_portlet, ALL_TEXT, GUEST_TEXT, PLAYER_GUEST_TEXT);
-        assertPortletPermissions(PlayerCondition.player, ConfiguredPages.permissions_portlet, ALL_TEXT, PLAYER_TEXT, PLAYER_GUEST_TEXT);
 	}
 
-    /* 1. Portlet permissions for admin user */
+    /* 2. Portlet permissions for player user */
+    @Test(groups = {"regression"})
+    public void permissionsPortletPlayer() {
+        assertPortletPermissions(PlayerCondition.player, ConfiguredPages.permissions_portlet, ALL_TEXT, PLAYER_TEXT, PLAYER_GUEST_TEXT);
+    }
+
+    /* 3. Portlet permissions for admin user */
     @Test(groups = {"admin"})
     public void permissionsPortletAdmin() {
         assertPortletPermissions(PlayerCondition.admin, ConfiguredPages.permissions_portlet, ALL_TEXT, ADMIN_TEXT, GUEST_TEXT, PLAYER_TEXT, PLAYER_GUEST_TEXT);
     }
 
-    /* 2. Page permissions for guest and player users */
+    /* 4. Page permissions for guest user on page visible for all */
     @Test(groups = {"regression"})
-    public void permissionsPage() {
-        //skipTestWithIssues("D-16282, D-17742, D-14716");
-        skipTestWithIssues("D-16282, D-17742");
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_all,          ALL_TEXT,           true);
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_guest,        GUEST_TEXT,         true);
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false);
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player_guest, PLAYER_GUEST_TEXT,  true);
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_admin,        ADMIN_TEXT,         false, false);
+    public void permissionsPageGuestOnAllPage() {
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_all, ALL_TEXT, true);
+    }
 
-        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_all,         ALL_TEXT,           true);
-        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_guest,       GUEST_TEXT,         false);
-        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_player,      PLAYER_TEXT,        true);
-        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_player_guest,PLAYER_GUEST_TEXT,  true);
+    /* 5. Page permissions for guest user on page visible for guest */
+    @Test(groups = {"regression"})
+    public void permissionsPageGuestOnGuestPage() {
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_guest,        GUEST_TEXT,         true);
+    }
+
+    /* 6. Page permissions for guest user on page visible for player */
+    @Test(groups = {"regression"})
+    public void permissionsPageGuestOnPlayerPage() {
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false);
+    }
+
+    /* 7. Page permissions for guest user on page visible for player and guest */
+    @Test(groups = {"regression"})
+    public void permissionsPageGuestOnPlayerGuestPage() {
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player_guest, PLAYER_GUEST_TEXT,  true);
+    }
+
+    /* 8. Page permissions for guest user on page visible for admin */
+    @Test(groups = {"regression"})
+    public void permissionsPageGuestOnAdminPage() {
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_admin,        ADMIN_TEXT,         false, false);
+    }
+
+    /* 9. Page permissions for player user on page visible for all */
+    @Test(groups = {"regression"})
+    public void permissionsPagePlayerOnAllPage() {
+        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_all, ALL_TEXT, true);
+    }
+    /* 10. Page permissions for player user on page visible for guest */
+    @Test(groups = {"regression"})
+    public void permissionsPagePlayerOnGuestPage() {
+        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_guest, GUEST_TEXT, false);
+    }
+
+    /* 11. Page permissions for player user on page visible for player */
+    @Test(groups = {"regression"})
+    public void permissionsPagePlayerOnPlayerPage() {
+        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_player, PLAYER_TEXT, true);
+    }
+
+    /* 12. Page permissions for player user on page visible for player and guest */
+    @Test(groups = {"regression"})
+    public void permissionsPagePlayerOnPlayerGuestPage() {
+        assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_player_guest, PLAYER_GUEST_TEXT, true);
+    }
+
+    /* 13. Page permissions for player user on page visible for admin */
+    @Test(groups = {"regression"})
+    public void permissionsPagePlayerOnAdminPage() {
         assertPagePermissions(PlayerCondition.player, ConfiguredPages.permissions_page_admin,       ADMIN_TEXT,         false);
     }
 
-    /* 2. Page permissions for admin user */
+    /* 14. Page permissions for admin user */
     @Test(groups = {"admin"})
     public void permissionsPageAdmin() {
         assertPagePermissions(PlayerCondition.admin, ConfiguredPages.permissions_page_all,          ALL_TEXT ,          true);
