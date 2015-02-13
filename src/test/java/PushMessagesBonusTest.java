@@ -56,10 +56,13 @@ public class PushMessagesBonusTest extends AbstractTest{
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
+    /**
+     *Updated by Vadymfe on 2/13/2015.
+     */
     /*Online Declinable decline*/
     @Test(groups = {"regression", "mobile"})
     public void onlineDecline(){
-        skipTest("D-18046");
+        //skipTest("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
@@ -71,7 +74,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Online Declinable clickOffPopup*/
     @Test(groups = {"regression", "mobile"})
     public void onlineOffPopup(){
-        skipTest("D-18046");
+        //skipTest("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.acceptDeclineBonus);
