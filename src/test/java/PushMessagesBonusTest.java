@@ -88,12 +88,12 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Offline Non-declinable Ok*/
     @Test(groups = {"regression", "mobile"})
     public void offlineNonDeclinableOk(){
-        //skipTest("Not described bug, was sent letter");
+        skipTest("Not described bug, was sent letter");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         PortalUtils.logout();
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
-        //PortalUtils.loginUser(userData, Page.homePage);
+        //---PortalUtils.loginUser(userData, Page.homePage);
         OkBonusPopup okBonusPopup = (OkBonusPopup)PortalUtils.loginUser(userData, Page.okBonus);
         okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");

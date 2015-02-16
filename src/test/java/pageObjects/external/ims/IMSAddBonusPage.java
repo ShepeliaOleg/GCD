@@ -20,7 +20,7 @@ public class IMSAddBonusPage extends AbstractServerPage {
 		WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
         WebDriverUtils.waitFor();
         WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
-        WebDriverUtils.waitFor(1500);
+        WebDriverUtils.waitFor(2000);
         return new IMSPlayerDetailsPage();
 	}
 

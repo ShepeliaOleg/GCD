@@ -31,6 +31,7 @@ public class LoggedInHeader extends Header{
     }
 
     public String getBalanceAmount(){
+        WebDriverUtils.waitFor();
         return TypeUtils.getBalanceAmount(getBalance());
     }
 
