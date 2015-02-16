@@ -16,8 +16,20 @@
         </dependency>
         <dependency>
             <groupId>io.selendroid</groupId>
+            <version>0.14.0</version>
+            <artifactId>selendroid-standalone</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.selendroid</groupId>
+            <artifactId>selendroid-common</artifactId>
+            <version>0.14.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.selendroid</groupId>
             <artifactId>selendroid-client</artifactId>
-            <version>0.12.0</version>
+            <version>0.14.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.uiautomation</groupId>

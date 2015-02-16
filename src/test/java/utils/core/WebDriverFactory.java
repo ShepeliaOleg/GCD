@@ -1,7 +1,7 @@
 package utils.core;
 
-import io.selendroid.SelendroidCapabilities;
-import io.selendroid.SelendroidDriver;
+import io.selendroid.client.SelendroidDriver;
+import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
@@ -18,11 +18,9 @@ import org.uiautomation.ios.IOSCapabilities;
 import org.uiautomation.ios.client.uiamodels.impl.RemoteIOSDriver;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
-import utils.WebDriverUtils;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 public class WebDriverFactory{
 

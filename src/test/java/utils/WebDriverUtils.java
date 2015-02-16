@@ -2,7 +2,7 @@ package utils;
 
 import enums.ConfiguredPages;
 import enums.Licensee;
-import io.selendroid.SelendroidDriver;
+import io.selendroid.client.SelendroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.*;
 import org.openqa.selenium.interactions.Actions;
@@ -121,7 +121,7 @@ public class WebDriverUtils{
         click(WebDriverFactory.getPortalDriver(), xpath);
     }
 
-    public static void click(WebDriver webDriver, String xpath){
+    public static void click(WebDriver webDriver, String xpath) {
         System.out.println("Clicking "+xpath+" element");
         WebElement webElement = getElement(webDriver, xpath);
         mouseOver(webDriver, webElement);
@@ -143,7 +143,7 @@ public class WebDriverUtils{
         click(WebDriverFactory.getPortalDriver(), xpath, offset);
     }
 
-    public static void click(WebDriver webDriver, String xpath, int offset){
+    public static void click(WebDriver webDriver, String xpath, int offset) {
         System.out.println("Clicking "+xpath+" element with offset "+offset+"");
         try {
             getAction(webDriver).moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
@@ -202,11 +202,11 @@ public class WebDriverUtils{
         return getElement(webDriver, xpath).getText();
     }
 
-    private static String getElementValue(WebElement webElement){
+    private static String getElementValue(WebElement webElement) {
         return webElement.getAttribute("value");
     }
 
-    public static boolean isVisible(String xpath){
+    public static boolean isVisible(String xpath) {
         return isVisible(WebDriverFactory.getPortalDriver(), xpath);
     }
 
@@ -506,7 +506,7 @@ public class WebDriverUtils{
         return optionsText;
     }
 
-    public static List<String> getDropdownOptionsValue(String xpath){
+    public static List<String> getDropdownOptionsValue(String xpath) {
         return getDropdownOptionsValue(WebDriverFactory.getPortalDriver(), xpath);
     }
 
