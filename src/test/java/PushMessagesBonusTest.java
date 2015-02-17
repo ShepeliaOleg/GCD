@@ -241,7 +241,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Online Non-declinable and Declinable x2 navigation*/
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigation() {
-        skipTest("D-18046");
+        //skipTest("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
@@ -256,7 +256,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Online Non-declinable and Declinable x2 close start*/
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseStart() {
-        skipTest("D-18046");
+        //skipTest("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
@@ -269,7 +269,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Online Non-declinable and Declinable x2 close end*/
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseEnd() {
-        skipTest("D-18046");
+        //skipTest("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
