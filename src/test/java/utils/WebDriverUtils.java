@@ -779,6 +779,7 @@ public class WebDriverUtils{
     public static void refreshPage(){
         System.out.println("Refreshing page");
         refreshPage(WebDriverFactory.getPortalDriver());
+        waitForPageToLoad();
     }
 
     public static void refreshPage(WebDriver webDriver){
