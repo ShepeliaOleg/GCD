@@ -254,7 +254,7 @@ public class RegistrationValidationTest extends AbstractTest{
         registrationPage.fillPasswordVerificationAndRefocus("");
         ValidationUtils.assertValidationStatus(id, ValidationUtils.STATUS_FAILED, "empty");
         ValidationUtils.assertTooltipStatus(id, ValidationUtils.STATUS_FAILED, "empty");
-        ValidationUtils.assertTooltipText(id, "Please retype your password.", "empty");
+        ValidationUtils.assertTooltipText(id, "Passwords are not the same", "empty");
         registrationPage.fillPasswordVerificationAndRefocus(password);
         ValidationUtils.validateStatusAndToolTips(ValidationUtils.STATUS_NONE, id, password, ValidationUtils.STATUS_PASSED, ValidationUtils.STATUS_NONE);
     }
