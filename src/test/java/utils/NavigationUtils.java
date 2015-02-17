@@ -122,6 +122,7 @@ public class NavigationUtils{
             case gamesCasinoPage:
             case gamesFavourites:
             case gamesFavouritesCategoryFirst:
+            case gamesFavouritesNoCategory:
             case gamesList:
             case gamesMinimum:
             case gamesNavigationStyleNone:
@@ -461,7 +462,6 @@ public class NavigationUtils{
         if (GameCategories.groupAll.getGames().contains(gameId)) {
             switch (playerCondition) {
                 case guest:
-                    return new LoginPopup();
                 case player:
                     return new GameLaunchPage(gameId, realMode);
                 case admin:

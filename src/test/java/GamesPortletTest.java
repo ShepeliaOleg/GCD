@@ -15,7 +15,7 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"regression", "smoke"})
 	public void startFirstAvailableGameInGamePortlet(){
         try{
-            GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesCasinoPage);
+            GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
             gamesPortletPage.playDemoAndAssertUrl();
         }catch (Exception e){
             skipTest();
@@ -1043,20 +1043,20 @@ public class GamesPortletTest extends AbstractTest {
     /*B-13152 Load game by URL */
     /*iFrame game*/
     /*1. */
-    @Test(groups = {"regression"})
+/*    @Test(groups = {"regression"})
     public void launchIFrameGameByUrlPlayer(){
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode by default.");
-    }
+    }*/
 
     /*2. */
-    @Test(groups = {"regression"})
+/*    @Test(groups = {"regression"})
     public void launchIFrameGameByUrlPlayerRealMode(){
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1, 1);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
-    }
+    }*/
 
     /*3. */
     @Test(groups = {"regression"})
@@ -1066,22 +1066,21 @@ public class GamesPortletTest extends AbstractTest {
         assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
     }
 
-    /*4. */
+    /* 4. */
     @Test(groups = {"regression"})
     public void launchIFrameGameByUrlGuestPlay(){
-        LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
-        GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid after login.");
     }
 
-    /*5. */
+/*    *//*5. *//*
     @Test(groups = {"regression"})
     public void launchIFrameGameByUrlGuestPlayRealMode(){
         LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1, 1);
         GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid after login.");
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
-    }
+    }*/
     /*redirect game*/
     /*6. */
     @Test(groups = {"regression"})
@@ -1092,12 +1091,12 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     /*7. */
-    @Test(groups = {"regression"})
+/*    @Test(groups = {"regression"})
     public void launchRedirectGameByUrlPlayerRealMode(){
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.REDIRECT_GAME_1, 1);
         assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
-    }
+    }*/
 
     /*8. */
     @Test(groups = {"regression"})
@@ -1107,13 +1106,13 @@ public class GamesPortletTest extends AbstractTest {
         assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
     }
 
-    /*9. */
+/*    *//*9. *//*
     @Test(groups = {"regression"})
     public void launchRedirectGameByUrlGuestPlay(){
         LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.REDIRECT_GAME_1);
         GameLaunchPage gameLaunchPage = (GameLaunchPage) loginPopup.login(Page.gameLaunch);
         assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid after login.");
-    }
+    }*/
 
     /*10. */
     @Test(groups = {"regression"})
@@ -1124,13 +1123,13 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     /*other*/
-    /*11. */
+/*    *//*11. *//*
     @Test(groups = {"regression"})
     public void launchIFrameGameByUrlGuestCancel(){
         LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
         loginPopup.closePopup();
         assertFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.home), "Game is not launched after cancel login.");
-    }
+    }*/
 
     /*12. */
     @Test(groups = {"regression"})
@@ -1140,18 +1139,18 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     /*13. */
-    @Test(groups = {"regression"})
+/*    @Test(groups = {"regression"})
     public void launchIFrameGameByUrlPlayerIncorrectGameMode(){
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1, 2);
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
-    }
+    }*/
 
-    /*14. */
+/*    *//*14. *//*
     @Test(groups = {"regression"})
     public void launchRedirectGameByUrlPlayerIncorrectGameId(){
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.NO_DEMO_GAME, 0);
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
-    }
+    }*/
 
 
 }

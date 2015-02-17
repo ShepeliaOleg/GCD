@@ -21,7 +21,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String TICKER_JACKPOT_XP= 						"//span[@class='game-jackpot']";
 	private static final String ROOT_XP=								"//*[contains(@class, 'portlet-games-info')]";
 	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
-    private static final String BEGINNING_GAMES_XP= 					"//ul[1]";
+    private static final String BEGINNING_GAMES_XP= 					"//ul[3]";
     private static final String FIRST_PAGE_GAMES_XP=                    BEGINNING_GAMES_XP + GAMES_XP;
 	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
 	private static final String CATEGORY_NAME_XP= 						"data-category";
@@ -105,13 +105,13 @@ public class GamesPortletPage extends AbstractPortalPage {
 
 	public String getGameID(int index){
         String id;
-        String itemViewXP = "//ul[3]//li["+index+"]" + GAMES_XP;
+        String itemViewXP = BEGINNING_GAMES_XP +"//li["+index+"]" + GAMES_XP;
         id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
         return id;
 	}
 
     public String getGameID(int page, int index){
-        return WebDriverUtils.getAttribute("//ul["+page+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
+        return WebDriverUtils.getAttribute("//ul["+(page + 2)+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
     }
 
 	public String getRandomGameID(){

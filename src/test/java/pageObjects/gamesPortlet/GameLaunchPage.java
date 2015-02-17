@@ -7,10 +7,11 @@ import utils.core.WebDriverFactory;
 
 public class GameLaunchPage extends AbstractPortalPage {
 
-    private static final String ROOT_XP =                   "//*[contains(@class,'gameFrame') or contains(@class,'game-iframe')]";
+    private static final String ROOT_XP =                   "//*[contains(@class,'fn-game-iframe')]";
     private static final String GAME_MODE_XP=               "//*[@class='gameMode']";
+    private static final String GAME_XP =                   "//*[@id='Casino']";
     public  static final String IFRAME_LAUNCH_GAME_URL =    "igaming/";
-    public  static final String REDIRECT_LAUNCH_GAME_URL =  "?game=";
+//    public  static final String REDIRECT_LAUNCH_GAME_URL =  "?game=";
     public  static final String GAME_MODE_URL =             "&real=";
     //game codes
     public  static final String IFRAME_GAME_1 =             "hlk2";
@@ -26,7 +27,6 @@ public class GameLaunchPage extends AbstractPortalPage {
     public GameLaunchPage(String gameId, Integer realMode){
         super(new String[]{ROOT_XP});
         this.gameId = gameId;
-        this.realMode = realMode;
     }
 
 	public boolean iFrameGameUrlIsValid(){
@@ -50,24 +50,13 @@ public class GameLaunchPage extends AbstractPortalPage {
     public boolean redirectGameUrlIsValid() {
         WebDriverUtils.waitFor(1000);
         String url = WebDriverUtils.getCurrentUrl();
-        int mode;
-        if (url.contains(REDIRECT_LAUNCH_GAME_URL + gameId)) {
-            if (realMode == null || realMode == 1) {
-                mode = 1;
-            } else {
-                mode = 0;
-            }
-            return url.contains(GAME_MODE_URL + mode) ? true : false;
-        } else {
-            return false;
-        }
+        return url.contains(IFRAME_LAUNCH_GAME_URL + gameId) ? true : false;
     }
 
     public boolean isRealMode() {
         WebDriverUtils.switchToIframeByXpath(WebDriverFactory.getPortalDriver(), ROOT_XP);
-        WebDriverUtils.waitForElement(GAME_MODE_XP, 30);
-        return WebDriverUtils.getElementText(GAME_MODE_XP).equals("PLAYING FOR REAL");
-//        return new GameLaunchIframe().isRealMode();
+        WebDriverUtils.waitForElement(GAME_XP);
+        return WebDriverUtils.getAttribute(GAME_XP, "flashvars").split("&")[0].split("=")[1].equals("online");
     }
 
     public class GameLaunchIframe extends AbstractServerIframe {
