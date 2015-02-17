@@ -62,7 +62,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 		fillNewPassword(newPassword1);
 		fillNewPasswordValidation(newPassword2);
 		submit();
-		assertEquals(getErrorMsg(), errorMessage, "Error message was not as expected!");
+		assertEquals(errorMessage, getErrorMsg(), "Error message was not as expected!");
 	}
 
     public ChangePasswordPopup fillIncorrectFormAndSubmit(String oldPassword, String newPassword){

@@ -57,7 +57,7 @@ public class ChangeMyDetailsValidationTest extends AbstractTest {
     }
 
     /*4. Post Code field validation*/
-    @Test(groups = {"validation", "regression"})
+    //@Test(groups = {"validation", "regression"})
     public void postCodeFieldValidation() {
         ChangeMyDetailsPage changeMyDetailsPage = (ChangeMyDetailsPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.updateMyDetails);
         changeMyDetailsPage.validatePostcode(postcodeValidationRule);

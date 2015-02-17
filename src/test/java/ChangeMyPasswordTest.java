@@ -140,6 +140,6 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		newPassword = passwordValidationRule.generateValidString();
 		homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
-		changePasswordPopup.fillValues(userData.getPassword(), newPassword, newPassword + "2", "Password should be equal");
+		changePasswordPopup.fillValues(userData.getPassword(), newPassword, newPassword + "2", "Passwords are not the same");
 	}
 }
