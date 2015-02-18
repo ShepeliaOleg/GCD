@@ -25,11 +25,16 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
     private   static final String ADD =                     "add";
     protected static final String FIELD_PASSWORD_XP =       "//*[@name='accountPwd']";
+    protected static final String CASHIER_LOADER =          "//*[contains(@class, 'fn-loader')]";
 
     private static final String[] FIELDS = {FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_XP};
 
     public CashierPage(){
-        super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
+        super(new String[]{ROOT_XP});
+    }
+
+    public CashierPage(String[] clickableBys) {
+        super(clickableBys);
     }
 
     public AddCardPage clickAddCard(){
@@ -202,5 +207,20 @@ public class CashierPage extends AbstractPortalPage {
         String name = method.getName();
         String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
         return WebDriverUtils.isVisible(header);
+    }
+
+    public void refresh() {
+        WebDriverUtils.refreshPage();
+        waitForCashierLoad();
+    }
+
+    private void waitForCashierLoad() {
+        WebDriverUtils.waitForElement(CASHIER_LOADER);
+        WebDriverUtils.waitForElementToDisappear(CASHIER_LOADER);
+    }
+
+    public String getBalanceAmount() {
+        refresh();
+        return super.getBalanceAmount();
     }
 }

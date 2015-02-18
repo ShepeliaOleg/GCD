@@ -1,17 +1,21 @@
-import enums.*;
+import enums.ConfiguredPages;
+import enums.PaymentMethod;
+import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.account.PendingWithdrawPage;
 import pageObjects.account.WithdrawLoadMoreNotificationPopup;
 import pageObjects.cashier.withdraw.WithdrawPage;
-import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
-import utils.*;
+import utils.DateUtils;
+import utils.NavigationUtils;
+import utils.TypeUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
 public class CashierPendingWithdrawTest extends AbstractTest{
 
-    private static String AMOUNT = "1.00";
+    private static final String AMOUNT = "1.00";
 
     /*B-13842 Pending Withdrawals page*/
     /*#1. pending withdraw visible for player */
@@ -41,9 +45,9 @@ public class CashierPendingWithdrawTest extends AbstractTest{
         assertEquals(AMOUNT, pendingWithdrawPage.getTotalAmount(), "Sum of all pending withdrawals.");
 
         pendingWithdrawPage.cancelWithdraw(1);
-        pendingWithdrawPage.refresh(); // ensure balance updated
+
         assertEquals(0, pendingWithdrawPage.getWithdrawRecordsCount(),  "Available pending withdraw records after withdraw cancel.");
-        assertEquals(TypeUtils.calculateSum(balance, AMOUNT), new AbstractPortalPage().getBalanceAmount(), "Balance after withdraw cancel.");
+        assertEquals(TypeUtils.calculateSum(balance, AMOUNT), pendingWithdrawPage.getBalanceAmount(), "Balance after withdraw cancel.");
     }
 
     /*#4. numerous pending withdraw record + total sum */
