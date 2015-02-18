@@ -22,7 +22,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String ROOT_XP=								"//*[contains(@class, 'portlet-games-info')]";
 	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
     private static final String BEGINNING_GAMES_XP= 					"//ul[3]";
-    private static final String FIRST_PAGE_GAMES_XP=                    BEGINNING_GAMES_XP + GAMES_XP;
+    private static final String BEGINNING_GAMES_STYLE_NONE_XP= 			"//ul[1]";
 	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
 	private static final String CATEGORY_NAME_XP= 						"data-category";
 	private static final String BUTTON_NEXT_XP= 						"//*[contains(@class, 'pagination__arrow_type_next')]";
@@ -78,7 +78,7 @@ public class GamesPortletPage extends AbstractPortalPage {
         return WebDriverUtils.isTextVisible("You have no games in this category");
     }
 
-	public ArrayList<String> getAllGameNames(){
+    public ArrayList<String> getAllGameNames(){
 		ArrayList<String> gameIDs=new ArrayList();
 		for(int i=1; i <= WebDriverUtils.getXpathCount(BEGINNING_GAMES_XP + GAMES_XP); i++){
 			gameIDs.add(getGameName(i));
@@ -94,36 +94,44 @@ public class GamesPortletPage extends AbstractPortalPage {
 		return RandomUtils.getRandomElementsFromList(getAllGameNames(), 1).get(0);
 	}
 
-	public ArrayList<String> getAllGameIDs(){
+	public ArrayList<String> getAllGameIDs(boolean isNavigationStyleNone){
 		ArrayList<String> gameIDs=new ArrayList();
-		int xPathCount=WebDriverUtils.getXpathCount(FIRST_PAGE_GAMES_XP);
+        String xPathBegining = isNavigationStyleNone ? BEGINNING_GAMES_STYLE_NONE_XP : BEGINNING_GAMES_XP;
+        int xPathCount = WebDriverUtils.getXpathCount(xPathBegining + GAMES_XP);
 		for(int i=1; i <= xPathCount; i++){
-			gameIDs.add(getGameID(i));
+			gameIDs.add(getGameID(i, xPathBegining));
 		}
 		return gameIDs;
 	}
 
-	public String getGameID(int index){
+    public String getGameID(int index){
         String id;
         String itemViewXP = BEGINNING_GAMES_XP +"//li["+index+"]" + GAMES_XP;
         id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
         return id;
-	}
+    }
+
+    public String getGameID(int index, String xPathBegining){
+        String id;
+        String itemViewXP = xPathBegining +"//li["+index+"]" + GAMES_XP;
+        id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
+        return id;
+    }
 
     public String getGameID(int page, int index){
         return WebDriverUtils.getAttribute("//ul["+(page + 2)+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
     }
 
-	public String getRandomGameID(){
-		return RandomUtils.getRandomElementsFromList(getAllGameIDs(), 1).get(0);
+	public String getRandomGameID(boolean isNavigationStyleNone){
+		return RandomUtils.getRandomElementsFromList(getAllGameIDs(isNavigationStyleNone), 1).get(0);
 	}
 
 	public boolean isGamePresent(String gameID){
 		return WebDriverUtils.isVisible("//div[@data-key='" + gameID + "']", 1);
 	}
 
-    public void correctGamesAreDisplayed(GameCategories category){
-        AbstractTest.assertEqualsCollections(category.getGames(), getAllGameIDs(), "Game IDs correspond");
+    public void correctGamesAreDisplayed(GameCategories category, boolean isNavigationStyleNone){
+        AbstractTest.assertEqualsCollections(category.getGames(), getAllGameIDs(isNavigationStyleNone), "Game IDs correspond");
     }
 
 	public boolean allNavigationControlsAreHidden() {
@@ -248,20 +256,20 @@ public class GamesPortletPage extends AbstractPortalPage {
        NavigationUtils.assertGameLaunch(gameId, 0);
 	}
 
-    public LoginPopup playRealLoggedOut(){
-        playReal();
+    public LoginPopup playRealLoggedOut(boolean isNavigationStyleNone){
+        playReal(isNavigationStyleNone);
         return new LoginPopup();
     }
 
-    public void playRealAndAssertURL(){
-        NavigationUtils.assertGameLaunch(playReal(), 1);
+    public void playRealAndAssertURL(boolean isNavigationStyleNone){
+        NavigationUtils.assertGameLaunch(playReal(isNavigationStyleNone), 1);
     }
 
-	private String playReal(){
+	private String playReal(boolean isNavigationStyleNone){
         String gameId = "";
 		ArrayList<String> checkedGames=new ArrayList<>();
 		for(int i=0; i <= RETRIES; i++){
-			gameId = getRandomGameID();
+			gameId = getRandomGameID(isNavigationStyleNone);
 			if(checkedGames.isEmpty() || (!checkedGames.isEmpty() && !checkedGames.contains(gameId))){
 				GameElement gameElement=new GameElement(gameId);
 				if(gameElement.isRealPresent()){
@@ -278,9 +286,9 @@ public class GamesPortletPage extends AbstractPortalPage {
         return gameId;
 	}
 
-    public AbstractPageObject playRealList(boolean isLoggedIn){
+    public AbstractPageObject playRealList(boolean isLoggedIn, boolean isNavigationStyleNone){
         AbstractPageObject result;
-        String gameId = getRandomGameID();
+        String gameId = getRandomGameID(isNavigationStyleNone);
         GameElement gameElement=new GameElement(gameId);
         gameElement.clickPlayRealList();
         if(isLoggedIn){

@@ -33,14 +33,8 @@ public class GameLaunchPage extends AbstractPortalPage {
 		String url;
 		for (int i=0; i<TIMEOUT; i++){
 			url = WebDriverUtils.getCurrentUrl();
-			if (realMode == null) {
-                if(url.contains(IFRAME_LAUNCH_GAME_URL + gameId)){
-                    return true;
-                }
-		    } else {
-                if (url.contains(IFRAME_LAUNCH_GAME_URL +  gameId + GAME_MODE_URL + realMode)); {
-                    return true;
-                }
+            if(url.contains(IFRAME_LAUNCH_GAME_URL + gameId)){
+                return true;
             }
         WebDriverUtils.waitFor(1000);
 		}

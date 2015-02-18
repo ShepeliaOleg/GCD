@@ -217,7 +217,7 @@ public class BannerPage extends AbstractPortalPage {
 
     public void clickGameAndAssertUrl(int slideIndex, UserData userData){
         String game;
-        if(slideIndex==1){
+        if(slideIndex==3){
             game = GameLaunchPage.IFRAME_GAME_1;
         }else {
             game = GameLaunchPage.IFRAME_GAME_2;
