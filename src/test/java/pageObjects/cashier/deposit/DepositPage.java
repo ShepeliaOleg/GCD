@@ -7,13 +7,12 @@ import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
 import springConstructors.UserData;
-import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
 public class DepositPage extends CashierPage{
 
     public DepositPage(){
-        super();
+        super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
     }
 
     public void assertCardInterface(PaymentMethod paymentMethod){
@@ -28,7 +27,7 @@ public class DepositPage extends CashierPage{
 
     public void depositCardValidPromoCode(PaymentMethod card, String amount){
         processPaymentByType(card, amount, PromoCode.valid);
-        WebDriverUtils.refreshPage(); //  D-18311
+        refresh(); //  D-18311
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
         acceptDeclineBonusPopup.clickAccept();
 //        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup(); // D-18311

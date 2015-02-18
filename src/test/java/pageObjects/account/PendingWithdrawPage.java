@@ -1,13 +1,12 @@
 package pageObjects.account;
 
+import pageObjects.cashier.CashierPage;
 import pageObjects.cashier.withdraw.PendingWithdrawCancelledNotification;
-import pageObjects.core.AbstractPortalPage;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 
-public class PendingWithdrawPage extends AbstractPortalPage {
+public class PendingWithdrawPage extends CashierPage {
 
-    private static final String ROOT_XP =                   "//*[contains(@class,'portlet-mobile-cashier')]";
     private static final String TITLE_XP =                  ROOT_XP + "//*[contains(@class,'title')]/span";
     private static final String TOTAL_VALUE_XP =            ROOT_XP + "//span[contains(@class,'sum')]";
     private static final String WITHDRAW_LIST_XP =          ROOT_XP + "//ul[contains(@class,'fn-pending-withdraw-list')]";
@@ -24,11 +23,7 @@ public class PendingWithdrawPage extends AbstractPortalPage {
     private static final String BUTTON_LOAD_MORE_XP =       ROOT_XP + "//*[contains(@class,'fn-load-more')]";
 
     public PendingWithdrawPage() {
-        super(new String[]{ROOT_XP});
-    }
-
-    public void waitForPendingWithdrawPageLoad(){
-        WebDriverUtils.waitForElement(BUTTON_LOAD_MORE_XP);
+        super();
     }
 
     public int getWithdrawRecordsCount() {
@@ -98,11 +93,6 @@ public class PendingWithdrawPage extends AbstractPortalPage {
         openWithdrawDetailsIfClosed(withdrawIndex);
         WebDriverUtils.click(getWithdrawXpathByIndex(withdrawIndex) + BUTTON_WITHDRAW_CANCEL_XP);
         new PendingWithdrawCancelledNotification();
-    }
-
-    public void refresh() {
-        WebDriverUtils.refreshPage();
-        waitForPendingWithdrawPageLoad();
     }
 
     public void cancelAllWithdraw() {

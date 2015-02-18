@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.core.AbstractPortalPage;
 import utils.core.AbstractTest;
 import utils.core.CustomExpectedConditions;
 import utils.core.DataContainer;
@@ -87,6 +88,7 @@ public class WebDriverUtils{
 
     public static void waitForPageToLoad(){
         waitForPageToLoad(WebDriverFactory.getPortalDriver());
+        waitForElementToDisappear(AbstractPortalPage.SITE_LOADER_XP);
     }
 
 	public static void waitForPageToLoad(WebDriver webDriver){

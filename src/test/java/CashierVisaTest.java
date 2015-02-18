@@ -2,7 +2,6 @@ import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import org.testng.annotations.Test;
-import pageObjects.bonus.OkBonusPopup;
 import pageObjects.cashier.deposit.DepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import utils.NavigationUtils;
@@ -61,7 +60,6 @@ public class CashierVisaTest extends AbstractTest{
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
         depositPage.depositCardValidPromoCode(PaymentMethod.Visa, AMOUNT);
-        new OkBonusPopup().closePopup();
         assertEquals(TypeUtils.calculateSum(balance, AMOUNT, PromoCode.valid.getAmount()), depositPage.getBalanceAmount(), "Balance change after deposit");
     }
 
