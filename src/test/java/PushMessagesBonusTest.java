@@ -41,7 +41,7 @@ public class PushMessagesBonusTest extends AbstractTest{
 
 
     /**
-     *Updated by Vadymfe on 2/13/2015.
+     *Updated by Vadymfe on 2/18/2015.
      */
     /*Online Declinable accept*/
     @Test(groups = {"regression", "mobile"})
@@ -54,6 +54,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup)NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
         acceptDeclineBonusPopup.clickAccept();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
+        PortalUtils.logout();
     }
 
     /**
