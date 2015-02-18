@@ -207,7 +207,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
 
     public void validateDepositLimitsIMS(String username, String dayLimit, String weekLimit, String monthLimit){
         IMSPlayerDetailsPage imsPlayerDetailsPage = IMSUtils.navigateToPlayedDetails(username);
-        WebDriverUtils.waitFor(1000);
+        WebDriverUtils.waitFor(2000);
         AbstractTest.assertEquals(dayLimit, imsPlayerDetailsPage.getDayLimit(), "Day limit successfully saved to IMS");
         AbstractTest.assertEquals(weekLimit, imsPlayerDetailsPage.getWeekLimit(), "Week limit successfully saved to IMS");
         AbstractTest.assertEquals(monthLimit, imsPlayerDetailsPage.getMonthLimit(), "Month limit successfully saved to IMS");
