@@ -14,6 +14,7 @@ import java.util.Random;
 public class RandomUtils{
     private static String allSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .@_#$/'&+()={|}~*`;!¡?¿,-%^üõöÖÄß";
     private static String literalSymbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+    public static String lettersAndNumbers = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
     public static String generateString(String characters, int length) {
         char[] text = new char[length];
@@ -63,6 +64,9 @@ public class RandomUtils{
                     " symbols '"+symbols+"'");
         }
         return result;
+    }
+    public static boolean generateRandomBoolean(){
+        return new Random().nextBoolean();
     }
 
     public static String generateEmail(String username, String domain) {

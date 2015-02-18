@@ -50,6 +50,10 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
     @Qualifier("userData")
     private UserData userData;
 
+    @Autowired
+    @Qualifier("gameData")
+    private GameData gameData;
+
     public static ArrayList<String> results = new ArrayList<>();
     protected static int counter;
     protected static String name;
@@ -64,6 +68,7 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
         DataContainer.setIms(iMS);
         DataContainer.setMailService(mailService);
         DataContainer.setUserData(userData);
+        DataContainer.setGameData(gameData);
         WebDriverFactory.initializeWebDrivers(driverData, deviceData);
     }
 

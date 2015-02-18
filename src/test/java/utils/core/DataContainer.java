@@ -13,6 +13,7 @@ public class DataContainer {
     private static IMS              ims;
     private static MailService      mailService;
     private static UserData         userData;
+    private static GameData         gameData;
 
     public static AffiliateData getAffiliateData() {
         return affiliateData;
@@ -76,5 +77,13 @@ public class DataContainer {
 
     public static void setUserData(UserData userData) {
         DataContainer.userData = userData;
+    }
+
+    public static GameData getGameData() {
+        return gameData;
+    }
+
+    public static void setGameData(GameData gameData) {
+        DataContainer.gameData = gameData;
     }
 }
