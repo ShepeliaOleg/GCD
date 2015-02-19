@@ -1,5 +1,4 @@
 import enums.*;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
@@ -354,10 +353,5 @@ public class PushMessagesBonusTest extends AbstractTest{
         IMSUtils.sendPushMessage(userData, amount, Page.loseOnWithdraw);
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = (AcceptDeclineBonusPopup) NavigationUtils.closeAllPopups(Page.acceptDeclineBonus);
         acceptDeclineBonusPopup.clickAccept();
-    }
-
-    @AfterMethod
-    public void preventLogout(){
-        PortalUtils.logout();
     }
 }
