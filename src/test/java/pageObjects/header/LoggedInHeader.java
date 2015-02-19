@@ -4,7 +4,6 @@ import enums.Licensee;
 import pageObjects.account.MyAccountPage;
 import pageObjects.inbox.InboxPage;
 import pageObjects.login.LogoutPopup;
-import springConstructors.UserData;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
@@ -31,7 +30,7 @@ public class LoggedInHeader extends Header{
     }
 
     public String getBalanceAmount(){
-        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
         return TypeUtils.getBalanceAmount(getBalance());
     }
 

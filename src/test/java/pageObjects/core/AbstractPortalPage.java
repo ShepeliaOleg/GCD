@@ -84,6 +84,13 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public String getBalanceAmount(){
+        return getBalanceAmount(false);
+    }
+
+    public String getBalanceAmount(boolean refresh) {
+        if (refresh) {
+            WebDriverUtils.refreshPage();
+        }
         return loggedInHeader().getBalanceAmount();
     }
 
