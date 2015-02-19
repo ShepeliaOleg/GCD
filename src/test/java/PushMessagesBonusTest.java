@@ -179,6 +179,7 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Game Non-declinable*/
     @Test(groups = {"regression", "mobile"})
     public void gameNonDeclinableOk(){
+        skipTest();
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
@@ -187,6 +188,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         okBonusPopup.closePopup();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(refreshPage), "Balance");
+        //NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
     }
 
     /*Game Declinable accept*/
