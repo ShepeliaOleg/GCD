@@ -132,10 +132,13 @@ public class RegistrationTest extends AbstractTest{
         validateEquals("0.00", homePage.getBalanceAmount(), "User balance");
     }
 
+    /**
+     *Updated by Vadymfe on 2/19/2015.
+     */
     //*3. Try to use invalid bonus code
     @Test(groups = {"registration","regression"})
     public void registrationWithInvalidBonusCoupon() {
-        skipTest("D-18865");
+        //skipTest("D-18865");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage = (RegistrationPage) registrationPage.registerUser(userData, PromoCode.invalid, Page.registrationPage);
