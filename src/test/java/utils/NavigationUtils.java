@@ -180,7 +180,7 @@ public class NavigationUtils{
         AbstractPortalPage abstractPortalPage = new AbstractPortalPage();
         switch (condition) {
             case guest:
-                if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 2)){
+                if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 3)){
                     closeAllPopups(expectedPage);
                 }
                 if(PortalUtils.isLoggedIn()) {
