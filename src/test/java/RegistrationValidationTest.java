@@ -206,7 +206,7 @@ public class RegistrationValidationTest extends AbstractTest{
 
 	@Test(groups = {"registration","regression"})
 	public void postcodeFieldValidation() {
-        skipTest("D-19011");
+        //skipTest("D-19011");
 		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
 		registrationPage.validatePostcode(postcodeValidationRule,DataContainer.getUserData().getRandomUserData());
 	}

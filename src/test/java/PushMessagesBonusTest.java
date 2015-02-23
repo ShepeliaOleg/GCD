@@ -249,12 +249,13 @@ public class PushMessagesBonusTest extends AbstractTest{
     /*Online Non-declinable and Declinable x2 close start*/
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseStart() {
-//        skipTestWithIssues("D-18046");
+        //skipTestWithIssues("D-18046");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
-        // TODO assert 3 messages received
-        new OkBonusPopup().closePopup();
+        OkBonusPopup okBonusPopup = new OkBonusPopup();
+        validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
+        okBonusPopup.closePopup();
         new AcceptDeclineBonusPopup().clickDecline();
         new AcceptDeclineBonusPopup().clickDecline();
     }
@@ -266,8 +267,9 @@ public class PushMessagesBonusTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
-        // TODO assert 3 messages received
-        new OkBonusPopup().clickNext();
+        OkBonusPopup okBonusPopup = new OkBonusPopup();
+        validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
+        okBonusPopup.clickNext();
         new AcceptDeclineBonusPopup().clickNext();
         new AcceptDeclineBonusPopup().closePopup();
         new AcceptDeclineBonusPopup().closePopup();
