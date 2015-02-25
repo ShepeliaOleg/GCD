@@ -6,7 +6,12 @@ import utils.core.WebDriverFactory;
 
 public class AbstractNotification extends AbstractPageObject{
 
-    protected static final String ROOT_XP = "//*[@class='info__content']";
+    private static final String ROOT_XP =       "//*[@class='info__content']";
+    private static       String MESSAGE_XP =    ROOT_XP + "[contains(text(), '" + PLACEHOLDER + "')]";
+
+    public AbstractNotification(String message) {
+        this(new String[]{getNotificationXpath(message)});
+    }
 
     public AbstractNotification(String[] clickableBys){
         this(clickableBys, new String[]{});
@@ -21,5 +26,9 @@ public class AbstractNotification extends AbstractPageObject{
         if(clickableBys[0]!=null){
             WebDriverUtils.waitForElementToDisappear(clickableBys[0], 30);
         }
+    }
+
+    private static String getNotificationXpath(String message) {
+        return MESSAGE_XP.replace(PLACEHOLDER, message);
     }
 }
