@@ -50,8 +50,12 @@ public class ValidationUtils{
 
     private static void validateEmptyDropdown(String xpath, ValidationRule rule, String tooltipID) {
         refocusDropdown(xpath);
+        if (rule.getRegexp().equals("DOB")){
+            refocusDropdown(xpath);
+            WebDriverUtils.pressKey(Keys.ENTER);
+        }
         if(rule.getIsMandatory().equals("true")){
-            validateStatusAndToolTips(rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_NONE, STATUS_NONE);
+            validateStatusAndToolTips(rule.getTooltipNegativeEmpty(), tooltipID, "empty", STATUS_FAILED, STATUS_FAILED);
         }else{
             validateStatusAndToolTips(NO_TOOLTIP, tooltipID, "empty", STATUS_PASSED, STATUS_NONE);
         }
@@ -240,7 +244,7 @@ public class ValidationUtils{
     }
 
     private static void refocusDropdown(String xpath){
-        WebDriverUtils.pressKey(Keys.TAB);
+        WebDriverUtils.pressKey(Keys.ESCAPE);
         WebDriverUtils.pressKey(Keys.TAB);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             clickField(xpath);
