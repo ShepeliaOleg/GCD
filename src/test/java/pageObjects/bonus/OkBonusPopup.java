@@ -14,6 +14,10 @@ public class OkBonusPopup extends AbstractPortalPopup{
 		super(new String[]{BONUS_TITLE_XP, BUTTON_CLOSE_XP});
 	}
 
+    public boolean twoPopUpsIsAppeared(){
+        return WebDriverUtils.isVisible(WebDriverFactory.getPortalDriver(), BONUS_TITLE_2_XP, 10);
+    }
+
     public boolean threePopUpsIsAppeared(){
         return WebDriverUtils.isVisible(WebDriverFactory.getPortalDriver(), BONUS_TITLE_3_XP, 5);
     }

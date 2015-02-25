@@ -224,8 +224,8 @@ public class PushMessagesBonusTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus);
-        // TODO assert 2 messages received
-        new OkBonusPopup();
+        OkBonusPopup okBonusPopup = new OkBonusPopup();
+        validateTrue(okBonusPopup.twoPopUpsIsAppeared(), "Two bonus popups weren't appeared!");
         WebDriverUtils.refreshPage();
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
         acceptDeclineBonusPopup.clickAccept();
@@ -239,11 +239,13 @@ public class PushMessagesBonusTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
-        new OkBonusPopup().clickNext();
+        OkBonusPopup okBonusPopup = new OkBonusPopup();
+        validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
+        okBonusPopup.clickNext();
         new AcceptDeclineBonusPopup().clickNext();
         new AcceptDeclineBonusPopup().clickPrevious();
         new AcceptDeclineBonusPopup().clickPrevious();
-//        NavigationUtils.closeAllPopups(Page.homePage);
+        NavigationUtils.closeAllPopups(Page.homePage);
     }
 
     /*Online Non-declinable and Declinable x2 close start*/
