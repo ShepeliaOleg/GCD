@@ -48,8 +48,7 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
         setAddress(userData.getFullAddress());
         setCity(userData.getCity());
         setPostCode(userData.getPostCode());
-//        setPhone(userData.getPhoneAreaCode().concat(userData.getPhone()));
-        setMobile(userData.getMobileAreaCode().concat(userData.getMobile()));
+        setMobile(userData.getPhoneAreaCode().concat(userData.getPhone()));
         setEmail(userData.getEmail());
     }
 
@@ -62,7 +61,8 @@ public class ChangeMyDetailsPage extends AbstractPortalPage {
         AbstractTest.assertEquals(userData.getCity(), WebDriverUtils.getInputFieldText(FIELD_CITY_XP), "City");
         AbstractTest.assertEquals(userData.getPostCode().toUpperCase(), (WebDriverUtils.getInputFieldText(FIELD_POSTCODE_XP)), "Postcode");
 //        AbstractTest.assertEquals(userData.getPhoneAreaCode()+userData.getPhone(), WebDriverUtils.getInputFieldText(FIELD_PHONE_XP), "Phone");
-        AbstractTest.assertEquals(userData.getMobileAreaCode()+userData.getMobile(), WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP), "Mobile");
+        AbstractTest.assertEquals(userData.getPhoneAreaCode()+userData.getPhone(), WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP), "Mobile");
+//        AbstractTest.assertEquals(userData.getMobileAreaCode()+userData.getMobile(), WebDriverUtils.getInputFieldText(FIELD_MOBILE_XP), "Mobile");
         AbstractTest.assertEquals(userData.getEmail(), WebDriverUtils.getInputFieldText(FIELD_EMAIL_XP), "Email");
     }
 
