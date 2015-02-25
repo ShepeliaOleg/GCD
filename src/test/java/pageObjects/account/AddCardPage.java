@@ -52,8 +52,6 @@ public class AddCardPage extends AbstractPortalPage {
     public void addValidCard(String card){
         addCard(card);
         new CardAddedNotification();
-//        CardAddedPopup cardAddedPopup = new CardAddedPopup();
-//        cardAddedPopup.closePopup();
     }
 
     public void addCard(String card){
