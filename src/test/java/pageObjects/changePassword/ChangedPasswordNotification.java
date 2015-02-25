@@ -6,7 +6,7 @@ import utils.WebDriverUtils;
 public class ChangedPasswordNotification extends AbstractNotification{
     public static final String ROOT_XP =            "//*[contains(@class, 'popup_type_info ') or @class='info__content']";
 	public final static String BUTTON_OK_XP=				"//*[@title='ok']";
-	private final static String LABEL_MESSAGE_SUCCESS_XP=	"//*[contains(text(),'Password Changed')]";
+	private final static String LABEL_MESSAGE_SUCCESS_XP=	"//*[@class='info__content'][contains(text(), 'Password is changed')]";
 
 	public ChangedPasswordNotification(){
 
