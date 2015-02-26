@@ -110,7 +110,7 @@ public class CashierAddCardTest extends AbstractTest{
     /*valid card is added, correct message*/
     @Test(groups = {"regression", "mobile"})
     public void addValidCardFromWithdrawMasterCard(){
-        skipTestWithIssues("D-18999");
+        //skipTestWithIssues("D-18999");
         String card = RandomUtils.getValidCardNumber(PaymentMethod.MasterCard);
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
