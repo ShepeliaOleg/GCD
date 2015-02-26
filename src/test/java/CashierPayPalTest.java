@@ -62,7 +62,7 @@ public class CashierPayPalTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void payPalDepositValidPromoCode() {
-        skipTestWithIssues("D-18785");
+        //skipTestWithIssues("D-18785");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
