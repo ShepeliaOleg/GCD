@@ -42,7 +42,7 @@ public class CashierPaySafeCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void paySafeCardDepositValidPromoCode(){
-        skipTestWithIssues("D-18311");
+        //skipTestWithIssues("D-18311");
         UserData userData = getEURUser();
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
