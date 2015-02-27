@@ -54,8 +54,9 @@ public class LanguageTest extends AbstractTest {
     /*#7. */
     @Test(groups = {"regression"})
     public void pageOpenedInDefaultLanguage(){
-        WebDriverUtils.clearLocalStorage();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
+        WebDriverUtils.clearLocalStorage();
+        WebDriverUtils.refreshPage();
         assertLanguageChange(homePage, DataContainer.getDefaults().getDefaultLanguage());
     }
 
