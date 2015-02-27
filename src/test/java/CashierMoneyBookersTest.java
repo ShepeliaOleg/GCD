@@ -126,6 +126,7 @@ public class CashierMoneyBookersTest extends AbstractTest{
     }
 
     private String moneyBookersDeposit(){
+        skipTestWithIssues("D-19465");
         UserData userData = getMoneyBookersUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.deposit, userData);
         String initialBalance = depositPage.getBalanceAmount();

@@ -3,7 +3,7 @@ import enums.PaymentMethod;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.account.PendingWithdrawPage;
-import pageObjects.account.WithdrawLoadMoreNotificationPopup;
+import pageObjects.account.WithdrawLoadMoreNotification;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
 import utils.DateUtils;
@@ -30,7 +30,7 @@ public class CashierPendingWithdrawTest extends AbstractTest{
         skipTestWithIssues("D-19084");
         PendingWithdrawPage pendingWithdrawPage = (PendingWithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.pending_withdraw);
         pendingWithdrawPage.loadMore();
-        new WithdrawLoadMoreNotificationPopup();
+        new WithdrawLoadMoreNotification();
     }
 
     /*#3. Cancel pending withdraw*/

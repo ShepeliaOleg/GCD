@@ -53,8 +53,8 @@ public class CashierPage extends AbstractPortalPage {
         }
         List<String> visibleFields = Arrays.asList(fields);
         String name = method.getName();
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
-        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
+        String body = getMethodBodyXpath(name);
+        String header = getMethodHeaderXpath(name);
         if(WebDriverUtils.isVisible(header, 0)){
             WebDriverUtils.click(header);
             WebDriverUtils.waitFor();
@@ -84,9 +84,9 @@ public class CashierPage extends AbstractPortalPage {
 
     public void addAccountByType(PaymentMethod method, String account) {
         String name = method.getName();
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
+        String body = getMethodBodyXpath(name);
         if(!WebDriverUtils.isVisible(body, 1)){
-            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
+            WebDriverUtils.click(getMethodHeaderXpath(name));
             WebDriverUtils.waitForElement(body);
         }
         WebDriverUtils.setDropdownOptionByValue(body + FIELD_ACCOUNT_KNOWN_XP, ADD);
@@ -95,7 +95,7 @@ public class CashierPage extends AbstractPortalPage {
     }
 
     public void closeAddAccountField(PaymentMethod method) {
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, method.getName());
+        String body = getMethodBodyXpath(method.getName());
         WebDriverUtils.setDropdownOptionByValue(body+ FIELD_ACCOUNT_KNOWN_XP, method.getAccount());
         WebDriverUtils.waitForElementToDisappear(body+ FIELD_ACCOUNT_XP);
     }
@@ -145,17 +145,12 @@ public class CashierPage extends AbstractPortalPage {
 
     private String fillFields(PaymentMethod method, String amount, String account, String password){
         String name =               method.getName();
-        String promoCode =          method.getPromoCode();
-        String body =               METHOD_BODY_XP.replace(PLACEHOLDER, name);
-        String fieldPromoCode =     body + FIELD_PROMO_CODE_XP;
+        String body =               getMethodBodyXpath(name);
         String fieldAccount =       body + FIELD_ACCOUNT_XP;
         String fieldAccountKnown =  body + FIELD_ACCOUNT_KNOWN_XP;
         String fieldPassword =      body + FIELD_PASSWORD_XP;
         String fieldCVV =           body + FIELD_CVV_XP;
-        if(!WebDriverUtils.isVisible(body, 0)){
-            WebDriverUtils.click(METHOD_HEADER_XP.replace(PLACEHOLDER, name));
-            WebDriverUtils.waitForElement(body);
-        }
+        openMethodBodyIfClosed(method);
         WebDriverUtils.inputTextToField(body+FIELD_AMOUNT_XP, amount);
         if(WebDriverUtils.isVisible(fieldAccount, 0)){
             WebDriverUtils.clearAndInputTextToField(fieldAccount, account);
@@ -183,15 +178,29 @@ public class CashierPage extends AbstractPortalPage {
         return body;
     }
 
+    private String getMethodBodyXpath(String methodName) {
+        return METHOD_BODY_XP.replace(PLACEHOLDER, methodName);
+    }
+
+    private String getMethodHeaderXpath(String methodName) {
+        return METHOD_HEADER_XP.replace(PLACEHOLDER, methodName);
+    }
+
+    private void openMethodBodyIfClosed(PaymentMethod method) {
+        String methodName = method.getName();
+        String methodBodyXpath = getMethodBodyXpath(methodName);
+        if(!WebDriverUtils.isVisible(methodBodyXpath, 0)){
+            WebDriverUtils.click(getMethodHeaderXpath(methodName));
+            WebDriverUtils.waitForElement(methodBodyXpath);
+        }
+        AbstractTest.assertTrue(WebDriverUtils.isVisible(methodBodyXpath), "Payment method opened");
+    }
+
     public boolean isCardVisible(PaymentMethod method, String card) {
-        String name = method.getName();
-        String body = METHOD_BODY_XP.replace(PLACEHOLDER, name);
-        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
         if(!isMethodVisible(method)){
             return false;
         }else {
-            WebDriverUtils.click(header);
-            AbstractTest.assertTrue(WebDriverUtils.isVisible(body), "Payment method opened");
+            openMethodBodyIfClosed(method);
             List<String> dropdownOptions = WebDriverUtils.getDropdownOptionsText(FIELD_ACCOUNT_KNOWN_XP);
             for(String value: dropdownOptions){
                 value = value.replace("*", "").trim();
@@ -204,8 +213,7 @@ public class CashierPage extends AbstractPortalPage {
     }
 
     public boolean isMethodVisible(PaymentMethod method) {
-        String name = method.getName();
-        String header = METHOD_HEADER_XP.replace(PLACEHOLDER, name);
+        String header = getMethodHeaderXpath(method.getName());
         return WebDriverUtils.isVisible(header);
     }
 

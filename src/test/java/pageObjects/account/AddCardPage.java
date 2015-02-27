@@ -1,6 +1,6 @@
 package pageObjects.account;
 
-import pageObjects.cashier.CardAddedPopup;
+import pageObjects.cashier.CardAddedNotification;
 import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
 import utils.WebDriverUtils;
@@ -51,8 +51,7 @@ public class AddCardPage extends AbstractPortalPage {
 
     public void addValidCard(String card){
         addCard(card);
-        CardAddedPopup cardAddedPopup = new CardAddedPopup();
-        cardAddedPopup.closePopup();
+        new CardAddedNotification();
     }
 
     public void addCard(String card){
