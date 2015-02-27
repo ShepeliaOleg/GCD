@@ -6,7 +6,9 @@ import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
+import pageObjects.bonus.OkBonusPopup;
 import pageObjects.core.AbstractPortalPage;
+import pageObjects.core.AbstractPortalPopup;
 import springConstructors.BonusData;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -33,11 +35,22 @@ public class BonusTest extends AbstractTest {
 
         //- ADD +15 Euro
         //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-
         bonusPage.getFreeBonus(bonusData.getBonusID());
+        new AbstractPortalPopup().closePopup();
 
         assertEquals(bonusData.getBonusAmount(), new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
-        PortalUtils.logout();
+        //PortalUtils.logout();
+    }
+
+    @Test(groups = {"regression"})
+    public void congratsPopUpIsAppered() {
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("USD");
+        homePage = PortalUtils.registerUser(userData);
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+
+        bonusPage.getFreeBonus(bonusData.getBonusID());
+        new OkBonusPopup().closePopup();
     }
 
     @Test(groups = {"regression"})

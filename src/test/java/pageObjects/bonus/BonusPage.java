@@ -26,7 +26,6 @@ public class BonusPage extends AbstractPortalPage{
 	public void getFreeBonus(String bonusID) {
 		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID);
 		freeBonusPopup.clickGetBonus();
-		new AbstractPortalPopup().closePopup();
 	}
 
 	public AbstractPortalPopup clickFreeBonusLink(String bonusID) {
