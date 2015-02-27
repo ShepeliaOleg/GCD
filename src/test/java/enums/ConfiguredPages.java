@@ -76,6 +76,7 @@ public enum ConfiguredPages{
     registerClientTypeCreferrer("register_client_type_creferrer"),
     registerNoClientType("register_no_client_type"),
     registerDepositLimits("register_deposit_limits"),
+    registerDublicateEmailLookup("register_dublicate_email"),
     referAFriend("refer_a_friend"),
     referAFriendPage("refer_a_friend_page"),
     responsibleGaming("deposit-limits"),

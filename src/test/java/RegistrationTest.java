@@ -1,7 +1,10 @@
 import enums.*;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPortalPage;
+import pageObjects.forgotPassword.ForgotPasswordPopup;
+import pageObjects.login.LoginPopup;
 import pageObjects.registration.*;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
@@ -447,7 +450,9 @@ public class RegistrationTest extends AbstractTest{
         assertTrue(registrationPageStepTwo.isAddressFieldsEditableAndEmpty(), "Address fields are editable and not empty");
     }
 
-    /*DEPOSIT LIMITS*/
+    /**
+     * DEPOSIT LIMITS START
+     * */
 
     /*29. Deposit limits dropdowns visibility*/
     @Test(groups = {"registration","regression"})
@@ -470,6 +475,73 @@ public class RegistrationTest extends AbstractTest{
         registrationPageStepThree.fillDataAndSubmit(userData, true, true, null);
         registrationPageStepThree.validateDepositLimitsIMS(userData.getUsername(), dayLimit, weekLimit, monthLimit);
     }
+
+    /**
+     *DEPOSIT LIMITS END
+     * */
+
+    /**
+    *DUBLICATE EMAIL LOOKUP START
+    * */
+
+    /*31. Dublicate email lookup. Editing email address*/
+    @Test(groups= {"registration", "regression"})
+    public void dublicateEmailLookupEditingEmailAddress(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
+        registrationPage.inputDublicateEmail();
+        LoginPopup loginPopup = new LoginPopup();
+        loginPopup.validateDescriptionMesageDublicateEmail();
+        loginPopup.closePopup();
+        registrationPage.validateTooltipDublicateEmail();
+        registrationPage.verifyWhetherEmailStillInputedInInputField();
+        HomePage homePage = (HomePage) registrationPage.registerUser(DataContainer.getUserData().getRandomUserData());
+    }
+
+    /*32. Dublicate email lookup. Logging in from Login modal overlay*/
+    @Test(groups= {"registration", "regression"})
+    public void dublicateEmailLookupLoggingInFromLoginModalOverlay(){
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
+        registrationPage.inputDublicateEmail();
+        LoginPopup loginPopup = new LoginPopup();
+        loginPopup.login(userData);
+        validateTrue(new HomePage().isUsernameDisplayed(userData.getUsername()), "User is logged in from Login modal overlay");
+    }
+
+    /*33. Dublicate email lookup. Login popup initiating initiating*/
+    @Test(groups= {"registration", "regression"})
+    public void dublicateEmailLookupLoginPopupInitiatingInitiating(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
+        registrationPage.inputDublicateEmail();
+        LoginPopup loginPopup = new LoginPopup();
+        loginPopup.validateDescriptionMesageDublicateEmail();
+        loginPopup.closePopup();
+        registrationPage.inputDublicateEmail();
+        loginPopup.validateDescriptionMesageDublicateEmail();
+    }
+
+    /*34. Dublicate email lookup. Fogotten Password popup*/
+    @Test(groups= {"registration", "regression"})
+    public void dublicateEmailLookupFogottenPasswordPopup(){
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
+        registrationPage.inputDublicateEmail();
+        LoginPopup loginPopup = new LoginPopup();
+        loginPopup.clickForgotPassword();
+        ForgotPasswordPopup forgotPasswordPopup = new ForgotPasswordPopup();
+        forgotPasswordPopup.closePopup();
+        registrationPage.validateTooltipDublicateEmail();
+        registrationPage.verifyWhetherEmailStillInputedInInputField();
+        registrationPage.inputDublicateEmail();
+        loginPopup.clickForgotPassword();
+        forgotPasswordPopup.fillDataAndClosePopup(DataContainer.getUserData().getRegisteredUserData());
+        registrationPage.validateTooltipDublicateEmail();
+        registrationPage.verifyWhetherEmailStillInputedInInputField();
+    }
+
+    /**
+     * DUBLICATE EMAIL LOOKUP END
+     * */
+
 
     //*B-11233 this BUG CLOSED
     //*1 DESKTOP

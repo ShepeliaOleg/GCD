@@ -9,6 +9,7 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
+import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
 public class LoginPopup extends AbstractPortalPopup {
@@ -20,6 +21,7 @@ public class LoginPopup extends AbstractPortalPopup {
     public static final String BUTTON_LOGIN_XP =			ROOT_XP + "//*[contains(@class, 'fn-login-btn')]";
     private static final String LINK_REGISTER_XP=			ROOT_XP + "//*[@href='/register']";
     public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'error')]";
+    private static final String DESCRIPTION_MSG_XP=         ROOT_XP + "//*[@class='popup-modal__description']";
     public static final String LABEL_TIMEOUT_ERROR_XP=      LABEL_VALIDATION_ERROR_XP + "[contains(text(), 'Timeout occurred')]";
 
 	public LoginPopup(){
@@ -48,6 +50,10 @@ public class LoginPopup extends AbstractPortalPopup {
 
     public boolean getRememberMeCheckBoxState(){
         return WebDriverUtils.getCheckBoxState(CHECKBOX_REMEMBERME_XP);
+    }
+
+    public static String getDescriptionMsgText() {
+        return WebDriverUtils.getElementText(DESCRIPTION_MSG_XP);
     }
 
     public void clickLogin(){
@@ -97,6 +103,9 @@ public class LoginPopup extends AbstractPortalPopup {
 		return WebDriverUtils.isVisible(LABEL_VALIDATION_ERROR_XP, 1);
 	}
 
+    public void validateDescriptionMesageDublicateEmail(){
+        AbstractTest.assertEquals("Sorry an account already exists for this email address.", getDescriptionMsgText(), "Description message in Login popup is wrong");
+    }
     /* VALIDATION*/
 
 //    public void validateUsername(ValidationRule rule) {

@@ -525,4 +525,16 @@ public class RegistrationPage extends AbstractPortalPage {
     public List getDays() {
         return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_BIRTHDAY_XP);
     }
+
+    public void inputDublicateEmail(){
+        ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_EMAIL_NAME), DataContainer.getUserData().getRegisteredUserData().getEmail());
+    }
+
+    public void verifyWhetherEmailStillInputedInInputField(){
+        AbstractTest.assertEquals(DataContainer.getUserData().getRegisteredUserData().getEmail(), WebDriverUtils.getInputFieldText(getXpathByName(FIELD_EMAIL_NAME)), "Already used email is not still populated in input field");
+    }
+
+    public void validateTooltipDublicateEmail(){
+        AbstractTest.assertEquals("Email is already in use", ValidationUtils.getTooltipText("registerEmail"), "Tooltip for email field is not match");
+    }
 }

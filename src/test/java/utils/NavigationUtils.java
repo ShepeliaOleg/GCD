@@ -159,6 +159,7 @@ public class NavigationUtils{
             case registerNoClientType:
             case registerClientTypeCreferrer:
             case registerDepositLimits:
+            case registerDublicateEmailLookup:
             case register:                                      return new RegistrationPage();
             case referAFriend:
             case referAFriendPage:                              return new ReferAFriendPage();
