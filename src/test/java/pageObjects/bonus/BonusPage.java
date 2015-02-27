@@ -2,6 +2,7 @@ package pageObjects.bonus;
 
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
+import pageObjects.registration.ReadTermsAndConditionsPopup;
 import utils.WebDriverUtils;
 
 public class BonusPage extends AbstractPortalPage{
@@ -15,7 +16,7 @@ public class BonusPage extends AbstractPortalPage{
 	private static final String OPT_IN = 					"//a[@data-code='45507']";
 	private static final String BUY_IN = 					"//a[@data-code='45609']";
 	private static final String BONUS_LINK =				"//td[1]/a[@data-item=";
-	private static final String TC_LINK =					"//td[2]/a[@data-item=";
+	private static final String TC_LINK =					"//td[3]/a[@data-item=";
 
 
 
@@ -32,6 +33,13 @@ public class BonusPage extends AbstractPortalPage{
 		WebDriverUtils.waitForElement(BONUS_LINK + bonusID + "]");
 		WebDriverUtils.click(BONUS_LINK + bonusID + "]");
 		return new FreeBonusPopup();
+	}
+
+	public void clickTCLink(String bonusID) {
+		WebDriverUtils.waitForElement(TC_LINK + bonusID + "]");
+		WebDriverUtils.click(TC_LINK + bonusID + "]");
+		AbstractPortalPopup popup = new ReadTermsAndConditionsPopup(true);
+		popup.closePopup();
 	}
 
 	public String getBonusTitle(String bonusID) {

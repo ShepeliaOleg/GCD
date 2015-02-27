@@ -1,6 +1,7 @@
 package pageObjects.bonus;
 
 import pageObjects.core.AbstractPortalPopup;
+import pageObjects.registration.ReadTermsAndConditionsPopup;
 import utils.WebDriverUtils;
 
 import static utils.core.AbstractTest.*;
@@ -24,6 +25,9 @@ public class FreeBonusPopup extends AbstractPortalPopup{
 
 	public void clickShowTC(){
 		WebDriverUtils.click(BONUS_POPUP_ROOT + BUTTON_SHOW_TC);
+		AbstractPortalPopup popup = new ReadTermsAndConditionsPopup(true);
+		popup.closePopup();
+		popup.clickOffPopup();
 	}
 
 	public void assertViewFreeBonusPopup(String expBonusTitle, String button1, String button2){

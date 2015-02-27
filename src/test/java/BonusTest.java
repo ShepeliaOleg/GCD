@@ -26,6 +26,7 @@ public class BonusTest extends AbstractTest {
     @Qualifier("bonus")
     private BonusData bonusData;
 
+    //FREE bonus test
     @Test(groups = {"regression"})
     public void addFreeBonusAmount() {
         userData = DataContainer.getUserData().getRandomUserData();
@@ -60,5 +61,21 @@ public class BonusTest extends AbstractTest {
         String bonusTitle = bonusPage.getBonusTitle(bonusData.getBonusID());
         FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());
         freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, bonusData.getGetFreeBonusButtonTitle(), bonusData.getLinksToTCbuttonTitle());
+    }
+
+    @Test(groups = {"regression"})
+    public void tcPopUpIsApperedFromPopup() {
+
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+
+        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());
+        freeBonusPopup.clickShowTC();
+    }
+
+    @Test(groups = {"regression"})
+    public void tcPopUpIsApperedFromPage() {
+
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+        bonusPage.clickTCLink(bonusData.getBonusID());
     }
 }
