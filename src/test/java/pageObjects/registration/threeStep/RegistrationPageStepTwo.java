@@ -59,6 +59,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     public void clickFind(){
+        WebDriverUtils.waitFor(50);
         WebDriverUtils.click(BUTTON_FIND_XP);
         WebDriverUtils.waitFor(2000);
     }
