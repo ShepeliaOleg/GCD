@@ -13,10 +13,7 @@ import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;
-import utils.DateUtils;
-import utils.IMSUtils;
-import utils.NavigationUtils;
-import utils.PortalUtils;
+import utils.*;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -256,6 +253,9 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
         //skipTest("System Error, D-18632");
+        //Disable next line if you fun only one this test!
+        WebDriverUtils.clearLocalStorage();
+
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
