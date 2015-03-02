@@ -58,6 +58,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*2. Submit correct data
 	@Test(groups = {"regression"})
 	public void changePasswordAndLogin(){
+		skipTest("System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
         homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
