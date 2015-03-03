@@ -77,9 +77,6 @@ public class ForgotPasswordTest extends AbstractTest{
     /*6. change temporary password (popup shown after login)*/
 	@Test(groups = {"regression"})
 	public void setNewPasswordAfterRecoveryLogin() {
-        //Disable next line if you fun only one this test!
-        WebDriverUtils.clearLocalStorage();
-
         setNewPasswordAfterRecoveryAndLogin();
 	}
 
@@ -256,8 +253,6 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
         //skipTest("System Error, D-18632");
-        //Disable next line if you fun only one this test!
-        WebDriverUtils.clearLocalStorage();
 
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
