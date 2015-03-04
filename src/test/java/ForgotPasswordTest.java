@@ -40,7 +40,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*POSITIVE*/
 
 	/*1. Portlet is displayed in popup*/
-	@Test(groups = {"smoke"})
+    @Test(groups = {"smoke"})
 	public void portletIsDisplayedOnPopup(){
         try{
             HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
@@ -59,6 +59,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*2. Submit correct data 3. Check confirmation popup*/
 	@Test(groups = {"regression"})
 	public void validRecovery(){
+        WebDriverUtils.clearLocalStorage();
         validPasswordRecovery();
 	}
 
@@ -253,7 +254,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void newPasswordUsedRecently(){
         //skipTest("System Error, D-18632");
-
+        WebDriverUtils.clearLocalStorage();
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();
@@ -331,6 +332,7 @@ public class ForgotPasswordTest extends AbstractTest{
     }
 
     private UserData setNewPasswordAfterRecoveryAndLogin() {
+        WebDriverUtils.clearLocalStorage();
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
         mailServicePage.waitForEmail();

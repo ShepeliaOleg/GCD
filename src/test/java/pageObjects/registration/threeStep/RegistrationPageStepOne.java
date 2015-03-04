@@ -16,7 +16,6 @@ public class RegistrationPageStepOne extends RegistrationPage {
 
     public RegistrationPageStepOne(){
         super(new String[]{ROOT_XP, BUTTON_NEXT_XP, LINK_ADULT_CONTENT_XP});
-        WebDriverUtils.clearLocalStorage();
     }
 
     public void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){
