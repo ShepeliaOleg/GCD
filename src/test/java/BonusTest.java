@@ -11,6 +11,7 @@ import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.BonusData;
 import springConstructors.UserData;
+import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.core.AbstractTest;
@@ -23,8 +24,12 @@ public class BonusTest extends AbstractTest {
     private BonusPage bonusPage;
 
     @Autowired
-    @Qualifier("bonus")
-    private BonusData bonusData;
+    @Qualifier("freeBonus")
+    private BonusData freeBonus;
+
+    @Autowired
+    @Qualifier("optInBonus")
+    private BonusData optInBonus;
 
     //FREE bonus test
     @Test(groups = {"regression"})
@@ -36,10 +41,10 @@ public class BonusTest extends AbstractTest {
 
         //- ADD +15 Euro
         //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-        bonusPage.getFreeBonus(bonusData.getBonusID());
+        bonusPage.getBonus(freeBonus.getBonusID(), freeBonus.getGetFreeBonusButtonTitle());
         new AbstractPortalPopup().closePopup();
 
-        assertEquals(bonusData.getBonusAmount(), new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
+        assertEquals(freeBonus.getBonusAmount(), new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
         //PortalUtils.logout();
     }
 
@@ -50,7 +55,7 @@ public class BonusTest extends AbstractTest {
         homePage = PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        bonusPage.getFreeBonus(bonusData.getBonusID());
+        bonusPage.getBonus(freeBonus.getBonusID());
         new OkBonusPopup().closePopup();
     }
 
@@ -58,9 +63,9 @@ public class BonusTest extends AbstractTest {
     public void freeBonusPopUp() {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
 
-        String bonusTitle = bonusPage.getBonusTitle(bonusData.getBonusID());
-        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());
-        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, bonusData.getGetFreeBonusButtonTitle(), bonusData.getLinksToTCbuttonTitle());
+        String bonusTitle = bonusPage.getBonusTitle(freeBonus.getBonusID());
+        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(freeBonus.getBonusID());
+        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, freeBonus.getGetFreeBonusButtonTitle(), freeBonus.getLinksToTCbuttonTitle());
     }
 
     @Test(groups = {"regression"})
@@ -68,7 +73,7 @@ public class BonusTest extends AbstractTest {
 
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
 
-        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(bonusData.getBonusID());
+        FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(freeBonus.getBonusID());
         freeBonusPopup.clickShowTC();
     }
 
@@ -76,6 +81,39 @@ public class BonusTest extends AbstractTest {
     public void tcPopUpIsApperedFromPage() {
 
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-        bonusPage.clickTCLink(bonusData.getBonusID());
+        bonusPage.clickTCLink(freeBonus.getBonusID());
+    }
+
+    //OPT-IN bonus test
+    @Test(groups = {"regression"})
+    public void addRemoveOptInBonus() {
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("USD");
+        homePage = PortalUtils.registerUser(userData);
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+
+        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
+        new AbstractPortalPopup().closePopup();
+
+        bonusPage.getBonus(optInBonus.getBonusID(), "Opt-out");
+        new AbstractPortalPopup().closePopup();
+    }
+
+    @Test(groups = {"regression"})
+    public void enableDisableOptInBonusAndCheckInIMS() {
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("USD");
+
+        homePage = PortalUtils.registerUser(userData);
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+
+        bonusPage.getBonus(optInBonus.getBonusID());
+        new AbstractPortalPopup().closePopup();
+        IMSUtils.checkPlayerHasEnabledOptInBonus(userData.getUsername(), optInBonus.getBonusID());
+
+        NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+        bonusPage.getBonus(optInBonus.getBonusID());
+        new AbstractPortalPopup().closePopup();
+        IMSUtils.checkPlayerHasDisabledOptInBonus(userData.getUsername(), optInBonus.getBonusID());
     }
 }

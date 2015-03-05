@@ -19,6 +19,12 @@ public class FreeBonusPopup extends AbstractPortalPopup{
 		super(new String[]{BONUS_POPUP_ROOT});
 	}
 
+	public void clickGetBonus(String expectedValue){
+		String actualButtonText = WebDriverUtils.getElementText(BONUS_POPUP_ROOT + BUTTON_GET_BONUS);
+		assertEquals(expectedValue, actualButtonText, "Button text was not equals");
+		clickGetBonus();
+	}
+
 	public void clickGetBonus(){
 		WebDriverUtils.click(BONUS_POPUP_ROOT + BUTTON_GET_BONUS);
 	}

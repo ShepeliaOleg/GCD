@@ -14,6 +14,10 @@ import utils.core.WebDriverFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static utils.core.AbstractTest.assertEquals;
+import static utils.core.AbstractTest.assertFalse;
+import static utils.core.AbstractTest.assertTrue;
+
 public class IMSUtils {
 
     private static final int RETRIES = 10;
@@ -51,7 +55,7 @@ public class IMSUtils {
         ArrayList<String> imsRegisterData=imsPlayerDetailsPage.getRegisterData();
         ArrayList<String> wplRegisterData=userData.getRegisterData();
         for(int i=0; i < wplRegisterData.size(); i++){
-            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data");
+            assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "Reg data");
         }
     }
 
@@ -59,7 +63,7 @@ public class IMSUtils {
         ArrayList<String> imsRegisterData=navigateToPlayedDetails(userData.getUsername()).getUMDData();
         ArrayList<String> wplRegisterData=userData.getUMDData();
         for(int i=0; i < wplRegisterData.size(); i++){
-            AbstractTest.assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "UMD data");
+            assertEquals(wplRegisterData.get(i).toUpperCase(), imsRegisterData.get(i).toUpperCase(), "UMD data");
         }
     }
 
@@ -106,6 +110,28 @@ public class IMSUtils {
             WebDriverUtils.refreshPage();
         }
         return false;
+    }
+
+    public static void checkPlayerHasEnabledOptInBonus(String username, String optInID) {
+        IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(username);
+        IMSPlayerBonusInfoPage imsPlayerBonusInfoPage = imsPlayerDetailsPage.clickPlayerDetailsInfo();
+        try {
+            assertTrue(imsPlayerBonusInfoPage.isVisibleActiveBonus(optInID), "Expected opt-in bonus is not visible");
+            assertEquals(imsPlayerBonusInfoPage.getNameActiveBonus(optInID), "Test Opt-in bonus 1", "Actual bonus has unexpected name");
+        } finally {
+            WebDriverFactory.getServerDriver().switchTo().defaultContent();
+        }
+    }
+
+    public static void checkPlayerHasDisabledOptInBonus(String username, String optInID) {
+        IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(username);
+        IMSPlayerBonusInfoPage imsPlayerBonusInfoPage = imsPlayerDetailsPage.clickPlayerDetailsInfo();
+        try {
+            assertTrue(imsPlayerBonusInfoPage.isVisibleNoActiveBonus(optInID), "Expected text not found");
+            assertTrue(!imsPlayerBonusInfoPage.isVisibleActiveBonus(optInID), "Opt-in bonus is visible, it's not as expected");
+        } finally {
+            WebDriverFactory.getServerDriver().switchTo().defaultContent();
+        }
     }
 
     public static void sendPushMessage(UserData userData, Page pushMessages){

@@ -68,6 +68,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	private static final String FIELD_DAY_LIMIT_XP = 						"//*[@id='depositlimitday']";
 	private static final String FIELD_WEEK_LIMIT_XP = 						"//*[@id='depositlimitweek']";
 	private static final String FIELD_MONTH_LIMIT_XP = 						"//*[@id='depositlimitmonth']";
+	private static final String BUTTON_PLAYER_DETAILS_INFO_XP =				"//input[@id='wageringinfo']";
 
 	public IMSPlayerDetailsPage(){
 		super(new String[]{ROOT_XP, BUTTON_FAILED_LOGINS});
@@ -392,6 +393,11 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
         WebDriverUtils.acceptJavaScriptAlert(WebDriverFactory.getServerDriver());
         WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), LABEL_LOCK_REMOVED);
     }
+
+	public IMSPlayerBonusInfoPage clickPlayerDetailsInfo(){
+		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_PLAYER_DETAILS_INFO_XP);
+		return new IMSPlayerBonusInfoPage();
+	}
 
     public void addBonus(Page pushMessages, String amount, int quantity){
         for(int i=0;i<quantity;i++){
