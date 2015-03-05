@@ -137,6 +137,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*4. New Password and Retype do not match
 	@Test(groups = {"regression"})
 	public void retypeIsNotEqualToPassword(){
+		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		homePage = PortalUtils.registerUser(userData);
