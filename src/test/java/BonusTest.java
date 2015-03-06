@@ -3,7 +3,6 @@ import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
-import pageObjects.HomePage;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
@@ -14,6 +13,7 @@ import springConstructors.UserData;
 import utils.IMSUtils;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -84,6 +84,17 @@ public class BonusTest extends AbstractTest {
 
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
         bonusPage.clickTCLink(freeBonus.getBonusID());
+        bonusPage.clickTCLink(optInBonus.getBonusID());
+    }
+
+    @Test(groups = {"regression"})
+    public void closeBonusPopUp() {
+
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+        bonusPage.openAndDeclineBonus(freeBonus.getBonusID());
+        assertFalse(WebDriverUtils.isTextVisible(freeBonus.getGetFreeBonusButtonTitle()), "Bonus Multi View was not disappeared");
+        bonusPage.openAndDeclineBonus(optInBonus.getBonusID());
+        assertFalse(WebDriverUtils.isTextVisible(optInBonus.getGetFreeBonusButtonTitle()), "Bonus Multi View was not disappeared");
     }
 
     //OPT-IN bonus test

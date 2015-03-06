@@ -34,6 +34,11 @@ public class BonusPage extends AbstractPortalPage{
 		return new OkBonusPopup();
 	}
 
+	public void openAndDeclineBonus(String bonusID) {
+		clickFreeBonusLink(bonusID);
+		new AbstractPortalPopup().closePopup();
+	}
+
 	public AbstractPortalPopup clickFreeBonusLink(String bonusID) {
 		WebDriverUtils.waitForElement(WebDriverFactory.getPortalDriver(), BONUS_LINK + bonusID + "]");
 		WebDriverUtils.click(BONUS_LINK + bonusID + "]");
