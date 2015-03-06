@@ -220,6 +220,7 @@ public class ValidationUtils{
             }
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
+        WebDriverUtils.waitFor(200);
         WebDriverUtils.pressKey(Keys.TAB);
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             clickField(xpath);

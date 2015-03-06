@@ -65,6 +65,7 @@ public class AbstractPortalPopup extends AbstractPopup{
         if(DataContainer.getDriverData().getBrowser().equals("safari")&&DataContainer.getDriverData().getOs().equals("mac")){
             WebDriverUtils.click(OFF_POPUP_XP);
         }else {
+            WebDriverUtils.waitFor(100);
             WebDriverUtils.click(ROOT_XP, OFFSET);
         }
         WebDriverUtils.waitFor();
