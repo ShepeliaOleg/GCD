@@ -20,8 +20,8 @@ import utils.core.DataContainer;
 public class BonusTest extends AbstractTest {
 
     private UserData userData;
-    private HomePage homePage;
     private BonusPage bonusPage;
+    private OkBonusPopup okBonusPopup;
 
     @Autowired
     @Qualifier("freeBonus")
@@ -36,7 +36,7 @@ public class BonusTest extends AbstractTest {
     public void addFreeBonusAmount() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
-        homePage = PortalUtils.registerUser(userData);
+        PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
         //- ADD +15 Euro
@@ -52,11 +52,13 @@ public class BonusTest extends AbstractTest {
     public void congratsPopUpIsAppered() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
-        homePage = PortalUtils.registerUser(userData);
+        PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        bonusPage.getBonus(freeBonus.getBonusID());
-        new OkBonusPopup().closePopup();
+        okBonusPopup = bonusPage.getBonus(freeBonus.getBonusID());
+        okBonusPopup.checkPopupTitleText("Congratulations");
+        okBonusPopup.checkPopupContentText("Congratulations, you just received a $ 10.00 bonus! Wishing you the best of luck in our games!");
+        okBonusPopup.closePopup();
     }
 
     @Test(groups = {"regression"})
@@ -86,10 +88,10 @@ public class BonusTest extends AbstractTest {
 
     //OPT-IN bonus test
     @Test(groups = {"regression"})
-    public void addRemoveOptInBonus() {
+    public void OnOffOptInBonus() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
-        homePage = PortalUtils.registerUser(userData);
+        PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
         bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
@@ -104,7 +106,7 @@ public class BonusTest extends AbstractTest {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
 
-        homePage = PortalUtils.registerUser(userData);
+        PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
         bonusPage.getBonus(optInBonus.getBonusID());
@@ -115,5 +117,20 @@ public class BonusTest extends AbstractTest {
         bonusPage.getBonus(optInBonus.getBonusID());
         new AbstractPortalPopup().closePopup();
         IMSUtils.checkPlayerHasDisabledOptInBonus(userData.getUsername(), optInBonus.getBonusID());
+    }
+
+    @Test(groups = {"regression"})
+    public void onOffOptInBonusPopUp() {
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+
+        okBonusPopup = bonusPage.getBonus(optInBonus.getBonusID());
+        okBonusPopup.checkPopupTitleText("");
+        okBonusPopup.checkPopupContentText("You have been successfully Opted-in to");
+        okBonusPopup.closePopup();
+
+        okBonusPopup = bonusPage.getBonus(optInBonus.getBonusID());
+        okBonusPopup.checkPopupTitleText("");
+        okBonusPopup.checkPopupContentText("You have been successfully Opted-out from");
+        okBonusPopup.closePopup();
     }
 }

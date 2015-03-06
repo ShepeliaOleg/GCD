@@ -25,6 +25,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
     }
@@ -36,6 +37,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         okBonusPopup.clickOffPopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
     }
@@ -89,6 +91,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         //---PortalUtils.loginUser(userData, Page.homePage);
         OkBonusPopup okBonusPopup = (OkBonusPopup)PortalUtils.loginUser(userData, Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         okBonusPopup.closePopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
     }
@@ -103,6 +106,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         //---PortalUtils.loginUser(userData, Page.homePage);
         OkBonusPopup okBonusPopup = (OkBonusPopup)PortalUtils.loginUser(userData, Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         okBonusPopup.clickOffPopup();
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
     }
@@ -157,6 +161,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         GameLaunchPage gameLaunchPage = NavigationUtils.launchGameByUrl(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         okBonusPopup.closePopup();
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         assertEquals(BONUS_AMOUNT, homePage.getBalanceAmount(refreshPage), "Balance");
@@ -198,6 +203,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus);
         OkBonusPopup okBonusPopup = (OkBonusPopup)NavigationUtils.closeAllPopups(Page.okBonus);
+        okBonusPopup.checkPopupTitleText("Congratulations");
         WebDriverUtils.refreshPage();
         assertFalse(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 5), "Bonus visible");
         assertEquals(BONUS_AMOUNT, new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
@@ -225,8 +231,10 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/2)");
         validateTrue(okBonusPopup.twoPopUpsIsAppeared(), "Two bonus popups weren't appeared!");
         WebDriverUtils.refreshPage();
+        okBonusPopup.checkPopupTitleText("Congratulations");
         AcceptDeclineBonusPopup acceptDeclineBonusPopup = new AcceptDeclineBonusPopup();
         acceptDeclineBonusPopup.clickAccept();
         assertEquals(TypeUtils.calculateSum(BONUS_AMOUNT, BONUS_AMOUNT), new AbstractPortalPage().getBalanceAmount(refreshPage), "Balance");
@@ -240,11 +248,16 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/3)");
         validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
         okBonusPopup.clickNext();
+        okBonusPopup.checkPopupTitleText("Congratulations (2/3)");
         new AcceptDeclineBonusPopup().clickNext();
+        okBonusPopup.checkPopupTitleText("Congratulations (3/3)");
         new AcceptDeclineBonusPopup().clickPrevious();
+        okBonusPopup.checkPopupTitleText("Congratulations (2/3)");
         new AcceptDeclineBonusPopup().clickPrevious();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/3)");
         NavigationUtils.closeAllPopups(Page.homePage);
     }
 
@@ -256,9 +269,12 @@ public class PushMessagesBonusTest extends AbstractTest{
         PortalUtils.registerUser(userData);
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/3)");
         validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
         okBonusPopup.closePopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/2)");
         new AcceptDeclineBonusPopup().clickDecline();
+        okBonusPopup.checkPopupTitleText("Congratulations");
         new AcceptDeclineBonusPopup().clickDecline();
     }
 
@@ -271,13 +287,17 @@ public class PushMessagesBonusTest extends AbstractTest{
         IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
         validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
+        okBonusPopup.checkPopupTitleText("Congratulations (1/3)");
         okBonusPopup.clickNext();
+        okBonusPopup.checkPopupTitleText("Congratulations (2/3)");
         new AcceptDeclineBonusPopup().clickNext();
+        okBonusPopup.checkPopupTitleText("Congratulations (3/3)");
         new AcceptDeclineBonusPopup().closePopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (2/3)");
         new AcceptDeclineBonusPopup().closePopup();
+        okBonusPopup.checkPopupTitleText("Congratulations (1/3)");
         new OkBonusPopup();
     }
-
 
 //	/*7. Push messages for bonus opt in/out */
 //	//@Test(groups = {"regression", "mobile"})

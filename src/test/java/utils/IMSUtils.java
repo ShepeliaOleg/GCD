@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import static utils.core.AbstractTest.assertEquals;
-import static utils.core.AbstractTest.assertFalse;
 import static utils.core.AbstractTest.assertTrue;
 
 public class IMSUtils {
