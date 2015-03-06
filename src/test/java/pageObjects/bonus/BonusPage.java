@@ -28,9 +28,15 @@ public class BonusPage extends AbstractPortalPage{
 		freeBonusPopup.clickGetBonus(text);
 	}
 
-	public void getBonus(String bonusID) {
+	public OkBonusPopup getBonus(String bonusID) {
 		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID);
 		freeBonusPopup.clickGetBonus();
+		return new OkBonusPopup();
+	}
+
+	public void openAndDeclineBonus(String bonusID) {
+		clickFreeBonusLink(bonusID);
+		new AbstractPortalPopup().closePopup();
 	}
 
 	public AbstractPortalPopup clickFreeBonusLink(String bonusID) {
