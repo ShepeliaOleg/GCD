@@ -113,6 +113,24 @@ public class BonusTest extends AbstractTest {
     }
 
     @Test(groups = {"regression"})
+    public void optInBonusOnAfterRelogin() {
+
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("EUR");
+        PortalUtils.registerUser(userData);
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+
+        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
+        new AbstractPortalPopup().closePopup();
+        PortalUtils.logout();
+
+        PortalUtils.loginUser(userData);
+        NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+        bonusPage.getBonus(optInBonus.getBonusID(), "Opt-out");
+        new AbstractPortalPopup().closePopup();
+    }
+
+    @Test(groups = {"regression"})
     public void enableDisableOptInBonusAndCheckInIMS() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
