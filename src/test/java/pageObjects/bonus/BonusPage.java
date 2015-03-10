@@ -24,24 +24,37 @@ public class BonusPage extends AbstractPortalPage{
 	}
 
 	public void getBonus(String bonusID, String text) {
-		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID);
+		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID, 1);
+		freeBonusPopup.clickGetBonus(text);
+	}
+
+	public void getBonus(String bonusID, String text, int numCount) {
+		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID, numCount);
 		freeBonusPopup.clickGetBonus(text);
 	}
 
 	public OkBonusPopup getBonus(String bonusID) {
-		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID);
+		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID, 1);
 		freeBonusPopup.clickGetBonus();
 		return new OkBonusPopup();
 	}
 
 	public void openAndDeclineBonus(String bonusID) {
-		clickFreeBonusLink(bonusID);
+		clickFreeBonusLink(bonusID, 1);
 		new AbstractPortalPopup().closePopup();
 	}
 
 	public AbstractPortalPopup clickFreeBonusLink(String bonusID) {
-		WebDriverUtils.waitForElement(WebDriverFactory.getPortalDriver(), BONUS_LINK + bonusID + "]");
-		WebDriverUtils.click(BONUS_LINK + bonusID + "]");
+		String xpath = "//div[@id='column-1']/div/div[1]"+BONUS_LINK + bonusID + "]";
+		WebDriverUtils.waitForElement(WebDriverFactory.getPortalDriver(), xpath);
+		WebDriverUtils.click(xpath);
+		return new FreeBonusPopup();
+	}
+
+	public AbstractPortalPopup clickFreeBonusLink(String bonusID, int divNumber) {
+		String xpath = "//div[@id='column-1']/div/div["+divNumber+"]"+BONUS_LINK + bonusID + "]";
+		WebDriverUtils.waitForElement(WebDriverFactory.getPortalDriver(), xpath);
+		WebDriverUtils.click(xpath);
 		return new FreeBonusPopup();
 	}
 
