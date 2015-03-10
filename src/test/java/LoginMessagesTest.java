@@ -18,7 +18,7 @@ public class LoginMessagesTest extends AbstractTest{
     /*One login message */
 	@Test(groups = {"regression", "mobile"})
 	public void loginMessage(){
-        skipTestWithIssues("D-19275");
+        //skipTestWithIssues("D-19275");
         IMSUtils.setLoginMessagesCount(1);
 		UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
@@ -29,7 +29,7 @@ public class LoginMessagesTest extends AbstractTest{
     /*No login message */
     @Test(groups = {"regression", "mobile"})
     public void noLoginMessage(){
-        skipTestWithIssues("D-19275");
+        //skipTestWithIssues("D-19275");
         IMSUtils.setLoginMessagesCount(0);
         try{
             UserData userData = DataContainer.getUserData().getRegisteredUserData();
