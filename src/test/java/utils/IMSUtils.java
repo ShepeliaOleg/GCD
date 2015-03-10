@@ -176,4 +176,8 @@ public class IMSUtils {
     public static String getClientType(UserData userData){
         return navigateToPlayedDetails(userData.getUsername()).getClientType();
     }
+
+    public static String getLastLoginDeviceType(UserData userData){
+        return navigateToPlayedDetails(userData.getUsername()).getDeviceType();
+    }
 }

@@ -1,12 +1,16 @@
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
+import io.selendroid.standalone.android.DeviceManager;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.registration.RegistrationPage;
+import springConstructors.Device;
+import springConstructors.DeviceData;
+import springConstructors.DriverData;
 import springConstructors.UserData;
 import utils.IMSUtils;
 import utils.NavigationUtils;
@@ -232,6 +236,22 @@ public class LoginTest extends AbstractTest{
 		PortalUtils.loginUser(userData);
         assertTrue(IMSUtils.isPlayerLoggedIn(userData.getUsername()),"User is logged in on IMS");
 	}
+
+    /*17. Device Detection On Login. Supported Device*/
+    @Test (groups = {"mobile, regression"})
+    public void deviceDetectionOnLoginSupportedDevice(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        assertEquals(DataContainer.getDriverData().getDevice(), IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
+    }
+
+    /*18. Device Detection On Login. Unsupported Device*/
+    @Test (groups = {"regression"})
+    public void deviceDetectionOnLoginUnsupportedDevice(){
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        PortalUtils.registerUser(userData);
+        assertEquals("other", IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
+    }
 
     /* NEGATIVE */
 
