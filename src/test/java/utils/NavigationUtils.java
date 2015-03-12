@@ -41,6 +41,7 @@ import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.replacers.PromotionalCodeReplacerPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.responsibleGaming.SelfExcludePage;
 import pageObjects.webcontent.WebContentPage;
@@ -156,6 +157,7 @@ public class NavigationUtils{
             case permissions_page_player:
             case permissions_page_player_guest:
             case permissions_portlet:                           return new AbstractPortalPage();
+            case promotional_code_replacer:                     return new PromotionalCodeReplacerPage();
             case registerNoClientType:
             case registerClientTypeCreferrer:
             case registerDepositLimits:

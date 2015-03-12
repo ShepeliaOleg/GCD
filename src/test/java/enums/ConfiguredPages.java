@@ -72,6 +72,7 @@ public enum ConfiguredPages{
     permissions_page_player("permissions_page_player"),
     permissions_page_player_guest("permissions_page_player_guest"),
     permissions_portlet("permissions_portlet"),
+    promotional_code_replacer("promotional_code"),
     register("register"),
     registerClientTypeCreferrer("register_client_type_creferrer"),
     registerNoClientType("register_no_client_type"),
