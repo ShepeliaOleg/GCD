@@ -238,7 +238,7 @@ public class LoginTest extends AbstractTest{
 	}
 
     /*17. Device Detection On Login. Supported Device*/
-    @Test (groups = {"mobile, regression"})
+    @Test (groups = {"mobile"})
     public void deviceDetectionOnLoginSupportedDevice(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
