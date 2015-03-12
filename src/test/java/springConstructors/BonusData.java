@@ -4,7 +4,7 @@ public class BonusData {
 
     private String bonusID;
     private String bonusAmount;
-    private String GetFreeBonusButtonTitle;
+    private String getBonusButtonTitle;
     private String LinksToTCbuttonTitle;
 
     public String getBonusID() {
@@ -23,12 +23,12 @@ public class BonusData {
         this.bonusAmount = bonusAmount;
     }
 
-    public String getGetFreeBonusButtonTitle() {
-        return GetFreeBonusButtonTitle;
+    public String getGetBonusButtonTitle() {
+        return getBonusButtonTitle;
     }
 
-    public void setGetFreeBonusButtonTitle(String getFreeBonusButtonTitle) {
-        GetFreeBonusButtonTitle = getFreeBonusButtonTitle;
+    public void setGetBonusButtonTitle(String getBonusButtonTitle) {
+        this.getBonusButtonTitle = getBonusButtonTitle;
     }
 
     public String getLinksToTCbuttonTitle() {

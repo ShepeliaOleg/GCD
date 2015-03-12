@@ -23,11 +23,12 @@ public class OkBonusPopup extends AbstractPortalPopup{
 //    }
 
     public void checkPopupTitleText(String text) {
-        assertEquals(WebDriverUtils.getElementText(TITLE_XP), text, "Pop Up title was not as expected");
+        assertEquals(text, WebDriverUtils.getElementText(TITLE_XP), "Pop Up title was not as expected");
     }
 
     public void checkPopupContentText(String text) {
         assertTrue(WebDriverUtils.getElementText(CONTENT_XP + "/div").contains(text), "Pop Up does not contain the expected text");
+        //assertEquals(text, WebDriverUtils.getElementText(CONTENT_XP + "/div"), "Pop Up does not contain the expected text");
     }
 
     public boolean twoPopUpsIsAppeared(){

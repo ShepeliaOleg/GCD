@@ -1,11 +1,14 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
+import enums.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
+import pageObjects.bonus.OptedInPopup;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.BonusData;
@@ -41,7 +44,7 @@ public class BonusTest extends AbstractTest {
 
         //- ADD +15 Euro
         //bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-        bonusPage.getBonus(freeBonus.getBonusID(), freeBonus.getGetFreeBonusButtonTitle());
+        bonusPage.getBonus(freeBonus.getBonusID(), freeBonus.getGetBonusButtonTitle());
         new AbstractPortalPopup().closePopup();
 
         assertEquals(freeBonus.getBonusAmount(), new AbstractPortalPage().getBalanceAmount(), "The current user amount isn't correspond expected bonus amount!");
@@ -67,7 +70,7 @@ public class BonusTest extends AbstractTest {
 
         String bonusTitle = bonusPage.getBonusTitle(freeBonus.getBonusID());
         FreeBonusPopup freeBonusPopup = (FreeBonusPopup) bonusPage.clickFreeBonusLink(freeBonus.getBonusID());
-        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, freeBonus.getGetFreeBonusButtonTitle(), freeBonus.getLinksToTCbuttonTitle());
+        freeBonusPopup.assertViewFreeBonusPopup(bonusTitle, freeBonus.getGetBonusButtonTitle(), freeBonus.getLinksToTCbuttonTitle());
     }
 
     @Test(groups = {"regression"})
@@ -92,9 +95,9 @@ public class BonusTest extends AbstractTest {
 
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
         bonusPage.openAndDeclineBonus(freeBonus.getBonusID());
-        assertFalse(WebDriverUtils.isTextVisible(freeBonus.getGetFreeBonusButtonTitle()), "Bonus Multi View was not disappeared");
+        assertFalse(WebDriverUtils.isTextVisible(freeBonus.getGetBonusButtonTitle()), "Bonus Multi View was not disappeared");
         bonusPage.openAndDeclineBonus(optInBonus.getBonusID());
-        assertFalse(WebDriverUtils.isTextVisible(optInBonus.getGetFreeBonusButtonTitle()), "Bonus Multi View was not disappeared");
+        assertFalse(WebDriverUtils.isTextVisible(optInBonus.getGetBonusButtonTitle()), "Bonus Multi View was not disappeared");
     }
 
     //OPT-IN bonus test
@@ -105,7 +108,7 @@ public class BonusTest extends AbstractTest {
         PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
+        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetBonusButtonTitle());
         new AbstractPortalPopup().closePopup();
 
         bonusPage.getBonus(optInBonus.getBonusID(), "Opt-out");
@@ -119,7 +122,7 @@ public class BonusTest extends AbstractTest {
         PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
+        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetBonusButtonTitle());
         new AbstractPortalPopup().closePopup();
 
         bonusPage.getBonus(optInBonus.getBonusID(), "Opt-out", 2);
@@ -134,7 +137,7 @@ public class BonusTest extends AbstractTest {
         PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
-        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetFreeBonusButtonTitle());
+        bonusPage.getBonus(optInBonus.getBonusID(), optInBonus.getGetBonusButtonTitle());
         new AbstractPortalPopup().closePopup();
         PortalUtils.logout();
 
@@ -175,5 +178,29 @@ public class BonusTest extends AbstractTest {
         okBonusPopup.checkPopupTitleText("");
         okBonusPopup.checkPopupContentText("You have been successfully Opted-out from");
         okBonusPopup.closePopup();
+    }
+
+    //Bonus Multiview
+    @Test(groups = {"regression"})
+    public void showEqualUnequalBonusMultiView(){
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+
+        assertTrue(bonusPage.isBonusDisplayed("44730"), "Configured Free bonus with correct Promotion code WAS NOT appears on BMV");
+        assertFalse(bonusPage.isBonusDisplayed("44732"), "Configured Free bonus with unequal Promotion code APPEARS on BMV");
+
+        assertTrue(bonusPage.isBonusDisplayed("44811"), "Configured Opt-in bonus with correct Promotion code WAS NOT appears on BMV");
+        assertFalse(bonusPage.isBonusDisplayed("44813"), "Configured Opt-in bonus with unequal Promotion code APPEARS on BMV");
+    }
+
+    @Test(groups = {"regression"})
+    public void showBonusMultiViewWithEmptyContent(){
+
+        userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("USD");
+        PortalUtils.registerUser(userData);
+        bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
+        //-WebDriverUtils.waitFor(2000);
+        bonusPage.getBonus("44734", freeBonus.getGetBonusButtonTitle());
+        new AbstractPortalPopup().closePopup();
     }
 }
