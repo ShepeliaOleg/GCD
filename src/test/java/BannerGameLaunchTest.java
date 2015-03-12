@@ -22,7 +22,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestLogin() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndAssertUrl(2, DataContainer.getUserData().getRegisteredUserData());
+        bannerPage.clickGameAndAssertUrl(3, DataContainer.getUserData().getRegisteredUserData());
     }
 
     /*Banner - Guest login popup login image slide 2*/
@@ -37,7 +37,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGameGuestCancel() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerGameTwoSlides);
-        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(2);
+        LoginPopup loginPopup = bannerPage.clickGameLoggedOut(3);
         loginPopup.closePopup();
         validateFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.bannerGameTwoSlides), "Game is not launched");
     }
@@ -56,7 +56,7 @@ public class BannerGameLaunchTest extends AbstractTest{
     @Test(groups = {"regression","banner"})
     public void bannerImageLaunchGamePlayer() {
         BannerPage bannerPage = (BannerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerGameTwoSlides);
-        bannerPage.clickGameAndAssertUrl(2);
+        bannerPage.clickGameAndAssertUrl(3);
     }
 
     /*Banner - Player play image slide 2*/
