@@ -22,7 +22,7 @@ public class TranslationKeysTest extends AbstractTest{
     }
 
     /*All element are translation keys*/
-    @Test
+    @Test(groups = {"regression"})
     public static void promotionalCode(){
         PromotionalCodeReplacerPage promotionalCodeReplacerPage = (PromotionalCodeReplacerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.promotional_code_replacer);
         showTranslationKeys(String.valueOf(ConfiguredPages.promotional_code_replacer));

@@ -539,4 +539,8 @@ public class RegistrationPage extends AbstractPortalPage {
     public void validateTooltipDublicateEmail(){
         AbstractTest.assertEquals("Email is already in use", ValidationUtils.getTooltipText("registerEmail"), "Tooltip for email field is not match");
     }
+
+    public String getEmailXpath(){
+        return getXpathByName(FIELD_EMAIL_NAME);
+    }
 }

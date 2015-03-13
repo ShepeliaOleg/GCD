@@ -494,6 +494,8 @@ public class RegistrationTest extends AbstractTest{
         loginPopup.closePopup();
         registrationPage.validateTooltipDublicateEmail();
         registrationPage.verifyWhetherEmailStillInputedInInputField();
+        WebDriverUtils.clearAndInputTextToField(registrationPage.getEmailXpath(), "");
+        WebDriverUtils.clearAndInputTextToField(registrationPage.getEmailVerificationXpath(), "");
         HomePage homePage = (HomePage) registrationPage.registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
