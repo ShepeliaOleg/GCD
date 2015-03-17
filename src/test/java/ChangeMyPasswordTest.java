@@ -95,7 +95,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*1. Incorrect old password
 	@Test(groups = {"regression"})
 	public void incorrectOldPassword(){
-		skipTest("System Error, D-18632");
+		//skipTest("System Error, D-18632");
 		userData = DataContainer.getUserData().getRandomUserData();
 		String incorrectPass = passwordValidationRule.generateValidString();
         homePage = PortalUtils.registerUser(userData);
@@ -107,7 +107,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*2. New password is the same as old
 	@Test(groups = {"regression"})
 	public void changeToSamePassword(){
-		skipTest("System Error, D-18632");
+		//skipTest("System Error, D-18632");
 		userData = DataContainer.getUserData().getRandomUserData();
 		homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
@@ -118,7 +118,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*3. New password which has been used recently
 	@Test(groups = {"regression"})
 	public void recentlyUsedPassword(){
-		skipTest("System Error, D-18632");
+		//skipTest("System Error, D-18632");
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
