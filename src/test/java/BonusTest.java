@@ -1,14 +1,11 @@
 import enums.ConfiguredPages;
-import enums.Page;
 import enums.PlayerCondition;
-import enums.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
-import pageObjects.bonus.OptedInPopup;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.BonusData;
@@ -52,15 +49,15 @@ public class BonusTest extends AbstractTest {
     }
 
     @Test(groups = {"regression"})
-    public void congratsPopUpIsAppered() {
+    public void congratsPopUpIsAppeared() {
         userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");
         PortalUtils.registerUser(userData);
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.bonusPage);
 
         okBonusPopup = bonusPage.getBonus(freeBonus.getBonusID());
-        okBonusPopup.checkPopupTitleText("Congratulations");
-        okBonusPopup.checkPopupContentText("Congratulations, you just received a $ 10.00 bonus! Wishing you the best of luck in our games!");
+        okBonusPopup.assertPopupTitleText("Congratulations");
+        okBonusPopup.assertPopupContentText("Congratulations, you just received a $ 10.00 bonus! Wishing you the best of luck in our games!");
         okBonusPopup.closePopup();
     }
 
@@ -170,13 +167,13 @@ public class BonusTest extends AbstractTest {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
 
         okBonusPopup = bonusPage.getBonus(optInBonus.getBonusID());
-        okBonusPopup.checkPopupTitleText("");
-        okBonusPopup.checkPopupContentText("You have been successfully Opted-in to");
+        okBonusPopup.assertPopupTitleText("");
+        okBonusPopup.assertPopupContentText("You have been successfully Opted-in to");
         okBonusPopup.closePopup();
 
         okBonusPopup = bonusPage.getBonus(optInBonus.getBonusID());
-        okBonusPopup.checkPopupTitleText("");
-        okBonusPopup.checkPopupContentText("You have been successfully Opted-out from");
+        okBonusPopup.assertPopupTitleText("");
+        okBonusPopup.assertPopupContentText("You have been successfully Opted-out from");
         okBonusPopup.closePopup();
     }
 

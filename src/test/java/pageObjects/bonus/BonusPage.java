@@ -108,7 +108,7 @@ public class BonusPage extends AbstractPortalPage{
 		return new OptOutPopup();
 	}
 
-	public BuyInPopup getBuyInBonus(){
+	public BuyInPopup confirmBuyInBonus(){
 		WebDriverUtils.click(BUY_IN);
 		return new BuyInPopup();
 	}*/

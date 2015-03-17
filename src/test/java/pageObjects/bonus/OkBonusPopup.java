@@ -22,11 +22,11 @@ public class OkBonusPopup extends AbstractPortalPopup{
 //        super(new String[]{TITLE_XP, CONTENT_XP + "/div[contains(text(), '" + popupText + "')]", BUTTON_CLOSE_XP});
 //    }
 
-    public void checkPopupTitleText(String text) {
+    public void assertPopupTitleText(String text) {
         assertEquals(text, WebDriverUtils.getElementText(TITLE_XP), "Pop Up title was not as expected");
     }
 
-    public void checkPopupContentText(String text) {
+    public void assertPopupContentText(String text) {
         assertTrue(WebDriverUtils.getElementText(CONTENT_XP + "/div").contains(text), "Pop Up does not contain the expected text");
         //assertEquals(text, WebDriverUtils.getElementText(CONTENT_XP + "/div"), "Pop Up does not contain the expected text");
     }
