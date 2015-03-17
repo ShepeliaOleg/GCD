@@ -58,13 +58,13 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*2. Submit correct data
 	@Test(groups = {"regression"})
 	public void changePasswordAndLogin(){
-		skipTest("D-19748, System Error");
+		//skipTest("D-19748, System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
         homePage = PortalUtils.registerUser(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
 		//*TRY TO LOGIN with OLD password
-		//PortalUtils.logout();
+		PortalUtils.logout();
 		//Unexpected user logout
 		WebDriverUtils.refreshPage();
 		LoginPopup loginPopup = (LoginPopup) homePage.navigateToLoginForm().login(userData, false, Page.loginPopup);

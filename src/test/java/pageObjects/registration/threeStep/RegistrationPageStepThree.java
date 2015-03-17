@@ -157,7 +157,9 @@ public class RegistrationPageStepThree extends RegistrationPage {
             setDepositLimit(entry.getKey(), Integer.toString(entry.getValue()));
         }
         System.out.println(daily +" "+weekly+" "+monthly+" | "+ finalLimits.toString());
+        WebDriverUtils.pressKey(Keys.ESCAPE);
         WebDriverUtils.pressKey(Keys.TAB);
+        WebDriverUtils.waitFor(200);
     }
 
     private void setDepositLimitNotDefined(DepositLimits type){

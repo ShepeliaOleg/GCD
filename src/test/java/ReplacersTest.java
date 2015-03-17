@@ -19,7 +19,7 @@ public class ReplacersTest extends AbstractTest {
      * */
 
     /*Promotional code is a replaser*/
-     @Test
+    @Test(groups = {"regression"})
     public static void isPomotionalCodeReplaserDisplayed(){
         try {
             PromotionalCodeReplacerPage promotionalCodeReplacerPage = (PromotionalCodeReplacerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.promotional_code_replacer);
@@ -29,7 +29,7 @@ public class ReplacersTest extends AbstractTest {
     }
 
     /*1. Bonus is not given if promotional code is blank*/
-    @Test
+    @Test(groups = {"regression"})
     public static void bonusIsNotGivenToPlayerIfPromotionalCodeIsBlank(){
         PromotionalCodeReplacerPage promotionalCodeReplacerPage = (PromotionalCodeReplacerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.promotional_code_replacer);
         Float balanceAmount = Float.valueOf(promotionalCodeReplacerPage.getBalanceAmount());
@@ -40,7 +40,7 @@ public class ReplacersTest extends AbstractTest {
     }
 
     /*2. Bonus is not given if promotional code is invalid*/
-    @Test
+    @Test(groups = {"regression"})
     public static void bonusIsNotGivenToPlayerIfPromotionalCodeIsInvalid(){
         PromotionalCodeReplacerPage promotionalCodeReplacerPage = (PromotionalCodeReplacerPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.promotional_code_replacer);
         Float balanceAmount = Float.valueOf(promotionalCodeReplacerPage.getBalanceAmount());
@@ -51,7 +51,7 @@ public class ReplacersTest extends AbstractTest {
     }
 
     /*3. Bonus is given if promotional code is valid*/
-    @Test
+    @Test(groups = {"regression"})
     public static void bonusIsGivenToPlayerIfPromotionalCodeIsValid(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setCurrency("USD");

@@ -27,6 +27,7 @@ public class IMSAdvancedPlayerSearchPage extends AbstractServerPage {
 
 	private void clickSearch(){
 		WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_SEARCH_XP);
+        WebDriverUtils.waitFor(200);
 	}
 
 	private void clickInternal(){
