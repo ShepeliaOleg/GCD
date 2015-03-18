@@ -20,7 +20,7 @@ import utils.core.DataContainer;
 /**
  * Created by Vadymfe on 3/12/2015.
  */
-public class BuyInBonusTest extends AbstractTest {
+public class BonusBuyInTest extends AbstractTest {
 
     private UserData userData;
     private BonusPage bonusPage;

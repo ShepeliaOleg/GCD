@@ -42,7 +42,7 @@ public class LanguageTest extends AbstractTest {
     /*#4. */
     @Test(groups = {"regression"})
     public void languageChangedOnAddingLanguageCode5ToUrl(){
-        //skipTestWithIssues("D-14495");
+        skipTestWithIssues("D-14495");
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
         for (String languageCode : DataContainer.getDefaults().getLanguageCodesList()) {
             WebDriverUtils.navigateToInternalURL(languageCode);

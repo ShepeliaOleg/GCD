@@ -89,7 +89,8 @@ public class BonusTest extends AbstractTest {
 
     @Test(groups = {"regression"})
     public void closeBonusPopUp() {
-
+        WebDriverUtils.clearCookies();
+        WebDriverUtils.clearLocalStorage();
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
         bonusPage.openAndDeclineBonus(freeBonus.getBonusID());
         assertFalse(WebDriverUtils.isTextVisible(freeBonus.getGetBonusButtonTitle()), "Bonus Multi View was not disappeared");
