@@ -12,6 +12,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Player with profileID*/
     @Test(groups = {"regression", "banner"})
     public void profileIDPlayerWith() {
+        //skipTestWithIssues("D-19983");
         PortalUtils.loginUser(DataContainer.getUserData().getRegisteredUserDataWithProfileID());
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
@@ -27,6 +28,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Player without profileID*/
     @Test(groups = {"regression", "banner"})
     public void profileIDPlayerWithout() {
+        skipTestWithIssues("D-19983");
         PortalUtils.loginUser(DataContainer.getUserData().getRegisteredUserData());
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
@@ -42,6 +44,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Guest */
     @Test(groups = {"regression", "banner"})
     public void profileIDGuest() {
+        skipTestWithIssues("D-19983");
         NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
@@ -57,6 +60,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Admin */
     @Test(groups = {"admin"})
     public void profileIDAdmin() {
+        skipTestWithIssues("D-19983");
         PortalUtils.loginAdmin();
         checkProfileID(PlayerCondition.admin, ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(PlayerCondition.admin, ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
