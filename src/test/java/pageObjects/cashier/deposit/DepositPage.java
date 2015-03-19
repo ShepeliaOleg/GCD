@@ -168,4 +168,14 @@ public class DepositPage extends CashierPage{
         processPaymentByType(PaymentMethod.WebMoney, amount);
         return new WebMoneyDepositPage();
     }
+
+    /*PrePaidCards*/
+
+    public void assertPrePaidcardInterface() {
+        assertInterfaceByType(PaymentMethod.PrePaidCards, new String[]{FIELD_NUMBER_PREPAID_XP, FIELD_PASSWORD_XP, FIELD_PROMO_CODE_XP});
+    }
+
+    public void depositPrePaidCardWithEmptyFields() {
+        processPrePaidCard("", "", "");
+    }
 }

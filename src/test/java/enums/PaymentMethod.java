@@ -10,7 +10,8 @@ public enum PaymentMethod {
     MoneyBookers("MoneyBookers", "olga.stepanova@playtech.com", "someshit@yahoo.co.uk", "Olga12345", ""),
     Envoy("Envoy", "", "", "", ""),
     Neteller("NETeller", "453501020503", "450424149137", "908379", "netellertest_EUR@neteller.com"),
-    WebMoney("WebMoney", "Z253744324569", "Z253744324568", "", "");
+    WebMoney("WebMoney", "Z253744324569", "Z253744324568", "", ""),
+    PrePaidCards("Pre-paid Cards", "", "");
 
     PaymentMethod(String name, String account, String secondaryAccount, String password, String emailAccount){
         this.name = name;

@@ -58,4 +58,7 @@ public class IMSLoginDatabasePage extends AbstractServerPage {
         }
     }
 
+    public static String getCasino(){
+        return CASINO;
+    }
 }

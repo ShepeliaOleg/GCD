@@ -1,5 +1,6 @@
 package utils;
 
+import com.google.common.base.Predicate;
 import enums.ConfiguredPages;
 import enums.Licensee;
 import io.selendroid.client.SelendroidDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.html5.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.core.AbstractPortalPage;
@@ -15,10 +17,12 @@ import utils.core.CustomExpectedConditions;
 import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverUtils{
 
@@ -960,4 +964,15 @@ public class WebDriverUtils{
 //        getLocalStorage(WebDriverFactory.getPortalDriver()).clear();
     }
 
+    public static void waitForFileDownload(String prepaidcardCvsPath) {
+        FluentWait<File> waiter = new FluentWait<File>(new File(prepaidcardCvsPath));
+        waiter.withTimeout(30, TimeUnit.SECONDS);
+        waiter.pollingEvery(1000, TimeUnit.MILLISECONDS);
+        waiter.until(new Predicate<File>() {
+            @Override
+            public boolean apply(File input) {
+                return input.exists() && input.length() > 0;
+            }
+        });
+    }
 }

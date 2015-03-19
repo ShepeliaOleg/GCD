@@ -2,7 +2,6 @@ package utils.core;
 
 import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +31,7 @@ public class WebDriverFactory{
     private static String device;
     private static URL remote;
     private static String serial;
-
+    private static String pathToDownloadsFolder;
     private static final String REMOTE = "172.29.49.73";
     private static final String REMOTE_MAC = "172.29.46.41";
 
@@ -49,6 +48,7 @@ public class WebDriverFactory{
 //		}
 		portalDriver = initializeWebDriver();
         setServerDriver(getRemoteDriver("firefox"));
+        pathToDownloadsFolder = setPathToDownloadsFolder(os);
 	}
 
 	private static WebDriver initializeWebDriver(){
@@ -161,13 +161,20 @@ public class WebDriverFactory{
 //	}
 
     private static WebDriver createRemoteDriver(String browser){
-        Capabilities capabilities;
+        DesiredCapabilities capabilities;
         URL url;
         String address = REMOTE;
         switch (browser){
             case "chrome":capabilities  = DesiredCapabilities.chrome();
                 break;
-            case "firefox":capabilities  = DesiredCapabilities.firefox();
+            case "firefox":
+                FirefoxProfile  firefoxProfile = new FirefoxProfile();
+                firefoxProfile.setPreference("browser.download.folderList",1);
+                firefoxProfile.setPreference("browser.download.manager.showWhenStarting",false);
+                firefoxProfile.setPreference("browser.download.dir", System.getProperty("user.dir") + "\\target\\download\\");
+                firefoxProfile.setPreference("browser.helperApps.neverAsk.saveToDisk","text/csv");
+                capabilities  = DesiredCapabilities.firefox();
+                capabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
                 break;
             case "explorer":capabilities  = DesiredCapabilities.internetExplorer();
                 break;
@@ -265,5 +272,16 @@ public class WebDriverFactory{
         return logDriver;
     }
 
+    private static String setPathToDownloadsFolder(String os){
+        switch (os){
+            case "windows":
+            case "linux":
+                return System.getProperty("user.home") + "\\Downloads\\";
+        }
+        return null;
+    }
 
+    public static String getPathToDownloadsFolder(){
+        return pathToDownloadsFolder;
+    }
 }

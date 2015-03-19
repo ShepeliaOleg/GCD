@@ -99,6 +99,10 @@ public class IMSUtils {
         return navigateToIMS().clickTemplateTools();
     }
 
+    public static IMSCreatePrepaidCardsPage navigateToPrePaidCardsPage(){
+        return navigateToIMS().clickPayments().clickCreatePrepaidCards();
+    }
+
     public static boolean isPlayerLoggedIn(String username){
         IMSPlayerDetailsPage imsPlayerDetailsPage = navigateToPlayedDetails(username);
         for(int i=0; i<RETRIES; i++){

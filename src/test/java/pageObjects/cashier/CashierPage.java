@@ -25,7 +25,9 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String FIELD_CVV_XP =            "//*[@name='cvv2']";
     private   static final String ADD =                     "add";
     protected static final String FIELD_PASSWORD_XP =       "//*[@name='accountPwd']";
+    protected static final String FIELD_NUMBER_PREPAID_XP = "//*[@name='accountId']";
     protected static final String CASHIER_LOADER =          "//*[contains(@class, 'fn-loader')]";
+    protected static final String ERROR_MSG_XP =            "//*[@class='message error']";
 
     private static final String[] FIELDS = {FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_XP};
 
@@ -125,6 +127,17 @@ public class CashierPage extends AbstractPortalPage {
         WebDriverUtils.inputTextToField(fieldPromoCode, promoCode.getCode());
         WebDriverUtils.click(body+BUTTON_XP);
         WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20); // D-18917 10 seconds by default are not enough
+    }
+
+    public void processPrePaidCard(String cardNumber, String pin, String promo){
+        PaymentMethod method = PaymentMethod.PrePaidCards;
+        String body = getMethodBodyXpath(method.getName());
+        openMethodBodyIfClosed(method);
+        WebDriverUtils.inputTextToField(body + FIELD_NUMBER_PREPAID_XP, cardNumber);
+        WebDriverUtils.inputTextToField(body + FIELD_PASSWORD_XP, pin);
+        WebDriverUtils.inputTextToField(body + FIELD_PROMO_CODE_XP, promo);
+        WebDriverUtils.click(body+BUTTON_XP);
+        WebDriverUtils.waitForElementToDisappear(INPUT_LOADER_XP, 20);
     }
 
     private String fillFields(PaymentMethod method, String amount, boolean expired){
@@ -230,5 +243,9 @@ public class CashierPage extends AbstractPortalPage {
     public String getBalanceAmount() {
         refresh();
         return super.getBalanceAmount();
+    }
+
+    public String getErrorMsg() {
+        return WebDriverUtils.getElementText(ERROR_MSG_XP);
     }
 }

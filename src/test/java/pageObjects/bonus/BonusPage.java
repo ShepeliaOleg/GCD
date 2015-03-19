@@ -13,7 +13,7 @@ public class BonusPage extends AbstractPortalPage{
 	//private static final String BONUS_ROOT= 				"//div[@id='column-1']/div/div[contains(@class, 'bonus-multiview')]";
 	private static final String BONUS_ROOT= 				"//div[@id='column-1']//div[contains(@class, 'bonus-multiview')]/table/thead/tr/th[text()='Promotion name']";
 	private static final String BUTTON_SUBMIT_PROMO = 		"//button[@type='submit']";
-	private static final String PROMOCODE = 				"AUTOFREE";
+	public static final String PROMOCODE = 				"AUTOFREE";
 	//private static final String FREE_BONUS = 				"//a[@data-code='45508']";
 	//private static final String OPT_IN = 					"//a[@data-code='45507']";
 	//private static final String BUY_IN = 					"//a[@data-code='45609']";
