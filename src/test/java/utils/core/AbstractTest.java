@@ -146,4 +146,13 @@ public class AbstractTest extends AbstractTestRunner{
         }
     }
 
+    public String getСurrencySymbol(String currencyKey){
+        for(Object el: DataContainer.getDefaults().getCurrencyList()){
+            String line = (String ) el;
+            if (line.contains(currencyKey)) {
+                return line.split("@")[1];
+            }
+        }
+        return null;
+    }
 }

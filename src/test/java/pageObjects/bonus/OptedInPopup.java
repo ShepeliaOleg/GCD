@@ -1,5 +1,6 @@
 package pageObjects.bonus;
 
+import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 import utils.core.WebDriverFactory;
@@ -20,22 +21,24 @@ public class OptedInPopup extends AbstractPortalPopup{
 	public static final String TITLE_TEXT = ROOT_XP + 			"/div[contains(@class, 'title')][contains(text(), '";
 	public static final String INPUT_AMOUNT = ROOT_XP + 		"//input[@name='amount']";
 	public static final String INFO_MSG_XP = ROOT_XP + 			"//p[@class='message infoMessage']";
+	private Float oldBalanceAmount = null;
 
 	public OptedInPopup(){
 		super(new String[]{TEXT_BONUS_APPLIED});
+		oldBalanceAmount = Float.parseFloat(new AbstractPortalPage().getBalanceAmount(false));
 	}
 
-	//public OptedInPopup(String buyInBonusID){
-	public void assertOptedInPopupIsCorrect(String buyInBonusID, String expTitle, String amount, String info){
-		//super(new String[]{TEXT_BONUS_APPLIED, TITLE_TEXT + buyInBonusID + "')]", INPUT_AMOUNT, BUY_IN_XP, CLOSE_XP, TERMS_CHECKBOX, TERMS_LINK});
+	public void assertOptedInPopupIsCorrect(String buyInBonusID, String expTitle, Float bonusAmount, String info){
 		assertEquals(expTitle, WebDriverUtils.getElementText(TITLE_TEXT + buyInBonusID + "')]"), "Bonus popup has unexpected title!");
 		assertTrue(WebDriverUtils.isElementVisible(INPUT_AMOUNT, 0), "WebElement 'amount' field was not visible");
-		assertEquals(amount, WebDriverUtils.getInputFieldText(INPUT_AMOUNT), "Amount value was not as expected");
 		assertEquals(info, WebDriverUtils.getElementText(INFO_MSG_XP), "Get bonus value was not as expected");
 		assertTrue(WebDriverUtils.isElementVisible(BUY_IN_XP, 0), "WebElement 'Buy-In' button was not visible");
 		assertTrue(WebDriverUtils.isElementVisible(CLOSE_XP, 0), "WebElement 'Close' button was not visible");
 		assertTrue(WebDriverUtils.isElementVisible(TERMS_CHECKBOX, 0), "WebElement 'Terms & Condition' checkbox was not visible");
 		assertTrue(WebDriverUtils.isElementVisible(TERMS_LINK, 0), "WebElement 'Terms & Condition' link was not visible");
+		if (null == bonusAmount) {
+			assertEquals(String.format("%1$.2f", oldBalanceAmount), WebDriverUtils.getInputFieldText(INPUT_AMOUNT), "Amount value was not as expected");
+		} else assertEquals(String.format("%1$.2f", bonusAmount), WebDriverUtils.getInputFieldText(INPUT_AMOUNT), "Amount value was not as expected");
 	}
 
 	public void closePopup(){
@@ -43,8 +46,19 @@ public class OptedInPopup extends AbstractPortalPopup{
 		WebDriverUtils.waitForElementToDisappear(CLOSE_XP);
 	}
 
+	public void validate(boolean checkbox){
+		WebDriverUtils.setCheckBoxState(WebDriverFactory.getPortalDriver(), TERMS_CHECKBOX, checkbox);
+		clickBuyInButton();
+	}
+
 	public void clickBuyInButton(){
 		WebDriverUtils.click(BUY_IN_XP);
+	}
+
+	public void getBonusAndCheckAmount(Float bonusAmount) {
+		confirmBuyInBonus();
+		new AbstractPortalPopup().closePopup();
+		assertEquals(String.format("%1$.2f", (bonusAmount + oldBalanceAmount)), new AbstractPortalPage().getBalanceAmount(true), "The current user amount isn't correspond expected bonus amount!");
 	}
 
 	public void confirmBuyInBonus(){

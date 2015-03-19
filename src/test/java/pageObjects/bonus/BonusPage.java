@@ -6,6 +6,8 @@ import pageObjects.registration.ReadTermsAndConditionsPopup;
 import utils.WebDriverUtils;
 import utils.core.WebDriverFactory;
 
+import static utils.core.AbstractTest.assertEquals;
+
 public class BonusPage extends AbstractPortalPage{
 
 	//private static final String PROMOTION_CODE_PORTLET = 	"//section[contains(@id, 'promotioncode')]";
@@ -14,21 +16,25 @@ public class BonusPage extends AbstractPortalPage{
 	private static final String BONUS_ROOT= 				"//div[@id='column-1']//div[contains(@class, 'bonus-multiview')]/table/thead/tr/th[text()='Promotion name']";
 	private static final String BUTTON_SUBMIT_PROMO = 		"//button[@type='submit']";
 	public static final String PROMOCODE = 				"AUTOFREE";
-	//private static final String FREE_BONUS = 				"//a[@data-code='45508']";
-	//private static final String OPT_IN = 					"//a[@data-code='45507']";
-	//private static final String BUY_IN = 					"//a[@data-code='45609']";
 	private static final String BONUS_LINK =				"//td[1]/a[@data-item=";
 	private static final String TC_LINK =					"//td[3]/a[@data-item=";
 	protected static final String LOADER =          "//*[contains(@class, 'fn-loader')]";
+	private Float oldBalanceAmount = null;
 
 	public BonusPage(){
 		super(new String[]{BONUS_ROOT});
 		WebDriverUtils.waitForElementToDisappear(LOADER);
+		oldBalanceAmount = Float.parseFloat(new AbstractPortalPage().getBalanceAmount(false));
 	}
 
 	public void getBonus(String bonusID, String text) {
 		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID, 1);
 		freeBonusPopup.clickGetBonus(text);
+	}
+
+	public void checkAmount(Float bonusAmount) {
+		new AbstractPortalPopup().closePopup();
+		assertEquals(String.format("%1$.2f", (bonusAmount + oldBalanceAmount)), new AbstractPortalPage().getBalanceAmount(true), "The current user amount isn't correspond expected bonus amount!");
 	}
 
 	public void getBonus(String bonusID, String text, int numCount) {
@@ -77,39 +83,4 @@ public class BonusPage extends AbstractPortalPage{
 
 		return WebDriverUtils.isElementVisible(BONUS_LINK + bonusID + "]", 0);
 	}
-/*
-	public OkBonusPopup submitCode(){
-		inputPromoCode();
-		clickSubmit();
-		return new OkBonusPopup();
-	}
-
-	private void inputPromoCode(){
-		WebDriverUtils.clearAndInputTextToField(FIELD_PROMO, PROMOCODE);
-	}
-
-	private void clickSubmit(){
-		WebDriverUtils.click(BUTTON_SUBMIT_PROMO);
-	}
-
-
-	public FreeBonusPopup clickFreeBonus(){
-		WebDriverUtils.click(FREE_BONUS);
-		return new FreeBonusPopup();
-	}
-
-	public OptInPopup clickOptIn(){
-		WebDriverUtils.click(OPT_IN);
-		return new OptInPopup();
-	}
-
-	public OptOutPopup clickOptOutBonus(){
-		WebDriverUtils.click(OPT_IN);
-		return new OptOutPopup();
-	}
-
-	public BuyInPopup confirmBuyInBonus(){
-		WebDriverUtils.click(BUY_IN);
-		return new BuyInPopup();
-	}*/
 }
