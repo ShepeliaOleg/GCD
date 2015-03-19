@@ -951,7 +951,7 @@ public class GamesPortletTest extends AbstractTest {
         assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
         assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
         gamesPortletPage.clickCategoryTab(GameCategories.all);
-        final String gameID = gamesPortletPage.getRandomGameID(false);
+        final String gameID = gamesPortletPage.getRandomGameID(true);
         GameElement gameElement = new GameElement(gameID);
         gameElement.favourite();
         gamesPortletPage.clickCategoryTab(GameCategories.favourites);
@@ -1029,7 +1029,7 @@ public class GamesPortletTest extends AbstractTest {
 	@Test(groups = {"regression"})
 	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
         GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
-		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playRealLoggedOut(false);
+		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playRealLoggedOut(true);
 	}
 
 	/*30. Player launches game from list view*/
