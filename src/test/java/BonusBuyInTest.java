@@ -124,6 +124,7 @@ public class BonusBuyInTest extends AbstractTest {
 //    }
 
     private String prepareExpInfoMsg(BonusData data){
-        return data.getOtherInfo() + getСurrencySymbol(data.getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
+        //return data.getOtherInfo() + getСurrencySymbol(data.getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
+        return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
     }
 }
