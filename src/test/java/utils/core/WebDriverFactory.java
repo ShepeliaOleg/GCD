@@ -48,7 +48,7 @@ public class WebDriverFactory{
 //		}
 		portalDriver = initializeWebDriver();
         setServerDriver(getRemoteDriver("firefox"));
-        pathToDownloadsFolder = setPathToDownloadsFolder(os);
+        pathToDownloadsFolder = setPathToDownloadsFolder("Downloads");
 	}
 
 	private static WebDriver initializeWebDriver(){
@@ -272,13 +272,10 @@ public class WebDriverFactory{
         return logDriver;
     }
 
-    private static String setPathToDownloadsFolder(String os){
-        switch (os){
-            case "windows":
-            case "linux":
-                return System.getProperty("user.home") + "\\Downloads\\";
-        }
-        return null;
+    private static String setPathToDownloadsFolder(String downloadFolderName){
+        String homePath = System.getProperty("user.home");
+        String fileSeparator = System.getProperty("file.separator");
+        return homePath + fileSeparator + downloadFolderName + fileSeparator;
     }
 
     public static String getPathToDownloadsFolder(){
