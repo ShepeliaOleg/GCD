@@ -119,6 +119,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
+		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
