@@ -33,13 +33,13 @@ public class Listener extends TestListenerAdapter{
 
     String[] list = {"BannerGameLaunchTest","BannerTest","BannerProfileIDTest","BingoScheduleTest", "BonusTest", "BonusBuyInTest",
             "ChangeMyDetailsTest","ChangeMyDetailsValidationTest", "ChangeMyPasswordTest","CashierAddCardTest", "CashierEnvoyTest",
-            "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest",
+            "CashierMasterCardTest", "CashierMoneyBookersTest", "CashierNetellerTest", "CashierPayPalTest", "CashierPrePaidCardsTest",
             "CashierPaySafeCardTest", "CashierPendingWithdrawTest", "CashierQIWITest", "CashierVisaTest", "ForgotPasswordTest", "ForgotUsernameTest",
-            "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
+            "GamesManagementTest", "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest", "LoginMessagesTest", "LoginValidationTest",
             "PermissionsTest", "PushMessagesBonusTest", "ReferAFriendTest","RegistrationAffiliateTest",
             "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest",
-            "ResponsibleGamingTest", "SelfExclusionTest", "WebContentTest"};
+            "ResponsibleGamingTest", "SelfExclusionTest", "TranslationKeysTest", "WebContentTest"};
 
     @Override
     public void onTestFailure(ITestResult iTestResult){
