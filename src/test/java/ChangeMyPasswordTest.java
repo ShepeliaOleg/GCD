@@ -119,7 +119,6 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
-		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
@@ -127,6 +126,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		homePage = PortalUtils.registerUser(userData);
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
+		WebDriverUtils.clearLocalStorage();
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		userData.setPassword(newPassword);
 		homePage.login(userData);
