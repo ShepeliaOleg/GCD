@@ -108,8 +108,8 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 //		data.add(getMobile());
 		data.add(getUsername());
 //		data.add(getPassword());
-		data.add(getVerificationQuestion());
-		data.add(getVerificationAnswer());
+		//data.add(getVerificationQuestion());
+		//data.add(getVerificationAnswer());
 		data.add(getCurrency());
 		return data;
 	}

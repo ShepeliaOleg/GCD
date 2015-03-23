@@ -273,7 +273,7 @@ public class RegistrationTest extends AbstractTest{
     //*#17. IMS Player Details Page
 	@Test(groups = {"registration","regression"})
 	public void verifyRegistrationDataIsShownCorrectlyInIMS(){
-        skipTest("D-19049");
+        //skipTest("D-19049");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
 		IMSUtils.assertRegisterData(userData);

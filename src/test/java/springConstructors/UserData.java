@@ -96,12 +96,13 @@ public class UserData{
         data.add(getCity());
         data.add(getFullAddress());
         data.add(getPostCode().toLowerCase());
-//*        data.add(getPhoneAreaCode() + getPhone());
-        data.add(getMobileAreaCode() + getMobile());
+        data.add(getPhoneAreaCode() + getPhone());
+        //CHANGE 23/03/15 by VADIM
+        //? data.add(getMobileAreaCode() + getMobile());
         data.add(getUsername());
 //        data.add(getPassword());
-        data.add(getVerificationQuestion());
-        data.add(getVerificationAnswer());
+//        data.add(getVerificationQuestion());
+//        data.add(getVerificationAnswer());
         data.add(getCurrencyName());
         return data;
     }
