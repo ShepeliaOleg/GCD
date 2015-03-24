@@ -12,7 +12,7 @@ public class BannerProfileIDTest extends AbstractTest{
     /*profile ID - Player with profileID*/
     @Test(groups = {"regression", "banner"})
     public void profileIDPlayerWith() {
-        //skipTestWithIssues("D-19983");
+        skipTestWithIssues("D-19983");
         PortalUtils.loginUser(DataContainer.getUserData().getRegisteredUserDataWithProfileID());
         checkProfileID(ConfiguredPages.bannerProfileNoProfileOneSlide, BannerPageProfileID.NO_PROFILE_ID, null, null, null);
         checkProfileID(ConfiguredPages.bannerProfileNoProfileTwoSlides, BannerPageProfileID.NO_PROFILE_ID, null, BannerPageProfileID.NO_PROFILE_ID, null);
