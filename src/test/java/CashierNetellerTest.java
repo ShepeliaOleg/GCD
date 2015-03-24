@@ -160,6 +160,32 @@ public class CashierNetellerTest extends AbstractTest {
         assertEquals(AMOUNT, withdrawPage.getBalanceAmount(), "Balance");
     }
 
+    /**
+     * LAST USED CC/PM IS CHOSEN BEGIN
+     * */
+
+     /*Last used payment account is selected on deposit/withdraw page*/
+    @Test(groups = {"regression", "mobile"})
+    public void lastUsedNetellerAccountIsSelected(){
+        PaymentMethod pm = PaymentMethod.Neteller;
+        PortalUtils.loginUser(DataContainer.getUserData().getLastUsedCCUserData());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage.depositNeteller(AMOUNT);
+        depositPage.refresh();
+        assertEquals(pm.getAccount(), depositPage.getSelectedCCNumber(pm), "Deposit. Last used card '" + pm.getAccount() + "' is selected");
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        assertEquals(pm.getAccount(), withdrawPage.getSelectedCCNumber(pm), "Open Withdraw after Deposit. Last used card '" + pm.getAccount() + "' is selected");
+        withdrawPage.withdraw(pm, AMOUNT);
+        withdrawPage.refresh();
+        assertEquals(pm.getAccount(), withdrawPage.getSelectedCCNumber(pm), "Withdraw. Last used card '" + pm.getAccount() + "' is selected");
+        depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        assertEquals(pm.getAccount(), depositPage.getSelectedCCNumber(pm), "Open Deposit after Withdraw. Last used card '" + pm.getAccount() + "' is selected");
+    }
+
+    /**
+     * LAST USED CC/PM IS CHOSEN END
+     * */
+
     private void netellerDeposit(){
         PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);

@@ -45,6 +45,12 @@ public class DepositPage extends CashierPage{
         return new DepositPage();
     }
 
+    public void depositLastUsedCC(PaymentMethod card, String account){
+        processPaymentByType(card, "1.00", account);
+        TransactionSuccessfulPopup transactionSuccessfulPopup = new TransactionSuccessfulPopup();
+        transactionSuccessfulPopup.closePopup();
+    }
+
     /*Paypal*/
 
     public void assertPayPalInterface(){

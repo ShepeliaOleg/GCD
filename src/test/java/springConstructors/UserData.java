@@ -167,7 +167,15 @@ public class UserData{
 
     public UserData getCardUserData() {
         UserData userData = getRegisteredUserData();
-        userData.setUsername("greesnm");
+//        userData.setUsername("greesnm");
+        userData.setUsername("carduser");
+        return userData;
+    }
+
+    public UserData getLastUsedCCUserData() {
+        UserData userData = getRegisteredUserData();
+        userData.setUsername("lastusedpm");
+        userData.setPassword("Password1");
         return userData;
     }
 

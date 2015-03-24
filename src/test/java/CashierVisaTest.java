@@ -96,4 +96,30 @@ public class CashierVisaTest extends AbstractTest{
         withdrawPage.withdrawExpired(PaymentMethod.Visa, AMOUNT);
     }
 
+    /**
+     * LAST USED CC/PM IS CHOSEN BEGIN
+     * */
+
+    /*Last used card for deposit is chosen*/
+    @Test(groups = {"regression", "mobile"})
+    public void lastUsedVisaCardSelected(){
+        PaymentMethod pm = PaymentMethod.VisaLastUsedCC;
+        PortalUtils.loginUser(DataContainer.getUserData().getLastUsedCCUserData());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage.depositLastUsedCC(pm, pm.getSecondaryAccount());
+        depositPage.refresh();
+        assertEquals(pm.getSecondaryAccount(), depositPage.getSelectedCCNumber(pm), "Deposit. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        assertEquals(pm.getSecondaryAccount(), withdrawPage.getSelectedCCNumber(pm), "Open Withdraw after Deposit. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+        withdrawPage.withdraw(pm, AMOUNT);
+        withdrawPage.refresh();
+        assertEquals(pm.getSecondaryAccount(), withdrawPage.getSelectedCCNumber(pm), "Withdraw. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+        depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        assertEquals(pm.getSecondaryAccount(), depositPage.getSelectedCCNumber(pm), "Open Deposit after Withdraw. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+    }
+
+    /**
+     * LAST USED CC/PM IS CHOSEN END
+     * */
+
 }

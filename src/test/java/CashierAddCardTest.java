@@ -12,6 +12,7 @@ import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
 public class CashierAddCardTest extends AbstractTest{
+    private static final String AMOUNT = "1.00";
 
     @Test(groups = {"regression", "mobile"})
     public void checkboxFillDataIsUncheckedByDefault(){
@@ -134,5 +135,29 @@ public class CashierAddCardTest extends AbstractTest{
         assertTrue(depositPage.isCardVisible(PaymentMethod.Visa, card), "Card visible");
     }
 
+    /**
+     * LAST USED CC/PM IS CHOSEN BEGIN
+     * */
+
+    /*Last added CC does not override last used*/
+    @Test(groups = {"regression", "mobile"})
+    public void lastAddedCCDoesNotOverrideLastUsed(){
+        String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
+        PaymentMethod pm = PaymentMethod.VisaLastUsedCC;
+        PortalUtils.loginUser(DataContainer.getUserData().getLastUsedCCUserData());
+        DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
+        depositPage.depositLastUsedCC(pm, pm.getSecondaryAccount());
+        AddCardPage addCardPage = depositPage.clickAddCard();
+        addCardPage.addValidCard(card);
+        depositPage = new DepositPage();
+        depositPage.refresh();
+        assertEquals(pm.getSecondaryAccount(), depositPage.getSelectedCCNumber(pm), "Deposit. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+        WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
+        assertEquals(pm.getSecondaryAccount(), withdrawPage.getSelectedCCNumber(pm), "Open Withdraw after Deposit. Last used card '" + pm.getSecondaryAccount() + "' is selected");
+    }
+
+    /**
+     * LAST USED CC/PM IS CHOSEN END
+     * */
 
 }

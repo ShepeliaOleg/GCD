@@ -1,5 +1,6 @@
 package pageObjects.cashier;
 
+import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
 import pageObjects.account.AddCardPage;
@@ -28,6 +29,8 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String FIELD_NUMBER_PREPAID_XP = "//*[@name='accountId']";
     protected static final String CASHIER_LOADER =          "//*[contains(@class, 'fn-loader')]";
     protected static final String ERROR_MSG_XP =            "//*[@class='message error']";
+    protected static final String OPENED_BLOCK_XP =         "//*[contains(@class, 'opened')]";
+    protected static final String PAYMENT_METHOD_NAME_XP =  "//*[@class='info-list__field fn-accordion-target']";
 
     private static final String[] FIELDS = {FIELD_ACCOUNT_XP, FIELD_AMOUNT_XP, FIELD_PROMO_CODE_XP, FIELD_CVV_XP, FIELD_PASSWORD_XP};
 
@@ -169,14 +172,22 @@ public class CashierPage extends AbstractPortalPage {
             WebDriverUtils.clearAndInputTextToField(fieldAccount, account);
         }
         if(WebDriverUtils.isVisible(WebDriverUtils.getPrecedingElement(fieldAccountKnown), 0)){
-            String selectedAccount = WebDriverUtils.getDropdownSelectedOptionValue(fieldAccountKnown);
-            List<String> optionsValue = WebDriverUtils.getDropdownOptionsValue(fieldAccountKnown);
-            if (method.equals(PaymentMethod.MasterCard) || method.equals(PaymentMethod.Visa)) {
+            String selectedAccount;
+            List<String> optionsValue;
+            if (WebDriverUtils.getCurrentUrl().contains(String.valueOf(ConfiguredPages.withdraw))){
+                selectedAccount = WebDriverUtils.getDropdownSelectedOptionText(fieldAccountKnown);
+                optionsValue = WebDriverUtils.getDropdownOptionsText(fieldAccountKnown);
+            } else {
+                selectedAccount = WebDriverUtils.getDropdownSelectedOptionValue(fieldAccountKnown);
+                optionsValue = WebDriverUtils.getDropdownOptionsValue(fieldAccountKnown);
+            }
+
+            if (method.equals(PaymentMethod.MasterCard) || method.equals(PaymentMethod.Visa) || method.equals(PaymentMethod.MasterCardLastUsedCC) || method.equals(PaymentMethod.VisaLastUsedCC)) {
                 account = "*" + account;
             }
             if (!selectedAccount.equals(account)) {
                 if (optionsValue.contains(account)) {
-                    WebDriverUtils.setDropdownOptionByValue(fieldAccountKnown, account);
+                    WebDriverUtils.setDropdownOptionByText(fieldAccountKnown, account);
                 } else {
                     addAccountByType(method, account);
                 }
@@ -236,7 +247,7 @@ public class CashierPage extends AbstractPortalPage {
     }
 
     private void waitForCashierLoad() {
-        WebDriverUtils.waitForElement(CASHIER_LOADER);
+//        WebDriverUtils.waitForElement(CASHIER_LOADER);
         WebDriverUtils.waitForElementToDisappear(CASHIER_LOADER);
     }
 
@@ -247,5 +258,13 @@ public class CashierPage extends AbstractPortalPage {
 
     public String getErrorMsg() {
         return WebDriverUtils.getElementText(ERROR_MSG_XP);
+    }
+
+    public String getSelectedCCNumber(PaymentMethod paymentMethod){
+        String name =               paymentMethod.getName();
+        String body =               getMethodBodyXpath(name);
+        String fieldAccountKnown =  body + FIELD_ACCOUNT_KNOWN_XP;
+        openMethodBodyIfClosed(paymentMethod);
+        return WebDriverUtils.getDropdownSelectedOptionText(fieldAccountKnown).replace("*", "").trim();
     }
 }
