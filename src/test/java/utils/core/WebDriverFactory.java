@@ -1,5 +1,6 @@
 package utils.core;
 
+import io.appium.java_client.ios.IOSDriver;
 import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.Dimension;
@@ -13,8 +14,6 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
-import org.uiautomation.ios.IOSCapabilities;
-import org.uiautomation.ios.client.uiamodels.impl.RemoteIOSDriver;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
@@ -32,8 +31,9 @@ public class WebDriverFactory{
     private static URL remote;
     private static String serial;
     private static String pathToDownloadsFolder;
-    private static final String REMOTE = "172.29.49.73";
-    private static final String REMOTE_MAC = "172.29.46.41";
+    private static final String LOCALHOST =  "127.0.0.1";
+    private static final String REMOTE =     "172.29.49.73";
+    private static final String REMOTE_MAC = "172.29.46.170";
 
     public static void initializeWebDrivers(DriverData driverData, DeviceData deviceData){
         browser =   driverData.getBrowser();
@@ -136,33 +136,8 @@ public class WebDriverFactory{
         WebDriverFactory.serverDriver = serverDriver;
     }
 
-//    public static void initServerDriver() {
-//        if (getServerDriver() == null) {
-//            try{
-//                setServerDriver(getRemoteDriver("firefox"));
-//            }catch(Exception e){
-//                throw new RuntimeException("Starting webdriver failed \n" + e);
-//            }
-//        }
-//    }
-
-//    public static void switchToAdditionalWebDriver(){
-//		storedWebDriver = webDriver;
-//		try{
-//			webDriver = getRemoteDriver("firefox");
-//		}catch(Exception e){
-//			throw new RuntimeException("Starting webdriver failed \n" + e);
-//		}
-//	}
-//
-//	public static void switchToMainWebDriver(){
-//		webDriver.quit();
-//		webDriver = storedWebDriver;
-//	}
-
     private static WebDriver createRemoteDriver(String browser){
         DesiredCapabilities capabilities;
-        URL url;
         String address = REMOTE;
         switch (browser){
             case "chrome":capabilities  = DesiredCapabilities.chrome();
@@ -184,12 +159,8 @@ public class WebDriverFactory{
             default:
                 throw new RuntimeException("Please set browser, now '"+browser+"'");
         }
-        try{
-            url = new URL("http://"+address+":4444/wd/hub");
-        }catch (MalformedURLException e){
-            throw new RuntimeException("Please set correct URL");
-        }
-        return new RemoteWebDriver(url, capabilities);
+
+        return new RemoteWebDriver(getUrl(address, "4444", "wd/hub"), capabilities);
     }
 
     private static WebDriver createChromeDriver(String osType){
@@ -220,7 +191,7 @@ public class WebDriverFactory{
 
     private static WebDriver createWinPhoneDriver(){
         try {
-            return new RemoteWebDriver(new URL("http://10.251.192.148:8080"), DesiredCapabilities.internetExplorer());
+            return new RemoteWebDriver(getUrl("10.251.192.148", "8080" , ""), DesiredCapabilities.internetExplorer());
         }catch (Exception e){
             throw new RuntimeException("Starting webdriver failed \n" + e);
         }
@@ -240,18 +211,25 @@ public class WebDriverFactory{
         return driver;
     }
 
-    private static WebDriver createIOSDriver(){
-        WebDriver driver;
-        IOSCapabilities capabilities = IOSCapabilities.iphone("Safari");
-        capabilities.setCapability(IOSCapabilities.SIMULATOR, false);
-        capabilities.setCapability("rotatable", true);
-        try {
-            driver = new RemoteIOSDriver(new URL("http://localhost:5555/wd/hub"), capabilities);
+    private static WebDriver createIOSDriver() {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("deviceName", "MWS iPhone 6 M0164");
+        capabilities.setCapability("platfromName", "iOS");
+        capabilities.setCapability("platfromVersion", "8.2");
+        capabilities.setCapability("udid", "d154b25d17a9f262251b58f48f3da446dc746415");
+        capabilities.setCapability("browserName", "Safari");
+        capabilities.setCapability("autoWebview", true);
 
-        }catch (Exception e){
-            throw new RuntimeException("Starting webdriver failed \n" + e);
-        }
+        IOSDriver driver = new IOSDriver(getUrl(REMOTE_MAC, "4723", "wd/hub"), capabilities);
         return driver;
+    }
+
+    private static URL getUrl(String host, String port, String suffix) {
+        try {
+            return new URL("http://"+ host +":" + port + "/" + suffix);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Please set correct URL");
+        }
     }
 
     private static WebDriver getMobileChromeDriver() {
