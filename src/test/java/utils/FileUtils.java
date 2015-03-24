@@ -16,26 +16,6 @@ import java.io.*;
  */
 public class FileUtils {
     public static final String GAMES_CONFIGURATION_XML_PATH = "library/XML/GameInfo/Games_wpl2.xml";
-    public static final String PREPAIDCARD_CVS_PATH = WebDriverFactory.getPathToDownloadsFolder() + "prepaidcard.csv";
-
-    public static String[] getPrePaidCardNumberAndPinFromExportedFile(){
-        BufferedReader reader;
-        String line;
-        String spliter = ",";
-        String[] result = new String[2];
-        try {
-            reader = new BufferedReader(new FileReader(PREPAIDCARD_CVS_PATH));
-            reader.readLine();
-            line = reader.readLine();
-            result[0] = line.split(spliter)[1];
-            result[1] = line.split(spliter)[2];
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 
     private static Document getXMLDocument(String path) {
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();

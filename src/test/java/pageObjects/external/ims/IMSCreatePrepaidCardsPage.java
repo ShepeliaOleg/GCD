@@ -23,6 +23,7 @@ public class IMSCreatePrepaidCardsPage extends AbstractServerPage {
     private static final String BUTTON_GENERATE_PREPAID_CARDS_XP =      "//*[@id='submit']";
     private static final String LINK_GENERATED_CARD_ID_XP =             "//*[@id='success_message_container_1']/a";
     private static final String BUTTON_EXPORT_XP =                      "//*[@id='export']";
+    public static final String PREPAIDCARD_CVS_PATH =                   WebDriverFactory.getPathToDownloadsFolder() + "prepaidcard.csv";
 
     private void setCasino(String casino){
         WebDriverUtils.setDropdownOptionByValue(WebDriverFactory.getServerDriver(), DROPDOWN_CASINO_XP, casino);
@@ -61,7 +62,7 @@ public class IMSCreatePrepaidCardsPage extends AbstractServerPage {
     private void clickExportButton(){
         WebDriverUtils.waitForElement(BUTTON_EXPORT_XP);
         WebDriverUtils.click(WebDriverFactory.getServerDriver(), BUTTON_EXPORT_XP);
-        WebDriverUtils.waitForFileDownload(FileUtils.PREPAIDCARD_CVS_PATH);
+        WebDriverUtils.waitForFileDownload(PREPAIDCARD_CVS_PATH);
     }
 
     public void inputDataToGeneratePrepaidCard(boolean isPinNecessary, int monetaryValue, String currency, int numberOfCards){
@@ -91,7 +92,7 @@ public class IMSCreatePrepaidCardsPage extends AbstractServerPage {
     }
 
     public void deleteGeneratedFile(){
-        File previousPrepaidCardFile = new File(FileUtils.PREPAIDCARD_CVS_PATH);
+        File previousPrepaidCardFile = new File(PREPAIDCARD_CVS_PATH);
         if (previousPrepaidCardFile.exists())
             previousPrepaidCardFile.delete();
     }

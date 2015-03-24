@@ -12,6 +12,11 @@ import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
 import utils.validation.ValidationUtils;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * Created by serhiist on 3/16/2015.
  */
@@ -118,7 +123,7 @@ public class CashierPrePaidCardsTest extends AbstractTest {
     private String[] getValidPrePaidCardNumberAndPin(UserData userData, boolean isPinNecessary){
         IMSCreatePrepaidCardsPage prepaidCardsPage = IMSUtils.navigateToPrePaidCardsPage();
         prepaidCardsPage.inputDataToGeneratePrepaidCard(isPinNecessary, MONETARY_VALUE, userData.getCurrency(), 1);
-        String[] result = FileUtils.getPrePaidCardNumberAndPinFromExportedFile();
+        String[] result = getPrePaidCardNumberAndPinFromExportedFile();
         prepaidCardsPage.deleteGeneratedFile();
         return result;
     }
@@ -147,5 +152,24 @@ public class CashierPrePaidCardsTest extends AbstractTest {
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.processPrePaidCard(numberAndPin[0], numberAndPin[1], promo);
         return depositPage;
+    }
+
+    private static String[] getPrePaidCardNumberAndPinFromExportedFile(){
+        BufferedReader reader;
+        String line;
+        String spliter = ",";
+        String[] result = new String[2];
+        try {
+            reader = new BufferedReader(new FileReader(IMSCreatePrepaidCardsPage.PREPAIDCARD_CVS_PATH));
+            reader.readLine();
+            line = reader.readLine();
+            result[0] = line.split(spliter)[1];
+            result[1] = line.split(spliter)[2];
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }
