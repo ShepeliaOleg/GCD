@@ -91,7 +91,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Guest login popup login button slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGameGuestLoginSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.button, 2, DataContainer.getUserData().getRegisteredUserData());
@@ -109,7 +109,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Guest login popup cancel button slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGameGuestCancelSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.button, 2);
@@ -136,7 +136,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Player play button slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerButtonLaunchGamePlayerSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, userData);
         webContentPage.clickNextSlide();
@@ -153,6 +153,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Admin play button slide 2*/
     @Test(groups = {"admin"})
     public void bannerButtonLaunchGameAdminSlide2() {
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.button, 2);
@@ -168,7 +169,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Guest login popup login image slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGameGuestLoginSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.image, 2, DataContainer.getUserData().getRegisteredUserData());
@@ -186,7 +187,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Guest login popup cancel image slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGameGuestCancelSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         LoginPopup loginPopup = webContentPage.clickLoggedOut(GameLaunch.image, 2);
@@ -204,7 +205,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Player play image slide 2*/
     @Test(groups = {"webcontent","regression","banner"})
     public void bannerImageLaunchGamePlayerSlide2() {
-        skipTestWithIssues("Jira bug with 2 banner webcontent");
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bannerWebContentGame, DataContainer.getUserData().getRegisteredUserData());
         webContentPage.clickNextSlide();
         webContentPage.playAndAssertUrl(GameLaunch.image, 2);
@@ -220,6 +221,7 @@ public class WebContentTest extends AbstractTest{
     /*Banner - Admin play image slide 2*/
     @Test(groups = {"admin"})
     public void bannerImageLaunchGameAdminSlide2() {
+        skipTestWithIssues("D-19983");
         WebContentPage webContentPage = (WebContentPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.bannerWebContentGame);
         webContentPage.clickNextSlide();
         AdminCanNotPlayPopup adminCanNotPlayPopup = webContentPage.clickAdmin(GameLaunch.image, 2);
