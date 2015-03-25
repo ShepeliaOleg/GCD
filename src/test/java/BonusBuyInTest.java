@@ -12,6 +12,7 @@ import springConstructors.BonusData;
 import springConstructors.UserData;
 import utils.NavigationUtils;
 import utils.PortalUtils;
+import utils.TypeUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -21,6 +22,8 @@ public class BonusBuyInTest extends AbstractTest {
     private BonusPage bonusPage;
     private OptedInPopup optedInPopup;
     private OkBonusPopup okBonusPopup;
+    private boolean refreshPage = true;
+    private String oldBalance;
 
     @Autowired
     @Qualifier("buyInMin")
@@ -38,9 +41,10 @@ public class BonusBuyInTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void addBuyInBonusAmount() {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+        oldBalance = bonusPage.getBalanceAmount();
 
         bonusPage.getBonus(buyInAvg.getBonusID(), buyInAvg.getGetBonusButtonTitle());
-        new OptedInPopup().getBonusAndCheckAmount(buyInAvg.getBonusAmount());
+        new OptedInPopup().getBonusAndCheckAmount(TypeUtils.calculateSum(oldBalance, buyInAvg.getBonusAmount()));
     }
 
     @Test(groups = {"regression"})
@@ -52,18 +56,19 @@ public class BonusBuyInTest extends AbstractTest {
 
         okBonusPopup = new OkBonusPopup();
         okBonusPopup.assertPopupTitleText("");
-        okBonusPopup.assertPopupContentText("Congratulations, you just received " + getСurrencySymbol(buyInAvg.getCurrency()) + String.format("%1$,.0f", buyInAvg.getBonusAmount()));
+        okBonusPopup.assertPopupContentText("Congratulations, you just received " + getСurrencySymbol(buyInAvg.getCurrency()) + String.format("%1$,.0f", Float.parseFloat(buyInAvg.getBonusAmount())));
         okBonusPopup.closePopup();
     }
 
     @Test(groups = {"regression"})
     public void checkOptedInPopupAndClose() {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+        oldBalance = bonusPage.getBalanceAmount();
 
         String bonusTitle = bonusPage.getBonusTitle(buyInAvg.getBonusID());
         bonusPage.getBonus(buyInAvg.getBonusID(), buyInAvg.getGetBonusButtonTitle());
         optedInPopup = new OptedInPopup();
-        optedInPopup.assertOptedInPopupIsCorrect(buyInAvg.getBonusID(), bonusTitle, null, prepareExpInfoMsg(buyInAvg));
+        optedInPopup.assertOptedInPopupIsCorrect(buyInAvg.getBonusID(), bonusTitle, oldBalance, prepareExpInfoMsg(buyInAvg));
         optedInPopup.closePopup();
     }
 
@@ -86,15 +91,16 @@ public class BonusBuyInTest extends AbstractTest {
         String bonusTitle = bonusPage.getBonusTitle(buyInMax.getBonusID());
         bonusPage.getBonus(buyInMax.getBonusID(), buyInMax.getGetBonusButtonTitle());
         optedInPopup = new OptedInPopup();
-        optedInPopup.assertOptedInPopupIsCorrect(buyInMax.getBonusID(), bonusTitle, new Float(9.0), prepareExpInfoMsg(buyInMax));
+        optedInPopup.assertOptedInPopupIsCorrect(buyInMax.getBonusID(), bonusTitle, "9.00", prepareExpInfoMsg(buyInMax));
     }
 
     @Test(groups = {"regression"})
     public void getMaximalCheckBonusAmount() {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
+        oldBalance = bonusPage.getBalanceAmount();
 
         bonusPage.getBonus(buyInMax.getBonusID(), buyInMax.getGetBonusButtonTitle());
-        new OptedInPopup().getBonusAndCheckAmount(buyInMax.getBonusAmount());
+        new OptedInPopup().getBonusAndCheckAmount(TypeUtils.calculateSum(oldBalance, buyInMax.getBonusAmount()));
     }
 
     @Test(groups = {"regression"})
@@ -125,6 +131,7 @@ public class BonusBuyInTest extends AbstractTest {
 
     private String prepareExpInfoMsg(BonusData data){
         //return data.getOtherInfo() + getСurrencySymbol(data.getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
-        return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
+        //return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
+        return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + data.getBonusAmount();
     }
 }

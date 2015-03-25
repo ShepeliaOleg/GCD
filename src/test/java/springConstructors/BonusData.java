@@ -3,8 +3,7 @@ package springConstructors;
 public class BonusData {
 
     private String bonusID;
-    //private String bonusAmount;
-    private Float bonusAmount;
+    private String bonusAmount;
     private String getBonusButtonTitle;
     private String otherInfo;
 
@@ -26,21 +25,13 @@ public class BonusData {
         this.bonusID = bonusID;
     }
 
-    public Float getBonusAmount() {
-        return bonusAmount;
-    }
-
-    public void setBonusAmount(Float bonusAmount) {
-        this.bonusAmount = bonusAmount;
-    }
-
-    /*public String getBonusAmount() {
+    public String getBonusAmount() {
         return bonusAmount;
     }
 
     public void setBonusAmount(String bonusAmount) {
         this.bonusAmount = bonusAmount;
-    }*/
+    }
 
     public String getGetBonusButtonTitle() {
         return getBonusButtonTitle;

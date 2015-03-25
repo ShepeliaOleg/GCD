@@ -19,12 +19,12 @@ public class BonusPage extends AbstractPortalPage{
 	private static final String BONUS_LINK =				"//td[1]/a[@data-item=";
 	private static final String TC_LINK =					"//td[3]/a[@data-item=";
 	protected static final String LOADER =          "//*[contains(@class, 'fn-loader')]";
-	private Float oldBalanceAmount = null;
+	//private Float oldBalanceAmount = null;
 
 	public BonusPage(){
 		super(new String[]{BONUS_ROOT});
-		WebDriverUtils.waitForElementToDisappear(LOADER);
-		oldBalanceAmount = Float.parseFloat(new AbstractPortalPage().getBalanceAmount(false));
+		//WebDriverUtils.waitForElementToDisappear(LOADER);
+		//oldBalanceAmount = Float.parseFloat(new AbstractPortalPage().getBalanceAmount(false));
 	}
 
 	public void getBonus(String bonusID, String text) {
@@ -32,10 +32,10 @@ public class BonusPage extends AbstractPortalPage{
 		freeBonusPopup.clickGetBonus(text);
 	}
 
-	public void checkAmount(Float bonusAmount) {
-		new AbstractPortalPopup().closePopup();
-		assertEquals(String.format("%1$.2f", (bonusAmount + oldBalanceAmount)), new AbstractPortalPage().getBalanceAmount(true), "The current user amount isn't correspond expected bonus amount!");
-	}
+//	public void checkAmount(Float bonusAmount) {
+//		new AbstractPortalPopup().closePopup();
+//		assertEquals(String.format("%1$.2f", (bonusAmount + oldBalanceAmount)), new AbstractPortalPage().getBalanceAmount(true), "The current user amount isn't correspond expected bonus amount!");
+// }
 
 	public void getBonus(String bonusID, String text, int numCount) {
 		FreeBonusPopup freeBonusPopup = (FreeBonusPopup) clickFreeBonusLink(bonusID, numCount);

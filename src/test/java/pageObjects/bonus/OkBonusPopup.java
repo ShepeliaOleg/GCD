@@ -17,10 +17,7 @@ public class OkBonusPopup extends AbstractPortalPopup{
 		//super(new String[]{BONUS_TITLE_XP, BUTTON_CLOSE_XP});
 		super(new String[]{ROOT_XP, BUTTON_CLOSE_XP.getXpath()});
 	}
-//
-//    public OkBonusPopup(String popupText){
-//        super(new String[]{TITLE_XP, CONTENT_XP + "/div[contains(text(), '" + popupText + "')]", BUTTON_CLOSE_XP});
-//    }
+
 
     public void assertPopupTitleText(String text) {
         assertEquals(text, WebDriverUtils.getElementText(TITLE_XP), "Pop Up title was not as expected");

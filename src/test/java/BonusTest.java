@@ -1,8 +1,10 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.FreeBonusPopup;
 import pageObjects.bonus.OkBonusPopup;
@@ -11,10 +13,7 @@ import pageObjects.core.AbstractPortalPage;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.BonusData;
 import springConstructors.UserData;
-import utils.IMSUtils;
-import utils.NavigationUtils;
-import utils.PortalUtils;
-import utils.WebDriverUtils;
+import utils.*;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -23,6 +22,8 @@ public class BonusTest extends AbstractTest {
     private UserData userData;
     private BonusPage bonusPage;
     private OkBonusPopup okBonusPopup;
+    private boolean refreshPage = true;
+    private String oldBalance;
 
     @Autowired
     @Qualifier("freeBonus")
@@ -36,9 +37,9 @@ public class BonusTest extends AbstractTest {
     @Test(groups = {"regression"})
     public void addFreeBonusAmount() {
         bonusPage = (BonusPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusPage);
-
+        oldBalance = bonusPage.getBalanceAmount();
         bonusPage.getBonus(freeBonus.getBonusID(), freeBonus.getGetBonusButtonTitle());
-        bonusPage.checkAmount(freeBonus.getBonusAmount());
+        assertEquals(freeBonus.getBonusAmount(), TypeUtils.calculateDiff(bonusPage.getBalanceAmount(refreshPage), oldBalance), "Add balance was not as expected");
     }
 
     @Test(groups = {"regression"})
@@ -47,7 +48,7 @@ public class BonusTest extends AbstractTest {
 
         okBonusPopup = bonusPage.getBonus(freeBonus.getBonusID());
         okBonusPopup.assertPopupTitleText("Congratulations");
-        okBonusPopup.assertPopupContentText("Congratulations, you just received a " + getСurrencySymbol(freeBonus.getCurrency()) + String.format("%1$,.2f", freeBonus.getBonusAmount()) + " bonus! Wishing you the best of luck in our games!");
+        okBonusPopup.assertPopupContentText("Congratulations, you just received a " + getСurrencySymbol(freeBonus.getCurrency()) + freeBonus.getBonusAmount() + " bonus! Wishing you the best of luck in our games!");
         okBonusPopup.closePopup();
     }
 
