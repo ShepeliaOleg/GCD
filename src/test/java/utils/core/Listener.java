@@ -322,27 +322,25 @@ public class Listener extends TestListenerAdapter{
         String imageName = name+".jpg";
         String landscape = ScreenOrientation.LANDSCAPE.value() + imageName;
         String portrait = ScreenOrientation.PORTRAIT.value() + imageName;
-        if(!DataContainer.getDriverData().getBrowser().equals("native")) {
-            writeScreenshot(portrait);
-            writeScreenshot(landscape);
-        }else {
-            ScreenOrientation initialOrientation = WebDriverUtils.getOrientation();
-            writeScreenshot(initialOrientation.value()+imageName);
-            if(initialOrientation.equals(ScreenOrientation.LANDSCAPE)){
-                WebDriverUtils.setOrientation(ScreenOrientation.PORTRAIT);
+        switch (WebDriverFactory.getPlatform()) {
+            case desktop:
                 writeScreenshot(portrait);
-            }else {
+                writeScreenshot(landscape);
+                break;
+            case mobile:
+                writeScreenshot(portrait);
                 WebDriverUtils.setOrientation(ScreenOrientation.LANDSCAPE);
                 writeScreenshot(landscape);
-            }
-            WebDriverUtils.setOrientation(initialOrientation);
+                WebDriverUtils.setOrientation(ScreenOrientation.PORTRAIT);
+                break;
         }
         return new String[] {portrait, landscape};
     }
-
     private static void writeScreenshot(String imageName){
+        writeScreenshot(WebDriverFactory.getPortalDriver(), imageName);
+    }
+    private static void writeScreenshot(WebDriver webDriver, String imageName){
         File file = new File(outFolder +imageName);
-        WebDriver webDriver = WebDriverFactory.getPortalDriver();
         if(webDriver!=null){
             File scrFile = ((TakesScreenshot)webDriver).getScreenshotAs(OutputType.FILE);
             try  {

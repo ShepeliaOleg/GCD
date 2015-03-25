@@ -11,7 +11,7 @@ public class ReceivedInboxMessagePopup extends AbstractPortalPopup{
 	private static final String FIELD_MESSAGE_XP=	"//th[contains(text(),'Message')]/following-sibling::td";
 
 	public ReceivedInboxMessagePopup(){
-		super(new String[]{BUTTON_CLOSE_XP});
+		super(new String[]{BUTTON_CLOSE_XP.getXpath()});
 	}
 
 	public InboxPage clickDeleteButton(){

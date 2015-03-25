@@ -1,6 +1,7 @@
 package pageObjects.core;
 
 import org.apache.commons.lang3.ArrayUtils;
+import utils.Locator;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
@@ -9,11 +10,11 @@ import utils.core.WebDriverFactory;
 public class AbstractPortalPopup extends AbstractPopup{
 
     public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
-	public final static String BUTTON_CLOSE_XP =	ROOT_XP +     "//*[contains(@class, 'button_type_cancel')]";
-    public final static String BUTTON_DECLINE_XP =	ROOT_XP +     "//*[contains(@class, 'fn-decline')]";
-    public final static String BUTTON_ACCEPT_XP =   ROOT_XP +     "//*[contains(@class, 'fn-accept')]";
-    public final static String BUTTON_NEXT_XP =     TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]";
-    public final static String BUTTON_PREVIOUS_XP = TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]";
+	public final static Locator BUTTON_CLOSE_XP =	new Locator("fn-close",   ROOT_XP + "//*[contains(@class, 'button_type_cancel')]", null);
+    public final static Locator BUTTON_DECLINE_XP =	new Locator("fn-decline", ROOT_XP + "//*[contains(@class, 'fn-decline')]", null);
+    public final static Locator BUTTON_ACCEPT_XP =  new Locator("fn-accept",  ROOT_XP + "//*[contains(@class, 'fn-accept')]", null);
+    public final static Locator BUTTON_NEXT_XP =    new Locator("fn-next",    TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]", null);
+    public final static Locator BUTTON_PREVIOUS_XP =new Locator("fn-prev",    TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]", null);
     public final static String OFF_POPUP_XP =          "//*[contains(@class, 'fn-footer-wrapper')]";
     public final static String TITLE_XP =        "//*[@class='popup-modal__title']";
     public final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
@@ -53,7 +54,7 @@ public class AbstractPortalPopup extends AbstractPopup{
     }
 
     public void closePopup(){
-        if(WebDriverUtils.isVisible(BUTTON_CLOSE_XP, 0)){
+        if(WebDriverUtils.isVisible(BUTTON_CLOSE_XP.getXpath(), 0)){
             clickClose();
         }else {
             clickOffPopup();

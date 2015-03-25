@@ -8,7 +8,7 @@ public class GameInfoPopup extends AbstractPortalPopup{
 	private String gameID;
 
 	public GameInfoPopup(String gameID){
-		super(new String[]{BUTTON_CLOSE_XP});
+		super(new String[]{BUTTON_CLOSE_XP.getXpath()});
 		this.gameID=gameID;
 	}
 

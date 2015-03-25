@@ -20,7 +20,7 @@ public class ReferAFriendPopup extends AbstractPortalPopup {
 
 
 	public ReferAFriendPopup(){
-		super(new String[]{REFER_A_FRIEND_ROOT_XP, FIELD_EMAIL_XP, BUTTON_CONFIRM_XP, BUTTON_CLOSE_XP});
+		super(new String[]{REFER_A_FRIEND_ROOT_XP, FIELD_EMAIL_XP, BUTTON_CONFIRM_XP, BUTTON_CLOSE_XP.getXpath()});
 	}
 
     public void fillRecipientInfo(String email) {

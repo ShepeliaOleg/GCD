@@ -37,7 +37,7 @@ public class Locator {
         if (xpath != null) {
             return xpath;
         } else
-            return getXpathByFunctionalClass(getFunctionalClass());
+            return getXpathByFunctionalClass();
     }
 
     public void setXpath(String xpath) {
@@ -45,17 +45,27 @@ public class Locator {
     }
 
     public String getCss() {
-        return css;
+        if (css != null) {
+            return css;
+        } else
+            return getCssByFunctionalClass();
     }
 
     public void setCss(String css) {
         this.css = css;
     }
 
-    private String getXpathByFunctionalClass(String functionalClass) {
+    private String getXpathByFunctionalClass() {
         if (functionalClass != null) {
             return "//*[contains(@class,'" + functionalClass + "')]";
         } else throw new RuntimeException("Cannot generate xpath: functional class is not defined in Locator.");
+
+    }
+
+    private String getCssByFunctionalClass() {
+        if (functionalClass != null) {
+            return "." + functionalClass;
+        } else throw new RuntimeException("Cannot generate css: functional class is not defined in Locator.");
 
     }
 }

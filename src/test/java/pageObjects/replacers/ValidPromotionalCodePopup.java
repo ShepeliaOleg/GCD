@@ -3,9 +3,6 @@ package pageObjects.replacers;
 import pageObjects.core.AbstractPortalPopup;
 import utils.WebDriverUtils;
 
-/**
- * Created by serhiist on 3/12/2015.
- */
 public class ValidPromotionalCodePopup extends AbstractPortalPopup {
     private static final String MESSAGE_XP = "//*[@class='fn-popup-loader']";
     private static final String TITLE_XP = "//*[@class='popup-modal__title']";
@@ -15,7 +12,7 @@ public class ValidPromotionalCodePopup extends AbstractPortalPopup {
 
 
     public ValidPromotionalCodePopup() {
-        super(new String[]{ROOT_XP, BUTTON_CLOSE_XP});
+        super(new String[]{ROOT_XP, BUTTON_CLOSE_XP.getXpath()});
     }
 
     public String getMessage() {

@@ -13,7 +13,7 @@ public class DriverData{
     public String   browser;
     public String   os;
     public Licensee licensee;
-    public String   device;
+    public String   deviceId;
 
     public String getAdminNode() {
         return adminNode;
@@ -71,12 +71,12 @@ public class DriverData{
         this.licensee = licensee;
     }
 
-    public String getDevice() {
-        return device;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setDevice(String device) {
-        this.device = device;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 
     public String getCurrentUrl() {

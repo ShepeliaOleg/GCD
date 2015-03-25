@@ -9,23 +9,22 @@ public class DeviceData {
 
     public Device[] devices;
 
-    private Device getDeviceByName(String name){
+    public Device getDeviceById(String id){
         for(Device device:devices) {
-            if (device.getName().equals(name)) {
+            if (device.getId().equals(id)) {
                 return device;
             }
         }
-        AbstractTest.failTest("Device '" + name + "' is not found.");
-        return null;
+        throw new RuntimeException("Device with id: '" + id + "' is not found.");
     }
 
     public String getSerialByName(String name) {
-        return getDeviceByName(name).getSerial();
+        return getDeviceById(name).getSerial();
     }
 
     public URL getRemoteByName(String name, String browser) {
         URL remote = null;
-        String url = getDeviceByName(name).getRemote();
+        String url = getDeviceById(name).getRemote();
         if(browser.equals("native")){
             url = url.replace("9515", "4444/wd/hub/");
         }

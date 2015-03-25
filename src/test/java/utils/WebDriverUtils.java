@@ -3,6 +3,7 @@ package utils;
 import com.google.common.base.Predicate;
 import enums.ConfiguredPages;
 import enums.Licensee;
+import io.appium.java_client.AppiumDriver;
 import io.selendroid.client.SelendroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.*;
@@ -123,22 +124,34 @@ public class WebDriverUtils{
 
     //Element actions
 
+    public static void click(Locator locator){
+        click(WebDriverFactory.getPortalDriver(), locator);
+    }
+
     public static void click(String xpath){
         click(WebDriverFactory.getPortalDriver(), xpath);
     }
 
     public static void click(WebDriver webDriver, String xpath) {
-        System.out.println("Clicking "+xpath+" element");
+        System.out.println("Clicking "+ xpath +" element");
         WebElement webElement = getElement(webDriver, xpath);
         mouseOver(webDriver, webElement);
         try {
-            //FOR Internet Explorer 11
-            //Actions actions = new Actions(WebDriverFactory.getPortalDriver());
-            //actions.moveToElement(webElement).click().perform();
             webElement.click();
-        }catch (WebDriverException e){
+        }catch (WebDriverException e) {
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }
+    }
+
+    public static void click(WebDriver webDriver, Locator locator) {
+            switch (WebDriverFactory.getPlatform()) {
+                case desktop:
+                    click(webDriver, locator.getXpath());
+                    break;
+                case mobile:
+                    tap(webDriver, locator);
+                    break;
+            }
     }
 
     private static Actions getAction(WebDriver webDriver) {
@@ -150,7 +163,7 @@ public class WebDriverUtils{
     }
 
     public static void click(WebDriver webDriver, String xpath, int offset) {
-        System.out.println("Clicking "+xpath+" element with offset "+offset+"");
+        System.out.println("Clicking " + xpath + " element with offset " + offset + "");
         try {
             getAction(webDriver).moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
         }catch (WebDriverException e){
@@ -344,7 +357,7 @@ public class WebDriverUtils{
     }
 
 	public static void inputTextToField(WebDriver webDriver, String xpath, String text){
-        System.out.println("Inputting "+text+" ro field "+xpath);
+        System.out.println("Inputting " + text + " ro field " + xpath);
         try{
 			getElement(webDriver, xpath).sendKeys(text);
         }catch(NoSuchElementException e){
@@ -389,7 +402,7 @@ public class WebDriverUtils{
     }
 
 	public static void pressKey(WebDriver webDriver, Keys key){
-        System.out.println("Pressing key"+key);
+        System.out.println("Pressing key" + key);
         getAction(webDriver).sendKeys(key).perform();
 	}
 
@@ -654,7 +667,7 @@ public class WebDriverUtils{
         try{
             if(DataContainer.getDriverData().getLicensee().equals(Licensee.core)){
                 String list = getFollowingElement(xpath);
-                return getElement(webDriver, list+"//li[contains(@class, 'selected')]");
+                return getElement(webDriver, list + "//li[contains(@class, 'selected')]");
             }else {
                 return getElement(webDriver, xpath+"//span");
             }
@@ -778,7 +791,7 @@ public class WebDriverUtils{
     }
 
 	public static void navigateToURL(WebDriver webDriver, String url){
-        System.out.println("Navigating to url "+url );
+        System.out.println("Navigating to url " + url);
         webDriver.get(url);
 	}
 
@@ -863,14 +876,14 @@ public class WebDriverUtils{
     //Mobile
 
     public static void setOrientation(ScreenOrientation screenOrientation){
-        SelendroidDriver selendroidDriver = (SelendroidDriver)WebDriverFactory.getPortalDriver();
-        selendroidDriver.rotate(screenOrientation);
+        AppiumDriver appiumDriver = (AppiumDriver)WebDriverFactory.getPortalDriver();
+        appiumDriver.rotate(screenOrientation);
         waitFor(1000);
     }
 
     public static ScreenOrientation getOrientation(){
-        SelendroidDriver selendroidDriver = (SelendroidDriver)WebDriverFactory.getPortalDriver();
-        return selendroidDriver.getOrientation();
+        AppiumDriver appiumDriver = (AppiumDriver)WebDriverFactory.getPortalDriver();
+            return appiumDriver.getOrientation();
     }
 
     public static String getDomain() {
@@ -974,5 +987,21 @@ public class WebDriverUtils{
                 return input.exists() && input.length() > 0;
             }
         });
+    }
+
+    public static void tap(WebDriver webDriver, Locator locator) {
+        String css = locator.getCss();
+        System.out.println("Taping "+ css +" element");
+        tap(webDriver, css);
+    }
+
+    public static void tap(Locator locator) {
+        tap(WebDriverFactory.getPortalDriver(), locator);
+    }
+
+
+    private static void tap(WebDriver webDriver, String css) {
+        TouchAct touchAct = new TouchAct(webDriver);
+        touchAct.tap(css);
     }
 }

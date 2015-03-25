@@ -331,7 +331,7 @@ public class NavigationUtils{
         } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
             return processChangePasswordPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TITLE_XP, 0)){
-            if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP, 0)){
+            if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP.getXpath(), 0)){
                 return processAcceptDecline(exceptPage);
             }else {
                 return processOkBonus(exceptPage);

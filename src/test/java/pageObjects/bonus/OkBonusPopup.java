@@ -15,7 +15,7 @@ public class OkBonusPopup extends AbstractPortalPopup{
 
     public OkBonusPopup(){
 		//super(new String[]{BONUS_TITLE_XP, BUTTON_CLOSE_XP});
-		super(new String[]{ROOT_XP, BUTTON_CLOSE_XP});
+		super(new String[]{ROOT_XP, BUTTON_CLOSE_XP.getXpath()});
 	}
 //
 //    public OkBonusPopup(String popupText){

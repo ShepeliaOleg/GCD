@@ -7,13 +7,14 @@ import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import springConstructors.UserData;
+import utils.Locator;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.DataContainer;
 
 public class LoggedOutHeader extends Header{
 
-    private static final String BUTTON_LOGIN_XP = 		ROOT_XP+"//*[contains(@class, 'btn fr')]";
+    private static final Locator BUTTON_LOGIN_XP = 		new Locator("fn-login", ROOT_XP+"//*[contains(@class, 'btn fr')]", ".btn.fr.fn-login");
     //Desktop only
     private static final String FIELD_USERNAME_XP= 		ROOT_XP+"//*[@id='name']";
     private static final String FIELD_PASSWORD_XP= 		ROOT_XP+"//*[@id='password']";
@@ -22,7 +23,7 @@ public class LoggedOutHeader extends Header{
 	private static final String CHECKBOX_REMEMBER_ME=	ROOT_XP+"//*[@id='rememberme']";
 
 	public LoggedOutHeader(){
-		super(new String[]{BUTTON_LOGIN_XP});
+		super(new String[]{BUTTON_LOGIN_XP.getXpath()});
 	}
 
     public void clickButtonLogin(){
@@ -90,7 +91,7 @@ public class LoggedOutHeader extends Header{
 	}
 
     public String getLoginButtonText() {
-        return WebDriverUtils.getElementText(BUTTON_LOGIN_XP);
+        return WebDriverUtils.getElementText(BUTTON_LOGIN_XP.getXpath());
     }
 
 	/* VALIDATION */

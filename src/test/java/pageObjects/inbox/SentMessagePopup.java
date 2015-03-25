@@ -10,7 +10,7 @@ public class SentMessagePopup extends AbstractPortalPopup{
     private static final String FIELD_MESSAGE_XP=	"//th[contains(text(),'Message')]/following-sibling::td";
 
 	public SentMessagePopup(){
-			super(new String[]{BUTTON_CLOSE_XP});
+			super(new String[]{BUTTON_CLOSE_XP.getXpath()});
 			WebDriverUtils.waitFor(2000);
 		}
 

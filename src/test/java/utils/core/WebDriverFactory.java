@@ -1,10 +1,12 @@
 package utils.core;
 
+import enums.PlatForm;
 import io.appium.java_client.ios.IOSDriver;
 import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -14,6 +16,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import springConstructors.Device;
 import springConstructors.DeviceData;
 import springConstructors.DriverData;
 
@@ -25,44 +28,57 @@ public class WebDriverFactory{
 	private static WebDriver portalDriver;
     private static WebDriver serverDriver;
     private static WebDriver logDriver;
-    private static String browser;
-    private static String os;
-    private static String device;
-    private static URL remote;
-    private static String serial;
-    private static String pathToDownloadsFolder;
+    private static String    browser;
+    private static String    os;
+    private static String    deviceId;
+    private static PlatForm  platform;
+    private static String    pathToDownloadsFolder;
     private static final String LOCALHOST =  "127.0.0.1";
     private static final String REMOTE =     "172.29.49.73";
     private static final String REMOTE_MAC = "172.29.46.170";
 
     public static void initializeWebDrivers(DriverData driverData, DeviceData deviceData){
-        browser =   driverData.getBrowser();
-        os =        driverData.getOs();
-        device =    driverData.getDevice();
-        remote = deviceData.getRemoteByName(device, browser);
-        serial = deviceData.getSerialByName(device);
-//		try{
-//			logDriver = initializeWebDriver(browser, os);
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-		portalDriver = initializeWebDriver();
+        browser =    driverData.getBrowser();
+        os =         driverData.getOs();
+        deviceId =   driverData.getDeviceId();
+        platform =   getPlatform(os);
+		portalDriver = initializeWebDriver(deviceData.getDeviceById(deviceId));
         setServerDriver(getRemoteDriver("firefox"));
         pathToDownloadsFolder = setPathToDownloadsFolder("Downloads");
 	}
 
-	private static WebDriver initializeWebDriver(){
+    private static PlatForm getPlatform(String os) {
+        switch (os) {
+            case "ios":
+            case "android":
+            case "winPhone":
+                return PlatForm.mobile;
+            case "windows":
+            case "linux":
+            case "mac":
+            case "remote":
+                return PlatForm.desktop;
+            default:
+                return null;
+        }
+    }
+
+    public static String getOs() {
+        return os;
+    }
+
+    private static WebDriver initializeWebDriver(Device device){
 		WebDriver driver = null;
 		try{
             switch (os) {
                 case "ios":
-                    driver = createIOSDriver();
+                    driver = createIOSDriver(device);
                     break;
                 case "android":
                     if (browser.equals("native")) {
-                        driver = createAndroidDriver();
+                        driver = createAndroidDriver(device);
                     } else if (browser.equals("chrome")) {
-                        driver = getMobileChromeDriver();
+                        driver = getMobileChromeDriver(device);
                     }
                     break;
                 case "winPhone":
@@ -197,45 +213,49 @@ public class WebDriverFactory{
         }
     }
 
-    private static WebDriver createAndroidDriver(){
+    private static WebDriver createAndroidDriver(Device device){
         WebDriver driver;
         SelendroidCapabilities capabilities = new SelendroidCapabilities();
         capabilities.setBrowserName("android");
         capabilities.setPlatform(Platform.ANDROID);
-        capabilities.setSerial(serial);
+        capabilities.setSerial(device.getSerial());
         try {
-            driver = new SelendroidDriver(remote, capabilities);
+            driver = new SelendroidDriver(getUrl(device.getRemote()), capabilities);
         }catch (Exception e){
             throw new RuntimeException("Starting webdriver failed \n" + e);
         }
         return driver;
     }
 
-    private static WebDriver createIOSDriver() {
+    private static WebDriver createIOSDriver(Device iOSDevice) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("deviceName", "MWS iPhone 6 M0164");
         capabilities.setCapability("platfromName", "iOS");
-        capabilities.setCapability("platfromVersion", "8.2");
-        capabilities.setCapability("udid", "d154b25d17a9f262251b58f48f3da446dc746415");
         capabilities.setCapability("browserName", "Safari");
         capabilities.setCapability("autoWebview", true);
+        capabilities.setCapability("deviceName", iOSDevice.getName());
+        capabilities.setCapability("platfromVersion", iOSDevice.getVersion());
+        capabilities.setCapability("udid", iOSDevice.getSerial());
 
-        IOSDriver driver = new IOSDriver(getUrl(REMOTE_MAC, "4723", "wd/hub"), capabilities);
+        IOSDriver driver = new IOSDriver(getUrl(iOSDevice.getRemote()), capabilities);
         return driver;
     }
 
-    private static URL getUrl(String host, String port, String suffix) {
+    private static URL getUrl(String url) {
         try {
-            return new URL("http://"+ host +":" + port + "/" + suffix);
+            return new URL(url);
         } catch (MalformedURLException e) {
             throw new RuntimeException("Please set correct URL");
         }
     }
 
-    private static WebDriver getMobileChromeDriver() {
+    private static URL getUrl(String host, String port, String suffix) {
+       return getUrl("http://"+ host +":" + port + "/" + suffix);
+    }
+
+    private static WebDriver getMobileChromeDriver(Device device) {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setExperimentalOption("androidPackage", "com.android.chrome");
-        chromeOptions.setExperimentalOption("androidDeviceSerial", serial);
+        chromeOptions.setExperimentalOption("androidDeviceSerial", device.getSerial());
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         // return new RemoteWebDriver(remote, capabilities);
@@ -258,5 +278,9 @@ public class WebDriverFactory{
 
     public static String getPathToDownloadsFolder(){
         return pathToDownloadsFolder;
+    }
+
+    public static PlatForm getPlatform() {
+        return platform;
     }
 }

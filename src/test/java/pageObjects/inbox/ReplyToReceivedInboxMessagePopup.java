@@ -10,7 +10,7 @@ public class ReplyToReceivedInboxMessagePopup extends AbstractPortalPopup{
 	private static final String BUTTON_SEND_XP=		ROOT_XP + "//*[@id = 'sendMessageBtn']";
 
 	public ReplyToReceivedInboxMessagePopup(){
-		super(new String[]{BUTTON_CLOSE_XP});
+		super(new String[]{BUTTON_CLOSE_XP.getXpath()});
 	}
 
 	public InboxPage clickSendButton(){
