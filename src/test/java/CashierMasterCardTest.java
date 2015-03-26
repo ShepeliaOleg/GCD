@@ -58,7 +58,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardDepositValidBonusCode(){
-        skipTestWithIssues("D-18311");
+        //skipTestWithIssues("D-18311");
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
@@ -96,7 +96,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardExpiredWithdraw(){
-        skipTestWithIssues("D-18404");
+        //skipTestWithIssues("D-18404");
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawExpired(PaymentMethod.MasterCard, AMOUNT);
