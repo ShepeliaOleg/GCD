@@ -20,65 +20,65 @@ public class WebContentPage extends AbstractPortalPage{
         super(new String[]{IMAGE_XP});
     }
 
-    public LoginPopup clickLoggedOut(GameLaunch type, int page){
-        clickByType(type, page);
+    public LoginPopup clickLoggedOut(GameLaunch type, int slideIndex){
+        clickByType(type, slideIndex);
         return new LoginPopup();
     }
 
-    public AdminCanNotPlayPopup clickAdmin(GameLaunch type, int page){
-        clickByType(type, page);
+    public AdminCanNotPlayPopup clickAdmin(GameLaunch type, int slideIndex){
+        clickByType(type, slideIndex);
         return new AdminCanNotPlayPopup();
     }
 
-    private void clickButton(int page){
-        WebDriverUtils.click("//li["+page+"]"+BUTTON_XP);
+    private String getSlidePrefix(int slideIndex) {
+        return "//li[" + slideIndex + "]";
     }
 
-    private void clickImage(int page){
-        WebDriverUtils.click("//li["+page+"]"+IMAGE_XP);
+    private void clickButton(int slideIndex){
+        WebDriverUtils.click(getSlidePrefix(slideIndex) + BUTTON_XP);
     }
 
-    private String clickByType(GameLaunch type, int page){
-        String multiPage;
-        if(WebDriverUtils.isVisible(BannerPage.ROOT_XP, 1)){
-            multiPage = "//li["+page+"]";
-        }else {
-            multiPage = "";
-        }
-        String gameId = getGameID(type, multiPage);
-        clickGame(type, multiPage);
+    private void clickImage(int slideIndex){
+        WebDriverUtils.click(getSlidePrefix(slideIndex) + IMAGE_XP);
+    }
+
+    private String clickByType(GameLaunch type, int slideIndex){
+        String gameId = getGameID(type, slideIndex);
+        clickGameOnSlide(type, slideIndex);
         return gameId;
     }
 
-    private void clickGame(GameLaunch type, String multipage){
-        String xpath = BUTTON_XP;
-        if(type.equals(GameLaunch.image)){
-            xpath = IMAGE_XP;
+    private void clickGameOnSlide(GameLaunch type, int slideIndex){
+        switch (type){
+            case button:
+                clickButton(slideIndex); break;
+            case image:
+                clickImage(slideIndex);  break;
         }
-        WebDriverUtils.click(multipage+xpath);
     }
 
-    public void playAndAssertUrl(GameLaunch type, int page, UserData userData){
-        String gameID = clickByType(type, page);
+    public void playAndAssertUrl(GameLaunch type, int slideIndex, UserData userData){
+        String gameId = clickByType(type, slideIndex);
         if(userData!=null){
             LoginPopup loginPopup = new LoginPopup();
             loginPopup.login(userData, false, Page.gameLaunch);
         }
-        NavigationUtils.assertGameLaunch(gameID, 1);
+        NavigationUtils.assertGameLaunch(gameId, 1);
     }
 
-    public void playAndAssertUrl(GameLaunch type, int page){
-        playAndAssertUrl(type, page, null);
+    public void playAndAssertUrl(GameLaunch type, int slideIndex){
+        playAndAssertUrl(type, slideIndex, null);
     }
 
-    private String getGameID(GameLaunch type, String multiPage){
-        String xpath;
-        if(type.equals(GameLaunch.image)){
-            xpath=IMAGE_XP + "/..";
-        }else {
-            xpath = BUTTON_XP;
+    private String getGameID(GameLaunch type, int slideIndex){
+        String xpath = null;
+        switch (type) {
+            case image:
+                xpath = WebDriverUtils.getPrecedingElement(IMAGE_XP); break;
+            case button:
+                xpath = BUTTON_XP; break;
         }
-        return WebDriverUtils.getAttribute(multiPage+xpath, "data-game-code");
+        return WebDriverUtils.getAttribute(getSlidePrefix(slideIndex) + xpath, "data-game-code");
     }
 
     public void clickNextSlide(){
