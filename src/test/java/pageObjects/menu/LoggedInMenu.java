@@ -1,16 +1,17 @@
 package pageObjects.menu;
 
-import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.cashier.deposit.DepositPage;
+import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.login.LogoutPopup;
 import pageObjects.referAFriend.ReferAFriendPopup;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
+import utils.Locator;
 import utils.WebDriverUtils;
 
 public class LoggedInMenu extends Menu {
 
-    protected static final String BUTTON_LOGOUT_XP =        ROOT_XP + "//*[contains(@class,'fn-logout')]";
+    protected static final Locator BUTTON_LOGOUT_XP =       new Locator("fn-logout", ROOT_XP + "//*[contains(@class,'fn-logout')]", null);
     private static final String REFER_A_FRIEND_XP =         ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-refer-friend')]]";
     private static final String MY_BALANCE_XP =             ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-my-balance')]]";
     private static final String UPDATE_MY_DETAILS_XP =      ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-update-details')]]";
@@ -24,7 +25,7 @@ public class LoggedInMenu extends Menu {
     private static final String HIDE_BALANCE_XP =           ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-balance')]]";
 
 	public LoggedInMenu(){
-		super(new String[]{BUTTON_LOGOUT_XP});
+		super(new String[]{BUTTON_LOGOUT_XP.getXpath()});
 	}
 
     public LogoutPopup clickLogout(){

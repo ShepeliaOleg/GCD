@@ -7,6 +7,7 @@ import pageObjects.core.AbstractPortalPopup;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
+import utils.Locator;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -14,15 +15,15 @@ import utils.core.DataContainer;
 
 public class LoginPopup extends AbstractPortalPopup {
 
-    public static final String INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
-    private static final String INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
-    private static final String CHECKBOX_REMEMBERME_XP=		ROOT_XP + "//*[@id='rememberme']";
-    private static final String LINK_FORGOTTEN_XP=			ROOT_XP + "//*[@class='fn-forgot-password']";
-    public static final String BUTTON_LOGIN_XP =			ROOT_XP + "//*[contains(@class, 'fn-login-btn')]";
-    private static final String LINK_REGISTER_XP=			ROOT_XP + "//*[@href='/register']";
-    public static final String LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'error')]";
-    private static final String DESCRIPTION_MSG_XP=         ROOT_XP + "//*[@class='popup-modal__description']";
-    public static final String LABEL_TIMEOUT_ERROR_XP=      LABEL_VALIDATION_ERROR_XP + "[contains(text(), 'Timeout occurred')]";
+    public  static final String  INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
+    private static final String  INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
+    private static final String  CHECKBOX_REMEMBERME_XP=	ROOT_XP + "//*[@id='rememberme']";
+    private static final Locator LINK_FORGOTTEN_XP=			new Locator("fn-forgot-password", ROOT_XP + "//*[@class='fn-forgot-password']", null);
+    public  static final String  BUTTON_LOGIN_XP =			ROOT_XP + "//*[contains(@class, 'fn-login-btn')]";
+    private static final String  LINK_REGISTER_XP=			ROOT_XP + "//*[@href='/register']";
+    public  static final String  LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'error')]";
+    private static final String  DESCRIPTION_MSG_XP=        ROOT_XP + "//*[@class='popup-modal__description']";
+    public  static final String  LABEL_TIMEOUT_ERROR_XP=    LABEL_VALIDATION_ERROR_XP + "[contains(text(), 'Timeout occurred')]";
 
 	public LoginPopup(){
 		super(new String[]{INPUT_USERNAME_XP});

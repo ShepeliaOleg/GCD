@@ -4,6 +4,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.menu.Menu;
+import utils.Locator;
 import utils.WebDriverUtils;
 import utils.core.WebDriverFactory;
 
@@ -16,7 +17,7 @@ public class Header extends AbstractPageObject{
     //Desktop only
     private static final String DROPDOWN_LANGUAGE_XP =	"//*[contains(@class, 'fn-language-trigger')]";
     //Mobile only
-    public static final String MENU_XP =       ROOT_XP + "//*[contains(@class,'fn-open-menu')]";
+    public static final Locator MENU_XP =       new Locator("fn-open-menu", ROOT_XP + "//*[contains(@class,'fn-open-menu')]", null);
 
     public Header(){
 		super(WebDriverFactory.getPortalDriver(), new String[]{ROOT_XP});

@@ -59,7 +59,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 	private static final String FIELD_VERIFICATION_QUESTION=				"//*[@id='verificationquestion']";
 	private static final String FIELD_VERIFICATION_ANSWER=					"//*[@id='verificationanswer']";
     private static final String FIELD_CLIENT_TYPE=                          "//*[preceding-sibling::*[contains(text(), 'Sign up client type:')]][1]";
-    private static final String FIELD_LAST_LOGIN_DEVICE_TYPE =              "//*[@id='ssec_supinfo' and contains(., 'Last login deviceId type:')]/td[4]";
+    private static final String FIELD_LAST_LOGIN_DEVICE_TYPE =              "//*[@id='ssec_supinfo' and contains(., 'Last login device type:')]/td[4]";
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
