@@ -272,9 +272,11 @@ public class PushMessagesBonusTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseStart() {
         //skipTestWithIssues("D-18046");
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
-        IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
+        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+        //UserData userData = DataContainer.getUserData().getRandomUserData();
+        //PortalUtils.registerUser(userData);
+        //IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
+        IMSUtils.sendPushMessage(DataContainer.getUserData(), BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
         okBonusPopup.assertPopupTitleText("Congratulations (1/3)");
         validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
@@ -289,9 +291,8 @@ public class PushMessagesBonusTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void onlineMultipleNavigationCloseEnd() {
         //skipTestWithIssues("D-18046");
-        UserData userData = DataContainer.getUserData().getRandomUserData();
-        PortalUtils.registerUser(userData);
-        IMSUtils.sendPushMessage(userData, BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
+        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
+        IMSUtils.sendPushMessage(DataContainer.getUserData(), BONUS_AMOUNT, Page.okBonus, Page.acceptDeclineBonus, Page.acceptDeclineBonus);
         OkBonusPopup okBonusPopup = new OkBonusPopup();
         validateTrue(okBonusPopup.threePopUpsIsAppeared(), "Three bonus popups weren't appeared!");
         okBonusPopup.assertPopupTitleText("Congratulations (1/3)");
@@ -306,7 +307,7 @@ public class PushMessagesBonusTest extends AbstractTest{
         new OkBonusPopup();
     }
 
-//	/*7. Push messages for bonus opt in/out */
+//	//*7. Push messages for bonus opt in/out
 //	//@Test(groups = {"regression", "mobile"})
 //	public void pushMessageOptIn(){
 //        UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -318,7 +319,7 @@ public class PushMessagesBonusTest extends AbstractTest{
 //		optOutPopup.clickOptOut().closePopup();
 //	}
 
-//	/*8. Push message for bonus buy in */
+//	//*8. Push message for bonus buy in
 //	//@Test(groups = {"regression", "mobile"})
 //	public void pushMessageBuyIn(){
 //		UserData userData = DataContainer.getUserData().getRegisteredUserData();
@@ -331,8 +332,8 @@ public class PushMessagesBonusTest extends AbstractTest{
 //		assertTrue(homePage.getBalanceChange(balance)==20);
 //	}
 
-    /*B-11130 Lose bonus confirmation on withdraw, fund transfer*/
-    /*#1. Click Decline button*/
+    //B-11130 Lose bonus confirmation on withdraw, fund transfer
+    //#1. Click Decline button
     @Test(groups = {"registration","regression"})
     public void loseOnWithdrawAccept(){
         skipTestWithIssues("D-18046, B-11130");
@@ -342,6 +343,7 @@ public class PushMessagesBonusTest extends AbstractTest{
 //        UserData userData=DataContainer.getUserData().getRegisteredUserData();
 //        userData.setUsername("HSekq");
 //        PortalUtils.loginUser(userData);
+
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         assertEquals("20.00", withdrawPage.getBalanceAmount(refreshPage), "Balance is 20 (10 real + 10 bonus).");
         withdrawPage.withdraw(PaymentMethod.PayPal, PromoCode.valid.getAmount());

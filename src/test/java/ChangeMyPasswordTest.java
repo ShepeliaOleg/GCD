@@ -45,7 +45,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 //	}
 
     //*1. Portlet is displayed in CHANGE PASSWORD POPUP
-    @Test(groups = {"smoke"})
+    //***@Test(groups = {"smoke"})
     public void portletIsDisplayedOnPopup(){
         try{
             homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
@@ -119,6 +119,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
+		NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
 		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
@@ -128,7 +129,10 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+			System.out.println("OLD PASSWORD: "+userData.getPassword());
 		userData.setPassword(newPassword);
+			System.out.println("NEw PASSWORD: "+userData.getPassword());
+			WebDriverUtils.waitFor(5000);
 		homePage.login(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndClickSubmit(newPassword, oldPassword);
