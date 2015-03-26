@@ -149,7 +149,7 @@ public class WebDriverUtils{
                     click(webDriver, locator.getXpath());
                     break;
                 case mobile:
-                    tap(webDriver, locator);
+                    tap(webDriver, locator.getCss());
                     break;
             }
     }
@@ -989,19 +989,15 @@ public class WebDriverUtils{
         });
     }
 
-    public static void tap(WebDriver webDriver, Locator locator) {
-        String css = locator.getCss();
-        System.out.println("Taping "+ css +" element");
-        tap(webDriver, css);
-    }
-
-    public static void tap(Locator locator) {
-        tap(WebDriverFactory.getPortalDriver(), locator);
-    }
-
-
-    private static void tap(WebDriver webDriver, String css) {
+    /*private static void tap(WebDriver webDriver, String css) {
+        System.out.println("Tapping "+ css +" element");
         TouchAct touchAct = new TouchAct(webDriver);
         touchAct.tap(css);
+    }*/
+
+    private static void tap(WebDriver webDriver, String css) {
+        System.out.println("Tapping "+ css +" element");
+        executeScript(webDriver, "$('"+ css + "').trigger('tap')");
     }
+
 }
