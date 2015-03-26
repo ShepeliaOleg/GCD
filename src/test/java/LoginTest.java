@@ -233,19 +233,34 @@ public class LoginTest extends AbstractTest{
         assertTrue(IMSUtils.isPlayerLoggedIn(userData.getUsername()),"User is logged in on IMS");
 	}
 
-    /*17. Device Detection On Login. Supported Device*/
-    @Test (groups = {"mobile"})
-    public void deviceDetectionOnLoginSupportedDevice(){
+    /*17. Device detection after registration on supported mobile device.*/
+    @Test (groups = {"regression", "mobile"})
+    public void deviceDetectionAfterRegistrationSupportedDevice(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
         assertEquals(DataContainer.getDriverData().getDeviceId(), IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
     }
 
-    /*18. Device Detection On Login. Unsupported Device*/
-    @Test (groups = {"regression"})
-    public void deviceDetectionOnLoginUnsupportedDevice(){
+    /*18. Device detection after login on supported mobile device.*/
+    @Test (groups = {"regression", "mobile"})
+    public void deviceDetectionAfterLoginSupportedDevice(){
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
+        PortalUtils.loginUser(userData);
+        assertEquals(DataContainer.getDriverData().getDeviceId(), IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
+    }
+
+    /*19. Device detection after registration on unsupported device - desktop. */
+    @Test (groups = {"regression", "desktop"})
+    public void deviceDetectionAfterRegistrationUnsupportedDevice(){
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
+        assertEquals("other", IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
+    }
+    /*20. Device detection after login on unsupported device - desktop. */
+    @Test (groups = {"regression", "desktop"})
+    public void deviceDetectionAfterLoginUnsupportedDevice(){
+        UserData userData = DataContainer.getUserData().getRegisteredUserData();
+        PortalUtils.loginUser(userData);
         assertEquals("other", IMSUtils.getLastLoginDeviceType(userData), "Device type is not correctly saved to IMS");
     }
 
