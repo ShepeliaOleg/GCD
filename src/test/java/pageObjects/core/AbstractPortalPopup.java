@@ -9,17 +9,17 @@ import utils.core.WebDriverFactory;
 
 public class AbstractPortalPopup extends AbstractPopup{
 
-    public static final String PORTLET_ERROR_XP= "//*[contains(@class,'error') or contains(@class, 'info__content')]";
-	public final static Locator BUTTON_CLOSE_XP =	new Locator("fn-close",   ROOT_XP + "//*[contains(@class, 'button_type_cancel')]", null);
-    public final static Locator BUTTON_DECLINE_XP =	new Locator("fn-decline", ROOT_XP + "//*[contains(@class, 'fn-decline')]", null);
-    public final static Locator BUTTON_ACCEPT_XP =  new Locator("fn-accept",  ROOT_XP + "//*[contains(@class, 'fn-accept')]", null);
-    public final static Locator BUTTON_NEXT_XP =    new Locator("fn-next",    TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]", null);
-    public final static Locator BUTTON_PREVIOUS_XP =new Locator("fn-prev",    TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]", null);
-    public final static String OFF_POPUP_XP =          "//*[contains(@class, 'fn-footer-wrapper')]";
-    public final static String TITLE_XP =        "//*[@class='popup-modal__title']";
-    public final static String CONTENT_XP =        "//*[@class='popup-modal__content']";
+    public static final String  PORTLET_ERROR_XP =   "//*[contains(@class,'error') or contains(@class, 'info__content')]";
+	public final static Locator BUTTON_CLOSE_XP =	 new Locator("fn-close",   ROOT_XP + "//*[contains(@class, 'button_type_cancel')]", null);
+    public final static Locator BUTTON_DECLINE_XP =	 new Locator("fn-decline", ROOT_XP + "//*[contains(@class, 'fn-decline')]",         null);
+    public final static Locator BUTTON_ACCEPT_XP =   new Locator("fn-accept",  ROOT_XP + "//*[contains(@class, 'fn-accept')]",          null);
+    public final static Locator BUTTON_NEXT_XP =     new Locator("fn-next",    TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]",        null);
+    public final static Locator BUTTON_PREVIOUS_XP = new Locator("fn-prev",    TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]",        null);
+    public final static String  OFF_POPUP_XP =       "//*[contains(@class, 'fn-footer-wrapper')]";
+    public final static String  TITLE_XP =           "//*[@class='popup-modal__title']";
+    public final static String  CONTENT_XP =         "//*[@class='popup-modal__content']";
 
-    private final static int OFFSET =               100;
+    private final static int OFFSET =               5;
 
 	public AbstractPortalPopup(){
 		this(null);
@@ -66,7 +66,6 @@ public class AbstractPortalPopup extends AbstractPopup{
         if(DataContainer.getDriverData().getBrowser().equals("safari")&&DataContainer.getDriverData().getOs().equals("mac")){
             WebDriverUtils.click(OFF_POPUP_XP);
         }else {
-            WebDriverUtils.waitFor(100);
             WebDriverUtils.click(ROOT_XP, OFFSET);
         }
         WebDriverUtils.waitFor();

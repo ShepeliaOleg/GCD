@@ -4,9 +4,9 @@ import com.google.common.base.Predicate;
 import enums.ConfiguredPages;
 import enums.Licensee;
 import io.appium.java_client.AppiumDriver;
-import io.selendroid.client.SelendroidDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.html5.*;
+import org.openqa.selenium.html5.LocalStorage;
+import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -162,10 +162,10 @@ public class WebDriverUtils{
         click(WebDriverFactory.getPortalDriver(), xpath, offset);
     }
 
-    public static void click(WebDriver webDriver, String xpath, int offset) {
-        System.out.println("Clicking " + xpath + " element with offset " + offset + "");
+    public static void click(WebDriver webDriver, String xpath, int xOffset) {
+        System.out.println("Clicking " + xpath + " element with offset " + xOffset + "");
         try {
-            getAction(webDriver).moveToElement(getElement(webDriver, xpath), -offset, 0).click().build().perform();
+            getAction(webDriver).moveToElement(getElement(webDriver, xpath), -xOffset, 0).click().build().perform();
         }catch (WebDriverException e){
             AbstractTest.failTest("Could not click element by xpath: " + xpath);
         }
