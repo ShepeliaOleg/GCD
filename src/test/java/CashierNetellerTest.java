@@ -58,11 +58,11 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositWithdrawForExistingUser() {
-        netellerDeposit();пше сщььше
+        netellerDeposit();
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         String balance = withdrawPage.getBalanceAmount();
         withdrawPage.withdrawSuccessful(PaymentMethod.Neteller, AMOUNT);
-        //assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
+        assertEquals(TypeUtils.calculateDiff(balance, AMOUNT), withdrawPage.getBalanceAmount(), "Balance change after withdraw");
     }
 
     @Test(groups = {"regression", "mobile"})
