@@ -80,6 +80,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression", "debugTest"})
 	public void passwordChangedInIMS(){
 		//newPassword = DataContainer.getUserData().getPassword();
+		newPassword = passwordValidationRule.generateValidString();
 		userData = DataContainer.getUserData().getRandomUserData();
 		homePage = PortalUtils.registerUser(userData);
 		String username = userData.getUsername();
