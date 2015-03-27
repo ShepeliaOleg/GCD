@@ -118,10 +118,8 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression", "debugTest"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
-		//*NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
-		//*WebDriverUtils.clearLocalStorage();
-		//*WebDriverUtils.clearCookies();
-
+		//NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
+		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
@@ -166,6 +164,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*4. New Password and Retype do not match
 	@Test(groups = {"regression", "debugTest"})
 	public void retypeIsNotEqualToPassword(){
+		//NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
 		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
