@@ -119,9 +119,10 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	@Test(groups = {"regression", "debugTest"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
-		NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
-		WebDriverUtils.clearLocalStorage();
-		WebDriverUtils.clearCookies();
+		//*NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
+		//*WebDriverUtils.clearLocalStorage();
+		//*WebDriverUtils.clearCookies();
+		/*
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
@@ -138,6 +139,24 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndClickSubmit(newPassword, oldPassword);
 		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
+		*/
+
+		userData = DataContainer.getUserData().getRandomUserData();
+		newPassword = passwordValidationRule.generateValidString();
+		String oldPassword = userData.getPassword();
+		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+		homePage = PortalUtils.registerUser(userData);
+		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+		playerDetailsPage.changePassword(newPassword, true);
+		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+		System.out.println("OLD PASSWORD: "+userData.getPassword());
+		userData.setPassword(newPassword);
+		System.out.println("NEw PASSWORD: " + userData.getPassword());
+		WebDriverUtils.waitFor(5000);
+		/*homePage.login(userData);
+		changePasswordPopup = homePage.navigateToChangePassword();
+		changePasswordPopup.fillFormAndClickSubmit(newPassword, oldPassword);
+		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");*/
 	}
 
 	//*4. New Password and Retype do not match
