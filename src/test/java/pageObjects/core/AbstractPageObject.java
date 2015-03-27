@@ -3,7 +3,6 @@ package pageObjects.core;
 import org.openqa.selenium.WebDriver;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.WebDriverFactory;
 
 public abstract class AbstractPageObject{
 

@@ -5,8 +5,7 @@ import enums.ConfiguredPages;
 import enums.Licensee;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.*;
-import org.openqa.selenium.html5.LocalStorage;
-import org.openqa.selenium.html5.WebStorage;
+import org.openqa.selenium.html5.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -1000,4 +999,11 @@ public class WebDriverUtils{
         executeScript(webDriver, "$('"+ css + "').trigger('tap')");
     }
 
+    public static int getCountOfNodes(WebDriver driver, String xpath) {
+        return  driver.findElements(By.xpath(xpath)).size();
+    }
+
+    public static int getCountOfNodes(String xpath) {
+        return getCountOfNodes(WebDriverFactory.getPortalDriver(), xpath);
+    }
 }

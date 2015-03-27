@@ -41,6 +41,7 @@ import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.replacers.BonusHistoryPage;
 import pageObjects.replacers.PromotionalCodeReplacerPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.responsibleGaming.SelfExcludePage;
@@ -117,6 +118,7 @@ public class NavigationUtils{
             case bingoLobbyFeed:
             case bingoScheduleFeed:                             return new BingoSchedulePage();
             case bonusPage:                                     return new BonusPage();
+            case bonusHistory:                                  return new BonusHistoryPage();
             case updateMyDetails:                               return new ChangeMyDetailsPage();
             case changeLanguage:                                return new ChangeLanguagePage();
             case changeMyPassword:                              return new ChangePasswordPage();
