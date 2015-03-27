@@ -45,7 +45,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 //	}
 
     //*1. Portlet is displayed in CHANGE PASSWORD POPUP
-    //***@Test(groups = {"smoke"})
+    @Test(groups = {"smoke"})
     public void portletIsDisplayedOnPopup(){
         try{
             homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
@@ -56,7 +56,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
     }
 
 	//*2. Submit correct data
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void changePasswordAndLogin(){
 		//skipTest("D-19748, System Error");
 		userData = DataContainer.getUserData().getRandomUserData();
@@ -77,7 +77,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*3. IMS Player Details Page
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void passwordChangedInIMS(){
 		newPassword = DataContainer.getUserData().getPassword();
 		userData = DataContainer.getUserData().getRandomUserData();
@@ -93,7 +93,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	//*NEGATIVE
 
 	//*1. Incorrect old password
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void incorrectOldPassword(){
 		//skipTest("System Error, D-18632");
 		userData = DataContainer.getUserData().getRandomUserData();
@@ -105,7 +105,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*2. New password is the same as old
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void changeToSamePassword(){
 		//skipTest("System Error, D-18632");
 		userData = DataContainer.getUserData().getRandomUserData();
@@ -116,11 +116,12 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*3. New password which has been used recently
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void recentlyUsedPassword(){
 		//skipTest("System Error, D-18632");
 		NavigationUtils.navigateToPage(PlayerCondition.any, ConfiguredPages.home);
 		WebDriverUtils.clearLocalStorage();
+		WebDriverUtils.clearCookies();
 		userData = DataContainer.getUserData().getRandomUserData();
 		newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
@@ -131,7 +132,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 			System.out.println("OLD PASSWORD: "+userData.getPassword());
 		userData.setPassword(newPassword);
-			System.out.println("NEw PASSWORD: "+userData.getPassword());
+			System.out.println("NEw PASSWORD: " + userData.getPassword());
 			WebDriverUtils.waitFor(5000);
 		homePage.login(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
@@ -140,7 +141,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*4. New Password and Retype do not match
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "debugTest"})
 	public void retypeIsNotEqualToPassword(){
 		WebDriverUtils.clearLocalStorage();
 		userData = DataContainer.getUserData().getRandomUserData();

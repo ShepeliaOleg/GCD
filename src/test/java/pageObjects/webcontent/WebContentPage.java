@@ -31,7 +31,8 @@ public class WebContentPage extends AbstractPortalPage{
     }
 
     private String getSlidePrefix(int slideIndex) {
-        return "//li[" + slideIndex + "]";
+        return "//*[" + slideIndex + "]";
+        //return "//li[" + slideIndex + "]";
     }
 
     private void clickButton(int slideIndex){
