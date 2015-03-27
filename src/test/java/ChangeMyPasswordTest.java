@@ -147,7 +147,10 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		*/
 
 		userData = DataContainer.getUserData().getRandomUserData();
-		//newPassword = passwordValidationRule.generateValidString();
+		newPassword = passwordValidationRule.generateValidString();
+		System.out.println("-----------");
+		System.out.println(newPassword);
+		System.out.println("-----------");
 		String oldPassword = userData.getPassword();
 		//*NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage = PortalUtils.registerUser(userData);
