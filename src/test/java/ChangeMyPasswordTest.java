@@ -77,7 +77,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*3. IMS Player Details Page
-	@Test(groups = {"regression", "debugTest"})
+	//*@Test(groups = {"regression", "debugTest"})
 	public void passwordChangedInIMS(){
 		//newPassword = DataContainer.getUserData().getPassword();
 		newPassword = passwordValidationRule.generateValidString();
