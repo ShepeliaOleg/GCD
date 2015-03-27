@@ -146,6 +146,9 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		String oldPassword = userData.getPassword();
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage = PortalUtils.registerUser(userData);
+		PortalUtils.logout();
+		WebDriverUtils.clearCookies();
+		WebDriverUtils.clearLocalStorage();
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
