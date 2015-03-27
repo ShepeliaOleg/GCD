@@ -4,7 +4,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import utils.Locator;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
-import utils.core.DataContainer;
 import utils.core.WebDriverFactory;
 
 public class AbstractPortalPopup extends AbstractPopup{
@@ -15,11 +14,8 @@ public class AbstractPortalPopup extends AbstractPopup{
     public final static Locator BUTTON_ACCEPT_XP =   new Locator("fn-accept",  ROOT_XP + "//*[contains(@class, 'fn-accept')]",          null);
     public final static Locator BUTTON_NEXT_XP =     new Locator("fn-next",    TOP_ROOT_XP + "//*[contains(@class, 'fn-next')]",        null);
     public final static Locator BUTTON_PREVIOUS_XP = new Locator("fn-prev",    TOP_ROOT_XP + "//*[contains(@class, 'fn-prev')]",        null);
-    public final static String  OFF_POPUP_XP =       "//*[contains(@class, 'fn-footer-wrapper')]";
     public final static String  TITLE_XP =           "//*[@class='popup-modal__title']";
     public final static String  CONTENT_XP =         "//*[@class='popup-modal__content']";
-
-    private final static int OFFSET =               5;
 
 	public AbstractPortalPopup(){
 		this(null);
@@ -62,12 +58,8 @@ public class AbstractPortalPopup extends AbstractPopup{
         WebDriverUtils.waitFor();
     }
 
-    public void clickOffPopup(){
-        if(DataContainer.getDriverData().getBrowser().equals("safari")&&DataContainer.getDriverData().getOs().equals("mac")){
-            WebDriverUtils.click(OFF_POPUP_XP);
-        }else {
-            WebDriverUtils.click(ROOT_XP, OFFSET);
-        }
+    public void clickOffPopup() {
+        WebDriverUtils.clickWithOffset(ROOT_XP);
         WebDriverUtils.waitFor();
     }
 

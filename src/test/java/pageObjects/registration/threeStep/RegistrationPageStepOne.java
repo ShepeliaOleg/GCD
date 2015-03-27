@@ -4,6 +4,7 @@ import enums.PromoCode;
 import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
+import utils.Locator;
 import utils.WebDriverUtils;
 
 public class RegistrationPageStepOne extends RegistrationPage {
@@ -12,10 +13,10 @@ public class RegistrationPageStepOne extends RegistrationPage {
     private final static String DROPDOWN_TITLE_NAME =                               "title";
     public final static String FIELD_EMAIL_VERIFICATION_NAME = 					    "emailVerify";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";
-    protected final static String LINK_ADULT_CONTENT_XP=							"//*[@data-article-id='18PLUS']";
+    protected final static Locator LINK_ADULT_CONTENT_XP=							new Locator("fn-popup-open", "//*[@data-article-id='18PLUS']", null);
 
     public RegistrationPageStepOne(){
-        super(new String[]{ROOT_XP, BUTTON_NEXT_XP, LINK_ADULT_CONTENT_XP});
+        super(new String[]{ROOT_XP, BUTTON_NEXT_XP, LINK_ADULT_CONTENT_XP.getXpath()});
     }
 
     public void registerNewUser(UserData userData, boolean termsAndConditions, boolean promotions, PromoCode promoCode){

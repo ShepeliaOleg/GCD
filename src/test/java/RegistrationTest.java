@@ -1,5 +1,4 @@
 import enums.*;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
 import pageObjects.core.AbstractPortalPage;
@@ -488,7 +487,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups= {"registration", "regression"})
     public void dublicateEmailLookupEditingEmailAddress(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
         loginPopup.validateDescriptionMesageDublicateEmail();
         loginPopup.closePopup();
@@ -504,7 +503,7 @@ public class RegistrationTest extends AbstractTest{
     public void dublicateEmailLookupLoggingInFromLoginModalOverlay(){
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
         loginPopup.login(userData);
         validateTrue(new HomePage().isUsernameDisplayed(userData.getUsername()), "User is logged in from Login modal overlay");
@@ -514,11 +513,11 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups= {"registration", "regression"})
     public void dublicateEmailLookupLoginPopupInitiatingInitiating(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
         loginPopup.validateDescriptionMesageDublicateEmail();
         loginPopup.closePopup();
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         loginPopup.validateDescriptionMesageDublicateEmail();
     }
 
@@ -526,14 +525,14 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups= {"registration", "regression"})
     public void dublicateEmailLookupFogottenPasswordPopup(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
         loginPopup.clickForgotPassword();
         ForgotPasswordPopup forgotPasswordPopup = new ForgotPasswordPopup();
         forgotPasswordPopup.closePopup();
         registrationPage.validateTooltipDublicateEmail();
         registrationPage.verifyWhetherEmailStillInputedInInputField();
-        registrationPage.inputDublicateEmail();
+        registrationPage.inputDuplicateEmail();
         loginPopup.clickForgotPassword();
         forgotPasswordPopup.fillDataAndClosePopup(DataContainer.getUserData().getRegisteredUserData());
         registrationPage.validateTooltipDublicateEmail();

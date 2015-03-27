@@ -123,6 +123,19 @@ public class WebDriverUtils{
 
     //Element actions
 
+
+    /* YIU implementation
+    private static void tap(WebDriver webDriver, String css) {
+        System.out.println("Tapping "+ css +" element");
+        TouchAct touchAct = new TouchAct(webDriver);
+        touchAct.tap(css);
+    }*/
+
+    private static void tap(WebDriver webDriver, String css) {
+        System.out.println("Tapping "+ css +" element");
+        executeScript(webDriver, "$('"+ css + "').trigger('tap')");
+    }
+
     public static void click(Locator locator){
         click(WebDriverFactory.getPortalDriver(), locator);
     }
@@ -153,24 +166,38 @@ public class WebDriverUtils{
             }
     }
 
+    public static void clickWithOffset(String xpath){
+        clickWithOffset(WebDriverFactory.getPortalDriver(), getElement(xpath), 0, -5);
+    }
+
+    public static void clickWithOffset(WebElement webElement){
+        clickWithOffset(WebDriverFactory.getPortalDriver(), webElement, 0, -5);
+    }
+
+    /**
+     * Moves the mouse to an offset from the top-left corner of the element.
+     * @param xOffset Offset from the top-left corner. A negative value means coordinates left from the element.
+     * @param yOffset Offset from the top-left corner. A negative value means coordinates above the element.
+     */
+
+    public static void clickWithOffset(WebElement webElement, int xOffset, int yOffset){
+        clickWithOffset(WebDriverFactory.getPortalDriver(), webElement, xOffset, yOffset);
+    }
+
+    public static void clickWithOffset(WebDriver webDriver, WebElement webElement, int xOffset, int yOffset) {
+        System.out.println("Clicking web element with X offset " + xOffset + " and Y offset " + yOffset + ".");
+        try {
+            getAction(webDriver).moveToElement(webElement, xOffset, yOffset).click().build().perform();
+        }catch (WebDriverException e){
+            AbstractTest.failTest("Could not click element on web element with X offset " + xOffset + " and Y offset " + yOffset + ".");
+        }
+    }
+
     private static Actions getAction(WebDriver webDriver) {
         return new Actions(webDriver);
     }
 
-    public static void click(String xpath, int offset){
-        click(WebDriverFactory.getPortalDriver(), xpath, offset);
-    }
-
-    public static void click(WebDriver webDriver, String xpath, int xOffset) {
-        System.out.println("Clicking " + xpath + " element with offset " + xOffset + "");
-        try {
-            getAction(webDriver).moveToElement(getElement(webDriver, xpath), -xOffset, 0).click().build().perform();
-        }catch (WebDriverException e){
-            AbstractTest.failTest("Could not click element by xpath: " + xpath);
-        }
-    }
-
-    public static String getAttribute( String xpath, String attribute){
+    public static String getAttribute(String xpath, String attribute){
         System.out.println("Getting attribute "+attribute+" of "+xpath+" element");
         return getAttribute(WebDriverFactory.getPortalDriver(), xpath, attribute);
     }
@@ -336,11 +363,7 @@ public class WebDriverUtils{
     }
 
     protected static void clearField(WebDriver webDriver, String xpath){
-        try{
-            getElement(webDriver, xpath).clear();
-        }catch(NoSuchElementException e){
-            AbstractTest.failTest("Could not find element: " + xpath);
-        }
+        getElement(webDriver, xpath).clear();
     }
 
     public static String getInputFieldText(String xpath){
@@ -891,6 +914,25 @@ public class WebDriverUtils{
         return baseUrl.substring(firstDotIndex).replace("/", "").replace(":8080", "");
     }
 
+    private static WebElement getElement(Locator locator) {
+        return getElement(WebDriverFactory.getPortalDriver(), locator);
+    }
+
+    private static WebElement getElement(WebDriver webDriver, Locator locator) {
+        String css = locator.getCss();
+        System.out.println("Getting element by css " + css);
+        try{
+            return webDriver.findElement(By.cssSelector(css));
+        }catch(NoSuchElementException e){
+            AbstractTest.failTest("Could not find element by css: " + css);
+        }
+        return null;
+    }
+
+    public static WebElement getElement(String xpath) {
+        return getElement(WebDriverFactory.getPortalDriver(), xpath);
+    }
+
     private static WebElement getElement(WebDriver webDriver, String xpath) {
         System.out.println("Getting element by xpath "+xpath);
         try{
@@ -986,17 +1028,6 @@ public class WebDriverUtils{
                 return input.exists() && input.length() > 0;
             }
         });
-    }
-
-    /*private static void tap(WebDriver webDriver, String css) {
-        System.out.println("Tapping "+ css +" element");
-        TouchAct touchAct = new TouchAct(webDriver);
-        touchAct.tap(css);
-    }*/
-
-    private static void tap(WebDriver webDriver, String css) {
-        System.out.println("Tapping "+ css +" element");
-        executeScript(webDriver, "$('"+ css + "').trigger('tap')");
     }
 
     public static int getCountOfNodes(WebDriver driver, String xpath) {

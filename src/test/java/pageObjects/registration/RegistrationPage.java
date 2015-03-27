@@ -6,7 +6,6 @@ import enums.PasswordStrength;
 import enums.PromoCode;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
-import pageObjects.login.LoginPopup;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
@@ -527,9 +526,8 @@ public class RegistrationPage extends AbstractPortalPage {
         return WebDriverUtils.getDropdownOptionsValue(DROPDOWN_BIRTHDAY_XP);
     }
 
-    public void inputDublicateEmail(){
+    public void inputDuplicateEmail(){
         ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_EMAIL_NAME), DataContainer.getUserData().getRegisteredUserData().getEmail());
-        WebDriverUtils.waitForElement(LoginPopup.INPUT_USERNAME_XP, 1000);
     }
 
     public void verifyWhetherEmailStillInputedInInputField(){

@@ -8,6 +8,7 @@ import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
+import utils.core.WebDriverFactory;
 
 import java.util.ArrayList;
 
@@ -221,7 +222,12 @@ public class ValidationUtils{
         }
         WebDriverUtils.clearAndInputTextToField(xpath, input);
         WebDriverUtils.waitFor(200);
-        WebDriverUtils.pressKey(Keys.TAB);
+        switch (WebDriverFactory.getPlatform()) {
+            case desktop:
+                WebDriverUtils.pressKey(Keys.TAB); break;
+            case mobile:
+                WebDriverUtils.clickWithOffset(WebDriverUtils.getElement(xpath)); break;
+        }
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             clickField(xpath);
         }
