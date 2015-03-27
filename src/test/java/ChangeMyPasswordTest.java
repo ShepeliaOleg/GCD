@@ -150,20 +150,20 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		String oldPassword = userData.getPassword();
 		//*NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage = PortalUtils.registerUser(userData);
-		PortalUtils.logout();
-		WebDriverUtils.clearCookies();
-		WebDriverUtils.clearLocalStorage();
+			//PortalUtils.logout();
+			//WebDriverUtils.clearCookies();
+			//WebDriverUtils.clearLocalStorage();
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		System.out.println("OLD PASSWORD: "+oldPassword);
+			System.out.println("OLD PASSWORD: "+oldPassword);
 		userData.setPassword(newPassword);
-		System.out.println("NEw PASSWORD: " + userData.getPassword());
+			System.out.println("NEW PASSWORD: " + userData.getPassword());
 		WebDriverUtils.waitFor(5000);
-		/*homePage.login(userData);
+		homePage.login(userData);
 		changePasswordPopup = homePage.navigateToChangePassword();
 		changePasswordPopup.fillFormAndClickSubmit(newPassword, oldPassword);
-		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");*/
+		assertEquals("Password has already been used recently", changePasswordPopup.getErrorMsg(), "Error message was not as expected!");
 	}
 
 	//*4. New Password and Retype do not match
