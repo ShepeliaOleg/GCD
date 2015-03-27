@@ -77,17 +77,21 @@ public class ChangeMyPasswordTest extends AbstractTest{
 	}
 
 	//*3. IMS Player Details Page
-	//*@Test(groups = {"regression", "debugTest"})
+	@Test(groups = {"regression", "debugTest"})
 	public void passwordChangedInIMS(){
-		newPassword = DataContainer.getUserData().getPassword();
+		//newPassword = DataContainer.getUserData().getPassword();
 		userData = DataContainer.getUserData().getRandomUserData();
 		homePage = PortalUtils.registerUser(userData);
 		String username = userData.getUsername();
+			System.out.println(username);
+			System.out.println("OLD pass:" +userData.getPassword());
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(username);
-		playerDetailsPage.changePassword(newPassword);
+		playerDetailsPage.changePassword(newPassword, true);
 		userData.setPassword(newPassword);
 		HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		changePasswordPopup = (ChangePasswordPopup) homePage.navigateToLoginForm().login(userData, false, Page.changePasswordPopup);
+			System.out.println("NEW pass:" +userData.getPassword());
+		homePage.navigateToLoginForm().login(userData, false, Page.homePage);
+		//changePasswordPopup = (ChangePasswordPopup) homePage.navigateToLoginForm().login(userData, false, Page.changePasswordPopup);
 	}
 
 	//*NEGATIVE
