@@ -146,9 +146,9 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		*/
 
 		userData = DataContainer.getUserData().getRandomUserData();
-		newPassword = passwordValidationRule.generateValidString();
+		//newPassword = passwordValidationRule.generateValidString();
 		String oldPassword = userData.getPassword();
-		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
+		//*NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
 		homePage = PortalUtils.registerUser(userData);
 		PortalUtils.logout();
 		WebDriverUtils.clearCookies();
@@ -156,7 +156,7 @@ public class ChangeMyPasswordTest extends AbstractTest{
 		IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
 		playerDetailsPage.changePassword(newPassword, true);
 		NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		System.out.println("OLD PASSWORD: "+userData.getPassword());
+		System.out.println("OLD PASSWORD: "+oldPassword);
 		userData.setPassword(newPassword);
 		System.out.println("NEw PASSWORD: " + userData.getPassword());
 		WebDriverUtils.waitFor(5000);
