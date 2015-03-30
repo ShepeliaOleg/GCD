@@ -29,7 +29,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
 
 
     public RegistrationPageStepTwo(){
-		super(new String[]{ROOT_XP, getXpathByName(DROPDOWN_COUNTRY_NAME)});
+		super(new String[]{ROOT_XP, getXpathByName(FIELD_STATE_NAME)});
 	}
 
     public RegistrationPageStepThree fillDataAndSubmit(UserData userData){
