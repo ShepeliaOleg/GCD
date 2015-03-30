@@ -480,12 +480,12 @@ public class RegistrationTest extends AbstractTest{
      * */
 
     /**
-    *DUBLICATE EMAIL LOOKUP START
+    *DUPLICATE EMAIL LOOKUP START
     * */
 
-    /*31. Dublicate email lookup. Editing email address*/
+    /*31. Duplicate email lookup. Editing email address*/
     @Test(groups= {"registration", "regression"})
-    public void dublicateEmailLookupEditingEmailAddress(){
+    public void duplicateEmailLookupEditingEmailAddress(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
@@ -498,9 +498,9 @@ public class RegistrationTest extends AbstractTest{
         HomePage homePage = (HomePage) registrationPage.registerUser(DataContainer.getUserData().getRandomUserData());
     }
 
-    /*32. Dublicate email lookup. Logging in from Login modal overlay*/
+    /*32. Duplicate email lookup. Logging in from Login modal overlay*/
     @Test(groups= {"registration", "regression"})
-    public void dublicateEmailLookupLoggingInFromLoginModalOverlay(){
+    public void duplicateEmailLookupLoggingInFromLoginModalOverlay(){
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
@@ -509,9 +509,9 @@ public class RegistrationTest extends AbstractTest{
         validateTrue(new HomePage().isUsernameDisplayed(userData.getUsername()), "User is logged in from Login modal overlay");
     }
 
-    /*33. Dublicate email lookup. Login popup initiating initiating*/
+    /*33. Duplicate email lookup. Login popup initiating initiating*/
     @Test(groups= {"registration", "regression"})
-    public void dublicateEmailLookupLoginPopupInitiatingInitiating(){
+    public void duplicateEmailLookupLoginPopupInitiatingInitiating(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
@@ -521,9 +521,9 @@ public class RegistrationTest extends AbstractTest{
         loginPopup.validateDescriptionMesageDublicateEmail();
     }
 
-    /*34. Dublicate email lookup. Fogotten Password popup*/
+    /*34. Duplicate email lookup. Fogotten Password popup*/
     @Test(groups= {"registration", "regression"})
-    public void dublicateEmailLookupFogottenPasswordPopup(){
+    public void duplicateEmailLookupFogottenPasswordPopup(){
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
@@ -540,7 +540,7 @@ public class RegistrationTest extends AbstractTest{
     }
 
     /**
-     * DUBLICATE EMAIL LOOKUP END
+     * DUPLICATE EMAIL LOOKUP END
      * */
 
 

@@ -12,6 +12,7 @@ import pageObjects.registration.threeStep.RegistrationPageStepThree;
 import pageObjects.registration.threeStep.RegistrationPageStepTwo;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
+import utils.Locator;
 import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -55,7 +56,7 @@ public class RegistrationPage extends AbstractPortalPage {
     protected final static String BUTTON_SUBMIT_XP = 									ROOT_XP + "//*[contains(@class,'fn-submit')]";
     protected final static String LABEL_USERNAME_SUGGESTION_LINK_XP = 					"//a[@class='fn-suggestion']";
     protected final static String LABEL_USERNAME_SUGGESTION_TOOLTIP_XP = 				LABEL_USERNAME_SUGGESTION_LINK_XP + "/..";
-    protected final static String LINK_TERMS_AND_CONDITION_XP = 						"//*[@data-article-id='TERMS-AND-CONDITIONS']";
+    protected final static Locator LINK_TERMS_AND_CONDITION_XP = 						new Locator("fn-popup-open", "//*[@data-article-id='TERMS-AND-CONDITIONS']", ".fn-register-step:nth-child(3) .fn-popup-open");
     protected final static String LABEL_RECEIVE_PROMOTIONS_XP=							"//label[@for='subscription-checkbox']";
     public    final static String FIELD_PHONE_COUNTRY_CODE_DESKTOP_XP =					"//*[@name='phoneAreaCode']";
     public    final static String FIELD_PHONE_COUNTRY_CODE_MOBILE_XP=					"//*[@name='area']";

@@ -3,6 +3,7 @@ package pageObjects.registration.threeStep;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
+import utils.Locator;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -12,11 +13,11 @@ public class RegistrationPageStepTwo extends RegistrationPage {
 
     private static final String ROOT_XP = 											"//*[contains(@class, 'portlet-registration__step')][2]";
     private final static String BUTTON_NEXT_XP=                                     ROOT_XP + "//button[contains(@class, 'fn-next')]";
-    private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
+    private final static Locator BUTTON_PREVIOUS_XP=                                new Locator("fn-prev", ROOT_XP + "//button[contains(@class, 'fn-prev')]", ".fn-register-step:nth-child(2) .fn-prev");
     private final static String FIELD_PHONE_MOBILE_VALIDATION_NAME = 				"phone";
     private final static String FIELD_PHONE_MOBILE_NAME = 					        "cellphone";
     private final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 					"area";
-    private final static String BUTTON_FIND_XP =                                    "//*[@class='btn fr fn-find']";
+    private final static Locator BUTTON_FIND_XP =                                   new Locator("fn-find", "//*[@class='btn fr fn-find']", null);
     private final static String DROPDOWN_ADDRESS_XP =                               "//*[@name='address4']";
     private final static String POSTCODE_ONE_SIX_ADDRESSES =                        "SW1Y 4DP";
     private final static String POSTCODE_MANY_ADDRESSES =                           "N9 0EF";
@@ -88,7 +89,7 @@ public class RegistrationPageStepTwo extends RegistrationPage {
     }
 
     public boolean isFindButtonVisible(){
-        return WebDriverUtils.isVisible(BUTTON_FIND_XP);
+        return WebDriverUtils.isVisible(BUTTON_FIND_XP.getXpath());
     }
 
     public void selectUKCountry(){

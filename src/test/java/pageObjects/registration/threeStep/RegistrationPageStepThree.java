@@ -8,6 +8,7 @@ import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import utils.IMSUtils;
+import utils.Locator;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
@@ -28,14 +29,14 @@ public class RegistrationPageStepThree extends RegistrationPage {
     private final static String MONTHLY_DEPOSIT_LIMIT_XP =                          "//*[@id='monthdepositlimit']";
     private final static String DEPOSIT_LIMIT_XP =                                  "//*[contains(@class, 'deposit-limit')]";
     private static final String CHECKBOX_TERMS_AND_CONDITION_XP = 					ROOT_XP + "//*[@id='terms-checkbox']";
-    private final static String BUTTON_PREVIOUS_XP=                                 ROOT_XP + "//button[contains(@class, 'fn-prev')]";
+    private final static Locator BUTTON_PREVIOUS_XP=                                new Locator("fn-prev", ROOT_XP + "//button[contains(@class, 'fn-prev')]", ".fn-register-step:nth-child(3) .fn-prev");
     private static final String TOOLTIP_ERROR_XP =                                  "//*[contains(@class,'error-tooltip')]";
     private static final String LABEL_ERROR_DAILY_XP =                              "//*[contains(@class,'daily')]" + TOOLTIP_ERROR_XP;
     private static final String LABEL_ERROR_WEEKLY_XP =                             "//*[contains(@class,'weekly')]" + TOOLTIP_ERROR_XP;
     private static final String LABEL_ERROR_MONTHLY_XP =                            "//*[contains(@class,'monthly')]" + TOOLTIP_ERROR_XP;
 
     public RegistrationPageStepThree(){
-		super(new String[]{ROOT_XP, BUTTON_PREVIOUS_XP, BUTTON_SUBMIT_XP});
+		super(new String[]{ROOT_XP, BUTTON_PREVIOUS_XP.getXpath(), BUTTON_SUBMIT_XP});
 	}
 
     public void fillDataAndSubmit(UserData userData, boolean termsAndConditions, boolean isReceiveBonusesChecked, PromoCode promoCode){
