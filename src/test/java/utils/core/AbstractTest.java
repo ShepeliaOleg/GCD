@@ -70,11 +70,11 @@ public class AbstractTest extends AbstractTestRunner{
             issuesList = TypeUtils.splitBy(issues, ",");
         }
         if (issuesList.isEmpty()) {
-            issues = getJiraIssueLink(issues);
+            issues = getIssueLink(issues);
         } else {
             issues = "";
             for (String issue:issuesList) {
-                issues += getJiraIssueLink(issue.trim());
+                issues += getIssueLink(issue.trim());
             }
 
         }
@@ -83,9 +83,9 @@ public class AbstractTest extends AbstractTestRunner{
     }
 
     private static String getIssueLink(String issueId) {
-        if (issueId.contains("")) {
-            return getJiraIssueLink(issueId);
-        } else return issueId;
+        if (issueId.startsWith("D-")) {
+            return issueId;
+        } else return getJiraIssueLink(issueId);
     }
 
     private static String getJiraIssueLink(String issueId) {

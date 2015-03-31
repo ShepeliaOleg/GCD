@@ -486,6 +486,7 @@ public class RegistrationTest extends AbstractTest{
     /*31. Duplicate email lookup. Editing email address*/
     @Test(groups= {"registration", "regression"})
     public void duplicateEmailLookupEditingEmailAddress(){
+        skipTestWithIssues(PlatForm.mobile, "COR-592");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
@@ -501,6 +502,7 @@ public class RegistrationTest extends AbstractTest{
     /*32. Duplicate email lookup. Logging in from Login modal overlay*/
     @Test(groups= {"registration", "regression"})
     public void duplicateEmailLookupLoggingInFromLoginModalOverlay(){
+        skipTestWithIssues(PlatForm.mobile, "COR-592");
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
@@ -512,6 +514,7 @@ public class RegistrationTest extends AbstractTest{
     /*33. Duplicate email lookup. Login popup initiating initiating*/
     @Test(groups= {"registration", "regression"})
     public void duplicateEmailLookupLoginPopupInitiatingInitiating(){
+        skipTestWithIssues(PlatForm.mobile, "COR-592");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
@@ -524,6 +527,7 @@ public class RegistrationTest extends AbstractTest{
     /*34. Duplicate email lookup. Fogotten Password popup*/
     @Test(groups= {"registration", "regression"})
     public void duplicateEmailLookupFogottenPasswordPopup(){
+        skipTestWithIssues(PlatForm.mobile, "COR-592");
         RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();

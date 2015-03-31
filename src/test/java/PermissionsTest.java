@@ -1,4 +1,5 @@
 import enums.ConfiguredPages;
+import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.login.LoginPopup;
@@ -55,7 +56,7 @@ public class PermissionsTest extends AbstractTest{
     /* 6. Page permissions for guest user on page visible for player */
     @Test(groups = {"regression"})
     public void permissionsPageGuestOnPlayerPage() {
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false);
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_player,       PLAYER_TEXT,        false, false, Page.loginPopup);
     }
 
     /* 7. Page permissions for guest user on page visible for player and guest */
@@ -67,7 +68,8 @@ public class PermissionsTest extends AbstractTest{
     /* 8. Page permissions for guest user on page visible for admin */
     @Test(groups = {"regression"})
     public void permissionsPageGuestOnAdminPage() {
-        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_admin,        ADMIN_TEXT,         false, false);
+        skipTestWithIssues("D-19013");
+        assertPagePermissions(PlayerCondition.guest, ConfiguredPages.permissions_page_admin,        ADMIN_TEXT,         false, false, Page.homePage);
     }
 
     /* 9. Page permissions for player user on page visible for all */
@@ -125,11 +127,11 @@ public class PermissionsTest extends AbstractTest{
     }
 
     private void assertPagePermissions(PlayerCondition condition, ConfiguredPages page, String text, boolean visibility) {
-        assertPagePermissions(condition, page, text, visibility, true);
+        assertPagePermissions(condition, page, text, visibility, true, Page.homePage);
     }
 
-    private void assertPagePermissions(PlayerCondition condition, ConfiguredPages page, String text, boolean visibility, boolean redirect) {
-        NavigationUtils.navigateToPage(condition, page);
+    private void assertPagePermissions(PlayerCondition condition, ConfiguredPages page, String text, boolean visibility, boolean redirect, Page expectedPage) {
+        NavigationUtils.navigateToPage(condition, page, expectedPage);
         String role = page.toString().replace("permissions_page_", "").replace("_", " and ");
         if (visibility) {
             assertEquals(DataContainer.getDriverData().getCurrentUrl() + page.toString(), WebDriverUtils.getCurrentUrl(), "Page visible for " + role + " is displayed for " + condition.toString() + ".");
