@@ -1,9 +1,13 @@
 package utils.core;
 
+import enums.PlatForm;
 import org.testng.SkipException;
 import utils.TypeUtils;
 import utils.WebDriverUtils;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class AbstractTest extends AbstractTestRunner{
 
@@ -39,18 +43,21 @@ public class AbstractTest extends AbstractTestRunner{
         validate();
     }
 
-    public static void skipTest(String message, boolean getScreenshot){
+    private static void skipTest(String message, boolean getScreenshot){
         String results = collectResults();
         String details = "";
         if (getScreenshot) {
             details = getScreenshot();
         }
         if(!results.isEmpty()){
-
             throw new SkipException(message + details + "Errors found: " + results);
         }else {
             throw new SkipException(message + details);
         }
+    }
+
+    public static void skipTest() {
+        skipTest("");
     }
 
     public static void skipTest(String message){
@@ -58,11 +65,37 @@ public class AbstractTest extends AbstractTestRunner{
     }
 
     public static void skipTestWithIssues(String issues){
+        List<String> issuesList = new ArrayList<>();
+        if (issues.contains(",")) {
+            issuesList = TypeUtils.splitBy(issues, ",");
+        }
+        if (issuesList.isEmpty()) {
+            issues = getJiraIssueLink(issues);
+        } else {
+            issues = "";
+            for (String issue:issuesList) {
+                issues += getJiraIssueLink(issue.trim());
+            }
+
+        }
+
         skipTest(issues, false);
     }
 
-    public static void skipTest(){
-        skipTest("");
+    private static String getIssueLink(String issueId) {
+        if (issueId.contains("")) {
+            return getJiraIssueLink(issueId);
+        } else return issueId;
+    }
+
+    private static String getJiraIssueLink(String issueId) {
+        return "<a href='https://portal-jira.playtech.corp/browse/" + issueId + "' target='_blank'>" + issueId + "</a> ";
+    }
+
+    public static void skipTestWithIssues(PlatForm platform, String issues){
+        if (platform.equals(WebDriverFactory.getPlatform())) {
+            skipTestWithIssues(issues);
+        }
     }
 
     public static boolean assertTrue(boolean actual, String message){

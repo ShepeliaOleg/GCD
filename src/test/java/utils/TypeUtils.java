@@ -3,10 +3,7 @@ package utils;
 import org.apache.commons.codec.binary.Base64;
 import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 
 public class TypeUtils{
@@ -138,5 +135,9 @@ public class TypeUtils{
 
     private static boolean currencyGoesFirst(String[] currencyAndAmount){
         return currencyAndAmount[0].length()<=3;
+    }
+
+    public static List<String> splitBy(String initial, String symbol) {
+        return new ArrayList(Arrays.asList(initial.split(symbol)));
     }
 }
