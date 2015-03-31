@@ -136,7 +136,10 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositIncorrectPassword() {
-        PortalUtils.registerUser();
+        UserData userData = DataContainer.getUserData().getRandomUserData();
+        userData.setCurrency("USD");
+        PortalUtils.registerUser(userData);
+        //PortalUtils.registerUser();
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositNetellerInvalidPassword(AMOUNT);
         assertEquals("0.00", depositPage.getBalanceAmount(), "Balance");

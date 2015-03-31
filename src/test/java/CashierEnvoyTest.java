@@ -69,6 +69,7 @@ public class CashierEnvoyTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void cancelDeposit(){
         UserData userData = getEnvoyUser();
+        userData.setCurrency("EUR");
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
