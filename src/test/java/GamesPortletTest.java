@@ -1,6 +1,5 @@
 import enums.ConfiguredPages;
 import enums.GameCategories;
-import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.gamesPortlet.*;
@@ -11,18 +10,21 @@ import utils.core.AbstractTest;
 
 public class GamesPortletTest extends AbstractTest {
 
-	/*1. Portlet is displayed, game can be launched */
-	@Test(groups = {"regression", "smoke"})
-	public void startFirstAvailableGameInGamePortlet(){
-        try{
+    private static final String GAMES_LIST_FAVOURITES_XP = "//*[contains(@class, 'favorite-game')]";
+    private static final String FIRST_GAME_FAVOURITES_XP = "//li[contains(@class, 'gamesinfo__item') and //*[contains(@class, 'favorite-game')]][1]/div";
+
+    /*1. Portlet is displayed, game can be launched */
+    @Test(groups = {"regression", "smoke"})
+    public void startFirstAvailableGameInGamePortlet() {
+        try {
             GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
             gamesPortletPage.playDemoAndAssertUrl();
-        }catch (Exception e){
+        } catch (Exception e) {
             skipTest();
         }
     }
 
-//	/*2.1. Refine By: Top level*/
+    //	/*2.1. Refine By: Top level*/
 //	@Test(groups = {"regression"})
 //	public void refineByNavigationStyleTopLevel (){
 //		GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesNavigationStyleRefineBy);
@@ -896,22 +898,22 @@ public class GamesPortletTest extends AbstractTest {
 //		gameInfoPopup.clickClose();
 //	}
 //
-	/*15. Navigation types*/
+    /*15. Navigation types*/
 	/*15.1. Slider : next/back arrows navigation*/
-	@Test(groups = {"regression", "desktop"})
-	public void sliderPaginationWorksCorrectly(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
-		String firstPageGame = gamesPortletPage.getGameID(1,1);
-        String secondPageGame = gamesPortletPage.getGameID(2,1);
-		gamesPortletPage = gamesPortletPage.clickNextButton();
+    @Test(groups = {"regression", "desktop"})
+    public void sliderPaginationWorksCorrectly() {
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(ConfiguredPages.gamesStyleOne);
+        String firstPageGame = gamesPortletPage.getGameID(1, 1);
+        String secondPageGame = gamesPortletPage.getGameID(2, 1);
+        gamesPortletPage = gamesPortletPage.clickNextButton();
         assertTrue(gamesPortletPage.isGamePresent(secondPageGame), "Game from second page visible");
         assertFalse(gamesPortletPage.isGamePresent(firstPageGame), "Game from first page visible");
         gamesPortletPage = gamesPortletPage.clickPreviousButton();
         assertTrue(gamesPortletPage.isGamePresent(firstPageGame), "Game from first page visible");
         assertFalse(gamesPortletPage.isGamePresent(secondPageGame), "Game from second page visible");
-	}
+    }
 
-//	/*15.3. Navigation types - To Fit*/
+    //	/*15.3. Navigation types - To Fit*/
 //	@Test(groups = {"regression"})
 //	public void toFitModeIsDisplayedAndGameCanBeStarted(){
 //        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesToFit, defaultUserData.getRegisteredUserData());
@@ -925,29 +927,30 @@ public class GamesPortletTest extends AbstractTest {
     /*16.1. Player adds games to favorites*/
     /*16.2. Player removes games from favorites*/
 	/*17.2. When a game is removed from favorites it disappears from Favorites-only portlet*/
-	@Test(groups = {"regression"})
-	public void gamesCanBeAddedToFavouritesCategoryAndRemoved(){
-		GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
-		final String gameID = gamesPortletPage.getRandomGameID(true);
-		GameElement gameElement = new GameElement(gameID);
-		gameElement.favourite();
+    @Test(groups = {"regression"})
+    public void gamesCanBeAddedToFavouritesCategoryAndRemoved() {
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
+        final String gameID = gamesPortletPage.getRandomGameID(true);
+        GameElement gameElement = new GameElement(gameID);
+        gameElement.favourite();
         assertTrue(gameElement.isFavouriteActive(), "Is favorite");
         gamesPortletPage.clickCategoryTab(GameCategories.favourites);
-		gameElement = new GameElement(gameID);
-		gameElement.unFavourite();
+        gameElement = new GameElement(gameID);
+        gameElement.unFavourite();
         assertFalse(gamesPortletPage.isGamePresent(gameID), "is still favorite");
-	}
+    }
 
     @Test(groups = {"regression"})
-    public void favouritesCategoryPlayerFirst(){
+    public void favouritesCategoryPlayerFirst() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
         assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
     }
 
     @Test(groups = {"regression"})
-    public void removeAllGamesFromCategory(){
+    public void removeAllGamesFromCategory() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesCategoryFirst);
         gamesPortletPage.clickCategoryTab(GameCategories.favourites);
+        removeGamesFromFavourites();
         assertEquals(0, gamesPortletPage.getNumberOfGames(), "Number of favourites");
         assertTrue(gamesPortletPage.isNoGamesMessageVisible(), "Message visible");
         gamesPortletPage.clickCategoryTab(GameCategories.all);
@@ -962,7 +965,7 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     @Test(groups = {"regression"})
-    public void removeAllGamesNotFromCategory(){
+    public void removeAllGamesNotFromCategory() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
         final String gameID = gamesPortletPage.getRandomGameID(true);
         GameElement gameElement = new GameElement(gameID);
@@ -974,32 +977,32 @@ public class GamesPortletTest extends AbstractTest {
     }
 
     @Test(groups = {"regression"})
-    public void favouritesCategoryPlayerLast(){
+    public void favouritesCategoryPlayerLast() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
         assertTrue(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
         gamesPortletPage.assertCategoryLast(GameCategories.favourites);
     }
 
     @Test(groups = {"regression"})
-    public void favouritesNoCategoryPlayer(){
+    public void favouritesNoCategoryPlayer() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavouritesNoCategory);
         assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
     }
 
     @Test(groups = {"regression"})
-    public void favouritesNavigationsStyleNone(){
+    public void favouritesNavigationsStyleNone() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesNavigationStyleNone);
         assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
     }
 
     @Test(groups = {"regression"})
-    public void favouritesCategoryGuest(){
+    public void favouritesCategoryGuest() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesFavourites);
         assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
     }
 
     @Test(groups = {"admin"})
-    public void favouritesCategoryAdmin(){
+    public void favouritesCategoryAdmin() {
         GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.gamesFavourites);
         assertFalse(gamesPortletPage.isCategoryTabPresent(GameCategories.favourites), "Favourites category present");
 
@@ -1025,20 +1028,20 @@ public class GamesPortletTest extends AbstractTest {
 //        TypeUtils.assertFalseWithLogs(gamesPortletPage.isDemoPresent(),"demo buttons present");
 //	}
 
-	/*29.1. Guest launches a game in real mode and faces login popup*/
-	@Test(groups = {"regression"})
-	public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
-		LoginPopup loginPopup = (LoginPopup)gamesPortletPage.playRealLoggedOut(true);
-	}
+    /*29.1. Guest launches a game in real mode and faces login popup*/
+    @Test(groups = {"regression"})
+    public void loggedOutUserTriesToPlayRealGameGetsLogInPrompt() {
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.gamesStyleOne);
+        LoginPopup loginPopup = (LoginPopup) gamesPortletPage.playRealLoggedOut(true);
+    }
 
-	/*30. Player launches game from list view*/
-	@Test(groups = {"regression", "desktop"})
-	public void gameCanBeStartedFromListView(){
-        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesList);
-		GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true, true);
+    /*30. Player launches game from list view*/
+    @Test(groups = {"regression", "desktop"})
+    public void gameCanBeStartedFromListView() {
+        GamesPortletPage gamesPortletPage = (GamesPortletPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesList);
+        GameLaunchPopup gameLaunchPopup = (GameLaunchPopup) gamesPortletPage.playRealList(true, true);
         gameLaunchPopup.assertGameLaunchAndClose();
-	}
+    }
 
     /*B-13152 Load game by URL */
     /*iFrame game*/
@@ -1060,7 +1063,7 @@ public class GamesPortletTest extends AbstractTest {
 
     /*3. */
     @Test(groups = {"regression"})
-    public void launchIFrameGameByUrlPlayerDemoMode(){
+    public void launchIFrameGameByUrlPlayerDemoMode() {
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.IFRAME_GAME_1, 0);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid.");
         assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
@@ -1068,12 +1071,12 @@ public class GamesPortletTest extends AbstractTest {
 
     /* 4. */
     @Test(groups = {"regression"})
-    public void launchIFrameGameByUrlGuestPlay(){
+    public void launchIFrameGameByUrlGuestPlay() {
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1);
         assertTrue(gameLaunchPage.iFrameGameUrlIsValid(), "Game url is valid after login.");
     }
 
-/*    *//*5. *//*
+    /*    *//*5. *//*
     @Test(groups = {"regression"})
     public void launchIFrameGameByUrlGuestPlayRealMode(){
         LoginPopup loginPopup = (LoginPopup) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.IFRAME_GAME_1, 1);
@@ -1084,7 +1087,7 @@ public class GamesPortletTest extends AbstractTest {
     /*redirect game*/
     /*6. */
     @Test(groups = {"regression"})
-    public void launchRedirectGameByUrlPlayer(){
+    public void launchRedirectGameByUrlPlayer() {
         GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.player, GameLaunchPage.REDIRECT_GAME_1);
         assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
         assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode by default.");
@@ -1116,8 +1119,8 @@ public class GamesPortletTest extends AbstractTest {
 
     /*10. */
     @Test(groups = {"regression"})
-    public void launchRedirectGameByUrlGuestPlayDemoMode(){
-        GameLaunchPage gameLaunchPage = (GameLaunchPage)  NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.REDIRECT_GAME_1, 0);
+    public void launchRedirectGameByUrlGuestPlayDemoMode() {
+        GameLaunchPage gameLaunchPage = (GameLaunchPage) NavigationUtils.launchGameByUrl(PlayerCondition.guest, GameLaunchPage.REDIRECT_GAME_1, 0);
         assertTrue(gameLaunchPage.redirectGameUrlIsValid(), "Game url is valid.");
         assertFalse(gameLaunchPage.isRealMode(), "Game launched in demo mode.");
     }
@@ -1133,7 +1136,7 @@ public class GamesPortletTest extends AbstractTest {
 
     /*12. */
     @Test(groups = {"regression"})
-    public void launchIFrameGameByUrlPlayerIncorrectGameId(){
+    public void launchIFrameGameByUrlPlayerIncorrectGameId() {
         GameIncorrectId gameIncorrectId = (GameIncorrectId) NavigationUtils.launchGameByUrl(PlayerCondition.player, "incorrectGameId");
         assertFalse(WebDriverUtils.isGameLaunched(ConfiguredPages.home), "Game with incorrect code is not launched.");
     }
@@ -1152,5 +1155,13 @@ public class GamesPortletTest extends AbstractTest {
         assertTrue(gameLaunchPage.isRealMode(), "Game launched in real mode.");
     }*/
 
-
+    private void removeGamesFromFavourites() {
+        int numberOfGames = WebDriverUtils.getCountOfNodes(GAMES_LIST_FAVOURITES_XP);
+        if (numberOfGames > 0) {
+            for (int i = 0; i < numberOfGames; i++){
+                GameElement gameElement = new GameElement(WebDriverUtils.getAttribute(FIRST_GAME_FAVOURITES_XP, "data-key"));
+                gameElement.unFavourite();
+            }
+        }
+    }
 }
