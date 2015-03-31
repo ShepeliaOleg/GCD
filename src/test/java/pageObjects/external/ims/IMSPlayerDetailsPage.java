@@ -3,7 +3,6 @@ package pageObjects.external.ims;
 import enums.Page;
 import pageObjects.core.AbstractServerPage;
 import springConstructors.AffiliateData;
-import utils.TypeUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 import utils.core.WebDriverFactory;
