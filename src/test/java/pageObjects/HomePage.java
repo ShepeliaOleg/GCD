@@ -3,11 +3,10 @@ package pageObjects;
 import pageObjects.core.AbstractPortalPage;
 
 public class HomePage extends AbstractPortalPage{
-	private static final String NAVIGATION_PANEL= 	"//*[@id = 'nav']";
-	private static final String LOGO= 				"//img[contains(@class, 'logo')]";
+	private static final String IMG_LOGO_XP = "//img[contains(@class, 'logo')]/..";
 
 	public HomePage(){
-		super(new String[]{LOGO});
+		super(new String[]{IMG_LOGO_XP});
 	}
 
 }
