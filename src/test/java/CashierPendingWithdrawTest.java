@@ -6,10 +6,7 @@ import pageObjects.account.PendingWithdrawPage;
 import pageObjects.account.WithdrawLoadMoreNotification;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import springConstructors.UserData;
-import utils.DateUtils;
-import utils.NavigationUtils;
-import utils.TypeUtils;
-import utils.WebDriverUtils;
+import utils.*;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
 
@@ -21,7 +18,8 @@ public class CashierPendingWithdrawTest extends AbstractTest{
     /*#1. pending withdraw visible for player */
     @Test(groups = {"regression"})
     public void pageAvailableForPlayer() {
-        PendingWithdrawPage pendingWithdrawPage = (PendingWithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.pending_withdraw);
+        PortalUtils.loginUser();
+        PendingWithdrawPage pendingWithdrawPage = (PendingWithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.pending_withdraw);
     }
 
     /*#2. load more button on pending withdraw page */
