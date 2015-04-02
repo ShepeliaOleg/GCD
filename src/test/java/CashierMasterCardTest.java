@@ -88,7 +88,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardExpiredDeposit(){
-        skipTestWithIssues("D-18404");
+        //skipTestWithIssues("D-18404"); - FIXED
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         depositPage.depositCardExpired(PaymentMethod.MasterCard, AMOUNT);
@@ -96,7 +96,7 @@ public class CashierMasterCardTest extends AbstractTest{
 
     @Test(groups = {"regression", "mobile"})
     public void masterCardExpiredWithdraw(){
-        //skipTestWithIssues("D-18404");
+        //skipTestWithIssues("D-18404"); - FIXED
         PortalUtils.loginUser(DataContainer.getUserData().getCardUserData());
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
         withdrawPage.withdrawExpired(PaymentMethod.MasterCard, AMOUNT);
