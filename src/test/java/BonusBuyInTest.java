@@ -5,9 +5,14 @@ import enums.PromoCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
+import pageObjects.account.BalancePage;
 import pageObjects.bonus.BonusPage;
 import pageObjects.bonus.OkBonusPopup;
 import pageObjects.bonus.OptedInPopup;
+import pageObjects.gamesPortlet.GameElement;
+import pageObjects.gamesPortlet.GameLaunchPage;
+import pageObjects.gamesPortlet.GamesPortletPage;
 import springConstructors.BonusData;
 import springConstructors.UserData;
 import utils.NavigationUtils;
@@ -115,7 +120,7 @@ public class BonusBuyInTest extends AbstractTest {
 
     //ToDo Translation Key check
 
-    //Todo Validation amount field
+    //Todo Validation tooltip amount field
     // Validation Rules
 
 
@@ -133,5 +138,21 @@ public class BonusBuyInTest extends AbstractTest {
         //return data.getOtherInfo() + getСurrencySymbol(data.getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
         //return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + String.format("%1$,.2f", data.getBonusAmount());
         return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + data.getBonusAmount();
+    }
+
+    //Compoints
+    @Test
+    public void acumulateCompointsTest(){
+
+        BalancePage balancePage = (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.balance );
+        balancePage.convertCompPoints("Not enough points to convert");
+
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.gamesFavourites);
+        gamesPortletPage.playReal(4);
+        gamesPortletPage.waitGameLoaded();
+        balancePage = (BalancePage) gamesPortletPage.doSpin();
+        oldBalance = balancePage.getBalanceAmount();
+        balancePage.convertCompPoints("Compoints has been converted successfully");
+        assertEquals(TypeUtils.calculateSum("25.00", oldBalance), balancePage.getBalanceAmount(true), "Add balance was not as expected");
     }
 }

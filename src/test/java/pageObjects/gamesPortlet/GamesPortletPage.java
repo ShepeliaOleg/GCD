@@ -1,7 +1,12 @@
 package pageObjects.gamesPortlet;
 
+import enums.ConfiguredPages;
 import enums.GameCategories;
+import enums.PlayerCondition;
 import enums.SortBy;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.login.LoginPopup;
@@ -9,9 +14,13 @@ import utils.NavigationUtils;
 import utils.RandomUtils;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
+import utils.core.WebDriverFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static utils.NavigationUtils.getConfiguredPageObject;
+import static utils.NavigationUtils.navigateToPage;
 
 public class GamesPortletPage extends AbstractPortalPage {
 	//General
@@ -30,6 +39,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String BUTTON_LIST_VIEW_XP=					"//a[@data-view='LIST']";
 	private static final String BUTTON_ITEM_VIEW_XP=					"//a[@data-view='ITEM']";
 	private static final String FIELD_SEARCH_XP= 						"//input[contains(@class, 'field-search')]";
+	private static final String GAME_IFRAME_XP= 						"//iframe[contains(@class, 'fn-game-iframe')]";
 	//Refine By
     private static final String LABEL_REFINE_BY =                       "Refine by";
     private static final String LABEL_RESET_FILTER =                    "RESET FILTER";
@@ -87,7 +97,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	}
 
 	public String getGameName(int index){
-		return WebDriverUtils.getAttribute("//li["+index+"]" + GAMES_XP, TAG_GAME_NAME);
+		return WebDriverUtils.getAttribute("//li[" + index + "]" + GAMES_XP, TAG_GAME_NAME);
 	}
 
 	public String getRandomGameName(){
@@ -106,7 +116,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 
     public String getGameID(int index){
         String id;
-        String itemViewXP = BEGINNING_GAMES_XP +"//li["+index+"]" + GAMES_XP;
+        String itemViewXP = BEGINNING_GAMES_STYLE_NONE_XP +"//li["+index+"]" + GAMES_XP;
         id = WebDriverUtils.getAttribute(itemViewXP, TAG_GAME_ID);
         return id;
     }
@@ -119,7 +129,7 @@ public class GamesPortletPage extends AbstractPortalPage {
     }
 
     public String getGameID(int page, int index){
-        return WebDriverUtils.getAttribute("//ul["+(page + 2)+"]//li["+index+"]"+GAMES_XP, TAG_GAME_ID);
+        return WebDriverUtils.getAttribute("//ul[" + (page + 2) + "]//li[" + index + "]" + GAMES_XP, TAG_GAME_ID);
     }
 
 	public String getRandomGameID(boolean isNavigationStyleNone){
@@ -290,7 +300,7 @@ public class GamesPortletPage extends AbstractPortalPage {
         AbstractPageObject result;
         String gameId = getRandomGameID(isNavigationStyleNone);
         GameElement gameElement=new GameElement(gameId);
-        gameElement.clickPlayRealList();
+		gameElement.clickPlayRealList();
         if(isLoggedIn){
             result=new GameLaunchPopup(getMainWindowHandle());
         }else{
@@ -300,7 +310,7 @@ public class GamesPortletPage extends AbstractPortalPage {
     }
 
 	public GameLaunchPopup playReal(int index){
-		String gameId= getGameID(index);
+		String gameId = getGameID(index);
 		GameElement gameElement=new GameElement(gameId);
 		if(gameElement.isRealPresent()){
 			gameElement.clickPlayReal();
@@ -308,6 +318,53 @@ public class GamesPortletPage extends AbstractPortalPage {
             AbstractTest.failTest("No real game button found");
 		}
 		return new GameLaunchPopup(getMainWindowHandle());
+	}
+
+	//ToDo implements real game waiter
+	public void waitGameLoaded(){
+		WebDriverUtils.waitFor(60000);
+	}
+
+	//public void doSpin(){
+	public AbstractPageObject doSpin(){
+		System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
+		System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
+		WebElement frame = WebDriverUtils.getElement(GAME_IFRAME_XP);
+		/*int x =700;
+		//int y = 0;
+		for (;x < 1200; x++){
+			WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, x+620, x);
+			WebDriverUtils.waitFor(80);
+		}*/
+
+		// xOffSet  1240 | 1241 - 1594 | 1595
+		// yOffSet   855 | 856 - 930   | 931
+		/*
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1243, 857);//Fail
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1250, 856);//Fail
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1592, 860); //1592,860 - FAIL
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1240, 870); //FAIL
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1241, 857); //FAIL
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1241, 927); //PASS
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1245, 926);
+
+
+
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 865);//FAIL 1595,865
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 858);//FAIL 1595,858
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1584, 900);//PASS
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 930);
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1595, 900);//FAIL
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1580, 931);
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1590, 930);//Pass
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1590, 931);//FAIL
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1580, 931);
+*/
+		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1400, 880);
+		WebDriverUtils.waitFor(100);
+		//System.out.println(WebDriverFactory.getPortalDriver().findElement(By.xpath("//iframe[contains(@class, 'fn-game-iframe')]")).getLocation());
+		//System.out.println(WebDriverFactory.getPortalDriver().findElement(By.xpath("//iframe[contains(@class, 'fn-game-iframe')]")).getSize());
+		return navigateToPage(PlayerCondition.player, ConfiguredPages.balance);
 	}
 
 //	public GameInfoPopup clickInfo(){
