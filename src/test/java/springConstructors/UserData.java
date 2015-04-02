@@ -175,7 +175,6 @@ public class UserData{
     public UserData getLastUsedCCUserData() {
         UserData userData = getRegisteredUserData();
         userData.setUsername("lastusedpm");
-        userData.setPassword("Password1");
         return userData;
     }
 
