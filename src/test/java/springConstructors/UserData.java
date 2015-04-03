@@ -169,6 +169,7 @@ public class UserData{
         UserData userData = getRegisteredUserData();
 //        userData.setUsername("greesnm");
         userData.setUsername("carduser");
+        userData.setCurrency("USD");
         return userData;
     }
 
