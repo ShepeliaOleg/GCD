@@ -96,7 +96,7 @@ public class LoginMessagesTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 		IMSUtils.sendPushMessage(userData, Page.logout);
-        validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 300), "User was not logged out after 180 seconds");
+        validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 180), "User was not logged out after 180 seconds");
 		new SignedOutPopup().close().waitForLogout();
 	}
 

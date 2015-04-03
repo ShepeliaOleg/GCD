@@ -4,9 +4,7 @@ import enums.ConfiguredPages;
 import enums.GameCategories;
 import enums.PlayerCondition;
 import enums.SortBy;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.login.LoginPopup;
@@ -19,8 +17,8 @@ import utils.core.WebDriverFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-import static utils.NavigationUtils.getConfiguredPageObject;
 import static utils.NavigationUtils.navigateToPage;
+import static utils.core.AbstractTest.skipTest;
 
 public class GamesPortletPage extends AbstractPortalPage {
 	//General
@@ -320,51 +318,30 @@ public class GamesPortletPage extends AbstractPortalPage {
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
 
-	//ToDo implements real game waiter
+	//ToDo implements real game object waiter
 	public void waitGameLoaded(){
+		checkSupportedBrowser();
 		WebDriverUtils.waitFor(60000);
 	}
 
 	//public void doSpin(){
 	public AbstractPageObject doSpin(){
-		System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
-		System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
+		//System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
+		//System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
+		checkSupportedBrowser();
 		WebElement frame = WebDriverUtils.getElement(GAME_IFRAME_XP);
-		/*int x =700;
-		//int y = 0;
-		for (;x < 1200; x++){
-			WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, x+620, x);
-			WebDriverUtils.waitFor(80);
-		}*/
-
 		// xOffSet  1240 | 1241 - 1594 | 1595
 		// yOffSet   855 | 856 - 930   | 931
-		/*
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1243, 857);//Fail
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1250, 856);//Fail
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1592, 860); //1592,860 - FAIL
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1240, 870); //FAIL
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1241, 857); //FAIL
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1241, 927); //PASS
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1245, 926);
-
-
-
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 865);//FAIL 1595,865
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 858);//FAIL 1595,858
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1584, 900);//PASS
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1594, 930);
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1595, 900);//FAIL
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1580, 931);
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1590, 930);//Pass
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1590, 931);//FAIL
-		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1580, 931);
-*/
+		// This will not work in Firefox
 		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1400, 880);
 		WebDriverUtils.waitFor(100);
-		//System.out.println(WebDriverFactory.getPortalDriver().findElement(By.xpath("//iframe[contains(@class, 'fn-game-iframe')]")).getLocation());
-		//System.out.println(WebDriverFactory.getPortalDriver().findElement(By.xpath("//iframe[contains(@class, 'fn-game-iframe')]")).getSize());
 		return navigateToPage(PlayerCondition.player, ConfiguredPages.balance);
+	}
+
+	private void checkSupportedBrowser(){
+		if (!WebDriverFactory.getBrowser().equals("chrome")){
+			skipTest("Firefox browser and other not support mouse move method!");
+		}
 	}
 
 //	public GameInfoPopup clickInfo(){

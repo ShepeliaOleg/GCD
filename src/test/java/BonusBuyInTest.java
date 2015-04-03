@@ -140,7 +140,7 @@ public class BonusBuyInTest extends AbstractTest {
         return data.getOtherInfo() + getСurrencySymbol(DataContainer.getUserData().getCurrency()) + data.getBonusAmount();
     }
 
-    //Compoints
+    //COMPOINTS
     @Test
     public void acumulateCompointsTest(){
 
