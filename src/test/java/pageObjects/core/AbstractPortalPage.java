@@ -31,6 +31,8 @@ import utils.core.WebDriverFactory;
 
 import java.util.Collection;
 
+import static utils.core.AbstractTest.skipTest;
+
 public class AbstractPortalPage extends AbstractPage {
 
     public static final String PORTLET_ERROR_XP =       "//*[contains(@class,'error') or contains(@class, 'info__content')]";
@@ -236,6 +238,11 @@ public class AbstractPortalPage extends AbstractPage {
         }
     }
 
+    protected void checkSupportedBrowser(){
+        if (!WebDriverFactory.getBrowser().equals("chrome")){
+            skipTest("Firefox browser and other not support mouse move method!");
+        }
+    }
 }
 
 

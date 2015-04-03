@@ -338,12 +338,6 @@ public class GamesPortletPage extends AbstractPortalPage {
 		return navigateToPage(PlayerCondition.player, ConfiguredPages.balance);
 	}
 
-	private void checkSupportedBrowser(){
-		if (!WebDriverFactory.getBrowser().equals("chrome")){
-			skipTest("Firefox browser and other not support mouse move method!");
-		}
-	}
-
 //	public GameInfoPopup clickInfo(){
 //		ArrayList<String> checkedGames=null;
 //		String gameId=null;
