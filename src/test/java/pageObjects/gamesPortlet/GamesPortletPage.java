@@ -4,7 +4,9 @@ import enums.ConfiguredPages;
 import enums.GameCategories;
 import enums.PlayerCondition;
 import enums.SortBy;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import pageObjects.core.AbstractPage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
 import pageObjects.login.LoginPopup;
@@ -17,8 +19,8 @@ import utils.core.WebDriverFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.NavigationUtils.getConfiguredPageObject;
 import static utils.NavigationUtils.navigateToPage;
-import static utils.core.AbstractTest.skipTest;
 
 public class GamesPortletPage extends AbstractPortalPage {
 	//General
@@ -318,21 +320,18 @@ public class GamesPortletPage extends AbstractPortalPage {
 		return new GameLaunchPopup(getMainWindowHandle());
 	}
 
-	//ToDo implements real game object waiter
+	//ToDo implements real game waiter
 	public void waitGameLoaded(){
-		checkSupportedBrowser();
 		WebDriverUtils.waitFor(60000);
 	}
 
 	//public void doSpin(){
 	public AbstractPageObject doSpin(){
-		//System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
-		//System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
-		checkSupportedBrowser();
+			//System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
+			//System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
 		WebElement frame = WebDriverUtils.getElement(GAME_IFRAME_XP);
 		// xOffSet  1240 | 1241 - 1594 | 1595
 		// yOffSet   855 | 856 - 930   | 931
-		// This will not work in Firefox
 		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1400, 880);
 		WebDriverUtils.waitFor(100);
 		return navigateToPage(PlayerCondition.player, ConfiguredPages.balance);

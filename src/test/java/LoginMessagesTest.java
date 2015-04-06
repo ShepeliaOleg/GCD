@@ -42,7 +42,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages navigation */
-    //Obsolete
+    //OBSOLETE
     /*@Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesNavigation(){
         skipTestWithIssues("D-19275");
@@ -62,7 +62,6 @@ public class LoginMessagesTest extends AbstractTest{
     }*/
 
     /*Login messages closing from first*/
-
     @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingStart(){
         //skipTestWithIssues("D-19275");
@@ -78,7 +77,7 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from last*/
-    //Obsolete
+    //OBSOLETE
     /*@Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingEnd(){
         skipTestWithIssues("D-19275");
@@ -99,7 +98,7 @@ public class LoginMessagesTest extends AbstractTest{
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
 		IMSUtils.sendPushMessage(userData, Page.logout);
-        validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 180), "User was not logged out after 180 seconds");
+        validateTrue(WebDriverUtils.isVisible(SignedOutPopup.TITLE_XP, 300), "User was not logged out after 180 seconds");
 		new SignedOutPopup().close().waitForLogout();
 	}
 

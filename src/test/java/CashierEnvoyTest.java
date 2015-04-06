@@ -1,6 +1,8 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
 import enums.PromoCode;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.testng.annotations.Test;
 import pageObjects.cashier.TransactionSuccessfulPopup;
 import pageObjects.cashier.TransactionUnSuccessfulPopup;
@@ -9,6 +11,7 @@ import pageObjects.cashier.deposit.EnvoyDepositPage;
 import pageObjects.cashier.withdraw.WithdrawPage;
 import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
+import springConstructors.ValidationRule;
 import utils.NavigationUtils;
 import utils.PortalUtils;
 import utils.RandomUtils;
@@ -18,6 +21,9 @@ import utils.core.DataContainer;
 
 public class CashierEnvoyTest extends AbstractTest{
 
+    @Autowired
+    @Qualifier("emailValidationRule")
+    private ValidationRule emailValidationRule;
     private static final String AMOUNT = "10.00";
 
     @Test(groups = {"regression", "mobile"})
@@ -53,7 +59,7 @@ public class CashierEnvoyTest extends AbstractTest{
         TransactionSuccessfulPopup transactionSuccessfulPopup = envoyDepositPage.pay(userData, true);
         transactionSuccessfulPopup.closePopup();
 //        new OkBonusPopup().closePopup();
-        assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(), "Balance");
+        assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(true), "Balance");
     }
 
     @Test(groups = {"regression", "mobile"})
@@ -69,7 +75,7 @@ public class CashierEnvoyTest extends AbstractTest{
     @Test(groups = {"regression", "mobile"})
     public void cancelDeposit(){
         UserData userData = getEnvoyUser();
-        userData.setCurrency("EUR");
+        //userData.setCurrency("EUR");
         PortalUtils.registerUser(userData);
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         EnvoyDepositPage envoyDepositPage = depositPage.depositEnvoy(AMOUNT);
@@ -118,6 +124,9 @@ public class CashierEnvoyTest extends AbstractTest{
 //        UserData euteller = setUserData("FI", "EUR");
 //        UserData ewire =    setUserData("DK", "DKK");
         UserData sofort =   setUserData("DE", "EUR");
+        //Set custom regexp validation rule, set more short random valid email
+        emailValidationRule.setRegexp("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{0,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,9}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,22}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{0,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,4}");
+        sofort.setEmail(emailValidationRule.generateValidString());
 //        UserData ibanq =    setUserData("JP", "USD");
 //        UserData moneta =   setUserData("RU", "USD");
 //        UserData poli =     setUserData("AU", "AUD");
