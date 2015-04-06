@@ -38,7 +38,7 @@ public class Listener extends TestListenerAdapter{
             "GamesManagementTest", "GamesPortletTest","GeneralTest","InboxTest","InternalTagsTest", "LanguageTest",
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest", "LoginMessagesTest", "LoginValidationTest",
             "PermissionsTest", "PushMessagesBonusTest", "ReferAFriendTest","RegistrationAffiliateTest",
-            "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest",
+            "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest", "ReplacersTest",
             "ResponsibleGamingTest", "SelfExclusionTest", "TranslationKeysTest", "WebContentTest"};
 
     @Override

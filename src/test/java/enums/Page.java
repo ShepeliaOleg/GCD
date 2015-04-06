@@ -18,5 +18,6 @@ public enum Page{
     readTermsAndConditionsPopup,
     registrationPage,
     ringfencing,
-    welcomePopup;
+    welcomePopup,
+    freeSpins;
 }

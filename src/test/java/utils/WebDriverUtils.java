@@ -933,7 +933,7 @@ public class WebDriverUtils{
         return getElement(WebDriverFactory.getPortalDriver(), xpath);
     }
 
-    private static WebElement getElement(WebDriver webDriver, String xpath) {
+    public static WebElement getElement(WebDriver webDriver, String xpath) {
         System.out.println("Getting element by xpath "+xpath);
         try{
             return webDriver.findElement(By.xpath(xpath));
