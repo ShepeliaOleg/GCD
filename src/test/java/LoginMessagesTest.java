@@ -42,7 +42,8 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages navigation */
-    @Test(groups = {"regression", "mobile"})
+    //OBSOLETE
+    /*@Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesNavigation(){
         skipTestWithIssues("D-19275");
         IMSUtils.setLoginMessagesCount(3);
@@ -58,12 +59,12 @@ public class LoginMessagesTest extends AbstractTest{
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[1], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[1]+"'");
         welcomePopup.clickPrevious();
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
-    }
+    }*/
 
     /*Login messages closing from first*/
     @Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingStart(){
-        skipTestWithIssues("D-19275");
+        //skipTestWithIssues("D-19275");
         IMSUtils.setLoginMessagesCount(3);
         UserData userData = DataContainer.getUserData().getRegisteredUserData();
         WelcomePopup welcomePopup = (WelcomePopup) PortalUtils.loginUser(userData, Page.welcomePopup);
@@ -76,7 +77,8 @@ public class LoginMessagesTest extends AbstractTest{
     }
 
     /*Login messages closing from last*/
-    @Test(groups = {"regression", "mobile"})
+    //OBSOLETE
+    /*@Test(groups = {"regression", "mobile"})
     public void multipleLoginMessagesClosingEnd(){
         skipTestWithIssues("D-19275");
         IMSUtils.setLoginMessagesCount(3);
@@ -88,7 +90,7 @@ public class LoginMessagesTest extends AbstractTest{
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[1], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[1]+"'");
         welcomePopup.closePopup();
         assertTrue(WebDriverUtils.isVisible(IMSLoginDatabasePage.MESSAGES[0], 1), "Message correct '"+IMSLoginDatabasePage.MESSAGES[0]+"'");
-    }
+    }*/
 
 	/*Push logout */
 	@Test(groups = {"regression", "mobile"})

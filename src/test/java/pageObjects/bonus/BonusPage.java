@@ -80,7 +80,7 @@ public class BonusPage extends AbstractPortalPage{
 	}
 
 	public boolean isBonusDisplayed(String bonusID) {
-
+		WebDriverUtils.waitForElementToDisappear(LOADER);
 		return WebDriverUtils.isElementVisible(BONUS_LINK + bonusID + "]", 0);
 	}
 }
