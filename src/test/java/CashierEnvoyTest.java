@@ -26,7 +26,7 @@ public class CashierEnvoyTest extends AbstractTest{
     private ValidationRule emailValidationRule;
     private static final String AMOUNT = "10.00";
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void envoyDepositInterfaceIsFunctional(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData);
@@ -34,7 +34,7 @@ public class CashierEnvoyTest extends AbstractTest{
         depositPage.assertEnvoyInterface(userData);
     }
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void envoyWithdrawInterfaceIsFunctional(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData);
@@ -42,7 +42,7 @@ public class CashierEnvoyTest extends AbstractTest{
         withdrawPage.assertEnvoyInterface(userData);
     }
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void deposit(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData);
@@ -62,7 +62,7 @@ public class CashierEnvoyTest extends AbstractTest{
         assertEquals(TypeUtils.calculateSum(AMOUNT, PromoCode.valid.getAmount()), new AbstractPortalPage().getBalanceAmount(true), "Balance");
     }
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void depositInvalidPromoCode(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData);
@@ -84,7 +84,7 @@ public class CashierEnvoyTest extends AbstractTest{
         assertEquals("0.00", new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void withdrawUnsuccessful(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData, PromoCode.valid);
@@ -94,7 +94,7 @@ public class CashierEnvoyTest extends AbstractTest{
         assertEquals(AMOUNT, new AbstractPortalPage().getBalanceAmount(), "Balance");
     }
 
-    //---@Test(groups = {"regression", "mobile"})
+    @Test(groups = {"regression", "mobile"})
     public void cancelWithdraw(){
         UserData userData = getEnvoyUser();
         PortalUtils.registerUser(userData, PromoCode.valid);
@@ -125,7 +125,7 @@ public class CashierEnvoyTest extends AbstractTest{
 //        UserData ewire =    setUserData("DK", "DKK");
         UserData sofort =   setUserData("DE", "EUR");
         //Set custom regexp validation rule, set more short random valid email
-        emailValidationRule.setRegexp("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{0,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,9}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,26}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{0,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,4}");
+        emailValidationRule.setRegexp("[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-]{1,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{0,6}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]{1,9}[@]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{1,22}[.]{0,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{0,30}[.]{1,1}[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{2,4}");
         sofort.setEmail(emailValidationRule.generateValidString());
 //        UserData ibanq =    setUserData("JP", "USD");
 //        UserData moneta =   setUserData("RU", "USD");
