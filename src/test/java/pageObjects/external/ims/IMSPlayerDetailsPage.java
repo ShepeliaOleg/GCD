@@ -1,5 +1,6 @@
 package pageObjects.external.ims;
 
+import enums.BonusType;
 import enums.Page;
 import pageObjects.core.AbstractServerPage;
 import springConstructors.AffiliateData;
@@ -131,7 +132,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     }
 
     public void checkAffiliateData(String advertiser, String banner, String profile, String url, String creferrer, boolean creferrerIsExists){
-        checkAdvertiser(advertiser+" ("+profile+")");
+        checkAdvertiser(advertiser + " (" + profile + ")");
         checkUrl(url);
         checkCreferrer(creferrer, creferrerIsExists);
         checkBanner(advertiser, banner, profile);
@@ -191,7 +192,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 
     private void checkCreferrerCustomField(String name, String value){
         String nameXpath = "*[contains(text(), '"+name+"')]";
-        if (!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//"+ nameXpath, 0)) {
+        if (!WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//" + nameXpath, 0)) {
             WebDriverUtils.click(WebDriverFactory.getServerDriver(), LINK_CUSTOM_FIELDS);
             AbstractTest.assertTrue(WebDriverUtils.isVisible(WebDriverFactory.getServerDriver(), "//" + nameXpath, 1), "Custom field '//" + nameXpath + "' is visible -");
         }
@@ -401,7 +402,12 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
 		return new IMSPlayerBonusInfoPage();
 	}
 
-    public void addBonus(Page pushMessages, String amount, int quantity){
+	public IMSPlayerDetailsPage addBonus(Page pushMessages, String amount, BonusType bonusType){
+		IMSAddBonusPage imsAddBonusPage = clickAddBonus();
+		return imsAddBonusPage.addBonus(pushMessages, amount, bonusType);
+	}
+
+	public void addBonus(Page pushMessages, String amount, int quantity){
         for(int i=0;i<quantity;i++){
             addBonus(pushMessages, amount);
         }

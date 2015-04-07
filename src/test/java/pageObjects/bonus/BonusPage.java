@@ -49,6 +49,7 @@ public class BonusPage extends AbstractPortalPage{
 	}
 
 	public void openAndDeclineBonus(String bonusID) {
+		checkSupportedBrowser();
 		clickFreeBonusLink(bonusID, 1);
 		new AbstractPortalPopup().closePopup();
 	}

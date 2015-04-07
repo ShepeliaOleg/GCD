@@ -1,18 +1,25 @@
+import enums.BonusType;
 import enums.ConfiguredPages;
 import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
+import pageObjects.account.BalancePage;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.external.ims.IMSPlayerBonusInfoPage;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
+import pageObjects.gamesPortlet.GamesPortletPage;
 import pageObjects.replacers.BonusHistoryPage;
+import pageObjects.replacers.FreeSpinsBalancePage;
 import pageObjects.replacers.PromotionalCodeReplacerPage;
 import pageObjects.replacers.ValidPromotionalCodePopup;
 import springConstructors.UserData;
 import utils.*;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
+import utils.core.WebDriverFactory;
 import utils.validation.ValidationUtils;
+
+import java.util.Date;
 
 /**
  * Created by serhiist on 3/11/2015.
@@ -77,7 +84,7 @@ public class ReplacersTest extends AbstractTest {
      * [TOTAL_BONUS_BALANCE] REPLACER START
      */
 
-    /*Bonus history page is displayed*/
+    /*5. Bonus history page is displayed*/
     @Test(groups = {"regression"})
     public static void isBonusHistoryDisplayed() {
         try {
@@ -87,7 +94,7 @@ public class ReplacersTest extends AbstractTest {
         }
     }
 
-    /*Total Bonus Balance update for non acceptable bonus*/
+    /*6. Total Bonus Balance update for non acceptable bonus*/
     @Test(groups = {"regression"})
     public static void isTotalBonusBalanceUpdatedForNonAcceptableBonus() {
         BonusHistoryPage bonusHistoryPage = (BonusHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusHistory);
@@ -102,7 +109,7 @@ public class ReplacersTest extends AbstractTest {
         assertTrue(Float.parseFloat(finalBalanceAmount) - Float.parseFloat(initialBalanceAmount) == Float.parseFloat(AMOUNT), "Right bonus amount was added");
     }
 
-    /*Total Bonus Balance update for accepted bonus*/
+    /*7. Total Bonus Balance update for accepted bonus*/
     @Test(groups = {"regression"})
     public static void isTotalBonusBalanceUpdatedForAcceptedBonus() {
         BonusHistoryPage bonusHistoryPage = (BonusHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusHistory);
@@ -117,7 +124,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals(imsPlayerDetailsPage.getTotalBonusAmount(), finalBalanceAmount, "Amount of total bonus should be equals to value on IMS after bonus accepting");
     }
 
-    /*Total Bonus Balance update for declined bonus*/
+    /*8. Total Bonus Balance update for declined bonus*/
     @Test(groups = {"regression"})
     public static void isTotalBonusBalanceNotUpdatedForDeclineBonus() {
         BonusHistoryPage bonusHistoryPage = (BonusHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.bonusHistory);
@@ -132,7 +139,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals(imsPlayerDetailsPage.getTotalBonusAmount(), finalBalanceAmount, "Amount of total bonus should be equals to value on IMS after bonus declining");
     }
 
-    /*Bonus history page with 3 symbol currency */
+    /*9. Bonus history page with 3 symbol currency */
     @Test(groups = {"regression"})
     public static void CurrencyOnBonusHistoryPageWithThreeSymbolCurrencyDisplayedRight() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
@@ -148,8 +155,8 @@ public class ReplacersTest extends AbstractTest {
 
     /**
      * [BONUS_DETAIL_BALANCE] REPLACER START
-     * */
-    /*Bonus Detail balance updated for non acceptable bonus*/
+     */
+    /*10. Bonus Detail balance updated for non acceptable bonus*/
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedForNonAcceptableBonus() {
         Page bonusType = Page.okBonus;
@@ -166,7 +173,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals("$", bonusHistoryPage.getCurrentBalanceCurrency(bonusType), "Current balance currency");
     }
 
-    /*Bonus Detail balance updated for accepted bonus*/
+    /*11. Bonus Detail balance updated for accepted bonus*/
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedForAcceptedBonus() {
         Page bonusType = Page.acceptDeclineBonus;
@@ -183,7 +190,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals("0.00", bonusHistoryPage.getCurrentBalanceValue(bonusType), "Current balance value");
     }
 
-    /*Bonus Detail balance updated for declined bonus*/
+    /*12. Bonus Detail balance updated for declined bonus*/
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedForDeclinedBonus() {
         Page bonusType = Page.acceptDeclineBonus;
@@ -200,7 +207,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals("0.00", bonusHistoryPage.getCurrentBalanceValue(bonusType), "Current balance value");
     }
 
-    /*Bonus Detail balance check 3 symbol currency*/
+    /*13. Bonus Detail balance check 3 symbol currency*/
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedCheckThreeSymbolCurrency() {
         Page bonusType = Page.okBonus;
@@ -215,7 +222,7 @@ public class ReplacersTest extends AbstractTest {
         assertEquals(userData.getCurrency(), bonusHistoryPage.getCurrentBalanceCurrency(bonusType), "Current balance with 3 symbol currency");
     }
 
-    /*Bonus Detail balance check bonus list scrolling*/
+    /*14. Bonus Detail balance check bonus list scrolling*/
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedCheckBonusListScrolling() {
         UserData userData = getBonusUser();
@@ -229,14 +236,124 @@ public class ReplacersTest extends AbstractTest {
         bonusHistoryPage.clickLoadMoreButton();
         assertEquals(totalBonusesAmount, bonusHistoryPage.getNumberOfBonusesInList(), "Right number of bonuses displayed");
     }
+    /**
+     * [BONUS_DETAIL_BALANCE] REPLACER END
+     * */
 
-    private static UserData getBonusUser(){
+    /**
+     * [TOTAL_FREE_SPIN_BALANCE] REPLACER START
+     */
+
+    /*15. Total free spins balance is displayed*/
+    @Test(groups = {"regression"})
+    public static void isTotalFreeSpinReplaserDisplayed() {
+        try {
+            FreeSpinsBalancePage freeSpinsBalancePage = (FreeSpinsBalancePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.freeSpinsBalanceTotal);
+        } catch (Exception e) {
+            skipTest();
+        }
+    }
+
+    /*16. Total free spins amount for new user*/
+    @Test(groups = {"regression"})
+    public static void totalFreeSpinsAmountNewUser() {
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        FreeSpinsBalancePage freeSpinsBalancePage = (FreeSpinsBalancePage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalanceTotal);
+        assertEquals("0", freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for new user equals to '0'");
+    }
+
+    /*17. Total free spins amount for new user*/
+    @Test(groups = {"regression"})
+    public static void addTotalFreeSpins() {
+        String spinsAmount = "1";
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        IMSUtils.navigateToPlayedDetails(userData.getUsername()).addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        FreeSpinsBalancePage freeSpinsBalancePage = navigateToTotalFreeSpinsBalance();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user equals to amount added on IMS");
+    }
+
+    /*18. Using of Total free spins*/
+    @Test(groups = {"regression"})
+    public static void usingFreeSpins() {
+        String spinsAmount = "1";
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        IMSUtils.navigateToPlayedDetails(userData.getUsername()).addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        FreeSpinsBalancePage freeSpinsBalancePage = navigateToTotalFreeSpinsBalance();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user equals to amount added on IMS");
+        doSpinInGame();
+        NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalanceTotal);
+        assertEquals("0", freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance after using them");
+    }
+
+    /*19.  Total free spins amount displayed properly after relogin*/
+    @Test(groups = {"regression"})
+    public static void checkFreeSpinsAmountAfrerRelogin() {
+        String spinsAmount = "1";
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        IMSUtils.navigateToPlayedDetails(userData.getUsername()).addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        FreeSpinsBalancePage freeSpinsBalancePage = navigateToTotalFreeSpinsBalance();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user equals to amount added on IMS");
+        freeSpinsBalancePage.logout();
+        PortalUtils.loginUser(userData);
+        NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalanceTotal);
+        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user is shown properly after relogin");
+    }
+
+    /*20. Total free spins amount for several new users displayed properly*/
+    @Test(groups = {"regression"})
+    public static void checkFreeSpinsAmountForDifferentUsers() {
+        String spinsAmount = "1";
+        String spinsAmount2 = "5";
+        UserData userData1 = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData1);
+        IMSUtils.navigateToPlayedDetails(userData1.getUsername()).addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        FreeSpinsBalancePage freeSpinsBalancePage = navigateToTotalFreeSpinsBalance();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user1 equals to amount added on IMS");
+        freeSpinsBalancePage.logout();
+
+        UserData userData2 = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData2);
+        IMSUtils.navigateToPlayedDetails(userData2.getUsername()).addBonus(Page.freeSpins, spinsAmount2, BonusType.freeSpins);
+        navigateToTotalFreeSpinsBalance();
+        assertEquals(spinsAmount2, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user2 equals to amount added on IMS");
+        freeSpinsBalancePage.logout();
+
+        PortalUtils.loginUser(userData1);
+        NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalanceTotal);
+        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
+        assertEquals(spinsAmount, freeSpinsBalancePage.getTotalFreeSpinBalance(), "Total free spins balance for user1 is shown properly after relogin");
+    }
+
+    /**
+     * [TOTAL_FREE_SPIN_BALANCE] REPLACER END
+     * */
+
+
+    private static UserData getBonusUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername("bonusUser");
         return userData;
     }
 
-    /**
-     * [BONUS_DETAIL_BALANCE] REPLACER END
-     * */
+    private static void doSpinInGame(){
+        GamesPortletPage gamesPortletPage = (GamesPortletPage)NavigationUtils.navigateToPage(ConfiguredPages.gamesFavourites);
+        gamesPortletPage.playReal(4);
+        gamesPortletPage.waitGameLoaded();
+        gamesPortletPage.doSpin();
+    }
+
+    private static FreeSpinsBalancePage navigateToTotalFreeSpinsBalance(){
+        FreeSpinsBalancePage freeSpinsBalancePage = (FreeSpinsBalancePage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalanceTotal);
+        new AcceptDeclineBonusPopup().clickAccept();
+        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
+        return freeSpinsBalancePage;
+    }
  }

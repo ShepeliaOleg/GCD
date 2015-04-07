@@ -17,6 +17,7 @@ public class BonusHistoryPage extends AbstractPortalPage {
     private static final String FIELD_CURRENT_BALANCE_XP = "//ul[" + PLACEHOLDER + "]//*[@class='info-list info-list_type_sub row']/li[contains(., 'Current balance')]/span[last()]";
     private static final String ABSTRACT_BONUS_ELEMENT_XP = "//*[contains(@class, 'fn-bonus-history')]//ul";
     private static final String BUTTON_LOAD_MORE_XP = "//*[contains(@class, 'fn-load-more')]";
+    private static final String LOADER_XP = "//*[contains(@class, 'fn-loader')]";
 
     public BonusHistoryPage() {
         super(new String[]{BONUS_BALANCE_ROOT_XP, BONUS_DETAILS_ROOT_XP});
@@ -51,6 +52,7 @@ public class BonusHistoryPage extends AbstractPortalPage {
 
     public void clickOnBonus(Page bonusName) {
         String bonusXP = getBonusDetailsNameXP(bonusName);
+        WebDriverUtils.waitForElementToDisappear(LOADER_XP);
         WebDriverUtils.waitForElement(bonusXP);
         WebDriverUtils.click(bonusXP);
     }

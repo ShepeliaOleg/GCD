@@ -46,7 +46,9 @@ public class PromotionalCodeReplacerPage extends AbstractPortalPage {
 
     public ValidPromotionalCodePopup clearFieldAndInputValidPromocode(){
         clearAndInputTextToPromocodeField(VALID_PROMOTIONAL_CODE);
+        WebDriverUtils.waitFor();
         clickGoButton();
+        WebDriverUtils.waitFor();
         return new ValidPromotionalCodePopup();
     }
 

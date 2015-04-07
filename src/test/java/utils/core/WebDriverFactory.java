@@ -283,4 +283,8 @@ public class WebDriverFactory{
     public static PlatForm getPlatform() {
         return platform;
     }
+
+    public static String getBrowser() {
+        return browser;
+    }
 }

@@ -36,6 +36,8 @@ public enum ConfiguredPages{
     deposit("deposit"),
     forgotPassword("forgot_password"),
     forgotUsername("forgot_password"),
+    freeSpinsBalance("free_spins_balance"),
+    freeSpinsBalanceTotal("total_free_spins_balance"),
     gamesCasinoPage("home"),
     gamesList("list"),
 	gamesStyleOne("style1_slider"),
