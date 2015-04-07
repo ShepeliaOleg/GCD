@@ -60,8 +60,9 @@ public class BonusBuyInTest extends AbstractTest {
         new OptedInPopup().confirmBuyInBonus();
 
         okBonusPopup = new OkBonusPopup();
-        okBonusPopup.assertPopupTitleText("");
-        okBonusPopup.assertPopupContentText("Congratulations, you just received " + getСurrencySymbol(buyInAvg.getCurrency()) + String.format("%1$,.0f", Float.parseFloat(buyInAvg.getBonusAmount())));
+        okBonusPopup.closePopup();
+        okBonusPopup.assertPopupTitleText("Congratulations");
+        okBonusPopup.assertPopupContentText("Congratulations, you just received a " + getСurrencySymbol(buyInAvg.getCurrency()) + String.format("%1$,.0f", Float.parseFloat(buyInAvg.getBonusAmount())));
         okBonusPopup.closePopup();
     }
 
