@@ -14,7 +14,7 @@ import utils.core.DataContainer;
 
 public class LoggedOutHeader extends Header{
 
-    private static final Locator BUTTON_LOGIN_XP = 		new Locator("fn-login", ROOT_XP+"//*[contains(@class, 'fn-login')]", ".btn.fn-login");
+    public static final Locator BUTTON_LOGIN_XP = 		new Locator("fn-login", ROOT_XP+"//*[contains(@class, 'fn-login')]", ".btn.fn-login");
     //Desktop only
     private static final String FIELD_USERNAME_XP= 		ROOT_XP+"//*[@id='name']";
     private static final String FIELD_PASSWORD_XP= 		ROOT_XP+"//*[@id='password']";

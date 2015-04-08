@@ -1,6 +1,7 @@
 package utils;
 
 import enums.*;
+import org.openqa.selenium.JavascriptExecutor;
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
@@ -29,6 +30,7 @@ import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
 import pageObjects.gamesPortlet.GameLaunchPopup;
 import pageObjects.gamesPortlet.GamesPortletPage;
+import pageObjects.header.LoggedOutHeader;
 import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
@@ -52,6 +54,7 @@ import springConstructors.UserData;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
+import utils.core.WebDriverFactory;
 
 import static utils.core.AbstractTest.skipTestWithIssues;
 
@@ -202,7 +205,12 @@ public class NavigationUtils{
                 }
                 break;
             case player:
-                if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 5)) {
+                WebDriverUtils.waitForPageToLoad();
+                if(WebDriverUtils.isVisible(LoggedOutHeader.BUTTON_LOGIN_XP.getXpath(),1)) {
+                    javaScriptLogin(userData);
+                }
+                if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)) {
+                //if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 5)) {
                     new LoginPopup().login(userData);
                 }else{
                     if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
@@ -500,5 +508,26 @@ public class NavigationUtils{
 
     public static void refreshPage() {
         WebDriverUtils.refreshPage();
+    }
+
+    private static void javaScriptLogin(UserData userData) {
+        String jsLoginScript = "var user = require('modules/user/user.model')\n" +
+                "user.set({\n" +
+                "    userName: '" + userData.getUsername() + "',\n" +
+                "    password: '" + userData.getPassword() + "'\n" +
+                "})\n" +
+                ".fetch()\n" +
+                ".done(function(data) {\n" +
+                " console.log('success', data);\n" +
+                "})\n" +
+                ".fail(function(data) {\n" +
+                " console.log('error', data);\n" +
+                "});";
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverFactory.getPortalDriver();
+        js.executeScript(jsLoginScript);
+        WebDriverUtils.waitForPageToLoad();
+        WebDriverUtils.waitFor(1100);
+        WebDriverUtils.refreshPage();
+        System.out.println("Fast JavaScript login");
     }
 }

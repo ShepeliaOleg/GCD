@@ -22,6 +22,7 @@ import springConstructors.DriverData;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class WebDriverFactory{
 
@@ -98,6 +99,7 @@ public class WebDriverFactory{
 		}catch(Exception e){
 			throw new RuntimeException("Starting webdriver failed \n" + e);
 		}
+        driver.manage().timeouts().setScriptTimeout(1000, TimeUnit.MILLISECONDS);
 		return driver;
 	}
 
