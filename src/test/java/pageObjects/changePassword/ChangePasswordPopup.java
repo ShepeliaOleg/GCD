@@ -4,6 +4,7 @@ import pageObjects.core.AbstractPopup;
 import pageObjects.core.AbstractPortalPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
+import utils.Locator;
 import utils.WebDriverUtils;
 import utils.core.WebDriverFactory;
 import utils.validation.ValidationUtils;
@@ -11,8 +12,7 @@ import utils.validation.ValidationUtils;
 import static utils.core.AbstractTest.assertEquals;
 
 public class ChangePasswordPopup extends AbstractPortalPopup{
-	private  final static String BUTTON_SUBMIT_XP    =              "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]";
-    public static final String ROOT_XP = BUTTON_SUBMIT_XP;
+	private  final static Locator BUTTON_SUBMIT_XP    = new Locator("fn-changepassword", "//*[contains(@class, 'fn-changepassword')][contains(@class, 'button')]", ".popup-modal .fn-changepassword");
     private final static String INPUT_OLD_PASSWORD_XP =             "//*[@name='oldPassword']";
     //OLD locators
     //private final static String INPUT_NEW_PASSWORD_XP =             "//*[@name='newPassword']";
@@ -23,7 +23,7 @@ public class ChangePasswordPopup extends AbstractPortalPopup{
 	private final static String GENERAL_ERROR_MSG =					"//*[contains(@class,'error')]";
 
 	public ChangePasswordPopup(){
-		super(new String[]{ROOT_XP});
+		super(new String[]{BUTTON_SUBMIT_XP.getXpath()});
 	}
 
 	private void fillOldPassword(String password){

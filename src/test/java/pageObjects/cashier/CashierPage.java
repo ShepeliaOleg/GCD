@@ -6,6 +6,7 @@ import enums.PromoCode;
 import pageObjects.account.AddCardPage;
 import pageObjects.core.AbstractPortalPage;
 import springConstructors.UserData;
+import utils.Locator;
 import utils.WebDriverUtils;
 import utils.core.AbstractTest;
 
@@ -18,7 +19,7 @@ public class CashierPage extends AbstractPortalPage {
     protected static final String METHOD_HEADER_BASE_XP =   "//*[contains(@class, 'info-list__field')]";
     protected static final String METHOD_HEADER_XP =        METHOD_HEADER_BASE_XP+"[contains(text(), '"+PLACEHOLDER+"')]";
     protected static final String METHOD_BODY_XP =          WebDriverUtils.getFollowingElement(METHOD_HEADER_XP);
-    protected static final String BUTTON_ADD_CARD_XP =      BUTTON_XP+"[@data-url='/add-card']";
+    protected static final Locator BUTTON_ADD_CARD_XP =     new Locator("fn-card-add", null, null);
     protected static final String FIELD_AMOUNT_XP =         "//*[@name='amount']";
     protected static final String FIELD_PROMO_CODE_XP =     "//*[@name='promoCode']";
     protected static final String FIELD_ACCOUNT_KNOWN_XP =  "//select[@class='fn-change-account']";

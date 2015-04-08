@@ -21,7 +21,7 @@ public class LoggedInMenu extends Menu {
     private static final String TRANSACTION_HISTORY_XP =    ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-pending-transactions')]]";
     private static final String RESPONSIBLE_GAMING_XP =     ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-responsible-gaming')]]";
     private static final String SELF_EXCLUSION_XP =         ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-self-exclusion')]]";
-    private static final String CHANGE_PASSWORD_XP =        ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-password')]]";
+    private static final Locator CHANGE_PASSWORD_XP =       new Locator(null, ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-password')]]", ".micon-password +span");
     private static final String HIDE_BALANCE_XP =           ROOT_XP + "//*[preceding-sibling::*[contains(@class,'micon-balance')]]";
 
 	public LoggedInMenu(){

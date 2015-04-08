@@ -13,7 +13,7 @@ public class WithdrawPage extends CashierPage {
 
 
     public WithdrawPage(){
-        super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP, METHOD_HEADER_BASE_XP});
+        super(new String[]{ROOT_XP, BUTTON_ADD_CARD_XP.getXpath(), METHOD_HEADER_BASE_XP});
     }
 
     public void withdrawSuccessful(PaymentMethod type, String amount){

@@ -1,5 +1,6 @@
 import enums.ConfiguredPages;
 import enums.PaymentMethod;
+import enums.PlatForm;
 import org.testng.annotations.Test;
 import pageObjects.account.AddCardPage;
 import pageObjects.cashier.deposit.DepositPage;
@@ -91,6 +92,7 @@ public class CashierAddCardTest extends AbstractTest{
     /*already used by other user is not added, correct message*/
     @Test(groups = {"regression", "mobile"})
     public void addAlreadyUsedByOtherPlayerCard(){
+        skipTestWithIssues(PlatForm.mobile, "COR-700");
         String card = RandomUtils.getValidCardNumber(PaymentMethod.Visa);
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
