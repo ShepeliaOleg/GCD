@@ -25,7 +25,7 @@ public class CashierPendingWithdrawTest extends AbstractTest{
     /*#2. load more button on pending withdraw page */
     @Test(groups = {"regression"})
     public void pendingWithdrawLoadMore(){
-        skipTestWithIssues("D-19084");
+        skipTestWithIssues("COR-723");
         PendingWithdrawPage pendingWithdrawPage = (PendingWithdrawPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.pending_withdraw);
         pendingWithdrawPage.loadMore();
         new WithdrawLoadMoreNotification();

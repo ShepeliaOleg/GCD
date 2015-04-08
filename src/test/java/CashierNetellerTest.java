@@ -67,7 +67,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerDepositValidPromoCode() {
-        skipTestWithIssues("D-18785");
+//        skipTestWithIssues("D-18785");
         PortalUtils.loginUser(getNetellerUser());
         DepositPage depositPage = (DepositPage) NavigationUtils.navigateToPage(ConfiguredPages.deposit);
         String balance = depositPage.getBalanceAmount();
@@ -147,7 +147,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectAccount() {
-        skipTestWithIssues("D-18912");
+        skipTestWithIssues("COR-721");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
@@ -157,7 +157,7 @@ public class CashierNetellerTest extends AbstractTest {
 
     @Test(groups = {"regression", "mobile"})
     public void netellerWithdrawIncorrectEmail() {
-        skipTestWithIssues("D-18912");
+        skipTestWithIssues("COR-721");
         UserData userData = DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData, PromoCode.valid);
         WithdrawPage withdrawPage = (WithdrawPage) NavigationUtils.navigateToPage(ConfiguredPages.withdraw);
