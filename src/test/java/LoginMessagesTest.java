@@ -33,7 +33,8 @@ public class LoginMessagesTest extends AbstractTest{
         IMSUtils.setLoginMessagesCount(0);
         try{
             UserData userData = DataContainer.getUserData().getRegisteredUserData();
-            PortalUtils.loginUser(userData);
+            //PortalUtils.loginUser(userData);
+            NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
         }catch (Exception e){
             addError(e.getMessage());
         }finally {

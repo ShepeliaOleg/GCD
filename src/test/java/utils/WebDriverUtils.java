@@ -891,12 +891,10 @@ public class WebDriverUtils{
     }
 
 	public static void executeScript(WebDriver webDriver, String javascript){
-        System.out.println("Executing JS "+javascript);
         ((JavascriptExecutor) webDriver).executeScript(javascript);
 	}
 
     //Mobile
-
     public static void setOrientation(ScreenOrientation screenOrientation){
         AppiumDriver appiumDriver = (AppiumDriver)WebDriverFactory.getPortalDriver();
         appiumDriver.rotate(screenOrientation);

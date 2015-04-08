@@ -523,8 +523,7 @@ public class NavigationUtils{
                 ".fail(function(data) {\n" +
                 " console.log('error', data);\n" +
                 "});";
-        JavascriptExecutor js = (JavascriptExecutor) WebDriverFactory.getPortalDriver();
-        js.executeScript(jsLoginScript);
+        WebDriverUtils.executeScript(jsLoginScript);
         WebDriverUtils.waitForPageToLoad();
         WebDriverUtils.waitFor(1100);
         WebDriverUtils.refreshPage();
