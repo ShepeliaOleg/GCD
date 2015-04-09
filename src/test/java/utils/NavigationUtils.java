@@ -341,15 +341,15 @@ public class NavigationUtils{
             return processReadTermsAndConditionsPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(AcceptTermsAndConditionsPopup.TERMS_ROOT_XP, 0)) {
             return processTermsAndConditionsPopup(exceptPage);
-        } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
-            return processChangePasswordPopup(exceptPage);
         } else if (WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BONUS_TITLE_XP, 0)){
             if(WebDriverUtils.isVisible(AcceptDeclineBonusPopup.BUTTON_ACCEPT_XP.getXpath(), 0)){
                 return processAcceptDecline(exceptPage);
             }else {
                 return processOkBonus(exceptPage);
             }
-        }else {
+        } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
+            return processChangePasswordPopup(exceptPage);
+        } else {
             return processGenericPopup();
         }
     }

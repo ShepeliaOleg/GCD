@@ -6,7 +6,6 @@ import io.selendroid.client.SelendroidDriver;
 import io.selendroid.common.SelendroidCapabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
-import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -182,10 +181,16 @@ public class WebDriverFactory{
     }
 
     private static WebDriver createChromeDriver(String osType){
+
         ChromeOptions chromeOptions=new ChromeOptions();
-        chromeOptions.addArguments("--ignore-certificate-errors");
-        if (osType.equals("linux")) { chromeOptions.setBinary("/usr/bin/google-chrome");}
-        return new ChromeDriver(chromeOptions);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        if (osType.equals("linux")) {
+            chromeOptions.setBinary("/usr/bin/google-chrome");
+        }
+        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        capabilities.setJavascriptEnabled(true);
+
+        return new ChromeDriver(capabilities);
     }
 
     private static WebDriver createSafariDriver(){
