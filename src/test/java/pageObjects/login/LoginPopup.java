@@ -86,6 +86,7 @@ public class LoginPopup extends AbstractPortalPopup {
             }catch (Exception e){
                 NavigationUtils.registrationError();
             }
+            WebDriverUtils.waitForElement(AbstractPortalPopup.ROOT_XP); // wait for popup appear before trying to close it
             return NavigationUtils.closeAllPopups(expectedPage);
         }
     }
