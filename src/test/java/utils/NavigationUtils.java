@@ -35,6 +35,7 @@ import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
 import pageObjects.login.LoginPopup;
+import pageObjects.login.SignedOutPopup;
 import pageObjects.login.WelcomePopup;
 import pageObjects.pageInPopup.PageInPopupPage;
 import pageObjects.pageInPopup.PageInPopupPopup;
@@ -197,8 +198,11 @@ public class NavigationUtils{
                     closeAllPopups(expectedPage);
                 }
                 if(PortalUtils.isLoggedIn()) {
-                    PortalUtils.logout();
-                    reload = true;
+                    //PortalUtils.logout();
+                    javaScriptLogout();
+                    //new SignedOutPopup().close();
+                    //new AbstractPortalPopup().closePopup();
+                    reload = false;
                 }else if(abstractPortalPage.isAdminLoggedIn()) {
                     abstractPortalPage.logoutAdmin();
                     reload = true;
@@ -528,5 +532,13 @@ public class NavigationUtils{
         WebDriverUtils.waitFor(1100);
         WebDriverUtils.refreshPage();
         System.out.println("Fast JavaScript login");
+    }
+
+    private static void javaScriptLogout(){
+        String jsLogoutScript =  "var user = require('modules/user/user.model')\n" +
+                "user.logoutAction();";
+        WebDriverUtils.executeScript(jsLogoutScript);
+        WebDriverUtils.refreshPage();
+        System.out.println("Fast JavaScript logout");
     }
 }
