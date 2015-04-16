@@ -142,7 +142,7 @@ public class BonusBuyInTest extends AbstractTest {
     }
 
     //COMPOINTS
-    @Test
+    @Test(groups = {"regression"})
     public void acumulateCompointsTest(){
 
         BalancePage balancePage = (BalancePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.balance );
