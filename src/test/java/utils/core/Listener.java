@@ -39,7 +39,7 @@ public class Listener extends TestListenerAdapter{
             "LiveTableFinderTest","LoginTest","LoginLogoutConfirmationTest", "LoginMessagesTest", "LoginValidationTest",
             "PermissionsTest", "PushMessagesBonusTest", "ReferAFriendTest","RegistrationAffiliateTest",
             "RegistrationTest", "RegistrationUsernameSuggestionTest","RegistrationValidationTest", "ReplacersTest",
-            "ResponsibleGamingTest", "SelfExclusionTest", "TranslationKeysTest", "WebContentTest"};
+            "ResponsibleGamingTest", "SelfExclusionTest", "TranslationKeysTest", "TransactionHistoryTest", "WebContentTest"};
 
     @Override
     public void onTestFailure(ITestResult iTestResult){

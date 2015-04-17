@@ -9,7 +9,6 @@ import pageObjects.changePassword.ChangePasswordPopup;
 import pageObjects.external.ims.IMSPlayerDetailsPage;
 import pageObjects.external.mail.MailServicePage;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
-import pageObjects.login.LoginPopup;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
 import springConstructors.mail.MailService;

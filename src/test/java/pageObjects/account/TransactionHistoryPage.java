@@ -1,6 +1,7 @@
 package pageObjects.account;
 
 import pageObjects.core.AbstractPortalPage;
+import utils.WebDriverUtils;
 
 public class TransactionHistoryPage extends AbstractPortalPage {
 
@@ -12,6 +13,18 @@ public class TransactionHistoryPage extends AbstractPortalPage {
 
     public TransactionHistoryPage() {
         super(new String[]{ROOT_XP});
+    }
+
+    public String getFirstGroupText(){
+        return WebDriverUtils.getElementText(ALL_TAB_XP);
+    }
+
+    public String getSecondGroupText(){
+        return WebDriverUtils.getElementText(DEPOSIT_TAB_XP);
+    }
+
+    public String getThirdGroupText(){
+        return WebDriverUtils.getElementText(WITHDRAW_TAB_XP);
     }
 }
 

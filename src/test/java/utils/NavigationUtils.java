@@ -1,7 +1,7 @@
 package utils;
 
 import enums.*;
-import org.openqa.selenium.JavascriptExecutor;
+
 import pageObjects.HomePage;
 import pageObjects.InternalTagsPage;
 import pageObjects.account.BalancePage;
@@ -35,7 +35,6 @@ import pageObjects.inbox.InboxPage;
 import pageObjects.liveCasino.LiveCasinoPage;
 import pageObjects.login.AcceptTermsAndConditionsPopup;
 import pageObjects.login.LoginPopup;
-import pageObjects.login.SignedOutPopup;
 import pageObjects.login.WelcomePopup;
 import pageObjects.pageInPopup.PageInPopupPage;
 import pageObjects.pageInPopup.PageInPopupPopup;
@@ -55,7 +54,6 @@ import springConstructors.UserData;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
-import utils.core.WebDriverFactory;
 
 import static utils.core.AbstractTest.skipTestWithIssues;
 
