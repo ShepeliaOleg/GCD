@@ -40,7 +40,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	/*POSITIVE*/
 
 	/*1. Portlet is displayed in popup*/
-    @Test(groups = {"smoke"})
+    @Test(groups = {"smoke", "P1", "COR-256", "1.03_Forgot_Password"})
 	public void portletIsDisplayedOnPopup(){
         try{
             HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
@@ -48,7 +48,6 @@ public class ForgotPasswordTest extends AbstractTest{
         }catch (Exception e){
             skipTest();
         }
-
 	}
 //    /*1. Portlet is displayed on page*/
 //    @Test(groups = {"smoke"})
@@ -57,14 +56,14 @@ public class ForgotPasswordTest extends AbstractTest{
 //    }
 	
 	/*2. Submit correct data 3. Check confirmation popup*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P1", "COR-256", "1.03_Forgot_Password"})
 	public void validRecovery(){
         WebDriverUtils.clearLocalStorage();
         validPasswordRecovery();
 	}
 
     /* Frozen user*/
-    @Test(groups = {"regression"})
+    @Test(groups = {"regression", "P2", "COR-274", "1.03_Forgot_Password"})
     public void frozenPasswordRecovery(){
         UserData userData = DataContainer.getUserData().getFrozenUserData();
         userData.setEmail(mailService.generateEmail());
@@ -76,7 +75,7 @@ public class ForgotPasswordTest extends AbstractTest{
     }
 
     /*6. change temporary password (popup shown after login)*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void setNewPasswordAfterRecoveryLogin() {
         setNewPasswordAfterRecoveryAndLogin();
 	}
@@ -115,7 +114,7 @@ public class ForgotPasswordTest extends AbstractTest{
 //	}
 
     /*10. Close popup without resetting and login*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void closePasswordChangePopup(){
 		UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -161,7 +160,7 @@ public class ForgotPasswordTest extends AbstractTest{
     /*NEGATIVE*/
 
 	/*1. Try to clickLogin FP form with incorrect email (valida but not the one specified for your account)*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P1", "COR-261", "1.03_Forgot_Password"})
 	public void invalidPasswordRecovery(){
         UserData userData=DataContainer.getUserData().getRegisteredUserData();
         userData.setEmail("incorrectemail@mailService.com");
@@ -172,7 +171,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	}
 
 	/*2. Try to specify Date of birth showing that you are not 18 years yet*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void tryToSpecifyDateOfBirthLessThan18(){
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
@@ -186,7 +185,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	}
 
     /*3. Try to clickLogin FP form with incorrect date of birth (valid but not the one specified for your account)*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void tryToSpecifyIncorrectDateOfBirth(){
         UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setBirthDay("23"); // set incorrect date of birth
@@ -197,7 +196,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	}
 
     /*4. Try to clickLogin FP form with not existing username*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void tryToSpecifyIncorrectUsername(){
         UserData userData=DataContainer.getUserData().getRegisteredUserData();
 		userData.setUsername("incorrectUsername"); // set incorrect username
@@ -208,7 +207,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	}
 
     /*5. Restore password and try to login with old password*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void unableToLoginWithOldPassword(){
         UserData userData=DataContainer.getUserData().getRandomUserData();
         PortalUtils.registerUser(userData);
@@ -216,11 +215,11 @@ public class ForgotPasswordTest extends AbstractTest{
         ForgotPasswordPopup forgotPasswordPopup = homePage.navigateToForgotPassword();
         forgotPasswordPopup.recoverPasswordValid(userData);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-        LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
+        homePage.login(userData, Page.loginPopup);
 	}
 
     /*6. Login with temporary password stops working after password is changed*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P1", "COR-275", "1.03_Forgot_Password"})
 	public void tryToLoginWithTempPassAfterPassChanged() {
         UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
@@ -232,11 +231,11 @@ public class ForgotPasswordTest extends AbstractTest{
         ChangePasswordPopup changePasswordPopup = (ChangePasswordPopup) homePage.login(userData, Page.changePasswordPopup);
         changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
         homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
-		LoginPopup loginPopup = (LoginPopup) homePage.login(userData, Page.loginPopup);
+		homePage.login(userData, Page.loginPopup);
 	}
 
     /*7. When you are logged in with temporary password and on forced Change Password form enters incorrect old password you are shown an error.*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P1", "COR-275", "1.03_Forgot_Password"})
 	public void incorrectOldPassword(){
 		UserData userData = validPasswordRecovery();
         MailServicePage mailServicePage = mailService.navigateToInbox(userData.getEmail());
@@ -251,7 +250,7 @@ public class ForgotPasswordTest extends AbstractTest{
 	}
 
     /*8. New password which has been used recently*/
-	@Test(groups = {"regression"})
+	@Test(groups = {"regression", "P3", "1.03_Forgot_Password"})
 	public void newPasswordUsedRecently(){
         //skipTest("System Error, D-18632");
         WebDriverUtils.clearLocalStorage();
@@ -341,7 +340,7 @@ public class ForgotPasswordTest extends AbstractTest{
         ChangePasswordPopup changePasswordPopup = loginWithTempPassword(userData);
         changePasswordPopup.fillFormAndSubmit(userData.getPassword(), newPassword);
         userData.setPassword(newPassword);
-        HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
+        NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home, userData);
         return userData;
     }
 }
