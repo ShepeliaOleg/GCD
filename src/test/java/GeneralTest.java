@@ -19,14 +19,14 @@ import utils.core.DataContainer;
 public class GeneralTest extends AbstractTest {
 
     private static final String POPUP_SCROLL_WIDTH = "40%";
-    private static final String POPUP_A_WIDTH =      "50%";
-    private static final String POPUP_B_WIDTH =      "60%";
-    private static final String POPUP_CHILD_WIDTH =  "70%";
-    private static final String POPUP_SCROLL_HEIGHT ="80%";
+    private static final String POPUP_A_WIDTH = "50%";
+    private static final String POPUP_B_WIDTH = "60%";
+    private static final String POPUP_CHILD_WIDTH = "70%";
+    private static final String POPUP_SCROLL_HEIGHT = "80%";
 
     /*Session is saved after visiting external resource*/
     @Test(groups = {"regression"})
-    public void sessionIsSavedAfterVisitingExternalResource(){
+    public void sessionIsSavedAfterVisitingExternalResource() {
         NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.home);
         WebDriverUtils.navigateToURL("http://www.google.com/");
         WebDriverUtils.waitForPageToLoad();
@@ -38,7 +38,7 @@ public class GeneralTest extends AbstractTest {
     /*B-12855 Show any page as popup*/
     /*3*/
     @Test(groups = {"regression"})
-    public void openDirectlyByUrl(){
+    public void openDirectlyByUrl() {
         PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_a, pageInPopupPopup, POPUP_A_WIDTH, ConfiguredPages.home);
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_disabled);
@@ -48,7 +48,7 @@ public class GeneralTest extends AbstractTest {
 
     /*4 current*/
     @Test(groups = {"regression"})
-    public void currentPageOnBackground(){
+    public void currentPageOnBackground() {
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_disabled);
         PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) pageInPopupPage.clickButton();
         assertPageInPopup(ConfiguredPages.page_in_popup_a, pageInPopupPopup, POPUP_A_WIDTH, ConfiguredPages.page_in_popup_disabled);
@@ -58,7 +58,7 @@ public class GeneralTest extends AbstractTest {
 
     /*5 root*/
     @Test(groups = {"regression"})
-    public void rootPageOnBackground(){
+    public void rootPageOnBackground() {
         PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_a, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_a, pageInPopupPopup, POPUP_A_WIDTH, ConfiguredPages.home);
         AdultContentPopup adultContentPopup = (AdultContentPopup) pageInPopupPopup.clickButton();
@@ -67,8 +67,8 @@ public class GeneralTest extends AbstractTest {
 
     /*6 parent*/
     @Test(groups = {"regression"})
-    public void parentPageOnBackground(){
-        skipTestWithIssues("D-15797");
+    public void parentPageOnBackground() {
+        skipTestWithIssues("COR-709");
         PageInPopupPopup pageInPopupPopup = (PageInPopupPopup) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_child, Page.pageInPopup);
         assertPageInPopup(ConfiguredPages.page_in_popup_child, pageInPopupPopup, POPUP_CHILD_WIDTH, ConfiguredPages.page_in_popup_parent);
         PageInPopupPage pageInPopupPage = (PageInPopupPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.page_in_popup_link_to_child);
@@ -104,7 +104,7 @@ public class GeneralTest extends AbstractTest {
 
     /*2, 7*/
     @Test(groups = {"admin"})
-    public void redirect404toPageLanguages(){
+    public void redirect404toPageLanguages() {
         SiteConfigurationPopup siteConfigurationPopup = (SiteConfigurationPopup) PortalUtils.openSettings(SettingsTab.siteConfiguration);
         siteConfigurationPopup.setUseCdnState(false);
         siteConfigurationPopup.setDirectToPage("/24/7-support");
