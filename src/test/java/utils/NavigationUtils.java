@@ -198,9 +198,7 @@ public class NavigationUtils{
                 if(PortalUtils.isLoggedIn()) {
                     //PortalUtils.logout();
                     javaScriptLogout();
-                    //new SignedOutPopup().close();
-                    //new AbstractPortalPopup().closePopup();
-                    reload = false;
+                    reload = true;
                 }else if(abstractPortalPage.isAdminLoggedIn()) {
                     abstractPortalPage.logoutAdmin();
                     reload = true;
@@ -212,7 +210,6 @@ public class NavigationUtils{
                     javaScriptLogin(userData);
                 }
                 if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 0)) {
-                //if(WebDriverUtils.isVisible(LoginPopup.INPUT_USERNAME_XP, 5)) {
                     new LoginPopup().login(userData);
                 }else{
                     if(WebDriverUtils.isVisible(AbstractPortalPopup.ROOT_XP, 0)) {
@@ -536,7 +533,6 @@ public class NavigationUtils{
         String jsLogoutScript =  "var user = require('modules/user/user.model')\n" +
                 "user.logoutAction();";
         WebDriverUtils.executeScript(jsLogoutScript);
-        WebDriverUtils.refreshPage();
         System.out.println("Fast JavaScript logout");
     }
 }
