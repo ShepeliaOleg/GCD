@@ -524,7 +524,7 @@ public class NavigationUtils{
                 "});";
         WebDriverUtils.executeScript(jsLoginScript);
         WebDriverUtils.waitForPageToLoad();
-        WebDriverUtils.waitFor(1100);
+        WebDriverUtils.waitFor(1200);
         WebDriverUtils.refreshPage();
         System.out.println("Fast JavaScript login");
     }

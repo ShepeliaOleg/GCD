@@ -190,7 +190,7 @@ public class UserData{
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));
         userData.setTitle(RandomUtils.getRandomElementsFromList(getTitleList(), 1).get(0));
         userData.setCurrency(RandomUtils.getRandomElementsFromList(getCurrencyList(), 1).get(0));
-        userData.setUsername(usernameValidationRule.generateValidString());
+        userData.setUsername(usernameValidationRule.generateValidString().toUpperCase());
         userData.setEmail(emailValidationRule.generateValidString());
         userData.setCountry(DataContainer.getDefaults().getRandomCountryCode());
         userData.setCity(cityValidationRule.generateValidString());
