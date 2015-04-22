@@ -21,7 +21,7 @@ public class TransactionHistoryTest extends AbstractTest {
         assertEquals("General", trHistory.getGroupText(TransactionHistoryPage.GENERAL_OPT), "Third tab(group) capture was not as expected");
     }
 
-    @Test(groups = {"regression", "P1", "COR-474"})
+    @Test
     public void playerShouldHasGeneralTransactions(){
         TransactionHistoryPage trHistory = (TransactionHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.transactionHistory);
 
@@ -35,7 +35,7 @@ public class TransactionHistoryTest extends AbstractTest {
         System.out.println("CHECK FINISHED");
     }
 
-    @Test(groups = {"regression"})
+    @Test
     public void playerShouldHasGameTransactions(){
         TransactionHistoryPage trHistory = (TransactionHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.transactionHistory);
 
@@ -49,7 +49,7 @@ public class TransactionHistoryTest extends AbstractTest {
         System.out.println("CHECK FINISHED");
     }
 
-    @Test(groups = {"regression"})
+    @Test
     public void playerShouldHasAllTransactions(){
         TransactionHistoryPage trHistory = (TransactionHistoryPage) NavigationUtils.navigateToPage(PlayerCondition.player, ConfiguredPages.transactionHistory);
 

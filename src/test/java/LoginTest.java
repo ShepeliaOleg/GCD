@@ -267,26 +267,29 @@ public class LoginTest extends AbstractTest{
     /* NEGATIVE */
 
     /*Case-sensitive login*/
-    @Test(groups = {"regression"})
-    public void loginWithLowerCaseUsername(){
-        UserData userData=DataContainer.getUserData().getRegisteredUserData();
-        userData.setUsername(userData.getUsernameLowercase());
-        assertFailedLoginPopup(userData);
-    }
+    //OBSOLETE
+    //@Test(groups = {"regression"})
+    //public void loginWithLowerCaseUsername(){
+    //    UserData userData=DataContainer.getUserData().getRegisteredUserData();
+    //    userData.setUsername(userData.getUsernameLowercase());
+    //    assertFailedLoginPopup(userData);
+    //}
 
-    @Test(groups = {"regression"})
-    public void loginWithUpperCaseUsername(){
-        UserData userData=DataContainer.getUserData().getRegisteredUserData();
-        userData.setUsername(userData.getUsernameUppercase());
-        assertFailedLoginPopup(userData);
-    }
+    //OBSOLETE
+    //@Test(groups = {"regression"})
+    //public void loginWithUpperCaseUsername(){
+    //    UserData userData=DataContainer.getUserData().getRegisteredUserData();
+    //    userData.setUsername(userData.getUsernameUppercase());
+    //    assertFailedLoginPopup(userData);
+    //}
 
-    @Test(groups = {"regression"})
-    public void loginWithMixedCaseUsername(){
-        UserData userData=DataContainer.getUserData().getRegisteredUserData();
-        userData.setUsername(userData.getUsernameMixedcase());
-        assertFailedLoginPopup(userData);
-    }
+    //OBSOLETE
+    //@Test(groups = {"regression"})
+    //public void loginWithMixedCaseUsername(){
+    //    UserData userData=DataContainer.getUserData().getRegisteredUserData();
+    //    userData.setUsername(userData.getUsernameMixedcase());
+    //    assertFailedLoginPopup(userData);
+    //}
 
     /*#1. Login with invalid username from header*/
 	/*@Test(groups = {"regression", "desktop"})
