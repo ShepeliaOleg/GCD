@@ -185,6 +185,18 @@ public class UserData{
         return userData;
     }
 
+    public UserData getBonusUserData() {
+        UserData userData = getRegisteredUserData();
+        userData.setUsername("okbonus");
+        return userData;
+    }
+
+    public UserData getFreeSpinUserData() {
+        UserData userData = getInternalRandomUserData();
+        userData.setUsername("freespins");
+        return userData;
+    }
+
     public UserData getRandomUserData() {
         UserData userData = getRegisteredUserData();
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));

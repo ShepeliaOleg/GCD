@@ -43,8 +43,9 @@ import pageObjects.registration.AdultContentPopup;
 import pageObjects.registration.AfterRegistrationPopup;
 import pageObjects.registration.ReadTermsAndConditionsPopup;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.replacers.AllFreeSpinsPage;
 import pageObjects.replacers.BonusHistoryPage;
-import pageObjects.replacers.FreeSpinsBalancePage;
+import pageObjects.replacers.TotalFreeSpinsBalancePage;
 import pageObjects.replacers.PromotionalCodeReplacerPage;
 import pageObjects.responsibleGaming.ResponsibleGamingPage;
 import pageObjects.responsibleGaming.SelfExcludePage;
@@ -127,8 +128,8 @@ public class NavigationUtils{
             case changeMyPassword:                              return new ChangePasswordPage();
             case deposit:                                       return new DepositPage();
             case forgotPassword:                                return new ForgotPasswordPage();
-            case freeSpinsBalance:
-            case freeSpinsBalanceTotal:                         return new FreeSpinsBalancePage();
+            case freeSpinsBalance:                              return new AllFreeSpinsPage();
+            case freeSpinsBalanceTotal:                         return new TotalFreeSpinsBalancePage();
             case gamesCasinoPage:
             case gamesFavourites:
             case gamesFavouritesCategoryFirst:

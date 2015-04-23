@@ -38,6 +38,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     private static final String LABEL_ADVERTISER =                          "//tr/td[preceding-sibling::td[contains(text(), 'Referrer advertiser:')]][1]";
 	private static final String LABEL_LOCK_REMOVED =                        "//*[contains(text(), 'Temporary Lock (NTries) has been removed.')]";
     private static final String LINK_CONTACT_PREFERENCES=					"//*[@id='contact_preferences']//a";
+	private static final String LINK_FIRST_BONUS_IN_LIST = 					"//*[@id='ssec_bonusinfo']//tr[2]/td[3]/a";
 	private static final String CHECKBOX_EMAIL=								"//input[@id='communicationoptouts[1][2]']";
 	private static final String CHECKBOX_SMS=								"//input[@id='communicationoptouts[2][2]']";
 	private static final String CHECKBOX_DIRECT_MAIL=						"//input[@id='communicationoptouts[3][2]']";
@@ -62,6 +63,7 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
     private static final String FIELD_CLIENT_TYPE=                          "//*[preceding-sibling::*[contains(text(), 'Sign up client type:')]][1]";
     private static final String FIELD_LAST_LOGIN_DEVICE_TYPE =              "//*[@id='ssec_supinfo' and contains(., 'Last login device type:')]/td[4]";
     private static final String FIELD_TOTAL_BONUS_AMOUNT_XP =               "//*[@id='ssec_bonusinfo']//tr[last()]/td[3]";
+	private static final String FIELD_FIRST_BONUS_IN_LIST_PENDING_WINNINGS ="//*[@id='ssec_bonusinfo']//tr[2]/td[8]";
 	private static final String BUTTON_KILL_PLAYER=							"//*[@id='killplayer']";
 	private static final String BUTTON_ADD_BONUS= 							"//*[@value='Add bonus']";
     private static final String BUTTON_FAILED_LOGINS =                      "//*[@id='failedlogins']";
@@ -503,4 +505,13 @@ public class IMSPlayerDetailsPage extends AbstractServerPage {
         WebDriverUtils.waitForElement(WebDriverFactory.getServerDriver(), FIELD_TOTAL_BONUS_AMOUNT_XP);
         return WebDriverUtils.getElementText(WebDriverFactory.getServerDriver(), FIELD_TOTAL_BONUS_AMOUNT_XP).substring(0, 1);
     }
+
+	public IMSBonusTemplateInfoPage clickFirstBonusInTheList(){
+		WebDriverUtils.click(LINK_FIRST_BONUS_IN_LIST);
+		return new IMSBonusTemplateInfoPage();
+	}
+
+	public String getFirstBonusInListPendingWinnings(){
+		return WebDriverUtils.getElementText(FIELD_FIRST_BONUS_IN_LIST_PENDING_WINNINGS);
+	}
 }

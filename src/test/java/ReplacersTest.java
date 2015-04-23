@@ -4,7 +4,6 @@ import enums.Page;
 import enums.PlayerCondition;
 import org.testng.annotations.Test;
 import pageObjects.admin.AdminPageAdmin;
-import pageObjects.admin.settings.GamesManagementPopup;
 import pageObjects.bonus.AcceptDeclineBonusPopup;
 import pageObjects.external.ims.IMSBonusTemplateInfoPage;
 import pageObjects.external.ims.IMSPlayerBonusInfoPage;
@@ -336,7 +335,158 @@ public class ReplacersTest extends AbstractTest {
      * [TOTAL_FREE_SPIN_BALANCE] REPLACER END
      * */
 
-     private static UserData getBonusUser() {
+    /**
+     * [ALL_FREE_SPIN] REPLACER START
+     * */
+
+    /*21 COR-545 Free Spins: No Free Spin bonuses*/
+    public static void noFreeSpinBonuses() {
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        assertFalse(allFreeSpinsPage.isReplacerVisible(), "Replacer is empty for new user");
+    }
+
+    /*22 COR-551 Free Spins: Bonus details*/
+    public static void allFreeSpinsBonusDetails() {
+        String spinsAmount = "1";
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+        playerDetailsPage.addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
+        allFreeSpinsPage.clickFreeSpin();
+        assertEquals(playerDetailsPage.getFirstBonusInListPendingWinnings(), allFreeSpinsPage.getPendingBonusWinnings(), "Pending Winnings value");
+        IMSBonusTemplateInfoPage imsBonusTemplateInfoPage = playerDetailsPage.clickFirstBonusInTheList();
+        if (WebDriverFactory.getOs().equals("desktop"))
+            assertEquals("Free Spins", allFreeSpinsPage.getFreeSpinsTitle(), "Title value");
+        assertEquals(imsBonusTemplateInfoPage.getMarketingName(), allFreeSpinsPage.getFreeSpinsMarketingName(), "Marketing name value");
+        assertEquals(spinsAmount, allFreeSpinsPage.getFreeSpinsAmount(), "Amount of free spins is equals to added");
+        assertEquals(imsBonusTemplateInfoPage.getExpirationDate(), allFreeSpinsPage.getFreeSpinsExpirationDate(), "Expiry date value");
+        assertTrue(allFreeSpinsPage.isGamesInfoVisible(), "Games info is shown");
+    }
+
+    /*23 COR-555 Free Spins: Bonuses order*/
+    public static void allFreeSpinsBonusesOrder() {
+        String spinsAmount = "1";
+        String spinsAmount2 = "2";
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
+        PortalUtils.registerUser(userData);
+        IMSPlayerDetailsPage playerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
+        playerDetailsPage.addBonus(Page.freeSpins, spinsAmount, BonusType.freeSpins);
+        playerDetailsPage.addBonus(Page.freeSpins, spinsAmount2, BonusType.freeSpins);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        WebDriverUtils.refreshPage();
+        WebDriverUtils.waitFor();
+        assertEquals(spinsAmount2, allFreeSpinsPage.getFreeSpinsAmount(0), "Last added bonus on the top of the list");
+        assertEquals(spinsAmount, allFreeSpinsPage.getFreeSpinsAmount(1), "First added bonus under the last added");
+    }
+
+    /*24 COR-556 Free Spins: Configured and active games only*/
+    public static void allFreeSpinsShowActiveGamesOnly() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+        String gameId = allFreeSpinsPage.getGameID(0);
+        AdminPageAdmin adminPageAdmin = (AdminPageAdmin) NavigationUtils.navigateToPage(PlayerCondition.admin, ConfiguredPages.admin);
+        adminPageAdmin.openGamesManagement().editGamePopup(allFreeSpinsPage.getGameName(0));
+//
+//
+//
+    }
+
+    /*25 COR-559 Free Spins: Flags on game icons*/
+    public static void allFreeSpinsFlagsInGamesAttributes() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+//
+//
+//
+    }
+
+    /*26 COR-564 Free Spins: Game launch*/
+    public static void allFreeSpinsGameLaunch() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /*27 COR-566 Free Spins: Spins number update*/
+    public static void allFreeSpinsUpdateOfSpinsNumber() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /*28 COR-579 Free Spins: Spending all free spins from the corresponding free-spins bonus*/
+    public static void allFreeSpinsSpendingAllFreeSpins() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /*29 COR-580 Free Spins: Pending Bonus Winnings*/
+    public static void allFreeSpinsPendingBonusWinnings() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /*30 COR-582 Free Spins: Order of free spins write-off*/
+    public static void allFreeSpinsOrderOfFreeSpinsWriteOff() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /*31 COR-589 Free Spins: Support of I18n (UTF8) for Marketing name (name)*/
+    public static void allFreeSpinsUTF8Support() {
+        UserData userData = DataContainer.getUserData().getFreeSpinUserData();
+        PortalUtils.loginUser(userData);
+        AllFreeSpinsPage allFreeSpinsPage = (AllFreeSpinsPage) NavigationUtils.navigateToPage(ConfiguredPages.freeSpinsBalance);
+        allFreeSpinsPage.clickFreeSpin();
+
+//
+//
+//
+    }
+
+    /**
+     * [ALL_FREE_SPIN] REPLACER END
+     * */
+
+
+    private static UserData getBonusUser() {
         UserData userData = DataContainer.getUserData().getRandomUserData();
         userData.setUsername("bonusUser");
         return userData;
