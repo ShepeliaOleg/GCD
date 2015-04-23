@@ -97,7 +97,7 @@ public class RegistrationTest extends AbstractTest{
             registrationPage.registrationPageStepThree(userData);
         }
         assertTrue(registrationPage.getReceivePromotionsCheckboxState(), "Promotional checkbox is checked by default");
-        assertEquals("I would like to receive great bonuses and exciting offers", registrationPage.getReceivePromotionsCheckboxText(), "Promotional offers checkbox text");
+        assertEquals("I would like to get marketing offers", registrationPage.getReceivePromotionsCheckboxText(), "Promotional offers checkbox text");
     }
 
 	//*#2. Registration with receive bonuses check box checked
@@ -159,14 +159,6 @@ public class RegistrationTest extends AbstractTest{
 //        assertTrue(defaultCurrencyInRegistrationForm.contains(currency), "Default register currency is '"+currency+"'");
 //        assertTrue(homePage.getBalance().contains(currencySign), "Currency sign in header is '"+currency+"'");
 //	}
-
-    //*#7. After registration web content
-	@Test(groups = {"registration","regression"})
-	public void afterRegistrationWebContent(){
-		RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
-		UserData userData=DataContainer.getUserData().getRandomUserData();
-		AfterRegistrationPopup afterRegistrationPopup=(AfterRegistrationPopup) registrationPage.registerUser(userData, Page.afterRegistrationPopup);
-	}
 
     //*#10. After-registration redirect
 	@Test(groups = {"registration","regression"})
