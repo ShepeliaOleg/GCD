@@ -52,7 +52,6 @@ public class BonusHistoryPage extends AbstractPortalPage {
 
     public void clickOnBonus(Page bonusName) {
         String bonusXP = getBonusDetailsNameXP(bonusName);
-        WebDriverUtils.waitForElementToDisappear(LOADER_XP);
         WebDriverUtils.waitForElement(bonusXP);
         WebDriverUtils.click(bonusXP);
     }
