@@ -211,9 +211,9 @@ public class ReplacersTest extends AbstractTest {
     @Test(groups = {"regression"})
     public static void bonusDetailsDisplayedCheckThreeSymbolCurrency() {
         Page bonusType = Page.okBonus;
-        UserData userData = DataContainer.getUserData().getBonusUserData();
+        UserData userData = DataContainer.getUserData().getInternalRandomUserData();
         userData.setCurrency("AUD");
-        PortalUtils.loginUser(userData);
+        PortalUtils.registerUser(userData);
         BonusHistoryPage bonusHistoryPage = (BonusHistoryPage) NavigationUtils.navigateToPage(ConfiguredPages.bonusHistory);
         IMSPlayerDetailsPage imsPlayerDetailsPage = IMSUtils.navigateToPlayedDetails(userData.getUsername());
         imsPlayerDetailsPage.addBonus(bonusType, AMOUNT);
