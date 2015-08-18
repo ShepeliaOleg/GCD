@@ -52,8 +52,13 @@ public class BonusHistoryPage extends AbstractPortalPage {
 
     public void clickOnBonus(Page bonusName) {
         String bonusXP = getBonusDetailsNameXP(bonusName);
-        WebDriverUtils.waitForElement(bonusXP);
-        WebDriverUtils.click(bonusXP);
+
+        try{
+            WebDriverUtils.waitForElement(bonusXP);
+            WebDriverUtils.click(bonusXP);
+        } catch(Exception e){
+            System.out.println("Bonus '"+bonusName+"' was not appeared");
+        }
     }
 
     public String getCurrentBalanceValue(Page bonusName) {

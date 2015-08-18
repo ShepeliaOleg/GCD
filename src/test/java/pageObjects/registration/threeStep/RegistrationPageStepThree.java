@@ -60,7 +60,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_QUESTION_NAME), username);
     }
 
-    protected static void fillAnswer(String username){
+    public static void fillAnswer(String username){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ANSWER_NAME), username);
     }
 
@@ -77,7 +77,7 @@ public class RegistrationPageStepThree extends RegistrationPage {
         return new RegistrationPageStepTwo();
     }
 
-    private static void setTermsCheckbox(boolean state){
+    public static void setTermsCheckbox(boolean state){
         WebDriverUtils.setCheckBoxState(CHECKBOX_TERMS_AND_CONDITION_XP, state);
     }
 

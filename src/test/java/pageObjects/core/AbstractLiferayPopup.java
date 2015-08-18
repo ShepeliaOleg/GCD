@@ -10,6 +10,7 @@ public class AbstractLiferayPopup extends AbstractPopup{
     protected final static String HEADER_XP =       ROOT_XP + "//*[contains(@class,'header')]";
     protected final static String TITLE_XP =        HEADER_XP + "//*[@class='title']";
     protected final static String BUTTON_CLOSE_XP =	HEADER_XP + "//*[contains(@class, 'popupClose')]";
+   // protected final static String BUTTON_CLOSE_XP =	"//*[contains(@class, 'fn-close close-popup')]";
 
 
 	public AbstractLiferayPopup(){

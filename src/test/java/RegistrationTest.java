@@ -479,7 +479,7 @@ public class RegistrationTest extends AbstractTest{
     @Test(groups= {"registration", "regression"})
     public void duplicateEmailLookupEditingEmailAddress(){
         skipTestWithIssues(PlatForm.mobile, "COR-592");
-        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.registerDublicateEmailLookup);
+        RegistrationPage registrationPage = (RegistrationPage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.register);
         registrationPage.inputDuplicateEmail();
         LoginPopup loginPopup = new LoginPopup();
         loginPopup.validateDescriptionMesageDublicateEmail();

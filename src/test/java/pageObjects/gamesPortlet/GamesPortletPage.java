@@ -31,7 +31,7 @@ public class GamesPortletPage extends AbstractPortalPage {
 	private static final String ROOT_XP=								"//*[contains(@class, 'portlet-games-info')]";
 	private static final String GAMES_XP=								"//*[contains(@class, 'gamesinfo__item-container')]";
     private static final String BEGINNING_GAMES_XP= 					"//ul[3]";
-    private static final String BEGINNING_GAMES_STYLE_NONE_XP= 			"//ul[1]";
+    private static final String BEGINNING_GAMES_STYLE_NONE_XP= 			"//ul[2]";
 	private static final String TOGGLE_XP= 								"//li[contains(@class, 'toggle')]";
 	private static final String CATEGORY_NAME_XP= 						"data-category";
 	private static final String BUTTON_NEXT_XP= 						"//*[contains(@class, 'pagination__arrow_type_next')]";
@@ -329,7 +329,8 @@ public class GamesPortletPage extends AbstractPortalPage {
 	public AbstractPageObject doSpin(){
 			//System.out.println(WebDriverUtils.getElementWidth(GAME_IFRAME_XP));
 			//System.out.println(WebDriverUtils.getElementHeight(GAME_IFRAME_XP));
-		WebElement frame = WebDriverUtils.getElement(GAME_IFRAME_XP);
+		WebElement frame = WebDriverUtils.getElement("//*[@id='Casino']");
+//		WebElement frame = WebDriverUtils.getElement(GAME_IFRAME_XP);
 		// xOffSet  1240 | 1241 - 1594 | 1595
 		// yOffSet   855 | 856 - 930   | 931
 		WebDriverUtils.clickWithOffset(WebDriverFactory.getPortalDriver(), frame, 1400, 880);

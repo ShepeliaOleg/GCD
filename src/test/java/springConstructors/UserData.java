@@ -1,7 +1,10 @@
 package springConstructors;
 
+import enums.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import utils.NavigationUtils;
+import utils.PortalUtils;
 import utils.RandomUtils;
 import utils.core.DataContainer;
 
@@ -201,10 +204,14 @@ public class UserData{
         UserData userData = getRegisteredUserData();
         userData.setGender(RandomUtils.getRandomElementsFromList(getGenderList(), 1).get(0));
         userData.setTitle(RandomUtils.getRandomElementsFromList(getTitleList(), 1).get(0));
-        userData.setCurrency(RandomUtils.getRandomElementsFromList(getCurrencyList(), 1).get(0));
+        //userData.setCurrency(RandomUtils.getRandomElementsFromList(getCurrencyList(), 1).get(0));
+        userData.setCurrency(userData.getCurrency());
         userData.setUsername(usernameValidationRule.generateValidString().toUpperCase());
-        userData.setEmail(emailValidationRule.generateValidString());
-        userData.setCountry(DataContainer.getDefaults().getRandomCountryCode());
+        //userData.setEmail(emailValidationRule.generateValidString());
+        userData.setEmail(userData.getEmail());
+        NavigationUtils.closeAllPopups(Page.anyLoggedInPage);
+        //userData.setCountry(DataContainer.getDefaults().getRandomCountryCode());
+        userData.setCountry(userData.getCountry());
         userData.setCity(cityValidationRule.generateValidString());
         userData.setPostCode(postcodeValidationRule.generateValidString());
         userData.setAddress(addressValidationRule.generateValidString());

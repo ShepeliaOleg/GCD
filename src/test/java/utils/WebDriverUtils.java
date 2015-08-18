@@ -1035,4 +1035,11 @@ public class WebDriverUtils{
     public static int getCountOfNodes(String xpath) {
         return getCountOfNodes(WebDriverFactory.getPortalDriver(), xpath);
     }
+
+    // Radio button
+
+    public static void setRadioButton (String xpath){
+        WebElement element = (WebElement) WebDriverFactory.getPortalDriver().findElements(By.xpath(xpath));
+        element.click();
+    }
 }

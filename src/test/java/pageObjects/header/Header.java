@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class Header extends AbstractPageObject{
-	protected static final String ROOT_XP=	"//*[@class='main-header']";
+	protected static final String ROOT_XP=	"//div[contains(@class, 'main-header ')]";//"//*[@class='main-header ']";
 	public static final String BALANCE_AREA ="//*[contains(@class, 'main-header__balance')]";
     //Desktop only
     private static final String DROPDOWN_LANGUAGE_XP =	"//*[contains(@class, 'fn-language-trigger')]";

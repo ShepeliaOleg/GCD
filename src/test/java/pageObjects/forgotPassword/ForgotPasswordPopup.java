@@ -19,7 +19,7 @@ public class ForgotPasswordPopup extends AbstractPortalPopup{
     private final static String DROPDOWN_BIRTH_DAY =            	ROOT_XP + "//*[@id='birthDay']";
     private final static String DROPDOWN_BIRTH_MONTH =          	ROOT_XP + "//*[@id='birthMonth']";
     private final static String DROPDOWN_BIRTH_YEAR =         	  	ROOT_XP + "//*[@id='birthYear']";
-    public final static String BUTTON_APPROVE_XP =             	    "//span[contains(@class, 'fn-forgotpassword')]";
+    public final static String BUTTON_APPROVE_XP =             	    ROOT_XP + "//*[@class='btn btn_green btn_s']";
     private final static String[] ELEMENTS =                        new String[]{FIELD_USERNAME_XP, FIELD_EMAIL_XP, BUTTON_APPROVE_XP};
 
     public ForgotPasswordPopup(){

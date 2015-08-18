@@ -70,6 +70,7 @@ public class AbstractTestRunner extends AbstractTestNGSpringContextTests {
         DataContainer.setUserData(userData);
         DataContainer.setGameData(gameData);
         WebDriverFactory.initializeWebDrivers(driverData, deviceData);
+        //WebDriverFactory.getDesktopDriver();
     }
 
     @BeforeMethod(alwaysRun = true)

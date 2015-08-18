@@ -35,6 +35,7 @@ public class LoginTest extends AbstractTest{
         HomePage homePage = (HomePage) NavigationUtils.navigateToPage(PlayerCondition.guest, ConfiguredPages.home);
         homePage.navigateToLoginForm().login(userData);
         validateTrue(new AbstractPortalPage().isUsernameDisplayed(userData.getUsername().trim()), "Correct username is displayed after login");
+       // validateTrue(new AbstractPortalPage().isUsernameDisplayed("TEST"), "Correct username is displayed after login");
     }
 
     /*2. Login popup is available*/

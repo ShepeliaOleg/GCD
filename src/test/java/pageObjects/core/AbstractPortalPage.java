@@ -4,6 +4,7 @@ import enums.ConfiguredPages;
 import enums.Licensee;
 import enums.Page;
 import enums.PlayerCondition;
+import pageObjects.HomePage;
 import pageObjects.account.MyAccountPage;
 import pageObjects.admin.AdminPageAdmin;
 import pageObjects.cashier.deposit.DepositPage;
@@ -17,6 +18,7 @@ import pageObjects.header.LoggedInHeader;
 import pageObjects.header.LoggedOutHeader;
 import pageObjects.header.NavigationPanel;
 import pageObjects.inbox.InboxPage;
+
 import pageObjects.login.LoginPopup;
 import pageObjects.login.LogoutPopup;
 import pageObjects.menu.Menu;
@@ -69,6 +71,7 @@ public class AbstractPortalPage extends AbstractPage {
         return new LoggedOutHeader();
     }
 
+
     public boolean isLoggedIn(){
         return header().isLoggedIn();
     }
@@ -97,7 +100,8 @@ public class AbstractPortalPage extends AbstractPage {
     }
 
     public AbstractPortalPage logout(){
-        loggedInHeader().clickLogout().clickLogoutButton().close();
+        //loggedInHeader().clickLogout().clickLogoutButton().close();
+        loggedInHeader().clickLogoutGCD();
         return waitForLogout();
     }
 
@@ -124,6 +128,9 @@ public class AbstractPortalPage extends AbstractPage {
         return loggedInHeader().clickLogout();
     }
 
+    public HomePage navigateToHomePage (){
+        return loggedInHeader().clickLogoutGCD();
+    }
     public ForgotPasswordPopup navigateToForgotPassword(){
         return loggedOutHeader().navigateToForgotPasswordPopup();
     }
@@ -140,12 +147,20 @@ public class AbstractPortalPage extends AbstractPage {
         return this.login(userData, false, page);
     }
 
+    public AbstractPageObject loginFromHeader (UserData userData, boolean rememberMeEnable){
+        return this.loginFromHeader(userData, rememberMeEnable, Page.homePage);
+    }
+
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable){
         return this.login(userData, rememberMeEnable, Page.homePage);
     }
 
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page page){
         return loggedOutHeader().login(userData, rememberMeEnable, page);
+    }
+
+    public AbstractPageObject loginFromHeader (UserData userData, boolean rememberMeEnable, Page page){
+        return loggedOutHeader().loginFromHeader(userData, rememberMeEnable, page);
     }
 
     public Collection<String> getLanguageCodesList() {

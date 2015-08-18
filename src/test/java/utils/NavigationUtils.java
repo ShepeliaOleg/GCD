@@ -22,9 +22,7 @@ import pageObjects.changeLanguage.ChangeLanguagePage;
 import pageObjects.changeMyDetails.ChangeMyDetailsPage;
 import pageObjects.changePassword.ChangePasswordPage;
 import pageObjects.changePassword.ChangePasswordPopup;
-import pageObjects.core.AbstractPageObject;
-import pageObjects.core.AbstractPortalPage;
-import pageObjects.core.AbstractPortalPopup;
+import pageObjects.core.*;
 import pageObjects.forgotPassword.ForgotPasswordPage;
 import pageObjects.gamesPortlet.GameIncorrectId;
 import pageObjects.gamesPortlet.GameLaunchPage;
@@ -55,6 +53,7 @@ import springConstructors.UserData;
 import utils.cookie.AffiliateCookie;
 import utils.core.AbstractTest;
 import utils.core.DataContainer;
+import utils.core.WebDriverFactory;
 
 import static utils.core.AbstractTest.skipTestWithIssues;
 
@@ -274,7 +273,9 @@ public class NavigationUtils{
                         break;
                     case loggedIn:
                         if (expectedPage.equals(Page.homePage)) {
+
                             return new HomePage();
+
                         } else {
                             String errMsg = expectedPage.toString() + " was expected, but never appeared.";
                             if (errMsg.contains("okBonus")) {
@@ -347,9 +348,9 @@ public class NavigationUtils{
             }else {
                 return processOkBonus(exceptPage);
             }
-        } else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
+        } /*else if (WebDriverUtils.isVisible(ChangePasswordPopup.ROOT_XP, 0)) {
             return processChangePasswordPopup(exceptPage);
-        } else {
+        } */else {
             return processGenericPopup();
         }
     }

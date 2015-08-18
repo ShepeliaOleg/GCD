@@ -42,9 +42,10 @@ public class WebDriverFactory{
         os =         driverData.getOs();
         deviceId =   driverData.getDeviceId();
         platform =   getPlatform(os);
-		portalDriver = initializeWebDriver(deviceData.getDeviceById(deviceId));
-        setServerDriver(getRemoteDriver("firefox"));
-        pathToDownloadsFolder = setPathToDownloadsFolder("Downloads");
+		//portalDriver = initializeWebDriver(deviceData.getDeviceById(deviceId));
+        portalDriver = getDesktopDriver();
+       // setServerDriver(getRemoteDriver("chrome"));
+       // pathToDownloadsFolder = setPathToDownloadsFolder("Downloads");
 	}
 
     private static PlatForm getPlatform(String os) {
@@ -121,7 +122,9 @@ public class WebDriverFactory{
     public static WebDriver getDesktopDriver(){
         WebDriver driver;
         switch (browser){
-            case "chrome":driver=createChromeDriver(os);
+            case "chrome":
+                System.setProperty("webdriver.chrome.driver", "C:\\Job\\Framework\\New folder\\portal-tests-testng\\portal-tests-testng\\src\\test\\chromedriver.exe");
+                driver= new ChromeDriver();
                 break;
             case "firefox":driver=createFireFoxDriver();
                 break;
@@ -157,7 +160,13 @@ public class WebDriverFactory{
         DesiredCapabilities capabilities;
         String address = REMOTE;
         switch (browser){
-            case "chrome":capabilities  = DesiredCapabilities.chrome();
+            case "chrome"://capabilities  = DesiredCapabilities.chrome();
+                System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") +"C:\\Job\\Framework\\New folder\\portal-tests-testng\\portal-tests-testng\\src\\chromedriver.exe");
+               // System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir") + "\\drivers\\chromedriver.exe");
+                //capabilities = DesiredCapabilities.chrome();
+                capabilities = new DesiredCapabilities();
+                capabilities.setBrowserName("chrome");
+                capabilities.setPlatform(Platform.WINDOWS);
                 break;
             case "firefox":
                 FirefoxProfile  firefoxProfile = new FirefoxProfile();
@@ -181,16 +190,20 @@ public class WebDriverFactory{
     }
 
     private static WebDriver createChromeDriver(String osType){
-
-        ChromeOptions chromeOptions=new ChromeOptions();
+        System.setProperty("webdriver.chrome.driver","C:\\Job\\Framework\\New folder\\portal-tests-testng\\portal-tests-testng\\src\\chromedriver.exe");
+        ChromeDriver webDriver = new ChromeDriver();
+        return webDriver;
+        /*ChromeOptions chromeOptions=new ChromeOptions();
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         if (osType.equals("linux")) {
             chromeOptions.setBinary("/usr/bin/google-chrome");
         }
+        chromeOptions.addArguments("test-type");
+        capabilities.setCapability("chrome.binary","C:\\Job\\Framework\\New folder\\portal-tests-testng\\portal-tests-testng\\src\\chromedriver.exe");
         capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
         capabilities.setJavascriptEnabled(true);
 
-        return new ChromeDriver(capabilities);
+        return new ChromeDriver(capabilities);*/
     }
 
     private static WebDriver createSafariDriver(){

@@ -6,6 +6,7 @@ import enums.PasswordStrength;
 import enums.PromoCode;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.core.AbstractPortalPage;
+import pageObjects.header.LoggedOutHeader;
 import pageObjects.registration.classic.RegistrationPageAllSteps;
 import pageObjects.registration.threeStep.RegistrationPageStepOne;
 import pageObjects.registration.threeStep.RegistrationPageStepThree;
@@ -27,7 +28,7 @@ public class RegistrationPage extends AbstractPortalPage {
     protected final static String ROOT_XP =                                             "//*[contains(@class, 'fn-register-content')]";
     protected final static String FIELD_BASE_XP =                                       ROOT_XP + "//*[@name='"+PLACEHOLDER+"']";
     protected final static String DROPDOWN_GENDER_VALIDATION_NAME =		                "gender";
-    protected final static String DROPDOWN_GENDER_NAME =		                        "sex";
+    protected final static String DROPDOWN_GENDER_NAME =		                        "//*[contains(@name, 'sex')][contains(@value, 'F')]";
     protected final static String FIELD_FIRSTNAME_NAME =				 				"firstname";
     protected final static String FIELD_LASTNAME_NAME = 								"lastname";
     protected final static String DROPDOWN_BIRTHDATE_VALIDATION_NAME =					"birthdate";
@@ -65,6 +66,12 @@ public class RegistrationPage extends AbstractPortalPage {
     public    final static String FIELD_PASSWORD_VERIFICATION_XP=						"//*[@name='"+FIELD_PASSWORD_VERIFICATION_NAME+"']";
     private   final static String PASSWORD_METER_XP =                                   "//*[@class='password-meter']/*[1]";
     private   final static String PASSWORD_STRENGTH_TOOLTIP =                           "//*[contains(@class, 'password-meter_message')]/p";
+    public    final static String BUTTON_FIND_MY_ADDRESS_XP =                           "//*[@name='find-postcode']";
+    public    final static String BUTTON_ENTER_MANUALLY =                               "//*[@class='fn-open-list']";
+    public    final static String DROPDOWN_SECRET_QUESTION_XP =                         "//*[contains(@name, 'verificationQuestion')]";
+    public    final static String FIELD_ANSWER_XP =                                     "//*[@name='verificationAnswer']";
+    public    final static String CHECKBOX_TERMS_AND_CONDITION_XP = 					"//*[@id='terms-checkbox']";
+    public    final static String FIELD_HOUSE_XP =                                      "//*[contains(@name, 'house')]";
 
     public RegistrationPage(String[] elements){
         super(elements);
@@ -125,10 +132,13 @@ public class RegistrationPage extends AbstractPortalPage {
 //        if (clearDeviceId) {
 //            WebDriverUtils.removeLocalStorageItem("serial");
 //        }
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.galacasino)){
+
             registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);
         }else{
-            registrationPageStepThree(userData).fillDataAndSubmit(userData, termsAndConditions, promotions, promoCode);
+            registrationPageAllSteps().fillRegistrationForm(userData,true,promoCode);
+            registrationPageAllSteps().clickSubmit();
+            //registrationPageAllSteps().registerNewUser(userData, promotions, promoCode);
         }
         if(expectedPage.equals(Page.registrationPage)){
             WebDriverUtils.waitFor(1000);
@@ -161,7 +171,8 @@ public class RegistrationPage extends AbstractPortalPage {
     /*Inputs*/
 
     protected static void fillGender(String title){
-        WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME), title);
+        //WebDriverUtils.setDropdownOptionByValue(getXpathByName(DROPDOWN_GENDER_NAME), title);
+        WebDriverUtils.setRadioButton(DROPDOWN_GENDER_NAME);
     }
 
     protected static void fillFirstName(String firstName){
@@ -207,6 +218,9 @@ public class RegistrationPage extends AbstractPortalPage {
         ValidationUtils.inputFieldAndRefocus(xpath, confirmEmail);
     }
 
+    public static void fillHouse(String house){
+        WebDriverUtils.clearAndInputTextToField(FIELD_HOUSE_XP, house);
+    }
 
     public static void fillAddress(String address){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_ADDRESS_NAME), address);
@@ -240,12 +254,23 @@ public class RegistrationPage extends AbstractPortalPage {
         ValidationUtils.inputFieldAndRefocus(getXpathByName(FIELD_PASSWORD_VERIFICATION_NAME), confirmPassword);
     }
 
+    protected void fillSecretQuestion (String secretQuestion){
+        WebDriverUtils.setDropdownOptionByText(DROPDOWN_SECRET_QUESTION_XP, secretQuestion);
+    }
+
+    protected static void fillAnswer(String answer){
+        WebDriverUtils.clearAndInputTextToField(FIELD_ANSWER_XP, answer);
+    }
     protected static void setCurrency(String currencyCode){
         WebDriverUtils.setDropdownOptionByText(getXpathByName(DROPDOWN_CURRENCY_NAME), currencyCode);
     }
 
     protected static void fillBonusCode(String coupon){
         WebDriverUtils.clearAndInputTextToField(getXpathByName(FIELD_BONUSCODE_NAME), coupon);
+    }
+
+    protected static void setTermsCheckbox(boolean state){
+        WebDriverUtils.setCheckBoxState(CHECKBOX_TERMS_AND_CONDITION_XP, state);
     }
 
     private static void setCheckboxReceivePromotional(boolean desiredState){
@@ -541,5 +566,17 @@ public class RegistrationPage extends AbstractPortalPage {
 
     public String getEmailXpath(){
         return getXpathByName(FIELD_EMAIL_NAME);
+    }
+
+    public void openRegistrationPage(){
+        WebDriverUtils.click(LoggedOutHeader.LINK_REGISTER_XP);
+    }
+
+    public void clickOnFindMyAddress (){
+        WebDriverUtils.click(BUTTON_FIND_MY_ADDRESS_XP);
+    }
+
+    public void clickOnEnterManually (){
+        WebDriverUtils.click(BUTTON_ENTER_MANUALLY);
     }
 }

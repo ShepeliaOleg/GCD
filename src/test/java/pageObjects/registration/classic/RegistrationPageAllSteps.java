@@ -1,6 +1,7 @@
 package pageObjects.registration.classic;
 
 import enums.PromoCode;
+import pageObjects.header.LoggedOutHeader;
 import pageObjects.registration.RegistrationPage;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
@@ -14,8 +15,8 @@ import java.util.List;
 public class RegistrationPageAllSteps extends RegistrationPage {
 
     public final static String FIELD_EMAIL_VERIFICATION_NAME = 					        "confirmEmail";
-    protected final static String FIELD_PHONE_XP = 									    "//*[@id='phoneNumber']";
-    protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"phoneAreaCode";
+    protected final static String FIELD_PHONE_XP = 									    "//*[@id='cellphone']";
+    protected final static String FIELD_PHONE_COUNTRY_CODE_NAME  = 						"area";
 
     protected final static String LABEL_GENDER_XP=									    "//label[@for='gender']";
     protected final static String LABEL_FIRSTNAME_XP =								    "//label[@for='firstname']";
@@ -56,29 +57,36 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     }
 
     public void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, PromoCode promoCode){
+
         fillUserData(userData);
         fillBonusAndPromotional(isReceiveBonusesChecked, promoCode);
     }
 
     private void fillUserData(UserData userData){
-        fillGender(userData.getGender());
+        //fillGender(userData.getGender());
         fillFirstName(userData.getFirstName());
         fillLastName(userData.getLastName());
         fillBirthDay(userData.getBirthDay());
         fillBirthMonth(userData.getBirthMonth());
         fillBirthYear(userData.getBirthYear());
         fillEmail(userData.getEmail());
-        fillEmailVerification(userData.getEmail());
-        fillCountry(userData.getCountry());
-        fillCity(userData.getCity());
-        fillAddress(userData.getAddress());
-        fillPostCode(userData.getPostCode());
+        //fillEmailVerification(userData.getEmail());
         fillPhoneAreaCode(userData.getPhoneAreaCode());
         fillPhone(userData.getPhone());
+        fillCountry(userData.getCountry());
+        fillPostCode(userData.getPostCode());
+        //clickOnEnterManually();
+        fillHouse(userData.getHouse());
+        fillCity(userData.getCity());
+        fillAddress(userData.getAddress());
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
         fillPasswordVerification(userData.getPassword());
-        setCurrency(userData.getCurrencyName());
+        //setCurrency(userData.getCurrencyName());
+        setCurrency(userData.getCurrency());
+        fillSecretQuestion(userData.getVerificationQuestion());
+        fillAnswer(userData.getVerificationAnswer());
+        setTermsCheckbox(true);
     }
 
     /*Inputs*/
@@ -166,6 +174,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         boolean optionalUnmarked=bonus;
         return (requiredMarked == true && optionalUnmarked == false);
     }
+
 
     @Override
     public void copyAndPasteEmail() {

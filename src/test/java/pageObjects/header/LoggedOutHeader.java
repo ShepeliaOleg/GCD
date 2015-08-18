@@ -2,6 +2,7 @@ package pageObjects.header;
 
 import enums.Licensee;
 import enums.Page;
+import pageObjects.HomePage;
 import pageObjects.core.AbstractPageObject;
 import pageObjects.forgotPassword.ForgotPasswordPopup;
 import pageObjects.login.LoginPopup;
@@ -14,13 +15,13 @@ import utils.core.DataContainer;
 
 public class LoggedOutHeader extends Header{
 
-    public static final Locator BUTTON_LOGIN_XP = 		new Locator("fn-login", ROOT_XP+"//*[contains(@class, 'fn-login')]", ".btn.fn-login");
+    public static final Locator BUTTON_LOGIN_XP = 		new Locator("//button[contains(@class, 'btn btn_orange btn_s fn-login-btn')]");
     //Desktop only
-    private static final String FIELD_USERNAME_XP= 		ROOT_XP+"//*[@id='name']";
-    private static final String FIELD_PASSWORD_XP= 		ROOT_XP+"//*[@id='password']";
-	private static final String LINK_REGISTER_XP=		ROOT_XP+"//a[contains(@class,'btn-register')]";
+    private static final String FIELD_USERNAME_XP= 		ROOT_XP+"//*[@id='header-userName']";
+    private static final String FIELD_PASSWORD_XP= 		ROOT_XP+"//*[@name='password']";
+	public static final String LINK_REGISTER_XP=		ROOT_XP+"//a[contains(@class,'btn btn_green btn_s')]";
 	private static final String LINK_FORGOT_PASSWORD_XP=ROOT_XP+"//*[contains(@class, 'forgot-password')]";
-	private static final String CHECKBOX_REMEMBER_ME=	ROOT_XP+"//*[@id='rememberme']";
+	private static final String CHECKBOX_REMEMBER_ME=	"//*[@id='rememberme']";
 
 	public LoggedOutHeader(){
 		super(new String[]{BUTTON_LOGIN_XP.getXpath()});
@@ -48,19 +49,23 @@ public class LoggedOutHeader extends Header{
         if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
             WebDriverUtils.click(LINK_REGISTER_XP);
         }else {
-            openMenu().loggedOutMenu().clickRegister();
+            WebDriverUtils.click(LINK_REGISTER_XP);
+            //openMenu().loggedOutMenu().clickRegister();
         }
         return new RegistrationPageAllSteps();
     }
 
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page expectedPage){
-        if(DataContainer.getDriverData().getLicensee().equals(Licensee.sevenRegal)){
+        if(DataContainer.getDriverData().getLicensee().equals(Licensee.galacasino)){
             return fillLoginFormAndSubmit(userData, rememberMeEnable, expectedPage);
         }else {
             return navigateToLoginPopup().login(userData, rememberMeEnable, expectedPage);
         }
     }
 
+    public AbstractPageObject loginFromHeader (UserData userData, boolean rememberMeEnable, Page expectredPage){
+        return fillLoginFormAndSubmit(userData, rememberMeEnable, expectredPage);
+    }
     //Desktop only
 	public void fillUsername(String username){
 		WebDriverUtils.clearAndInputTextToField(FIELD_USERNAME_XP, username);
@@ -87,8 +92,21 @@ public class LoggedOutHeader extends Header{
 		fillUsername(userData.getUsername());
 		fillPassword(userData.getPassword());
 		clickButtonLogin();
-		return NavigationUtils.closeAllPopups(expectedPage);
+        if(expectedPage.equals(Page.loginPopup)){
+            return new HomePage();
+        }else {
+            try{
+                WebDriverUtils.waitForElementToDisappear(FIELD_PASSWORD_XP, 30);
+            }catch (Exception e){
+                NavigationUtils.registrationError();
+            }
+            WebDriverUtils.waitForElement("//*[contains(@class, 'main-header__balance')]"); // wait for popup appear before trying to close it
+            // new AbstractPortalPopup().closePopup();
+            return NavigationUtils.closeAllPopups(expectedPage);
+        }
+
 	}
+
 
     public String getLoginButtonText() {
         return WebDriverUtils.getElementText(BUTTON_LOGIN_XP.getXpath());

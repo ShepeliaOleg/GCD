@@ -15,19 +15,20 @@ import utils.core.DataContainer;
 
 public class LoginPopup extends AbstractPortalPopup {
 
-    public  static final String  INPUT_USERNAME_XP=			ROOT_XP + "//*[@name='userName']";
-    private static final String  INPUT_PASSWORD_XP=			ROOT_XP + "//*[@name='password']";
-    private static final String  CHECKBOX_REMEMBERME_XP=	ROOT_XP + "//*[@id='rememberme']";
-    private static final Locator LINK_FORGOTTEN_XP=			new Locator("fn-forgot-password", ROOT_XP + "//*[@class='fn-forgot-password']", null);
+    public  static final String  INPUT_USERNAME_XP=			"//label/input[contains(@name, 'userName')]"; //"//*[@name='userName']";
+    private static final String  INPUT_PASSWORD_XP=			"//label/input[contains(@name, 'password')]"; //"//*[@name='password']";
+    private static final String  CHECKBOX_REMEMBERME_XP=	"//*[@id='rememberme']";
+    private static final Locator LINK_FORGOTTEN_XP=			new Locator("fn-forgot-password", ROOT_XP + "//*[@class='fn-forgot-password forgot-password']", null);
     public  static final String  BUTTON_LOGIN_XP =			ROOT_XP + "//*[contains(@class, 'fn-login-btn')]";
-    private static final String  LINK_REGISTER_XP=			ROOT_XP + "//*[@href='/register']";
+    private static final String  LINK_REGISTER_XP=			ROOT_XP + "//*[@href='/registration']";
     public  static final String  LABEL_VALIDATION_ERROR_XP=	ROOT_XP + "//*[contains(@class,'error')]";
-    private static final String  DESCRIPTION_MSG_XP=        ROOT_XP + "//*[@class='popup-modal__description']";
+    private static final String  DESCRIPTION_MSG_XP=        "(" + ROOT_XP + "//*[@class='popup-modal__description'])[1]";
     public  static final String  LABEL_TIMEOUT_ERROR_XP=    LABEL_VALIDATION_ERROR_XP + "[contains(text(), 'Timeout occurred')]";
 
 	public LoginPopup(){
 		super(new String[]{INPUT_USERNAME_XP});
 	}
+
 
     private void fillUsername(String username){
         WebDriverUtils.clearAndInputTextToField(INPUT_USERNAME_XP, username);
@@ -73,10 +74,19 @@ public class LoginPopup extends AbstractPortalPopup {
         return this.login(userData,rememberMeEnable, Page.homePage);
     }
 
+    //new
+    public AbstractPortalPage loginFromHeader (UserData userData, boolean rememberMeEnable, Page expectedPage){
+        fillUsername(userData.getUsername());
+        fillPassword(userData.getPassword());
+        clickLogin();
+        new AbstractPortalPopup().closePopup();
+        return (AbstractPortalPage) NavigationUtils.closeAllPopups(expectedPage);
+    }
+
     public AbstractPageObject login(UserData userData, boolean rememberMeEnable, Page expectedPage) throws RuntimeException{
         fillUsername(userData.getUsername());
         fillPassword(userData.getPassword());
-        setRememberMeCheckBoxState(rememberMeEnable);
+        //setRememberMeCheckBoxState(rememberMeEnable);
         clickLogin();
         if(expectedPage.equals(Page.loginPopup)){
             return new LoginPopup();
@@ -86,7 +96,8 @@ public class LoginPopup extends AbstractPortalPopup {
             }catch (Exception e){
                 NavigationUtils.registrationError();
             }
-            WebDriverUtils.waitForElement(AbstractPortalPopup.ROOT_XP); // wait for popup appear before trying to close it
+            WebDriverUtils.waitForElement("//*[contains(@class, 'main-header__balance')]"); // wait for popup appear before trying to close it
+           // new AbstractPortalPopup().closePopup();
             return NavigationUtils.closeAllPopups(expectedPage);
         }
     }
@@ -102,7 +113,7 @@ public class LoginPopup extends AbstractPortalPopup {
     }
 
 	public boolean validationErrorVisible(){
-		return WebDriverUtils.isVisible(LABEL_VALIDATION_ERROR_XP, 1);
+		return WebDriverUtils.isVisible(DESCRIPTION_MSG_XP, 1);
 	}
 
     public void validateDescriptionMesageDublicateEmail(){
