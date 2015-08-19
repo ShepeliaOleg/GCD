@@ -1,10 +1,15 @@
 package pageObjects.registration.classic;
 
+import enums.Page;
 import enums.PromoCode;
+import pageObjects.core.AbstractPopup;
+import pageObjects.core.AbstractPortalPopup;
 import pageObjects.header.LoggedOutHeader;
 import pageObjects.registration.RegistrationPage;
+import pageObjects.registration.RegistrationSuccessfullPopUp;
 import springConstructors.UserData;
 import springConstructors.ValidationRule;
+import utils.NavigationUtils;
 import utils.WebDriverUtils;
 import utils.validation.ValidationUtils;
 
@@ -47,6 +52,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
 
     public RegistrationPageAllSteps(){
         super(new String[]{FIELD_PHONE_XP});
+
     }
 
     /*General*/
@@ -54,6 +60,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
     public void registerNewUser(UserData userData, boolean isReceiveBonusesChecked, PromoCode promoCode){
         fillRegistrationForm(userData, isReceiveBonusesChecked, promoCode);
         clickSubmit();
+        new RegistrationSuccessfullPopUp().clickContinue();
     }
 
     public void fillRegistrationForm(UserData userData, boolean isReceiveBonusesChecked, PromoCode promoCode){
@@ -70,8 +77,10 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         fillBirthMonth(userData.getBirthMonth());
         fillBirthYear(userData.getBirthYear());
         fillEmail(userData.getEmail());
+
         //fillEmailVerification(userData.getEmail());
         fillPhoneAreaCode(userData.getPhoneAreaCode());
+        new AbstractPortalPopup().closePopup();
         fillPhone(userData.getPhone());
         fillCountry(userData.getCountry());
         fillPostCode(userData.getPostCode());
@@ -87,6 +96,7 @@ public class RegistrationPageAllSteps extends RegistrationPage {
         fillSecretQuestion(userData.getVerificationQuestion());
         fillAnswer(userData.getVerificationAnswer());
         setTermsCheckbox(true);
+        //registrationSuccessfullPopUp.clickContinue();
     }
 
     /*Inputs*/

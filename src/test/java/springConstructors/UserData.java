@@ -209,7 +209,6 @@ public class UserData{
         userData.setUsername(usernameValidationRule.generateValidString().toUpperCase());
         //userData.setEmail(emailValidationRule.generateValidString());
         userData.setEmail(userData.getEmail());
-        NavigationUtils.closeAllPopups(Page.anyLoggedInPage);
         //userData.setCountry(DataContainer.getDefaults().getRandomCountryCode());
         userData.setCountry(userData.getCountry());
         userData.setCity(cityValidationRule.generateValidString());
